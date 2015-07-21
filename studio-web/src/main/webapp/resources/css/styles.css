@@ -1,0 +1,43 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+h1{
+	color: rgb(65, 63, 63);
+}
+
+body{
+	background: url('/studio-web/resources/img/colorImage.png');
+
+	
+}
+
+#div-login {
+	text-align: center;
+	top: 30%;
+	left: 50%;
+	width: 500px;
+	height: 600px;
+	margin-left: -250px;
+	margin-top: -150px;
+	position: absolute;
+	background-color: #968E8E;
+	border-radius: 15px;
+	box-shadow: 1px 1px 10px 10px #D7C4C4;
+	padding-top: 86px;
+}
+
+#logo{
+	width: 100px;
+	height: 100px;
+}
+
+#email{
+	width: 300px;
+}
+
+#password{
+	width: 300px;
+}
+

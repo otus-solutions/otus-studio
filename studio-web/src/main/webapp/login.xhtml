@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<title>Login Page</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+<body>
+	<div id="div-login">
+		<h:graphicImage id="logo" title="LogoStudio" value="resources/img/corujaconstrutora.png" />
+		<br />
+		<br />
+		<h1>Otus Estúdio</h1>
+		<br />
+		<p:inputText id="email" placeholder="Email"/>
+		<br />
+		<br />
+		<br />
+		<p:inputText id="password" placeholder="Senha" type="password"/>
+		<br />
+		<br />
+		<p:commandButton value="Entrar" id="loginHome" />
+		<p:spacer width="20"/>	
+		<a href="Home"> Esqueceu sua senha? </a>
+	</div>
+	<p>Desenvolvido por CCEM.</p>
+</body>
+</html>
