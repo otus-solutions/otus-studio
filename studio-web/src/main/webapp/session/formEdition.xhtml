@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Editor de formulários</title>
+	<h:outputStylesheet library="css" />
+</h:head>
+
+<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.sideLeft {
+	height: 100%;
+	width: 15%;
+	background-color: #C4C4C4;
+	display: table-cell;
+}
+
+.mainPage {
+	height: 800px;
+	width: 50%;
+	background-color: blueviolet;
+	-webkit-box-shadow: 9px 11px 12px -7px rgba(158, 149, 158, 0.86);
+	display: table-cell;
+}
+
+.sideRight {
+	height: 100px;
+	background-color: #C4C4C4;
+	display: table-cell;
+	width: 20%;
+}
+
+.questions_route {
+	display: table-cell;
+	transform: rotate(90deg);
+}
+
+.item h3 {
+	position: center;
+}
+</style>
+
+<body>
+	<div class="topMenu">
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:submenu label="Arquivo">
+				</p:submenu>
+				<p:submenu label="Repositórios">
+				</p:submenu>
+				<p:submenu label="Ajuda">
+				</p:submenu>
+				<p:submenu label="Sair">
+				</p:submenu>
+			</p:menubar>
+
+		</h:form>
+	</div>
+
+	<div class="content">
+		<div class="sideLeft">
+			<h:form>
+				<p:growl autoUpdate="true" />
+
+				<p:panelMenu>
+					<p:submenu label="Questões">
+						<p:menuitem value="Númerica" />
+						<p:menuitem value="Texto" />
+						<p:menuitem value="SingleSelectQuestion" />
+					</p:submenu>
+					<p:submenu label="Metadados">
+						<p:menuitem value="Númerica" />
+						<p:menuitem value="Texto" />
+						<p:menuitem value="laboratório" />
+					</p:submenu>
+					<p:submenu label="Navegação">
+						<p:menuitem value="Pulo" />
+						<p:menuitem value="Mostra/Escode" />
+						<p:menuitem value="Delete" />
+					</p:submenu>
+					<p:submenu label="Layout">
+					</p:submenu>
+					<p:submenu label="Dropdown">
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</div>
+
+		<div class="mainPage">
+			
+		</div>
+		
+		<div class="questions_route">
+				<p:steps styleClass="custom">
+					<p:menuitem value="Personal" />
+					<p:menuitem value="Seat Selection" />
+					<p:menuitem value="Payment" />
+					<p:menuitem value="Confirmation" />
+				</p:steps>
+		</div>
+
+		<div class="sideRight">
+
+			<br />
+			<h:form>
+				<p:growl autoUpdate="true" />
+				<p:panelMenu>
+					<p:submenu label="Opções">
+						<p:menuitem value="Option 1" />
+						<p:menuitem value="Option 1" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+			<br />
+			<p:separator />
+			<h:form>
+				<p:growl autoUpdate="true" />
+				<p:panelMenu>
+					<p:submenu label="Fomulários">
+						<p:menuitem value="LAPA - 1.0" />
+						<p:menuitem value="RCPA - 1.1" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</div>
+	</div>
+</body>
+</html>

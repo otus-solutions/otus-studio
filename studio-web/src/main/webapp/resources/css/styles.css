@@ -8,9 +8,7 @@ h1{
 }
 
 body{
-	background: url('/studio-web/resources/img/colorImage.png');
-
-	
+	background: url('/studio-web/resources/img/colorImage.png');	
 }
 
 #div-login {
@@ -41,3 +39,10 @@ body{
 	width: 300px;
 }
 
+/* Style FormEditon */
+
+d {
+	background-color: red;
+	height: 100px;
+	width: 100px;
+}
