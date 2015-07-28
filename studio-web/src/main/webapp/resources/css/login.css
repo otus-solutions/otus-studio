@@ -38,11 +38,3 @@ body{
 #password{
 	width: 300px;
 }
-
-/* Style FormEditon */
-
-d {
-	background-color: red;
-	height: 100px;
-	width: 100px;
-}

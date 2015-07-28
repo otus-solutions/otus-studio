@@ -6,64 +6,33 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Editor de formulários</title>
-	<h:outputStylesheet library="css" />
+	<title>Editor de Formulários</title>
+	<h:outputStylesheet library="css" name="form-edition.css" />
+	<h:outputStylesheet library="css/questions" name="text-question.css" />
+	<link href="/studio-web/resources/img/corujaconstrutora.png" rel="icon"/>
+	<meta charset="UTF-8" />
 </h:head>
-
-<style>
-html, body {
-	margin: 0px;
-	padding: 0px;
-}
-
-.sideLeft {
-	height: 100%;
-	width: 15%;
-	background-color: #C4C4C4;
-	display: table-cell;
-}
-
-.mainPage {
-	height: 800px;
-	width: 50%;
-	background-color: blueviolet;
-	-webkit-box-shadow: 9px 11px 12px -7px rgba(158, 149, 158, 0.86);
-	display: table-cell;
-}
-
-.sideRight {
-	height: 100px;
-	background-color: #C4C4C4;
-	display: table-cell;
-	width: 20%;
-}
-
-.questions_route {
-	display: table-cell;
-	transform: rotate(90deg);
-}
-
-.item h3 {
-	position: center;
-}
-</style>
 
 <body>
 	<div class="topMenu">
 		<h:form>
 			<p:growl id="messages" />
 
-			<p:menubar>
-				<p:submenu label="Arquivo">
-				</p:submenu>
-				<p:submenu label="Repositórios">
-				</p:submenu>
-				<p:submenu label="Ajuda">
-				</p:submenu>
-				<p:submenu label="Sair">
-				</p:submenu>
-			</p:menubar>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:menuButton value="Arquivo">
+						<p:menuitem value="Novo" />
+					</p:menuButton>
+					<p:menuButton value="Repositórios">
+						<p:menuitem value="Novo" />
+					</p:menuButton>
+				</f:facet>
 
+				<f:facet name="right">
+					<p:commandButton value="Ajuda" />
+					<p:commandButton value="Sair" />
+				</f:facet>
+			</p:toolbar>
 		</h:form>
 	</div>
 
@@ -72,7 +41,7 @@ html, body {
 			<h:form>
 				<p:growl autoUpdate="true" />
 
-				<p:panelMenu>
+				<p:panelMenu id="menuEsquerda">
 					<p:submenu label="Questões">
 						<p:menuitem value="Númerica" />
 						<p:menuitem value="Texto" />
@@ -96,21 +65,36 @@ html, body {
 			</h:form>
 		</div>
 
-		<div class="mainPage">
-			
+		<div class="mainPage centralized">
+			<div class="linksForms">
+				<ul>
+					<li class="activeLink"><a href="#">Edição</a></li>
+					<li><a href="#">Pulos</a></li>
+					<li><a href="#">Mensagens</a></li>
+					<li><a href="#">Preview</a></li>
+				</ul>
+			</div>
+			<div class="mainPageInside">
+				<div class="textQuestion">
+					<p:inputText id="textQuestionID" />
+					<p:watermark for="textQuestionID" value="ID" />
+					<p:inputTextarea id="textQuestionlabel" rows="1" maxlength="500"
+						autoResize="true" />
+					<p:watermark for="textQuestionlabel" value="Label" />
+				</div>
+				<div class="textQuestion">
+					<p:inputText id="textQuestionID1" />
+					<p:watermark for="textQuestionID1" value="ID" />
+					<p:inputTextarea id="textQuestionlabel1" rows="1" maxlength="500"
+						autoResize="true" />
+					<p:watermark for="textQuestionlabel1" value="Label" />
+				</div>
+
+			</div>
 		</div>
-		
-		<div class="questions_route">
-				<p:steps styleClass="custom">
-					<p:menuitem value="Personal" />
-					<p:menuitem value="Seat Selection" />
-					<p:menuitem value="Payment" />
-					<p:menuitem value="Confirmation" />
-				</p:steps>
-		</div>
+
 
 		<div class="sideRight">
-
 			<br />
 			<h:form>
 				<p:growl autoUpdate="true" />
@@ -123,6 +107,7 @@ html, body {
 			</h:form>
 			<br />
 			<p:separator />
+			<br />
 			<h:form>
 				<p:growl autoUpdate="true" />
 				<p:panelMenu>

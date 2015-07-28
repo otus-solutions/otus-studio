@@ -1,0 +1,15 @@
+.textQuestion {
+	padding: 15px;
+	min-height: 100px;
+	border: dotted 1px #D0D0D0;
+	margin-bottom: 10px;
+}
+
+.textQuestion input {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.textQuestion textarea {
+	width: 80%;
+}

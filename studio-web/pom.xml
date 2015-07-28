@@ -6,6 +6,14 @@
 	<packaging>war</packaging>
 	<name>Studio</name>
 
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -33,5 +41,13 @@
 			<artifactId>primefaces</artifactId>
 			<version>5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 </project>
