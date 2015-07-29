@@ -9,33 +9,29 @@
 	<title>Editor de Formulários</title>
 	<h:outputStylesheet library="css" name="form-edition.css" />
 	<h:outputStylesheet library="css/questions" name="text-question.css" />
-	<link href="/studio-web/resources/img/corujaconstrutora.png" rel="icon"/>
+	<link href="/studio-web/resources/img/corujaconstrutora.png" rel="icon" />
 	<meta charset="UTF-8" />
 </h:head>
 
 <body>
 	<div class="topMenu">
 		<h:form>
-			<p:growl id="messages" />
-
-			<p:toolbar>
-				<f:facet name="left">
-					<p:menuButton value="Arquivo">
-						<p:menuitem value="Novo" />
-					</p:menuButton>
-					<p:menuButton value="Repositórios">
-						<p:menuitem value="Novo" />
-					</p:menuButton>
-				</f:facet>
-
-				<f:facet name="right">
-					<p:commandButton value="Ajuda" />
-					<p:commandButton value="Sair" />
-				</f:facet>
-			</p:toolbar>
+			<div class="leftMenu">
+				<ul>
+					<li><h:commandLink action="#" value="Arquivo" /></li>
+					<li><a href="#">Repositório</a></li>
+				</ul>
+			</div>
+			<div class="rightMenu">
+				<div class="imageUserDiv">
+					<img src="/studio-web/resources/img/prof_bruce_duncan.jpg" alt="perfil" />
+				</div>
+				<ul>
+					<li><a href="#">Bruce Duncan</a></li>
+				</ul>
+			</div>
 		</h:form>
 	</div>
-
 	<div class="content">
 		<div class="sideLeft">
 			<h:form>
@@ -43,9 +39,21 @@
 
 				<p:panelMenu id="menuEsquerda">
 					<p:submenu label="Questões">
-						<p:menuitem value="Númerica" />
-						<p:menuitem value="Texto" />
-						<p:menuitem value="SingleSelectQuestion" />
+						<p:menuitem value="Numeric" />
+						<p:menuitem value="AutoComplete" />
+						<p:menuitem value="Text" />
+						<p:menuitem value="Radio" />
+						<p:menuitem value="Checkbox" />
+						<p:menuitem value="Date" />
+						<p:menuitem value="TextArea" />
+						<p:menuitem value="Time" />
+					</p:submenu>
+					<p:submenu label="Grupos">
+						<p:menuitem value="Basic" />
+						<p:menuitem value="AtLeastOne" />
+						<p:menuitem value="TextArea" />
+						<p:menuitem value="MutuallyExclusive" />
+						<p:menuitem value="ListQuestions" />
 					</p:submenu>
 					<p:submenu label="Metadados">
 						<p:menuitem value="Númerica" />

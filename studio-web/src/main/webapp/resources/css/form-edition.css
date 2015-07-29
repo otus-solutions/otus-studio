@@ -4,8 +4,16 @@
 }
 
 body {
-	font-family: Arial !important;
+	font-family: 'Arial', sans-serif !important;
 	font-size: 90%;
+    font-weight: normal !important;
+}
+
+.ui-widget {
+	font-family: 'Arial', sans-serif !important;
+	font-size: 100%;
+    font-weight: normal !important;
+	
 }
 
 .content {
@@ -15,15 +23,17 @@ body {
 
 .sideLeft {
 	height: 900px;
-	width: 15%;
+	width: 20%;
 	background-color: #C4C4C4;
 	float: left;
+	padding: 9px;
 }
 
 .sideRight {
+	padding: 9px;
 	height: 900px;
 	background-color: #C4C4C4;
-	width: 15%;
+	width: 20%;
 	float: right;
 }
 
@@ -31,7 +41,6 @@ body {
 	margin-top: 20px;
 	min-height: 800px;
 	width: 50%;;
-	background-color: #EFEFEF;
 	padding: 20px;
 	margin-top: 10px !important;
 }
@@ -49,6 +58,7 @@ body {
 	background-color: white;
 	height: 800px;
 	padding: 20px;
+	border: solid 1px #E6E3E3;
 }
 
 .linksForms {
@@ -57,20 +67,104 @@ body {
 
 .linksForms li {
 	font-family: Arial;
-    display: inline-block;
-    text-decoration: none;
-    padding: 10px;
-    width: 20%;
-    font-size: 1.2em;
+	display: inline-block;
+	text-decoration: none;
+	padding: 10px;
+	width: 20%;
+	font-size: 1.2em;
+	background-color: #BBB8B8;
+    border-radius: 10px 10px 0px 0px
 }
 
-.activeLink{
-	background-color: #fff;
-    border-top: solid 1px gray;
-    border-left: solid 1px gray;
-    border-right: solid 1px gray;
+.activeLink {
+	background-color: #6B9DDA !important;
+    border-radius: 10px 10px 0px 0px
 }
 
 .linksForms a {
+	color: white;
 	text-decoration: none;
+}
+
+.topMenu {
+	width: 100%;
+	height: 70px;
+	background-color: #333333;
+	border-bottom: solid 2px;
+}
+
+.leftMenu {
+	float: left;
+}
+
+.leftMenu li {
+	float: left;
+	display: inline-block;
+	padding: 27px;
+}
+
+.leftMenu a {
+	text-decoration: none;
+	color: #fff;
+}
+
+.rightMenu {
+	padding-right: 3%;
+	width: 50%;
+	float: right;
+}
+
+.rightMenu li {
+	float: right;
+	display: inline-block;
+	padding: 27px;
+}
+
+.rightMenu ul {
+	height: 70px;
+	margin-right: 90px;
+}
+
+.rightMenu a {
+	text-decoration: none;
+	color: #fff;
+}
+
+.topMenu li:hover {
+	background-color: #444;
+}
+
+.imageUserDiv {
+	border-radius: 35px;
+	float: right;
+	width: 46px;
+	margin-top: 12px;
+}
+
+.imageUserDiv img {
+	cursor: pointer; height : inherit;
+	width: inherit;
+	border-radius: inherit;
+	height: inherit;
+}
+
+/* ############################ PRIMEFACES ############################### */
+.sideLeft h3 > a {
+	color: white !important;
+	text-shadow: none !important;
+    background-color: #6B9DDA !important;
+    text-decoration: none !important;
+}
+.sideLeft h3 {
+	border-radius: 0px !important;
+}
+
+.sideRight h3 > a {
+	color: white !important;
+	text-shadow: none !important;
+    background-color: #6B9DDA !important;
+    text-decoration: none !important;
+}
+.sideRight h3 {
+	border-radius: 0px !important;
 }
