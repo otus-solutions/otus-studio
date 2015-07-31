@@ -3,32 +3,36 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"> 
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Log In</title>
+	<title>Tela de login</title>
 	<h:outputStylesheet library="css" name="login.css" />
-	<link href="/studio-web/resources/img/corujaconstrutora.png" rel="icon"/>
 	<meta charset="UTF-8" />
 </h:head>
 <body>
-	<div id="div-login">
-		<h:graphicImage id="logo" title="LogoStudio" value="resources/img/corujaconstrutora.png" />
-		<br />
-		<br />
-		<h1>Otus Estúdio</h1>
-		<br />
-		<p:inputText id="email" placeholder="Email"/>
-		<br />
-		<br />
-		<br />
-		<p:inputText id="password" placeholder="Senha" type="password"/>
-		<br />
-		<br />
-		<p:commandButton value="Entrar" id="loginHome" />
-		<p:spacer width="20"/>	
-		<a href="Home"> Esqueceu sua senha? </a>
+	<main>
+	<div class="page">
+		<div class="content">
+
+			<div class="imageLogoOtus">
+				<img src="/studio-web/resources/img/owl.png" /> <label>Studio</label>
+			</div>
+			<div class="contentInputText">
+				<p:inputText value="Email" />
+				<br />
+				<p:inputText value="Senha" />
+				<br /> <br />
+				<p:commandButton id="buttonLogin" value="Entrar" />
+			</div>
+			<div id="link">
+				<a href="#" id="labelInfo">Não consegue acessar sua conta?</a>
+			</div>
+		</div>
 	</div>
-	<p>Desenvolvido por CCEM.</p>
+	<div class="footer">
+		<label>Copyright © 2015 ELSA Brasil. Corporation.</label>
+	</div>
+	</main>
 </body>
 </html>

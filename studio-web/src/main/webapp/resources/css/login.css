@@ -1,40 +1,70 @@
 * {
-	margin: 0px;
-	padding: 0px;
+	padding: 0;
+	margin: 0;
 }
 
-h1{
-	color: rgb(65, 63, 63);
+body {
+	background: #FFFFFF;
+	font-family: 'Arial', sans-serif !important;
+	font-size: 90%;
+	font-weight: normal !important;
 }
 
-body{
-	background: url('/studio-web/resources/img/colorImage.png');	
-}
-
-#div-login {
-	text-align: center;
+.page {
+	/* alinhar ao centro */
 	top: 30%;
+	margin: 0 auto;
 	left: 50%;
-	width: 500px;
-	height: 600px;
-	margin-left: -250px;
-	margin-top: -150px;
 	position: absolute;
-	background-color: #968E8E;
-	border-radius: 15px;
-	box-shadow: 1px 1px 10px 10px #D7C4C4;
-	padding-top: 86px;
+	transform: translateX(-50%);
 }
 
-#logo{
-	width: 100px;
+.imageLogoOtus img {
+	margin: 0px 0px;
+	height: 50px;
+	width: 50px;
+	margin: 0px 0px;
+}
+
+.imageLogoOtus label {
+	margin: 10px 0px;
+	font-family: 'Oswald', sans-serif;
+	font-size: 50px;
+}
+
+#labelInfo {
+	margin-top: 30px;
+	font-size: 86%;
+	color: #0072C6;
+	display: block;
+	font-size: 86%;
+}
+
+/* PRIMEFACES */
+ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only {
+	color: #fff;
+	background-color: #3e87ec;
+	text-align: center;
+}
+
+#buttonLogin span {
+	color: #FFFFFF !important;
+	background-color: #3e87ec !important;
+}
+
+input {
+	margin: 3px !important;
+}
+
+.footer {
+	background-color: #333333;
+	color: white;
+	width: 100%;
 	height: 100px;
+	position: absolute;
+	bottom: 0px;
 }
 
-#email{
-	width: 300px;
-}
-
-#password{
-	width: 300px;
+.footer label {
+	float: right;
 }
