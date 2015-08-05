@@ -15,7 +15,7 @@
 	</repositories>
 
 	<build>
-        <finalName>otus</finalName>
+        <finalName>studio</finalName>
 
 		<plugins>
 			<plugin>
