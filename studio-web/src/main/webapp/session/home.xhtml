@@ -6,12 +6,15 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Editor de Formulários</title>
-	<h:outputStylesheet library="css" name="form-edition.css" />
-	<h:outputStylesheet library="css/questions" name="text-question.css" />
+	<meta charset="UTF-8" />
 	<link href="#{request.contextPath}/resources/img/corujaconstrutora.png"
 		rel="icon" />
-	<meta charset="UTF-8" />
+	<title>Editor de Formulários</title>
+	
+	<h:outputStylesheet library="css" name="form-edition.css" />
+	<h:outputStylesheet library="css/questions" name="text-question.css" />
+	
+	<h:outputScript library="js" name="experimental.js" />
 </h:head>
 
 <body>
@@ -85,24 +88,9 @@
 				</ul>
 			</div>
 			<div class="mainPageInside">
-				<div class="textQuestion">
-					<p:inputText id="textQuestionID" />
-					<p:watermark for="textQuestionID" value="ID" />
-					<p:inputTextarea id="textQuestionlabel" rows="1" maxlength="500"
-						autoResize="true" />
-					<p:watermark for="textQuestionlabel" value="Label" />
-				</div>
-				<div class="textQuestion">
-					<p:inputText id="textQuestionID1" />
-					<p:watermark for="textQuestionID1" value="ID" />
-					<p:inputTextarea id="textQuestionlabel1" rows="1" maxlength="500"
-						autoResize="true" />
-					<p:watermark for="textQuestionlabel1" value="Label" />
-				</div>
-
+				<ui:include src="/resources/templates/questions/text-question.xhtml" />
 			</div>
 		</div>
-
 
 		<div class="sideRight">
 			<br />
@@ -110,7 +98,10 @@
 				<p:growl autoUpdate="true" />
 				<p:panelMenu>
 					<p:submenu label="Opções">
-						<p:menuitem value="Option 1" />
+						<p:menuitem>
+							<p:inputText id="textQuestionID" />
+							<p:watermark for="textQuestionID" value="ID" />
+						</p:menuitem>
 						<p:menuitem value="Option 1" />
 					</p:submenu>
 				</p:panelMenu>

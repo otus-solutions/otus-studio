@@ -5,7 +5,7 @@
 
 body {
 	font-family: 'Arial', sans-serif !important;
-	font-size: 90%;
+	font-size: 0.9em;
     font-weight: normal !important;
 }
 
@@ -71,7 +71,6 @@ body {
 	text-decoration: none;
 	padding: 10px;
 	width: 20%;
-	font-size: 1.2em;
 	background-color: #BBB8B8;
     border-radius: 10px 10px 0px 0px
 }

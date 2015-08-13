@@ -1,8 +1,12 @@
 .textQuestion {
-	padding: 15px;
 	min-height: 100px;
 	border: dotted 1px #D0D0D0;
 	margin-bottom: 10px;
+}
+
+.questionContent {
+	padding: 15px;
+	min-height: inherit;
 }
 
 .textQuestion input {
@@ -12,4 +16,34 @@
 
 .textQuestion textarea {
 	width: 80%;
+}
+
+.questionInfo {
+	height: 20px;
+	width: 100%;
+}
+
+.questionInfo ul li {
+	display: inline;
+	color: white;
+	padding: 3px;
+	border: 1px solid #6785D8;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background: -webkit-linear-gradient(top, #409de5 0%, #5382aa 100%);
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+.watermark {
+	border: 1px solid white;
+	color: #555;
+	display: block;
+	font-size: 14px;
+	padding: 4px 0px 0px 4px;
+	width: 80%;
+}
+
+.borderRed {
+	border: 1px solid red;
 }
