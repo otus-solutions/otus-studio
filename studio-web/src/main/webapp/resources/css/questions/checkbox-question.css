@@ -1,0 +1,11 @@
+.checkbox-question .label-container {
+	float: left;
+	width: 80%;
+	padding-top: 7px;
+	margin-left: 5px;
+}
+
+.ui-chkbox {
+	float: left !important;
+	margin-top: 10px;
+}

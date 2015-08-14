@@ -22,7 +22,7 @@ body {
 }
 
 .sideLeft {
-	height: 900px;
+	min-height: 900px;
 	width: 20%;
 	background-color: #C4C4C4;
 	float: left;
@@ -31,7 +31,7 @@ body {
 
 .sideRight {
 	padding: 9px;
-	height: 900px;
+	min-height: 900px;
 	background-color: #C4C4C4;
 	width: 20%;
 	float: right;
@@ -56,7 +56,7 @@ body {
 .mainPageInside {
 	-webkit-box-shadow: 9px 11px 12px -7px rgba(158, 149, 158, 0.86);
 	background-color: white;
-	height: 800px;
+	min-height: 800px;
 	padding: 20px;
 	border: solid 1px #E6E3E3;
 }

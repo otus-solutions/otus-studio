@@ -3,19 +3,20 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <body>
-	<div class="question-container">
+	<div class="question-container checkbox-question">
 		<div class="question-info">
 			<ul>
-				<li><span>RCPA1</span></li>
-				<li><span>Texto</span></li>
+				<li><span>RCPA3</span></li>
+				<li><span>Caixa de Seleção</span></li>
 			</ul>
 		</div>
 		<div class="question-content">
 
-			<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
-			<span class="watermark">Insira sua label aqui</span>
-			<p:inputTextarea autoResize="true" rows="1" maxlength="300" disabled="true" />
-			
+			<p:selectBooleanCheckbox />
+			<div class="label-container">
+				<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
+				<span class="watermark">Insira sua label aqui</span>
+			</div>
 		</div>
 	</div>
 </body>

@@ -3,19 +3,22 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <body>
-	<div class="question-container">
+	<div class="question-container numeric-question">
 		<div class="question-info">
 			<ul>
-				<li><span>RCPA1</span></li>
-				<li><span>Texto</span></li>
+				<li><span>RCPA2</span></li>
+				<li><span>Numérica</span></li>
 			</ul>
 		</div>
 		<div class="question-content">
-
 			<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
 			<span class="watermark">Insira sua label aqui</span>
-			<p:inputTextarea autoResize="true" rows="1" maxlength="300" disabled="true" />
-			
+
+			<p:inputTextarea class="answer-input" autoResize="true" rows="1" maxlength="300" disabled="true" />
+			<div class="label-container">
+				<p:inputTextarea class="edit unit-edit" rows="1" maxlength="500" autoResize="true" />
+				<span class="watermark unit-watermark">cm</span>
+			</div>
 		</div>
 	</div>
 </body>

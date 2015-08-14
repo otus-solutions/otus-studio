@@ -1,44 +1,64 @@
 $(document).ready(function() {
-	var DEFAULT_VALUE = 'Insira seu texto aqui';
+	
+	var LABEL_DEFAULT_VALUE;
+	var currentText;
 
-	var $watermark = $('.watermark'), $edit = $('.edit'), currentText;
+	function loadEvents() {
+		$('.question-container').click(function() {
+			$('.question-container').removeClass('selected-question');
+			$(this).toggleClass('selected-question');
+			loadEditionEvents();
+		});
+	}
+	
+	function loadEditionEvents() {
+		$('.selected-question .watermark').on('click', function(event) {
+			if (LABEL_DEFAULT_VALUE) {
+				LABEL_DEFAULT_VALUE = $(this).text();
+			}
+			startEdition(event, $(this));
+		});
+	
+		$('.selected-question .edit').on('blur', function(event) {
+			endEdition(event, $(this));
+		});
+		
+		$('.selected-question .edit').on('keypress', function (event) {
+	        if(event.which === 13){
+	        	$(this).blur();
+	        }
+		});
+	}
+	
+	function startEdition(event, $this) {
+		$('.selected-question .edit').css('display', 'block');
+		$('.selected-question .edit').focus();
 
-	$watermark.on('click', function(event) {
-//		$edit.val(currentText);
-		$edit.css('display', 'block');
-		$edit.focus();
-
-		$(this).css('display', 'none');
-		if ($watermark.text() == DEFAULT_VALUE) {
+		$this.css('display', 'none');
+		if ($this.text() == LABEL_DEFAULT_VALUE) {
 			currentText = '';
 		} else {
-			currentText = $watermark.text();
+			currentText = $this.text();
 		}
-	});
+	}
 
-	$edit.on('blur', function(event) {
-		currentText = $(this).val();
+	function endEdition(event, $this) {
+		currentText = $this.val();
 
 		if (currentText != '') {
-			$watermark.text($(this).val());
+			$('.selected-question .watermark').text($this.val());
 		} else {
-			$watermark.text(DEFAULT_VALUE);
+			$('.selected-question .watermark').text(DEFAULT_VALUE);
 		}
 
-		$watermark.css('display', 'block');
-		$(this).css('display', 'none');
-	});
+		$('.selected-question .watermark').css('display', 'block');
+		$this.css('display', 'none');
+		
+		//$('.watermark').replaceWith($('<span class="watermark">' + $('.watermark').text() + '</span>'));
+		//loadEvents();
+	}
 	
-	$edit.on('keypress', function (event) {
-        if(event.which === 13){
-        	$watermark.css('display', 'block');
-    		$(this).css('display', 'none');
-        }
-	});
-	
-	$(".textQuestion").click(function() {
-		$(this).toggleClass('borderRed');
-	});
-	
-	
+	loadEvents();
 });
+
+// Teste de formatação em <b>negrito</b>, <i>itálico e <u>sublinhado</u>,
