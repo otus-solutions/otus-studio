@@ -1,9 +1,3 @@
-.question-container {
-	min-height: 100px;
-	border: dotted 1px #D0D0D0;
-	margin-bottom: 10px;
-}
-
 .question-container input {
 	display: block;
 	margin-bottom: 5px;
@@ -13,26 +7,9 @@
 	width: 80%;
 }
 
-.question-content {
-	padding: 15px;
-	min-height: inherit;
-}
-
 .question-info {
 	height: 20px;
 	width: 100%;
-}
-
-.question-info ul li {
-	display: inline;
-	color: white;
-	padding: 3px;
-	border: 1px solid #6785D8;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	background: -webkit-linear-gradient(top, #409de5 0%, #5382aa 100%);
-	font-weight: bold;
-	font-size: 0.8em;
 }
 
 .watermark {

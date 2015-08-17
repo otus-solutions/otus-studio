@@ -11,13 +11,19 @@
 }
 
 .numeric-question .unit-edit {
+	float: left;
 	display: none;
 	width: 100px;
 }
 
 .numeric-question .unit-watermark {
 	display: block;
-	float: left;
 	padding-bottom: 10px;
+	float: left;
 	width: 100px;
+}
+
+.label-container {
+	min-height: 25px;
+	
 }

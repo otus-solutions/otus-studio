@@ -1,5 +1,5 @@
 .question-container {
-	min-height: 75px;
+	min-height: 50px;
 	border: dotted 1px #D0D0D0;
 	margin-bottom: 10px;
 }
@@ -11,11 +11,15 @@
 
 .question-container textarea {
 	width: 80%;
+	margin-bottom: 5px;
 }
 
 .question-content {
-	padding: 15px;
-	min-height: inherit;
+	padding-top: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	min-height: 40px;
 }
 
 .question-info {

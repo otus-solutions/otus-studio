@@ -27,6 +27,7 @@ body {
 	background-color: #C4C4C4;
 	float: left;
 	padding: 9px;
+	border-right: solid 1px #848484;
 }
 
 .side-right {
@@ -35,6 +36,7 @@ body {
 	background-color: #C4C4C4;
 	width: 20%;
 	float: right;
+	border-left: solid 1px #848484;
 }
 
 .main-page {
@@ -55,7 +57,7 @@ body {
 .main-page-inside {
 	-webkit-box-shadow: 9px 11px 12px -7px rgba(158, 149, 158, 0.86);
 	background-color: white;
-	height: 800px;
+	height: 819px;
 	padding: 20px;
 	border: solid 1px #E6E3E3;
 	overflow: auto;
@@ -145,6 +147,11 @@ body {
 	width: inherit;
 	border-radius: inherit;
 	height: inherit;
+}
+
+.main-page-inside h3 {
+	text-align: center;
+	padding-bottom: 25px;
 }
 
 /* ############################ PRIMEFACES ############################### */
