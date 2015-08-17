@@ -1,0 +1,14 @@
+<ui:composition template="/resources/templates/questions/question-base.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="questionId" value="RCPA6" />
+	<ui:param name="questionType" value="Questão de Tempo" />
+
+	<ui:define name="questionContent">
+		<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
+		<span class="watermark">Insira sua label aqui</span>
+		<p:calendar value="#{calendarView.date11}" pattern="HH:mm" timeOnly="true" />
+	</ui:define>
+
+</ui:composition>

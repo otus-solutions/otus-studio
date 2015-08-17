@@ -1,0 +1,18 @@
+<ui:composition template="/resources/templates/questions/question-base.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="questionId" value="RCPA3" />
+	<ui:param name="questionType" value="Caixa de Seleção" />
+
+	<ui:define name="questionContent">
+		<div class="checkbox-question">
+			<p:selectBooleanCheckbox />
+			<div class="label-container">
+				<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
+				<span class="watermark">Insira sua label aqui</span>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

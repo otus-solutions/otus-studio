@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
@@ -11,7 +11,7 @@
 		rel="icon" />
 	<title>Editor de Formulários</title>
 	
-	<h:outputStylesheet library="css" name="form-edition.css" />
+	<h:outputStylesheet library="css" name="home.css" />
 	<h:outputStylesheet library="css/questions" name="question.css" />
 	<h:outputStylesheet library="css/questions" name="text-question.css" />
 	<h:outputStylesheet library="css/questions" name="numeric-question.css" />
@@ -22,16 +22,16 @@
 </h:head>
 
 <body>
-	<div class="topMenu">
+	<div class="top-menu">
 		<h:form>
-			<div class="leftMenu">
+			<div class="left-menu">
 				<ul>
 					<li><h:commandLink action="#" value="Arquivo" /></li>
 					<li><a href="#">Repositório</a></li>
 				</ul>
 			</div>
-			<div class="rightMenu">
-				<div class="imageUserDiv">
+			<div class="right-menu">
+				<div class="image-user-div">
 					<h:graphicImage library="img" name="prof_bruce_duncan.jpg"
 						alt="perfil" />
 				</div>
@@ -42,11 +42,11 @@
 		</h:form>
 	</div>
 	<div class="content">
-		<div class="sideLeft">
+		<div class="side-left">
 			<h:form>
 				<p:growl autoUpdate="true" />
 
-				<p:panelMenu id="menuEsquerda">
+				<p:panelMenu id="menu-esquerda">
 					<p:submenu label="Questões">
 						<p:menuitem value="Numeric" />
 						<p:menuitem value="AutoComplete" />
@@ -82,24 +82,26 @@
 			</h:form>
 		</div>
 
-		<div class="mainPage centralized">
-			<div class="linksForms">
+		<div class="main-page centralized">
+			<div class="links-forms">
 				<ul>
-					<li class="activeLink"><a href="#">Edição</a></li>
+					<li class="active-link"><a href="#">Edição</a></li>
 					<li><a href="#">Pulos</a></li>
 					<li><a href="#">Mensagens</a></li>
 					<li><a href="#">Preview</a></li>
 				</ul>
 			</div>
-			<div class="mainPageInside">
-				<ui:include src="/resources/templates/questions/text-question.xhtml" />
-				<ui:include src="/resources/templates/questions/numeric-question.xhtml" />
-				<ui:include src="/resources/templates/questions/checkbox-question.xhtml" />
-				<ui:include src="/resources/templates/questions/radio-question.xhtml" />
+			<div class="main-page-inside">
+				<ui:include src="/resources/templates/questions/text-question_1.xhtml" />
+				<ui:include src="/resources/templates/questions/numeric-question_1.xhtml" />
+				<ui:include src="/resources/templates/questions/checkbox-question_1.xhtml" />
+				<ui:include src="/resources/templates/questions/radio-question_1.xhtml" />
+				<ui:include src="/resources/templates/questions/date-question_1.xhtml" />
+				<ui:include src="/resources/templates/questions/time-question_1.xhtml" />
 			</div>
 		</div>
 
-		<div class="sideRight">
+		<div class="side-right">
 			<br />
 			<h:form>
 				<p:growl autoUpdate="true" />

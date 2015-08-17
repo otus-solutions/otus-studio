@@ -1,0 +1,19 @@
+<ui:composition template="/resources/templates/questions/question-base.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="questionId" value="RCPA4" />
+	<ui:param name="questionType" value="Caixa de Seleção Única" />
+
+	<ui:define name="questionContent">
+		<p:inputTextarea class="edit" rows="1" maxlength="500" autoResize="true" />
+		<span class="watermark">Insira sua label aqui</span>
+
+		<p:selectOneRadio class="question-options" layout="grid" columns="1">
+			<f:selectItem itemLabel="Opção 1" itemValue="1" />
+			<f:selectItem itemLabel="Opção 2" itemValue="2" />
+			<f:selectItem itemLabel="Opção 3" itemValue="3" />
+		</p:selectOneRadio>
+	</ui:define>
+
+</ui:composition>
