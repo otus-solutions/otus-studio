@@ -30,6 +30,7 @@
 .question-info ul li {
 	display: inline;
 	color: white;
+	float: right;
 	padding: 3px;
 	border: 1px solid #6785D8;
 	border-bottom-left-radius: 4px;
@@ -46,7 +47,7 @@
 	font-size: 14px;
 	font-style: italic; 
 	padding: 4px 0px 10px 4px;
-	width: 80%;
+	width: 25%;
 }
 
 .edit {

@@ -12,16 +12,6 @@
 	width: 100%;
 }
 
-.watermark {
-	border: 1px solid white;
-	color: #555;
-	display: block;
-	font-size: 14px;
-	padding: 4px 0px 0px 4px;
-	width: 80%;
-	padding-bottom: 10px;
-}
-
 .edit {
 	display: none;
 	font-size: 14px;
