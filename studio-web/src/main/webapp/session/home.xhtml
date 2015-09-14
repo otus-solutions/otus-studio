@@ -9,7 +9,7 @@
 	<meta charset="UTF-8" />
 	<link href="#{request.contextPath}/resources/img/corujaconstrutora.png"
 		rel="icon" />
-	<title>Editor de Formulários</title>
+	<title>#{genLbl['page-title']}</title>
 	
 	<h:outputStylesheet library="css" name="home.css" />
 	<h:outputStylesheet library="css/questions" name="question.css" />
@@ -26,8 +26,8 @@
 		<h:form>
 			<div class="left-menu">
 				<ul>
-					<li><h:commandLink action="#" value="Arquivo" /></li>
-					<li><a href="#">Repositório</a></li>
+					<li><h:commandLink action="#" value="#{genLbl['top-menu.file']}"/></li>
+					<li><h:commandLink action="#" value="#{genLbl['top-menu.repository']}"/></li>
 				</ul>
 			</div>
 			<div class="right-menu">
@@ -47,34 +47,33 @@
 				<p:growl autoUpdate="true" />
 
 				<p:panelMenu id="menu-esquerda">
-					<p:submenu label="Questões">
-						<p:menuitem value="Numeric" />
-						<p:menuitem value="AutoComplete" />
-						<p:menuitem value="Text" />
-						<p:menuitem value="Radio" />
-						<p:menuitem value="Checkbox" />
-						<p:menuitem value="Date" />
-						<p:menuitem value="TextArea" />
-						<p:menuitem value="Time" />
+					<p:submenu label="#{genLbl['left-menu.questions']}">
+						<p:menuitem value="#{genLbl['questions-types.numeric']}" />
+						<p:menuitem value="#{genLbl['questions-types.autocomplete']}" />
+						<p:menuitem value="#{genLbl['questions-types.checkbox']}" />
+						<p:menuitem value="#{genLbl['questions-types.date']}" />
+						<p:menuitem value="#{genLbl['questions-types.radio']}" />
+						<p:menuitem value="#{genLbl['questions-types.text']}" />
+						<p:menuitem value="#{genLbl['questions-types.textarea']}" />
+						<p:menuitem value="#{genLbl['questions-types.time']}" />
 					</p:submenu>
-					<p:submenu label="Grupos">
-						<p:menuitem value="Basic" />
-						<p:menuitem value="AtLeastOne" />
-						<p:menuitem value="TextArea" />
-						<p:menuitem value="MutuallyExclusive" />
-						<p:menuitem value="ListQuestions" />
+					<p:submenu label="#{genLbl['left-menu.groups']}">
+						<p:menuitem value="#{genLbl['groups-types.basic']}" />
+						<p:menuitem value="#{genLbl['groups-types.atleastone']}" />
+						<p:menuitem value="#{genLbl['groups-types.mutuallyexclusive']}" />
+						<p:menuitem value="#{genLbl['groups-types.listquestions']}" />
 					</p:submenu>
-					<p:submenu label="Metadados">
+					<p:submenu label="#{genLbl['left-menu.metadata']}">
 						<p:menuitem value="Númerica" />
 						<p:menuitem value="Texto" />
 						<p:menuitem value="laboratório" />
 					</p:submenu>
-					<p:submenu label="Navegação">
+					<p:submenu label="#{genLbl['left-menu.navigation']}">
 						<p:menuitem value="Pulo" />
 						<p:menuitem value="Mostra/Escode" />
 						<p:menuitem value="Delete" />
 					</p:submenu>
-					<p:submenu label="Layout">
+					<p:submenu label="#{genLbl['left-menu.layout']}">
 					</p:submenu>
 					<p:submenu label="Dropdown">
 					</p:submenu>
@@ -85,10 +84,12 @@
 		<div class="main-page centralized">
 			<div class="links-forms">
 				<ul>
-					<li class="active-link"><a href="#">Edição</a></li>
-					<li><a href="#">Pulos</a></li>
-					<li><a href="#">Mensagens</a></li>
-					<li><a href="#">Preview</a></li>
+					<h:form>
+						<li class="active-link"><h:commandLink action="#" value="#{genLbl['form.options.edit']}"/></li>
+						<li><h:commandLink action="#" value="#{genLbl['form.options.jumps']}"/></li>
+						<li><h:commandLink action="#" value="#{genLbl['form.options.messages']}"/></li>
+						<li><h:commandLink action="#" value="#{genLbl['form.options.preview']}"/></li>
+					</h:form>
 				</ul>
 			</div>
 			<div class="main-page-inside">
@@ -107,7 +108,7 @@
 			<h:form>
 				<p:growl autoUpdate="true" />
 				<p:panelMenu>
-					<p:submenu label="Opções">
+					<p:submenu label="#{genLbl['right-menu.options']}">
 						<p:menuitem>
 							<p:inputText id="textQuestionID" />
 							<p:watermark for="textQuestionID" value="ID" />
@@ -122,7 +123,7 @@
 			<h:form>
 				<p:growl autoUpdate="true" />
 				<p:panelMenu>
-					<p:submenu label="Fomulários">
+					<p:submenu label="#{genLbl['right-menu.forms']}">
 						<p:menuitem value="LAPA - 1.0" />
 						<p:menuitem value="RCPA - 1.1" />
 					</p:submenu>
