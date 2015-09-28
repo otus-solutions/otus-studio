@@ -7,19 +7,38 @@
 	<packaging>pom</packaging>
 	<name>studio-root</name>
 
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<wildfly-hostname>localhost</wildfly-hostname>
+		<wildfly-port>9990</wildfly-port>
+		<wildfly-username>admin</wildfly-username>
+		<wildfly-password>admin</wildfly-password>
+	</properties>
+
 	<modules>
-		<module>../studio-persistence</module>
 		<module>../studio-web</module>
+		<module>../studio-business</module>
+		<module>../studio-ear</module>
 	</modules>
 
-	<dependencyManagement>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencyManagement>
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
+
+		<dependencies>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>7.0</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
 
 	<build>
 		<pluginManagement>
@@ -31,6 +50,14 @@
 					<configuration>
 						<source>1.7</source>
 						<target>1.7</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>2.3</version>
+					<configuration>
+						<ejbVersion>3.1</ejbVersion>
 					</configuration>
 				</plugin>
 			</plugins>
