@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xlmns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" />
+
+<head>
+<meta charset="UTF-8" />
+
+<h:outputStylesheet library="css" name="loginadm.css" />
+
+<link rel="Studio" href="resources/img/owl.png" />
+
+<title>Tela de Cadastramento de Administrador</title>
+</head>
+<body class="container-fluid" ng-controller="LoginAdm">
+	<div class="container" style="margin-top: 200px">
+		<div class="panel panel-default">
+
+			<form>
+				<div id="imageLogoOtus">
+					<h:graphicImage value="resources/img/owl.png" />
+					<label>Studio</label>
+				</div>
+				<div class="form-group">
+					<label for="name-login">Nome</label> <input type="text"
+						class="form-control" id="text-login" ng-model="text" />
+				</div>
+				<div class="form-group">
+					<label for="name-login">Sobrenome</label> <input type="text"
+						class="form-control" id="text-login" ng-model="text" />
+				</div>
+				<div class="form-group">
+					<label for="email-login">Email</label> <input type="email"
+						class="form-control" id="email-login" ng-model="email"
+						placeholder="email@exemplo.com.br" /> <br />
+				</div>
+				<div class="form-group">
+					<label for="phone-login">Telefone</label> <input type="number"
+						class="form-control" id="text-login" ng-model="number" />
+				</div>
+				<div class="form-group">
+					<label for="password-login">Senha</label> <input type="password"
+						class="form-control" id="password-login" ng-model="password" />
+				</div>
+				<div class="form-group">
+					<label for="password-login">Digite sua senha novamente</label> <input
+						type="password" class="form-control" id="password-login"
+						ng-model="password" /> <br /> <br />
+				</div>
+				<button type="submit" class="btn btn-primary" ng-click="login()">Cadastrar</button>
+			</form>
+		</div>
+	</div>
+	<div>
+		<footer> <label>Copyright © 2015 ELSA Brasil.
+			Corporation.</label> </footer>
+	</div>
+</body>
+</html>
