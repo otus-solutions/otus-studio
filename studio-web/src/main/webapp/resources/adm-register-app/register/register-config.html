@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="RegisterAdm">
 <head>
 	<meta charset="UTF-8" />
-	<link href="resources/css/login-adm.css" rel="stylesheet" />
-	<link href="resources/img/owl.png" rel="icon"/>
-	<link href="resources/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="register-adm.css" rel="stylesheet" />
+	<link href="../../shared/img/owl.png" rel="icon"/>
+	<link href="../../shared/lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<title>Cadastro de Administrador</title>
 </head>
-<body ng-controller="LoginAdm">
-	<img src="resources/img/owl.png" id="logo"/>
+<body>
+	<img src="../../shared/img/owl.png" id="logo"/>
 	<h1 class="text-center">Cadastro de Administrador</h1>
 	<div class="container">	
 		<div class="panel-default col-lg-6 col-md-offset-3">
-			<form>
+			<form ng-controller="RegisterAdmCtrl">
 				<div class="form-group">
 					<input type="text" class="form-control" id="text-login" ng-model="text" placeholder="Nome" required />
 				</div>
@@ -31,7 +31,7 @@
 				<div class="form-group">
 					<input type="password" class="form-control" id="password-login"	ng-model="password" placeholder="Confirmação de Senha"/> 
 				</div>
-				<button type="submit" class="btn btn-primary" ng-click="login()">Cadastrar</button>
+				<button type="submit" class="btn btn-primary" ng-click="register()">Cadastrar</button>
 			</form>
 		</div>
 	</div>
@@ -39,7 +39,10 @@
 		<label>Copyright © 2015 ELSA Brasil Corporation.</label> 
 	</footer>
 
-	<script src="resources/jquery/jquery-2.1.4.min.js"></script>
-	<script src="resources/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<script src="../shared/lib/jquery/jquery-2.1.4.min.js"></script>
+	<script src="../shared/lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<script src="../shared/lib/angularjs/angular.min.js"></script>
+	<script src="app.js"></script>
+	<script src="register-adm.ctrl.js"></script>
 </body>
 </html>
