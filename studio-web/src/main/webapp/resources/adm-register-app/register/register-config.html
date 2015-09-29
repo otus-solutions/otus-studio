@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<link href="register-adm.css" rel="stylesheet" />
-	<link href="../../shared/img/owl.png" rel="icon"/>
+	<link href="../../shared/img/otus-studio-img.png" rel="icon"/>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 	<title>Cadastro de Administrador</title>
 </head>
 <body>
-	<img src="../../shared/img/owl.png" id="logo"/>
+	<img src="../../shared/img/otus-studio-img.png" id="logo"/>
+	<h1>Otus Studio</h1>
 <div id="center">
 	<div ng-controller="DemoCtrl" layout="column">
 		
@@ -26,8 +27,9 @@
 	    	</md-input-container>
 
 	    	<md-input-container md-no-float flex>
-				<input ng-model="user.sobrenome" type="email" placeholder="Sobrenome" ng-required="true">
+				<input ng-model="user.sobrenome" type="text" placeholder="Sobrenome" ng-required="true">
 	    	</md-input-container>
+
 	    </div>
 		    <md-input-container md-no-float>
 		    	<input ng-model="user.phone" type="text" placeholder="Telefone">
@@ -47,13 +49,13 @@
 		  	
 	  </md-content>
 	
-	  <md-button class="md-primary" columns="5">Cadastrar</md-button>
+	  <md-button class="md-raised md-button md-default-theme">Cadastrar</md-button>
 	
 	</div>
 </div>
 
 <footer> 
-	<label>Copyright © 2015 ELSA Brasil Corporation.</label> 
+	<p>Copyright© 2015 ELSA Brasil Corporation.</p> 
 </footer>
 
 

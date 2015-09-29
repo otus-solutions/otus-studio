@@ -10,7 +10,7 @@ body {
 
 #logo {
 	margin: 0 auto;
-	width: 150px;
+	width: 180px;
 	height: 150px;
 	display: block;
 }
@@ -24,15 +24,22 @@ footer {
 	position: absolute;
 	bottom: 0px;
 	text-align: center;
+	border-top: 2px solid black;
 }
 
-footer label {
-	margin-top: 2.0em;
+footer p {
+	margin-top: 2.5em;
+	font-style: italic;
 }
 
 #center {
 	width: 40%;
 	margin: 0 auto;
+}
+
+h1 {
+	margin: 0 auto;
+	width: 200px;
 }
 
 
@@ -55,4 +62,9 @@ footer label {
 
 .inputdemoErrors .inputErrorsApp {
 	min-height: 48px; 
+}
+
+md-toolbar {
+	background-color: #6B9DDA !important;
+	color: white !important;
 }
