@@ -33,6 +33,10 @@
                             <groupId>br.org.studio</groupId>
                             <artifactId>studio-business</artifactId>
                         </ejbModule>
+                        <ejbModule>
+                            <groupId>br.org.studio</groupId>
+                            <artifactId>studio-persistence</artifactId>
+                        </ejbModule>
                     </modules>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
@@ -56,6 +60,12 @@
         <dependency>
             <groupId>br.org.studio</groupId>
             <artifactId>studio-business</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>br.org.studio</groupId>
+            <artifactId>studio-persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
