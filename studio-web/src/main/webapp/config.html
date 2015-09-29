@@ -1,61 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xlmns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" />
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-
-<h:outputStylesheet library="css" name="loginadm.css" />
-
-<link rel="Studio" href="resources/img/owl.png" />
-
-<title>Tela de Cadastramento de Administrador</title>
+	<meta charset="UTF-8" />
+	<link href="resources/css/login-adm.css" rel="stylesheet" />
+	<link href="resources/img/owl.png" rel="icon"/>
+	<link href="resources/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<title>Cadastro de Administrador</title>
 </head>
-<body class="container-fluid" ng-controller="LoginAdm">
-	<div class="container" style="margin-top: 200px">
-		<div class="panel panel-default">
-
+<body ng-controller="LoginAdm">
+	<img src="resources/img/owl.png" id="logo"/>
+	<h1 class="text-center">Cadastro de Administrador</h1>
+	<div class="container">	
+		<div class="panel-default col-lg-6 col-md-offset-3">
 			<form>
-				<div id="imageLogoOtus">
-					<h:graphicImage value="resources/img/owl.png" />
-					<label>Studio</label>
+				<div class="form-group">
+					<input type="text" class="form-control" id="text-login" ng-model="text" placeholder="Nome" required />
 				</div>
 				<div class="form-group">
-					<label for="name-login">Nome</label> <input type="text"
-						class="form-control" id="text-login" ng-model="text" />
+					<input type="text" class="form-control" id="text-login" ng-model="text" placeholder="Sobrenome"/>
 				</div>
 				<div class="form-group">
-					<label for="name-login">Sobrenome</label> <input type="text"
-						class="form-control" id="text-login" ng-model="text" />
+					<input type="email" class="form-control" id="email-login" ng-model="email" placeholder="email@exemplo.com.br" />
 				</div>
 				<div class="form-group">
-					<label for="email-login">Email</label> <input type="email"
-						class="form-control" id="email-login" ng-model="email"
-						placeholder="email@exemplo.com.br" /> <br />
+					<input type="tel" class="form-control" id="text-login" ng-model="number" placeholder="Telefone"/>
 				</div>
 				<div class="form-group">
-					<label for="phone-login">Telefone</label> <input type="number"
-						class="form-control" id="text-login" ng-model="number" />
+					<input type="password" class="form-control" id="password-login" ng-model="password" placeholder="Senha"/>
 				</div>
 				<div class="form-group">
-					<label for="password-login">Senha</label> <input type="password"
-						class="form-control" id="password-login" ng-model="password" />
-				</div>
-				<div class="form-group">
-					<label for="password-login">Digite sua senha novamente</label> <input
-						type="password" class="form-control" id="password-login"
-						ng-model="password" /> <br /> <br />
+					<input type="password" class="form-control" id="password-login"	ng-model="password" placeholder="Confirmação de Senha"/> 
 				</div>
 				<button type="submit" class="btn btn-primary" ng-click="login()">Cadastrar</button>
 			</form>
 		</div>
 	</div>
-	<div>
-		<footer> <label>Copyright © 2015 ELSA Brasil.
-			Corporation.</label> </footer>
-	</div>
+	<footer> 
+		<label>Copyright © 2015 ELSA Brasil Corporation.</label> 
+	</footer>
+
+	<script src="resources/jquery/jquery-2.1.4.min.js"></script>
+	<script src="resources/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
