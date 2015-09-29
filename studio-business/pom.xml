@@ -15,4 +15,13 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../studio-root/pom.xml</relativePath>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>br.org.studio</groupId>
+            <artifactId>studio-persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>

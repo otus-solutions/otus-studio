@@ -17,6 +17,10 @@
 		<relativePath>../studio-root/pom.xml</relativePath>
 	</parent>
 
+	<properties>
+		<database.action>validate</database.action>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -33,6 +37,13 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>

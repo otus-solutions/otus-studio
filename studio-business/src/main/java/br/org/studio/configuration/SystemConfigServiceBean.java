@@ -1,7 +1,10 @@
 package br.org.studio.configuration;
 
+import br.org.studio.dao.SystemConfigDao;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.io.Serializable;
 
 /**
@@ -11,9 +14,12 @@ import java.io.Serializable;
 @Local(SystemConfigService.class)
 public class SystemConfigServiceBean implements SystemConfigService, Serializable{
 
+    @Inject
+    private SystemConfigDao systemConfigDao;
+
+
     @Override
     public Boolean isReady(){
-        // TODO CON-9 Buscar existencia de configuração previa.
-        return false;
+        return systemConfigDao.isReady();
     }
 }
