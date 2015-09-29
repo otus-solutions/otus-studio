@@ -29,3 +29,30 @@ footer {
 footer label {
 	margin-top: 2.0em;
 }
+
+#center {
+	width: 40%;
+	margin: 0 auto;
+}
+
+
+
+/** AngularJS **/
+
+.inputdemoIcons .inputIconDemo {
+	min-height: 48px; 
+}
+.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
+	color: green;
+}
+.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name {
+	color: dodgerblue; 
+}
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
+	color: red; 
+}
+
+.inputdemoErrors .inputErrorsApp {
+	min-height: 48px; 
+}

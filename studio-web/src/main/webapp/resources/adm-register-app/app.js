@@ -1,1 +1,1 @@
-angular.module('RegisterAdm', []);
+angular.module('RegisterAdm', ['ngMessages']);

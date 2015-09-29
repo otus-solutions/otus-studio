@@ -4,45 +4,65 @@
 	<meta charset="UTF-8" />
 	<link href="register-adm.css" rel="stylesheet" />
 	<link href="../../shared/img/owl.png" rel="icon"/>
-	<link href="../../shared/lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 	<title>Cadastro de Administrador</title>
 </head>
 <body>
 	<img src="../../shared/img/owl.png" id="logo"/>
-	<h1 class="text-center">Cadastro de Administrador</h1>
-	<div class="container">	
-		<div class="panel-default col-lg-6 col-md-offset-3">
-			<form ng-controller="RegisterAdmCtrl">
-				<div class="form-group">
-					<input type="text" class="form-control" id="text-login" ng-model="text" placeholder="Nome" required />
-				</div>
-				<div class="form-group">
-					<input type="text" class="form-control" id="text-login" ng-model="text" placeholder="Sobrenome"/>
-				</div>
-				<div class="form-group">
-					<input type="email" class="form-control" id="email-login" ng-model="email" placeholder="email@exemplo.com.br" />
-				</div>
-				<div class="form-group">
-					<input type="tel" class="form-control" id="text-login" ng-model="number" placeholder="Telefone"/>
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" id="password-login" ng-model="password" placeholder="Senha"/>
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" id="password-login"	ng-model="password" placeholder="Confirmação de Senha"/> 
-				</div>
-				<button type="submit" class="btn btn-primary" ng-click="register()">Cadastrar</button>
-			</form>
-		</div>
-	</div>
-	<footer> 
-		<label>Copyright © 2015 ELSA Brasil Corporation.</label> 
-	</footer>
+<div id="center">
+	<div ng-controller="DemoCtrl" layout="column">
+		
+		<md-content layout-padding class="autoScroll">
+			<md-toolbar class="md-theme-light md-default-theme">
+    			<h2 class="md-toolbar-tools">
+      			<span>Cadastro do Administrador</span>
+    			</h2>
+ 			</md-toolbar>
+ 			<br/>
+		<div layout layout-sm="column">
 
-	<script src="../shared/lib/jquery/jquery-2.1.4.min.js"></script>
-	<script src="../shared/lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-	<script src="../shared/lib/angularjs/angular.min.js"></script>
-	<script src="app.js"></script>
-	<script src="register-adm.ctrl.js"></script>
+	  		<md-input-container md-no-float flex>
+		    	<input ng-model="user.name" type="text" ng-required="true" placeholder="Nome">
+	    	</md-input-container>
+
+	    	<md-input-container md-no-float flex>
+				<input ng-model="user.sobrenome" type="email" placeholder="Sobrenome" ng-required="true">
+	    	</md-input-container>
+	    </div>
+		    <md-input-container md-no-float>
+		    	<input ng-model="user.phone" type="text" placeholder="Telefone">
+		    </md-input-container>
+		   
+		    <md-input-container md-no-float>
+		    	<input ng-model="user.email" type="email" placeholder="Email" ng-required="true">
+		    </md-input-container>
+
+		    <md-input-container md-no-float>
+			    <input ng-model="user.password" type="password" placeholder="Senha" >
+		  	</md-input-container>
+
+		  	<md-input-container md-no-float>
+			    <input ng-model="user.passwordConfirm" type="password" placeholder="Confirmação de Senha" >
+		  	</md-input-container>
+		  	
+	  </md-content>
+	
+	  <md-button class="md-primary" columns="5">Cadastrar</md-button>
+	
+	</div>
+</div>
+
+<footer> 
+	<label>Copyright © 2015 ELSA Brasil Corporation.</label> 
+</footer>
+
+
+<!-- Angular Material Dependencies -->
+<script src="../../shared/lib/angularjs/angular.min.js"></script>
+<script src="../../shared/lib/angularjs/angular-animate.min.js"></script>
+<script src="../../shared/lib/angularjs/angular-aria.min.js"></script>
+<script src="../../shared/lib/angularjs/angular-material.min.js"></script>
+<script src="../app.js"></script>
+<script src="register-adm.ctrl.js"></script>
 </body>
 </html>
