@@ -21,6 +21,7 @@
 		<module>../studio-web</module>
 		<module>../studio-business</module>
 		<module>../studio-ear</module>
+		<module>../studio-persistence</module>
 	</modules>
 
 	<repositories>
