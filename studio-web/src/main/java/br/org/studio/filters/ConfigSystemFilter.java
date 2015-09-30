@@ -1,18 +1,24 @@
 package br.org.studio.filters;
 
-import br.org.studio.configuration.SystemConfigService;
+import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import br.org.studio.configuration.SystemConfigService;
 
 @WebFilter(urlPatterns = "/login.html")
 public class ConfigSystemFilter implements Filter{
 
-    private static final String CONFIG_PAGE = "/config.html"; // TODO URL Pagina De Configuração
+    private static final String CONFIG_PAGE = "/resources/adm-register-app/register/register-config.html";
 
     @Inject
     private SystemConfigService systemConfig;
