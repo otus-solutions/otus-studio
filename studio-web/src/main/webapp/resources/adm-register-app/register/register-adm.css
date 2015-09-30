@@ -42,8 +42,6 @@ h1 {
 	width: 200px;
 }
 
-
-
 /** AngularJS **/
 
 .inputdemoIcons .inputIconDemo {
@@ -67,4 +65,8 @@ h1 {
 md-toolbar {
 	background-color: #6B9DDA !important;
 	color: white !important;
+}
+
+.md-button {
+	background-color: #6B9DDA !important;
 }

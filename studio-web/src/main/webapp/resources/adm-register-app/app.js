@@ -1,1 +1,1 @@
-angular.module('RegisterAdm', ['ngMessages']);
+angular.module('RegisterAdm', ['ngMessages', 'ngAnimate']);
