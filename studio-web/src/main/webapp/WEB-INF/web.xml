@@ -9,16 +9,22 @@
      <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/session/rest</param-value>
     </context-param>
     
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+    	<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>br.org.studio.rest.EndPointsLoader</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
+        <servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/session/rest/*</url-pattern>
     </servlet-mapping>
 
     <session-config>
