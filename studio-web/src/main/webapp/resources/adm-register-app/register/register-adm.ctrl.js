@@ -1,4 +1,4 @@
-function AppCtrl($scope, $log) {
+function AppCtrl($scope) {
   $scope.user = {
       name: '',
       email: '',
