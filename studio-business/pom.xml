@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>ejb</packaging>
 
-    <name>studio-business</name>
+	<name>studio-business</name>
 
     <parent>
         <groupId>br.org.studio</groupId>
@@ -16,12 +16,18 @@
         <relativePath>../studio-root/pom.xml</relativePath>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>br.org.studio</groupId>
-            <artifactId>studio-persistence</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>br.org.studio</groupId>
+			<artifactId>studio-persistence</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.org.tutty</groupId>
+			<artifactId>equalizer</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>
