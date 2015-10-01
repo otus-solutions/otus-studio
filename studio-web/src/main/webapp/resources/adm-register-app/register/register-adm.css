@@ -44,24 +44,6 @@ h1 {
 
 /** AngularJS **/
 
-.inputdemoIcons .inputIconDemo {
-	min-height: 48px; 
-}
-.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
-	color: green;
-}
-.inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name {
-	color: dodgerblue; 
-}
-.inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
-.inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
-	color: red; 
-}
-
-.inputdemoErrors .inputErrorsApp {
-	min-height: 48px; 
-}
-
 md-toolbar {
 	background-color: #6B9DDA !important;
 	color: white !important;
@@ -69,4 +51,9 @@ md-toolbar {
 
 .md-button {
 	background-color: #6B9DDA !important;
+}
+
+/** This style is to fix float label 'celular'! Do NOT remove**/
+label[for="phonenumber"] {
+	-webkit-transform: translate3d(0,6px,0) scale(.75) !important;
 }

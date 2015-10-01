@@ -2,11 +2,10 @@ function AppCtrl($scope, $log) {
   $scope.user = {
       name: '',
       email: '',
-      phone: '',
+      phone: ' ',
       surname : '',
       password: '',
-      passwordConfirm : '',
-      clientEmail: ''
+      passwordConfirm : ''
   };
 
   /**
@@ -17,4 +16,4 @@ function AppCtrl($scope, $log) {
   }
 };
 
-angular.module('RegisterAdm', ['ngMaterial']).controller('RegisterAdmCtrl', AppCtrl);
+angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('RegisterAdmCtrl', AppCtrl);
