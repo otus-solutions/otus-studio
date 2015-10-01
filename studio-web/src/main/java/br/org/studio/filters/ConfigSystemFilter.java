@@ -18,7 +18,7 @@ import br.org.studio.configuration.SystemConfigService;
 @WebFilter(urlPatterns = "/login.html")
 public class ConfigSystemFilter implements Filter{
 
-    private static final String CONFIG_PAGE = "resources/adm-register-app/register/register-config.html"; // TODO URL Pagina De Configuração
+    private static final String CONFIG_PAGE = "/resources/adm-register-app/register/register-config.html";
 
     @Inject
     private SystemConfigService systemConfig;
