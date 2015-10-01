@@ -30,6 +30,10 @@
 			<name>PrimeFaces Maven Repository</name>
 			<url>http://repository.primefaces.org</url>
 		</repository>
+		<repository>
+			<id>releases</id>
+			<url>http://ccem.ufrgs.br:8081/nexus/content/repositories/releases</url>
+		</repository>
 	</repositories>
 
 	<dependencies>

@@ -1,10 +1,14 @@
 package br.org.studio.configuration;
 
 import br.org.studio.dao.SystemConfigDao;
+import br.org.studio.entities.system.User;
+import br.org.studio.rest.dtos.AdmDto;
+import br.org.tutty.Equalizer;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
 import java.io.Serializable;
 
 /**
@@ -14,12 +18,27 @@ import java.io.Serializable;
 @Local(SystemConfigService.class)
 public class SystemConfigServiceBean implements SystemConfigService, Serializable{
 
-    @Inject
+	private static final long serialVersionUID = 212121713077555289L;
+
+	@Inject
     private SystemConfigDao systemConfigDao;
 
 
     @Override
     public Boolean isReady(){
         return systemConfigDao.isReady();
+    }
+    
+    @Override
+    public void createAdmin(AdmDto admDto){
+    	try {
+    		User user = new User();
+			Equalizer.equalize(admDto, user);
+			
+			user.becomesAdm();
+	    	systemConfigDao.persist(user);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
     }
 }

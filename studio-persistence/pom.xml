@@ -34,6 +34,12 @@
 			<version>5.0.1.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.org.tutty</groupId>
+			<artifactId>equalizer</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

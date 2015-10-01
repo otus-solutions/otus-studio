@@ -1,5 +1,7 @@
 package br.org.studio.configuration;
 
+import br.org.studio.rest.dtos.AdmDto;
+
 
 /**
  * Created by diogoferreira on 28/09/15.
@@ -7,4 +9,6 @@ package br.org.studio.configuration;
 public interface SystemConfigService {
 
     Boolean isReady();
+
+	void createAdmin(AdmDto admDto);
 }
