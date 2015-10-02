@@ -76,7 +76,7 @@
 				        <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
         			</div>
 			  	</md-input-container>
-			  	<md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerAdmForm.$invalid" ng-click="register()">Cadastrar</md-button>
+			  	<md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerAdmForm.$invalid" ng-click="register(user)">Cadastrar</md-button>
 	 		</form>
 	  </md-content>
 	</div>
