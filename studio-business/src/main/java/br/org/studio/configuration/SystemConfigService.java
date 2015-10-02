@@ -1,5 +1,6 @@
 package br.org.studio.configuration;
 
+import br.org.studio.exception.FillUserExceltion;
 import br.org.studio.rest.dtos.AdmDto;
 
 
@@ -10,5 +11,5 @@ public interface SystemConfigService {
 
     Boolean isReady();
 
-	void createAdmin(AdmDto admDto);
+	void createAdmin(AdmDto admDto) throws FillUserExceltion;
 }

@@ -5,6 +5,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import br.org.studio.configuration.SystemConfigService;
+import br.org.studio.exception.FillUserExceltion;
+import br.org.studio.messages.FillUserExcetionMessage;
 import br.org.studio.rest.dtos.AdmDto;
 
 import com.google.gson.Gson;
@@ -18,10 +20,18 @@ public class UserResouce {
 	@POST
 	@Path("/adm")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAdm(String userJSon) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public String addAdm(String userJSon) {
 		Gson gson = new Gson();
-		AdmDto admDto = gson.fromJson(userJSon, AdmDto.class);
 
-		systemConfigService.createAdmin(admDto);
+		try {
+			AdmDto admDto = gson.fromJson(userJSon, AdmDto.class);
+
+			systemConfigService.createAdmin(admDto);
+			return gson.toJson(new FillUserExcetionMessage());
+
+		} catch (FillUserExceltion e) {
+			return gson.toJson(new FillUserExcetionMessage());
+		}
 	}
 }

@@ -2,6 +2,7 @@ package br.org.studio.configuration;
 
 import br.org.studio.dao.SystemConfigDao;
 import br.org.studio.entities.system.User;
+import br.org.studio.exception.FillUserExceltion;
 import br.org.studio.rest.dtos.AdmDto;
 import br.org.tutty.Equalizer;
 
@@ -30,7 +31,7 @@ public class SystemConfigServiceBean implements SystemConfigService, Serializabl
     }
     
     @Override
-    public void createAdmin(AdmDto admDto){
+    public void createAdmin(AdmDto admDto) throws FillUserExceltion{
     	try {
     		User user = new User();
 			Equalizer.equalize(admDto, user);
@@ -38,7 +39,7 @@ public class SystemConfigServiceBean implements SystemConfigService, Serializabl
 			user.becomesAdm();
 	    	systemConfigDao.persist(user);
 		} catch (IllegalAccessException | NoSuchFieldException e) {
-			e.printStackTrace();
+			throw new FillUserExceltion();
 		}
     }
 }
