@@ -26,6 +26,7 @@ public class UserResouce {
 
 		try {
 			AdmDto admDto = gson.fromJson(userJSon, AdmDto.class);
+			admDto.encrypt();
 
 			systemConfigService.createAdmin(admDto);
 			return gson.toJson(new FillUserExcetionMessage());
