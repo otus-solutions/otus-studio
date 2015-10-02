@@ -1,20 +1,13 @@
-angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('RegisterAdmCtrl', function($scope, $http) {
-  $scope.user = {
-      name: '',
-      email: '',
-      phone: '',
-      surname: '',
-      password: '',
-      passwordConfirm : ''
-  };
-
-
-  /**
+angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('RegisterAdmCtrl', function($scope, $http, $window) {
+ 
+	/**
    * REST URL: /register/adm
    */
-  $scope.register = function () {
-    $http.post('session/rest/register/adm', $scope.user).then(function(response){
+  $scope.register = function (user) {
+    $http.post('http://localhost:8080/studio/session/rest/register/adm', user).then(function(response){
+    	console.log(user.name)
         console.log("Sucess!!!")
+        $window.location.href = 'http://localhost:8080/studio/'
     },
     function(response){
         console.log("Error!!!")
