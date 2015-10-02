@@ -14,7 +14,7 @@ function confirmAlertToNavigate() {
 	      $mdDialog
 	          .show( alert )
 	          .finally(function() {
-	            $window.location.href = 'http://localhost:8080/studio/'
+	            $window.location.href = window.location.origin + '/studio/'
 	          });
 }
 	
@@ -22,7 +22,7 @@ function confirmAlertToNavigate() {
 	
 	
   $scope.register = function (user) {
-    $http.post('http://localhost:8080/studio/session/rest/register/adm', user).then(function(response){
+    $http.post(window.location.origin + '/studio/session/rest/register/adm', user).then(function(response){
     	
     	confirmAlertToNavigate();
     	
