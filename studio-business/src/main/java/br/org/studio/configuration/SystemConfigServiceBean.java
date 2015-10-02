@@ -1,6 +1,7 @@
 package br.org.studio.configuration;
 
 import br.org.studio.dao.SystemConfigDao;
+import br.org.studio.entities.system.SystemConfig;
 import br.org.studio.entities.system.User;
 import br.org.studio.rest.dtos.AdmDto;
 import br.org.tutty.Equalizer;
@@ -33,10 +34,16 @@ public class SystemConfigServiceBean implements SystemConfigService, Serializabl
     public void createAdmin(AdmDto admDto){
     	try {
     		User user = new User();
+    		SystemConfig systemConfig = new SystemConfig();
+    		
 			Equalizer.equalize(admDto, user);
 			
 			user.becomesAdm();
 	    	systemConfigDao.persist(user);
+	    	
+	    	systemConfig.finalizeConfiguration();
+	    	
+	    	systemConfigDao.persist(systemConfig);
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			e.printStackTrace();
 		}

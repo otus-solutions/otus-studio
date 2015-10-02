@@ -11,7 +11,9 @@ import java.io.Serializable;
 @SequenceGenerator(name = "SystemConfigSequence", sequenceName = "system_config_seq", initialValue = 1, allocationSize = 1)
 public class SystemConfig implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = -2630898111000415759L;
+
+	@Id
     @GeneratedValue(generator = "SystemConfigSequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
