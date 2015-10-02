@@ -30,10 +30,10 @@ public class User implements Serializable {
 
 	private Boolean adm;
 
-	@Equalization(name = "lastName")
+	@Equalization(name = "surname")
 	@NotNull
-	@Column(name = "last_name")
-	private String lastName;
+	@Column(name = "surname")
+	private String surname;
 
 	@Equalization(name = "phone")
 	@NotNull
@@ -51,9 +51,9 @@ public class User implements Serializable {
 		this.adm = Boolean.FALSE;
 	}
 
-	public User(String name, String lastName, String password, String email, String phone) {
+	public User(String name, String surname, String password, String email, String phone) {
 		this.name = name;
-		this.lastName = lastName;
+		this.surname = surname;
 		this.password = password;
 		this.email = email;
 		this.phone = phone;
@@ -76,8 +76,8 @@ public class User implements Serializable {
 		return adm;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getSurname() {
+		return surname;
 	}
 
 	public String getPhone() {

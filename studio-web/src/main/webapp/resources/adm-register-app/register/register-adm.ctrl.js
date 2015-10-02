@@ -10,6 +10,7 @@ angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('RegisterAdm
         $window.location.href = 'http://localhost:8080/studio/'
     },
     function(response){
+    	console.log(user)
         console.log("Error!!!")
     });
   }

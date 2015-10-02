@@ -9,7 +9,7 @@ public class AdmDto implements Serializable{
 	@Equalization(name = "name")
 	private String name;
 
-	@Equalization(name = "last_name")
+	@Equalization(name = "surname")
 	private String surname;
 
 	@Equalization(name = "phone")
