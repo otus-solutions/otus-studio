@@ -13,7 +13,7 @@
 	</parent>
 
 	<build>
-		<finalName>studio-web</finalName>
+		<finalName>studio</finalName>
 	</build>
 
 	<dependencies>
