@@ -1,6 +1,6 @@
 angular.module('Login', ['ngMaterial', 'ui.mask']).controller('LoginController', function($scope){
 	
-	function logar(user) {
+	$scope.logar = function (user) {
 		console.log($scope.user);
 	}
 	
