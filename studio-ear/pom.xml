@@ -38,6 +38,14 @@
                             <artifactId>studio-persistence</artifactId>
                         </ejbModule>
                     </modules>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <git-SHA-1>${buildNumber}</git-SHA-1>
+                        </manifestEntries>
+                    </archive>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                 </configuration>
@@ -75,22 +83,22 @@
             <version>0.0.1-SNAPSHOT</version>
             <type>war</type>
         </dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.org.tutty</groupId>
-			<artifactId>equalizer</artifactId>
-			<version>1.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.0.1.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.0.1.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>br.org.tutty</groupId>
+            <artifactId>equalizer</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
