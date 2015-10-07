@@ -1,33 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="Login">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="resources/otus-studio-app/css/login.css"/>
-    <meta charset="UTF-8" />
+<meta charset="UTF-8" />
+<link href="../../shared/img/otus-studio-img.png" rel="icon" />
+<link rel="stylesheet" type="text/css" href="resources/otus-studio-app/css/login.css" />
+<link rel="stylesheet" href="resources/shared/lib/angularjs/md/angular-material.min.css">
+<title>Tela de login</title>
 </head>
 <body>
-<main>
-    <div class="page">
-        <div class="content">
+	<img class="logo" src="resources/shared/img/otus-studio-img.png">
+	<h1>Studio</h1>
+	<div id="center">
+		<div ng-controller="LoginController" layout="column">
+			<md-content layout-padding class="autoScroll">
+				<md-toolbar class="md-theme-light md-default-theme">
+	    			<h2 class="md-toolbar-tools">
+	      			<span>Login</span>
+	    			</h2>
+	 			</md-toolbar>
+	 			<form name="login-form">
+					<md-input-container>
+					<label>Email</label>
+					<input name="email" ng-model="user.email" type="email" ng-required="true" />
+						<div ng-messages="login-form.email.$error">
+							<div ng-message="required" ng-show="login-form.email.$error.required">Obrigatório</div>
+							<div ng-message="email" ng-show="login-form.email.$error.email">Insira um email válido.</div>
+						</div>
+					</md-input-container>
 
-            <div class="imageLogoOtus">
-                <img src="resources/shared/img/otus-studio-img.png"><label>Studio</label>
-            </div>
-            <div class="contentInputText">
-                <input value="Email" />
-                <br />
-                <input value="Senha" />
-                <br /> <br />
-                <input type="button" id="buttonLogin" value="Entrar" />
-            </div>
-            <div id="link">
-                <a href="#" id="labelInfo">Não consegue acessar sua conta?</a>
-            </div>
-        </div>
-    </div>
-    <footer>
-        <p>Copyright © 2015 ELSA Brasil. Corporation.</p>
-    </footer>
-</main>
+					<md-input-container>
+					<label>Senha</label>
+					<input name="password" ng-model="user.password" type="password" ng-required="true"
+						maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
+						<div ng-messages="login-form.password.$error">
+							<div ng-message="required" ng-show="login-form.password.$error.required">Obrigatório</div>
+						</div>
+					</md-input-container>
+					<md-button class="md-button" ng-click="logar(user)">Logar</md-button>
+					<div id="link">
+						<a href="#" id="labelInfo">Não consegue acessar sua conta?</a>
+					</div>
+	 			</form>
+			</md-content>
+		</div>
+	</div>
+	<footer>
+		<p>Copyright © 2015 ELSA Brasil. Corporation.</p>
+	</footer>
+
+	<!-- Angular Material Dependencies -->
+	<script src="resources/shared/lib/angularjs/angular.min.js"></script>
+	<script src="resources/shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+	<script src="resources/shared/lib/angularjs/md/angular-animate.min.js"></script>
+	<script src="resources/shared/lib/angularjs/md/angular-aria.min.js"></script>
+	<script src="resources/shared/lib/angularjs/md/angular-material.min.js"></script>
+	<script src="app.js"></script>
+	<script src="login.ctrl.js"></script>
 </body>
 </html>

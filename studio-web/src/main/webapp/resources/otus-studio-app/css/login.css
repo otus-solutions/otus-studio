@@ -1,35 +1,11 @@
 * {
 	padding: 0;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 body {
-	background: #FFFFFF;
-	font-family: 'Arial', sans-serif !important;
-	font-size: 90%;
-	font-weight: normal !important;
-}
-
-.page {
-	/* alinhar ao centro */
-	top: 30%;
-	margin: 0 auto;
-	left: 50%;
-	position: absolute;
-	transform: translateX(-50%);
-}
-
-.imageLogoOtus img {
-	margin: 0px 0px;
-	height: 50px;
-	width: 50px;
-	margin: 0px 0px;
-}
-
-.imageLogoOtus label {
-	margin: 10px 0px;
-	font-family: 'Oswald', sans-serif;
-	font-size: 50px;
+	padding-top: 10rem;
 }
 
 #labelInfo {
@@ -40,20 +16,23 @@ body {
 	font-size: 86%;
 }
 
-/* PRIMEFACES */
-ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only {
-	color: #fff;
-	background-color: #3e87ec;
-	text-align: center;
+#center {
+	width: 15%;
+	margin: 0 auto;
 }
 
-#buttonLogin span {
-	color: #FFFFFF !important;
-	background-color: #3e87ec !important;
+h1 {
+	margin: 0 auto;
+	width: 110px;
+	/* height: 150px; */
+	display: block;
 }
 
-input {
-	margin: 3px !important;
+.logo {
+	margin: 0 auto;
+	width: 180px;
+	height: 150px;
+	display: block;
 }
 
 footer {
@@ -70,4 +49,20 @@ footer {
 footer p {
 	margin-top: 2.5em;
 	font-style: italic;
+}
+
+/** AngularJS **/
+md-toolbar {
+	background-color: #6B9DDA !important;
+	color: white !important;
+}
+
+.md-button {
+	background-color: #6B9DDA !important;
+	color: white !important;
+}
+
+/** This style is to fix float label 'celular'! Do NOT remove**/
+label[for="phonenumber"] {
+	-webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
 }
