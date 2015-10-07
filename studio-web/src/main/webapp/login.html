@@ -15,11 +15,11 @@
 			<md-content layout-padding class="autoScroll">
 				<md-toolbar class="md-theme-light md-default-theme">
 	    			<h2 class="md-toolbar-tools">
-	      			<span>Tela de login</span>
+	      			<span>Login</span>
 	    			</h2>
 	 			</md-toolbar>
 	 			<form name="login-form">
-					<md-input-container> 
+					<md-input-container>
 					<label>Email</label>
 					<input name="email" ng-model="user.email" type="email" ng-required="true" />
 						<div ng-messages="login-form.email.$error">
@@ -27,9 +27,9 @@
 							<div ng-message="email" ng-show="login-form.email.$error.email">Insira um email válido.</div>
 						</div>
 					</md-input-container>
-	
-					<md-input-container> 
-					<label>Senha</label> 
+
+					<md-input-container>
+					<label>Senha</label>
 					<input name="password" ng-model="user.password" type="password" ng-required="true"
 						maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
 						<div ng-messages="login-form.password.$error">
