@@ -6,5 +6,5 @@
 *.metadata
 **/.idea
 *.iml
-**.swp
-**.orig
+*.swp
+*.orig
