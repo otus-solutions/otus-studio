@@ -1,26 +1,27 @@
+var registerAdminPage = require('./page-objects/register-admin-page');
+
 describe('the first time when the user tries access the login page', function() {
 
-    /**
-        TODO : Refactor to use page objects
-    */
+    beforeEach(function() {
+        browser.get('studio/');
+    });
 
     it('then the system must be redirects to register administrator page', function() {
-        browser.get('studio/');
         expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/adm-register-app/register/register-adm.html');
     });
 
-    it('fill form with valid data should redirect to login', function() {
-        element(by.model('user.name')).sendKeys('Test');
-        element(by.model('user.surname')).sendKeys('Test');
-        element(by.model('user.phone')).sendKeys('00000000000');
-        element(by.model('user.email')).sendKeys('test@test.com');
-        element(by.model('user.password')).sendKeys('aA1teste');
-        element(by.model('user.passwordConfirm')).sendKeys('aA1teste');
-        element(by.buttonText('Cadastrar')).click();
+    it('fill form with valid data should redirect to login page', function() {
+        registerAdminPage.setUserName('Test');
+        registerAdminPage.setSurname('surname');
+        registerAdminPage.setPhone('00000000000');
+        registerAdminPage.setEmail('test@test.com');
+        registerAdminPage.setPassword('aA1test');
+        registerAdminPage.setPasswordConfirm('aA1test');
+        registerAdminPage.getRegisterButton().click();
+        registerAdminPage.getConfirmAlertButton().click();
 
-        element(by.css('button[ng-click="dialog.hide()"]')).click();
+        browser.sleep(500);
 
-        browser.sleep(2000);
         expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/');
     });
 
