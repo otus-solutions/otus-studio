@@ -14,7 +14,7 @@ angular.module('RegisterUser', [ 'ngMaterial', 'ui.mask' ]).controller('Register
     }
     
     $scope.register = function (user) {
-    	$http.post($HTTP_POST_URL_CREATE, $scope.user).then(function (response){
+    	$http.post($HTTP_POST_URL_CREATE, user).then(function (response){
     	    	confirmAlertToNavigate();
     	    })
      }
