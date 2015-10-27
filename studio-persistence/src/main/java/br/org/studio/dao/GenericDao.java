@@ -1,13 +1,15 @@
 package br.org.studio.dao;
 
-import br.org.studio.exceptions.DataNotFoundException;
+import java.util.List;
+
 import org.hibernate.Criteria;
 
-import java.util.List;
+import br.org.studio.exceptions.DataNotFoundException;
 
 /**
  * Created by diogoferreira on 29/09/15.
  */
+
 public interface GenericDao {
     void persist(Object entity);
 

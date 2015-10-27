@@ -5,7 +5,7 @@ import br.org.tutty.Equalization;
 
 import java.io.Serializable;
 
-public class AdmDto implements Serializable{
+public class UserDto implements Serializable{
 
 	private static final long serialVersionUID = -5851680952577534837L;
 

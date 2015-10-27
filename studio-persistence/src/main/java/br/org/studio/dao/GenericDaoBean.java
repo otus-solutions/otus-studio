@@ -1,18 +1,21 @@
 package br.org.studio.dao;
 
-import br.org.studio.exceptions.DataNotFoundException;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
+import br.org.studio.exceptions.DataNotFoundException;
 
 /**
  * Created by diogoferreira on 29/09/15.
  */
-public class GenericDaoBean implements GenericDao {
+
+public abstract class GenericDaoBean implements GenericDao {
 
     @PersistenceContext
     protected EntityManager entityManager;
