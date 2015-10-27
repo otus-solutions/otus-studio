@@ -32,4 +32,18 @@ function confirmAlertToNavigate() {
         console.log("Error!!!")
     });
   }
+  
+  	$scope.matchPassword = function() {
+		if ($scope.user.password && $scope.user.passwordConfirm) {
+			if ($scope.user.password != $scope.user.passwordConfirm) {
+				$scope.registerAdmForm.password.$setValidity('password', false);
+				$scope.registerAdmForm.$setValidity('password', false);
+			} else {
+				$scope.registerAdmForm.password.$setValidity('password', true);
+				$scope.registerAdmForm.$setValidity('password', true);
+			}
+		}
+	}
+  
+  
 });
