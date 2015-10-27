@@ -60,7 +60,7 @@
 
 			    <md-input-container>
 			    	<label>Senha</label>
-				    <input name="password" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
+				    <input name="password" ng-blur="matchPassword()"  ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
 				    <div ng-messages="registerAdmForm.password.$error" >
 				        <div ng-message="required" ng-show="registerAdmForm.password.$error.required">Obrigatório</div>
 				        <div ng-message="minlength" ng-show="registerAdmForm.password.$error.minlength">Mínimo 6 caracteres</div>
@@ -70,7 +70,7 @@
 
 			  	<md-input-container>
 			  		<label>Confirmação de Senha</label>
-				    <input name="passwordConfirm" ng-model="user.passwordConfirm" type="password" ng-required="true" />
+				    <input name="passwordConfirm" ng-blur="matchPassword()"  ng-model="user.passwordConfirm" type="password" ng-required="true" />
 				    <div ng-messages="registerAdmForm.passwordConfirm.$error">
 				        <div ng-message="required" ng-show="registerAdmForm.passwordConfirm.$error.required">Obrigatório</div>
 				        <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
