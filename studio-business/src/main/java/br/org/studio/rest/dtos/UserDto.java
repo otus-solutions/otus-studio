@@ -5,7 +5,7 @@ import br.org.tutty.Equalization;
 
 import java.io.Serializable;
 
-public class UserDto implements Serializable{
+public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = -5851680952577534837L;
 
@@ -23,8 +23,48 @@ public class UserDto implements Serializable{
 
 	@Equalization(name = "password")
 	private String password;
-	
-	public void encrypt(){
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}
 }

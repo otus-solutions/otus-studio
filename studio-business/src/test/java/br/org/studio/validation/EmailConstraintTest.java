@@ -16,28 +16,28 @@ import br.org.studio.dao.UserDao;
 @RunWith(MockitoJUnitRunner.class)
 public class EmailConstraintTest {
 
-    @Mock
-    private UserDao dao;
+	@Mock
+	private UserDao dao;
 
-    @InjectMocks
-    private EmailConstraint emailConstraint;
+	@InjectMocks
+	private EmailConstraint emailConstraint;
 
-    @Test
-    public void isUnique_method_should_return_TRUE_when_the_email_already_exist_in_the_list() {
-	when(dao.emailExists(anyString())).thenReturn(false);
+	@Test
+	public void isUnique_method_should_return_TRUE_when_the_email_already_exist_in_the_list() {
+		when(dao.emailExists(anyString())).thenReturn(false);
 
-	Boolean verificationResult = emailConstraint.isUnique(anyString());
+		Boolean verificationResult = emailConstraint.isUnique(anyString());
 
-	assertThat(verificationResult, equalTo(true));
-    }
+		assertThat(verificationResult, equalTo(true));
+	}
 
-    @Test
-    public void isUnique_method_should_return_FALSE_when_the_email_does_not_exist_in_the_list() {
-	when(dao.emailExists(anyString())).thenReturn(true);
+	@Test
+	public void isUnique_method_should_return_FALSE_when_the_email_does_not_exist_in_the_list() {
+		when(dao.emailExists(anyString())).thenReturn(true);
 
-	Boolean verificationResult = emailConstraint.isUnique(anyString());
+		Boolean verificationResult = emailConstraint.isUnique(anyString());
 
-	assertThat(verificationResult, equalTo(false));
-    }
+		assertThat(verificationResult, equalTo(false));
+	}
 
 }

@@ -12,18 +12,18 @@ import br.org.studio.entities.system.User;
 @Local(UserDao.class)
 public class UserDaoBean extends GenericDaoBean implements UserDao {
 
-    private static final String EMAIL = "email";
+	private static final String EMAIL = "email";
 
-    @Override
-    public Boolean emailExists(String email) {
-	Criteria criteria = createCriteria(User.class);
-	criteria.add(Restrictions.eq(EMAIL, email));
-	
-	if (uniqueResult(criteria) == null) {
-	    return true;
-	} else {
-	    return false;
+	@Override
+	public Boolean emailExists(String email) {
+		Criteria criteria = createCriteria(User.class);
+		criteria.add(Restrictions.eq(EMAIL, email));
+
+		if (uniqueResult(criteria) == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-    }
 
 }

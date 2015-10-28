@@ -4,7 +4,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.studio.dao.GenericDao;
+import br.org.studio.dao.SystemConfigDao;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.FillUserException;
 import br.org.studio.rest.dtos.UserDto;
@@ -12,18 +12,18 @@ import br.org.tutty.Equalizer;
 
 @Stateless
 @Local(RegisterUserService.class)
-public class RegisterUserServiceBean implements RegisterUserService{
-	
+public class RegisterUserServiceBean implements RegisterUserService {
+
 	@Inject
-	private GenericDao genericDao;
+	private SystemConfigDao genericDao;
 
 	@Override
 	public void createUser(UserDto userDto) throws FillUserException {
 		try {
-    		User user = new User();
+			User user = new User();
 			Equalizer.equalize(userDto, user);
 			genericDao.persist(user);
-	    	
+
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			throw new FillUserException();
 		}
