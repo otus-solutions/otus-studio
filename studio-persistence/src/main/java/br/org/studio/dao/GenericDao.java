@@ -5,10 +5,8 @@ import org.hibernate.Criteria;
 
 import java.util.List;
 
-/**
- * Created by diogoferreira on 29/09/15.
- */
 public interface GenericDao {
+    
     void persist(Object entity);
 
     Long count(Class<?> clazz);
@@ -24,4 +22,5 @@ public interface GenericDao {
     Object uniqueResult(Criteria criteria);
 
     void remove(Object entity);
+    
 }
