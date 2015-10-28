@@ -1,21 +1,19 @@
 package br.org.studio.dao;
 
-import br.org.studio.entities.system.SystemConfig;
-import br.org.studio.exceptions.DataNotFoundException;
+import javax.ejb.Local;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+import br.org.studio.entities.system.SystemConfig;
+import br.org.studio.exceptions.DataNotFoundException;
 
 /**
  * Created by diogoferreira on 29/09/15.
  */
-@Stateless
 @Local(SystemConfigDao.class)
-public class SystemConfigDaoBean extends GenericDaoBean implements GenericDao, SystemConfigDao{
+public class SystemConfigDaoBean extends GenericDaoBean implements SystemConfigDao{
 
-    @Override
     public Boolean isReady(){
         Criteria criteria = createCriteria(SystemConfig.class);
 

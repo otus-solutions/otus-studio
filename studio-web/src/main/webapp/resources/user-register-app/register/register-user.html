@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="RegisterAdm">
+<head>
+	<meta charset="UTF-8" />
+	<link href="register-user.css" rel="stylesheet" />
+	<link href="../../shared/img/otus-studio-img.png" rel="icon"/>
+	<link rel="stylesheet" href="../../shared/lib/angularjs/md/angular-material.min.css">
+	<title>Cadastro de Administrador</title>
+	
+</head>
+<body>
+	<img src="../../shared/img/otus-studio-img.png" id="logo"/>
+	<h1>Otus Studio</h1>
+<div id="center">
+	<div ng-controller="RegisterAdmCtrl" layout="column">
+		
+		<md-content layout-padding class="autoScroll">
+				<md-toolbar class="md-theme-light md-default-theme">
+	    			<h2 class="md-toolbar-tools">
+	      			<span>Cadastro do Administrador</span>
+	    			</h2>
+	 			</md-toolbar>
+	 			<br/>
+	 		<form name="registerAdmForm">
+				<div layout layout-sm="column">
+
+			  		<md-input-container flex>
+			  			<label>Nome</label>
+				    	<input name="name" ng-model="user.name" type="text" ng-required="true" />
+				    	<div ng-messages="registerAdmForm.name.$error">
+					        <div ng-message="required" ng-show="registerAdmForm.name.$error.required">Obrigatório</div>
+	        			</div>
+			    	</md-input-container>
+
+			    	<md-input-container flex>
+			    		<label>Sobrenome</label>
+						<input name="surname" ng-model="user.surname" type="text" ng-required="true" />
+						<div ng-messages="registerAdmForm.surname.$error">
+					        <div ng-message="required" ng-show="registerAdmForm.surname.$error.required">Obrigatório</div>
+	        			</div>
+			    	</md-input-container>
+
+			    </div>
+			    <md-input-container>
+			    	<label>Celular</label>
+			    	<input name="phone" id="phonenumber" ng-model="user.phone" type="text" ng-required="true" ui-mask="(999) 9999-9999" />
+			    	<div ng-messages="registerAdmForm.phone.$error">
+				        <div ng-message="required" ng-show="registerAdmForm.phone.$error.required">Obrigatório</div>
+        			</div>
+			    </md-input-container>
+			   
+			    <md-input-container>
+			    	<label>Email</label>
+			    	<input name="email" ng-model="user.email" type="email" ng-required="true" />
+			    	<div ng-messages="registerAdmForm.email.$error">
+				        <div ng-message="required" ng-show="registerAdmForm.email.$error.required">Obrigatório</div>
+				        <div ng-message="email" ng-show="registerAdmForm.email.$error.email">Insira um email válido.</div>
+        			</div>
+			    </md-input-container>
+
+			    <md-input-container>
+			    	<label>Senha</label>
+				    <input name="password" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
+				    <div ng-messages="registerAdmForm.password.$error" >
+				        <div ng-message="required" ng-show="registerAdmForm.password.$error.required">Obrigatório</div>
+				        <div ng-message="minlength" ng-show="registerAdmForm.password.$error.minlength">Mínimo 6 caracteres</div>
+				        <div ng-message="pattern" ng-show="registerAdmForm.password.$error.pattern"><br />Deve conter pelo menos um caracter minúsculo, um maiúsculo e um dígito</div>
+        			</div>
+			  	</md-input-container>
+
+			  	<md-input-container>
+			  		<label>Confirmação de Senha</label>
+				    <input name="passwordConfirm" ng-model="user.passwordConfirm" type="password" ng-required="true" />
+				    <div ng-messages="registerAdmForm.passwordConfirm.$error">
+				        <div ng-message="required" ng-show="registerAdmForm.passwordConfirm.$error.required">Obrigatório</div>
+				        <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
+        			</div>
+			  	</md-input-container>
+			  	<md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerAdmForm.$invalid" ng-click="register(user)">Cadastrar</md-button>
+	 		</form>
+	  </md-content>
+	</div>
+</div>
+
+<footer> 
+	<p>Copyright© 2015 ELSA Brasil Corporation.</p> 
+</footer>
+
+
+<!-- Angular Material Dependencies -->
+<script src="../../shared/lib/angularjs/angular.min.js"></script>
+<script src="../../shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+<script src="../../shared/lib/angularjs/md/angular-animate.min.js"></script>
+<script src="../../shared/lib/angularjs/md/angular-aria.min.js"></script>
+<script src="../../shared/lib/angularjs/md/angular-material.min.js"></script>
+<script src="../app.js"></script>
+<script src="register-adm.ctrl.js"></script>
+
+</body>
+</html>

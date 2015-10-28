@@ -1,30 +1,25 @@
 package br.org.studio.configuration;
 
-import br.org.studio.dao.SystemConfigDao;
-import br.org.studio.entities.system.SystemConfig;
-import br.org.studio.entities.system.User;
-import br.org.studio.exception.FillUserExceltion;
-import br.org.studio.rest.dtos.AdmDto;
-import br.org.tutty.Equalizer;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import java.io.Serializable;
+import br.org.studio.dao.SystemConfigDao;
+import br.org.studio.entities.system.SystemConfig;
+import br.org.studio.entities.system.User;
+import br.org.studio.exception.FillUserException;
+import br.org.studio.rest.dtos.UserDto;
+import br.org.tutty.Equalizer;
 
 /**
  * Created by diogoferreira on 28/09/15.
  */
 @Stateless
 @Local(SystemConfigService.class)
-public class SystemConfigServiceBean implements SystemConfigService, Serializable{
-
-	private static final long serialVersionUID = 212121713077555289L;
+public class SystemConfigServiceBean implements SystemConfigService{
 
 	@Inject
     private SystemConfigDao systemConfigDao;
-
 
     @Override
     public Boolean isReady(){
@@ -32,7 +27,7 @@ public class SystemConfigServiceBean implements SystemConfigService, Serializabl
     }
     
     @Override
-    public void createAdmin(AdmDto admDto) throws FillUserExceltion{
+    public void createAdmin(UserDto admDto) throws FillUserException{
     	try {
     		User user = new User();
     		SystemConfig systemConfig = new SystemConfig();
@@ -46,7 +41,7 @@ public class SystemConfigServiceBean implements SystemConfigService, Serializabl
 	    	
 	    	systemConfigDao.persist(systemConfig);
 		} catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new FillUserExceltion();
+			throw new FillUserException();
 		}
     }
 }

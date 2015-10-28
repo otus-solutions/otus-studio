@@ -1,15 +1,13 @@
 angular.module('RegisterUser', [ 'ngMaterial', 'ui.mask' ]).controller('RegisterUserCtrl', function($scope, $http, $window, $mdDialog) {
 	
-    $HTTP_POST_URL_VALIDATE = window.location.origin + '/session/rest/register/validade';
-    $HTTP_POST_URL_CREATE = window.location.origin + '/session/rest/register/create';
+    $HTTP_POST_URL_VALIDATE = window.location.origin + '/studio/session/rest/register/validade';
+    $HTTP_POST_URL_CREATE = window.location.origin + '/studio/session/rest/register/user';
 
     $scope.validateEmail = function(){
-        $rootScope.$broadcast("clearMessagesEvent");
-
         $http.post($HTTP_POST_URL_VALIDATE, $scope.user).then(function (response){
             $scope.emailInUse = !response.data;
-            $scope.register_form.email.$setValidity('emailInUse', response.data);
-            $scope.register_form.$setValidity('emailInUse', response.data);
+            $scope.registerUserForm.email.$setValidity('emailInUse', response.data);
+            $scope.registerUserForm.$setValidity('emailInUse', response.data);
         });
     }
     
