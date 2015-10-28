@@ -1,0 +1,22 @@
+.image-user-div {
+	border-radius: 35px;
+	float: right;
+	width: 46px;
+	margin-right: 10px;
+}
+
+.image-user-div img {
+	cursor: pointer;
+	height: inherit;
+	width: inherit;
+	border-radius: inherit;
+	height: inherit;
+}
+
+.toolbar-alig {
+	margin-top: 10px !important;
+}
+
+.layout-row{
+	background-color: #333333;
+}
