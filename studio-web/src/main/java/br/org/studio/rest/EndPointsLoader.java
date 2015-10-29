@@ -13,10 +13,14 @@ public class EndPointsLoader extends Application {
 	@Inject
 	private UserResouce userResouce;
 
+    @Inject
+    private AdministrationUsersResource administrationUsersResource;
+
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> resources = new HashSet<Class<?>>();
 		resources.add(UserResouce.class);
+        resources.add(AdministrationUsersResource.class);
 		return resources;
 	}
 
@@ -24,6 +28,7 @@ public class EndPointsLoader extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> resources = new HashSet<Object>();
 		resources.add(userResouce);
+        resources.add(administrationUsersResource);
 		return resources;
 	}
 

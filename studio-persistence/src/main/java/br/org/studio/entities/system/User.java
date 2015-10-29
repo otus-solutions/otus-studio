@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.org.tutty.Equalization;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 @Entity
 @Table(name = "user", catalog = "studio", schema = "public")
@@ -47,8 +48,12 @@ public class User implements Serializable {
 	@NotNull
 	private String password;
 
+    @Equalization(name = "enable")
+    private Boolean enable;
+
 	public User() {
 		this.adm = Boolean.FALSE;
+        this.enable = Boolean.FALSE;
 	}
 
 	public User(String name, String surname, String password, String email, String phone) {
@@ -57,11 +62,19 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.phone = phone;
-
 	}
-	
+
+    public void enable(){
+        this.enable = Boolean.TRUE;
+    }
+
+    public void disable(){
+        this.enable = Boolean.FALSE;
+    }
+
 	public void becomesAdm() {
 		this.adm = Boolean.TRUE;
+        enable();
 	}
 
 	public Integer getId() {
@@ -91,4 +104,8 @@ public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
+
+    public Boolean isEnable() {
+        return enable;
+    }
 }

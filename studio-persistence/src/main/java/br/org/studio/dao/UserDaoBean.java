@@ -9,6 +9,8 @@ import org.hibernate.criterion.Restrictions;
 import br.org.studio.entities.system.User;
 import br.org.studio.exceptions.DataNotFoundException;
 
+import java.util.List;
+
 @Stateless
 @Local(UserDao.class)
 public class UserDaoBean extends GenericDaoBean implements UserDao, GenericDao {
@@ -21,5 +23,12 @@ public class UserDaoBean extends GenericDaoBean implements UserDao, GenericDao {
 
 		return (User) uniqueResultNotWaitingEmpty(criteria);
 	}
+
+    @Override
+    public List fetchAll(){
+        Criteria criteria = createCriteria(User.class);
+        return list(criteria);
+    }
+
 
 }
