@@ -17,14 +17,8 @@ public class Response {
 	
 	@Override
 	public String toString() {
-		StringBuilder json = new StringBuilder();
-		
-		json.append("{");
-		json.append("data:");
-		json.append(data);
-		json.append("}");
-		
-		return json.toString();
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 
 }
