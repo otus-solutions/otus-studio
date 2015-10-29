@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Users">
+    <head>
+        <meta charset="UTF-8" />
+        <base href="/studio/resources/">
+        <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+        <link rel="stylesheet" href="otus-studio-app/session/users/style.css">
+        <title>Usuarios</title>
+    </head>
+    <body>
+        <md-list ng-controller="UsersCtrl" ng-cloak>
+
+        <md-toolbar class="md-theme-light">
+            <div class="md-toolbar-tools background-toolbar-blue">
+                <h2>
+                    <span>Inativos</span>
+                </h2>
+                <span flex></span>
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="shared/img/icons/ic_lock_open_white_36px.svg"></md-icon>
+                </md-button>
+            </div>
+
+        </md-toolbar>
+        <md-content>
+        <md-list-item class="md-3-line" ng-repeat="inactiveUser in inactiveUsers">
+            <div class="md-list-item-text" layout="column">
+                <md-checkbox class="md-secondary"></md-checkbox>
+                <h3> {{inactiveUser.name}}</h3>
+                <p> {{inactiveUser.email}}</p>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+        </md-content>
+
+        <md-toolbar class="md-theme-light">
+            <div class="md-toolbar-tools background-toolbar-blue">
+            <h2>
+                <span>Ativos</span>
+            </h2>
+                <span flex></span>
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="shared/img/icons/ic_lock_outline_white_36px.svg"></md-icon>
+                </md-button>
+                </div>
+        </md-toolbar>
+        <md-content>
+
+        <md-list-item class="md-3-line" ng-repeat="activeUser in activeUsers">
+            <div class="md-list-item-text" layout="column">
+                <md-checkbox class="md-secondary"></md-checkbox>
+                <h3> {{activeUser.name}}</h3>
+                <p> {{activeUser.email}}</p>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+        </md-list>
+        </md-content>
+
+        <!-- Angular Material Dependencies -->
+        <script src="shared/lib/angularjs/angular.min.js"></script>
+        <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+        <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+        <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+        <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+        <script src="otus-studio-app/session/users/users-module.js"></script>
+        <script src="otus-studio-app/session/users/users-ctrl.js"></script>
+
+    </body>
+</html>

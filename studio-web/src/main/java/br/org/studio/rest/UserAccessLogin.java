@@ -5,21 +5,21 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ApplicationPath;
 
-@ApplicationPath("studio")
+//@ApplicationPath("studio")
 public class UserAccessLogin {
 
-	@Inject
-	private UserResouce userResouce;
-	private HttpServletRequest httpServletRequest;
+    //@Inject
+    //private UserResouce userResouce;
+    //private HttpServletRequest httpServletRequest;
 
-	public UserAccessLogin(UserResouce userResouce, HttpServletRequest httpServletRequest) {
+    //public UserAccessLogin(UserResouce userResouce, HttpServletRequest httpServletRequest) {
 
-		this.userResouce = userResouce;
-		this.httpServletRequest = httpServletRequest;
-	}
+        //this.userResouce = userResouce;
+        //this.httpServletRequest = httpServletRequest;
+    //}
 
-	public User authenticatorLogin(String userName, String password) throws AuthenticationException {
+    //public User authenticatorLogin(String userName, String password) throws AuthenticationException {
 
-	}
+    //}
 
 }
