@@ -71,7 +71,7 @@ public class UserResouce {
 		Boolean result = emailConstraint.isUnique(email);
 		Response response = new Response();
 		response.setData(result);
-		return response.toString();
+		return response.toJson();
 	}
 
 	private UserDto getDtoWithEncryptedPassword(String userJSon, Gson gson) {
