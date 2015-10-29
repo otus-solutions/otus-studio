@@ -11,12 +11,10 @@ public class Response {
 	}
 
 	public void setData(Object data) {
-		Gson gson = new Gson();
-		this.data = gson.toJson(data);
+		this.data = data;
 	}
 	
-	@Override
-	public String toString() {
+	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
