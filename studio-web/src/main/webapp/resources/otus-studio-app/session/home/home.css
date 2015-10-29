@@ -1,3 +1,7 @@
+body {
+	overflow-y: hidden !important;
+}
+
 .image-user-div {
 	border-radius: 35px;
 	float: right;
@@ -19,4 +23,10 @@
 
 .layout-row{
 	background-color: #333333;
+}
+
+
+.md-open-menu-container {
+	    margin-top: 56px;
+	    width: 135px;
 }

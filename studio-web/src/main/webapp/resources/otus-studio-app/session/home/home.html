@@ -15,14 +15,25 @@
 	<div class="md-toolbar">
 		<div class="toolbar-alig">
 			
-			<md-button> Administração </md-button>
-			
+			<md-menu-bar>
+				<md-menu>
+					<md-button ng-click="$mdOpenMenu()"> Administração </md-button>
+					<md-menu-content>
+              			<md-menu-item>
+                			<md-button ng-click="ctrl.sampleAction('share', $event)">
+                  				Usuários
+                			</md-button>
+                		</md-menu-item>
+              		</md-menu-content>
+				</md-menu>
+			</md-menu-bar>
 			<div class="image-user-div">
 				<img ng-src="otus-studio-app/img/prof_bruce_duncan.jpg"></img>
 			</div>
 		</div>
 	</div>
 	</md-toolbar>
+	
 
 	<!-- Angular Material Dependencies -->
 	<script src="shared/lib/angularjs/angular.min.js"></script>
