@@ -29,6 +29,7 @@ public class User implements Serializable {
 	@NotNull
 	private String name;
 
+    @Equalization(name = "admin_flag")
 	private Boolean adm;
 
 	@Equalization(name = "surname")
