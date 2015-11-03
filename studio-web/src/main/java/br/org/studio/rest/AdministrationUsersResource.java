@@ -12,9 +12,6 @@ import javax.ws.rs.core.MediaType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-/**
- * Created by diogoferreira on 29/10/15.
- */
 @Path("/administration/users")
 public class AdministrationUsersResource {
 

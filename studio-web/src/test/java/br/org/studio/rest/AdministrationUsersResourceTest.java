@@ -16,9 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by diogoferreira on 03/11/15.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class AdministrationUsersResourceTest {
 
