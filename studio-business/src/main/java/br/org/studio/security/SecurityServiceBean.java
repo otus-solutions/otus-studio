@@ -6,7 +6,6 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.studio.configuration.SystemConfigService;
 import br.org.studio.context.UserDataContext;
 import br.org.studio.dao.UserDao;
 import br.org.studio.entities.system.User;

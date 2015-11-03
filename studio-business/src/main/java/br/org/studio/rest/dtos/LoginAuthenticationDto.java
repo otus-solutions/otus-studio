@@ -14,6 +14,16 @@ public class LoginAuthenticationDto implements Serializable {
 
 	@Equalization(name = "password")
 	private String password;
+	
+	public LoginAuthenticationDto() {
+		super();
+	}
+
+	public LoginAuthenticationDto(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
 
 	public void encryptPassword() {
 		this.password = EncryptorResources.encrypt(password);
