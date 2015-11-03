@@ -25,10 +25,11 @@
 
     <md-list-item class="md-3-line" ng-repeat="disabledUser in users.disabledUsers">
         <div class="md-list-item-text" layout="column">
-            <md-checkbox ng-model="disabledUser.selected" class="md-secondary"></md-checkbox>
+            <md-checkbox ng-model="disabledUser.selected" ng-disabled="disabledUser.admin" class="md-secondary"></md-checkbox>
             <h3> {{disabledUser.name}}</h3>
 
             <p> {{disabledUser.email}}</p>
+            <h4 ng-show="disabledUser.admin">Administrador</h4>
         </div>
         <md-divider ng-if="!$last"></md-divider>
     </md-list-item>
@@ -52,10 +53,11 @@
 
     <md-list-item class="md-3-line" ng-repeat="activedUser in users.activedUsers">
         <div class="md-list-item-text" layout="column">
-            <md-checkbox ng-model="activedUser.selected" class="md-secondary"></md-checkbox>
+            <md-checkbox ng-model="activedUser.selected" ng-disabled="activedUser.admin" class="md-secondary"></md-checkbox>
             <h3> {{activedUser.name}}</h3>
 
             <p> {{activedUser.email}}</p>
+            <h4 ng-show="activedUser.admin">Administrador</h4>
         </div>
         <md-divider ng-if="!$last"></md-divider>
     </md-list-item>
