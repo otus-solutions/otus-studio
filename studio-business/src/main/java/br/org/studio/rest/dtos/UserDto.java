@@ -12,4 +12,15 @@ public class UserDto {
 
     @Equalization(name = "email")
     private String email;
+
+    @Equalization(name = "admin_flag")
+    private Boolean admin;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

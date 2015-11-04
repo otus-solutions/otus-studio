@@ -26,4 +26,12 @@ public class AdministrationUser {
             disabledUsers.add(userDto);
         }
     }
+
+    public List<UserDto> getActivedUsers() {
+        return activedUsers;
+    }
+
+    public List<UserDto> getDisabledUsers() {
+        return disabledUsers;
+    }
 }

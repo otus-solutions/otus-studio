@@ -5,7 +5,7 @@ import br.org.studio.exceptions.DataNotFoundException;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends GenericDao{
 
 	User fetchByEmail(String email) throws DataNotFoundException;
 

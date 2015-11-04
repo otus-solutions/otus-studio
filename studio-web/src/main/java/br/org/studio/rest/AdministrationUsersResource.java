@@ -1,16 +1,17 @@
 package br.org.studio.rest;
 
 import br.org.studio.administration.AdministrationUserService;
+import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Type;
+import java.util.List;
 
-/**
- * Created by diogoferreira on 29/10/15.
- */
 @Path("/administration/users")
 public class AdministrationUsersResource {
 
@@ -31,14 +32,24 @@ public class AdministrationUsersResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String disableUsers(String users) {
-        return new Gson().toJson(new Object());
+        Type collectionType = new TypeToken<List<UserDto>>(){}.getType();
+        List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
+
+        administrationUserService.disableUsers(convertedUsers);
+        // TODO Aplicar Response
+        return new Gson().toJson(Boolean.TRUE);
     }
 
     @POST
-    @Path("/disable")
+    @Path("/enable")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String enableUsers(String users) {
-        return new Gson().toJson(new Object());
+        Type collectionType = new TypeToken<List<UserDto>>(){}.getType();
+        List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
+
+        administrationUserService.enableUsers(convertedUsers);
+        // TODO Aplicar Response
+        return new Gson().toJson(Boolean.TRUE);
     }
 }

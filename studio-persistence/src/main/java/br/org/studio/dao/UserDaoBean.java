@@ -29,6 +29,4 @@ public class UserDaoBean extends GenericDaoBean implements UserDao, GenericDao {
         Criteria criteria = createCriteria(User.class);
         return list(criteria);
     }
-
-
 }
