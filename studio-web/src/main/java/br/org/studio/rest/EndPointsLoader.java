@@ -16,11 +16,15 @@ public class EndPointsLoader extends Application {
     @Inject
     private AdministrationUsersResource administrationUsersResource;
 
+    @Inject
+    private AuthenticationResource authenticationResource;
+
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> resources = new HashSet<Class<?>>();
 		resources.add(UserResouce.class);
         resources.add(AdministrationUsersResource.class);
+        resources.add(AuthenticationResource.class);
 		return resources;
 	}
 
@@ -29,6 +33,7 @@ public class EndPointsLoader extends Application {
 		Set<Object> resources = new HashSet<Object>();
 		resources.add(userResouce);
         resources.add(administrationUsersResource);
+        resources.add(authenticationResource);
 		return resources;
 	}
 

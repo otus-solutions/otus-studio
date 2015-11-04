@@ -2,6 +2,7 @@ package br.org.studio.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +21,7 @@ public class AuthenticationResource {
 	private SecurityService securityService;
 
 	@Path("/login")
+    @POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String userLogin(String loginData) {
@@ -30,14 +32,11 @@ public class AuthenticationResource {
 
 		try {
 			securityService.authenticate(loginDto);
-			
+
 			return gson.toJson(Boolean.TRUE);
-			
-		} catch (InvalidPasswordException e) {
-			return gson.toJson(e);
-			
-		} catch (EmailNotFoundException e) {
-			return gson.toJson(e);
+
+		} catch (Exception e) {
+            return gson.toJson(Boolean.FALSE);
 		}
 	}
 }

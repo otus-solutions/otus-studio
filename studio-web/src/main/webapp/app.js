@@ -1,1 +1,1 @@
-angular.module('Login', ['ngMessages']);
+angular.module('Login', []);

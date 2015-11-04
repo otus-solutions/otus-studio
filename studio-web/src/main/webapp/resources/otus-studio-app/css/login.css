@@ -17,7 +17,7 @@ body {
 }
 
 #center {
-	width: 15%;
+	width: 40%;
 	margin: 0 auto;
 }
 
@@ -65,4 +65,9 @@ md-toolbar {
 /** This style is to fix float label 'celular'! Do NOT remove**/
 label[for="phonenumber"] {
 	-webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
+}
+
+.error-message{
+    text-align: center;
+    color: rgb(244,67,54);
 }
