@@ -41,7 +41,7 @@ public class UserResourceTest {
 
 		String restReturn = resource.userEmailExists(anyString());
 
-		assertThat(trueResponse.toString(), equalTo(restReturn));
+		assertThat(trueResponse.toJson(), equalTo(restReturn));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class UserResourceTest {
 
 		String restReturn = resource.userEmailExists(anyString());
 
-		assertThat(falseResponse.toString(), equalTo(restReturn));
+		assertThat(falseResponse.toJson(), equalTo(restReturn));
 	}
 
 }
