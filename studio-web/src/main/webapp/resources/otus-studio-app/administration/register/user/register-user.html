@@ -4,20 +4,20 @@
 <head>
     <base href="/studio/resources/">
     <meta charset="UTF-8" />
+    <title>Cadastro de usuários</title>
     <link href="otus-studio-app/administration/register/user/register-user.css" rel="stylesheet" />
     <link href="shared/img/otus-studio-img.png" rel="icon" />
-    <title>Cadastro de usuários</title>
 </head>
 
 <body>
     <img src="shared/img/otus-studio-img.png" id="logo" />
     <h1>Otus Studio</h1>
     <div id="center">
-        <div ng-controller="RegisterUserCtrl" layout="column">
+        <div ng-controller="RegisterUserCtrl as ctrl" layout="column">
             <md-content layout-padding class="autoScroll">
                 <md-toolbar class="md-theme-light md-default-theme">
                     <h2 class="md-toolbar-tools">
-                    <span>Cadastro de usuários</span>
+                        <span>Cadastro de usuários</span>
                     </h2>
                 </md-toolbar>
                 <br/>
@@ -25,38 +25,38 @@
                     <div layout layout-sm="column">
                         <md-input-container flex>
                             <label>Nome</label>
-                            <input name="name" ng-model="user.name" type="text" ng-required="true" />
+                            <input name="name" ng-model="user.name" type="text" required />
                             <div ng-messages="registerUserForm.name.$error">
-                                <div ng-message="required" ng-show="registerUserForm.name.$error.required">Obrigatório</div>
+                                <div ng-message="required">Obrigatório</div>
                             </div>
                         </md-input-container>
                         <md-input-container flex>
                             <label>Sobrenome</label>
-                            <input name="surname" ng-model="user.surname" type="text" ng-required="true" />
+                            <input name="surname" ng-model="user.surname" type="text" required />
                             <div ng-messages="registerUserForm.surname.$error">
-                                <div ng-message="required" ng-show="registerUserForm.surname.$error.required">Obrigatório</div>
+                                <div ng-message="required">Obrigatório</div>
                             </div>
                         </md-input-container>
                     </div>
                     <md-input-container>
                         <label>Celular</label>
-                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ng-required="true" ui-mask="(999) 9999-9999" />
+                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-mask="(999) 9999-9999" required />
                         <div ng-messages="registerUserForm.phone.$error">
-                            <div ng-message="required" ng-show="registerUserForm.phone.$error.required">Obrigatório</div>
+                            <div ng-message="required">Obrigatório</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
-                        <label>Email</label>
-                        <input name="email" ng-model="user.email" type="email" ng-required="true" ng-blur="validateEmail()" />
+                        <label>E-mail</label>
+                        <input name="email" ng-model="user.email" type="email" unique required />
                         <div ng-messages="registerUserForm.email.$error">
-                            <div ng-message="required" ng-show="registerUserForm.email.$error.required">Obrigatório</div>
-                            <div ng-message="email" ng-show="registerUserForm.email.$error.email">Insira um email válido.</div>
-                            <div ng-message="emailInUse" ng-show="registerUserForm.email.$error.emailInUse">Email já em uso.</div>
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="emailInUse">E-mail já em uso.</div>
+                            <div ng-message="email">Insira um e-mail válido.</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
                         <label>Senha</label>
-                        <input name="password" ng-blur="matchPassword()" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
+                        <input name="password" ng-blur="ctrl.matchPassword()" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
                         <div ng-messages="registerUserForm.password.$error">
                             <div ng-message="required" ng-show="registerUserForm.password.$error.required">Obrigatório</div>
                             <div ng-message="minlength" ng-show="registerUserForm.password.$error.minlength">Mínimo 6 caracteres</div>
@@ -66,13 +66,13 @@
                     </md-input-container>
                     <md-input-container>
                         <label>Confirmação de Senha</label>
-                        <input name="passwordConfirm" ng-blur="matchPassword()" ng-model="user.passwordConfirm" type="password" ng-required="true" />
+                        <input name="passwordConfirm" ng-blur="ctrl.matchPassword()" ng-model="user.passwordConfirm" type="password" ng-required="true" />
                         <div ng-messages="registerUserForm.passwordConfirm.$error">
                             <div ng-message="required" ng-show="registerUserForm.passwordConfirm.$error.required">Obrigatório</div>
                             <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
                         </div>
                     </md-input-container>
-                    <md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerUserForm.$invalid" ng-click="register(user)">Cadastrar</md-button>
+                    <md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerUserForm.$invalid" ng-click="ctrl.register(user)">Cadastrar</md-button>
                 </form>
             </md-content>
         </div>
@@ -86,6 +86,7 @@
     <!-- Angular Material Dependencies -->
     <script src="shared/lib/angularjs/angular.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-material.min.js"></script>

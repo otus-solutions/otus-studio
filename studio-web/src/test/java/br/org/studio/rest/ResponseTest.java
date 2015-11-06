@@ -30,7 +30,7 @@ public class ResponseTest {
 		response.setData(true);
 
 		Gson gson = new Gson();
-		Response generatedJson = gson.fromJson(response.toString(), Response.class);
+		Response generatedJson = gson.fromJson(response.toJson(), Response.class);
 		assertThat(generatedJson.getData(), equalTo(String.valueOf(true)));
 	}
 

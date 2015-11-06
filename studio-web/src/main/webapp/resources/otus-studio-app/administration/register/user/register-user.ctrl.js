@@ -1,45 +1,82 @@
 (function() {
 
     angular
-        .module('StudioApp', ['ngMaterial', 'ui.mask'])
+        .module('StudioApp', ['ngMessages', 'ngMaterial', 'ui.mask'])
         .controller(
-            'RegisterUserCtrl',
-            function($scope, $http, $window, $mdDialog) {
+            'RegisterUserCtrl', ['$scope', '$http', '$mdDialog',
+                function($scope, $http, $mdDialog) {
 
-                $HTTP_POST_URL_VALIDATE = window.location.origin + '/studio/session/rest/register/validade';
-                $HTTP_POST_URL_CREATE = window.location.origin + '/studio/session/rest/register/user';
+                    var self = this;
 
-                $scope.validateEmail = function() {
-                    $http.post($HTTP_POST_URL_VALIDATE, $scope.user).then(function(response) {
-                        $scope.emailInUse = !response.data;
-                        $scope.registerUserForm.email.$setValidity('emailInUse', response.data);
-                        $scope.registerUserForm.$setValidity('emailInUse', response.data);
-                    });
-                }
+                    const $HTTP_POST_URL_CREATE = window.location.origin + '/studio/session/rest/register/user';
 
-                $scope.register = function(user) {
-                    $http.post($HTTP_POST_URL_CREATE, user).then(function(response) {
-                        confirmAlertToNavigate();
-                    })
-                }
+                    /* Public interface */
+                    self.register = register;
+                    self.matchPassword = matchPassword;
 
-                $scope.matchPassword = function() {
-                    if ($scope.user.password && $scope.user.passwordConfirm) {
-                        if ($scope.user.password != $scope.user.passwordConfirm) {
-                            $scope.registerUserForm.password.$setValidity('password', false);
-                            $scope.registerUserForm.$setValidity('password', false);
-                        } else {
-                            $scope.registerUserForm.password.$setValidity('password', true);
-                            $scope.registerUserForm.$setValidity('password', true);
+                    /* Public implementations */
+                    function matchPassword() {
+                        if ($scope.user.password && $scope.user.passwordConfirm) {
+                            if ($scope.user.password != $scope.user.passwordConfirm) {
+                                $scope.registerUserForm.password.$setValidity('password', false);
+                                $scope.registerUserForm.$setValidity('password', false);
+                            } else {
+                                $scope.registerUserForm.password.$setValidity('password', true);
+                                $scope.registerUserForm.$setValidity('password', true);
+                            }
                         }
                     }
+
+                    function register(user) {
+                        console.log(self);
+                        $http.post($HTTP_POST_URL_CREATE, user).then(function(response) {
+                            confirmAlertRegister();
+                        });
+                    }
+
+                    /* Private implementations */
+                    function confirmAlertRegister() {
+                        alert = $mdDialog.alert().title('Informação').content('Sua liberação esta pendente de aprovação').ok('ok');
+                    }
                 }
+            ]);
 
-                function confirmAlertRegister() {
-                    alert = $mdDialog.alert().title('Informação').content('Sua liberação esta pendente de aprovação')
-                        .ok('ok');
+    angular
+        .module('StudioApp')
+        .directive(
+            'unique', ['$http', '$q',
+                function($http, $q) {
+
+                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/studio/session/rest/register/user/email/exists';
+
+                    return {
+                        restrict: 'A',
+                        require: 'ngModel',
+                        link: function(scope, element, attrs, ctrl) {
+                            ctrl.$asyncValidators.emailInUse = function(modelValue, viewValue) {
+                                var deferred = $q.defer();
+
+                                $http.get($HTTP_POST_URL_VALIDATE, {
+                                    params: {
+                                        email: modelValue
+                                    }
+                                }).then(
+                                    function(response) {
+                                        var emailExists = (response.data.data === 'true');
+                                        if (emailExists) {
+                                            deferred.reject();
+                                        } else {
+                                            deferred.resolve();
+                                        }
+                                    },
+                                    function(error) {
+                                        console.log('erro');
+                                    });
+
+                                return deferred.promise;
+                            };
+                        }
+                    };
                 }
-
-            });
-
-}());
+            ]);
+})();

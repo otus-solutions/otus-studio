@@ -70,7 +70,7 @@ public class UserResouce {
 	public String userEmailExists(@QueryParam("email") String email) {
 		Boolean result = emailConstraint.isUnique(email);
 		Response response = new Response();
-		response.setData(result);
+		response.setData(!result);
 		return response.toJson();
 	}
 

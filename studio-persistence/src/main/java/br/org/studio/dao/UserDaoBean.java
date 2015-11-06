@@ -4,6 +4,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import org.hibernate.Criteria;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.criterion.Restrictions;
 
 import br.org.studio.entities.system.User;
@@ -19,11 +20,16 @@ public class UserDaoBean extends GenericDaoBean implements UserDao {
 		Criteria criteria = createCriteria(User.class);
 		criteria.add(Restrictions.eq(EMAIL, email));
 
-		if (uniqueResult(criteria) == null) {
+		try {
+			if (uniqueResult(criteria) == null) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (NonUniqueResultException e) {
 			return true;
-		} else {
-			return false;
 		}
+		
 	}
 
 }

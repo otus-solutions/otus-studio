@@ -11,7 +11,8 @@ public class Response {
 	}
 
 	public void setData(Object data) {
-		this.data = data;
+		Gson gson = new Gson();
+		this.data = gson.toJson(data);
 	}
 	
 	public String toJson() {
