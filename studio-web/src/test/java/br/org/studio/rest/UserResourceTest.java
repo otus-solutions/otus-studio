@@ -36,8 +36,8 @@ public class UserResourceTest {
 	}
 
 	@Test
-	public void userEmailExist_method_should_return_a_json_with_value_TRUE_for_property_data_when_email_is_unique() {
-		when(emailConstraint.isUnique(anyString())).thenReturn(true);
+	public void userEmailExist_method_should_return_a_json_with_value_FALSE_for_property_data_when_email_is_unique() {
+		when(emailConstraint.isUnique(anyString())).thenReturn(false);
 
 		String restReturn = resource.userEmailExists(anyString());
 
@@ -45,8 +45,8 @@ public class UserResourceTest {
 	}
 
 	@Test
-	public void userEmailExist_method_should_return_a_json_with_value_FALSE_for_property_data_when_email_is_not_unique() {
-		when(emailConstraint.isUnique(anyString())).thenReturn(false);
+	public void userEmailExist_method_should_return_a_json_with_value_TRUE_for_property_data_when_email_is_not_unique() {
+		when(emailConstraint.isUnique(anyString())).thenReturn(true);
 
 		String restReturn = resource.userEmailExists(anyString());
 

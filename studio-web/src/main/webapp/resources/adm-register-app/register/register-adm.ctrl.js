@@ -26,23 +26,6 @@ angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('SystemConfi
       });
     }
     		
-//        $http.post(window.location.origin + '/studio/session/rest/register/adm', systemConf.user).then(function(response) {
-//                //confirmAlertToNavigate();
-//            },
-//            function(response) {
-//                console.log(systemConf.user)
-//                console.log("Error!!!")
-//            });
-//
-//        $http.post(window.location.origin + '/studio/session/rest/register/email', systemConf.emailSender).then(function(response) {
-//                confirmAlertToNavigate();
-//            },
-//            function(response) {
-//                console.log(systemConf.emailSender)
-//                console.log("Error!!!")
-//            });
-
-//    }
 
     $scope.matchPassword = function() {
         if ($scope.systemConf.user.password && $scope.systemConf.user.passwordConfirm) {
@@ -70,3 +53,4 @@ angular.module('RegisterAdm', ['ngMaterial', 'ui.mask']).controller('SystemConfi
 
 
 });
+

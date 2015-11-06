@@ -1,29 +1,28 @@
 package br.org.studio.dao;
 
-import br.org.studio.exceptions.DataNotFoundException;
+import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.NonUniqueResultException;
 
-import java.util.List;
+import br.org.studio.exceptions.DataNotFoundException;
 
 public interface GenericDao {
     
-    void persist(Object entity);
+	void persist(Object entity);
 
-    Long count(Class<?> clazz);
+	Long count(Class<?> clazz);
 
-    void update(Object entity);
+	void update(Object entity);
 
-    @SuppressWarnings("rawtypes")
 	List listNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
 
-    @SuppressWarnings("rawtypes")
 	List list(Criteria criteria);
 
-    Object uniqueResultNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
+	Object uniqueResultNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
 
-    Object uniqueResult(Criteria criteria);
+	Object uniqueResult(Criteria criteria) throws NonUniqueResultException;
 
-    void remove(Object entity);
-    
+	void remove(Object entity);
+
 }

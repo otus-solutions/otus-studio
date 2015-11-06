@@ -10,7 +10,7 @@ public class EmailConstraint {
 	private UserDao userDao;
 
 	public Boolean isUnique(String emailToVerify) {
-		if (userDao.emailExists(emailToVerify)) {
+		if (emailToVerify != null && userDao.emailExists(emailToVerify)) {
 			return false;
 		} else {
 			return true;

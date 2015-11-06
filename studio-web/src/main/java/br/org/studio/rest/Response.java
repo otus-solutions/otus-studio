@@ -14,7 +14,7 @@ public class Response {
 		Gson gson = new Gson();
 		this.data = gson.toJson(data);
 	}
-
+	
 	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
