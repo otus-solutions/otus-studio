@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import br.org.studio.configuration.SystemConfigService;
 import br.org.studio.exception.FillUserException;
 import br.org.studio.messages.FillUserExceptionMessage;
 import br.org.studio.registration.RegisterUserService;
@@ -22,29 +21,9 @@ import com.google.gson.Gson;
 public class UserResouce {
 
 	@Inject
-	private SystemConfigService systemConfigService;
-	@Inject
 	private RegisterUserService registerUserService;
 	@Inject
 	private EmailConstraint emailConstraint;
-
-	@POST
-	@Path("/adm")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String addAdm(String userJSon) {
-		Gson gson = new Gson();
-
-		try {
-			UserDto admDto = getDtoWithEncryptedPassword(userJSon, gson);
-
-			systemConfigService.createAdmin(admDto);
-			return gson.toJson(new Object());
-
-		} catch (FillUserException e) {
-			return gson.toJson(new FillUserExceptionMessage());
-		}
-	}
 
 	@POST
 	@Path("/user")
@@ -54,7 +33,8 @@ public class UserResouce {
 		Gson gson = new Gson();
 
 		try {
-			UserDto userDto = getDtoWithEncryptedPassword(userJSon, gson);
+			UserDto userDto = gson.fromJson(userJSon, UserDto.class);
+			userDto.encrypt();
 
 			registerUserService.createUser(userDto);
 			return gson.toJson(new FillUserExceptionMessage());
@@ -72,12 +52,6 @@ public class UserResouce {
 		Response response = new Response();
 		response.setData(result);
 		return response.toJson();
-	}
-
-	private UserDto getDtoWithEncryptedPassword(String userJSon, Gson gson) {
-		UserDto admDto = gson.fromJson(userJSon, UserDto.class);
-		admDto.encrypt();
-		return admDto;
 	}
 
 }
