@@ -8,28 +8,26 @@ describe('the first time when the user tries access the login page', function() 
     });
 
     it('clicked in button register user then should redirect', function() {
+    	
         expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/');
-        // Cara, preciso clicar no botão aqui para direcionar para a tela de cadastro de usuário!
         loginPage.getRegisterButton().click();
+        
+        expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/otus-studio-app/administration/register/user/register-user.html');
+        browser.sleep(5000);
     });
-    
-    it('then the system must be redirects to register administrator page', function() {
-        expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/otus-studio-app/administration/user/register/register-user.html');
-    });
-
+  
     it('fill form with valid data should redirect to login page', function() {
-        registerAdminPage.setUserName('Test');
-        registerAdminPage.setSurname('surname');
-        registerAdminPage.setPhone('00000000000');
-        registerAdminPage.setEmail('test@test.com');
-        registerAdminPage.setPassword('aA1test');
-        registerAdminPage.setPasswordConfirm('aA1test');
-        registerAdminPage.getRegisterButton().click();
+    	registerUserPage.setUserName('name');
+    	registerUserPage.setSurname('surname');
+    	registerUserPage.setPhone('00000000000');
+    	registerUserPage.setEmail('test@test.com');
+    	registerUserPage.setPassword('aA1test');
+    	registerUserPage.setPasswordConfirm('aA1test');
+    	registerUserPage.getRegisterButton().click();
 
         browser.sleep(500);
 
-        // Mas no final, ele ira ser direcionado para alguma tela?! Qual?! A de login?!
-        expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/');
+
     });
 
 });

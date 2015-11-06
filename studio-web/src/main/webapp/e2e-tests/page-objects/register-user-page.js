@@ -6,7 +6,6 @@ var RegisterUserPage = function() {
     var passwordInput = element(by.model('user.password'));
     var passwordConfirmInput = element(by.model('user.passwordConfirm'));
     var registerButton = element(by.buttonText('Cadastrar'));
-    var confirmAlertButton = element(by.css('button[ng-click="dialog.hide()"]'));
 
     this.setUserName = function(name) {
         userNameInput.sendKeys(name);
@@ -34,10 +33,6 @@ var RegisterUserPage = function() {
 
     this.getRegisterButton = function() {
         return registerButton;
-    };
-
-    this.getConfirmAlertButton = function() {
-        return confirmAlertButton;
     };
 
 };
