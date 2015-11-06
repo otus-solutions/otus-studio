@@ -28,7 +28,6 @@
                     }
 
                     function register(user) {
-                        console.log(self);
                         $http.post($HTTP_POST_URL_CREATE, user).then(function(response) {
                             confirmAlertRegister();
                         });
