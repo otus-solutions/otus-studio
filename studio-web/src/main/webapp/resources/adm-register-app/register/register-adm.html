@@ -6,14 +6,14 @@
 	<link href="../../shared/img/otus-studio-img.png" rel="icon"/>
 	<link rel="stylesheet" href="../../shared/lib/angularjs/md/angular-material.min.css">
 	<title>Cadastro de Administrador</title>
-	
+
 </head>
 <body>
 	<img src="../../shared/img/otus-studio-img.png" id="logo"/>
 	<h1>Otus Studio</h1>
 <div id="center">
-	<div ng-controller="RegisterAdmCtrl" layout="column">
-		
+	<div ng-controller="SystemConfigCtrl" layout="column">
+
 		<md-content layout-padding class="autoScroll">
 				<md-toolbar class="md-theme-light md-default-theme">
 	    			<h2 class="md-toolbar-tools">
@@ -21,69 +21,107 @@
 	    			</h2>
 	 			</md-toolbar>
 	 			<br/>
-	 		<form name="registerAdmForm">
+                <form name="initialConfigSystemForm" novalidate>
 				<div layout layout-sm="column">
 
 			  		<md-input-container flex>
 			  			<label>Nome</label>
-				    	<input name="name" ng-model="user.name" type="text" ng-required="true" />
-				    	<div ng-messages="registerAdmForm.name.$error">
-					        <div ng-message="required" ng-show="registerAdmForm.name.$error.required">Obrigatório</div>
+				    	<input name="name" ng-model="systemConf.user.name" type="text" ng-required="true" />
+				    	<div ng-messages="initialConfigSystemForm.name.$error">
+					        <div ng-message="required" ng-show="initialConfigSystemForm.name.$error.required">Obrigatório</div>
 	        			</div>
 			    	</md-input-container>
 
 			    	<md-input-container flex>
 			    		<label>Sobrenome</label>
-						<input name="surname" ng-model="user.surname" type="text" ng-required="true" />
-						<div ng-messages="registerAdmForm.surname.$error">
-					        <div ng-message="required" ng-show="registerAdmForm.surname.$error.required">Obrigatório</div>
+						<input name="surname" ng-model="systemConf.user.surname" type="text" ng-required="true" />
+						<div ng-messages="initialConfigSystemForm.surname.$error">
+					        <div ng-message="required" ng-show="initialConfigSystemForm.surname.$error.required">Obrigatório</div>
 	        			</div>
 			    	</md-input-container>
 
 			    </div>
 			    <md-input-container>
 			    	<label>Celular</label>
-			    	<input name="phone" id="phonenumber" ng-model="user.phone" type="text" ng-required="true" ui-mask="(999) 9999-9999" />
-			    	<div ng-messages="registerAdmForm.phone.$error">
-				        <div ng-message="required" ng-show="registerAdmForm.phone.$error.required">Obrigatório</div>
+			    	<input name="phone" id="phonenumber" ng-model="systemConf.user.phone" type="text" ng-required="true" ui-mask="(999) 9999-9999" />
+			    	<div ng-messages="initialConfigSystemForm.phone.$error">
+				        <div ng-message="required" ng-show="initialConfigSystemForm.phone.$error.required">Obrigatório</div>
         			</div>
 			    </md-input-container>
-			   
+
 			    <md-input-container>
 			    	<label>Email</label>
-			    	<input name="email" ng-model="user.email" type="email" ng-required="true" />
-			    	<div ng-messages="registerAdmForm.email.$error">
-				        <div ng-message="required" ng-show="registerAdmForm.email.$error.required">Obrigatório</div>
-				        <div ng-message="email" ng-show="registerAdmForm.email.$error.email">Insira um email válido.</div>
+			    	<input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
+			    	<div ng-messages="initialConfigSystemForm.email.$error">
+				        <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório</div>
+				        <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.</div>
         			</div>
 			    </md-input-container>
 
 			    <md-input-container>
 			    	<label>Senha</label>
-				    <input name="password" ng-blur="matchPassword()"  ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
-				    <div ng-messages="registerAdmForm.password.$error" >
-				        <div ng-message="required" ng-show="registerAdmForm.password.$error.required">Obrigatório</div>
-				        <div ng-message="minlength" ng-show="registerAdmForm.password.$error.minlength">Mínimo 6 caracteres</div>
-				        <div ng-message="pattern" ng-show="registerAdmForm.password.$error.pattern"><br />Deve conter pelo menos um caracter minúsculo, um maiúsculo e um dígito</div>
+				    <input name="password" ng-blur="matchPassword()" ng-model="systemConf.user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
+				    <div ng-messages="initialConfigSystemForm.password.$error" >
+				        <div ng-message="required" ng-show="initialConfigSystemForm.password.$error.required">Obrigatório</div>
+				        <div ng-message="minlength" ng-show="initialConfigSystemForm.password.$error.minlength">Mínimo 6 caracteres</div>
+				        <div ng-message="pattern" ng-show="initialConfigSystemForm.password.$error.pattern"><br />Deve conter pelo menos um caracter minúsculo, um maiúsculo e um dígito</div>
         			</div>
 			  	</md-input-container>
 
 			  	<md-input-container>
 			  		<label>Confirmação de Senha</label>
-				    <input name="passwordConfirm" ng-blur="matchPassword()"  ng-model="user.passwordConfirm" type="password" ng-required="true" />
-				    <div ng-messages="registerAdmForm.passwordConfirm.$error">
-				        <div ng-message="required" ng-show="registerAdmForm.passwordConfirm.$error.required">Obrigatório</div>
-				        <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
+				    <input name="passwordConfirm" ng-blur="matchPassword()" ng-model="systemConf.user.passwordConfirm" type="password" ng-required="true" />
+				    <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
+				        <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">Obrigatório</div>
+				        <div ng-message ng-show="(systemConf.user.passwordConfirm != systemConf.user.password) && (systemConf.user.passwordConfirm && systemConf.user.password)">Suas senhas não coincidem.</div>
         			</div>
 			  	</md-input-container>
-			  	<md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerAdmForm.$invalid" ng-click="register(user)">Cadastrar</md-button>
+
+                <md-toolbar class="md-theme-light md-default-theme">
+                    <h2 class="md-toolbar-tools">
+                    <span>Configurações do E-mail</span>
+                    </h2>
+                </md-toolbar>
+
+                <md-input-container>
+                    <label>Nome</label>
+                    <input name="emailSenderName" ng-model="systemConf.emailSender.name" type="text" ng-required="true" />
+                    <div ng-messages="initialConfigSystemForm.emailSenderName.$error">
+                          <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderName.$error.required">Obrigatório</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>Email</label>
+                    <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" type="email" ng-required="true" />
+                    <div ng-messages="initialConfigSystemForm.emailSenderEmail.$error">
+                        <div ng-message="email" ng-show="initialConfigSystemForm.emailSenderEmail.$error.email">Insira um email válido.</div>
+                        <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderEmail.$error.required">Obrigatório</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Senha</label>
+                    <input name="emailSenderPassword" ng-blur="matchPasswordEmailSender()" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
+                    <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
+                        <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPassword.$error.required">Obrigatório</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Confirmação de Senha</label>
+                    <input name="emailSenderPasswordConfirm" ng-blur="matchPasswordEmailSender()" ng-model="systemConf.emailSender.passwordConfirm" type="password" ng-required="true" />
+                    <div ng-messages="initialConfigSystemForm.emailSenderPasswordConfirm.$error">
+                        <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPasswordConfirm.$error.required">Obrigatório</div>
+                        <div ng-message ng-show="(systemConf.emailSender.passwordConfirm != systemConf.emailSender.password) && (systemConf.emailSender.passwordConfirm && systemConf.emailSender.password)">Suas senhas não coincidem.</div>
+                    </div>
+                </md-input-container>
+			  	<md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="initialConfigSystemForm.$invalid"  ng-click="register(systemConf)">Cadastrar</md-button>
 	 		</form>
 	  </md-content>
 	</div>
 </div>
 
-<footer> 
-	<p>Copyright© 2015 ELSA Brasil Corporation.</p> 
+<footer>
+	<p>Copyright© 2015 ELSA Brasil Corporation.</p>
 </footer>
 
 
