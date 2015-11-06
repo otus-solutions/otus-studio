@@ -3,8 +3,8 @@
     angular
         .module('StudioApp', ['ngMessages', 'ngMaterial', 'ui.mask'])
         .controller(
-            'RegisterUserCtrl', ['$scope', '$http', '$mdDialog',
-                function($scope, $http, $mdDialog) {
+            'RegisterUserCtrl', ['$scope', '$http', '$mdDialog','$window',
+                function($scope, $http, $mdDialog, $window) {
 
                     var self = this;
 
@@ -36,6 +36,11 @@
                     /* Private implementations */
                     function confirmAlertRegister() {
                         alert = $mdDialog.alert().title('Informação').content('Sua liberação esta pendente de aprovação').ok('ok');
+                        $mdDialog
+                        .show(alert)
+                        .finally(function() {
+                            $window.location.href = window.location.origin + '/studio/'
+                        });
                     }
                 }
             ]);
