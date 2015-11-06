@@ -5,6 +5,7 @@ import javax.ejb.Local;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import br.org.studio.entities.email.EmailSender;
 import br.org.studio.entities.system.SystemConfig;
 import br.org.studio.exceptions.DataNotFoundException;
 
@@ -27,4 +28,11 @@ public class SystemConfigDaoBean extends GenericDaoBean implements SystemConfigD
             return false;
         }
     }
+    
+    @Override
+	public EmailSender findEmailSender() throws DataNotFoundException {
+		Criteria query = createCriteria(SystemConfig.class);
+		SystemConfig systemConfig = (SystemConfig) uniqueResultNotWaitingEmpty(query);
+		return systemConfig.getEmailSender();
+	}
 }
