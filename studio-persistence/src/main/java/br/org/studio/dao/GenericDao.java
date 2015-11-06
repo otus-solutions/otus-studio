@@ -1,6 +1,7 @@
 package br.org.studio.dao;
 
 import br.org.studio.exceptions.DataNotFoundException;
+
 import org.hibernate.Criteria;
 
 import java.util.List;
@@ -13,9 +14,11 @@ public interface GenericDao {
 
     void update(Object entity);
 
-    List listNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
+    @SuppressWarnings("rawtypes")
+	List listNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
 
-    List list(Criteria criteria);
+    @SuppressWarnings("rawtypes")
+	List list(Criteria criteria);
 
     Object uniqueResultNotWaitingEmpty(Criteria criteria) throws DataNotFoundException;
 
