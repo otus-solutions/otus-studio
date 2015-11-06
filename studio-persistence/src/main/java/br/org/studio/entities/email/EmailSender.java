@@ -8,11 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import br.org.tutty.Equalization;
 
 @Entity
-@Table(name = "sender", catalog = "studio", schema = "public")
+@Table(name = "email_sender", catalog = "studio", schema = "public")
 @SequenceGenerator(name = "senderSequence", sequenceName = "sender_seq", initialValue = 1, allocationSize = 1)
-public class Sender implements Serializable {
+public class EmailSender implements Serializable {
 	
 	private static final long serialVersionUID = -2231961499270874947L;
 	
@@ -20,16 +23,38 @@ public class Sender implements Serializable {
     @GeneratedValue(generator = "senderSequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 	
+	@Equalization(name = "name")
+	@NotNull
 	private String name;
 	
+	@Equalization(name = "email")
+	@NotNull
 	private String emailAddress;
 	
+	@Equalization(name = "password")
+	@NotNull
 	private String password;
 
-	public Sender(String name, String emailAddress, String password) {
+	public EmailSender() {
+	}
+	
+	public EmailSender(String name, String emailAddress, String password) {
 		super();
 		this.name = name;
 		this.emailAddress = emailAddress;
 		this.password = password;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
 }
