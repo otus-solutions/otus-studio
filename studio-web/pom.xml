@@ -21,7 +21,7 @@
         <dependency>
             <groupId>br.org.studio</groupId>
             <artifactId>studio-business</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -66,19 +66,19 @@
         <dependency>
             <groupId>br.org.studio</groupId>
             <artifactId>studio-business</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>br.org.studio</groupId>
             <artifactId>studio-persistence</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>br.org.studio</groupId>
             <artifactId>studio-web</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <type>war</type>
         </dependency>
         <dependency>
