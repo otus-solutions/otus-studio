@@ -1,17 +1,21 @@
 package br.org.studio.email;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
-import br.org.owail.sender.email.Sender;
+import br.org.studio.entities.system.User;
 
 public class NewUserNotificationEmail extends Email implements StudioEmail {
 	
-	private final String TEMPLATE = "/email-templates/new-user-notification-template.html";
+	private final String TEMPLATE = "/template/new-user-notification-template.html";
+	private final String SUBJECT = "Alerta - Novo usuário cadastrado no sistema OTUS STUDIO";
+	private HashMap<String, String> dataMap;
 	
-	protected NewUserNotificationEmail() {
-		defineSender();
+	public NewUserNotificationEmail(User user) {
+		buildDataMap(user);
+		defineSubject();
 	}
 
 	@Override
@@ -21,7 +25,7 @@ public class NewUserNotificationEmail extends Email implements StudioEmail {
 
 	@Override
 	public Map<String, String> getContentDataMap() {
-		return null;
+		return dataMap;
 	}
 
 	@Override
@@ -29,11 +33,20 @@ public class NewUserNotificationEmail extends Email implements StudioEmail {
 		return Mailer.HTML;
 	}
 	
-	/*
-	 *  TODO: Deve buscar no banco
-	 */
-    private void defineSender() {
-    	setFrom(new Sender("name", "emailAddress", "password"));
+	public void defineAdminRecipient(User admin){
+		addTORecipient("admin", admin.getEmail());
+	}
+    
+    private void defineSubject(){
+    	setSubject(SUBJECT);
+    }
+    
+    private void buildDataMap(User user){
+    	dataMap = new HashMap<String, String>();
+    	dataMap.put("name", user.getName());
+    	dataMap.put("surname", user.getSurname());
+    	dataMap.put("mail", user.getEmail());
+    	dataMap.put("phone", user.getPhone());
     }
 
 }
