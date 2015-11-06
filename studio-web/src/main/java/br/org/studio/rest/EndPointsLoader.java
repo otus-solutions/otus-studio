@@ -12,19 +12,23 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private UserResouce userResouce;
+	
+	@Inject
+	private SystemConfigResource systemConfigResource;
 
-    @Inject
-    private AdministrationUsersResource administrationUsersResource;
+   	@Inject
+  	private AdministrationUsersResource administrationUsersResource;
 
-    @Inject
-    private AuthenticationResource authenticationResource;
+    	@Inject
+    	private AuthenticationResource authenticationResource;
 
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> resources = new HashSet<Class<?>>();
 		resources.add(UserResouce.class);
-        resources.add(AdministrationUsersResource.class);
-        resources.add(AuthenticationResource.class);
+		resources.add(SystemConfigResource.class);
+        	resources.add(AdministrationUsersResource.class);
+        	resources.add(AuthenticationResource.class);
 		return resources;
 	}
 
@@ -32,8 +36,9 @@ public class EndPointsLoader extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> resources = new HashSet<Object>();
 		resources.add(userResouce);
-        resources.add(administrationUsersResource);
-        resources.add(authenticationResource);
+		resources.add(systemConfigResource);
+ 		resources.add(administrationUsersResource);
+        	resources.add(authenticationResource);
 		return resources;
 	}
 

@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import sun.misc.BASE64Encoder;
 
+@SuppressWarnings("restriction")
 public class EncryptorResources {
 
 	public static String encrypt(String value) throws EncryptedException {

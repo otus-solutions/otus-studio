@@ -7,8 +7,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.org.studio.exception.EmailNotFoundException;
-import br.org.studio.exception.InvalidPasswordException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
 import br.org.studio.security.SecurityService;
 

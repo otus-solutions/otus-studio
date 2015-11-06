@@ -6,6 +6,11 @@ describe('the first time when the user tries access the login page', function() 
         browser.get('studio/');
     });
 
+    afterEach(function() {
+        browser.executeScript('window.sessionStorage.clear();');
+        browser.executeScript('window.localStorage.clear();');
+    });
+
     it('then the system must be redirects to register administrator page', function() {
         expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/adm-register-app/register/register-adm.html');
     });

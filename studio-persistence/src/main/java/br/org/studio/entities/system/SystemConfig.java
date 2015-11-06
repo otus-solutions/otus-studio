@@ -1,6 +1,9 @@
 package br.org.studio.entities.system;
 
 import javax.persistence.*;
+
+import br.org.studio.entities.email.EmailSender;
+
 import java.io.Serializable;
 
 /**
@@ -18,13 +21,27 @@ public class SystemConfig implements Serializable{
     private Long id;
 
     private Boolean ready;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private EmailSender emailSender;
+    
+    public SystemConfig(EmailSender emailSender) {
+		this.emailSender = emailSender;
+	}
+    
+	protected SystemConfig() {
+	}
 
-
-    public void finalizeConfiguration(){
+	public void finalizeConfiguration(){
         this.ready = Boolean.TRUE;
     }
 
     public Boolean isReady(){
         return ready;
     }
+
+	public EmailSender getEmailSender() {
+		return emailSender;
+	}
+    
 }

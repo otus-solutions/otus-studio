@@ -1,7 +1,12 @@
 package br.org.studio.administration;
 
 import br.org.studio.dao.UserDao;
+import br.org.studio.email.DisableUserNotificationEmail;
+import br.org.studio.email.EmailNotifierService;
+import br.org.studio.email.EnableUserNotificationEmail;
+import br.org.studio.email.NewUserNotificationEmail;
 import br.org.studio.entities.system.User;
+import br.org.studio.exception.EmailNotificationException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
@@ -22,6 +27,9 @@ public class AdministrationUserServiceBean implements AdministrationUserService{
 
     @Inject
     private UserDao userDao;
+
+    @Inject
+    private EmailNotifierService emailNotifierService;
 
     @Override
     public AdministrationUser fetchUsers(){
@@ -56,7 +64,14 @@ public class AdministrationUserServiceBean implements AdministrationUserService{
                     user.disable();
 
                     userDao.update(user);
-                } catch (DataNotFoundException e) {
+
+                    DisableUserNotificationEmail disableUserNotificationEmail = new DisableUserNotificationEmail();
+                    disableUserNotificationEmail.defineRecipient(user);
+                    disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+
+                    emailNotifierService.sendEmail(disableUserNotificationEmail);
+                } catch (DataNotFoundException | EmailNotificationException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -73,7 +88,14 @@ public class AdministrationUserServiceBean implements AdministrationUserService{
                     user.enable();
 
                     userDao.update(user);
-                } catch (DataNotFoundException e) {
+
+                    EnableUserNotificationEmail enableUserNotificationEmail = new EnableUserNotificationEmail();
+                    enableUserNotificationEmail.defineRecipient(user);
+                    enableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+
+                    emailNotifierService.sendEmail(enableUserNotificationEmail);
+                } catch (DataNotFoundException | EmailNotificationException e) {
+                    e.printStackTrace();
                 }
             }
         });

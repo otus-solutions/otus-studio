@@ -1,10 +1,10 @@
 var RegisterAdminPage = function() {
-    var userNameInput = element(by.model('user.name'));
-    var surnameInput = element(by.model('user.surname'));
-    var phoneInput = element(by.model('user.phone'));
-    var emailInput = element(by.model('user.email'));
-    var passwordInput = element(by.model('user.password'));
-    var passwordConfirmInput = element(by.model('user.passwordConfirm'));
+    var userNameInput = element(by.model('systemConf.user.name'));
+    var surnameInput = element(by.model('systemConf.user.surname'));
+    var phoneInput = element(by.model('systemConf.user.phone'));
+    var emailInput = element(by.model('systemConf.user.email'));
+    var passwordInput = element(by.model('systemConf.user.password'));
+    var passwordConfirmInput = element(by.model('systemConf.user.passwordConfirm'));
     var registerButton = element(by.buttonText('Cadastrar'));
     var confirmAlertButton = element(by.css('button[ng-click="dialog.hide()"]'));
 
