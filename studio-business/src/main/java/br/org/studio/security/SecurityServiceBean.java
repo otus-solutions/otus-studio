@@ -22,7 +22,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 
 	@Inject
 	private UserDao userDao;
-	
+
 	@Inject
 	private UserDataContext userDataContext;
 
@@ -30,14 +30,14 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 	public void authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException {
 		try {
 			User user = userDao.fetchByEmail(loginDto.getEmail());
-			
+
 			if(user.getPassword().equals(loginDto.getPassword())){
 				userDataContext.login(user);
-				
+
 			}else{
 				throw new InvalidPasswordException();
 			}
-			
+
 		} catch (DataNotFoundException e) {
 			throw new EmailNotFoundException();
 		}

@@ -12,6 +12,8 @@ public interface UserDao extends GenericDao {
 
 	User fetchByEmail(String email) throws DataNotFoundException;
 
-    	List fetchAll();
+    User fetchEnableByEmail(String email) throws DataNotFoundException;
+
+    List fetchAll();
 
 }
