@@ -1,6 +1,7 @@
 package br.org.studio.administration;
 
 import br.org.studio.dao.UserDaoBean;
+import br.org.studio.email.EmailNotifierServiceBean;
 import br.org.studio.entities.system.User;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.UserDto;
@@ -32,6 +33,9 @@ public class AdministrationUserServiceBeanTest {
 
     @InjectMocks
     private AdministrationUserServiceBean administrationUserServiceBean;
+
+    @Mock
+    private EmailNotifierServiceBean emailNotifierServiceBean;
 
     @Mock
     private UserDaoBean userDaoBean;
