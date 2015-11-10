@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.org.tutty.Equalization;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 @Entity
 @Table(name = "user", catalog = "studio", schema = "public")

@@ -10,7 +10,6 @@ import br.org.owail.io.TemplateReader;
 import br.org.owail.sender.email.Sender;
 import br.org.owail.sender.gmail.GMailer;
 import br.org.studio.dao.SystemConfigDao;
-import br.org.studio.dao.UserDao;
 import br.org.studio.entities.email.EmailSender;
 import br.org.studio.exception.EmailNotificationException;
 import br.org.studio.exceptions.DataNotFoundException;
@@ -18,8 +17,6 @@ import br.org.studio.exceptions.DataNotFoundException;
 @Stateless
 public class EmailNotifierServiceBean implements EmailNotifierService {
 
-	@Inject
-	private UserDao userDao;
 	@Inject
 	private SystemConfigDao systemConfigDao;
 

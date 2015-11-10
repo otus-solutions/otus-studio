@@ -1,22 +1,22 @@
 package br.org.studio.administration;
 
+import java.util.List;
+import java.util.function.Consumer;
+
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
 import br.org.studio.dao.UserDao;
 import br.org.studio.email.DisableUserNotificationEmail;
 import br.org.studio.email.EmailNotifierService;
 import br.org.studio.email.EnableUserNotificationEmail;
-import br.org.studio.email.NewUserNotificationEmail;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.EmailNotificationException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
 import br.org.tutty.Equalizer;
-
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Created by diogoferreira on 29/10/15.
