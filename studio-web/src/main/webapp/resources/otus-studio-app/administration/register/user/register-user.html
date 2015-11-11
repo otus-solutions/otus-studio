@@ -7,6 +7,20 @@
     <title>Cadastro de usuários</title>
     <link href="otus-studio-app/administration/register/user/register-user.css" rel="stylesheet" />
     <link href="shared/img/otus-studio-img.png" rel="icon" />
+    
+     <!-- Angular -->
+    <script src="shared/lib/angularjs/angular.min.js"></script>
+    <!-- /Angular -->
+    <!-- Angular Material Dependencies -->
+    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+    
+    <script src="otus-studio-app/app.js"></script>
+    <script src="otus-studio-app/administration/register/user/register-user.ctrl.js"></script>
 </head>
 
 <body>
@@ -40,9 +54,10 @@
                     </div>
                     <md-input-container>
                         <label>Celular</label>
-                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-mask="(999) 9999-9999" required />
+                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9" required />
                         <div ng-messages="registerUserForm.phone.$error">
                             <div ng-message="required">Obrigatório</div>
+                            <div ng-message="mask">Insira um número válido.</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
@@ -80,18 +95,6 @@
     <footer>
         <p>Copyright© 2015 ELSA Brasil Corporation.</p>
     </footer>
-    <!-- Angular -->
-    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
-    <!-- /Angular -->
-    <!-- Angular Material Dependencies -->
-    <script src="shared/lib/angularjs/angular.min.js"></script>
-    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
-    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
-    <script src="otus-studio-app/app.js"></script>
-    <script src="otus-studio-app/administration/register/user/register-user.ctrl.js"></script>
 </body>
 
 </html>
