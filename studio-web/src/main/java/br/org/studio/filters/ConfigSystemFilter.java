@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.org.studio.configuration.SystemConfigService;
 
-@WebFilter(urlPatterns = "/index.html")
+@WebFilter(urlPatterns = "/app/public/login.html")
 public class ConfigSystemFilter implements Filter{
 
     private static final String CONFIG_PAGE = "/app/public/setting/register-adm.html";
