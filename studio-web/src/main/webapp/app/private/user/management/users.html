@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Users">
+<head>
+    <meta charset="UTF-8"/>
+    <base href="/studio/resources/">
+    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+    <link rel="stylesheet" href="otus-studio-app/session/users/style.css">
+    <title>Usuarios</title>
+</head>
+<body>
+<md-list ng-controller="UsersCtrl" ng-cloak>
+
+    <md-toolbar class="md-theme-light">
+        <div class="md-toolbar-tools background-toolbar-blue">
+            <h2>
+                <span>Inativos</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="enableUsers()">
+                <md-icon md-svg-icon="shared/img/icons/ic_lock_open_white_36px.svg"></md-icon>
+            </md-button>
+        </div>
+
+    </md-toolbar>
+
+    <md-list-item class="md-3-line" ng-repeat="disabledUser in users.disabledUsers">
+        <div class="md-list-item-text" layout="column">
+            <md-checkbox ng-model="disabledUser.selected" ng-disabled="disabledUser.admin" class="md-secondary"></md-checkbox>
+            <h3> {{disabledUser.name}}</h3>
+
+            <p> {{disabledUser.email}}</p>
+            <h4 ng-show="disabledUser.admin">Administrador</h4>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+
+    <div layout="row" layout-align="center center" ng-show="!users.disabledUsers.length">
+        <p class="md-body-2"> Nenhum Usuário Encontrado</p>
+    </div>
+    </md-content>
+
+    <md-toolbar class="md-theme-light">
+        <div class="md-toolbar-tools background-toolbar-blue">
+            <h2>
+                <span>Ativos</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="disableUsers()">
+                <md-icon md-svg-icon="shared/img/icons/ic_lock_outline_white_36px.svg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-list-item class="md-3-line" ng-repeat="activedUser in users.activedUsers">
+        <div class="md-list-item-text" layout="column">
+            <md-checkbox ng-model="activedUser.selected" ng-disabled="activedUser.admin" class="md-secondary"></md-checkbox>
+            <h3> {{activedUser.name}}</h3>
+
+            <p> {{activedUser.email}}</p>
+            <h4 ng-show="activedUser.admin">Administrador</h4>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+
+    <div layout="row" layout-align="center center" ng-show="!users.activedUsers.length">
+        <p class="md-body-2"> Nenhum Usuário Encontrado</p>
+    </div>
+</md-list>
+
+<!-- Angular Material Dependencies -->
+<script src="shared/lib/angularjs/angular.min.js"></script>
+<script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+<script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+<script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+<script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+<script src="otus-studio-app/session/users/users-module.js"></script>
+<script src="otus-studio-app/session/users/users-ctrl.js"></script>
+
+</body>
+</html>

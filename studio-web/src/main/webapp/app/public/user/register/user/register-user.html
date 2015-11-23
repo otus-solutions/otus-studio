@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="StudioApp">
+
+<head>
+    <base href="/studio/app">
+    <meta charset="UTF-8" />
+    <title>Cadastro de usuários</title>
+    <link href="public/user/register/user/register-user.css" rel="stylesheet" />
+    <link href="shared/img/otus-studio-img.png" rel="icon" />
+
+     <!-- Angular -->
+    <script src="shared/lib/angularjs/angular.min.js"></script>
+    <!-- /Angular -->
+    <!-- Angular Material Dependencies -->
+    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+
+    <script src="otus-studio-app/app.js"></script>
+    <script src="otus-studio-app/administration/register/user/register-user.ctrl.js"></script>
+</head>
+
+<body>
+    <img src="shared/img/otus-studio-img.png" id="logo" />
+    <h1>Otus Studio</h1>
+    <div id="center">
+        <div ng-controller="RegisterUserCtrl as ctrl" layout="column">
+            <md-content layout-padding class="autoScroll">
+                <md-toolbar class="md-theme-light md-default-theme">
+                    <h2 class="md-toolbar-tools">
+                        <span>Cadastro de usuários</span>
+                    </h2>
+                </md-toolbar>
+                <br/>
+                <form name="registerUserForm">
+                    <div layout layout-sm="column">
+                        <md-input-container flex>
+                            <label>Nome</label>
+                            <input name="name" ng-model="user.name" type="text" required />
+                            <div ng-messages="registerUserForm.name.$error">
+                                <div ng-message="required">Obrigatório</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Sobrenome</label>
+                            <input name="surname" ng-model="user.surname" type="text" required />
+                            <div ng-messages="registerUserForm.surname.$error">
+                                <div ng-message="required">Obrigatório</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <md-input-container>
+                        <label>Celular</label>
+                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9" required />
+                        <div ng-messages="registerUserForm.phone.$error">
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="mask">Insira um número válido.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>E-mail</label>
+                        <input name="email" ng-model="user.email" type="email" unique required />
+                        <div ng-messages="registerUserForm.email.$error">
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="emailInUse">E-mail já em uso.</div>
+                            <div ng-message="email">Insira um e-mail válido.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Senha</label>
+                        <input name="password" ng-blur="ctrl.matchPassword()" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
+                        <div ng-messages="registerUserForm.password.$error">
+                            <div ng-message="required" ng-show="registerUserForm.password.$error.required">Obrigatório</div>
+                            <div ng-message="minlength" ng-show="registerUserForm.password.$error.minlength">Mínimo 6 caracteres</div>
+                            <div ng-message="pattern" ng-show="registerUserForm.password.$error.pattern">
+                                <br />Deve conter pelo menos um caracter minúsculo, um maiúsculo e um dígito</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Confirmação de Senha</label>
+                        <input name="passwordConfirm" ng-blur="ctrl.matchPassword()" ng-model="user.passwordConfirm" type="password" ng-required="true" />
+                        <div ng-messages="registerUserForm.passwordConfirm.$error">
+                            <div ng-message="required" ng-show="registerUserForm.passwordConfirm.$error.required">Obrigatório</div>
+                            <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
+                        </div>
+                    </md-input-container>
+                    <md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerUserForm.$invalid" ng-click="ctrl.register(user)">Cadastrar</md-button>
+                </form>
+            </md-content>
+        </div>
+    </div>
+    <footer>
+        <p>Copyright© 2015 ELSA Brasil Corporation.</p>
+    </footer>
+</body>
+
+</html>
