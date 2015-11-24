@@ -36,8 +36,10 @@ public class AdministrationUsersResource {
         List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
 
         administrationUserService.disableUsers(convertedUsers);
-        // TODO Aplicar Response
-        return new Gson().toJson(Boolean.TRUE);
+        Response response = new Response();
+        response.setData(Boolean.TRUE);
+        return response.toJson();
+       
     }
 
     @POST
@@ -49,7 +51,8 @@ public class AdministrationUsersResource {
         List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
 
         administrationUserService.enableUsers(convertedUsers);
-        // TODO Aplicar Response
-        return new Gson().toJson(Boolean.TRUE);
+        Response response = new Response();
+        response.setData(Boolean.TRUE);
+        return response.toJson();
     }
 }

@@ -3,7 +3,9 @@ package br.org.studio.rest;
 import br.org.studio.administration.AdministrationUserServiceBean;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
+
 import com.google.gson.Gson;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,8 +48,10 @@ public class AdministrationUsersResourceTest {
 
         String result = administrationUsersResource.disableUsers(usersJson);
         Mockito.verify(administrationUserServiceBean).disableUsers(Matchers.anyList());
+        
+        Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertTrue(new Gson().fromJson(result, Boolean.class));
+        Assert.assertEquals("true", response.getData());
     }
 
     @Test
@@ -60,7 +64,9 @@ public class AdministrationUsersResourceTest {
 
         String result = administrationUsersResource.enableUsers(usersJson);
         Mockito.verify(administrationUserServiceBean).enableUsers(Matchers.anyList());
+        
+        Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertTrue(new Gson().fromJson(result, Boolean.class));
+        Assert.assertEquals("true", response.getData());
     }
 }
