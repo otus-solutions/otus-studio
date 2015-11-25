@@ -30,3 +30,7 @@ body {
 	    margin-top: 56px;
 	    width: 135px;
 }
+
+md-toolbar {
+    margin-bottom : 30px;
+}
