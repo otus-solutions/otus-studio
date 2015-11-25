@@ -1,5 +1,5 @@
 angular
-    .module('StudioApp', ['ui.router', 'ngMaterial', 'ui.mask', 'Home', 'User'])
+    .module('StudioApp', ['ui.router', 'ngMaterial','ngMessages', 'ui.mask', 'Home', 'User', 'Repository'])
     .config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
 
@@ -17,6 +17,10 @@ angular
                 .state('user-management', {
                     url: '/user-management',
                     templateUrl: 'private/user/management/users.html'
+                })
+                .state('repository', {
+                    url: '/repository',
+                    templateUrl: 'private/repository/repository.html'
                 });
 
             /* Default state (route) */

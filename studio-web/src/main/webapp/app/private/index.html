@@ -34,6 +34,18 @@
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()" aria-label="Repositórios">
+                                Repositórios
+                            </md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="openRepository()" aria-label="Adicionar">
+                                        Adicionar
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
                     </md-menu-bar>
                     <div class="image-user-div">
                         <img ng-src="shared/img/prof_bruce_duncan.jpg" />
@@ -61,6 +73,8 @@
 <script src="private/home/module.js"></script>
 <script src="private/user/module.js"></script>
 <script src="private/user/management/users-ctrl.js"></script>
+<script src="private/repository/repository.module.js"></script>
+<script src="private/repository/repository.ctrl.js"></script>
 <script src="app.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>
 
