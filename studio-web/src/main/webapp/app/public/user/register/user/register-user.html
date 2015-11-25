@@ -7,8 +7,7 @@
     <title>Cadastro de usuários</title>
     <link href="public/user/register/user/register-user.css" rel="stylesheet" />
     <link href="shared/img/otus-studio-img.png" rel="icon" />
-
-     <!-- Angular -->
+    <!-- Angular -->
     <script src="shared/lib/angularjs/angular.min.js"></script>
     <!-- /Angular -->
     <!-- Angular Material Dependencies -->
@@ -18,7 +17,6 @@
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
-
     <script src="app.js"></script>
     <script src="public/user/register/user/register-user.ctrl.js"></script>
 </head>
@@ -54,7 +52,7 @@
                     </div>
                     <md-input-container>
                         <label>Celular</label>
-                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9" required />
+                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(999) 99999999?9" required />
                         <div ng-messages="registerUserForm.phone.$error">
                             <div ng-message="required">Obrigatório</div>
                             <div ng-message="mask">Insira um número válido.</div>

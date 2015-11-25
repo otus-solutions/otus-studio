@@ -4,8 +4,8 @@ angular
         function($stateProvider, $urlRouterProvider) {
 
             /**
-             * The properties 'templateUrl' consider the url path from
-             * /studio/app/, resulting on this request:
+             * The property 'templateUrl' will consider the url path
+             * from of /studio/app/, resulting in this request:
              *
              * /studio/app/<templateUrl_value>
              */
@@ -14,8 +14,8 @@ angular
                     url: '/home',
                     templateUrl: 'private/home/home.html'
                 })
-                .state('userManagement', {
-                    url: '/userManagement',
+                .state('user-management', {
+                    url: '/user-management',
                     templateUrl: 'private/user/management/users.html'
                 });
 
