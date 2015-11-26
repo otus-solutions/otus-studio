@@ -52,7 +52,8 @@ public class SecurityServiceBeanTest {
 		Mockito.verify(userDataContext).login(httpSession, user);
 	}
 
-    @Test(expected = EmailNotFoundException.class)
+    @SuppressWarnings("unchecked")
+	@Test(expected = EmailNotFoundException.class)
     public void authentication_should_invalid_with_user_isDisabled() throws EmailNotFoundException, InvalidPasswordException, DataNotFoundException {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenThrow(DataNotFoundException.class);
@@ -71,7 +72,6 @@ public class SecurityServiceBeanTest {
 		service.authenticate(loginAuthentication);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(expected = InvalidPasswordException.class)
 	public void authentication_login_password_invalid() throws DataNotFoundException, InvalidPasswordException, EmailNotFoundException{
         String invalidPassword = "INVALID";

@@ -1,36 +1,46 @@
 package br.org.studio.context;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.servlet.http.HttpSession;
 
-import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import br.org.studio.entities.system.User;
 import br.org.studio.exceptions.DataNotFoundException;
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserDataContextTest {
 	
 	@Mock
-	private HttpSession httpSession;
-	
+	private User user;
 	@Mock
+	private HttpSession session;
+	
 	private UserDataContext userDataContext;
-
-	@Ignore
-	@Test
-	public void method_login_should_put_a_user_in_map() throws DataNotFoundException{
-		//TODO 
-		Mockito.when(httpSession.equals(Matchers.any())).thenReturn(true); 
-		
-		User user = new User();
-		userDataContext.login(httpSession, user);
-		Assert.assertEquals(user, userDataContext.getLoggedUser(httpSession));
+	
+	@Before
+	public void setUp() {
+		userDataContext = new UserDataContext();
+		userDataContext.setUp();
+		userDataContext.login(session, user);
 	}
+	
+	@Test
+	public void method_getLoggedUser_should_return_a_logged_user() throws DataNotFoundException{
+		assertEquals(user, userDataContext.getLoggedUser(session));
+	}
+	
+	@Test(expected = DataNotFoundException.class)
+	public void method_getLoggedUser_should_trowns_a_DataNotFoundException_when_not_exists_a_logged_user() throws DataNotFoundException{
+		//to clean the array list
+		userDataContext.setUp();
+		userDataContext.getLoggedUser(session);
+	}
+
 	
 }
