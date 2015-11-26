@@ -51,7 +51,7 @@ public class AdministrationUsersResourceTest {
         
         Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertEquals("true", response.getData());
+        Assert.assertEquals("true", response.getData().toString());
     }
 
     @Test
@@ -67,6 +67,6 @@ public class AdministrationUsersResourceTest {
         
         Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertEquals("true", response.getData());
+        Assert.assertEquals("true", response.getData().toString());
     }
 }
