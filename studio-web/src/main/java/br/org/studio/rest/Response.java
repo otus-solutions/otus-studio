@@ -4,15 +4,14 @@ import com.google.gson.Gson;
 
 public class Response {
 
-	private String data;
+	private Object data;
 
-	public String getData() {
+	public Object getData() {
 		return data;
 	}
 
 	public void setData(Object data) {
-		Gson gson = new Gson();
-		this.data = gson.toJson(data);
+		this.data = data;
 	}
 	
 	public String toJson() {

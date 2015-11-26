@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="Home">
-
-<head>
-	<base href="/studio/app/" />
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="private/home/home.css">
-	<link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
-	<title>Home</title>
-</head>
-
-<body>
-	<div id="center">
+	<div ng-controller="HomeCtrl">
 		<div layout="column" >
 			<md-toolbar class="md-toolbar-tools background-toolbar-blue">
 				<h2 class="md-flex">Inicialização do Repositório</h2>
@@ -18,19 +6,18 @@
 			<br>
 			<br>
 			<md-content flex layout-padding>
-				<div layout="column" layout-align="center center">
-						<p class="md-subhead">Olá, <strong>Carolzinha</strong> você não possui nenhum repositório.<br>
+				<div layout="column" layout-align="center center" ng-show=isAdmin(loggedUser)>
+						<p class="md-subhead">Olá, <strong>{{loggedUser.name}}</strong><label type="text" ng-model="loggedUser.name"/> você não possui nenhum repositório.<br>
 						Para começar a utilizar o sistema você precisa de pelo menos um repositório.<md-button class="md-primary">Saiba mais.</md-button><br>
 						Para criar um repositório: <strong>Repositórios</strong> > <strong>Novo</strong>.</p>						
 				</div>
-				<div layout="column" layout-align="center center">
-						<p class="md-subhead">Olá, <strong>Carolzinha</strong> você não possui nenhum repositório.<br>
+				<div layout="column" layout-align="center center" ng-show=isNotAdmin(loggedUser)>
+						<p class="md-subhead">Olá, <strong>{{loggedUser.name}}</strong><label type="text" ng-model="loggedUser.name"/> você não possui nenhum repositório.<br>
 						Para começar a utilizar o sistema você precisa de pelo menos um repositório.<md-button class="md-primary">Saiba mais.</md-button><br>
 						Conecte um repositório ou contate o administrador do sistema.</p>						
 				</div>
 			</md-content>
 		</div>
 	</div>
-</body>
-</html>
+
 

@@ -1,5 +1,16 @@
 package br.com.studio.security.service;
 
+import static org.mockito.Mockito.when;
+
+import javax.servlet.http.HttpSession;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import br.org.studio.context.UserDataContext;
 import br.org.studio.dao.UserDao;
 import br.org.studio.entities.system.User;
@@ -8,16 +19,6 @@ import br.org.studio.exception.InvalidPasswordException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
 import br.org.studio.security.SecurityServiceBean;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.xml.crypto.Data;
-
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SecurityServiceBeanTest {
@@ -36,6 +37,8 @@ public class SecurityServiceBeanTest {
 	private UserDataContext userDataContext;
 	@Mock
 	private User user;
+	@Mock
+	private HttpSession httpSession;
 
 	@Test
 	public void authentication_login_with_data() throws InvalidPasswordException, EmailNotFoundException, DataNotFoundException {
@@ -43,10 +46,10 @@ public class SecurityServiceBeanTest {
 		Mockito.when(user.getPassword()).thenReturn(PASSWORD);
         Mockito.when(user.isEnable()).thenReturn(true);
 
-		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD);
+		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD, httpSession);
 		service.authenticate(loginAuthentication);
 
-		Mockito.verify(userDataContext).login(user);
+		Mockito.verify(userDataContext).login(httpSession, user);
 	}
 
     @Test(expected = EmailNotFoundException.class)
@@ -54,7 +57,7 @@ public class SecurityServiceBeanTest {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenThrow(DataNotFoundException.class);
 
-        LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD);
+        LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD, httpSession);
         service.authenticate(loginAuthentication);
 
     }
@@ -64,7 +67,7 @@ public class SecurityServiceBeanTest {
 	public void authentication_login_email_invalid() throws InvalidPasswordException, EmailNotFoundException, DataNotFoundException {
 		when(userDao.fetchByEmail(EMAIL)).thenThrow(EmailNotFoundException.class);
 
-		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD);
+		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD, httpSession);
 		service.authenticate(loginAuthentication);
 	}
 
@@ -76,7 +79,7 @@ public class SecurityServiceBeanTest {
 		Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(user.getPassword()).thenReturn(invalidPassword);
 
-		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD);
+		LoginAuthenticationDto loginAuthentication = new LoginAuthenticationDto(EMAIL, PASSWORD, httpSession);
 		service.authenticate(loginAuthentication);
 
 	}
