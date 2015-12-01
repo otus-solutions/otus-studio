@@ -48,10 +48,10 @@ public class AdministrationUsersResourceTest {
 
         String result = administrationUsersResource.disableUsers(usersJson);
         Mockito.verify(administrationUserServiceBean).disableUsers(Matchers.anyList());
-        
+
         Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertEquals("true", response.getData());
+        Assert.assertEquals(Boolean.TRUE, response.getData());
     }
 
     @Test
@@ -64,9 +64,9 @@ public class AdministrationUsersResourceTest {
 
         String result = administrationUsersResource.enableUsers(usersJson);
         Mockito.verify(administrationUserServiceBean).enableUsers(Matchers.anyList());
-        
+
         Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertEquals("true", response.getData());
+        Assert.assertEquals(Boolean.TRUE, response.getData());
     }
 }

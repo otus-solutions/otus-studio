@@ -5,17 +5,26 @@
         <form name="repositoryForm" novalidate>
             <md-input-container>
                 <label>Nome do repositório</label>
-                <input name="name" ng-model="repository.name" type="text" ng-required="true" />
+                <input name="name" ng-blur="existRepository(repository)" ng-model="repository.name" type="text" ng-required="true" />
                 <div ng-messages="repositoryForm.name.$error">
                     <div ng-message="required">Obrigatório</div>
+                    <div ng-message="nameInUse">Repositório já cadastrado</div>
                 </div>
             </md-input-container>
             <div layout layout-sm="column">
                 <md-input-container flex>
-                    <label>URL</label>
-                    <input name="url" ng-model="repository.url" type="text" ng-required="true" />
-                    <div ng-messages="repositoryForm.url.$error">
+                    <label>Nome Base de Dados</label>
+                    <input name="database" ng-model="repository.database" type="text" ng-required="true" />
+                    <div ng-messages="repositoryForm.database.$error">
                         <div ng-message="required">Obrigatório</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>HOST</label>
+                    <input name="host" ng-model="repository.host" type="text" ng-required="true" />
+                    <div ng-messages="repositoryForm.host.$error">
+                        <div ng-message="required">Obrigatório</div>
+                        <div ng-message="connection">Problema ao conectar. Verifique os dados do servidor.</div>
                     </div>
                 </md-input-container>
                 <md-input-container flex="30">
@@ -35,12 +44,18 @@
             </md-input-container>
             <md-input-container>
                 <label>Senha</label>
-                <input name="password" ng-model="repository.password" type="text" ng-required="true" />
+                <input name="password" ng-model="repository.password" ng-required="true" type="password"/>
                 <div ng-messages="repositoryForm.password.$error">
                     <div ng-message="required">Obrigatório</div>
                 </div>
             </md-input-container>
-            <md-button class="md-raised md-primary" ng-disabled="repositoryForm.$invalid" ng-click="connect(repository)">Conectar</md-button>
+
+            <md-input-container class="md-block">
+                <label>Descrição</label>
+                <textarea ng-model="repository.description" columns="1" md-maxlength="150" rows="2"></textarea>
+            </md-input-container>
+
+            <md-button class="md-raised md-primary" ng-disabled="repositoryForm.$invalid" ng-click="actionButton(repository)">{{connectButton}}</md-button>
             <div layout="row" layout-sm="column" layout-align="center">
                 <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
             </div>
