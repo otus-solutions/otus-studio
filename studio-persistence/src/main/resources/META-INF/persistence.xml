@@ -18,4 +18,8 @@
             <property name="hibernate.show_sql" value="false" />
         </properties>
     </persistence-unit>
+    <persistence-unit name="RepositoryPool"	transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.org.studio.entities.repository.Survey</class>
+	</persistence-unit>
 </persistence>

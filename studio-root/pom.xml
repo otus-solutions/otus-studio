@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.org.studio</groupId>
     <artifactId>studio-root</artifactId>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.2.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>studio-root</name>
 
@@ -30,11 +30,6 @@
     </modules>
 
     <repositories>
-        <repository>
-            <id>prime-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-        </repository>
         <repository>
             <id>releases</id>
             <url>http://ccem.ufrgs.br:8081/nexus/content/repositories/releases</url>

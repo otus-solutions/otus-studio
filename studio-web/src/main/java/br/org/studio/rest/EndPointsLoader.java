@@ -10,36 +10,41 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("studio")
 public class EndPointsLoader extends Application {
 
-	@Inject
-	private UserResouce userResouce;
-	
-	@Inject
-	private SystemConfigResource systemConfigResource;
+    @Inject
+    private UserResouce userResouce;
 
-   	@Inject
-  	private AdministrationUsersResource administrationUsersResource;
+    @Inject
+    private SystemConfigResource systemConfigResource;
 
-    	@Inject
-    	private AuthenticationResource authenticationResource;
+    @Inject
+    private AdministrationUsersResource administrationUsersResource;
 
-	@Override
-	public Set<Class<?>> getClasses() {
-		Set<Class<?>> resources = new HashSet<Class<?>>();
-		resources.add(UserResouce.class);
-		resources.add(SystemConfigResource.class);
-        	resources.add(AdministrationUsersResource.class);
-        	resources.add(AuthenticationResource.class);
-		return resources;
-	}
+    @Inject
+    private AuthenticationResource authenticationResource;
 
-	@Override
-	public Set<Object> getSingletons() {
-		Set<Object> resources = new HashSet<Object>();
-		resources.add(userResouce);
-		resources.add(systemConfigResource);
- 		resources.add(administrationUsersResource);
-        	resources.add(authenticationResource);
-		return resources;
-	}
+    @Inject
+    private RepositoryResource repositoryResource;
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> resources = new HashSet<Class<?>>();
+        resources.add(UserResouce.class);
+        resources.add(SystemConfigResource.class);
+        resources.add(AdministrationUsersResource.class);
+        resources.add(AuthenticationResource.class);
+        resources.add(RepositoryResource.class);
+        return resources;
+    }
+
+    @Override
+    public Set<Object> getSingletons() {
+        Set<Object> resources = new HashSet<Object>();
+        resources.add(userResouce);
+        resources.add(systemConfigResource);
+        resources.add(administrationUsersResource);
+        resources.add(authenticationResource);
+        resources.add(repositoryResource);
+        return resources;
+    }
 
 }

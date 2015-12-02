@@ -4,10 +4,6 @@
 	box-sizing: border-box;
 }
 
-body {
-	padding-top: 10rem;
-}
-
 #logo {
 	margin: 0 auto;
 	width: 180px;
