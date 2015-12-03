@@ -81,12 +81,13 @@ public class RepositoryServiceBean implements RepositoryService {
 
 	private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
 		// TODO Implementar criação da base de dados para repositorio
+		
 		RepositoryConfiguration configuration = RepositoryConfiguration.forPostgre(repositoryDto.getName(), repositoryDto.getHost(),
-				repositoryDto.getPort(), repositoryDto.getUsername(), repositoryDto.getPassword());
+				String.valueOf(repositoryDto.getPort()), repositoryDto.getUsername(), repositoryDto.getPassword());
 
 		RepositoryManagerFacade managerFacade = new RepositoryManagerFacade();
 
 		managerFacade.createRepository(configuration);
-		managerFacade.deleteRepository(configuration);
+		//managerFacade.deleteRepository(configuration);
 	}
 }

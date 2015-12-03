@@ -55,7 +55,7 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
     function addRepository(repository) {
         buttonStateAdding();
 
-        $http.post(ADD_REPOSITORY, repository).then(function (response) {
+        $http.post(CREATE_REPOSITORY, repository).then(function (response) {
             buttonStateWaiting();
 
             if (response.data.data) {
