@@ -26,7 +26,7 @@
                             <md-button ng-click="$mdOpenMenu()" aria-label="Administração">
                                 Administração
                             </md-button>
-                            <md-menu-content>
+                            <md-menu-content  width="4">
                                 <md-menu-item>
                                     <md-button ng-click="openAdministrationUsers()" aria-label="Usuários">
                                         Usuários
@@ -38,12 +38,17 @@
                             <md-button ng-click="$mdOpenMenu()" aria-label="Repositórios">
                                 Repositórios
                             </md-button>
-                            <md-menu-content>
-                                <md-menu-item>
-                                    <md-button ng-click="openAddRepository()" aria-label="Adicionar">
-                                        Adicionar
-                                    </md-button>
-                                </md-menu-item>
+                            <md-menu-content width="4">
+	                                <md-menu-item>
+		                                <md-button ng-click="openNewRepository()" aria-label="Novo">
+		                                        Novo
+	                                    </md-button>
+	                                </md-menu-item>
+	                                <md-menu-item>
+	                                    <md-button ng-click="openConnectRepository()" aria-label="Conectar a um existe">
+	                                        Conectar a um existente
+	                                    </md-button>
+	                                </md-menu-item>
                             </md-menu-content>
                         </md-menu>
                     </md-menu-bar>

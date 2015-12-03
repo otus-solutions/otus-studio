@@ -1,15 +1,21 @@
 package br.org.studio.rest;
 
-import br.org.studio.exception.RepositoryNotFoundException;
-import br.org.studio.exception.RepositoryOfflineException;
-import br.org.studio.repository.RepositoryService;
-import br.org.studio.rest.dtos.repository.RepositoryDto;
-import com.google.gson.Gson;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+
+import br.org.studio.exception.RepositoryNotFoundException;
+import br.org.studio.repository.RepositoryService;
+import br.org.studio.rest.dtos.repository.RepositoryDto;
+
+import com.google.gson.Gson;
 
 @Path("repository")
 public class RepositoryResource {
@@ -49,10 +55,10 @@ public class RepositoryResource {
 
 
     @POST
-    @Path("/add")
+    @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String add(String repository) {
+    public String connect(String repository) {
         Response response = new Response();
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
 

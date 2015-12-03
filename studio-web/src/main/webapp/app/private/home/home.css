@@ -33,7 +33,7 @@ body {
 
 .md-open-menu-container {
 	    margin-top: 56px;
-	    width: 135px;
+	   /** width: 135px; */
 }
 
 md-toolbar {

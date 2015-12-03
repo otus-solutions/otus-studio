@@ -1,11 +1,11 @@
 angular.module('Repository').controller('RepositoryCtrl', function ($scope, $http, $location, $mdDialog) {
-    var CREATE_REPOSITORY = window.location.origin + '/studio/session/rest/repository/create';
-    var ADD_REPOSITORY = window.location.origin + '/studio/session/rest/repository/add';
+    var NEW_REPOSITORY = window.location.origin + '/studio/session/rest/repository/create';
+    var CONNECT_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connect';
     var GET_REPOSITORY = window.location.origin + '/studio/session/rest/repository/get';
     var CHECK_CONNECTION_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connectionStatus';
     var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
-    var REPOSITORY_ADD_ACTION = 'ADD';
-    var REPOSITORY_CREATE_ACTION = 'CREATE';
+    var REPOSITORY_CONNECT_ACTION = 'CONNECT';
+    var REPOSITORY_CREATE_ACTION = 'NEW';
 
     $scope.actionType = $location.search().actionType;
 
@@ -16,11 +16,11 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
 
         $http.post(CHECK_CONNECTION_REPOSITORY, repository).then(function (response) {
             if (response.data.data) {
-                if (angular.equals($scope.actionType, REPOSITORY_ADD_ACTION)) {
-                    addRepository(repository);
+                if (angular.equals($scope.actionType, REPOSITORY_CONNECT_ACTION)) {
+                    connectRepository(repository);
 
                 } else if (angular.equals($scope.actionType, REPOSITORY_CREATE_ACTION)) {
-                    console.log('CRIANDO');
+                	newRepository(repository);
                 }
             } else {
                 $scope.repositoryForm.host.$setValidity('connection', false);
@@ -52,11 +52,24 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
 
     }
 
-    function addRepository(repository) {
-        buttonStateAdding();
+    function connectRepository(repository) {
+        buttonStateConnection();
 
-        $http.post(CREATE_REPOSITORY, repository).then(function (response) {
+        $http.post(CONNECT_REPOSITORY, repository).then(function (response) {
             buttonStateWaiting();
+
+            if (response.data.data) {
+                successMessage();
+            }
+        });
+    };
+    
+    function newRepository(repository) {
+    	console.log('entrou aqui essa');
+    	buttonCreateState();
+    	console.log($scope.connectButton);
+    	
+    	$http.post(NEW_REPOSITORY, repository).then(function (response) {
 
             if (response.data.data) {
                 successMessage();
@@ -69,12 +82,17 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
         $scope.isLoading = false;
     };
 
+    function buttonCreateState() {
+    	$scope.connectButton = 'Criar';
+    	$scope.isLoading = false;
+    };
+
     function buttonStateValidation() {
         $scope.connectButton = 'Validando ...';
         $scope.isLoading = true;
     };
 
-    function buttonStateAdding() {
+    function buttonStateConnection() {
         $scope.connectButton = 'Conectando ...';
         $scope.isLoading = true;
     };
