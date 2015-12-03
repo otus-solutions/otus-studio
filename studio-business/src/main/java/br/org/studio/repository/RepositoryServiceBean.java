@@ -16,8 +16,8 @@ import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
-import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.RepositoryManagerFacade;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.tutty.Equalizer;
 
 @Stateless
