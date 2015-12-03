@@ -1,4 +1,4 @@
- === OTUS - Studio ===
+  === OTUS - Studio ===
 
 O projeto tem como intuito desenvolver uma plataforma para o desenvolvimento de formulários com baixa, media e alta complexidade. Fornecendo métodos e padrões, desenvolvidos com base em experiências, de
 largo acesso à comunidade e facilidade de utilização por envolvidos, não ligados diretamente a TI.
