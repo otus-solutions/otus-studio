@@ -106,15 +106,16 @@
 
                 <md-input-container>
                     <label>Email</label>
-                    <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" type="email" ng-required="true" />
+                    <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" ng-change="resetValidationEmail()" type="email" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderEmail.$error">
                         <div ng-message="email" ng-show="initialConfigSystemForm.emailSenderEmail.$error.email">Insira um email válido.</div>
                         <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderEmail.$error.required">Obrigatório</div>
+                        <div ng-message="emailService">Erro ao validar serviço de email. Verifique dados informados</div>
                     </div>
                 </md-input-container>
                 <md-input-container>
                     <label>Senha</label>
-                    <input name="emailSenderPassword" ng-blur="matchPasswordEmailSender()" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
+                    <input name="emailSenderPassword" ng-blur="matchPasswordEmailSender()" ng-change="resetValidationEmail()" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
                         <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPassword.$error.required">Obrigatório</div>
                     </div>
