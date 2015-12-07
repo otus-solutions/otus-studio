@@ -18,13 +18,17 @@ angular.module('StudioApp', ['ngMaterial', 'ui.mask', 'ngMessages']).controller(
     }
 
     $scope.register = function (systemConf) {
+        $scope.isLoading = true;
         $scope.validateEmailService(systemConf).then(function () {
             $http.post(window.location.origin + '/studio/session/rest/system/config', systemConf).then(function (response) {
+                    $scope.isLoading = false;
                     confirmAlertToNavigate();
                 },
-                function (response) {
-                    alert("Erro: Entre em contato com a equipe de desenvolvimento.");
+                function () {
+                    $scope.isLoading = false;
                 });
+        }, function () {
+            $scope.isLoading = false;
         });
     }
 
