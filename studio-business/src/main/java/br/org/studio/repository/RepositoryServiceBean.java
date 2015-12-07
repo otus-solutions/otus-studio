@@ -16,8 +16,9 @@ import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
-import br.org.studio.tool.RepositoryConfiguration;
 import br.org.studio.tool.RepositoryManagerFacade;
+import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 import br.org.tutty.Equalizer;
 
 @Stateless
@@ -82,12 +83,15 @@ public class RepositoryServiceBean implements RepositoryService {
 	private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
 		// TODO Implementar criação da base de dados para repositorio
 		
-		RepositoryConfiguration configuration = RepositoryConfiguration.forPostgre(repositoryDto.getDatabase(), repositoryDto.getHost(),
+		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto.getDatabase(), repositoryDto.getHost(),
 				String.valueOf(repositoryDto.getPort()), repositoryDto.getUsername(), repositoryDto.getPassword());
 
 		RepositoryManagerFacade managerFacade = new RepositoryManagerFacade();
 
-		managerFacade.createRepository(configuration);
-		//managerFacade.deleteRepository(configuration);
+		try {
+			managerFacade.createRepository(configuration);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
