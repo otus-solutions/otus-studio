@@ -13,7 +13,7 @@ public class RepositoryDto {
 	private String host;
 
 	@Equalization(name = "port")
-	private Integer port;
+	private String port;
 
 	@Equalization(name = "username")
 	private String username;
@@ -48,11 +48,11 @@ public class RepositoryDto {
 		this.host = host;
 	}
 
-	public Integer getPort() {
+	public String getPort() {
 		return port;
 	}
 
-	public void setPort(Integer port) {
+	public void setPort(String port) {
 		this.port = port;
 	}
 

@@ -29,7 +29,7 @@ public class Repository implements Serializable {
 
     @Equalization(name = "port")
     @NotNull
-    private Integer port;
+    private String port;
 
     @Equalization(name = "username")
     @NotNull

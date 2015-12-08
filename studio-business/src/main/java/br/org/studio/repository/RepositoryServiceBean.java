@@ -81,8 +81,6 @@ public class RepositoryServiceBean implements RepositoryService {
 	}
 
 	private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
-		// TODO Implementar criação da base de dados para repositorio
-		
 		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto.getDatabase(), repositoryDto.getHost(),
 				String.valueOf(repositoryDto.getPort()), repositoryDto.getUsername(), repositoryDto.getPassword());
 
