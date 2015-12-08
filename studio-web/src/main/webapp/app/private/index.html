@@ -9,7 +9,10 @@
     <meta http-equiv="pragma" content="no-cache" />
     <link href="shared/img/otus-studio-img.png" rel="icon" />
     <!-- Angular Material -->
-    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" />
+<!--     <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" /> -->
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.css">
+
+	
     <!-- Application CSS -->
     <link href="private/home/home.css" rel="stylesheet" />
     <title>Otus Studio</title>
@@ -17,46 +20,58 @@
 
 <body>
     <div id="toolbar-system" ng-controller="ToolbarCtrl">
-        <md-toolbar class="layout-row">
-            <div class="md-toolbar">
-                <div class="toolbar-alig">
-                    <md-button ui-sref="home" aria-label="Home">Home</md-button>
+        <md-toolbar class="md-menu-toolbar">
+                <div layout="row" layout-align="space-between center">
+                <div>
                     <md-menu-bar>
+                    <button ui-sref="home">Home</button>
                         <md-menu>
-                            <md-button ng-click="$mdOpenMenu()" aria-label="Administração">
+                            <button ng-click="$mdOpenMenu()">
                                 Administração
-                            </md-button>
+                            </button>
                             <md-menu-content  width="4">
                                 <md-menu-item>
-                                    <md-button ng-click="openAdministrationUsers()" aria-label="Usuários">
+                                    <md-button ng-click="openAdministrationUsers()">
                                         Usuários
                                     </md-button>
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
                         <md-menu>
-                            <md-button ng-click="$mdOpenMenu()" aria-label="Repositórios">
+                            <button ng-click="$mdOpenMenu()">
                                 Repositórios
-                            </md-button>
+                            </button>
                             <md-menu-content width="4">
-	                                <md-menu-item>
-		                                <md-button ng-click="openNewRepository()" aria-label="Novo">
-		                                        Novo
-	                                    </md-button>
-	                                </md-menu-item>
-	                                <md-menu-item>
-	                                    <md-button ng-click="openConnectRepository()" aria-label="Conectar a um existe">
-	                                        Conectar a um existente
-	                                    </md-button>
-	                                </md-menu-item>
+	                            <md-menu-item>
+					                <md-menu>
+					                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
+				                		<md-menu-content width="4">
+					                    		<md-menu-item type="radio" value="linda">Linda</md-menu-item>
+					                   			<md-menu-item type="radio" value="elsa">Elsa</md-menu-item>
+					                	</md-menu-content>
+					              	</md-menu>
+				              	</md-menu-item>
+				              	
+				              	<md-menu-divider></md-menu-divider>
+				              	
+	                            <md-menu-item>
+	                             <md-button ng-click="openNewRepository()">
+	                                     Novo
+	                                </md-button>
+	                            </md-menu-item>
+	                            <md-menu-item>
+	                                <md-button ng-click="openConnectRepository()">
+	                                    Conectar a um existente
+	                                </md-button>
+	                            </md-menu-item>
                             </md-menu-content>
                         </md-menu>
                     </md-menu-bar>
+                </div>
                     <div class="image-user-div">
                         <img ng-src="shared/img/prof_bruce_duncan.jpg" />
                     </div>
                 </div>
-            </div>
         </md-toolbar>
     </div>
     <!-- /#toolbar-system -->
@@ -72,7 +87,8 @@
 <!-- Angular Material Dependencies -->
 <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc6/angular-material.min.js"></script>	
+
 <!-- Application -->
 <link href="private/user/management/style.css" rel="stylesheet" />
 <script src="private/home/module.js"></script>

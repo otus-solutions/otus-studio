@@ -22,20 +22,6 @@ body {
 	height: inherit;
 }
 
-.toolbar-alig {
-	margin-top: 10px !important;
-}
-
-.layout-row{
-	background-color: #333333;
-}
-
-
-.md-open-menu-container {
-	    margin-top: 56px;
-	   /** width: 135px; */
-}
-
-md-toolbar {
-    margin-bottom : 30px;
+#toolbar-system md-toolbar {
+	padding-top : 7px;
 }

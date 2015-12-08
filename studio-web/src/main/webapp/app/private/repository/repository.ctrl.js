@@ -108,5 +108,14 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
                 $scope.repository = null;
                 $scope.repositoryForm.$setUntouched();
             });
-    }
+    };
+    
+    this.sampleAction = function(name, ev) {
+        $mdDialog.show($mdDialog.alert()
+          .title(name)
+          .content('You triggered the "' + name + '" action')
+          .ok('Great')
+          .targetEvent(ev)
+        );
+      };
 });
