@@ -1,11 +1,28 @@
-angular.module('Repository').controller('RepositoryCtrl', function ($scope, $http, $location, $mdDialog) {
+angular.module('Repository').controller('RepositoryCtrl', function ($scope, $http, $location, $mdDialog, $rootScope) {
     var NEW_REPOSITORY = window.location.origin + '/studio/session/rest/repository/create';
     var CONNECT_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connect';
     var GET_REPOSITORY = window.location.origin + '/studio/session/rest/repository/get';
     var CHECK_CONNECTION_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connectionStatus';
+    var REPOSITORIES = window.location.origin + '/studio/session/rest/repository';
     var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
     var REPOSITORY_CONNECT_ACTION = 'CONNECT';
     var REPOSITORY_CREATE_ACTION = 'NEW';
+    
+    $scope.repositories = [];
+    
+    $http.get(REPOSITORIES)
+    	.success(function(data){
+    		$scope.repositories = data;
+    })
+    	.error(function(data) {
+    	console.log('Erro + ', data)
+    });
+    
+    $rootScope.connectedRepository = "Não conectado";
+    
+    $scope.setRepository = function(name){
+    	$rootScope.connectedRepository = name;
+    }
 
     $scope.actionType = $location.search().actionType;
 
@@ -65,12 +82,9 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
     };
     
     function newRepository(repository) {
-    	console.log('entrou aqui essa');
     	buttonCreateState();
-    	console.log($scope.connectButton);
     	
     	$http.post(NEW_REPOSITORY, repository).then(function (response) {
-
             if (response.data.data) {
                 successMessage();
             }

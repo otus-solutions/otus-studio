@@ -25,3 +25,7 @@ body {
 #toolbar-system md-toolbar {
 	padding-top : 7px;
 }
+
+.connectedRepository {
+	margin-right: 2em;
+}
