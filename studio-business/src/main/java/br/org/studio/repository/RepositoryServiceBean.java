@@ -92,4 +92,29 @@ public class RepositoryServiceBean implements RepositoryService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public List<RepositoryDto> fetchAll() throws RepositoryNotFoundException {
+		try {
+			List<Repository> repositories = repositoryDao.fetchAll();
+			List<RepositoryDto> convertedRepositories = new ArrayList<>();
+
+			repositories.stream().forEach(new Consumer<Repository>() {
+				@Override
+				public void accept(Repository repository) {
+					RepositoryDto repositoryDto = new RepositoryDto();
+					try {
+						Equalizer.equalize(repository, repositoryDto);
+						convertedRepositories.add(repositoryDto);
+					} catch (IllegalAccessException | NoSuchFieldException e) {
+					}
+				}
+			});
+
+			return convertedRepositories;
+		} catch (DataNotFoundException e) {
+			throw new RepositoryNotFoundException();
+		}
+	
+	}
 }

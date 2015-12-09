@@ -22,7 +22,19 @@ public class RepositoryResource {
 
     @Inject
     private RepositoryService repositoryService;
-
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<RepositoryDto> getAll() {
+    	List<RepositoryDto> repositories = null;
+    	try {
+			repositories = repositoryService.fetchAll();
+		} catch (RepositoryNotFoundException e) {
+			e.printStackTrace();
+		}
+		return repositories;
+    }
+    
     @POST
     @Path("/connectionStatus")
     @Consumes(MediaType.APPLICATION_JSON)
