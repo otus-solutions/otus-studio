@@ -25,96 +25,98 @@ import br.org.tutty.Equalizer;
 @Local(RepositoryService.class)
 public class RepositoryServiceBean implements RepositoryService {
 
-	@Inject
-	private RepositoryDao repositoryDao;
+    @Inject
+    private RepositoryDao repositoryDao;
+    private RepositoryManagerFacade repositoryFacade;
 
-	@Override
-	public List<RepositoryDto> fetchRepository(String name) throws RepositoryNotFoundException {
-		try {
-			List<Repository> repositories = repositoryDao.fetch(name);
-			List<RepositoryDto> convertedRepositories = new ArrayList<>();
+    public RepositoryServiceBean() {
+        repositoryFacade = new RepositoryManagerFacade();
+    }
 
-			repositories.stream().forEach(new Consumer<Repository>() {
-				@Override
-				public void accept(Repository repository) {
-					RepositoryDto repositoryDto = new RepositoryDto();
-					try {
-						Equalizer.equalize(repository, repositoryDto);
-						convertedRepositories.add(repositoryDto);
-					} catch (IllegalAccessException | NoSuchFieldException e) {
-					}
-				}
-			});
+    @Override
+    public List<RepositoryDto> fetchRepository(String name) throws RepositoryNotFoundException {
+        try {
+            List<Repository> repositories = repositoryDao.fetch(name);
+            List<RepositoryDto> convertedRepositories = new ArrayList<>();
 
-			return convertedRepositories;
-		} catch (DataNotFoundException e) {
-			throw new RepositoryNotFoundException();
-		}
-	}
+            repositories.stream().forEach(new Consumer<Repository>() {
+                @Override
+                public void accept(Repository repository) {
+                    RepositoryDto repositoryDto = new RepositoryDto();
+                    try {
+                        Equalizer.equalize(repository, repositoryDto);
+                        convertedRepositories.add(repositoryDto);
+                    } catch (IllegalAccessException | NoSuchFieldException e) {
+                    }
+                }
+            });
 
-	@Override
-	public void add(RepositoryDto repositoryDto) {
-		Repository repository = new Repository();
-		try {
-			Equalizer.equalize(repositoryDto, repository);
-			repositoryDao.persist(repository);
+            return convertedRepositories;
+        } catch (DataNotFoundException e) {
+            throw new RepositoryNotFoundException();
+        }
+    }
 
-		} catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new ConvertedDtoException();
-		}
-	}
+    @Override
+    public List<RepositoryDto> fetchAll() throws RepositoryNotFoundException {
+        try {
+            List<Repository> repositories = repositoryDao.fetchAll();
+            List<RepositoryDto> convertedRepositories = new ArrayList<>();
 
-	@Override
-	public void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException {
-		if (validateConnection(repositoryDto)) {
-			buildRepositoryDatabase(repositoryDto);
-			add(repositoryDto);
-		} else {
-			throw new RepositoryOfflineException();
-		}
-	}
+            repositories.stream().forEach(new Consumer<Repository>() {
+                @Override
+                public void accept(Repository repository) {
+                    RepositoryDto repositoryDto = new RepositoryDto();
+                    try {
+                        Equalizer.equalize(repository, repositoryDto);
+                        convertedRepositories.add(repositoryDto);
+                    } catch (IllegalAccessException | NoSuchFieldException e) {
+                    }
+                }
+            });
 
-	@Override
-	public Boolean validateConnection(RepositoryDto repositoryDto) {
-		// TODO implementar validação da conexão com a base de dados
-		return Boolean.TRUE;
-	}
+            return convertedRepositories;
+        } catch (DataNotFoundException e) {
+            throw new RepositoryNotFoundException();
+        }
+    }
 
-	private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
-		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto.getDatabase(), repositoryDto.getHost(),
-				String.valueOf(repositoryDto.getPort()), repositoryDto.getUsername(), repositoryDto.getPassword());
+    @Override
+    public Boolean isServerRepositoryAccessible(RepositoryDto repositoryDto) {
+        RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+        return repositoryFacade.isRepositoryAccessible(configuration);
+    }
 
-		RepositoryManagerFacade managerFacade = new RepositoryManagerFacade();
+    @Override
+    public void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException {
+        if (isServerRepositoryAccessible(repositoryDto)) {
+            buildRepositoryDatabase(repositoryDto);
+            connect(repositoryDto);
+        } else {
+            throw new RepositoryOfflineException();
+        }
+    }
 
-		try {
-			managerFacade.createRepository(configuration);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void connect(RepositoryDto repositoryDto) {
+        Repository repository = new Repository();
+        try {
+            Equalizer.equalize(repositoryDto, repository);
+            repositoryDao.persist(repository);
 
-	@Override
-	public List<RepositoryDto> fetchAll() throws RepositoryNotFoundException {
-		try {
-			List<Repository> repositories = repositoryDao.fetchAll();
-			List<RepositoryDto> convertedRepositories = new ArrayList<>();
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new ConvertedDtoException();
+        }
+    }
 
-			repositories.stream().forEach(new Consumer<Repository>() {
-				@Override
-				public void accept(Repository repository) {
-					RepositoryDto repositoryDto = new RepositoryDto();
-					try {
-						Equalizer.equalize(repository, repositoryDto);
-						convertedRepositories.add(repositoryDto);
-					} catch (IllegalAccessException | NoSuchFieldException e) {
-					}
-				}
-			});
+    private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
+        RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
 
-			return convertedRepositories;
-		} catch (DataNotFoundException e) {
-			throw new RepositoryNotFoundException();
-		}
-	
-	}
+        try {
+            repositoryFacade.createRepository(configuration);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
