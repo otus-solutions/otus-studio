@@ -10,13 +10,12 @@
             self.createNewSurvey = createNewSurvey;
             self.closeSurvey = closeSurvey;
             self.loadSurvey = loadSurvey;
+            self.getCurrentSurvey = getCurrentSurvey;
 
             /* Public interface implementation */
             function createNewSurvey() {
                 var survey = SurveyLoader.newSurvey();
-                EditingService.init(survey);
-                EditingService.open();
-                console.log(EditingService.getSurvey());
+                initializeEditing(survey);
             }
 
             function closeSurvey() {
@@ -26,8 +25,16 @@
             function loadSurvey() {
                 // A persisted survey object should be load here
                 // var survey = loadSurvey();
+                // initializeEditing(survey);
+            }
+
+            function initializeEditing(survey) {
                 EditingService.init(survey);
                 EditingService.open();
+            }
+
+            function getCurrentSurvey() {
+                return EditingService.getSurvey();
             }
         }
     ]);
