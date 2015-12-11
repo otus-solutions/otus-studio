@@ -8,13 +8,14 @@
     <parent>
         <groupId>br.org.studio</groupId>
         <artifactId>studio-root</artifactId>
-        <version>0.2.6-SNAPSHOT</version>
+        <version>0.6.7-SNAPSHOT</version>
         <relativePath>../studio-root/pom.xml</relativePath>
     </parent>
 
     <name>studio-ear</name>
 
     <build>
+        <finalName>studio</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

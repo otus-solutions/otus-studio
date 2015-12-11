@@ -5,6 +5,7 @@
 *.jsfdia
 *.metadata
 **/.idea
+**/.orig
 *.iml
 *.swp
 *.orig

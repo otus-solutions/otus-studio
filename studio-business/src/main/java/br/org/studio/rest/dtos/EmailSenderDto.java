@@ -4,7 +4,7 @@ import br.org.studio.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
 public class EmailSenderDto {
-	
+
 	@Equalization(name = "name")
 	private String name;
 
@@ -13,9 +13,20 @@ public class EmailSenderDto {
 
 	@Equalization(name = "password")
 	private String password;
-	
+
 	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
