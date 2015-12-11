@@ -3,7 +3,7 @@
 <div id="repository" class="center" ng-controller="RepositoryCtrl">
     <md-content>
         <form name="repositoryForm" novalidate>
-            <md-input-container>
+            <md-input-container class="md-block">
                 <label>Nome do repositório</label>
                 <input name="name" ng-blur="existRepository(repository)" ng-model="repository.name" type="text" ng-required="true" />
                 <div ng-messages="repositoryForm.name.$error">
@@ -35,14 +35,14 @@
                     </div>
                 </md-input-container>
             </div>
-            <md-input-container>
+            <md-input-container class="md-block">
                 <label>Usuário</label>
                 <input name="username" ng-model="repository.username" type="text" ng-required="true" />
                 <div ng-messages="repositoryForm.username.$error">
                     <div ng-message="required">Obrigatório</div>
                 </div>
             </md-input-container>
-            <md-input-container>
+            <md-input-container class="md-block">
                 <label>Senha</label>
                 <input name="password" ng-model="repository.password" ng-required="true" type="password"/>
                 <div ng-messages="repositoryForm.password.$error">

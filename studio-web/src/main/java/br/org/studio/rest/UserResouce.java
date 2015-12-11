@@ -1,6 +1,7 @@
 package br.org.studio.rest;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,7 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import br.org.studio.context.ContextService;
 import br.org.studio.exception.FillUserException;
+import br.org.studio.exception.SessionNotFoundException;
 import br.org.studio.messages.FillUserExceptionMessage;
 import br.org.studio.registration.RegisterUserService;
 import br.org.studio.rest.dtos.UserDto;
@@ -24,6 +27,11 @@ public class UserResouce {
 	private RegisterUserService registerUserService;
 	@Inject
 	private EmailConstraint emailConstraint;
+	@Inject
+	private ContextService contextService;  
+	@Inject
+	private HttpSession httpSession;
+	
 
 	@POST
 	@Path("/user")
@@ -52,6 +60,24 @@ public class UserResouce {
 		Response response = new Response();
 		response.setData(!result);
 		return response.toJson();
+	}
+	
+	@GET
+	@Path("/loggedUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getLoggedUser() {
+		UserDto loggedUser;
+		Response response = new Response();
+		
+		try {
+			loggedUser = contextService.getLoggedUser(httpSession);			
+			response.setData(loggedUser);
+			return response.toJson();
+			
+		} catch (SessionNotFoundException e) {
+			return response.toJson();
+		}
+		
 	}
 
 }

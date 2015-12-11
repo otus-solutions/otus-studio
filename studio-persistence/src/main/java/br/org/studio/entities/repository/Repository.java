@@ -11,7 +11,9 @@ import java.io.Serializable;
 @SequenceGenerator(name = "repositorySequence", sequenceName = "repository_seq", initialValue = 1, allocationSize = 1)
 public class Repository implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 7319297696352112154L;
+
+	@Id
     @GeneratedValue(generator = "repositorySequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
@@ -29,7 +31,7 @@ public class Repository implements Serializable {
 
     @Equalization(name = "port")
     @NotNull
-    private Integer port;
+    private String port;
 
     @Equalization(name = "username")
     @NotNull

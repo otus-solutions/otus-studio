@@ -64,7 +64,7 @@ public class AdministrationUsersResourceTest {
 
         String result = administrationUsersResource.enableUsers(usersJson);
         Mockito.verify(administrationUserServiceBean).enableUsers(Matchers.anyList());
-
+        
         Response response = new Gson().fromJson(result, Response.class);
 
         Assert.assertEquals(Boolean.TRUE, response.getData());

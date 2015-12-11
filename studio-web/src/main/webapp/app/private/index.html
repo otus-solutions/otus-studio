@@ -17,41 +17,66 @@
 
 <body>
     <div id="toolbar-system" ng-controller="ToolbarCtrl">
-        <md-toolbar class="layout-row">
-            <div class="md-toolbar">
-                <div class="toolbar-alig">
-                    <md-button ui-sref="home" aria-label="Home">Home</md-button>
+        <md-toolbar class="md-menu-toolbar">
+                <div layout="row" layout-align="space-between center">
+                <div>
                     <md-menu-bar>
+                    <button ui-sref="home">Home</button>
                         <md-menu>
-                            <md-button ng-click="$mdOpenMenu()" aria-label="Administração">
+                            <button ng-click="$mdOpenMenu()">
                                 Administração
-                            </md-button>
-                            <md-menu-content>
+                            </button>
+                            <md-menu-content  width="4">
                                 <md-menu-item>
-                                    <md-button ng-click="openAdministrationUsers()" aria-label="Usuários">
+                                    <md-button ng-click="openAdministrationUsers()">
                                         Usuários
                                     </md-button>
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
                         <md-menu>
-                            <md-button ng-click="$mdOpenMenu()" aria-label="Repositórios">
+                            <button ng-click="$mdOpenMenu()">
                                 Repositórios
-                            </md-button>
-                            <md-menu-content>
-                                <md-menu-item>
-                                    <md-button ng-click="openAddRepository()" aria-label="Adicionar">
-                                        Adicionar
-                                    </md-button>
-                                </md-menu-item>
+                            </button>
+                            <md-menu-content width="4">
+	                            <div ng-controller="RepositoryCtrl as repositoryController" ng-show="repositories">
+		                            <md-menu-item>
+						                <md-menu>
+						                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
+					                		<md-menu-content width="4">
+					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)"
+					                    		 type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
+						                	</md-menu-content>
+						              	</md-menu>
+					              	</md-menu-item>
+
+	                            </div>
+				              	<md-menu-divider></md-menu-divider>
+
+	                            <md-menu-item>
+	                             <md-button ng-click="openNewRepository()">
+	                                     Novo
+	                                </md-button>
+	                            </md-menu-item>
+	                            <md-menu-item>
+	                                <md-button ng-click="openConnectRepository()">
+	                                    Conectar a um existente
+	                                </md-button>
+	                            </md-menu-item>
+
                             </md-menu-content>
                         </md-menu>
                     </md-menu-bar>
-                    <div class="image-user-div">
-                        <img ng-src="shared/img/prof_bruce_duncan.jpg" />
-                    </div>
                 </div>
-            </div>
+                <div layout="row" layout-align="center center">
+                	<div class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
+                		{{ctrl.connected()}}
+                	</div>
+                	<div class="image-user-div">
+                    	<img ng-src="shared/img/prof_bruce_duncan.jpg" />
+                	</div>
+                </div>
+               	</div>
         </md-toolbar>
     </div>
     <!-- /#toolbar-system -->
@@ -71,9 +96,11 @@
 <!-- Application -->
 <link href="private/user/management/style.css" rel="stylesheet" />
 <script src="private/home/module.js"></script>
+<script src="private/home/home-ctrl.js"></script>
 <script src="private/user/module.js"></script>
 <script src="private/user/management/users-ctrl.js"></script>
 <script src="private/repository/repository.module.js"></script>
+<script src="private/repository/repository.service.js"></script>
 <script src="private/repository/repository.ctrl.js"></script>
 <script src="app.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>

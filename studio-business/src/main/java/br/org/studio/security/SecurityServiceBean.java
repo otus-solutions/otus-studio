@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import br.org.studio.context.UserDataContext;
 import br.org.studio.dao.UserDao;
@@ -30,9 +31,10 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 	public void authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException {
 		try {
 			User user = userDao.fetchByEmail(loginDto.getEmail());
+			HttpSession httpSession = loginDto.getHttpSession();
 
 			if(user.getPassword().equals(loginDto.getPassword())){
-				userDataContext.login(user);
+				userDataContext.login(httpSession, user);
 
 			}else{
 				throw new InvalidPasswordException();

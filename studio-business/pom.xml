@@ -38,6 +38,12 @@
 			<version>${owail.sender.version}</version>
 			<scope>compile</scope>
 		</dependency>
+        <dependency>
+            <groupId>br.org.studio</groupId>
+            <artifactId>studio-repository-tool</artifactId>
+            <version>0.10.6-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
  		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-core</artifactId>

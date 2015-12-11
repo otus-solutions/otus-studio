@@ -19,10 +19,10 @@ public class RepositoryServiceBeanTest {
     private RepositoryDaoBean repositoryDaoBean;
 
     @Test
-    public void add_should_persist_repository_data() {
+    public void connect_should_persist_repository_data() {
         RepositoryDto repositoryDto = new RepositoryDto();
 
-        repositoryServiceBean.add(repositoryDto);
+        repositoryServiceBean.connect(repositoryDto);
         Mockito.verify(repositoryDaoBean).persist(Matchers.any());
     }
 }

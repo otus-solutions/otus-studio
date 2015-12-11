@@ -1,6 +1,7 @@
 package br.org.studio.rest;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,6 +18,8 @@ public class AuthenticationResource {
 
 	@Inject
 	private SecurityService securityService;
+	@Inject
+	private HttpSession httpSession;
 
 	@Path("/login")
     @POST
@@ -26,6 +29,7 @@ public class AuthenticationResource {
 		Gson gson = new Gson();
 
 		LoginAuthenticationDto loginDto = gson.fromJson(loginData, LoginAuthenticationDto.class);
+		loginDto.setHttpSession(httpSession);
 		loginDto.encryptPassword();
 
 		try {

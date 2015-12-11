@@ -2,6 +2,8 @@ package br.org.studio.rest.dtos;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpSession;
+
 import br.org.studio.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
@@ -15,14 +17,17 @@ public class LoginAuthenticationDto implements Serializable {
 	@Equalization(name = "password")
 	private String password;
 	
+	private HttpSession httpSession;
+	
 	public LoginAuthenticationDto() {
 		super();
 	}
 
-	public LoginAuthenticationDto(String email, String password) {
+	public LoginAuthenticationDto(String email, String password, HttpSession httpSession) {
 		super();
 		this.email = email;
 		this.password = password;
+		this.httpSession = httpSession;
 	}
 
 	public void encryptPassword() {
@@ -45,4 +50,11 @@ public class LoginAuthenticationDto implements Serializable {
 		this.password = password;
 	}
 
+	public HttpSession getHttpSession() {
+		return httpSession;
+	}
+
+	public void setHttpSession(HttpSession httpSession) {
+		this.httpSession = httpSession;
+	}			
 }
