@@ -3,12 +3,12 @@ angular
     .controller('ToolbarCtrl', ['$scope', '$location',
         function($scope, $location) {
 
-    		var NEW_SURVEY = 'survey';
+    		var NEW_SURVEY = 'container';
             var USER_MANAGEMENT_STATE = 'user-management';
             var REPOSITORY_CONNECT_STATE = 'repository?actionType=CONNECT';
             var REPOSITORY_NEW_STATE = 'repository?actionType=NEW';
 
-            $scope.openNewSurvey = function() {
+            $scope.openContainer  = function() {
                 $location.url(NEW_SURVEY);
             }
             
