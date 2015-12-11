@@ -1,7 +1,7 @@
 angular
     .module('Home')
-    .controller('HomeCtrl', ['$http', '$scope',
-        function($http, $scope) {
+    .controller('HomeCtrl', ['$http', '$scope','$rootScope',
+        function($http, $scope, $rootScope) {
     	const $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/studio/session/rest/register/loggedUser';
 
     	$scope.loggedUser = {};
@@ -16,6 +16,10 @@ angular
     	
     	$scope.isNotAdmin = function (loggedUser){
     		return !(loggedUser.admin);
-    	};    	
+    	};
+    	
+    	$scope.doesNotHasRepository = function () {
+    		return $rootScope.repositories.length;
+    	}
     	
 }]);
