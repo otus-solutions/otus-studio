@@ -25,14 +25,14 @@
                     <h6 class="md-subhead error-message" ng-show="invalidLogin">Login invalido. Verifique os dados
                     informados.</h6>
                     <br />
-                    <md-input-container>
+                    <md-input-container class="md-block">
                         <label>Email</label>
                         <input name="userEmail" ng-model="user.email" required/>
                         <div ng-messages="loginForm.userEmail.$error">
                             <div ng-message="required">Obrigatório</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container class="md-block">
                         <label>Senha</label>
                         <input name="userPassword" ng-model="user.password" type="password" required/>
                         <div ng-messages="loginForm.userPassword.$error">

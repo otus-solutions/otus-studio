@@ -53,7 +53,7 @@
                     </md-input-container>
 
                 </div>
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Celular</label>
                     <input name="phone" id="phonenumber" ng-model="systemConf.user.phone" type="text" ui-options={clearOnBlur:false}  ng-required="true" ui-mask="(99) 99999999?9" />
                     <div ng-messages="initialConfigSystemForm.phone.$error">
@@ -62,7 +62,7 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Email</label>
                     <input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.email.$error">
@@ -71,7 +71,7 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Senha</label>
                     <input name="password" ng-blur="matchPassword()" ng-model="systemConf.user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
                     <div ng-messages="initialConfigSystemForm.password.$error" >
@@ -81,7 +81,7 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Confirmação de Senha</label>
                     <input name="passwordConfirm" ng-blur="matchPassword()" ng-model="systemConf.user.passwordConfirm" type="password" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
@@ -96,7 +96,7 @@
                     </h2>
                 </md-toolbar>
 
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Nome</label>
                     <input name="emailSenderName" ng-model="systemConf.emailSender.name" type="text" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderName.$error">
@@ -104,7 +104,7 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Email</label>
                     <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" type="email" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderEmail.$error">
@@ -112,14 +112,14 @@
                         <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderEmail.$error.required">Obrigatório</div>
                     </div>
                 </md-input-container>
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Senha</label>
                     <input name="emailSenderPassword" ng-blur="matchPasswordEmailSender()" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
                         <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPassword.$error.required">Obrigatório</div>
                     </div>
                 </md-input-container>
-                <md-input-container>
+                <md-input-container class="md-block">
                     <label>Confirmação de Senha</label>
                     <input name="emailSenderPasswordConfirm" ng-blur="matchPasswordEmailSender()" ng-model="systemConf.emailSender.passwordConfirm" type="password" ng-required="true" />
                     <div ng-messages="initialConfigSystemForm.emailSenderPasswordConfirm.$error">
