@@ -1,4 +1,4 @@
-angular.module('Repository').controller('RepositoryCtrl', function ($scope, $http, $location, $mdDialog, $rootScope) {
+angular.module('Repository').controller('RepositoryCtrl', ['$scope', '$http', '$location', '$mdDialog', '$rootScope', 'RepositoryService', function($scope, $http, $location, $mdDialog, $rootScope, RepositoryService) {
     var NEW_REPOSITORY = window.location.origin + '/studio/session/rest/repository/create';
     var CONNECT_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connect';
     var GET_REPOSITORY = window.location.origin + '/studio/session/rest/repository/get';
@@ -7,37 +7,31 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
     var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
     var REPOSITORY_CONNECT_ACTION = 'CONNECT';
     var REPOSITORY_CREATE_ACTION = 'NEW';
-    
-    $scope.repositories = [];
-    
-    $http.get(REPOSITORIES)
-    	.success(function(data){
-    		$scope.repositories = data;
-    })
-    	.error(function(data) {
-    	console.log('Erro + ', data)
-    });
-    
-    $rootScope.connectedRepository = "Não conectado";
-    
-    $scope.setRepository = function(name){
-    	$rootScope.connectedRepository = name;
+
+    init();
+
+    var self = this;
+
+    self.connected = connected;
+
+    function connected() {
+        return RepositoryService.connectedRepository;
     }
 
-    $scope.actionType = $location.search().actionType;
+    $scope.setRepository = function(name) {
+        RepositoryService.updateConnectedRepository(name);
+    };
 
-    buttonStateWaiting();
-
-    $scope.actionButton = function (repository) {
+    $scope.actionButton = function(repository) {
         buttonStateValidation();
 
-        $http.post(CHECK_CONNECTION_REPOSITORY, repository).then(function (response) {
+        $http.post(CHECK_CONNECTION_REPOSITORY, repository).then(function(response) {
             if (response.data.data) {
                 if (angular.equals($scope.actionType, REPOSITORY_CONNECT_ACTION)) {
                     connectRepository(repository);
 
                 } else if (angular.equals($scope.actionType, REPOSITORY_CREATE_ACTION)) {
-                	newRepository(repository);
+                    newRepository(repository);
                 }
             } else {
                 $scope.repositoryForm.host.$setValidity('connection', false);
@@ -48,12 +42,12 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
         buttonStateWaiting();
     };
 
-    $scope.existRepository = function (repository) {
+    $scope.existRepository = function(repository) {
         $http.get(GET_REPOSITORY, {
             params: {
                 repositoryName: repository.name
             }
-        }).then(function (response) {
+        }).then(function(response) {
             if (!response.data.data) {
                 validateExisRepository(true);
 
@@ -63,16 +57,33 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
         });
     };
 
+    function init() {
+        $scope.connectedRepository = RepositoryService.connectedRepository;
+        getRepositories();
+
+        $scope.actionType = $location.search().actionType;
+        buttonStateWaiting();
+    }
+    
+    function getRepositories() {
+    	 $http.get(REPOSITORIES)
+         .success(function(data) {
+        	 $rootScope.repositories = data;
+         })
+         .error(function(data) {
+             console.log('Erro + ', data)
+         });
+    }
+    
     function validateExisRepository(valid) {
         $scope.repositoryForm.name.$setValidity('nameInUse', valid);
         $scope.repositoryForm.$setValidity('nameInUse', valid);
-
     }
 
     function connectRepository(repository) {
         buttonStateConnection();
 
-        $http.post(CONNECT_REPOSITORY, repository).then(function (response) {
+        $http.post(CONNECT_REPOSITORY, repository).then(function(response) {
             buttonStateWaiting();
 
             if (response.data.data) {
@@ -80,12 +91,13 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
             }
         });
     };
-    
+
     function newRepository(repository) {
-    	buttonCreateState();
-    	
-    	$http.post(NEW_REPOSITORY, repository).then(function (response) {
+        buttonCreateState();
+
+        $http.post(NEW_REPOSITORY, repository).then(function(response) {
             if (response.data.data) {
+            	getRepositories();
                 successMessage();
             }
         });
@@ -97,8 +109,8 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
     };
 
     function buttonCreateState() {
-    	$scope.connectButton = 'Criar';
-    	$scope.isLoading = false;
+        $scope.connectButton = 'Criar';
+        $scope.isLoading = false;
     };
 
     function buttonStateValidation() {
@@ -118,18 +130,10 @@ angular.module('Repository').controller('RepositoryCtrl', function ($scope, $htt
             .ok('ok');
 
         $mdDialog.show(alert)
-            .finally(function () {
+            .finally(function() {
                 $scope.repository = null;
                 $scope.repositoryForm.$setUntouched();
             });
     };
-    
-    this.sampleAction = function(name, ev) {
-        $mdDialog.show($mdDialog.alert()
-          .title(name)
-          .content('You triggered the "' + name + '" action')
-          .ok('Great')
-          .targetEvent(ev)
-        );
-      };
-});
+
+}]);

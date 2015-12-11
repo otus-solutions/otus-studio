@@ -9,10 +9,7 @@
     <meta http-equiv="pragma" content="no-cache" />
     <link href="shared/img/otus-studio-img.png" rel="icon" />
     <!-- Angular Material -->
-<!--     <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" /> -->
-      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.css">
-
-	
+    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" />
     <!-- Application CSS -->
     <link href="private/home/home.css" rel="stylesheet" />
     <title>Otus Studio</title>
@@ -47,15 +44,15 @@
 						                <md-menu>
 						                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
 					                		<md-menu-content width="4">
-					                    		<md-menu-item ng-repeat="repository in repositories" ng-click="setRepository(repository.name)"
-					                    		 type="radio" value="name">{{repository.name}}</md-menu-item>
+					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)"
+					                    		 type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
 						                	</md-menu-content>
 						              	</md-menu>
 					              	</md-menu-item>
-					              	
+
 	                            </div>
 				              	<md-menu-divider></md-menu-divider>
-					              	
+
 	                            <md-menu-item>
 	                             <md-button ng-click="openNewRepository()">
 	                                     Novo
@@ -66,14 +63,14 @@
 	                                    Conectar a um existente
 	                                </md-button>
 	                            </md-menu-item>
-	                            
+
                             </md-menu-content>
                         </md-menu>
                     </md-menu-bar>
                 </div>
                 <div layout="row" layout-align="center center">
-                	<div class="connectedRepository" ng-controller="RepositoryCtrl as repo">
-                		{{connectedRepository}}
+                	<div class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
+                		{{ctrl.connected()}}
                 	</div>
                 	<div class="image-user-div">
                     	<img ng-src="shared/img/prof_bruce_duncan.jpg" />
@@ -95,8 +92,7 @@
 <!-- Angular Material Dependencies -->
 <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc6/angular-material.min.js"></script>	
-
+<script src="shared/lib/angularjs/md/angular-material.min.js"></script>
 <!-- Application -->
 <link href="private/user/management/style.css" rel="stylesheet" />
 <script src="private/home/module.js"></script>
@@ -104,6 +100,7 @@
 <script src="private/user/module.js"></script>
 <script src="private/user/management/users-ctrl.js"></script>
 <script src="private/repository/repository.module.js"></script>
+<script src="private/repository/repository.service.js"></script>
 <script src="private/repository/repository.ctrl.js"></script>
 <script src="app.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>
