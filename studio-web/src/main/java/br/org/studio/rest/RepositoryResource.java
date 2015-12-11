@@ -1,5 +1,6 @@
 package br.org.studio.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,12 +27,11 @@ public class RepositoryResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<RepositoryDto> getAll() {
-    	List<RepositoryDto> repositories = null;
+    	List<RepositoryDto> repositories = new ArrayList<RepositoryDto>();
     	try {
 			repositories = repositoryService.fetchAll();
-		} catch (RepositoryNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (RepositoryNotFoundException e) {}
+    	
 		return repositories;
     }
     
