@@ -16,6 +16,7 @@
             function createNewSurvey() {
                 var survey = SurveyLoader.newSurvey();
                 initializeEditing(survey);
+                console.log(getCurrentSurvey());
             }
 
             function closeSurvey() {
@@ -24,7 +25,7 @@
 
             function loadSurvey() {
                 // A persisted survey object should be load here
-                // var survey = loadSurvey();
+                // var survey = SurveyLoader.loadSurvey();
                 // initializeEditing(survey);
             }
 

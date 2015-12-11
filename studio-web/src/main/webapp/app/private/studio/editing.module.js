@@ -1,9 +1,9 @@
 (function() {
 
-    var module = angular.module('Editing', []);
+    var module = angular.module('editing', ['survey', 'memory']);
 
-    module.service('EditingService', ['Survey', 'EditingState',
-        function(Survey, EditingState) {
+    module.service('EditingService', ['Survey', 'EditingState', 'MemoryService',
+        function(Survey, EditingState, MemoryService) {
             var self = this;
 
             /* Public interface */
@@ -12,7 +12,6 @@
             self.close = close;
             self.save = save;
             self.getSurvey = getSurvey;
-            self.set = set;
 
             /* Public interface implementation */
             function init(survey) {
@@ -20,23 +19,25 @@
             }
 
             function open() {
-                EditingState.storeOpen(self.survey);
+                var state = EditingState.generateOpen(self.survey);
+                MemoryService.storeState(state);
             }
 
             function close() {
-                EditingState.storeClose(self.survey);
+                EditingState.generateClose(self.survey);
             }
 
             function save() {
-                EditingState.storeSave(self.survey);
+                var state = EditingState.generateSave(self.survey);
+                MemoryService.storeState(state);
             }
 
             function getSurvey() {
-                return EditingState.currentState.survey;
+                return getCurrentState().survey;
             }
 
-            function set(data) {
-
+            function getCurrentState() {
+                return MemoryService.getMostRecentState();
             }
         }
     ]);
@@ -45,22 +46,21 @@
         var self = this;
 
         /* Public interface */
-        self.currentState = {};
-        self.storeOpen = storeOpen;
-        self.storeClose = storeClose;
-        self.storeSave = storeSave;
+        self.generateOpen = generateOpen;
+        self.generateClose = generateClose;
+        self.generateSave = generateSave;
 
         /* Public interface implementation */
-        function storeOpen(survey) {
-            self.currentState = createState('OPENED', survey);
+        function generateOpen(survey) {
+            return createState('OPENED', survey)
         }
 
-        function storeClose(survey) {
-            self.currentState = createState('OPENED', survey);
+        function generateClose(survey) {
+            return createState('CLOSED', survey);
         }
 
-        function storeSave(survey) {
-            self.currentState = createState('OPENED', survey);
+        function generateSave(survey) {
+            return createState('SAVED', survey);
         }
 
         function createState(value, survey) {
@@ -70,38 +70,6 @@
                 survey: survey
             };
         }
-    }]);
-
-    module.service('SurveyLoader', ['Survey', function(Survey) {
-        var self = this;
-
-        /* Public interface */
-        self.newSurvey = newSurvey;
-
-        /* Public interface implementation */
-        function newSurvey() {
-            return new Survey();
-        }
-    }]);
-
-    module.factory('Survey', ['SurveyIdentity', function(SurveyIdentity) {
-        return function() {
-            this.objectType = 'Survey';
-            this.identity = new SurveyIdentity();
-            this.questions = [];
-        };
-    }]);
-
-    module.factory('SurveyIdentity', [function() {
-        return function() {
-            this.objectType = 'SurveyIdentity';
-            this.name = '';
-            this.acronym = '';
-            this.version = '';
-            this.recommendedTo = '';
-            this.description = '';
-            this.keywords = [];
-        };
     }]);
 
 }());
