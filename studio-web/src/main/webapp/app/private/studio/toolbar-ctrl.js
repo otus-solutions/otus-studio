@@ -1,7 +1,7 @@
 angular
     .module('StudioApp')
-    .controller('ToolbarCtrl', ['$scope', '$location', 'EditingService',
-        function($scope, $location, EditingService) {
+    .controller('ToolbarCtrl', ['$scope', '$location', 'Studio',
+        function($scope, $location, Studio) {
 
     		var NEW_SURVEY = 'survey';
             var USER_MANAGEMENT_STATE = 'user-management';
@@ -10,8 +10,9 @@ angular
 
             $scope.openNewSurvey = function() {
                 $location.url(NEW_SURVEY);
+                Studio.createNewSurvey();
             }
-            
+
             $scope.openAdministrationUsers = function() {
                 $location.url(USER_MANAGEMENT_STATE);
             }
@@ -21,8 +22,7 @@ angular
             }
 
             $scope.openNewRepository = function() {
-            	// $location.url(REPOSITORY_NEW_STATE);
-                console.log(EditingService.getSurvey());
+            	$location.url(REPOSITORY_NEW_STATE);
             }
         }
     ]);

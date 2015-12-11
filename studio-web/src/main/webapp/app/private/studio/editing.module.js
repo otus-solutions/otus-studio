@@ -1,60 +1,107 @@
 (function() {
 
-    var module = angular.module('StudioApp');
+    var module = angular.module('Editing', []);
 
-    module.service('EditingService', ['Survey', function(Survey) {
+    module.service('EditingService', ['Survey', 'EditingState',
+        function(Survey, EditingState) {
+            var self = this;
 
+            /* Public interface */
+            self.init = init;
+            self.open = open;
+            self.close = close;
+            self.save = save;
+            self.getSurvey = getSurvey;
+            self.set = set;
+
+            /* Public interface implementation */
+            function init(survey) {
+                self.survey = survey;
+            }
+
+            function open() {
+                EditingState.storeOpen(self.survey);
+            }
+
+            function close() {
+                EditingState.storeClose(self.survey);
+            }
+
+            function save() {
+                EditingState.storeSave(self.survey);
+            }
+
+            function getSurvey() {
+                return EditingState.currentState.survey;
+            }
+
+            function set(data) {
+
+            }
+        }
+    ]);
+
+    module.service('EditingState', [function() {
         var self = this;
 
         /* Public interface */
-        self.open = open;
-        self.close = close;
-        self.save = save;
-        self.getSurvey = getSurvey;
-        self.set = set;
+        self.currentState = {};
+        self.storeOpen = storeOpen;
+        self.storeClose = storeClose;
+        self.storeSave = storeSave;
 
-        /* Private implementations */
-        function init(survey) {
-            self.survey = survey;
+        /* Public interface implementation */
+        function storeOpen(survey) {
+            self.currentState = createState('OPENED', survey);
         }
 
-        function open() {
-
+        function storeClose(survey) {
+            self.currentState = createState('OPENED', survey);
         }
 
-        function close() {
-
+        function storeSave(survey) {
+            self.currentState = createState('OPENED', survey);
         }
 
-        function save() {
-
+        function createState(value, survey) {
+            return {
+                timestamp: Date.now(),
+                value: value,
+                survey: survey
+            };
         }
-
-        function getSurvey() {
-            return new Survey();
-        }
-
-        function set(data) {
-
-        }
-
     }]);
 
-    module.factory('Survey', function() {
-        var survey = function() {
-            this.objectType = 'Survey';
-            this.identity = {
-                objectType: 'SurveyIdentity',
-            	name: '2. Altura Abdominal e Flexibilidade',
-            	acronym: 'AAF',
-            	version: 'A',
-            	recommendedTo: 'Análise da relação entre a estatura e o perímetro abdominal.',
-            	description: 'Formulário criado para constatar valores de altura abdominal e flexibilidade do indivíduo.',
-            	keywords: ['abdomen', 'altura', 'flexibilidade']
-            };
-        };
+    module.service('SurveyLoader', ['Survey', function(Survey) {
+        var self = this;
 
-        return survey;
-    });
+        /* Public interface */
+        self.newSurvey = newSurvey;
+
+        /* Public interface implementation */
+        function newSurvey() {
+            return new Survey();
+        }
+    }]);
+
+    module.factory('Survey', ['SurveyIdentity', function(SurveyIdentity) {
+        return function() {
+            this.objectType = 'Survey';
+            this.identity = new SurveyIdentity();
+            this.questions = [];
+        };
+    }]);
+
+    module.factory('SurveyIdentity', [function() {
+        return function() {
+            this.objectType = 'SurveyIdentity';
+            this.name = '';
+            this.acronym = '';
+            this.version = '';
+            this.recommendedTo = '';
+            this.description = '';
+            this.keywords = [];
+        };
+    }]);
 
 }());
