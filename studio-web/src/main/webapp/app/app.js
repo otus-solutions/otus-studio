@@ -1,7 +1,7 @@
 angular
     .module('StudioApp', ['ui.router', 'ngMaterial','ngMessages', 'ui.mask', 'Home', 'User', 'Repository'])
-    .config(['$stateProvider', '$urlRouterProvider',
-        function($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
+        function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             /**
              * The property 'templateUrl' will consider the url path
              * from of /studio/app/, resulting in this request:
@@ -21,6 +21,12 @@ angular
                     url: '/repository',
                     templateUrl: 'private/repository/repository.html'
                 });
+            
+            /* Configuration theme */
+            $mdThemingProvider.theme('custom1');
+            
+            $mdThemingProvider.theme('buttonTheme');
+            
 
             /* Default state (route) */
             $urlRouterProvider.otherwise('/home');
