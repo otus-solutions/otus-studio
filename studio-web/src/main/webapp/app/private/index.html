@@ -23,6 +23,18 @@
                     <md-menu-bar>
                     <button ui-sref="home">Home</button>
                         <md-menu>
+                           <button ng-click="$mdOpenMenu()">
+                               Formulário
+                           </button>
+                           <md-menu-content  width="4">
+                               <md-menu-item>
+                                   <md-button ng-click="openNewSurvey()">
+                                       Novo
+                                   </md-button>
+                               </md-menu-item>
+                           </md-menu-content>
+                        </md-menu>
+                        <md-menu>
                             <button ng-click="$mdOpenMenu()">
                                 Administração
                             </button>

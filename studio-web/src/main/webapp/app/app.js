@@ -13,6 +13,10 @@ angular
                     url: '/home',
                     templateUrl: 'private/home/home.html'
                 })
+                .state('survey', {
+                    url: '/survey',
+                    templateUrl: 'private/survey/survey.html'
+                })
                 .state('user-management', {
                     url: '/user-management',
                     templateUrl: 'private/user/management/users.html'
