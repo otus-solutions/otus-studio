@@ -1,83 +1,68 @@
 package br.org.studio.rest.dtos.repository;
 
+import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.tutty.Equalization;
 
-public class RepositoryDto {
-	@Equalization(name = "name")
-	private String name;
+public class RepositoryDto implements RepositoryDescriptor {
 
-	@Equalization(name = "database")
-	private String database;
+    @Equalization(name = "name")
+    private String name;
 
-	@Equalization(name = "host")
-	private String host;
+    @Equalization(name = "database")
+    private String database;
 
-	@Equalization(name = "port")
-	private String port;
+    @Equalization(name = "host")
+    private String host;
 
-	@Equalization(name = "username")
-	private String username;
+    @Equalization(name = "port")
+    private String port;
 
-	@Equalization(name = "password")
-	private String password;
+    @Equalization(name = "username")
+    private String username;
 
-	@Equalization(name = "description")
-	private String description;
+    @Equalization(name = "password")
+    private String password;
 
-	public String getName() {
-		return name;
-	}
+    @Equalization(name = "description")
+    private String description;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDatabase() {
-		return database;
-	}
+    @Override
+    public String getRepositoryName() {
+        return name;
+    }
 
-	public void setDatabase(String database) {
-		this.database = database;
-	}
+    @Override
+    public String getDatabaseName() {
+        return database;
+    }
 
-	public String getHost() {
-		return host;
-	}
+    @Override
+    public String getHostName() {
+        return host;
+    }
 
-	public void setHost(String host) {
-		this.host = host;
-	}
+    @Override
+    public String getPort() {
+        return port;
+    }
 
-	public String getPort() {
-		return port;
-	}
+    @Override
+    public String getUser() {
+        return username;
+    }
 
-	public void setPort(String port) {
-		this.port = port;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
 }

@@ -43,7 +43,7 @@ public class RepositoryResource {
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
         Response response = new Response();
 
-        response.setData(repositoryService.validateConnection(convertedRepositoryDto));
+        response.setData(repositoryService.isServerRepositoryAccessible(convertedRepositoryDto));
         return response.toJson();
     }
 
@@ -75,7 +75,7 @@ public class RepositoryResource {
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
 
         try {
-            repositoryService.add(convertedRepositoryDto);
+            repositoryService.connect(convertedRepositoryDto);
             response.setData(Boolean.TRUE);
         } catch (Exception e) {
             response.setError(e);

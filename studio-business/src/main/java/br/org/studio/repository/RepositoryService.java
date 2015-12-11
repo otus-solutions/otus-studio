@@ -15,9 +15,9 @@ public interface RepositoryService {
     
     List<RepositoryDto> fetchAll() throws RepositoryNotFoundException;
 
-    void add(RepositoryDto repositoryDto);
+    void connect(RepositoryDto repositoryDto);
 
     void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException;
 
-    Boolean validateConnection(RepositoryDto repositoryDto);
+    Boolean isServerRepositoryAccessible(RepositoryDto repositoryDto);
 }
