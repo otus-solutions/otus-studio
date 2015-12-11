@@ -1,7 +1,7 @@
 angular
     .module('StudioApp')
-    .controller('ToolbarCtrl', ['$scope', '$location',
-        function($scope, $location) {
+    .controller('ToolbarCtrl', ['$scope', '$location', 'EditingService',
+        function($scope, $location, EditingService) {
 
             var USER_MANAGEMENT_STATE = 'user-management';
             var REPOSITORY_CONNECT_STATE = 'repository?actionType=CONNECT';
@@ -16,7 +16,8 @@ angular
             }
 
             $scope.openNewRepository = function() {
-            	$location.url(REPOSITORY_NEW_STATE);
+            	// $location.url(REPOSITORY_NEW_STATE);
+                console.log(EditingService.getSurvey());
             }
         }
     ]);
