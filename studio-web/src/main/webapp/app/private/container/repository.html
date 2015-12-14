@@ -37,7 +37,7 @@
             </div>
             <md-input-container class="md-block">
                 <label>Usuário</label>
-                <input name="username" ng-model="repository.username" type="text" ng-required="true" />
+                <input name="username" ng-model="identity.name" type="text" ng-required="true" editing-source />
                 <div ng-messages="repositoryForm.username.$error">
                     <div ng-message="required">Obrigatório</div>
                 </div>

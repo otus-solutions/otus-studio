@@ -5,9 +5,9 @@
     /*******************************************************************************************************************/
     /* Module services */
 
-    module.service('EditingService', ['Survey', 'EditingState', 'MemoryManagement',
-        function(Survey, EditingState, MemoryManagement) {
-            const GENERAL_MEM_SIZE = 30;
+    module.service('EditingService', ['Survey', 'SurveyDataUpdater', 'EditingState', 'MemoryManagement',
+        function(Survey, SurveyDataUpdater, EditingState, MemoryManagement) {
+            const GENERAL_MEM_SIZE = 2;
 
             var self = this;
             var surveyMemoryCache, generalEditingMemoryCache;
@@ -21,7 +21,6 @@
             self.getSurvey = getSurvey;
 
             /* Public interface implementation */
-
             function init(survey) {
                 self.survey = survey;
                 surveyMemoryCache = new MemoryManagement();
@@ -43,15 +42,18 @@
             }
 
             function getSurvey() {
-                return getCurrentState().survey;
-            }
-
-            function getCurrentState() {
-                return surveyMemoryCache.getMostRecentState();
+                return surveyMemoryCache.getMostRecentState().data;
             }
 
             function editData(editingEvent) {
+                // validate editingEvent
+                // log editingEvent
                 generalEditingMemoryCache.storeState(editingEvent);
+                console.log(generalEditingMemoryCache.get());
+
+                // apply editingEvent data:
+                SurveyDataUpdater.updateIdentity(editingEvent, getSurvey());
+                console.log(getSurvey());
             }
         }
     ]);
@@ -102,6 +104,7 @@
     module.factory('EditingEvent', [function() {
         return function() {
             this.type = null,
+            this.ngModel = null,
             this.oldState = null,
             this.newState = null
         };
@@ -114,13 +117,33 @@
                     return {
                         value: element[0].value
                     }
+                },
+                password: function password(element) {
+                    return {
+                        value: element[0].value
+                    }
+                },
+                number: function number(element) {
+                    return {
+                        value: element[0].value
+                    }
+                }
+            },
+            textarea: {
+                textarea: function textarea(element) {
+                    return {
+                        value: element[0].value
+                    }
                 }
             },
             produce: function produce(element) {
                 var localName = element[0].localName,
                     type = element[0].type;
 
-                return this[localName][type](element);
+                if (!type)
+                    return this[localName](element);
+                else
+                    return this[localName][type](element);
             }
         };
     }]);
@@ -137,11 +160,9 @@
                     var data = DataStrucureFactory.produce(dataStructure);
                     this.event.newState = data;
                 },
-                getOldState: function restoreLastState() {
-                    return this.event.oldState;
-                },
-                fireEditingEvent: function fireEditingEvent() {
+                fireEditingEvent: function fireEditingEvent(ngModel) {
                     this.event.type = 'update';
+                    this.event.ngModel = ngModel;
                     EditingEventHandler.handle(this.event);
                     this.event = new EditingEvent();
                 }
@@ -152,33 +173,62 @@
     module.factory('EventTriggerFactory', ['FocusProcessor', function(FocusProcessor) {
         return {
             input: {
-                text: function text(element) {
+                text: function text(element, ngModel) {
                     element.on('focus', function setOnFocus() {
                         FocusProcessor.storeOldState(element);
                     });
+
                     element.on('blur', function setOnBlur() {
                         FocusProcessor.storeNewState(element);
-                        FocusProcessor.fireEditingEvent();
+                        FocusProcessor.fireEditingEvent(ngModel);
                     });
-                    element.on('keyup', function setKeyUp(event) {
-                        if (event.keyCode == 27) { // esc
-                            // revert editing
-                        } else if (event.keyCode == 13) { // enter
-                            element.blur();
-                        }
+                },
+                password: function password(element, ngModel) {
+                    element.on('focus', function setOnFocus() {
+                        FocusProcessor.storeOldState(element);
+                    });
+
+                    element.on('blur', function setOnBlur() {
+                        FocusProcessor.storeNewState(element);
+                        FocusProcessor.fireEditingEvent(ngModel);
+                    });
+                },
+                number: function password(element, ngModel) {
+                    element.on('focus', function setOnFocus() {
+                        FocusProcessor.storeOldState(element);
+                    });
+
+                    element.on('blur', function setOnBlur() {
+                        FocusProcessor.storeNewState(element);
+                        FocusProcessor.fireEditingEvent(ngModel);
+                    });
+                }
+            },
+            textarea: {
+                textarea: function textarea(element, ngModel) {
+                    element.on('focus', function setOnFocus() {
+                        FocusProcessor.storeOldState(element);
+                    });
+
+                    element.on('blur', function setOnBlur() {
+                        FocusProcessor.storeNewState(element);
+                        FocusProcessor.fireEditingEvent(ngModel);
                     });
                 }
             },
             button: {
-                button: function button(element) {
+                button: function button(element, ngModel) {
                     element.on('click', function setOnClick(event) {});
                 }
             },
-            produce: function produce(element) {
+            produce: function produce(element, ngModel) {
                 var localName = element[0].localName,
                     type = element[0].type;
 
-                return this[localName][type](element);
+                if (!type)
+                    return this[localName](element, ngModel);
+                else
+                    return this[localName][type](element, ngModel);
             }
         };
     }]);
@@ -195,15 +245,15 @@
                 self.applyEventTriggers = applyEventTriggers;
 
                 /* Public interface implementations */
-                function applyEventTriggers(editing) {
-                    EventTriggerFactory.produce(editing);
+                function applyEventTriggers() {
+                    EventTriggerFactory.produce($element, $attrs.ngModel);
                 }
             };
 
             return {
                 controller: controller,
                 link: function link(scope, element, attr, controller) {
-                    controller.applyEventTriggers(element);
+                    controller.applyEventTriggers();
                 }
             };
         }

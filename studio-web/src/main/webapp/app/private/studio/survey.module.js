@@ -2,6 +2,25 @@
 
     var module = angular.module('survey', []);
 
+    /*******************************************************************************************************************/
+    /* Module services */
+
+    module.service('SurveyDataUpdater', [function() {
+        var self = this;
+
+        /* Public interface */
+        self.updateIdentity = updateIdentity;
+
+        /* Public interface implementation */
+        function updateIdentity(newIdentityData, survey) {
+            var model = newIdentityData.ngModel.split('.');
+            if (model[1] == 'keywords')
+                survey[model[0]][model[1]] = newIdentityData.newState.value.split(',');
+            else
+                survey[model[0]][model[1]] = newIdentityData.newState.value;
+        }
+    }]);
+
     module.service('SurveyLoader', ['Survey', function(Survey) {
         var self = this;
 
@@ -13,6 +32,9 @@
             return new Survey();
         }
     }]);
+
+    /*******************************************************************************************************************/
+    /* Module factories */
 
     module.factory('Survey', ['SurveyIdentity', function(SurveyIdentity) {
         return function() {
