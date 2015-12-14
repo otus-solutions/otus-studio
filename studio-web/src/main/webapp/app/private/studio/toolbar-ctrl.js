@@ -1,7 +1,7 @@
 angular
     .module('StudioApp')
-    .controller('ToolbarCtrl', ['$scope', '$location', 'Studio',
-        function($scope, $location, Studio) {
+    .controller('ToolbarCtrl', ['$scope', '$location', 'StudioEditingService',
+        function($scope, $location, StudioEditingService) {
 
     		var NEW_SURVEY = 'container';
             var USER_MANAGEMENT_STATE = 'user-management';
@@ -10,7 +10,7 @@ angular
 
             $scope.openContainer  = function() {
                 $location.url(NEW_SURVEY);
-                Studio.createNewSurvey();
+                StudioEditingService.createNewSurvey();
             }
 
             $scope.openAdministrationUsers = function() {

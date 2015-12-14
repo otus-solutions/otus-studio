@@ -137,6 +137,9 @@
                     var data = DataStrucureFactory.produce(dataStructure);
                     this.event.newState = data;
                 },
+                getOldState: function restoreLastState() {
+                    return this.event.oldState;
+                },
                 fireEditingEvent: function fireEditingEvent() {
                     this.event.type = 'update';
                     EditingEventHandler.handle(this.event);
@@ -153,10 +156,16 @@
                     element.on('focus', function setOnFocus() {
                         FocusProcessor.storeOldState(element);
                     });
-
                     element.on('blur', function setOnBlur() {
                         FocusProcessor.storeNewState(element);
                         FocusProcessor.fireEditingEvent();
+                    });
+                    element.on('keyup', function setKeyUp(event) {
+                        if (event.keyCode == 27) { // esc
+                            // revert editing
+                        } else if (event.keyCode == 13) { // enter
+                            element.blur();
+                        }
                     });
                 }
             },

@@ -2,7 +2,7 @@
 
     var module = angular.module('StudioApp');
 
-    module.service('Studio', ['SurveyLoader', 'EditingService',
+    module.service('StudioEditingService', ['SurveyLoader', 'EditingService',
         function(SurveyLoader, EditingService) {
             var self = this;
 
@@ -22,8 +22,12 @@
                 EditingService.close();
             }
 
+            function saveSurvey() {
+                EditingService.save();
+            }
+
             function loadSurvey() {
-                // A persisted survey object should be load here
+                // A persisted survey object should be load here.
                 // var survey = SurveyLoader.loadSurvey();
                 // initializeEditing(survey);
             }
