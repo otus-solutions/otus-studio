@@ -23,12 +23,15 @@ angular
                 });
             
             /* Configuration theme */
+           /* $mdThemingProvider.theme('altTheme')
+            .primaryPalette('purple');*/
+            
             $mdThemingProvider.theme('custom1');
             
-            $mdThemingProvider.theme('buttonTheme');
-            
+            $mdThemingProvider.theme('footerTheme');            
 
             /* Default state (route) */
             $urlRouterProvider.otherwise('/home');
+            
         }
     ]);
