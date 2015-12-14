@@ -16,7 +16,6 @@
             function createNewSurvey() {
                 var survey = SurveyLoader.newSurvey();
                 initializeEditing(survey);
-                console.log(getCurrentSurvey());
             }
 
             function closeSurvey() {

@@ -2,7 +2,9 @@
 
     var module = angular.module('editing', ['survey', 'memory']);
 
-    module.service('EditingService', ['Survey', 'EditingState', 'MemoryService',
+    /* Module services */
+
+    module.service('EditingService', ['Survey', 'SurveyState', 'MemoryService',
         function(Survey, EditingState, MemoryService) {
             var self = this;
 
@@ -11,6 +13,7 @@
             self.open = open;
             self.close = close;
             self.save = save;
+            self.editData = editData;
             self.getSurvey = getSurvey;
 
             /* Public interface implementation */
@@ -19,16 +22,16 @@
             }
 
             function open() {
-                var state = EditingState.generateOpen(self.survey);
+                var state = SurveyState.generateOpen(self.survey);
                 MemoryService.storeState(state);
             }
 
             function close() {
-                EditingState.generateClose(self.survey);
+                SurveyState.generateClose(self.survey);
             }
 
             function save() {
-                var state = EditingState.generateSave(self.survey);
+                var state = SurveyState.generateSave(self.survey);
                 MemoryService.storeState(state);
             }
 
@@ -39,10 +42,14 @@
             function getCurrentState() {
                 return MemoryService.getMostRecentState();
             }
+
+            function editData(editingEvent) {
+                console.log(editingEvent);
+            }
         }
     ]);
 
-    module.service('EditingState', [function() {
+    module.service('SurveyState', [function() {
         var self = this;
 
         /* Public interface */
@@ -71,5 +78,90 @@
             };
         }
     }]);
+
+    /* Module factories */
+
+    module.factory('EditingEvent', [function() {
+        return function() {
+            this.type = null,
+            this.oldState = null,
+            this.newState = null
+        };
+    }]);
+
+    module.factory('EditingDataHandler', ['EditingService',
+        function(EditingService){
+            return {
+                handle: function(data) {
+                    EditingService.editData(data);
+                }
+            };
+        }
+    ]);
+
+    module.factory('DataStrucureWrapper', [function() {
+        var wrapperFactory = {
+            wrap: function(dataStructure) {
+                if (dataStructure.localName == 'input') {
+                    return this.inputText(dataStructure);
+                }
+            },
+            inputText: function(dataStructure) {
+                return {
+                    value: dataStructure.value
+                }
+            }
+        };
+
+        return wrapperFactory;
+    }]);
+
+    /* Module directives */
+
+    module.directive('editingSource', ['EditingDataHandler', 'EditingEvent', 'DataStrucureWrapper',
+        function(EditingDataHandler, EditingEvent, DataStrucureWrapper) {
+            var dirController = function($scope, $element, $attrs) {
+                var self = this;
+
+                // self.dataHandler = new EditingDataHandler();
+
+                /* Public interface */
+                self.storeOldState = storeOldState;
+                self.storeNewState = storeNewState;
+                self.fireEditingEvent = fireEditingEvent;
+
+                /* Public interface implementations */
+                function storeOldState(dataStructure) {
+                    var data = DataStrucureWrapper.wrap(dataStructure);
+                    self.event = new EditingEvent();
+                    self.event.oldState = data;
+                }
+
+                function storeNewState(dataStructure) {
+                    var data = DataStrucureWrapper.wrap(dataStructure);
+                    self.event.newState = data;
+                }
+
+                function fireEditingEvent() {
+                    self.event.type = 'update';
+                    EditingDataHandler.handle(self.event);
+                }
+            };
+
+            return {
+                controller: dirController,
+                link: function(scope, element, attr, controller) {
+                    element.on('focus', function() {
+                        controller.storeOldState(this);
+                    });
+
+                    element.on('blur', function() {
+                        controller.storeNewState(this);
+                        controller.fireEditingEvent();
+                    });
+                }
+            };
+        }
+    ]);
 
 }());
