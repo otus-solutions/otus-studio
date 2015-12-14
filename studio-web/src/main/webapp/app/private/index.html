@@ -44,7 +44,7 @@
 						                <md-menu>
 						                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
 					                		<md-menu-content width="4">
-					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)"
+					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)" ng-model="repositoryController.self.connected"
 					                    		 type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
 						                	</md-menu-content>
 						              	</md-menu>
