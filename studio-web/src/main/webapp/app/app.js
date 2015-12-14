@@ -21,10 +21,10 @@ angular
                     url: '/repository',
                     templateUrl: 'private/repository/repository.html'
                 });
-
+            
             /* Configuration theme */
             $mdThemingProvider.theme('custom1');
-
+            
             $mdThemingProvider.theme('buttonTheme');
 
             /*Configuration icons*/

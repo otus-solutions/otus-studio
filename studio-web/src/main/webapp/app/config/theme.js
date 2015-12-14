@@ -24,9 +24,31 @@ angular.module('StudioApp').config(function($mdThemingProvider) {
     	.primaryPalette('toolbarTheme')
     	.warnPalette('red');
 	
-	$mdThemingProvider.theme('buttonTheme')
-		.primaryPalette('indigo');
+/*	$mdThemingProvider.definePalette('footerTheme',  {
+		'50' : 'FAFAFA',
+		'100' : 'F5F5F5',
+		'200' : 'EEEEEE',
+		'300' : 'E0E0E0',
+		'400' : 'BDBDBD',
+		'500' : '9E9E9E',
+		'600' : '757575',
+		'700' : '616161', 
+		'800' : '424242',
+		'900' : '212121', 
+		'constrastDefaultColor' : '424242',
+		'constrastDarkColors' : ['500', '600', '700', '800', '900'],
+		'contrastLightColors' : undefined
 		
+	});
+	*/
+	
+	$mdThemingProvider.theme('footerTheme')
+		.primaryPalette('grey', {
+			'default' : '800',
+			'hue-1' : '400',
+			'hue-2' : '500',
+			'hue-3' : '600'
+		});
 });	
 
 	
