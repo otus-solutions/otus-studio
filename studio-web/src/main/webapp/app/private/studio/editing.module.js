@@ -2,11 +2,15 @@
 
     var module = angular.module('editing', ['survey', 'memory']);
 
+    /*******************************************************************************************************************/
     /* Module services */
 
-    module.service('EditingService', ['Survey', 'SurveyState', 'MemoryService',
-        function(Survey, EditingState, MemoryService) {
+    module.service('EditingService', ['Survey', 'EditingState', 'MemoryManagement',
+        function(Survey, EditingState, MemoryManagement) {
+            const GENERAL_MEM_SIZE = 30;
+
             var self = this;
+            var surveyMemoryCache, generalEditingMemoryCache;
 
             /* Public interface */
             self.init = init;
@@ -17,22 +21,25 @@
             self.getSurvey = getSurvey;
 
             /* Public interface implementation */
+
             function init(survey) {
                 self.survey = survey;
+                surveyMemoryCache = new MemoryManagement();
+                generalEditingMemoryCache = new MemoryManagement(GENERAL_MEM_SIZE);
             }
 
             function open() {
-                var state = SurveyState.generateOpen(self.survey);
-                MemoryService.storeState(state);
+                var state = EditingState.generateOpen(self.survey);
+                surveyMemoryCache.storeState(state);
             }
 
             function close() {
-                SurveyState.generateClose(self.survey);
+                EditingState.generateClose(self.survey);
             }
 
             function save() {
-                var state = SurveyState.generateSave(self.survey);
-                MemoryService.storeState(state);
+                var state = EditingState.generateSave(self.survey);
+                surveyMemoryCache.storeState(state);
             }
 
             function getSurvey() {
@@ -40,16 +47,16 @@
             }
 
             function getCurrentState() {
-                return MemoryService.getMostRecentState();
+                return surveyMemoryCache.getMostRecentState();
             }
 
             function editData(editingEvent) {
-                console.log(editingEvent);
+                generalEditingMemoryCache.storeState(editingEvent);
             }
         }
     ]);
 
-    module.service('SurveyState', [function() {
+    module.service('EditingState', [function() {
         var self = this;
 
         /* Public interface */
@@ -58,28 +65,39 @@
         self.generateSave = generateSave;
 
         /* Public interface implementation */
-        function generateOpen(survey) {
-            return createState('OPENED', survey)
+        function generateOpen(data) {
+            return createState('OPENED', data)
         }
 
-        function generateClose(survey) {
-            return createState('CLOSED', survey);
+        function generateClose(data) {
+            return createState('CLOSED', data);
         }
 
-        function generateSave(survey) {
-            return createState('SAVED', survey);
+        function generateSave(data) {
+            return createState('SAVED', data);
         }
 
-        function createState(value, survey) {
+        function createState(value, data) {
             return {
                 timestamp: Date.now(),
                 value: value,
-                survey: survey
+                data: data
             };
         }
     }]);
 
+    /*******************************************************************************************************************/
     /* Module factories */
+
+    module.factory('EditingEventHandler', ['EditingService',
+        function(EditingService){
+            return {
+                handle: function handle(data) {
+                    EditingService.editData(data);
+                }
+            };
+        }
+    ]);
 
     module.factory('EditingEvent', [function() {
         return function() {
@@ -89,76 +107,94 @@
         };
     }]);
 
-    module.factory('EditingDataHandler', ['EditingService',
-        function(EditingService){
+    module.factory('DataStrucureFactory', [function() {
+        return {
+            input: {
+                text: function text(element) {
+                    return {
+                        value: element[0].value
+                    }
+                }
+            },
+            produce: function produce(element) {
+                var localName = element[0].localName,
+                    type = element[0].type;
+
+                return this[localName][type](element);
+            }
+        };
+    }]);
+
+    module.factory('FocusProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStrucureFactory',
+        function(EditingEvent, EditingEventHandler, DataStrucureFactory) {
             return {
-                handle: function(data) {
-                    EditingService.editData(data);
+                event: new EditingEvent(),
+                storeOldState: function storeOldState(dataStructure) {
+                    var data = DataStrucureFactory.produce(dataStructure);
+                    this.event.oldState = data;
+                },
+                storeNewState: function storeNewState(dataStructure) {
+                    var data = DataStrucureFactory.produce(dataStructure);
+                    this.event.newState = data;
+                },
+                fireEditingEvent: function fireEditingEvent() {
+                    this.event.type = 'update';
+                    EditingEventHandler.handle(this.event);
+                    this.event = new EditingEvent();
                 }
             };
         }
     ]);
 
-    module.factory('DataStrucureWrapper', [function() {
-        var wrapperFactory = {
-            wrap: function(dataStructure) {
-                if (dataStructure.localName == 'input') {
-                    return this.inputText(dataStructure);
+    module.factory('EventTriggerFactory', ['FocusProcessor', function(FocusProcessor) {
+        return {
+            input: {
+                text: function text(element) {
+                    element.on('focus', function setOnFocus() {
+                        FocusProcessor.storeOldState(element);
+                    });
+
+                    element.on('blur', function setOnBlur() {
+                        FocusProcessor.storeNewState(element);
+                        FocusProcessor.fireEditingEvent();
+                    });
                 }
             },
-            inputText: function(dataStructure) {
-                return {
-                    value: dataStructure.value
+            button: {
+                button: function button(element) {
+                    element.on('click', function setOnClick(event) {});
                 }
+            },
+            produce: function produce(element) {
+                var localName = element[0].localName,
+                    type = element[0].type;
+
+                return this[localName][type](element);
             }
         };
-
-        return wrapperFactory;
     }]);
 
+    /*******************************************************************************************************************/
     /* Module directives */
 
-    module.directive('editingSource', ['EditingDataHandler', 'EditingEvent', 'DataStrucureWrapper',
-        function(EditingDataHandler, EditingEvent, DataStrucureWrapper) {
-            var dirController = function($scope, $element, $attrs) {
+    module.directive('editingSource', ['EventTriggerFactory',
+        function(EventTriggerFactory) {
+            var controller = function controller($scope, $element, $attrs) {
                 var self = this;
 
-                // self.dataHandler = new EditingDataHandler();
-
                 /* Public interface */
-                self.storeOldState = storeOldState;
-                self.storeNewState = storeNewState;
-                self.fireEditingEvent = fireEditingEvent;
+                self.applyEventTriggers = applyEventTriggers;
 
                 /* Public interface implementations */
-                function storeOldState(dataStructure) {
-                    var data = DataStrucureWrapper.wrap(dataStructure);
-                    self.event = new EditingEvent();
-                    self.event.oldState = data;
-                }
-
-                function storeNewState(dataStructure) {
-                    var data = DataStrucureWrapper.wrap(dataStructure);
-                    self.event.newState = data;
-                }
-
-                function fireEditingEvent() {
-                    self.event.type = 'update';
-                    EditingDataHandler.handle(self.event);
+                function applyEventTriggers(editing) {
+                    EventTriggerFactory.produce(editing);
                 }
             };
 
             return {
-                controller: dirController,
-                link: function(scope, element, attr, controller) {
-                    element.on('focus', function() {
-                        controller.storeOldState(this);
-                    });
-
-                    element.on('blur', function() {
-                        controller.storeNewState(this);
-                        controller.fireEditingEvent();
-                    });
+                controller: controller,
+                link: function link(scope, element, attr, controller) {
+                    controller.applyEventTriggers(element);
                 }
             };
         }
