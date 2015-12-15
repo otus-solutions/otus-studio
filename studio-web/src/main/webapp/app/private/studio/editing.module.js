@@ -171,66 +171,46 @@
     ]);
 
     module.factory('EventTriggerFactory', ['FocusProcessor', function(FocusProcessor) {
-        return {
-            input: {
-                text: function text(element, ngModel) {
-                    element.on('focus', function setOnFocus() {
-                        FocusProcessor.storeOldState(element);
-                    });
+        var eventTriggerFactory = {};
 
-                    element.on('blur', function setOnBlur() {
-                        FocusProcessor.storeNewState(element);
-                        FocusProcessor.fireEditingEvent(ngModel);
-                    });
-                },
-                password: function password(element, ngModel) {
-                    element.on('focus', function setOnFocus() {
-                        FocusProcessor.storeOldState(element);
-                    });
+        eventTriggerFactory.produce = function produce(element, ngModel) {
+            var localName = element[0].localName,
+                type = element[0].type;
 
-                    element.on('blur', function setOnBlur() {
-                        FocusProcessor.storeNewState(element);
-                        FocusProcessor.fireEditingEvent(ngModel);
-                    });
-                },
-                number: function password(element, ngModel) {
-                    element.on('focus', function setOnFocus() {
-                        FocusProcessor.storeOldState(element);
-                    });
-
-                    element.on('blur', function setOnBlur() {
-                        FocusProcessor.storeNewState(element);
-                        FocusProcessor.fireEditingEvent(ngModel);
-                    });
-                }
-            },
-            textarea: {
-                textarea: function textarea(element, ngModel) {
-                    element.on('focus', function setOnFocus() {
-                        FocusProcessor.storeOldState(element);
-                    });
-
-                    element.on('blur', function setOnBlur() {
-                        FocusProcessor.storeNewState(element);
-                        FocusProcessor.fireEditingEvent(ngModel);
-                    });
-                }
-            },
-            button: {
-                button: function button(element, ngModel) {
-                    element.on('click', function setOnClick(event) {});
-                }
-            },
-            produce: function produce(element, ngModel) {
-                var localName = element[0].localName,
-                    type = element[0].type;
-
-                if (!type)
-                    return this[localName](element, ngModel);
-                else
-                    return this[localName][type](element, ngModel);
+            if (!type) {
+                console.log(this);
+                return this[localName](element, ngModel);
+            }
+            else {
+                console.log(this);
+                return this[localName][type](element, ngModel);
             }
         };
+
+        eventTriggerFactory.input = {
+            text: function text(element, ngModel) {
+                element.on('focus', function setOnFocus() {
+                    FocusProcessor.storeOldState(element);
+                });
+
+                element.on('blur', function setOnBlur() {
+                    FocusProcessor.storeNewState(element);
+                    FocusProcessor.fireEditingEvent(ngModel);
+                });
+            }
+        };
+
+        eventTriggerFactory.button = {
+            button: function button(element, ngModel) {
+                element.on('click', function setOnClick(event) {});
+            }
+        };
+
+        eventTriggerFactory.input.password = eventTriggerFactory.input.text;
+        eventTriggerFactory.input.number = eventTriggerFactory.input.text;
+        eventTriggerFactory.textarea = { textarea: eventTriggerFactory.input.text };
+
+        return eventTriggerFactory;
     }]);
 
     /*******************************************************************************************************************/

@@ -14,10 +14,17 @@
         /* Public interface implementation */
         function updateIdentity(newIdentityData, survey) {
             var model = newIdentityData.ngModel.split('.');
-            if (model[1] == 'keywords')
-                survey[model[0]][model[1]] = newIdentityData.newState.value.split(',');
-            else
+
+            if (model[1] == 'keywords') {
+                survey[model[0]][model[1]] = [];
+                var keywordList = newIdentityData.newState.value.split(',');
+                keywordList.forEach(function(keyword) {
+                    survey[model[0]][model[1]].push(keyword.trim());
+                });
+            }
+            else {
                 survey[model[0]][model[1]] = newIdentityData.newState.value;
+            }
         }
     }]);
 
