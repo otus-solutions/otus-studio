@@ -119,7 +119,33 @@
     /*******************************************************************************************************************/
     /* studio.editing.data */
 
-    module.factory('DataStrucureFactory', [function() {
+    module.factory('DataStructureFactory', ['DataStructureTree', function(DataStructureTree) {
+        /* Factory interface */
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectDataStructure: function(component, type, data, ngModel) {
+                if (type)
+                    return DataStructureTree[component][type](data, ngModel);
+                else
+                    return DataStructureTree[component](data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element),
+                    type = this.identifyType(element);
+
+                return this.selectDataStructure(component, type, element, ngModel);
+            }
+        };
+
+        return factory;
+    }]);
+
+    module.factory('DataStructureTree', [function() {
         const NG_MODEL = 1;
 
         /* Data structure models */
@@ -130,25 +156,32 @@
         }
 
         /* Register builders to data structures */
-        var dataStructureTree = {};
+        var tree = {};
 
-        dataStructureTree.input = {
-            text: function buildTextStructure(element) {
+        tree.input = {
+            text: function buildTextStructure(element, ngModel) {
                 var structure = new DataStructure();
                 structure.domId = element.id;
-                structure.ngModel = element.attributes[NG_MODEL].value;
+                structure.ngModel = ngModel;
                 structure.value = element.value;
                 return structure;
             }
         };
 
-        dataStructureTree.input.password = dataStructureTree.input.text;
-        dataStructureTree.input.number = dataStructureTree.input.text;
+        tree.input.password = tree.input.text;
+        tree.input.number = tree.input.text;
 
-        dataStructureTree.textarea = {
-            textarea: dataStructureTree.input.text
+        tree.textarea = {
+            textarea: tree.input.text
         };
 
+        return tree;
+    }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.trigger */
+
+    module.factory('EventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
         /* Factory interface */
         var factory = {
             identifyComponent: function(element) {
@@ -157,27 +190,41 @@
             identifyType: function(element) {
                 return element.type;
             },
-            selectDataStructure: function(component, type, data) {
+            selectDataStructure: function(component, type, data, ngModel) {
                 if (type)
-                    return dataStructureTree[component][type](data);
+                    return EventTriggerTree[component][type](data, ngModel);
                 else
-                    return dataStructureTree[component](data);
+                    return EventTriggerTree[component](data, ngModel);
             },
-            produce: function produce(element) {
-                var component = this.identifyComponent(element),
-                    type = this.identifyType(element);
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element[0]),
+                    type = this.identifyType(element[0]);
 
-                return this.selectDataStructure(component, type, element)
+                return this.selectDataStructure(component, type, element, ngModel);
             }
         };
 
         return factory;
     }]);
 
-    /*******************************************************************************************************************/
-    /* studio.editing.trigger */
+    module.factory('EventTriggerTree', ['InputTextEventTrigger', function(InputTextEventTrigger) {
+        /* Register builders to event triggers */
+        var tree = {};
 
-    module.factory('InputTextTrigger', ['EventTriggerProcessor', function(EventTriggerProcessor) {
+        tree.input = {
+            text: function(data, ngModel) {
+                return new InputTextEventTrigger(data, ngModel);
+            }
+        };
+
+        tree.input.password = tree.input.text;
+        tree.input.number = tree.input.text;
+        tree.textarea = { textarea: tree.input.text };
+
+        return tree;
+    }]);
+
+    module.factory('InputTextEventTrigger', ['EventTriggerProcessor', function(EventTriggerProcessor) {
         return function InputTextTrigger(element, ngModel) {
             var processor = new EventTriggerProcessor(ngModel);
 
@@ -192,18 +239,18 @@
         };
     }]);
 
-    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStrucureFactory',
-        function(EditingEvent, EditingEventHandler, DataStrucureFactory) {
+    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStructureFactory',
+        function(EditingEvent, EditingEventHandler, DataStructureFactory) {
             return function EventTriggerProcessor(ngModel) {
                 var ngModel = ngModel,
                     event = new EditingEvent();
 
                 this.storeOldState = function storeOldState(dataStructure) {
-                    var data = DataStrucureFactory.produce(dataStructure[0]);
+                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
                     event.oldState = data;
                 };
                 this.storeNewState = function storeNewState(dataStructure) {
-                    var data = DataStrucureFactory.produce(dataStructure[0]);
+                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
                     event.newState = data;
                 };
                 this.run = function run() {
@@ -215,34 +262,6 @@
             };
         }
     ]);
-
-    module.factory('EventTriggerFactory', ['InputTextTrigger', function(InputTextTrigger) {
-        var eventTriggerFactory = {};
-
-        eventTriggerFactory.input = {
-            text: function(element, ngModel) {
-                return new InputTextTrigger(element, ngModel);
-            }
-        };
-
-        eventTriggerFactory.input.password = eventTriggerFactory.input.text;
-        eventTriggerFactory.input.number = eventTriggerFactory.input.text;
-        eventTriggerFactory.textarea = { textarea: eventTriggerFactory.input.text };
-
-        eventTriggerFactory.produce = function produce(element, ngModel) {
-            var localName = element[0].localName,
-                type = element[0].type;
-
-            if (!type) {
-                this[localName](element, ngModel);
-            }
-            else {
-                this[localName][type](element, ngModel);
-            }
-        };
-
-        return eventTriggerFactory;
-    }]);
 
     /*******************************************************************************************************************/
     /* studio.editing.directive */
