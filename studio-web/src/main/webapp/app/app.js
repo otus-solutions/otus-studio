@@ -23,10 +23,12 @@ angular
                 });
             
             /* Configuration theme */
-            $mdThemingProvider.theme('custom1');
             
-            $mdThemingProvider.theme('buttonTheme');
-
+            $mdThemingProvider.theme('default');
+            
+            $mdThemingProvider.theme('altTheme');
+            
+            
             /*Configuration icons*/
             /* 24 is the size default of icons */
             $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
