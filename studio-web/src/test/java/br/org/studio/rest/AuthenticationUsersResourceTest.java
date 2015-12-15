@@ -2,6 +2,7 @@ package br.org.studio.rest;
 
 import br.org.studio.exception.EmailNotFoundException;
 import br.org.studio.exception.InvalidPasswordException;
+import br.org.studio.exception.UserDisabledException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
 import br.org.studio.security.SecurityServiceBean;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ public class AuthenticationUsersResourceTest {
     private SecurityServiceBean securityServiceBean;
 
     @Test
-    public void userLogin_shold_return_FALSE_when_throw_any_exception() throws EmailNotFoundException, InvalidPasswordException {
+    public void userLogin_shold_return_FALSE_when_throw_any_exception() throws EmailNotFoundException, InvalidPasswordException, UserDisabledException {
         Mockito.doThrow(new EmailNotFoundException()).when(securityServiceBean).authenticate(Matchers.any(LoginAuthenticationDto.class));
 
         LoginAuthenticationDto loginAuthenticationDto = new LoginAuthenticationDto();
