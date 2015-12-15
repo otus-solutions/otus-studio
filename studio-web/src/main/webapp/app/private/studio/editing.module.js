@@ -111,41 +111,31 @@
     }]);
 
     module.factory('DataStrucureFactory', [function() {
-        return {
-            input: {
-                text: function text(element) {
-                    return {
-                        value: element[0].value
-                    }
-                },
-                password: function password(element) {
-                    return {
-                        value: element[0].value
-                    }
-                },
-                number: function number(element) {
-                    return {
-                        value: element[0].value
-                    }
-                }
-            },
-            textarea: {
-                textarea: function textarea(element) {
-                    return {
-                        value: element[0].value
-                    }
-                }
-            },
-            produce: function produce(element) {
-                var localName = element[0].localName,
-                    type = element[0].type;
+        var dataStrucureFactory = {};
 
-                if (!type)
-                    return this[localName](element);
-                else
-                    return this[localName][type](element);
+        dataStrucureFactory.input = {
+            text: function text(element) {
+                return {
+                    value: element[0].value
+                }
             }
         };
+
+        dataStrucureFactory.input.password = dataStrucureFactory.input.text;
+        dataStrucureFactory.input.number = dataStrucureFactory.input.text;
+        dataStrucureFactory.textarea = { textarea: dataStrucureFactory.input.text };
+
+        dataStrucureFactory.produce = function produce(element) {
+            var localName = element[0].localName,
+                type = element[0].type;
+
+            if (!type)
+                return this[localName](element);
+            else
+                return this[localName][type](element);
+        };
+
+        return dataStrucureFactory;
     }]);
 
     module.factory('FocusProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStrucureFactory',
