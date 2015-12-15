@@ -3,7 +3,7 @@
     var module = angular.module('editing', ['survey', 'memory']);
 
     /*******************************************************************************************************************/
-    /* Module services */
+    /* studio.editing */
 
     module.service('EditingService', ['Survey', 'SurveyDataUpdater', 'EditingState', 'MemoryManagement',
         function(Survey, SurveyDataUpdater, EditingState, MemoryManagement) {
@@ -89,7 +89,7 @@
     }]);
 
     /*******************************************************************************************************************/
-    /* Module factories */
+    /* studio.editing.event */
 
     module.factory('EditingEventHandler', ['EditingService',
         function(EditingService){
@@ -109,6 +109,9 @@
             this.newState = null
         };
     }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.data */
 
     module.factory('DataStrucureFactory', [function() {
         var dataStrucureFactory = {};
@@ -137,6 +140,9 @@
 
         return dataStrucureFactory;
     }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.trigger */
 
     module.factory('InputTextTrigger', ['EventTriggerProcessor', function(EventTriggerProcessor) {
         return function InputTextTrigger(element, ngModel) {
@@ -206,7 +212,7 @@
     }]);
 
     /*******************************************************************************************************************/
-    /* Module directives */
+    /* studio.editing.directive */
 
     module.directive('editingSource', ['EventTriggerFactory',
         function(EventTriggerFactory) {
