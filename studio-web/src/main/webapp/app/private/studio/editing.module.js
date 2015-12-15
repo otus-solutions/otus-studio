@@ -158,10 +158,10 @@
                 return element.type;
             },
             selectDataStructure: function(component, type, data) {
-                if (!type)
-                    return dataStructureTree[component](data);
-                else
+                if (type)
                     return dataStructureTree[component][type](data);
+                else
+                    return dataStructureTree[component](data);
             },
             produce: function produce(element) {
                 var component = this.identifyComponent(element),
