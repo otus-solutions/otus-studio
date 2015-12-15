@@ -7,7 +7,7 @@
 
     module.service('EditingService', ['Survey', 'SurveyDataUpdater', 'EditingState', 'MemoryManagement',
         function(Survey, SurveyDataUpdater, EditingState, MemoryManagement) {
-            const GENERAL_MEM_SIZE = 2;
+            const GENERAL_MEM_SIZE = 30;
 
             var self = this;
             var surveyMemoryCache, generalEditingMemoryCache;
@@ -138,67 +138,69 @@
         return dataStrucureFactory;
     }]);
 
-    module.factory('FocusProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStrucureFactory',
+    module.factory('InputTextTrigger', ['EventTriggerProcessor', function(EventTriggerProcessor) {
+        return function InputTextTrigger(element, ngModel) {
+            var processor = new EventTriggerProcessor(ngModel);
+
+            element.on('focus', function setOnFocus() {
+                processor.storeOldState(element);
+            });
+
+            element.on('blur', function setOnBlur() {
+                processor.storeNewState(element);
+                processor.run();
+            });
+        };
+    }]);
+
+    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStrucureFactory',
         function(EditingEvent, EditingEventHandler, DataStrucureFactory) {
-            return {
-                event: new EditingEvent(),
-                storeOldState: function storeOldState(dataStructure) {
+            return function EventTriggerProcessor(ngModel) {
+                var ngModel = ngModel,
+                    event = new EditingEvent();
+
+                this.storeOldState = function storeOldState(dataStructure) {
                     var data = DataStrucureFactory.produce(dataStructure);
-                    this.event.oldState = data;
-                },
-                storeNewState: function storeNewState(dataStructure) {
+                    event.oldState = data;
+                };
+                this.storeNewState = function storeNewState(dataStructure) {
                     var data = DataStrucureFactory.produce(dataStructure);
-                    this.event.newState = data;
-                },
-                fireEditingEvent: function fireEditingEvent(ngModel) {
-                    this.event.type = 'update';
-                    this.event.ngModel = ngModel;
-                    EditingEventHandler.handle(this.event);
-                    this.event = new EditingEvent();
-                }
+                    event.newState = data;
+                };
+                this.run = function run() {
+                    event.type = 'update';
+                    event.ngModel = ngModel;
+                    EditingEventHandler.handle(event);
+                    event = new EditingEvent();
+                };
             };
         }
     ]);
 
-    module.factory('EventTriggerFactory', ['FocusProcessor', function(FocusProcessor) {
+    module.factory('EventTriggerFactory', ['InputTextTrigger', function(InputTextTrigger) {
         var eventTriggerFactory = {};
 
-        eventTriggerFactory.produce = function produce(element, ngModel) {
-            var localName = element[0].localName,
-                type = element[0].type;
-
-            if (!type) {
-                console.log(this);
-                return this[localName](element, ngModel);
-            }
-            else {
-                console.log(this);
-                return this[localName][type](element, ngModel);
-            }
-        };
-
         eventTriggerFactory.input = {
-            text: function text(element, ngModel) {
-                element.on('focus', function setOnFocus() {
-                    FocusProcessor.storeOldState(element);
-                });
-
-                element.on('blur', function setOnBlur() {
-                    FocusProcessor.storeNewState(element);
-                    FocusProcessor.fireEditingEvent(ngModel);
-                });
-            }
-        };
-
-        eventTriggerFactory.button = {
-            button: function button(element, ngModel) {
-                element.on('click', function setOnClick(event) {});
+            text: function(element, ngModel) {
+                return new InputTextTrigger(element, ngModel);
             }
         };
 
         eventTriggerFactory.input.password = eventTriggerFactory.input.text;
         eventTriggerFactory.input.number = eventTriggerFactory.input.text;
         eventTriggerFactory.textarea = { textarea: eventTriggerFactory.input.text };
+
+        eventTriggerFactory.produce = function produce(element, ngModel) {
+            var localName = element[0].localName,
+                type = element[0].type;
+
+            if (!type) {
+                this[localName](element, ngModel);
+            }
+            else {
+                this[localName][type](element, ngModel);
+            }
+        };
 
         return eventTriggerFactory;
     }]);
@@ -212,10 +214,10 @@
                 var self = this;
 
                 /* Public interface */
-                self.applyEventTriggers = applyEventTriggers;
+                self.applyEventTrigger = applyEventTrigger;
 
                 /* Public interface implementations */
-                function applyEventTriggers() {
+                function applyEventTrigger() {
                     EventTriggerFactory.produce($element, $attrs.ngModel);
                 }
             };
@@ -223,7 +225,7 @@
             return {
                 controller: controller,
                 link: function link(scope, element, attr, controller) {
-                    controller.applyEventTriggers();
+                    controller.applyEventTrigger();
                 }
             };
         }
