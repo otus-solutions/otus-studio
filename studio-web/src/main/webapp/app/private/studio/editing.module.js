@@ -58,46 +58,52 @@
         }
     ]);
 
-    module.service('EditingState', [function() {
-        var self = this;
+    module.service('EditingState', [
+        function() {
+            var self = this;
 
-        /* Public interface */
-        self.generateOpen = generateOpen;
-        self.generateClose = generateClose;
-        self.generateSave = generateSave;
+            /* Public interface */
+            self.generateOpen = generateOpen;
+            self.generateClose = generateClose;
+            self.generateSave = generateSave;
 
-        /* Public interface implementation */
-        function generateOpen(data) {
-            return createState('OPENED', data)
+            /* Public interface implementation */
+            function generateOpen(data) {
+                return createState('OPENED', data)
+            }
+
+            function generateClose(data) {
+                return createState('CLOSED', data);
+            }
+
+            function generateSave(data) {
+                return createState('SAVED', data);
+            }
+
+            function createState(value, data) {
+                return {
+                    timestamp: Date.now(),
+                    value: value,
+                    data: data
+                };
+            }
         }
-
-        function generateClose(data) {
-            return createState('CLOSED', data);
-        }
-
-        function generateSave(data) {
-            return createState('SAVED', data);
-        }
-
-        function createState(value, data) {
-            return {
-                timestamp: Date.now(),
-                value: value,
-                data: data
-            };
-        }
-    }]);
+    ]);
 
     /*******************************************************************************************************************/
     /* studio.editing.event */
 
-    module.factory('EditingEventHandler', ['EditingService',
-        function(EditingService){
-            return {
-                handle: function handle(data) {
-                    EditingService.editData(data);
-                }
-            };
+    module.service('EditingEventHandler', ['EditingService',
+        function(EditingService) {
+            var self = this;
+
+            /* PUblic interface */
+            self.handle = handle;
+
+            /* Public interface implementation */
+            function handle(data) {
+                EditingService.editData(data);
+            }
         }
     ]);
 
@@ -114,31 +120,58 @@
     /* studio.editing.data */
 
     module.factory('DataStrucureFactory', [function() {
-        var dataStrucureFactory = {};
+        const NG_MODEL = 1;
 
-        dataStrucureFactory.input = {
-            text: function text(element) {
-                return {
-                    value: element[0].value
-                }
+        /* Data structure models */
+        function DataStructure() {
+            this.domId;
+            this.ngModel;
+            this.value;
+        }
+
+        /* Register builders to data structures */
+        var dataStructureTree = {};
+
+        dataStructureTree.input = {
+            text: function buildTextStructure(element) {
+                var structure = new DataStructure();
+                structure.domId = element.id;
+                structure.ngModel = element.attributes[NG_MODEL].value;
+                structure.value = element.value;
+                return structure;
             }
         };
 
-        dataStrucureFactory.input.password = dataStrucureFactory.input.text;
-        dataStrucureFactory.input.number = dataStrucureFactory.input.text;
-        dataStrucureFactory.textarea = { textarea: dataStrucureFactory.input.text };
+        dataStructureTree.input.password = dataStructureTree.input.text;
+        dataStructureTree.input.number = dataStructureTree.input.text;
 
-        dataStrucureFactory.produce = function produce(element) {
-            var localName = element[0].localName,
-                type = element[0].type;
-
-            if (!type)
-                return this[localName](element);
-            else
-                return this[localName][type](element);
+        dataStructureTree.textarea = {
+            textarea: dataStructureTree.input.text
         };
 
-        return dataStrucureFactory;
+        /* Factory interface */
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectDataStructure: function(component, type, data) {
+                if (!type)
+                    return dataStructureTree[component](data);
+                else
+                    return dataStructureTree[component][type](data);
+            },
+            produce: function produce(element) {
+                var component = this.identifyComponent(element),
+                    type = this.identifyType(element);
+
+                return this.selectDataStructure(component, type, element)
+            }
+        };
+
+        return factory;
     }]);
 
     /*******************************************************************************************************************/
@@ -166,11 +199,11 @@
                     event = new EditingEvent();
 
                 this.storeOldState = function storeOldState(dataStructure) {
-                    var data = DataStrucureFactory.produce(dataStructure);
+                    var data = DataStrucureFactory.produce(dataStructure[0]);
                     event.oldState = data;
                 };
                 this.storeNewState = function storeNewState(dataStructure) {
-                    var data = DataStrucureFactory.produce(dataStructure);
+                    var data = DataStrucureFactory.produce(dataStructure[0]);
                     event.newState = data;
                 };
                 this.run = function run() {
