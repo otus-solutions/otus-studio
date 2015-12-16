@@ -9,9 +9,27 @@
         var self = this;
 
         /* Public interface */
+        self.update = update;
         self.updateIdentity = updateIdentity;
 
         /* Public interface implementation */
+        function update(newIdentityData, survey) {
+            var updateType = identifyUpdateType(newIdentityData.type);
+            runUpdater(updateType, newIdentityData, survey);
+        }
+
+        function runUpdater(updateType, newIdentityData, survey) {
+            self[updateType](newIdentityData, survey);
+        }
+
+        function identifyUpdateType(ngModel) {
+            var ngModelParts = ngModel.split('.'),
+                firstLetter = ngModelParts[0].slice(0, 1),
+                restOfString = ngModelParts[0].slice(1);
+
+            return 'update'.concat(firstLetter.toUpperCase().concat(restOfString));
+        }
+
         function updateIdentity(newIdentityData, survey) {
             var model = newIdentityData.ngModel.split('.');
 

@@ -49,10 +49,9 @@
                 // validate editingEvent
                 // log editingEvent
                 generalEditingMemoryCache.storeState(editingEvent);
-                console.log(generalEditingMemoryCache.get());
 
                 // apply editingEvent data:
-                SurveyDataUpdater.updateIdentity(editingEvent, getSurvey());
+                SurveyDataUpdater.update(editingEvent, getSurvey());
                 console.log(getSurvey());
             }
         }
@@ -109,10 +108,10 @@
 
     module.factory('EditingEvent', [function() {
         return function() {
-            this.type = null,
-            this.ngModel = null,
-            this.oldState = null,
-            this.newState = null
+            this.type,
+            this.ngModel,
+            this.oldState,
+            this.newState
         };
     }]);
 
@@ -120,7 +119,6 @@
     /* studio.editing.data */
 
     module.factory('DataStructureFactory', ['DataStructureTree', function(DataStructureTree) {
-        /* Factory interface */
         var factory = {
             identifyComponent: function(element) {
                 return element.localName;
@@ -146,8 +144,6 @@
     }]);
 
     module.factory('DataStructureTree', [function() {
-        const NG_MODEL = 1;
-
         /* Data structure models */
         function DataStructure() {
             this.domId;
@@ -179,10 +175,44 @@
     }]);
 
     /*******************************************************************************************************************/
-    /* studio.editing.trigger */
+    /* studio.editing.event.trigger */
 
-    module.factory('EventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
-        /* Factory interface */
+    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory',
+        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory) {
+            var factoryIndex = {
+                input: 'html',
+                textarea: 'html',
+                text: 'question',
+                number: 'question',
+                date: 'question',
+                time: 'question',
+                singleSelection: 'question'
+            };
+
+            var factoryMap = {
+                html: HtmlEventTriggerFactory,
+                question: QuestionEventTriggerFactory
+            };
+
+            var factory = {
+                identifyFactory: function(element) {
+                    return factoryIndex[element.localName];
+                },
+                selectFactory: function(type) {
+                    return factoryMap[type];
+                },
+                produce: function produce(element, ngModel) {
+                    var factoryType = this.identifyFactory(element[0]);
+                    var selectedFactory = this.selectFactory(factoryType);
+                    selectedFactory.produce(element, ngModel);
+                }
+            };
+
+            return factory;
+        }
+    ]);
+
+    module.factory('HtmlEventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
         var factory = {
             identifyComponent: function(element) {
                 return element.localName;
@@ -190,17 +220,17 @@
             identifyType: function(element) {
                 return element.type;
             },
-            selectDataStructure: function(component, type, data, ngModel) {
+            selectEventTrigger: function(component, type, data, ngModel) {
                 if (type)
-                    return EventTriggerTree[component][type](data, ngModel);
+                    EventTriggerTree[component][type](data, ngModel);
                 else
-                    return EventTriggerTree[component](data, ngModel);
+                    EventTriggerTree[component](data, ngModel);
             },
             produce: function produce(element, ngModel) {
                 var component = this.identifyComponent(element[0]),
                     type = this.identifyType(element[0]);
 
-                return this.selectDataStructure(component, type, element, ngModel);
+                this.selectEventTrigger(component, type, element, ngModel);
             }
         };
 
@@ -208,12 +238,12 @@
     }]);
 
     module.factory('EventTriggerTree', ['InputTextEventTrigger', function(InputTextEventTrigger) {
-        /* Register builders to event triggers */
         var tree = {};
 
+        // tag-name/type
         tree.input = {
             text: function(data, ngModel) {
-                return new InputTextEventTrigger(data, ngModel);
+                InputTextEventTrigger(data, ngModel);
             }
         };
 
@@ -254,7 +284,7 @@
                     event.newState = data;
                 };
                 this.run = function run() {
-                    event.type = 'update';
+                    event.type = ngModel;
                     event.ngModel = ngModel;
                     EditingEventHandler.handle(event);
                     event = new EditingEvent();
@@ -262,6 +292,48 @@
             };
         }
     ]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event.question.trigger */
+
+    module.factory('QuestionEventTriggerTree', [function() {
+        var tree = {};
+
+        // question-type/
+        tree.text = function() {};
+        tree.number = function() {};
+        tree.singleSelection = function() {};
+        tree.date = function() {};
+        tree.time = function() {};
+        tree.checkbox = function() {};
+
+        return tree;
+    }]);
+
+    module.factory('QuestionEventTriggerFactory', ['QuestionEventTriggerTree', function(QuestionEventTriggerTree) {
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectEventTrigger: function(component, type, data, ngModel) {
+                if (type)
+                    QuestionEventTriggerTree[component][type](data, ngModel);
+                else
+                    QuestionEventTriggerTree[component](data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element[0]),
+                    type = this.identifyType(element[0]);
+
+                this.selectEventTrigger(component, type, element, ngModel);
+            }
+        };
+
+        return factory;
+    }]);
 
     /*******************************************************************************************************************/
     /* studio.editing.directive */
@@ -280,12 +352,14 @@
                 }
             };
 
-            return {
+            var directive = {
                 controller: controller,
                 link: function link(scope, element, attr, controller) {
                     controller.applyEventTrigger();
                 }
             };
+
+            return directive;
         }
     ]);
 
