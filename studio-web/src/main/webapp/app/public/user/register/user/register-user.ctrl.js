@@ -66,8 +66,7 @@
                                     }
                                 }).then(
                                     function(response) {
-                                        var emailExists = (response.data.data === 'true');
-                                        if (emailExists) {
+                                        if (response.data.data) {
                                             deferred.reject();
                                         } else {
                                             deferred.resolve();

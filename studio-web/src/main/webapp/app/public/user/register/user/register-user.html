@@ -33,18 +33,18 @@
                     </h2>
                 </md-toolbar>
                 <br/>
-                <form name="registerUserForm">
+                <form name="registerUserForm" novalidate>
                     <div layout layout-sm="column">
                         <md-input-container flex>
                             <label>Nome</label>
-                            <input name="name" ng-model="user.name" type="text" required />
+                            <input name="name" ng-model="user.name" type="text" ng-required="true" />
                             <div ng-messages="registerUserForm.name.$error">
                                 <div ng-message="required">Obrigatório</div>
                             </div>
                         </md-input-container>
                         <md-input-container flex>
                             <label>Sobrenome</label>
-                            <input name="surname" ng-model="user.surname" type="text" required />
+                            <input name="surname" ng-model="user.surname" type="text" ng-required="true" />
                             <div ng-messages="registerUserForm.surname.$error">
                                 <div ng-message="required">Obrigatório</div>
                             </div>
@@ -52,7 +52,7 @@
                     </div>
                     <md-input-container>
                         <label>Celular</label>
-                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(999) 99999999?9" required />
+                        <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9" ng-required="true" />
                         <div ng-messages="registerUserForm.phone.$error">
                             <div ng-message="required">Obrigatório</div>
                             <div ng-message="mask">Insira um número válido.</div>
@@ -60,7 +60,7 @@
                     </md-input-container>
                     <md-input-container>
                         <label>E-mail</label>
-                        <input name="email" ng-model="user.email" type="email" unique required />
+                        <input name="email" ng-model="user.email" type="email" unique ng-required="true" />
                         <div ng-messages="registerUserForm.email.$error">
                             <div ng-message="required">Obrigatório</div>
                             <div ng-message="emailInUse">E-mail já em uso.</div>
