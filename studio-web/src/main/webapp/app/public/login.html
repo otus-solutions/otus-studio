@@ -2,65 +2,71 @@
 <html lang="en" ng-app="Login">
 
 <head>
-    <meta charset="UTF-8" />
-    <link href="app/shared/img/otus-studio-img.png" rel="icon" />
-    <link rel="stylesheet" type="text/css" href="app/public/login.css" />
+    <meta charset="UTF-8"/>
+    <link href="app/shared/img/otus-studio-img.png" rel="icon"/>
+    <link rel="stylesheet" type="text/css" href="app/public/login.css"/>
     <link rel="stylesheet" href="app/shared/lib/angularjs/md/angular-material.min.css">
     <title>Tela de login</title>
 </head>
 
 <body>
-    <img class="logo" src="app/shared/img/otus-studio-img.png">
-    <h1>Studio</h1>
-    <div id="center">
-        <div ng-controller="LoginController" layout="column">
-            <md-content layout-padding class="autoScroll">
-                <md-toolbar class="md-theme-light md-default-theme">
-                    <h2 class="md-toolbar-tools">
+<img class="logo" src="app/shared/img/otus-studio-img.png">
+
+<h1>Studio</h1>
+
+<div id="center">
+    <div ng-controller="LoginController" layout="column">
+        <md-content layout-padding class="autoScroll">
+            <md-toolbar class="md-theme-light md-default-theme">
+                <h2 class="md-toolbar-tools">
                     <span>Login</span>
                 </h2>
-                </md-toolbar>
-                <form name="loginForm" novalidate>
-                    <br>
-                    <h6 class="md-subhead error-message" ng-show="invalidLogin">Login invalido. Verifique os dados
+            </md-toolbar>
+            <form name="loginForm" novalidate>
+                <br>
+                <h6 class="md-subhead error-message" ng-show="invalidLogin">Login invalido. Verifique os dados
                     informados.</h6>
-                    <br />
-                    <md-input-container class="md-block">
-                        <label>Email</label>
-                        <input name="userEmail" ng-model="user.email" required/>
-                        <div ng-messages="loginForm.userEmail.$error">
-                            <div ng-message="required">Obrigatório</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container class="md-block">
-                        <label>Senha</label>
-                        <input name="userPassword" ng-model="user.password" type="password" required/>
-                        <div ng-messages="loginForm.userPassword.$error">
-                            <div ng-message="required">Obrigatório</div>
-                        </div>
-                    </md-input-container>
-                    <br />
-                    <md-button class="md-button" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar</md-button>
-                    <md-button class="md-button" ng-click="register()">Cadastrar-se</md-button>
-                    <div id="link">
-                        <a href="#" id="labelInfo">Não consegue acessar sua conta?</a>
+                <br/>
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input name="userEmail" ng-model="user.email" required/>
+
+                    <div ng-messages="loginForm.userEmail.$error">
+                        <div ng-message="required">Obrigatório</div>
                     </div>
-                </form>
-            </md-content>
-        </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Senha</label>
+                    <input name="userPassword" ng-model="user.password" type="password" required/>
+
+                    <div ng-messages="loginForm.userPassword.$error">
+                        <div ng-message="required">Obrigatório</div>
+                    </div>
+                </md-input-container>
+                <br/>
+
+                <div layout="row" layout-sm="column">
+                    <md-button class="md-button" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
+                    </md-button>
+                    <md-button class="md-button" ng-click="register()">Cadastrar-se</md-button>
+                </div>
+            </form>
+        </md-content>
     </div>
-    <footer>
-        <p>Copyright © 2015 ELSA Brasil. Corporation.</p>
-    </footer>
-    <!-- Angular Material Dependencies -->
-    <script src="app/shared/lib/angularjs/angular.min.js"></script>
-    <script src="app/shared/lib/angularjs/md/angular-material.min.js"></script>
-    <script src="app/shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
-    <script src="app/shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
-    <script src="app/shared/lib/angularjs/md/angular-animate.min.js"></script>
-    <script src="app/shared/lib/angularjs/md/angular-aria.min.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/public/login.ctrl.js"></script>
+</div>
+<footer>
+    <p>Copyright © 2015 ELSA Brasil. Corporation.</p>
+</footer>
+<!-- Angular Material Dependencies -->
+<script src="app/shared/lib/angularjs/angular.min.js"></script>
+<script src="app/shared/lib/angularjs/md/angular-material.min.js"></script>
+<script src="app/shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+<script src="app/shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+<script src="app/shared/lib/angularjs/md/angular-animate.min.js"></script>
+<script src="app/shared/lib/angularjs/md/angular-aria.min.js"></script>
+<script src="app/app.js"></script>
+<script src="app/public/login.ctrl.js"></script>
 </body>
 
 </html>
