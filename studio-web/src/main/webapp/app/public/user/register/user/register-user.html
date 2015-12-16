@@ -42,6 +42,7 @@
                                 <div ng-message="required">Obrigatório</div>
                             </div>
                         </md-input-container>
+
                         <md-input-container flex>
                             <label>Sobrenome</label>
                             <input name="surname" ng-model="user.surname" type="text" ng-required="true" />
@@ -50,7 +51,8 @@
                             </div>
                         </md-input-container>
                     </div>
-                    <md-input-container>
+
+                    <md-input-container class="md-block">
                         <label>Celular</label>
                         <input name="phone" id="phonenumber" ng-model="user.phone" type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9" ng-required="true" />
                         <div ng-messages="registerUserForm.phone.$error">
@@ -58,7 +60,8 @@
                             <div ng-message="mask">Insira um número válido.</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
+
+                    <md-input-container class="md-block">
                         <label>E-mail</label>
                         <input name="email" ng-model="user.email" type="email" unique ng-required="true" />
                         <div ng-messages="registerUserForm.email.$error">
@@ -67,7 +70,8 @@
                             <div ng-message="email">Insira um e-mail válido.</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
+
+                    <md-input-container class="md-block">
                         <label>Senha</label>
                         <input name="password" ng-blur="ctrl.matchPassword()" ng-model="user.password" type="password" ng-required="true" maxlength="32" ng-minlength="6" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/" />
                         <div ng-messages="registerUserForm.password.$error">
@@ -77,7 +81,8 @@
                                 <br />Deve conter pelo menos um caracter minúsculo, um maiúsculo e um dígito</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
+
+                    <md-input-container class="md-block">
                         <label>Confirmação de Senha</label>
                         <input name="passwordConfirm" ng-blur="ctrl.matchPassword()" ng-model="user.passwordConfirm" type="password" ng-required="true" />
                         <div ng-messages="registerUserForm.passwordConfirm.$error">
@@ -85,6 +90,7 @@
                             <div ng-message ng-show="(user.passwordConfirm != user.password) && (user.passwordConfirm && user.password)">Suas senhas não coincidem.</div>
                         </div>
                     </md-input-container>
+
                     <md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerUserForm.$invalid" ng-click="ctrl.register(user)">Cadastrar</md-button>
                 </form>
             </md-content>
