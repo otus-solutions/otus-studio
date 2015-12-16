@@ -15,7 +15,7 @@ angular
                 })
                 .state('container', {
                     url: '/container',
-                    templateUrl: 'private/container/container.html'
+                    templateUrl: 'private/studio/edit/container.html'
                 })
                 .state('user-management', {
                     url: '/user-management',
