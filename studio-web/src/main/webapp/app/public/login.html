@@ -9,13 +9,13 @@
     <title>Tela de login</title>
 </head>
 
-<body>
+<body  md-theme="layoutTheme">
     <img class="logo" src="app/shared/img/otus-studio-img.png">
     <h1>Studio</h1>
     <div id="center">
         <div ng-controller="LoginController" layout="column">
             <md-content layout-padding class="autoScroll">
-                <md-toolbar class="md-theme-light md-default-theme">
+                <md-toolbar class="md-theme-light">
                     <h2 class="md-toolbar-tools">
                     <span>Login</span>
                 </h2>
@@ -40,8 +40,8 @@
                         </div>
                     </md-input-container>
                     <br />
-                    <md-button class="md-button" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar</md-button>
-                    <md-button class="md-button" ng-click="register()">Cadastrar-se</md-button>
+                    <md-button class="md-button md-accent" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar</md-button>
+                    <md-button class="md-button md-accent" ng-click="register()">Cadastrar-se</md-button>
                     <div id="link">
                         <a href="#" id="labelInfo">Não consegue acessar sua conta?</a>
                     </div>
@@ -60,6 +60,7 @@
     <script src="app/shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="app/shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="app/app.js"></script>
+    <script src="config/theme.js"></script>
     <script src="app/public/login.ctrl.js"></script>
 </body>
 

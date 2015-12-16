@@ -1,6 +1,6 @@
 angular.module('StudioApp').config(function($mdThemingProvider) {
 		
-	$mdThemingProvider.theme('default')
+	$mdThemingProvider.theme('layoutTheme')
 		.primaryPalette('blue', {
 		'default' : '500',
 		'hue-1' : '200'
@@ -8,8 +8,6 @@ angular.module('StudioApp').config(function($mdThemingProvider) {
 		'default' : '900'
 	}).warnPalette('red');
 	
-	$mdThemingProvider.theme('altTheme')
-		.primaryPalette('lime')
 	
 });	
 

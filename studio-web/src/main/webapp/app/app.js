@@ -24,9 +24,7 @@ angular
             
             /* Configuration theme */
             
-            $mdThemingProvider.theme('default');
-            
-            $mdThemingProvider.theme('altTheme');
+            $mdThemingProvider.theme('layoutTheme');
             
             
             /*Configuration icons*/

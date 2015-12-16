@@ -52,15 +52,15 @@ footer p {
 }
 
 /** AngularJS **/
-md-toolbar {
+/*md-toolbar {
 	background-color: #6B9DDA !important;
 	color: white !important;
-}
+}*/
 
-.md-button {
+/*.md-button {
 	background-color: #6B9DDA !important;
 	color: white !important;
-}
+}*/
 
 /** This style is to fix float label 'celular'! Do NOT remove**/
 label[for="phonenumber"] {
