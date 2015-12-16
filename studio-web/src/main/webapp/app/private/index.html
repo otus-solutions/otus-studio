@@ -43,9 +43,16 @@
 						<button ng-click="$mdOpenMenu()">Repositórios</button>
 						<md-menu-content width="4">
 							<div ng-controller="RepositoryCtrl as repositoryController" ng-show="repositories">
-								<md-menu-item> <md-menu> <md-button ng-click="$mdOpenMenu()">Usar</md-button> <md-menu-content width="4"> <md-menu-item
-									ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)" type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
-								</md-menu-content> </md-menu> </md-menu-item>
+								<md-menu-item> 
+									<md-menu> 
+									<md-button ng-click="$mdOpenMenu()">Usar</md-button> 
+									<md-menu-content width="4"> 
+										<md-menu-item
+											ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)" type="radio" value="{{repository.name}}">{{repository.name}}
+										</md-menu-item>
+									</md-menu-content> 
+									</md-menu> 
+								</md-menu-item>
 							</div>
 							<md-menu-item> 
 								<md-button ng-click="openNewRepository()"> Novo </md-button> 
