@@ -237,6 +237,48 @@
         return factory;
     }]);
 
+    module.factory('QuestionEventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectEventTrigger: function(component, type, data, ngModel) {
+                if (type)
+                    EventTriggerTree[component][type](data, ngModel);
+                else
+                    EventTriggerTree[component](data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element[0]),
+                    type = this.identifyType(element[0]);
+
+                this.selectEventTrigger(component, type, element, ngModel);
+            }
+        };
+
+        return factory;
+    }]);
+
+    module.factory('QuestionEventTriggerTree', [function(InputTextEventTrigger) {
+        var tree = {};
+
+        // tag-name/type
+        tree.input = {
+            text: function(data, ngModel) {
+                InputTextEventTrigger(data, ngModel);
+            }
+        };
+
+        tree.input.password = tree.input.text;
+        tree.input.number = tree.input.text;
+        tree.textarea = { textarea: tree.input.text };
+
+        return tree;
+    }]);
+
     module.factory('EventTriggerTree', ['InputTextEventTrigger', function(InputTextEventTrigger) {
         var tree = {};
 
