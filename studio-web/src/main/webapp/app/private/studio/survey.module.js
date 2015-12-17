@@ -6,7 +6,11 @@
     /* Module services */
 
     module.service('SurveyDataUpdater', [function() {
-        var self = this;
+        const NAME = 1;
+        const PROPERTY = 2;
+
+        var self = this,
+            model = [];
 
         /* Public interface */
         self.update = update;
@@ -23,25 +27,24 @@
         }
 
         function identifyUpdateType(ngModel) {
-            var ngModelParts = ngModel.split('.'),
-                firstLetter = ngModelParts[0].slice(0, 1),
-                restOfString = ngModelParts[0].slice(1);
+            model = ngModel.split('.');
+
+            var firstLetter = model[NAME].slice(0, 1),
+                restOfString = model[NAME].slice(1);
 
             return 'update'.concat(firstLetter.toUpperCase().concat(restOfString));
         }
 
         function updateIdentity(newIdentityData, survey) {
-            var model = newIdentityData.ngModel.split('.');
-
-            if (model[1] == 'keywords') {
-                survey[model[0]][model[1]] = [];
+            if (model[NAME] == 'keywords') {
+                survey[model[NAME]][model[PROPERTY]] = [];
                 var keywordList = newIdentityData.newState.value.split(',');
                 keywordList.forEach(function(keyword) {
-                    survey[model[0]][model[1]].push(keyword.trim());
+                    survey[model[NAME]][model[PROPERTY]].push(keyword.trim());
                 });
             }
             else {
-                survey[model[0]][model[1]] = newIdentityData.newState.value;
+                survey[model[NAME]][model[PROPERTY]] = newIdentityData.newState.value;
             }
         }
     }]);

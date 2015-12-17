@@ -5,13 +5,13 @@
 	<div class="palette sizeScreen" flex="20">Palheta</div>
 
 	<div class="stage sizeScreen" flex="70" layout-padding>
-		
-		<div ng-include src="'private/studio/edit/sheet.html'">
-		</div>
-	
+
+		<div ng-include src="'private/studio/edit/sheet.html'"></div>
+
 	</div>
 
-	<div class="resource sizeScreen" flex="20">Recurso</div>
+	<div class="resource sizeScreen" flex="20" layout="column">
+		<div ng-include src="'private/studio/edit/properties.html'"></div>
+	</div>
 
 </div>
-

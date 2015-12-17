@@ -1,0 +1,8 @@
+.properties-frame {
+	background-color: #FFFFFF;
+	max-height: 315px;
+}
+.properties-frame-body {
+	overflow-y: scroll;
+	max-height: 215px;
+}
