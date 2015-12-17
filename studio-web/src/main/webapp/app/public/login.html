@@ -3,6 +3,10 @@
 
 <head>
     <meta charset="UTF-8"/>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    
     <link href="app/shared/img/otus-studio-img.png" rel="icon"/>
     <link rel="stylesheet" type="text/css" href="app/public/login.css"/>
     <link rel="stylesheet" href="app/shared/lib/angularjs/md/angular-material.min.css">
@@ -47,9 +51,9 @@
                 <br/>
 
                 <div layout="row" layout-sm="column">
-                    <md-button class="md-button" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
+                    <md-button class="md-raised md-accent" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
                     </md-button>
-                    <md-button class="md-button" ng-click="register()">Cadastrar-se</md-button>
+                    <md-button class="md-raised md-accent" ng-click="register()">Cadastrar-se</md-button>
                 </div>
             </form>
         </md-content>
@@ -58,6 +62,9 @@
 <footer>
     <p>Copyright © 2015 ELSA Brasil. Corporation.</p>
 </footer>
+
+</body>
+
 <!-- Angular Material Dependencies -->
 <script src="app/shared/lib/angularjs/angular.min.js"></script>
 <script src="app/shared/lib/angularjs/md/angular-material.min.js"></script>
@@ -68,6 +75,5 @@
 <script src="app/app.js"></script>
 <script src="config/theme.js"></script>
 <script src="app/public/login.ctrl.js"></script>
-</body>
 
 </html>

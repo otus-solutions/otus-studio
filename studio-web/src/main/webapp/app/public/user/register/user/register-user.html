@@ -21,7 +21,7 @@
     <div id="center">
         <div ng-controller="RegisterUserCtrl as ctrl" layout="column">
             <md-content layout-padding class="autoScroll">
-                <md-toolbar class="md-theme-light md-default-theme">
+                <md-toolbar class="md-theme-light">
                     <h2 class="md-toolbar-tools">
                         <span>Cadastro de usuários</span>
                     </h2>
@@ -85,7 +85,7 @@
                         </div>
                     </md-input-container>
 
-                    <md-button class="md-raised md-primary md-button md-default-theme" ng-disabled="registerUserForm.$invalid" ng-click="ctrl.register(user)">Cadastrar</md-button>
+                    <md-button class="md-raised md-accent" ng-disabled="registerUserForm.$invalid" ng-click="ctrl.register(user)">Cadastrar</md-button>
                 </form>
             </md-content>
         </div>
@@ -101,6 +101,7 @@
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+    
     <script src="app.js"></script>
     <script src="config/theme.js"></script>
     <script src="public/user/register/user/register-user.ctrl.js"></script>

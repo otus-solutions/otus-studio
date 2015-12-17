@@ -29,7 +29,7 @@ angular.module('Login', ['ngMaterial', 'ngMessages', 'ui.mask']).controller('Log
 	
 	$mdThemingProvider.theme('layoutTheme')
 		.primaryPalette('blue', {
-		'default' : '500',
+		'default' : 'A200',
 		'hue-1' : '200'
 	}).accentPalette('blue-grey', {
 		'default' : '900'
