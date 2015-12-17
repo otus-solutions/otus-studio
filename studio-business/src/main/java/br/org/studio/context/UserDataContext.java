@@ -16,22 +16,22 @@ public class UserDataContext implements Serializable {
 
 	private static final long serialVersionUID = 109656450161251588L;
 
-	private Map<HttpSession, User> loggedUser;
-	
+	private Map<String, User> loggedUser;
+
 	@PostConstruct
 	public void setUp(){
-		loggedUser = new HashMap<HttpSession, User>();
+		loggedUser = new HashMap<String, User>();
 	}
-	
+
 	public void login(HttpSession httpSession, User user){
-		loggedUser.put(httpSession, user);
+		loggedUser.put(httpSession.getId(), user);
 	}
-	
+
 	public User getLoggedUser(HttpSession httpSession) throws DataNotFoundException{
-		if(loggedUser.containsKey(httpSession)){
-			return loggedUser.get(httpSession);	
+		if(loggedUser.containsKey(httpSession.getId())){
+			return loggedUser.get(httpSession.getId());
 		}else {
 			throw new DataNotFoundException();
-		}		
+		}
 	}
 }

@@ -20,6 +20,16 @@ public class SystemConfigResource {
 	@Inject
 	private SystemConfigService systemConfigService;
 
+    @GET
+    @Path("/config/ready")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String systemConfigReady(){
+        Response response = new Response();
+        response.setData(systemConfigService.isReady());
+        return response.toJson();
+    }
+
 	@POST
 	@Path("/config")
 	@Consumes(MediaType.APPLICATION_JSON)

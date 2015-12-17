@@ -15,32 +15,29 @@ import br.org.studio.exceptions.DataNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDataContextTest {
-	
+
 	@Mock
 	private User user;
 	@Mock
 	private HttpSession session;
-	
+
 	private UserDataContext userDataContext;
-	
+
 	@Before
 	public void setUp() {
-		userDataContext = new UserDataContext();
-		userDataContext.setUp();
-		userDataContext.login(session, user);
-	}
-	
-	@Test
-	public void method_getLoggedUser_should_return_a_logged_user() throws DataNotFoundException{
-		assertEquals(user, userDataContext.getLoggedUser(session));
-	}
-	
-	@Test(expected = DataNotFoundException.class)
-	public void method_getLoggedUser_should_trowns_a_DataNotFoundException_when_not_exists_a_logged_user() throws DataNotFoundException{
-		//to clean the array list
-		userDataContext.setUp();
-		userDataContext.getLoggedUser(session);
+        userDataContext = new UserDataContext();
+        userDataContext.setUp();
 	}
 
-	
+	@Test
+	public void method_getLoggedUser_should_return_a_logged_user() throws DataNotFoundException{
+        userDataContext.login(session, user);
+
+		assertEquals(user, userDataContext.getLoggedUser(session));
+	}
+
+	@Test(expected = DataNotFoundException.class)
+	public void method_getLoggedUser_should_trowns_a_DataNotFoundException_when_not_exists_a_logged_user() throws DataNotFoundException{
+		userDataContext.getLoggedUser(session);
+	}
 }
