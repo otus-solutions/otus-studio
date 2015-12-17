@@ -9,10 +9,10 @@ angular
             var REPOSITORY_NEW_STATE = 'repository?actionType=NEW';
 
             $scope.openContainer  = function() {
-                $location.url(NEW_SURVEY);
-                StudioEditingService.createNewSurvey();
+            	$location.url(NEW_SURVEY);
+StudioEditingService.createNewSurvey();
             }
-
+            
             $scope.openAdministrationUsers = function() {
                 $location.url(USER_MANAGEMENT_STATE);
             }
