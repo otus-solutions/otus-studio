@@ -5,8 +5,12 @@ import br.org.studio.exception.InvalidPasswordException;
 import br.org.studio.exception.UserDisabledException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
 
+import javax.servlet.http.HttpSession;
+
 public interface SecurityService {
 
 	void authenticate(LoginAuthenticationDto loginDto)
         throws InvalidPasswordException, EmailNotFoundException, UserDisabledException;
+
+    Boolean isLogged(HttpSession httpSession);
 }
