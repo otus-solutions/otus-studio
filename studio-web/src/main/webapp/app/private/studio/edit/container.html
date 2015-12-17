@@ -1,17 +1,11 @@
 <link href="private/studio/edit/container.css" rel="stylesheet">
 
-<div class="sizeScreen" layout="row" layout-align="center stretch">
+<div layout="row" style="height: 100%">
+	<div class="palette" layout="column" flex="20">Palheta</div>
 
-	<div class="palette sizeScreen" flex="20">Palheta</div>
-
-	<div class="stage sizeScreen" flex="70" layout-padding>
-		
-		<div style="padding: 0px;" ng-include src="'private/studio/edit/sheet.html'">
-		</div>
-	
+	<div class="stage" layout="column" flex="70">
+		<div style="padding: 0px;" ng-include src="'private/studio/edit/sheet.html'"></div>
 	</div>
 
-	<div class="resource sizeScreen" flex="20">Recurso</div>
-
+	<div class="resource" layout="column" flex="20">Recurso</div>
 </div>
-

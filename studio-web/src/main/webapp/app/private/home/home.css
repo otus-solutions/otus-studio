@@ -37,3 +37,7 @@ body {
 md-input-container.md-input-invalid > md-icon {
     color: red;
 }
+
+#center, #center > div {
+	height: 100%
+}

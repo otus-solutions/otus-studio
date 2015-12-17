@@ -9,7 +9,7 @@ angular
             var REPOSITORY_NEW_STATE = 'repository?actionType=NEW';
 
             $scope.openContainer  = function() {
-                $location.url(NEW_CONTAINER);
+            	$location.url(NEW_CONTAINER);
             }
             
             $scope.openAdministrationUsers = function() {
