@@ -1,16 +1,19 @@
 .palette {
+	height: 900px;
 	border-right: 1px dotted #999;
 	background: rgba(0, 0, 0, 0.08);
 }
 
 .resource {
+	height: 900px;
 	border-left: 1px dotted #999;
 	background: rgba(0, 0, 0, 0.08);
 }
 
 .stage {
+	height: 900px;
 	-webkit-box-shadow: 6px 9px 8px -4px rgba(0, 0, 0, 0.25);
 	-moz-box-shadow: 6px 9px 8px -4px rgba(0, 0, 0, 0.25);
 	box-shadow: 6px 9px 8px -4px rgba(0, 0, 0, 0.25);
-	margin: 0 1px 0px
+	margin: 0 1px 0px;
 }
