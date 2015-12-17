@@ -23,7 +23,9 @@ body {
 }
 
 #toolbar-system md-toolbar {
-	padding-top : 7px;
+	padding-top: 7px;
+	border-bottom: 1px solid #e1e1e1;
+	background-color: #EEEEEE;
 }
 
 .connectedRepository {
@@ -31,13 +33,13 @@ body {
 }
 
 .icon-white {
-    color: white!important;
+	color: white !important;
 }
 
-md-input-container.md-input-invalid > md-icon {
-    color: red;
+md-input-container.md-input-invalid>md-icon {
+	color: red;
 }
 
-#center, #center > div {
+#center, #center>div {
 	height: 100%
 }

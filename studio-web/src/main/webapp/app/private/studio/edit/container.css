@@ -1,16 +1,10 @@
 .palette {
-	-webkit-box-shadow: 8px 1px 10px -4px rgba(145,145,145,0.88);
-	-moz-box-shadow: 8px 1px 10px -4px rgba(145,145,145,0.88);
-	box-shadow: 8px 1px 10px -4px rgba(145,145,145,0.88)
-	border-right: 1px dotted #999;
+	border-right: 1px solid #e1e1e1;
 	background-color: #FFFFFF;
 }
 
 .resource {
-	-webkit-box-shadow: -8px 1px 10px -4px rgba(145,145,145,0.88);
-	-moz-box-shadow: -8px 1px 10px -4px rgba(145,145,145,0.88);
-	box-shadow: -8px 1px 10px -4px rgba(145,145,145,0.88);
-	border-left: 1px dotted #999;
+	border-left: 1px solid #e1e1e1;
 	background-color: #FFFFFF;
 }
 
@@ -18,5 +12,6 @@
 	margin: 0 1px 0px;
 	padding-left: 8px;
 	padding-right: 8px;
-	background-color: #f6f6f6;
+	background-color: #FAFAFA;
+	padding-top: 11px;
 }
