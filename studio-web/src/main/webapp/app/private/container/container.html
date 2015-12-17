@@ -2,64 +2,12 @@
 <div layout="row" ng-controller="ToolbarCtrl">
   <div flex="20" layout="column" layout-align="center center" style="background-color: #f2f2f2" class="md-padding">
     <span id="left">
-        <md-button class="md-button" ng-click="newQuestion()">Nova questão</md-button>
     </span>
   </div>
 
   <div flex="70" layout="column" layout-align="center start" layout-padding="">
     <p class="inset">
-        <link href="private/repository/repository.css" rel="stylesheet">
-
-        <div id="repository" class="center">
-            <md-content>
-                <form name="repositoryForm" novalidate>
-                    <md-input-container class="md-block">
-                        <label>Nome da Survey</label>
-                        <input name="name" ng-model="identity.name" type="text" ng-required="true" editing-source />
-                        <div ng-messages="repositoryForm.name.$error">
-                            <div ng-message="required">Obrigatório</div>
-                            <div ng-message="nameInUse">Repositório já cadastrado</div>
-                        </div>
-                    </md-input-container>
-                    <div layout layout-sm="column">
-                        <md-input-container flex>
-                            <label>Sigla</label>
-                            <input name="database" ng-model="identity.acronym" type="text" ng-required="true" editing-source />
-                            <div ng-messages="repositoryForm.database.$error">
-                                <div ng-message="required">Obrigatório</div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>Recomendado para</label>
-                            <input name="host" ng-model="identity.recommendedTo" type="text" ng-required="true" editing-source />
-                            <div ng-messages="repositoryForm.host.$error">
-                                <div ng-message="required">Obrigatório</div>
-                                <div ng-message="connection">Problema ao conectar. Verifique os dados do servidor.</div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container flex="30">
-                            <label>Versão</label>
-                            <input name="port" ng-model="identity.version" type="number" ng-required="true" editing-source />
-                            <div ng-messages="repositoryForm.port.$error">
-                                <div ng-message="required">Obrigatório</div>
-                            </div>
-                        </md-input-container>
-                    </div>
-                    <md-input-container class="md-block">
-                        <label>Palavras-chaves</label>
-                        <input name="password" ng-model="identity.keywords" ng-required="true" type="text" editing-source />
-                        <div ng-messages="repositoryForm.password.$error">
-                            <div ng-message="required">Obrigatório</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container class="md-block">
-                        <label>Descrição</label>
-                        <textarea ng-model="identity.description" columns="1" md-maxlength="150" rows="2" editing-source></textarea>
-                    </md-input-container>
-                </form>
-            </md-content>
-        </div>
-
+        
     </p>
 
   </div>
