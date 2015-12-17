@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="StudioApp">
+<html lang="en" ng-app="RegisterModule">
 <head>
-    <base href="/studio/app/"/>
+    <base href="/studio/app/" />
     <meta charset="UTF-8"/>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    
+    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
     <link href="public/setting/register-adm.css" rel="stylesheet"/>
     <link href="shared/img/otus-studio-img.png" rel="icon"/>
     <title>Cadastro de Administrador</title>
-
-    <!-- Angular Material Dependencies -->
-    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
-    <script src="shared/lib/angularjs/angular.min.js"></script>
-    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
-    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
-    <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
-
-    <script src="app.js"></script>
-    <script src="public/setting/register-adm.ctrl.js"></script>
-
+   
 </head>
-<body>
+<body md-theme="layoutTheme">
 <img src="shared/img/otus-studio-img.png" id="logo"/>
 
 <h1>Otus Studio</h1>
@@ -29,7 +22,7 @@
     <div ng-controller="SystemConfigCtrl" layout="column">
 
         <md-content layout-padding class="autoScroll">
-            <md-toolbar class="md-theme-light md-default-theme">
+            <md-toolbar class="md-theme-light">
                 <h2 class="md-toolbar-tools">
                     <span>Cadastro do Administrador</span>
                 </h2>
@@ -124,7 +117,7 @@
                     </div>
                 </md-input-container>
 
-                <md-toolbar class="md-theme-light md-default-theme">
+                <md-toolbar class="md-theme-light">
                     <h2 class="md-toolbar-tools">
                         <span>Configurações do E-mail</span>
                     </h2>
@@ -185,7 +178,7 @@
                         </div>
                     </div>
                 </md-input-container>
-                <md-button class="md-raised md-primary md-button md-default-theme"
+                <md-button class="md-raised md-accent"
                            ng-disabled="initialConfigSystemForm.$invalid || isLoading" ng-click="register(systemConf)">Cadastrar
                 </md-button>
                 <div layout="row" layout-sm="column" layout-align="center">
@@ -197,8 +190,22 @@
 </div>
 
 <footer>
-    <p>Copyright© 2015 ELSA Brasil Corporation.</p>
+	<p>Copyright© 2015 ELSA Brasil Corporation.</p>
 </footer>
 
-</body>
+</body>   
+
+ <!-- Angular Material Dependencies -->
+    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+    <script src="shared/lib/angularjs/angular.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-ui-router.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="config/theme.js"></script>
+    <script src="public/setting/register-adm.ctrl.js"></script> 
 </html>

@@ -17,7 +17,7 @@ body {
 }
 
 #center {
-	width: 40%;
+	width: 55%;
 	margin: 0 auto;
 }
 
@@ -51,17 +51,6 @@ footer p {
 	font-style: italic;
 }
 
-/** AngularJS **/
-md-toolbar {
-	background-color: #6B9DDA !important;
-	color: white !important;
-}
-
-.md-button {
-	background-color: #6B9DDA !important;
-	color: white !important;
-}
-
 /** This style is to fix float label 'celular'! Do NOT remove**/
 label[for="phonenumber"] {
 	-webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
@@ -69,5 +58,5 @@ label[for="phonenumber"] {
 
 .error-message{
     text-align: center;
-    color: rgb(244,67,54);
+    /*color: rgb(244,67,54);*/
 }

@@ -12,6 +12,7 @@ import br.org.studio.dao.UserDao;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.EmailNotFoundException;
 import br.org.studio.exception.InvalidPasswordException;
+import br.org.studio.exception.UserDisabledException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
 
@@ -28,13 +29,17 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 	private UserDataContext userDataContext;
 
 	@Override
-	public void authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException {
+	public void authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException {
 		try {
 			User user = userDao.fetchByEmail(loginDto.getEmail());
 			HttpSession httpSession = loginDto.getHttpSession();
 
 			if(user.getPassword().equals(loginDto.getPassword())){
-				userDataContext.login(httpSession, user);
+                if(user.isEnable()){
+                    userDataContext.login(httpSession, user);
+                }else {
+                    throw new UserDisabledException();
+                }
 
 			}else{
 				throw new InvalidPasswordException();

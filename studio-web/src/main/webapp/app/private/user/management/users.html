@@ -1,12 +1,12 @@
 <md-list ng-controller="UsersCtrl" ng-cloak>
     <md-toolbar class="md-theme-light">
-        <div class="md-toolbar-tools background-toolbar-blue">
+        <div class="md-toolbar-tools md-primary">
             <h2>
                 <span>Inativos</span>
             </h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="enableUsers()" aria-label="Habilitar usuários">
-                <md-icon md-svg-icon="shared/img/icons/ic_lock_open_white_36px.svg"></md-icon>
+                <md-icon md-svg-icon="lock-open-outline" class="icon-white"></md-icon>
             </md-button>
         </div>
     </md-toolbar>
@@ -24,13 +24,13 @@
     </div>
     </md-content>
     <md-toolbar class="md-theme-light">
-        <div class="md-toolbar-tools background-toolbar-blue">
+        <div class="md-toolbar-tools md-primary">
             <h2>
                 <span>Ativos</span>
             </h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="disableUsers()" aria-label="Desabilitar usuários">
-                <md-icon md-svg-icon="shared/img/icons/ic_lock_outline_white_36px.svg"></md-icon>
+                <md-icon md-svg-icon="lock-outline" class="icon-white"></md-icon>
             </md-button>
         </div>
     </md-toolbar>
