@@ -1,4 +1,5 @@
-angular.module('StudioApp', ['ngMaterial', 'ui.mask', 'ngMessages']).controller('SystemConfigCtrl', function ($q, $scope, $http, $window, $mdDialog) {
+angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
+.controller('SystemConfigCtrl', function ($q, $scope, $http, $window, $mdDialog) {
 
     $scope.systemConf = {};
     $scope.systemConf.user = {};
@@ -82,7 +83,19 @@ angular.module('StudioApp', ['ngMaterial', 'ui.mask', 'ngMessages']).controller(
             }
         }
     }
+    
+   
+}).config(['$mdThemingProvider', function($mdThemingProvider){
+	
+	$mdThemingProvider.theme('layoutTheme')
+		.primaryPalette('blue', {
+		'default' : 'A200',
+		'hue-1' : '200'
+	}).accentPalette('blue-grey', {
+		'default' : '900'
+	}).warnPalette('red');
 
-
-});
+	
+	$mdThemingProvider.theme('layoutTheme');
+}]);
 

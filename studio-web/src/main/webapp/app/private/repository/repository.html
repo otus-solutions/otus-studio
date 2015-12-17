@@ -55,7 +55,7 @@
                 <textarea ng-model="repository.description" columns="1" md-maxlength="150" rows="2"></textarea>
             </md-input-container>
 
-            <md-button class="md-raised md-primary" ng-disabled="repositoryForm.$invalid" ng-click="actionButton(repository)">{{connectButton}}</md-button>
+            <md-button class="md-raised md-accent" ng-disabled="repositoryForm.$invalid" ng-click="actionButton(repository)" >{{connectButton}}</md-button>
             <div layout="row" layout-sm="column" layout-align="center">
                 <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
             </div>

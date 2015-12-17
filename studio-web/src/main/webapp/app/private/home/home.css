@@ -29,3 +29,11 @@ body {
 .connectedRepository {
 	margin-right: 2em;
 }
+
+.icon-white {
+    color: white!important;
+}
+
+md-input-container.md-input-invalid > md-icon {
+    color: red;
+}

@@ -28,7 +28,7 @@ footer p {
 }
 
 #center {
-	width: 40%;
+	width: 55%;
 	margin: 0 auto;
 }
 
@@ -39,18 +39,10 @@ h1 {
 
 /** AngularJS **/
 
-md-toolbar {
-	background-color: #6B9DDA !important;
-	color: white !important;
-}
 /** Float label color */
 /*md-input-container label, md-input-container .md-placeholder {
     color: black !important;
 }*/
-
-.md-button {
-	background-color: #6B9DDA !important;
-}
 
 /** This style is to fix float label 'celular'! Do NOT remove**/
 label[for="phonenumber"] {
