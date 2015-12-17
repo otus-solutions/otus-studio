@@ -16,85 +16,67 @@
 </head>
 
 <body>
-    <div id="toolbar-system" ng-controller="ToolbarCtrl">
-        <md-toolbar class="md-menu-toolbar">
-                <div layout="row" layout-align="space-between center">
-                <div>
-                    <md-menu-bar>
-                    <button ui-sref="home">Home</button>
-                        <md-menu>
-                           <button ng-click="$mdOpenMenu()">
-                               Formulário
-                           </button>
-                           <md-menu-content  width="4">
-                               <md-menu-item>
-                                   <md-button ng-click="openContainer()">
-                                       Novo
-                                   </md-button>
-                               </md-menu-item>
-                           </md-menu-content>
-                        </md-menu>
-                        <md-menu>
-                            <button ng-click="$mdOpenMenu()">
-                                Administração
-                            </button>
-                            <md-menu-content  width="4">
-                                <md-menu-item>
-                                    <md-button ng-click="openAdministrationUsers()">
-                                        Usuários
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                        <md-menu>
-                            <button ng-click="$mdOpenMenu()">
-                                Repositórios
-                            </button>
-                            <md-menu-content width="4">
-	                            <div ng-controller="RepositoryCtrl as repositoryController" ng-show="repositories">
-		                            <md-menu-item>
-						                <md-menu>
-						                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
-					                		<md-menu-content width="4">
-					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)"
-					                    		 type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
-						                	</md-menu-content>
-						              	</md-menu>
-					              	</md-menu-item>
-
-	                            </div>
-				              	<md-menu-divider></md-menu-divider>
-
-	                            <md-menu-item>
-	                             <md-button ng-click="openNewRepository()">
-	                                     Novo
-	                                </md-button>
-	                            </md-menu-item>
-	                            <md-menu-item>
-	                                <md-button ng-click="openConnectRepository()">
-	                                    Conectar a um existente
-	                                </md-button>
-	                            </md-menu-item>
-
-                            </md-menu-content>
-                        </md-menu>
-                    </md-menu-bar>
-                </div>
-                <div layout="row" layout-align="center center">
-                	<div class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
-                		{{ctrl.connected()}}
-                	</div>
-                	<div class="image-user-div">
-                    	<img ng-src="shared/img/prof_bruce_duncan.jpg" />
-                	</div>
-                </div>
-               	</div>
-        </md-toolbar>
-    </div>
-    <!-- /#toolbar-system -->
-    <div id="center">
-        <div ui-view></div>
-    </div>
+	<div id="toolbar-system" ng-controller="ToolbarCtrl">
+		<md-toolbar class="md-menu-toolbar">
+		<div layout="row" layout-align="space-between center">
+			<div>
+				<md-menu-bar>
+					<button ui-sref="home">Home</button>
+					<md-menu>
+						<button ng-click="$mdOpenMenu()">Formulário</button>
+						<md-menu-content width="4"> 
+							<md-menu-item> 
+								<md-button ng-click="openContainer()" onclick="calculateScreenSize()">Novo</md-button> 
+							</md-menu-item> 
+						</md-menu-content> 
+					</md-menu> 
+					<md-menu>
+						<button ng-click="$mdOpenMenu()">Administração</button>
+						<md-menu-content width="4"> 
+							<md-menu-item> 
+								<md-button ng-click="openAdministrationUsers()"> Usuários </md-button> 
+							</md-menu-item> 
+						</md-menu-content> 
+					</md-menu> 
+					
+					<md-menu>
+						<button ng-click="$mdOpenMenu()">Repositórios</button>
+						<md-menu-content width="4">
+							<div ng-controller="RepositoryCtrl as repositoryController" ng-show="repositories">
+								<md-menu-item> 
+									<md-menu> 
+									<md-button ng-click="$mdOpenMenu()">Usar</md-button> 
+									<md-menu-content width="4"> 
+										<md-menu-item
+											ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)" type="radio" value="{{repository.name}}">{{repository.name}}
+										</md-menu-item>
+									</md-menu-content> 
+									</md-menu> 
+								</md-menu-item>
+							</div>
+							<md-menu-item> 
+								<md-button ng-click="openNewRepository()"> Novo </md-button> 
+							</md-menu-item> 
+							<md-menu-item>
+								<md-button ng-click="openConnectRepository()"> Conectar a um existente </md-button> 
+							</md-menu-item> 
+						</md-menu-content> 
+					</md-menu> 
+				</md-menu-bar>
+			</div>
+			<div layout="row" layout-align="center center">
+				<div class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">{{ctrl.connected()}}</div>
+				<div class="image-user-div">
+					<img ng-src="shared/img/prof_bruce_duncan.jpg" />
+				</div>
+			</div>
+		</div>
+		</md-toolbar>
+	</div>
+	<!-- /#toolbar-system -->
+	<div id="center">
+		<div ui-view></div>
+	</div>
 </body>
 <!-- Angular Dependencies -->
 <script src="shared/lib/angularjs/angular.min.js"></script>
@@ -121,5 +103,6 @@
 <script src="private/studio/editing.module.js"></script>
 <script src="private/studio/studio.module.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>
+<script src="private/studio/edit/controlResponsiveScreen-ctrl.js"></script>
 
 </html>
