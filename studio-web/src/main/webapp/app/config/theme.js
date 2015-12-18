@@ -6,7 +6,7 @@ angular.module('StudioApp').config(function($mdThemingProvider) {
 		'hue-1' : '200'
 	}).accentPalette('blue-grey', {
 		'default' : '900',
-		'hue-1' : '100'	
+		'hue-1' : '200'	
 	}).warnPalette('red');
 	
 });	
