@@ -454,7 +454,7 @@
         }
     ]);
 
-    module.factory('TextAreaEventTrigger', ['InputTextEventTrigger'
+    module.factory('TextAreaEventTrigger', ['InputTextEventTrigger',
         function(InputTextEventTrigger) {
             var self = this;
 
