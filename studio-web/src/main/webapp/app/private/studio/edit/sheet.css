@@ -17,3 +17,11 @@
 .tabsdemoDynamicHeight md-content h1:first-child {
 	margin-top: 0;
 }
+
+.style-sheet {
+	-webkit-box-shadow: 2px 5px 10px 4px rgba(176,167,176,1);
+	-moz-box-shadow: 2px 5px 10px 4px rgba(176,167,176,1);
+	box-shadow: 2px 5px 10px 4px rgba(176,167,176,1);
+}
+
+
