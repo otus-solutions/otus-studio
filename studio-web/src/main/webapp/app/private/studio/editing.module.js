@@ -288,7 +288,7 @@
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger.html */
 
-    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', function(EventTriggerRegister) {
+    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', 'InputTextEventTrigger', function(EventTriggerRegister, InputTextEventTrigger) {
         var factory = {
             identifyComponent: function(element) {
                 return element.localName;
@@ -379,13 +379,105 @@
         }
     ]);
 
-    // module.factory('InputCheckboxEventTrigger', [function() { ... }]);
+    module.factory('InputCheckboxEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
+        function(EventTriggerProcessor, EventTriggerRegister) {
+            var self = this;
 
-    // module.factory('InputRadioEventTrigger', [function() { ... }]);
+            self.type = 'html';
+            self.target = 'input.checkbox';
+            self.init = init;
 
-    // module.factory('SelectEventTrigger', [function() { ... }]);
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
 
-    // module.factory('TextAreaEventTrigger', [function() { ... }]);
+                element.on('focus', function setOnFocus() {
+                    processor.storeOldState(element);
+                });
+
+                element.on('change', function setOnBlur() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
+
+    module.factory('InputRadioEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
+        function(EventTriggerProcessor, EventTriggerRegister) {
+            var self = this;
+
+            self.type = 'html';
+            self.target = 'input.radio';
+            self.init = init;
+
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
+
+                element.on('focus', function setOnFocus() {
+                    processor.storeOldState(element);
+                });
+
+                element.on('mouseup', function setOnBlur() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
+
+    module.factory('SelectEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
+        function(EventTriggerProcessor, EventTriggerRegister) {
+            var self = this;
+
+            self.type = 'html';
+            self.target = 'select';
+            self.init = init;
+
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
+
+                element.on('focus', function setOnFocus() {
+                    processor.storeOldState(element);
+                });
+
+                element.on('change', function setOnBlur() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
+
+    module.factory('TextAreaEventTrigger', ['InputTextEventTrigger'
+        function(InputTextEventTrigger) {
+            var self = this;
+
+            self.type = 'html';
+            self.target = 'textarea.textarea';
+            self.init = init;
+
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
+
+                element.on('focus', function setOnFocus() {
+                    processor.storeOldState(element);
+                });
+
+                element.on('blur', function setOnBlur() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
 
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger.question */

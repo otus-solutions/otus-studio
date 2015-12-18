@@ -27,14 +27,11 @@ angular
                 });
 
             /* Configuration theme */
-
             $mdThemingProvider.theme('layoutTheme');
-
 
             /*Configuration icons*/
             /* 24 is the size default of icons */
             $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
-
 
             /* Default state (route) */
             $urlRouterProvider.otherwise('/home');
