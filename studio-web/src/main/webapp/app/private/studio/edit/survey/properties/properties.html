@@ -1,4 +1,4 @@
-<link href="private/studio/edit/properties-frame.css" rel="stylesheet" />
+<link href="private/studio/edit/survey/properties/properties.css" rel="stylesheet" />
 
 <div class="properties-frame" flex>
     <md-toolbar class="md-theme-light">
@@ -6,7 +6,7 @@
             <span>Dados do Formulário</span>
         </h2>
     </md-toolbar>
-    <div class="properties-frame-body" flex>
+    <md-content class="md-padding properties-frame-body" flex>
         <md-input-container class="md-block">
             <label>Nome</label>
             <input name="name" ng-model="survey.identity.name" type="text" editing-source />
@@ -31,5 +31,6 @@
             <label>Tags</label>
             <input name="keywords" ng-model="survey.identity.keywords" type="text" editing-source />
         </md-input-container>
-    </div>
+    </md-content>
 </div>
+<md-divider></md-divider>

@@ -49,8 +49,6 @@
                 // validate editingEvent
                 // log editingEvent
                 generalEditingMemoryCache.storeState(editingEvent);
-
-                // apply editingEvent data:
                 SurveyDataUpdater.update(editingEvent, getSurvey());
                 console.log(getSurvey());
             }
@@ -88,32 +86,6 @@
             }
         }
     ]);
-
-    /*******************************************************************************************************************/
-    /* studio.editing.event */
-
-    module.service('EditingEventHandler', ['EditingService',
-        function(EditingService) {
-            var self = this;
-
-            /* PUblic interface */
-            self.handle = handle;
-
-            /* Public interface implementation */
-            function handle(data) {
-                EditingService.editData(data);
-            }
-        }
-    ]);
-
-    module.factory('EditingEvent', [function() {
-        return function() {
-            this.type,
-            this.ngModel,
-            this.oldState,
-            this.newState
-        };
-    }]);
 
     /*******************************************************************************************************************/
     /* studio.editing.data */
@@ -175,209 +147,6 @@
     }]);
 
     /*******************************************************************************************************************/
-    /* studio.editing.event.trigger */
-
-    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory',
-        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory) {
-            var factoryIndex = {
-                input: 'html',
-                textarea: 'html',
-                text: 'question',
-                number: 'question',
-                date: 'question',
-                time: 'question',
-                singleSelection: 'question'
-            };
-
-            var factoryMap = {
-                html: HtmlEventTriggerFactory,
-                question: QuestionEventTriggerFactory
-            };
-
-            var factory = {
-                identifyFactory: function(element) {
-                    return factoryIndex[element.localName];
-                },
-                selectFactory: function(type) {
-                    return factoryMap[type];
-                },
-                produce: function produce(element, ngModel) {
-                    var factoryType = this.identifyFactory(element[0]);
-                    var selectedFactory = this.selectFactory(factoryType);
-                    selectedFactory.produce(element, ngModel);
-                }
-            };
-
-            return factory;
-        }
-    ]);
-
-    module.factory('HtmlEventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                if (type)
-                    EventTriggerTree[component][type](data, ngModel);
-                else
-                    EventTriggerTree[component](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]);
-
-                this.selectEventTrigger(component, type, element, ngModel);
-            }
-        };
-
-        return factory;
-    }]);
-
-    module.factory('QuestionEventTriggerFactory', ['EventTriggerTree', function(EventTriggerTree) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                if (type)
-                    EventTriggerTree[component][type](data, ngModel);
-                else
-                    EventTriggerTree[component](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]);
-
-                this.selectEventTrigger(component, type, element, ngModel);
-            }
-        };
-
-        return factory;
-    }]);
-
-    module.factory('QuestionEventTriggerTree', [function(InputTextEventTrigger) {
-        var tree = {};
-
-        // tag-name/type
-        tree.input = {
-            text: function(data, ngModel) {
-                InputTextEventTrigger(data, ngModel);
-            }
-        };
-
-        tree.input.password = tree.input.text;
-        tree.input.number = tree.input.text;
-        tree.textarea = { textarea: tree.input.text };
-
-        return tree;
-    }]);
-
-    module.factory('EventTriggerTree', ['InputTextEventTrigger', function(InputTextEventTrigger) {
-        var tree = {};
-
-        // tag-name/type
-        tree.input = {
-            text: function(data, ngModel) {
-                InputTextEventTrigger(data, ngModel);
-            }
-        };
-
-        tree.input.password = tree.input.text;
-        tree.input.number = tree.input.text;
-        tree.textarea = { textarea: tree.input.text };
-
-        return tree;
-    }]);
-
-    module.factory('InputTextEventTrigger', ['EventTriggerProcessor', function(EventTriggerProcessor) {
-        return function InputTextTrigger(element, ngModel) {
-            var processor = new EventTriggerProcessor(ngModel);
-
-            element.on('focus', function setOnFocus() {
-                processor.storeOldState(element);
-            });
-
-            element.on('blur', function setOnBlur() {
-                processor.storeNewState(element);
-                processor.run();
-            });
-        };
-    }]);
-
-    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStructureFactory',
-        function(EditingEvent, EditingEventHandler, DataStructureFactory) {
-            return function EventTriggerProcessor(ngModel) {
-                var ngModel = ngModel,
-                    event = new EditingEvent();
-
-                this.storeOldState = function storeOldState(dataStructure) {
-                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
-                    event.oldState = data;
-                };
-                this.storeNewState = function storeNewState(dataStructure) {
-                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
-                    event.newState = data;
-                };
-                this.run = function run() {
-                    event.type = ngModel;
-                    event.ngModel = ngModel;
-                    EditingEventHandler.handle(event);
-                    event = new EditingEvent();
-                };
-            };
-        }
-    ]);
-
-    /*******************************************************************************************************************/
-    /* studio.editing.event.question.trigger */
-
-    module.factory('QuestionEventTriggerTree', [function() {
-        var tree = {};
-
-        // question-type/
-        tree.text = function() {};
-        tree.number = function() {};
-        tree.singleSelection = function() {};
-        tree.date = function() {};
-        tree.time = function() {};
-        tree.checkbox = function() {};
-
-        return tree;
-    }]);
-
-    module.factory('QuestionEventTriggerFactory', ['QuestionEventTriggerTree', function(QuestionEventTriggerTree) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                if (type)
-                    QuestionEventTriggerTree[component][type](data, ngModel);
-                else
-                    QuestionEventTriggerTree[component](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]);
-
-                this.selectEventTrigger(component, type, element, ngModel);
-            }
-        };
-
-        return factory;
-    }]);
-
-    /*******************************************************************************************************************/
     /* studio.editing.directive */
 
     module.directive('editingSource', ['EventTriggerFactory',
@@ -404,5 +173,276 @@
             return directive;
         }
     ]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event */
+
+    module.service('EditingEventHandler', ['EditingService',
+        function(EditingService) {
+            var self = this;
+
+            /* PUblic interface */
+            self.handle = handle;
+
+            /* Public interface implementation */
+            function handle(data) {
+                EditingService.editData(data);
+            }
+        }
+    ]);
+
+    module.factory('EditingEvent', [function() {
+        return function() {
+            this.type,
+            this.ngModel,
+            this.oldState,
+            this.newState
+        };
+    }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event.trigger */
+
+    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory',
+        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory) {
+            var factoryIndex = {
+                input: 'html',
+                textarea: 'html',
+                text: 'question',
+                number: 'question',
+                date: 'question',
+                time: 'question',
+                singleSelection: 'question'
+            };
+
+            var factoryMap = {
+                html: HtmlEventTriggerFactory,
+                question: QuestionEventTriggerFactory
+            };
+
+            /* Factory interface */
+            var factory = {
+                identifyFactory: function(element) {
+                    return factoryIndex[element.localName];
+                },
+                selectFactory: function(type) {
+                    return factoryMap[type];
+                },
+                produce: function produce(element, ngModel) {
+                    var factoryType     = this.identifyFactory(element[0]),
+                        selectedFactory = this.selectFactory(factoryType);
+
+                    selectedFactory.produce(element, ngModel);
+                }
+            };
+
+            return factory;
+        }
+    ]);
+
+    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStructureFactory',
+        function(EditingEvent, EditingEventHandler, DataStructureFactory) {
+            return function EventTriggerProcessor(ngModel) {
+                var ngModel = ngModel,
+                    event = new EditingEvent();
+
+                this.storeOldState = function storeOldState(dataStructure) {
+                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
+                    event.oldState = data;
+                };
+                this.storeNewState = function storeNewState(dataStructure) {
+                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
+                    event.newState = data;
+                };
+                this.run = function run() {
+                    event.type = ngModel;
+                    event.ngModel = ngModel;
+                    EditingEventHandler.handle(event);
+                    event = new EditingEvent();
+                };
+            };
+        }
+    ]);
+
+    module.service('EventTriggerRegister', ['HtmlEventTriggerTree', 'QuestionEventTriggerTree',
+        function(HtmlEventTriggerTree, QuestionEventTriggerTree) {
+            var self = this;
+            var provider = {};
+            provider.html = new HtmlEventTriggerTree();
+            // provider.question = new QuestionEventTriggerTree();
+
+            self.setEventTrigger = setEventTrigger;
+            self.getEventTriggerTree = getEventTriggerTree;
+
+            function setEventTrigger(eventTrigger) {
+                var triggerTree = provider[eventTrigger.type];
+                triggerTree.getTrigger(eventTrigger.target).registerEventTrigger(eventTrigger);
+            }
+
+            function getEventTriggerTree(tree) {
+                return provider[tree];
+            }
+        }
+    ]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event.trigger.html */
+
+    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', function(EventTriggerRegister) {
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectEventTrigger: function(component, type, data, ngModel) {
+                var tree = EventTriggerRegister.getEventTriggerTree('html');
+
+                if (type)
+                    var eventTrigger = tree[component][type];
+                else
+                    var eventTrigger = tree[component];
+
+                eventTrigger.init(data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element[0]),
+                    type = this.identifyType(element[0]);
+
+                this.selectEventTrigger(component, type, element, ngModel);
+            }
+        };
+
+        return factory;
+    }]);
+
+    module.factory('HtmlEventTriggerTree', [function() {
+        var tree = function HtmlEventTriggerTree(){
+            // tag-name/type
+            this.input = {
+                text: {
+                    triggers: [],
+                    registerEventTrigger: function registerEventTrigger(eventTrigger) {
+                        this.triggers.push(eventTrigger);
+                    },
+                    init: function init(data, ngModel) {
+                        var triggerInstance;
+                        this.triggers.forEach(function(trigger) {
+                            trigger.init(data, ngModel);
+                        });
+                    }
+                }
+            };
+
+            this.input.password = this.input.text;
+            this.input.number = this.input.text;
+            this.textarea = { textarea: this.input.text };
+
+            this.getTrigger = function(triggerPath) {
+                var pathTokens = triggerPath.split('.');
+                var reference = this;
+
+                pathTokens.forEach(function(token) {
+                    reference = reference[token];
+                });
+
+                return reference;
+            }
+        };
+
+        return tree;
+    }]);
+
+    module.service('InputTextEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
+        function(EventTriggerProcessor, EventTriggerRegister) {
+            var self = this;
+
+            self.type = 'html';
+            self.target = 'input.text';
+            self.init = init;
+
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
+
+                element.on('focus', function setOnFocus() {
+                    processor.storeOldState(element);
+                });
+
+                element.on('blur', function setOnBlur() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
+
+    // module.factory('InputCheckboxEventTrigger', [function() { ... }]);
+
+    // module.factory('InputRadioEventTrigger', [function() { ... }]);
+
+    // module.factory('SelectEventTrigger', [function() { ... }]);
+
+    // module.factory('TextAreaEventTrigger', [function() { ... }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event.trigger.question */
+
+    module.factory('QuestionEventTriggerFactory', ['QuestionEventTriggerTree', function(QuestionEventTriggerTree) {
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectEventTrigger: function(component, type, data, ngModel) {
+                if (type)
+                    QuestionEventTriggerTree[component][type](data, ngModel);
+                else
+                    QuestionEventTriggerTree[component](data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                var component = this.identifyComponent(element[0]),
+                    type = this.identifyType(element[0]);
+
+                this.selectEventTrigger(component, type, element, ngModel);
+            }
+        };
+
+        return factory;
+    }]);
+
+    module.factory('QuestionEventTriggerTree', [function() {
+        var tree = {};
+
+        // question-type/
+        tree.text = function() {};
+        tree.number = function() {};
+        tree.singleSelection = function() {};
+        tree.date = function() {};
+        tree.time = function() {};
+        tree.checkbox = function() {};
+
+        return tree;
+    }]);
+
+    // module.factory('QuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('BooleanQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('DateQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('NumberQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('SingleSelectionQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('TextQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('TimeQuestionEventTrigger', [function() { ... }]);
+
+    // module.factory('SelectCardQuestionEventTrigger', [function() { ... }]);
 
 }());

@@ -15,7 +15,7 @@ angular
                 })
                 .state('container', {
                     url: '/container',
-                    templateUrl: 'private/studio/edit/container.html'
+                    templateUrl: 'private/studio/edit/container/container.html'
                 })
                 .state('user-management', {
                     url: '/user-management',
@@ -25,12 +25,12 @@ angular
                     url: '/repository',
                     templateUrl: 'private/repository/repository.html'
                 });
-            
+
             /* Configuration theme */
-            
+
             $mdThemingProvider.theme('layoutTheme');
-            
-            
+
+
             /*Configuration icons*/
             /* 24 is the size default of icons */
             $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
