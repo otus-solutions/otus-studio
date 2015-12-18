@@ -1,5 +1,6 @@
 .tabsdemoDynamicHeight {
 	background-color: #FFFFFF;
+	/*margin-right: 40px;*/
 }
 
 .tabsdemoDynamicHeight md-content {
@@ -16,4 +17,20 @@
 
 .tabsdemoDynamicHeight md-content h1:first-child {
 	margin-top: 0;
+}
+
+.style-sheet {
+	border: 1px solid rgba(225, 225, 225, 0.96);
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+}
+
+.page {
+	overflow-y: scroll;
+	min-height: 100px;
+}
+
+.editing-container {
+	padding: 10px;
 }
