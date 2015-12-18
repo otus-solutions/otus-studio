@@ -3,8 +3,10 @@
 <div layout="row" style="height: 100%">
 	<div class="palette" layout="column" flex="20">Palheta</div>
 
-	<div class="stage" layout="column" flex="70">
-		<div style="padding: 0px;" ng-include src="'private/studio/edit/sheet.html'"></div>
+	<div class="stage" layout="column" flex="60">
+		<div class="include" layout="row">
+			<div flex="90" ng-include src="'private/studio/edit/sheet.html'"></div>
+		</div>
 	</div>
 
 	<div class="resource" layout="column" flex="20">Recurso</div>

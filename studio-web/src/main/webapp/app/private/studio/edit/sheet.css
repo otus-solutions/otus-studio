@@ -1,5 +1,6 @@
 .tabsdemoDynamicHeight {
 	background-color: #FFFFFF;
+	/*margin-right: 40px;*/
 }
 
 .tabsdemoDynamicHeight md-content {
@@ -16,4 +17,9 @@
 
 .tabsdemoDynamicHeight md-content h1:first-child {
 	margin-top: 0;
+}
+
+.page {
+	overflow-y: scroll;
+	min-height:100px;
 }
