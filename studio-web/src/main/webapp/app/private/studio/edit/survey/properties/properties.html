@@ -1,0 +1,36 @@
+<link href="private/studio/edit/survey/properties/properties.css" rel="stylesheet" />
+
+<div class="properties-frame" flex>
+    <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+            <span>Dados do Formulário</span>
+        </h2>
+    </md-toolbar>
+    <md-content class="md-padding properties-frame-body" flex>
+        <md-input-container class="md-block">
+            <label>Nome</label>
+            <input name="name" ng-model="survey.identity.name" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Sigla</label>
+            <input name="acronym" ng-model="survey.identity.acronym" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Versão</label>
+            <input name="version" ng-model="survey.identity.version" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Recomendado para</label>
+            <input name="version" ng-model="survey.identity.recommendedTo" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Descrição</label>
+            <input name="description" ng-model="survey.identity.description" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Tags</label>
+            <input name="keywords" ng-model="survey.identity.keywords" type="text" editing-source />
+        </md-input-container>
+    </md-content>
+</div>
+<md-divider></md-divider>
