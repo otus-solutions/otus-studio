@@ -14,7 +14,7 @@
 	padding-right: 8px;
 	background-color: #FAFAFA;
 	padding-top: 11px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .page{
