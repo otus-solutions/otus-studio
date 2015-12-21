@@ -14,11 +14,9 @@
 	padding-right: 8px;
 	background-color: #FAFAFA;
 	padding-top: 11px;
-	max-height: 900px;
 	overflow-y: scroll;
 }
 
-.page {
-	max-height: 900px;
-	overflow-y: scroll;
+.page{
+	overflow-y: hidden;
 }
