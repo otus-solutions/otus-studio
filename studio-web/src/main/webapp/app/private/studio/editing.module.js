@@ -91,21 +91,6 @@
     /* studio.editing.data */
 
     module.factory('DataStructureFactory', ['DataStructureTree', function(DataStructureTree) {
-        var factoryIndex = {
-            input: 'html',
-            textarea: 'html',
-            text: 'question',
-            number: 'question',
-            date: 'question',
-            time: 'question',
-            singleSelection: 'question'
-        };
-
-        var factoryMap = {
-            html: HtmlEventTriggerFactory,
-            question: QuestionEventTriggerFactory
-        };
-
         var factory = {
             identifyComponent: function identifyComponent(element) {
                 return element.localName;
@@ -214,6 +199,22 @@
             this.newState
         };
     }]);
+
+    /*
+    module.provider('EventTriggerProvider', function EventTriggerProvider() {
+        function eventTrigger(trigger) {
+            console.log(trigger);
+            return this;
+        };
+
+        return {
+            eventTrigger: eventTrigger,
+            $get: function () {
+                return ('coisas');
+            }
+        }
+    });
+    */
 
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger */
@@ -340,35 +341,37 @@
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger.html */
 
-    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', 'InputTextEventTrigger', function(EventTriggerRegister, InputTextEventTrigger) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                var tree = EventTriggerRegister.getEventTriggerTree('html');
+    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', 'InputTextEventTrigger',
+        function(EventTriggerRegister, InputTextEventTrigger) {
+            var factory = {
+                identifyComponent: function(element) {
+                    return element.localName;
+                },
+                identifyType: function(element) {
+                    return element.type;
+                },
+                selectEventTrigger: function(component, type, data, ngModel) {
+                    var tree = EventTriggerRegister.getEventTriggerTree('html');
 
-                if (type)
-                    var eventTrigger = tree[component][type];
-                else
-                    var eventTrigger = tree[component];
+                    if (type)
+                        var eventTrigger = tree[component][type];
+                    else
+                        var eventTrigger = tree[component];
 
-                return eventTrigger;
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]),
-                    eventTrigger = this.selectEventTrigger(component, type, element, ngModel);
+                    return eventTrigger;
+                },
+                produce: function produce(element, ngModel) {
+                    var component = this.identifyComponent(element[0]),
+                        type = this.identifyType(element[0]),
+                        eventTrigger = this.selectEventTrigger(component, type, element, ngModel);
 
-                eventTrigger.init(data, ngModel);
-            }
-        };
+                    eventTrigger.init(element, ngModel);
+                }
+            };
 
-        return factory;
-    }]);
+            return factory;
+        }
+    ]);
 
     module.factory('HtmlEventTriggerTree', [function() {
         var tree = function HtmlEventTriggerTree() {

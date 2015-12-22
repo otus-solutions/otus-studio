@@ -35,5 +35,11 @@ angular
 
             /* Default state (route) */
             $urlRouterProvider.otherwise('/home');
+
+            /*
+            EventTriggerProvider
+                .eventTrigger('teste')
+                .eventTrigger('teste 2');
+            */
         }
     ]);
