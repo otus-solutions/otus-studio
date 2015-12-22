@@ -14,4 +14,9 @@
 	padding-right: 8px;
 	background-color: #FAFAFA;
 	padding-top: 11px;
+	overflow-y: auto;
+}
+
+.page{
+	overflow-y: hidden;
 }
