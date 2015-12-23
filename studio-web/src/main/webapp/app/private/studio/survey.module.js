@@ -65,21 +65,23 @@
                 var data = editingEvent.newState;
                 var modelList = data.ngModel.split('.');
                 modelList.shift();
+
                 var surveyModel = survey;
+                var questionIndex, labelIndex, contentIndex;
 
                 modelList.forEach(function(m) {
                     var model = extractModel(m),
                         index = extractModelIndex(m);
 
                     if (index || index === 0) {
-                        surveyModel = surveyModel[model][index];
-                    } else {
-                        surveyModel = surveyModel[model];
+                        if (model == 'questions') questionIndex = index;
+                        else if (model == 'labels') labelIndex = index;
+                        else if (model == 'content') contentIndex = index;
                     }
                 });
 
-                if (survey.questions.length > 0) {
-                    survey.questions[0].labels[0].content[0].text = data.value;
+                if (survey.questions.length > 0 && (questionIndex || questionIndex === 0)) {
+                    survey.questions[questionIndex].labels[labelIndex].content[contentIndex].text = data.value;
                 }
 
                 if (editingEvent.target == 'survey.questions') {
@@ -120,6 +122,10 @@
             this.objectType = 'Survey';
             this.identity = new SurveyIdentity();
             this.questions = [];
+
+            this.getQuestion = function getQuestion(index) {
+                return this.questions[index];
+            }
         };
     }]);
 
@@ -154,6 +160,10 @@
             this.dataType = 'String';
             this.oid = '';
             this.labels = [new Label()];
+
+            this.getLabel = function getLabel(index) {
+                return this.labels[index];
+            }
         };
     }]);
 
@@ -163,6 +173,10 @@
             this.objectType = 'Label';
             this.oid = '';
             this.content = [new LabelContent()];
+
+            this.getContent = function getContent(index) {
+                return this.content[index];
+            }
         };
     }]);
 
