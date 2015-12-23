@@ -32,7 +32,7 @@ angular.module('Container', []);
                                 'Opção Um' +
                                 '</md-checkbox>';
 
-        var inputTemplate = '<md-input-container class="md-block">' +
+        var inputTemplate = '<md-input-container class="md-block" md-theme="layoutTheme">' +
                                 '<label>{{lapa.input}}</label>' +
                                 '<input ng-model="lapa.input" type="text" editing-source />' +
                             '</md-input-container>';
