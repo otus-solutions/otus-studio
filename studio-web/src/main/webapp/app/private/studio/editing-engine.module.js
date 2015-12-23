@@ -1,11 +1,11 @@
 (function() {
 
-    var module = angular.module('editingEngine', []);
+    var module = angular.module('editingEngine', ['surveyEditing', 'utils']);
 
     /*******************************************************************************************************************/
     /* studio.editing.data */
 
-    module.factory('DataStructureFactory', ['DataStructureTree', function(DataStructureTree) {
+    module.factory('EditingStateFactory', ['EditingStateTree', function(EditingStateTree) {
         var factory = {
             identifyComponent: function identifyComponent(element) {
                 return element.localName;
@@ -19,9 +19,9 @@
             },
             selectDataStructure: function selectDataStructure(component, type, data, ngModel) {
                 if (type)
-                    return DataStructureTree[component][type](data, ngModel);
+                    return EditingStateTree[component][type](data, ngModel);
                 else
-                    return DataStructureTree[component](data, ngModel);
+                    return EditingStateTree[component](data, ngModel);
             },
             produce: function produce(element, ngModel) {
                 var component = this.identifyComponent(element),
@@ -34,9 +34,9 @@
         return factory;
     }]);
 
-    module.factory('DataStructureTree', [function() {
-        /* Data structure models */
-        function DataStructure() {
+    module.factory('EditingStateTree', [function() {
+        /* Editing state model */
+        function EditingState() {
             this.domId;
             this.ngModel;
             this.value;
@@ -47,7 +47,7 @@
 
         tree.input = {
             text: function buildTextStructure(element, ngModel) {
-                var structure = new DataStructure();
+                var structure = new EditingState();
                 structure.domId = element.id;
                 structure.ngModel = ngModel;
                 structure.value = element.value;
@@ -61,7 +61,7 @@
         };
         tree.button = {
             button: function buildButtonStructure(element, ngModel) {
-                var structure = new DataStructure();
+                var structure = new EditingState();
                 structure.domId = element.id;
                 structure.ngModel = element.attributes.target;
                 structure.value = element.attributes.action.value;
@@ -70,7 +70,7 @@
         };
         tree.question = {
             text: function buildTextQuestionStructure(element, ngModel) {
-                var structure = new DataStructure();
+                var structure = new EditingState();
                 structure.domId = element.id;
                 structure.ngModel = ngModel;
                 structure.value = element;
@@ -127,9 +127,9 @@
     ]);
 
     module.factory('EditingEvent', [function() {
-        return function() {
+        return function EditingEvent() {
             this.type,
-            this.ngModel,
+            this.target,
             this.oldState,
             this.newState
         };
@@ -138,24 +138,23 @@
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger */
 
-    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStructureFactory',
-        function(EditingEvent, EditingEventHandler, DataStructureFactory) {
-            return function EventTriggerProcessor(ngModel, context) {
-                var ngModel = ngModel,
-                    event = new EditingEvent(),
-                    data;
+    module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'EditingStateFactory',
+        function(EditingEvent, EditingEventHandler, EditingStateFactory) {
+            return function EventTriggerProcessor(target, eventType) {
+                var target = target,
+                    event = new EditingEvent();
+                    event.type = eventType;
 
                 this.storeOldState = function storeOldState(dataStructure) {
-                    data = DataStructureFactory.produce(dataStructure[0], ngModel);
-                    event.oldState = data;
+                    this.data = EditingStateFactory.produce(dataStructure[0], target);
+                    event.oldState = this.data;
                 };
                 this.storeNewState = function storeNewState(dataStructure) {
-                    data = DataStructureFactory.produce(dataStructure[0], ngModel);
-                    event.newState = data;
+                    this.data = EditingStateFactory.produce(dataStructure[0], target);
+                    event.newState = this.data;
                 };
                 this.run = function run() {
-                    event.type = data.ngModel;
-                    event.ngModel = data.ngModel;
+                    event.target = target;
                     EditingEventHandler.handle(event);
                     event = new EditingEvent();
                 };
@@ -166,9 +165,9 @@
     module.service('EventTriggerRegister', ['HtmlEventTriggerTree', 'QuestionEventTriggerTree',
         function(HtmlEventTriggerTree, QuestionEventTriggerTree) {
             var self = this;
-            var provider = {};
-            provider.html = new HtmlEventTriggerTree();
-            // provider.question = new QuestionEventTriggerTree();
+            var provider = {
+                html: new HtmlEventTriggerTree()
+            };
 
             self.setEventTrigger = setEventTrigger;
             self.getEventTriggerTree = getEventTriggerTree;
@@ -185,50 +184,35 @@
         }
     ]);
 
-    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory', 'SurveyEventTriggerFactory',
-        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory, SurveyEventTriggerFactory) {
-            var factoryIndex = {
-                input: 'html',
-                textarea: 'html',
-                button: 'html',
-                text: 'question',
-                number: 'question',
-                date: 'question',
-                time: 'question',
-                singleSelection: 'question',
-                surveyPage: 'survey'
-            };
-
+    module.factory('EventTriggerFactory', [
+        'HtmlEventTriggerFactory',
+        'QuestionEventTriggerFactory',
+        'SurveyEventTriggerFactory',
+        'StringNormalizer',
+        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory, SurveyEventTriggerFactory, StringNormalizer) {
             var factoryMap = {
-                html: HtmlEventTriggerFactory,
-                question: QuestionEventTriggerFactory,
-                survey: SurveyEventTriggerFactory
+                input: HtmlEventTriggerFactory,
+                textarea: HtmlEventTriggerFactory,
+                button: HtmlEventTriggerFactory,
+                text: QuestionEventTriggerFactory,
+                number: QuestionEventTriggerFactory,
+                date: QuestionEventTriggerFactory,
+                time: QuestionEventTriggerFactory,
+                surveyPage: SurveyEventTriggerFactory,
+
+                get: function get(elementName) {
+                    return this[elementName];
+                }
             };
 
             /* Factory interface */
             var factory = {
-                identifyFactory: function identifyFactory(element) {
-                    return factoryIndex[this.normalizeString(element.localName)];
-                },
-                selectFactory: function selectFactory(type) {
-                    return factoryMap[type];
-                },
-                normalizeString: function normalizeString(directiveName) {
-                    var directiveParts = directiveName.split('-'),
-                        loopSize = directiveParts.length,
-                        normalizedString = directiveParts[0].toLowerCase();
-
-                    for (var i = 1; i < loopSize; i++) {
-                        var firstLetter = directiveParts[i].slice(0, 1),
-                            restOfString = directiveParts[i].slice(1);
-                        normalizedString = normalizedString.concat(firstLetter.toUpperCase().concat(restOfString.toLowerCase()));
-                    }
-                    return normalizedString;
+                selectFactory: function selectFactory(element) {
+                    var elementName = StringNormalizer.normalizeString(element.localName);
+                    return factoryMap[elementName];
                 },
                 produce: function produce(element, ngModel) {
-                    var factoryType     = this.identifyFactory(element[0]),
-                        selectedFactory = this.selectFactory(factoryType);
-
+                    var selectedFactory = this.selectFactory(element[0]);
                     selectedFactory.produce(element, ngModel);
                 }
             };
@@ -363,11 +347,11 @@
             var self = this;
 
             self.type = 'html';
-            self.target = 'button.button';
+            self.source = 'button.button';
             self.init = init;
 
             function init(element, ngModel) {
-                var processor = new EventTriggerProcessor(ngModel);
+                var processor = new EventTriggerProcessor(element[0].attributes.action.nodeValue, 'action');
 
                 element.on('click', function setOnFocus() {
                     processor.storeNewState(element);
@@ -388,7 +372,7 @@
             self.init = init;
 
             function init(element, ngModel) {
-                var processor = new EventTriggerProcessor(ngModel);
+                var processor = new EventTriggerProcessor(ngModel, 'update-model');
 
                 element.on('focus', function setOnFocus() {
                     processor.storeOldState(element);
@@ -403,95 +387,5 @@
             EventTriggerRegister.setEventTrigger(self);
         }
     ]);
-
-    /*******************************************************************************************************************/
-    /* studio.editing.event.trigger.question */
-
-    module.factory('QuestionEventTriggerFactory', ['QuestionEventTriggerTree', function(QuestionEventTriggerTree) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                if (type)
-                    QuestionEventTriggerTree[component][type](data, ngModel);
-                else
-                    QuestionEventTriggerTree[component](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]);
-
-                this.selectEventTrigger(component, type, element, ngModel);
-            }
-        };
-
-        return factory;
-    }]);
-
-    module.factory('QuestionEventTriggerTree', [function() {
-        var tree = {};
-
-        // question-type/
-        tree.text = function() {};
-        tree.number = function() {};
-        tree.singleSelection = function() {};
-        tree.date = function() {};
-        tree.time = function() {};
-        tree.checkbox = function() {};
-
-        return tree;
-    }]);
-
-    /*******************************************************************************************************************/
-    /* studio.editing.event.trigger.survey */
-
-    module.factory('SurveyEventTriggerFactory', ['SurveyEventTriggerService', function(SurveyEventTriggerService) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                if (type)
-                    SurveyEventTriggerTree['loadSurveyPageEvents'][type](data, ngModel);
-                else
-                    SurveyEventTriggerTree['loadSurveyPageEvents'](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                SurveyEventTriggerService.init();
-            }
-        };
-
-        return factory;
-    }]);
-
-    module.service('SurveyEventTriggerService', ['EventTriggerProcessor', function(EventTriggerProcessor) {
-        var self = this;
-
-        self.init = init;
-
-        function init() {
-            var target = document.querySelector('survey-page');
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type == 'childList') {
-                        var processor = new EventTriggerProcessor('survey.questions');
-                        processor.storeNewState(mutation.addedNodes);
-                        processor.run();
-                    }
-                });
-            });
-            // configuration of the observer:
-            var config = { attributes: true, childList: true, characterData: true, subtree: true };
-            // pass in the target node, as well as the observer options
-            observer.observe(target, config);
-        }
-    }]);
 
 }());
