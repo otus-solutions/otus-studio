@@ -1,10 +1,11 @@
-<text-question>
+<question type="text" index="{{questionIndex}}">
     <md-content>
-        <div class="enunciation">
-
-        </div>
-        <div class="answer">
-
-        </div>
+        <md-input-container class="enunciation md-block">
+            <label>Label da questão</label>
+            <input ng-model="survey.questions" type="text" editing-source />
+        </md-input-container>
+        <md-input-container class="answer md-block">
+            <input ng-model="survey.questions" type="text" editing-source />
+        </md-input-container>
     </md-content>
 </text-question>

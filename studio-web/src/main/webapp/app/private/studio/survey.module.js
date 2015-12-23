@@ -5,7 +5,7 @@
     /*******************************************************************************************************************/
     /* Module services */
 
-    module.service('SurveyDataUpdater', [function() {
+    module.service('SurveyDataUpdater', ['TextQuestionParser', function(TextQuestionParser) {
         const NAME = 1;
         const PROPERTY = 2;
 
@@ -15,15 +15,16 @@
         /* Public interface */
         self.update = update;
         self.updateIdentity = updateIdentity;
+        self.updateQuestions = updateQuestions;
 
         /* Public interface implementation */
-        function update(newIdentityData, survey) {
-            var updateType = identifyUpdateType(newIdentityData.type);
-            runUpdater(updateType, newIdentityData, survey);
+        function update(data, survey) {
+            var updateType = identifyUpdateType(data.type);
+            runUpdater(updateType, data, survey);
         }
 
-        function runUpdater(updateType, newIdentityData, survey) {
-            self[updateType](newIdentityData, survey);
+        function runUpdater(updateType, data, survey) {
+            self[updateType](data, survey);
         }
 
         function identifyUpdateType(ngModel) {
@@ -35,17 +36,22 @@
             return 'update'.concat(firstLetter.toUpperCase().concat(restOfString));
         }
 
-        function updateIdentity(newIdentityData, survey) {
+        function updateIdentity(identityData, survey) {
             if (model[NAME] == 'keywords') {
                 survey[model[NAME]][model[PROPERTY]] = [];
-                var keywordList = newIdentityData.newState.value.split(',');
+                var keywordList = identityData.newState.value.split(',');
                 keywordList.forEach(function(keyword) {
                     survey[model[NAME]][model[PROPERTY]].push(keyword.trim());
                 });
             }
             else {
-                survey[model[NAME]][model[PROPERTY]] = newIdentityData.newState.value;
+                survey[model[NAME]][model[PROPERTY]] = identityData.newState.value;
             }
+        }
+
+        function updateQuestions(question, survey) {
+            survey.questions.push(question);
+            TextQuestionParser.fromDom(question.newState.value);
         }
     }]);
 
@@ -81,6 +87,47 @@
             this.recommendedTo = '';
             this.description = '';
             this.keywords = [];
+        };
+    }]);
+
+    module.service('TextQuestionParser', ['TextQuestion', function(TextQuestion) {
+        var self = this;
+
+        self.fromDom = fromDom;
+
+        function fromDom(dom) {
+            var question = new TextQuestion();
+            question.labels[0].content[0].text = dom.children[0].children[0].children[1].value;
+            console.log(question);
+        }
+    }]);
+
+    module.factory('TextQuestion', ['Label', function(Label) {
+        return function() {
+            this.extends = 'Question';
+            this.objectType = 'TextQuestion';
+            this.dataType = 'String';
+            this.oid = '';
+            this.labels = [new Label()];
+        };
+    }]);
+
+    module.factory('Label', ['LabelContent', function(LabelContent) {
+        return function() {
+            this.extends = 'StudioObject';
+            this.objectType = 'Label';
+            this.oid = '';
+            this.content = [new LabelContent()];
+        };
+    }]);
+
+    module.factory('LabelContent', [function() {
+        return function() {
+            this.extends = 'StudioObject';
+            this.objectType = 'LabelContent';
+            this.oid = '';
+            this.locale = 'pt_BR';
+            this.text = '';
         };
     }]);
 

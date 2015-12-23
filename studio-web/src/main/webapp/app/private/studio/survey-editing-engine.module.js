@@ -45,12 +45,21 @@
                 return surveyMemoryCache.getMostRecentState().data;
             }
 
+            function getCurrentQuestion() {
+
+            }
+
             function editData(editingEvent) {
+                console.info('Editing event: ');
+                console.log(editingEvent);
+
                 // validate editingEvent
                 // log editingEvent
                 generalEditingMemoryCache.storeState(editingEvent);
                 SurveyDataUpdater.update(editingEvent, getSurvey());
-                console.log(getSurvey());
+
+                // console.info('Log da survey');
+                // console.log(getSurvey());
             }
         }
     ]);
@@ -96,7 +105,11 @@
                 return element.localName;
             },
             identifyType: function identifyType(element) {
-                return element.type;
+                if (element.localName != 'question') {
+                    return element.type;
+                } else {
+                    return element.attributes.type.nodeValue;
+                }
             },
             selectDataStructure: function selectDataStructure(component, type, data, ngModel) {
                 if (type)
@@ -135,13 +148,29 @@
                 return structure;
             }
         };
-
         tree.input.password = tree.input.text;
         tree.input.number = tree.input.text;
-
         tree.textarea = {
             textarea: tree.input.text
         };
+        tree.button = {
+            button: function buildButtonStructure(element, ngModel) {
+                var structure = new DataStructure();
+                structure.domId = element.id;
+                structure.ngModel = element.attributes.target;
+                structure.value = element.attributes.action.value;
+                return structure;
+            }
+        };
+        tree.question = {
+            text: function buildTextQuestionStructure(element, ngModel) {
+                var structure = new DataStructure();
+                structure.domId = element.id;
+                structure.ngModel = ngModel;
+                structure.value = element;
+                return structure;
+            }
+        }
 
         return tree;
     }]);
@@ -221,21 +250,22 @@
 
     module.factory('EventTriggerProcessor', ['EditingEvent', 'EditingEventHandler', 'DataStructureFactory',
         function(EditingEvent, EditingEventHandler, DataStructureFactory) {
-            return function EventTriggerProcessor(ngModel) {
+            return function EventTriggerProcessor(ngModel, context) {
                 var ngModel = ngModel,
-                    event = new EditingEvent();
+                    event = new EditingEvent(),
+                    data;
 
                 this.storeOldState = function storeOldState(dataStructure) {
-                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
+                    data = DataStructureFactory.produce(dataStructure[0], ngModel);
                     event.oldState = data;
                 };
                 this.storeNewState = function storeNewState(dataStructure) {
-                    var data = DataStructureFactory.produce(dataStructure[0], ngModel);
+                    data = DataStructureFactory.produce(dataStructure[0], ngModel);
                     event.newState = data;
                 };
                 this.run = function run() {
-                    event.type = ngModel;
-                    event.ngModel = ngModel;
+                    event.type = data.ngModel;
+                    event.ngModel = data.ngModel;
                     EditingEventHandler.handle(event);
                     event = new EditingEvent();
                 };
@@ -255,7 +285,8 @@
 
             function setEventTrigger(eventTrigger) {
                 var triggerTree = provider[eventTrigger.type];
-                triggerTree.getTrigger(eventTrigger.target).registerEventTrigger(eventTrigger);
+                var triggerType = triggerTree.getTriggerType(eventTrigger.target);
+                triggerType.registerEventTrigger(eventTrigger);
             }
 
             function getEventTriggerTree(tree) {
@@ -264,30 +295,45 @@
         }
     ]);
 
-    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory',
-        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory) {
+    module.factory('EventTriggerFactory', ['HtmlEventTriggerFactory', 'QuestionEventTriggerFactory', 'SurveyEventTriggerFactory',
+        function(HtmlEventTriggerFactory, QuestionEventTriggerFactory, SurveyEventTriggerFactory) {
             var factoryIndex = {
                 input: 'html',
                 textarea: 'html',
+                button: 'html',
                 text: 'question',
                 number: 'question',
                 date: 'question',
                 time: 'question',
-                singleSelection: 'question'
+                singleSelection: 'question',
+                surveyPage: 'survey'
             };
 
             var factoryMap = {
                 html: HtmlEventTriggerFactory,
-                question: QuestionEventTriggerFactory
+                question: QuestionEventTriggerFactory,
+                survey: SurveyEventTriggerFactory
             };
 
             /* Factory interface */
             var factory = {
-                identifyFactory: function(element) {
-                    return factoryIndex[element.localName];
+                identifyFactory: function identifyFactory(element) {
+                    return factoryIndex[this.normalizeString(element.localName)];
                 },
-                selectFactory: function(type) {
+                selectFactory: function selectFactory(type) {
                     return factoryMap[type];
+                },
+                normalizeString: function normalizeString(directiveName) {
+                    var directiveParts = directiveName.split('-'),
+                        loopSize = directiveParts.length,
+                        normalizedString = directiveParts[0].toLowerCase();
+
+                    for (var i = 1; i < loopSize; i++) {
+                        var firstLetter = directiveParts[i].slice(0, 1),
+                            restOfString = directiveParts[i].slice(1);
+                        normalizedString = normalizedString.concat(firstLetter.toUpperCase().concat(restOfString.toLowerCase()));
+                    }
+                    return normalizedString;
                 },
                 produce: function produce(element, ngModel) {
                     var factoryType     = this.identifyFactory(element[0]),
@@ -318,12 +364,25 @@
                     }
                 }
             };
-
             this.input.password = this.input.text;
             this.input.number = this.input.text;
             this.textarea = { textarea: this.input.text };
+            this.button = {
+                button: {
+                    triggers: [],
+                    registerEventTrigger: function registerEventTrigger(eventTrigger) {
+                        this.triggers.push(eventTrigger);
+                    },
+                    init: function init(data, ngModel) {
+                        var triggerInstance;
+                        this.triggers.forEach(function(trigger) {
+                            trigger.init(data, ngModel);
+                        });
+                    }
+                }
+            }
 
-            this.getTrigger = function(triggerPath) {
+            this.getTriggerType = function getTriggerType(triggerPath) {
                 var pathTokens = triggerPath.split('.');
                 var reference = this;
 
@@ -341,8 +400,8 @@
     /*******************************************************************************************************************/
     /* studio.editing.event.trigger.html */
 
-    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', 'InputTextEventTrigger',
-        function(EventTriggerRegister, InputTextEventTrigger) {
+    module.factory('HtmlEventTriggerFactory', ['EventTriggerRegister', 'InputTextEventTrigger', 'ButtonEventTrigger',
+        function(EventTriggerRegister, InputTextEventTrigger, ButtonEventTrigger) {
             var factory = {
                 identifyComponent: function(element) {
                     return element.localName;
@@ -374,28 +433,35 @@
     ]);
 
     module.factory('HtmlEventTriggerTree', [function() {
-        var tree = function HtmlEventTriggerTree() {
-            // tag-name/type
-            this.input = {
-                text: {
-                    triggers: [],
-                    registerEventTrigger: function registerEventTrigger(eventTrigger) {
-                        this.triggers.push(eventTrigger);
-                    },
-                    init: function init(data, ngModel) {
-                        var triggerInstance;
-                        this.triggers.forEach(function(trigger) {
-                            trigger.init(data, ngModel);
-                        });
-                    }
-                }
+        function TriggerType() {
+            this.triggers = [];
+
+            this.registerEventTrigger = function registerEventTrigger(eventTrigger) {
+                this.triggers.push(eventTrigger);
             };
 
-            this.input.password = this.input.text;
-            this.input.number = this.input.text;
-            this.textarea = { textarea: this.input.text };
+            this.init = function init(data, ngModel) {
+                var triggerInstance;
+                this.triggers.forEach(function(trigger) {
+                    trigger.init(data, ngModel);
+                });
+            }
+        }
 
-            this.getTrigger = function(triggerPath) {
+        var tree = function HtmlEventTriggerTree() {
+            this.input = {
+                text: new TriggerType(),
+                password: new TriggerType(),
+                number: new TriggerType()
+            };
+            this.textarea = {
+                textarea: new TriggerType()
+            };
+            this.button = {
+                button: new TriggerType()
+            };
+
+            this.getTriggerType = function getTriggerType(triggerPath) {
                 var pathTokens = triggerPath.split('.');
                 var reference = this;
 
@@ -409,6 +475,27 @@
 
         return tree;
     }]);
+
+    module.service('ButtonEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
+        function(EventTriggerProcessor, EventTriggerRegister) {
+            var self = this;
+
+            self.type = 'html';
+            self.target = 'button.button';
+            self.init = init;
+
+            function init(element, ngModel) {
+                var processor = new EventTriggerProcessor(ngModel);
+
+                element.on('click', function setOnFocus() {
+                    processor.storeNewState(element);
+                    processor.run();
+                });
+            }
+
+            EventTriggerRegister.setEventTrigger(self);
+        }
+    ]);
 
     module.service('InputTextEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister',
         function(EventTriggerProcessor, EventTriggerRegister) {
@@ -592,5 +679,53 @@
     // module.factory('TimeQuestionEventTrigger', [function() { ... }]);
 
     // module.factory('SelectCardQuestionEventTrigger', [function() { ... }]);
+
+    /*******************************************************************************************************************/
+    /* studio.editing.event.trigger.survey */
+
+    module.factory('SurveyEventTriggerFactory', ['SurveyEventTriggerService', function(SurveyEventTriggerService) {
+        var factory = {
+            identifyComponent: function(element) {
+                return element.localName;
+            },
+            identifyType: function(element) {
+                return element.type;
+            },
+            selectEventTrigger: function(component, type, data, ngModel) {
+                if (type)
+                    SurveyEventTriggerTree['loadSurveyPageEvents'][type](data, ngModel);
+                else
+                    SurveyEventTriggerTree['loadSurveyPageEvents'](data, ngModel);
+            },
+            produce: function produce(element, ngModel) {
+                SurveyEventTriggerService.init();
+            }
+        };
+
+        return factory;
+    }]);
+
+    module.service('SurveyEventTriggerService', ['EventTriggerProcessor', function(EventTriggerProcessor) {
+        var self = this;
+
+        self.init = init;
+
+        function init() {
+            var target = document.querySelector('survey-page');
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type == 'childList') {
+                        var processor = new EventTriggerProcessor('survey.questions');
+                        processor.storeNewState(mutation.addedNodes);
+                        processor.run();
+                    }
+                });
+            });
+            // configuration of the observer:
+            var config = { attributes: true, childList: true, characterData: true, subtree: true };
+            // pass in the target node, as well as the observer options
+            observer.observe(target, config);
+        }
+    }]);
 
 }());

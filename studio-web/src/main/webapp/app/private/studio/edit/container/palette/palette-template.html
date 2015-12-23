@@ -1,9 +1,7 @@
 <div ng-controller="ContainerController" layout="column">
     <md-button class="md-raised md-primary" ng-click="openClose()">Questions</md-button>
-        <div ng-show="isOpened" layout="column">
-        <md-button class="md-primary" ng-click="binding.addText()">Text
-        </md-button>
-        <md-button class="md-primary" ng-click="binding.addCheckbox()">checkbox
-        </md-button>
-        </div>
+    <div ng-show="isOpened" layout="column">
+        <md-button action="add-text-question" class="md-primary" ng-click="binding.addText()" editing-source>Text</md-button>
+        <md-button action="add-checkbox-question" target="survey.questions" class="md-primary" ng-click="binding.addCheckbox()">checkbox</md-button>
+    </div>
 </div>

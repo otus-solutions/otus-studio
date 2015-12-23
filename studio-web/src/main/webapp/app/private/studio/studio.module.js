@@ -11,6 +11,7 @@
             self.closeSurvey = closeSurvey;
             self.loadSurvey = loadSurvey;
             self.getCurrentSurvey = getCurrentSurvey;
+            self.getCurrentQuestion = getCurrentQuestion;
 
             /* Public interface implementation */
             function createNewSurvey() {
@@ -39,6 +40,10 @@
 
             function getCurrentSurvey() {
                 return EditingService.getSurvey();
+            }
+
+            function getCurrentQuestion() {
+
             }
         }
     ]);
