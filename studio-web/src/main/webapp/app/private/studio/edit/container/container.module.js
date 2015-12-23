@@ -1,5 +1,5 @@
 (function() {
-    angular.module('Container', []);
+    angular.module('Container', ['surveyEditing']);
 
     var containerModule = angular.module('Container');
     var questionCount = 0;
@@ -26,13 +26,14 @@
         };
     }]);
 
-    containerModule.directive('directiveGenerator', ['$compile', '$templateRequest', '$templateCache',
-        function ($compile, $templateRequest, $templateCache) {
+    containerModule.directive('directiveGenerator', ['EditingService', '$compile', '$templateRequest', '$templateCache',
+        function (EditingService, $compile, $templateRequest, $templateCache) {
             var directive = {
                 restrict: 'A',
                 scope: {
                     control: '=',
-                    questionIndex: '='
+                    questionIndex: '=',
+                    target: '='
                 },
                 controller: function ($scope, $element, $attrs) {
                     var questions = [];
@@ -43,12 +44,12 @@
                 },
                 link: function link(scope, element, attrs, surveyPageController) {
                     scope.internalControl = scope.control || {};
-                    scope.questionIndex = 0;
-                    scope.questionModel = 'survey.questions[0]';
-
-                    var textQuestionTemplateUrl = 'private/studio/edit/survey/question/text-question-template.html';
 
                     scope.internalControl.addText = function addText(){
+                        var currentSurvey = EditingService.getSurvey();
+                        scope.questionIndex = currentSurvey.questions.length;
+                        scope.target = 'survey.questions[' + currentSurvey.questions.length + ']';
+                        var textQuestionTemplateUrl = 'private/studio/edit/survey/question/text-question-template.html';
                         $templateRequest(textQuestionTemplateUrl).then(function(html){
                             var compileResult = $compile(html)(scope),
                                 template = angular.element(compileResult);

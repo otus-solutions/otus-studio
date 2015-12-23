@@ -33,7 +33,7 @@
                     var model = target.split('.');
                     var firstLetter = model[NAME].slice(0, 1),
                         restOfString = model[NAME].slice(1);
-                    return 'update'.concat(firstLetter.toUpperCase().concat(restOfString));
+                    return 'update'.concat(firstLetter.toUpperCase().concat(restOfString)).replace(/\[.\]/, '');
                 }
 
             }
@@ -42,7 +42,9 @@
                 self[updateType](data, survey);
             }
 
-            function updateIdentity(identityData, survey) {
+            function updateIdentity(editingEvent, survey) {
+                var data = editingEvent.newState;
+                var model = data.ngModel.split('.');
                 if (model[NAME] == 'keywords') {
                     survey[model[NAME]][model[PROPERTY]] = [];
                     var keywordList = identityData.newState.value.split(',');
@@ -51,16 +53,49 @@
                     });
                 }
                 else {
-                    survey[model[NAME]][model[PROPERTY]] = identityData.newState.value;
+                    survey[model[NAME]][model[PROPERTY]] = data.value;
                 }
             }
 
             function addQuestion(question, survey) {
-                survey.questions.push(question);
+                // survey.questions.push(question);
             }
 
-            function updateQuestions(question, survey) {
-                TextQuestionParser.fromDom(question.newState.value);
+            function updateQuestions(editingEvent, survey) {
+                var data = editingEvent.newState;
+                var modelList = data.ngModel.split('.');
+                modelList.shift();
+                var surveyModel = survey;
+
+                modelList.forEach(function(m) {
+                    var model = extractModel(m),
+                        index = extractModelIndex(m);
+
+                    if (index || index === 0) {
+                        surveyModel = surveyModel[model][index];
+                    } else {
+                        surveyModel = surveyModel[model];
+                    }
+                });
+
+                if (survey.questions.length > 0) {
+                    survey.questions[0].labels[0].content[0].text = data.value;
+                }
+
+                if (editingEvent.target == 'survey.questions') {
+                    var question = TextQuestionParser.fromDom(data.value);
+                    survey.questions.push(question);
+                }
+            }
+
+            function extractModel(modelName) {
+                return modelName.replace(/\[.\]/, '');
+            }
+
+            function extractModelIndex(modelName) {
+                var index = modelName.replace(/(.*\[)/, '');
+                    index = index.replace(/(\])/, '');
+                return parseInt(index);
             }
         }
     ]);
@@ -108,7 +143,7 @@
         function fromDom(dom) {
             var question = new TextQuestion();
             question.labels[0].content[0].text = dom.children[0].children[0].children[1].value;
-            console.log(question);
+            return question;
         }
     }]);
 

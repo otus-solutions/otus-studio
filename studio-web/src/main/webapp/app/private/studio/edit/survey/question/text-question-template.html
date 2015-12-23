@@ -2,10 +2,8 @@
     <md-content>
         <md-input-container class="enunciation md-block">
             <label>Label da questão</label>
-            <input ng-model="survey.questions" type="text" editing-source />
+            <input type="text" aria-label="Label da questão" editing-source="{'target': '{{target}}.labels[0].content[0].text'}" />
         </md-input-container>
-        <md-input-container class="answer md-block">
-            <input ng-model="survey.questions" type="text" editing-source />
-        </md-input-container>
+        <md-input-container class="answer md-block"></md-input-container>
     </md-content>
-</text-question>
+</question>

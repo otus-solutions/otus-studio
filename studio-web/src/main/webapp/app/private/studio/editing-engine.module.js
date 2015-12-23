@@ -94,7 +94,16 @@
 
                 /* Public interface implementations */
                 function applyEventTrigger() {
-                    EventTriggerFactory.produce($element, $attrs.ngModel);
+                    if ($attrs.editingSource.length > 0) {
+                        var target = $attrs.editingSource.replace(/'/g, "-v-");
+                        target = target.replace(/"/g, "'");
+                        target = target.replace(/-v-/g, '"');
+                        var directive = JSON.parse(target);
+                        var target = directive.target;
+                    } else {
+                        var target = $attrs.ngModel;
+                    }
+                    EventTriggerFactory.produce($element, target);
                 }
             };
 
@@ -142,8 +151,8 @@
         function(EditingEvent, EditingEventHandler, EditingStateFactory) {
             return function EventTriggerProcessor(target, eventType) {
                 var target = target,
+                    type = eventType,
                     event = new EditingEvent();
-                    event.type = eventType;
 
                 this.storeOldState = function storeOldState(dataStructure) {
                     this.data = EditingStateFactory.produce(dataStructure[0], target);
@@ -155,6 +164,7 @@
                 };
                 this.run = function run() {
                     event.target = target;
+                    event.type = type;
                     EditingEventHandler.handle(event);
                     event = new EditingEvent();
                 };
