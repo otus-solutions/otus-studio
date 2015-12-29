@@ -51,11 +51,14 @@
 
             function editData(editingEvent) {
                 console.log(editingEvent);
-
                 // validate editingEvent
                 // log editingEvent
                 generalEditingMemoryCache.storeState(editingEvent);
-                SurveyDataUpdater.update(editingEvent, getSurvey());
+
+                if (editingEvent.type == 'update-model') {
+                    SurveyDataUpdater.update(editingEvent, getSurvey());
+                }
+                console.log(getSurvey());
             }
         }
     ]);

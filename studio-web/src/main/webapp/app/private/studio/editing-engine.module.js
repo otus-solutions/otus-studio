@@ -75,6 +75,13 @@
                 structure.ngModel = ngModel;
                 structure.value = element;
                 return structure;
+            },
+            checkbox: function buildCheckboxQuestionStructure(element, ngModel) {
+                var structure = new EditingState();
+                structure.domId = element.id;
+                structure.ngModel = ngModel;
+                structure.value = element;
+                return structure;
             }
         }
 
@@ -139,6 +146,7 @@
         return function EditingEvent() {
             this.type,
             this.target,
+            this.modelType,
             this.oldState,
             this.newState
         };

@@ -5,8 +5,8 @@
     /*******************************************************************************************************************/
     /* Module services */
 
-    module.service('SurveyDataUpdater', ['StringNormalizer', 'TextQuestionParser',
-        function(StringNormalizer, TextQuestionParser) {
+    module.service('SurveyDataUpdater', ['StringNormalizer', 'TextQuestionParser', 'CheckboxQuestionParser',
+        function(StringNormalizer, TextQuestionParser, CheckboxQuestionParser) {
             const NAME = 1;
             const PROPERTY = 2;
 
@@ -16,7 +16,6 @@
             /* Public interface */
             self.update = update;
             self.updateIdentity = updateIdentity;
-            self.addQuestion = addQuestion;
             self.updateQuestions = updateQuestions;
 
             /* Public interface implementation */
@@ -26,16 +25,11 @@
             }
 
             function identifyUpdateType(target, type) {
-                if (type == 'action') {
-                    return StringNormalizer.normalizeString(target);
+                var model = target.split('.');
+                var firstLetter = model[NAME].slice(0, 1),
+                    restOfString = model[NAME].slice(1);
 
-                } else if (type == 'update-model') {
-                    var model = target.split('.');
-                    var firstLetter = model[NAME].slice(0, 1),
-                        restOfString = model[NAME].slice(1);
-                    return 'update'.concat(firstLetter.toUpperCase().concat(restOfString)).replace(/\[.\]/, '');
-                }
-
+                return 'update'.concat(firstLetter.toUpperCase().concat(restOfString)).replace(/\[.\]/, '');
             }
 
             function runUpdater(updateType, data, survey) {
@@ -43,8 +37,9 @@
             }
 
             function updateIdentity(editingEvent, survey) {
-                var data = editingEvent.newState;
-                var model = data.ngModel.split('.');
+                var data = editingEvent.newState,
+                    model = data.ngModel.split('.');
+
                 if (model[NAME] == 'keywords') {
                     survey[model[NAME]][model[PROPERTY]] = [];
                     var keywordList = identityData.newState.value.split(',');
@@ -57,18 +52,14 @@
                 }
             }
 
-            function addQuestion(question, survey) {
-                // survey.questions.push(question);
-            }
-
             function updateQuestions(editingEvent, survey) {
                 var data = editingEvent.newState;
-                var modelList = data.ngModel.split('.');
+
+                var questionType = data.value.attributes.type.nodeValue,
+                    modelList = data.ngModel.split('.'),
+                    questionIndex, labelIndex, contentIndex;
+
                 modelList.shift();
-
-                var surveyModel = survey;
-                var questionIndex, labelIndex, contentIndex;
-
                 modelList.forEach(function(m) {
                     var model = extractModel(m),
                         index = extractModelIndex(m);
@@ -85,7 +76,12 @@
                 }
 
                 if (editingEvent.target == 'survey.questions') {
-                    var question = TextQuestionParser.fromDom(data.value);
+                    if (questionType == 'text') {
+                        var question = TextQuestionParser.fromDom(data.value);
+                    } else if (questionType == 'checkbox') {
+                        var question = CheckboxQuestionParser.fromDom(data.value);
+                    }
+
                     survey.questions.push(question);
                 }
             }
@@ -153,11 +149,37 @@
         }
     }]);
 
+    module.service('CheckboxQuestionParser', ['CheckboxQuestion', function(CheckboxQuestion) {
+        var self = this;
+
+        self.fromDom = fromDom;
+
+        function fromDom(dom) {
+            var question = new CheckboxQuestion();
+            question.labels[0].content[0].text = dom.children[0].children[1].children[1].value;
+            return question;
+        }
+    }]);
+
     module.factory('TextQuestion', ['Label', function(Label) {
         return function TextQuestion() {
             this.extends = 'Question';
             this.objectType = 'TextQuestion';
             this.dataType = 'String';
+            this.oid = '';
+            this.labels = [new Label()];
+
+            this.getLabel = function getLabel(index) {
+                return this.labels[index];
+            }
+        };
+    }]);
+
+    module.factory('CheckboxQuestion', ['Label', function(Label) {
+        return function CheckboxQuestion() {
+            this.extends = 'Question';
+            this.objectType = 'CheckboxQuestion';
+            this.dataType = 'Boolean';
             this.oid = '';
             this.labels = [new Label()];
 

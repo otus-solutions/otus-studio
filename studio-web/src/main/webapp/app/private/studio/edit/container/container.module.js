@@ -32,34 +32,38 @@
                 restrict: 'A',
                 scope: {
                     control: '=',
-                    questionIndex: '=',
                     target: '='
                 },
-                controller: function ($scope, $element, $attrs) {
+                controller: function ($scope, $element) {
                     var questions = [];
 
-                    this.registerQuestions = function (question) {
-                        questions.push(question);
+                    this.addQuestion = function addQuestion(templateUrl) {
+                        var currentSurvey = EditingService.getSurvey();
+
+                        $scope.target = 'survey.questions[' + currentSurvey.questions.length + ']';
+
+                        this.loadTemplate(templateUrl, function (template) {
+                            $element.append(template);
+                            questions.push($scope);
+                        });
+                    };
+                    this.loadTemplate = function loadTemplate(templateUrl, callback) {
+                        $templateRequest(templateUrl).then(function (html) {
+                            var compileResult = $compile(html)($scope),
+                                template = angular.element(compileResult);
+
+                            callback(template);
+                        });
                     };
                 },
-                link: function link(scope, element, attrs, surveyPageController) {
+                link: function link(scope, element, attrs, controller) {
                     scope.internalControl = scope.control || {};
 
                     scope.internalControl.addText = function addText(){
-                        var currentSurvey = EditingService.getSurvey();
-                        scope.questionIndex = currentSurvey.questions.length;
-                        scope.target = 'survey.questions[' + currentSurvey.questions.length + ']';
-                        var textQuestionTemplateUrl = 'private/studio/edit/survey/question/text-question-template.html';
-                        $templateRequest(textQuestionTemplateUrl).then(function(html){
-                            var compileResult = $compile(html)(scope),
-                                template = angular.element(compileResult);
-
-                            element.append(template);
-                            surveyPageController.registerQuestions(scope);
-                        });
+                        controller.addQuestion('private/studio/edit/survey/question/text-question-template.html');
                     };
                     scope.internalControl.addCheckbox = function addCheckbox(){
-                        element.append($compile(checkboxTemplate)(scope));
+                        controller.addQuestion('private/studio/edit/survey/question/checkbox-question-template.html');
                     };
                 }
             };
