@@ -23,11 +23,11 @@ body {
 }
 
 #toolbar-system md-toolbar {
-	padding-top : 7px;
+/*	padding-top : 7px;*/
 }
 
 .connectedRepository {
-	margin-right: 2em;
+/*	margin: 2em;*/
 }
 
 .icon-white {

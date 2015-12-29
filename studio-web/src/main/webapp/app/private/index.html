@@ -2,87 +2,68 @@
 <html lang="en" ng-app="StudioApp">
 
 <head>
-    <base href="/studio/app/" />
-    <meta charset="UTF-8" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    
-    <link href="shared/img/otus-studio-img.png" rel="icon" />
-    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" />
-    <link href="private/home/home.css" rel="stylesheet" />
-    
+    <base href="/studio/app/"/>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+
+    <link href="shared/img/otus-studio-img.png" rel="icon"/>
+    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet"/>
+    <link href="private/home/home.css" rel="stylesheet"/>
+
     <title>Otus Studio</title>
 </head>
 
 <body md-theme="layoutTheme">
-    <div id="toolbar-system" ng-controller="ToolbarCtrl">
-        <md-toolbar class="md-menu-toolbar">
-                <div layout="row" layout-align="space-between center">
-                <div>
-                    <md-menu-bar>
-                    <button ui-sref="home">Home</button>
-                        <md-menu>
-                            <button ng-click="$mdOpenMenu()">
-                                Administração
-                            </button>
-                            <md-menu-content  width="4">
-                                <md-menu-item>
-                                    <md-button ng-click="openAdministrationUsers()">
-                                        Usuários
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                        <md-menu>
-                            <button ng-click="$mdOpenMenu()">
-                                Repositórios
-                            </button>
-                            <md-menu-content width="4">
-	                            <div ng-controller="RepositoryCtrl as repositoryController" ng-show="repositories">
-		                            <md-menu-item>
-						                <md-menu>
-						                	<md-button ng-click="$mdOpenMenu()">Usar</md-button>
-					                		<md-menu-content width="4">
-					                    		<md-menu-item ng-repeat="repository in repositories track by $index" ng-click="setRepository(repository.name)" ng-model="repositoryController.self.connected"
-					                    		 type="radio" value="{{repository.name}}">{{repository.name}}</md-menu-item>
-						                	</md-menu-content>
-						              	</md-menu>
-					              	</md-menu-item>
+<div id="toolbar-system" ng-controller="ToolbarCtrl">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
 
-	                            </div>
-				              	<md-menu-divider></md-menu-divider>
+            <md-button ng-click="openHome(); loadPageHeaderMessage()">
+                <md-icon md-svg-icon="home" style="margin-right: 1em;"
+                         aria-label="Logout"></md-icon>
+            </md-button>
 
-	                            <md-menu-item>
-	                             <md-button ng-click="openNewRepository()">
-	                                     Novo
-	                                </md-button>
-	                            </md-menu-item>
-	                            <md-menu-item>
-	                                <md-button ng-click="openConnectRepository()">
-	                                    Conectar a um existente
-	                                </md-button>
-	                            </md-menu-item>
+            <h3 style="display: inline" class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
+                {{ctrl.connected()}}
+            </h3>
 
-                            </md-menu-content>
-                        </md-menu>
-                    </md-menu-bar>
-                </div>
-                <div layout="row" layout-align="center center">
-                	<div class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
-                		{{ctrl.connected()}}
-                	</div>
-                	<div class="image-user-div">
-                    	<img ng-src="shared/img/prof_bruce_duncan.jpg" />
-                	</div>
-                </div>
-               	</div>
-        </md-toolbar>
-    </div>
-    <!-- /#toolbar-system -->
-    <div id="center">
-        <div ui-view></div>
-    </div>
+            <md-icon md-svg-icon="cloud" style="margin: 1em;"
+                     aria-label="Logout"></md-icon>
+
+            <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar</md-button>
+            <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar</md-button>
+
+            <md-icon md-svg-icon="settings" style="margin: 1em;"
+                     aria-label="Configurações"></md-icon>
+
+            <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">usuários</md-button>
+
+            <span flex></span>
+
+            <a class="navbar-brand" rel="home" title="Profile">
+                <img ng-src="shared/img/prof_bruce_duncan.jpg" class="image-user-div"/>
+            </a>
+
+            <md-button aria-label="Logout">
+                <md-icon md-svg-icon="exit-to-app"
+                         aria-label="Logout"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar class="md-toolbar-tools md-primary">
+        <h2 class="md-flex">{{pageMessage}}</h2>
+    </md-toolbar>
+    <br>
+    <br>
+</div>
+
+<!-- /#toolbar-system -->
+<div id="center">
+    <div ui-view></div>
+</div>
 </body>
 <!-- Angular Dependencies -->
 <script src="shared/lib/angularjs/angular.min.js"></script>
@@ -94,7 +75,7 @@
 <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
 <!-- Application -->
-<link href="private/user/management/style.css" rel="stylesheet" />
+<link href="private/user/management/style.css" rel="stylesheet"/>
 <script src="private/home/module.js"></script>
 <script src="private/home/home-ctrl.js"></script>
 <script src="private/user/module.js"></script>

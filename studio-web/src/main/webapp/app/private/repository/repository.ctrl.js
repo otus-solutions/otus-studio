@@ -12,6 +12,7 @@ angular.module('Repository').controller('RepositoryCtrl', ['$scope', '$http', '$
 
     var self = this;
 
+    $scope.pageMessage = angular.equals($scope.actionType, REPOSITORY_CREATE_ACTION) ? "Criação de Repositório" : "Adição de Repositório";
     self.connected = connected;
 
     function connected() {
@@ -64,7 +65,7 @@ angular.module('Repository').controller('RepositoryCtrl', ['$scope', '$http', '$
         $scope.actionType = $location.search().actionType;
         buttonStateWaiting();
     }
-    
+
     function getRepositories() {
     	 $http.get(REPOSITORIES)
          .success(function(data) {
@@ -74,7 +75,7 @@ angular.module('Repository').controller('RepositoryCtrl', ['$scope', '$http', '$
              console.log('Erro + ', data)
          });
     }
-    
+
     function validateExisRepository(valid) {
         $scope.repositoryForm.name.$setValidity('nameInUse', valid);
         $scope.repositoryForm.$setValidity('nameInUse', valid);
