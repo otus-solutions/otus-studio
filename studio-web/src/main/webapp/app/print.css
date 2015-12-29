@@ -1,0 +1,42 @@
+/* Estilos para impressão */
+@media print {
+	.no-print, nav, footer, video, audio, object, embed, md-tab-item {
+		display: none;
+	}
+	.print {
+		display: block;
+	}
+	* {
+		background: transparent !important;
+		color: #000 !important;
+		text-shadow: none !important;
+		filter: none !important;
+		-ms-filter: none !important;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+		line-height: 1.4em;
+		font: 12pt Georgia, "Times New Roman", Times, serif;
+		color: #000;
+	}
+	h1 {
+		font-size: 24pt;
+	}
+	h2 {
+		font-size: 18pt;
+	}
+	h3 {
+		font-size: 14pt;
+	}
+	p {
+		font-size: 12pt;
+		widows: 3;
+		orphans: 3;
+	}
+	.page, md-tabs-template, md-tab-content {
+		width: 900px;
+		margin: 0;
+		float: none !important;
+	}
+}
