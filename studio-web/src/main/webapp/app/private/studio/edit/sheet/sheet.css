@@ -26,6 +26,6 @@
 	
 }
 
-.editing-container {
-	padding: 10px;
+.editing-container, .preview-container {
+	padding: 50px !important;
 }
