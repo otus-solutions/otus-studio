@@ -22,18 +22,14 @@ body {
 	height: inherit;
 }
 
-#toolbar-system md-toolbar {
-/*	padding-top : 7px;*/
-}
-
-.connectedRepository {
-/*	margin: 2em;*/
-}
-
 .icon-white {
     color: white!important;
 }
 
-md-input-container.md-input-invalid > md-icon {
-    color: red;
+md-input-container.md-input-invalid>md-icon {
+	color: red;
+}
+
+#center, #center>div {
+	height: 100%
 }

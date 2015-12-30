@@ -9,4 +9,5 @@ public interface ContextService {
 
 	UserDto getLoggedUser(HttpSession httpSession) throws SessionNotFoundException;
 
+    void removeLoggedUser(HttpSession httpSession);
 }

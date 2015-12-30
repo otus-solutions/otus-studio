@@ -57,6 +57,11 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 	}
 
     @Override
+    public void logout(HttpSession httpSession){
+        userDataContext.logout(httpSession);
+    }
+
+    @Override
     public Boolean isLogged(HttpSession httpSession){
         try {
             contextService.getLoggedUser(httpSession);

@@ -1,5 +1,6 @@
 package br.com.studio.security.service;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpSession;
@@ -100,5 +101,11 @@ public class SecurityServiceBeanTest {
     public void isLogged_should_return_FALSE_when_the_user_dont_exists() throws SessionNotFoundException {
         when(contextService.getLoggedUser(httpSession)).thenThrow(SessionNotFoundException.class);
         Assert.assertFalse(service.isLogged(httpSession));
+    }
+
+    @Test
+    public void method_logout_should_call_logout_in_userDataContext(){
+        service.logout(httpSession);
+        verify(userDataContext).logout(httpSession);
     }
 }

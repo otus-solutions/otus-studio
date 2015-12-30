@@ -12,5 +12,7 @@ public interface SecurityService {
 	void authenticate(LoginAuthenticationDto loginDto)
         throws InvalidPasswordException, EmailNotFoundException, UserDisabledException;
 
+    void logout(HttpSession httpSession);
+
     Boolean isLogged(HttpSession httpSession);
 }

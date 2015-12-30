@@ -1,0 +1,31 @@
+.tabsdemoDynamicHeight {
+	background-color: #FFFFFF;
+}
+
+.tabsdemoDynamicHeight md-content {
+	background-color: transparent !important;
+}
+
+.tabsdemoDynamicHeight md-content md-tabs {
+	border: 1px solid #e1e1e1;
+}
+
+.tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper {
+	background: white;
+}
+
+.tabsdemoDynamicHeight md-content h1:first-child {
+	margin-top: 0;
+}
+
+.style-sheet {
+	/* 	border: 1px solid rgba(225, 225, 225, 0.96);
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15); */
+	
+}
+
+.editing-container {
+	padding: 10px;
+}

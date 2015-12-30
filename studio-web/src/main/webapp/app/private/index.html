@@ -21,24 +21,32 @@
         <div class="md-toolbar-tools">
 
             <md-button ng-click="openHome(); loadPageHeaderMessage()">
-                <md-icon md-svg-icon="home" style="margin-right: 1em;"
-                         aria-label="Logout"></md-icon>
+                <md-icon md-svg-icon="home"
+                         aria-label="Home"></md-icon>
             </md-button>
 
-            <h3 style="display: inline" class="connectedRepository" ng-controller="RepositoryCtrl as ctrl">
-                {{ctrl.connected()}}
+            <h3 ng-controller="RepositoryCtrl as ctrl">
+                <span>{{ctrl.connected()}}</span>
             </h3>
+            <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;"
+                     aria-label="Form"></md-icon>
 
-            <md-icon md-svg-icon="cloud" style="margin: 1em;"
-                     aria-label="Logout"></md-icon>
+            <md-button ng-click="openContainer(); loadPageHeaderMessage()">Novo Form</md-button>
 
-            <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar</md-button>
-            <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar</md-button>
+            <md-icon md-svg-icon="cloud-upload"
+                     aria-label="Criar Repositório"></md-icon>
 
-            <md-icon md-svg-icon="settings" style="margin: 1em;"
+            <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar Repositório</md-button>
+
+            <md-icon md-svg-icon="cloud-download"
+                     aria-label="Conectar Repositório"></md-icon>
+
+            <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar Repositório</md-button>
+
+            <md-icon md-svg-icon="account"
                      aria-label="Configurações"></md-icon>
 
-            <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">usuários</md-button>
+            <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">Usuários</md-button>
 
             <span flex></span>
 
@@ -46,7 +54,7 @@
                 <img ng-src="shared/img/prof_bruce_duncan.jpg" class="image-user-div"/>
             </a>
 
-            <md-button aria-label="Logout">
+            <md-button aria-label="Logout" ng-click="logout()">
                 <md-icon md-svg-icon="exit-to-app"
                          aria-label="Logout"></md-icon>
             </md-button>
@@ -85,6 +93,13 @@
 <script src="private/repository/repository.ctrl.js"></script>
 <script src="app.js"></script>
 <script src="config/theme.js"></script>
+<script src="private/utils.module.js"></script>
+<script src="private/studio/survey.module.js"></script>
+<script src="private/studio/memory.module.js"></script>
+<script src="private/studio/editing-engine.module.js"></script>
+<script src="private/studio/survey-editing-engine.module.js"></script>
+<script src="private/studio/studio.module.js"></script>
+<script src="private/studio/edit/sheet/preview/preview-ctrl.js"></script>
+<script src="private/studio/edit/container/container.module.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>
-
 </html>

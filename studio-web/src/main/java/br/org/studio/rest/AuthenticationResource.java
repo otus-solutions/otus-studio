@@ -41,4 +41,21 @@ public class AuthenticationResource {
             return gson.toJson(Boolean.FALSE);
 		}
 	}
+
+    @Path("/logout")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String userLogout() {
+        Response response = new Response();
+
+        try{
+            securityService.logout(httpSession);
+            response.setData(Boolean.TRUE);
+        }catch (Exception e){
+            response.setData(Boolean.FALSE);
+        }
+
+        return response.toJson();
+
+    }
 }

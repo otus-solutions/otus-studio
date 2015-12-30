@@ -16,7 +16,7 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
             .finally(function () {
                 $window.location.href = window.location.origin + '/studio/'
             });
-    }
+    };
 
     $scope.register = function (systemConf) {
         $scope.isLoading = true;
@@ -31,7 +31,7 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
         }, function () {
             $scope.isLoading = false;
         });
-    }
+    };
 
     $scope.validateEmailService = function (systemConf) {
         var deferred = $q.defer();
@@ -83,10 +83,10 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
             }
         }
     }
-    
-   
+
+
 }).config(['$mdThemingProvider', function($mdThemingProvider){
-	
+
 	$mdThemingProvider.theme('layoutTheme')
 		.primaryPalette('blue', {
 		'default' : 'A200',
@@ -95,7 +95,7 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
 		'default' : '900'
 	}).warnPalette('red');
 
-	
+
 	$mdThemingProvider.theme('layoutTheme');
 }]);
 

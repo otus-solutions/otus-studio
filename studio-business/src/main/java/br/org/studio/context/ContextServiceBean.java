@@ -14,22 +14,26 @@ import br.org.tutty.Equalizer;
 @Stateless
 @Local(ContextService.class)
 public class ContextServiceBean implements ContextService {
-	
+
 	@Inject
 	private UserDataContext userDataContext;
-	
+
 	@Override
 	public UserDto getLoggedUser(HttpSession httpSession) throws SessionNotFoundException{
 		try {
 			User loggedUser = userDataContext.getLoggedUser(httpSession);
 			UserDto userDto = new UserDto();
-			
+
 			Equalizer.equalize(loggedUser, userDto);
 			return userDto;
-			
+
 		} catch (IllegalAccessException | NoSuchFieldException | DataNotFoundException e) {
 			throw new SessionNotFoundException();
 		}
 	}
 
+    @Override
+    public void removeLoggedUser(HttpSession httpSession){
+        userDataContext.logout(httpSession);
+    }
 }

@@ -27,6 +27,10 @@ public class UserDataContext implements Serializable {
 		loggedUser.put(httpSession.getId(), user);
 	}
 
+    public void logout(HttpSession httpSession){
+        loggedUser.remove(httpSession.getId());
+    }
+
 	public User getLoggedUser(HttpSession httpSession) throws DataNotFoundException{
 		if(loggedUser.containsKey(httpSession.getId())){
 			return loggedUser.get(httpSession.getId());

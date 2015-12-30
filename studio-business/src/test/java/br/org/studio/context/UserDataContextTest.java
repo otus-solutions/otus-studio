@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import br.org.studio.entities.system.User;
@@ -22,6 +23,8 @@ public class UserDataContextTest {
 	private HttpSession session;
 
 	private UserDataContext userDataContext;
+
+    private String sessionId = "123456A";
 
 	@Before
 	public void setUp() {
@@ -40,4 +43,13 @@ public class UserDataContextTest {
 	public void method_getLoggedUser_should_trowns_a_DataNotFoundException_when_not_exists_a_logged_user() throws DataNotFoundException{
 		userDataContext.getLoggedUser(session);
 	}
+
+    @Test(expected = DataNotFoundException.class)
+    public void method_logout_should_remove_with_arg_sessionId() throws DataNotFoundException {
+        Mockito.when(session.getId()).thenReturn(sessionId);
+
+        userDataContext.login(session, user);
+        userDataContext.logout(session);
+        userDataContext.getLoggedUser(session);
+    }
 }
