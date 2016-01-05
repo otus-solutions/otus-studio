@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>br.org.studio</groupId>
 		<artifactId>studio-root</artifactId>
-		<version>0.10.11-SNAPSHOT</version>
+		<version>0.10.12-SNAPSHOT</version>
 		<relativePath>../studio-root/pom.xml</relativePath>
 	</parent>
 
