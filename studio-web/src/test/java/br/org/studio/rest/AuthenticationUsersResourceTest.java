@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.servlet.http.HttpSession;
+
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationUsersResourceTest {
     private static final String EMAIL_INVALID = "email";
@@ -54,4 +56,21 @@ public class AuthenticationUsersResourceTest {
         Assert.assertEquals(Boolean.TRUE, new Gson().fromJson(result, Boolean.class));
     }
 
+    @Test
+    public void isLogged_should_return_TRUE_when_user_is_authenticated(){
+        Mockito.when(securityServiceBean.isLogged(Matchers.any(HttpSession.class))).thenReturn(Boolean.TRUE);
+
+        String result = authenticationResource.isLogged();
+
+        Assert.assertEquals(Boolean.TRUE, new Gson().fromJson(result, Response.class).getData());
+    }
+
+    @Test
+    public void isLogged_should_return_FALSE_when_user_is_dont_authenticated(){
+        Mockito.when(securityServiceBean.isLogged(Matchers.any(HttpSession.class))).thenReturn(Boolean.FALSE);
+
+        String result = authenticationResource.isLogged();
+
+        Assert.assertEquals(Boolean.FALSE, new Gson().fromJson(result, Response.class).getData());
+    }
 }
