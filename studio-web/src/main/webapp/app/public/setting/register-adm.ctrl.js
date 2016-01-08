@@ -1,4 +1,4 @@
-angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
+angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages', 'passwordControl'])
 .controller('SystemConfigCtrl', function ($q, $scope, $http, $window, $mdDialog) {
 
     $scope.systemConf = {};
@@ -52,38 +52,12 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages'])
 
             return deferred.promise;
         }
-    }
+    };
 
     $scope.resetValidationEmail = function () {
         $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', true);
         $scope.initialConfigSystemForm.$setValidity('emailService', true);
-    }
-
-
-    $scope.matchPassword = function () {
-        if ($scope.systemConf.user.password && $scope.systemConf.user.passwordConfirm) {
-            if ($scope.systemConf.user.password != $scope.systemConf.user.passwordConfirm) {
-                $scope.initialConfigSystemForm.password.$setValidity('password', false);
-                $scope.initialConfigSystemForm.$setValidity('password', false);
-            } else {
-                $scope.initialConfigSystemForm.password.$setValidity('password', true);
-                $scope.initialConfigSystemForm.$setValidity('password', true);
-            }
-        }
-    }
-
-    $scope.matchPasswordEmailSender = function () {
-        if ($scope.systemConf.emailSender.password && $scope.systemConf.emailSender.passwordConfirm) {
-            if ($scope.systemConf.emailSender.password != $scope.systemConf.emailSender.passwordConfirm) {
-                $scope.initialConfigSystemForm.emailSenderPassword.$setValidity('emailSenderPassword', false);
-                $scope.initialConfigSystemForm.$setValidity('emailSenderPassword', false);
-            } else {
-                $scope.initialConfigSystemForm.emailSenderPassword.$setValidity('emailSenderPassword', true);
-                $scope.initialConfigSystemForm.$setValidity('emailSenderPassword', true);
-            }
-        }
-    }
-
+    };
 
 }).config(['$mdThemingProvider', function($mdThemingProvider){
 

@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('StudioApp', ['ngMessages', 'ngMaterial', 'ui.mask'])
+        .module('StudioApp', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
         .controller(
             'RegisterUserCtrl', ['$scope', '$http', '$mdDialog', '$window',
                 function($scope, $http, $mdDialog, $window) {
@@ -12,20 +12,6 @@
 
                     /* Public interface */
                     self.register = register;
-                    self.matchPassword = matchPassword;
-
-                    /* Public implementations */
-                    function matchPassword() {
-                        if ($scope.user.password && $scope.user.passwordConfirm) {
-                            if ($scope.user.password != $scope.user.passwordConfirm) {
-                                $scope.registerUserForm.password.$setValidity('password', false);
-                                $scope.registerUserForm.$setValidity('password', false);
-                            } else {
-                                $scope.registerUserForm.password.$setValidity('password', true);
-                                $scope.registerUserForm.$setValidity('password', true);
-                            }
-                        }
-                    }
 
                     function register(user) {
                         $http.post($HTTP_POST_URL_CREATE, user).then(function(response) {
@@ -44,7 +30,7 @@
                     }
                 }
             ]).config(['$mdThemingProvider', function($mdThemingProvider){
-            	
+
             	$mdThemingProvider.theme('layoutTheme')
             		.primaryPalette('blue', {
             		'default' : 'A200',
@@ -53,7 +39,7 @@
             		'default' : '900'
             	}).warnPalette('red');
 
-            	
+
             	$mdThemingProvider.theme('layoutTheme');
             }]);
 

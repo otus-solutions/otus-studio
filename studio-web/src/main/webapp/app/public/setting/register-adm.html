@@ -6,12 +6,12 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="pragma" content="no-cache" />
-    
+
     <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
     <link href="public/setting/register-adm.css" rel="stylesheet"/>
     <link href="shared/img/otus-studio-img.png" rel="icon"/>
     <title>Cadastro de Administrador</title>
-   
+
 </head>
 <body md-theme="layoutTheme">
 <img src="shared/img/otus-studio-img.png" id="logo"/>
@@ -84,34 +84,25 @@
 
                 <md-input-container class="md-block">
                     <label>Senha</label>
-                    <input name="password" ng-blur="matchPassword()" ng-model="systemConf.user.password" type="password"
-                           ng-required="true" maxlength="32" ng-minlength="6"
-                           ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/"/>
+                    <input name="password" ng-model="systemConf.user.password" type="password" ng-required="true" st-password />
 
                     <div ng-messages="initialConfigSystemForm.password.$error">
-                        <div ng-message="required" ng-show="initialConfigSystemForm.password.$error.required">
-                            Obrigatório
-                        </div>
-                        <div ng-message="minlength" ng-show="initialConfigSystemForm.password.$error.minlength">Mínimo 6
-                            caracteres
-                        </div>
-                        <div ng-message="pattern" ng-show="initialConfigSystemForm.password.$error.pattern"><br/>Deve
-                            conter pelo menos um caracter minúsculo, um maiúsculo e um dígito
+                        <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
+                            A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
                         </div>
                     </div>
                 </md-input-container>
 
                 <md-input-container class="md-block">
                     <label>Confirmação de Senha</label>
-                    <input name="passwordConfirm" ng-blur="matchPassword()" ng-model="systemConf.user.passwordConfirm"
-                           type="password" ng-required="true"/>
+                    <input name="passwordConfirm" ng-model="systemConf.user.passwordConfirm"
+                           type="password" ng-required="true" st-password-match="systemConf.user.password"/>
 
                     <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
                         <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">
                             Obrigatório
                         </div>
-                        <div ng-message
-                             ng-show="(systemConf.user.passwordConfirm != systemConf.user.password) && (systemConf.user.passwordConfirm && systemConf.user.password)">
+                        <div ng-message="passwordMatch">
                             Suas senhas não coincidem.
                         </div>
                     </div>
@@ -153,8 +144,7 @@
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Senha</label>
-                    <input name="emailSenderPassword" ng-blur="matchPasswordEmailSender()"
-                           ng-change="resetValidationEmail()" ng-model="systemConf.emailSender.password" type="password"
+                    <input name="emailSenderPassword" ng-change="resetValidationEmail()" ng-model="systemConf.emailSender.password" type="password"
                            ng-required="true"/>
 
                     <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
@@ -165,15 +155,13 @@
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Confirmação de Senha</label>
-                    <input name="emailSenderPasswordConfirm" ng-blur="matchPasswordEmailSender()"
-                           ng-model="systemConf.emailSender.passwordConfirm" type="password" ng-required="true"/>
+                    <input name="emailSenderPasswordConfirm" ng-model="systemConf.emailSender.passwordConfirm" st-password-match="systemConf.emailSender.password" type="password" ng-required="true"/>
 
                     <div ng-messages="initialConfigSystemForm.emailSenderPasswordConfirm.$error">
                         <div ng-message="required"
                              ng-show="initialConfigSystemForm.emailSenderPasswordConfirm.$error.required">Obrigatório
                         </div>
-                        <div ng-message
-                             ng-show="(systemConf.emailSender.passwordConfirm != systemConf.emailSender.password) && (systemConf.emailSender.passwordConfirm && systemConf.emailSender.password)">
+                        <div ng-message="passwordMatch">
                             Suas senhas não coincidem.
                         </div>
                     </div>
@@ -193,7 +181,7 @@
 	<p>Copyright© 2015 ELSA Brasil Corporation.</p>
 </footer>
 
-</body>   
+</body>
 
  <!-- Angular Material Dependencies -->
     <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
@@ -204,8 +192,9 @@
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+    <script src="shared/st-password-module.js"></script>
 
     <script src="app.js"></script>
     <script src="config/theme.js"></script>
-    <script src="public/setting/register-adm.ctrl.js"></script> 
+    <script src="public/setting/register-adm.ctrl.js"></script>
 </html>
