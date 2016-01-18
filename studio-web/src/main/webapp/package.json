@@ -12,7 +12,7 @@
     "scripts": {
         "bsync": "browser-sync start --server --files=\"*.html, *.js, *.css\"",
         "gulp": "gulp",
-        "start": "concurrent \"npm run bsync\" \"npm run gulp\""
+        "start": "concurrent \"npm run bsync\" "
     },
     "dependencies": {
         "angular": "^1.4.7",

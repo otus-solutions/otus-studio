@@ -2,77 +2,56 @@
 <html lang="en" ng-app="StudioApp">
 
 <head>
-    <base href="/studio/app/"/>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-
-    <link href="shared/img/otus-studio-img.png" rel="icon"/>
-    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet"/>
-    <link href="private/home/home.css" rel="stylesheet"/>
-
+    <base href="/studio/app/" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link href="shared/img/otus-studio-img.png" rel="icon" />
+    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" />
+    <link href="private/home/home.css" rel="stylesheet" />
     <title>Otus Studio</title>
 </head>
 
 <body md-theme="layoutTheme">
-<div id="toolbar-system" ng-controller="ToolbarCtrl">
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-
-            <md-button ng-click="openHome(); loadPageHeaderMessage()">
-                <md-icon md-svg-icon="home"
-                         aria-label="Home"></md-icon>
-            </md-button>
-
-            <h3 ng-controller="RepositoryCtrl as ctrl">
+    <div id="toolbar-system" ng-controller="ToolbarCtrl">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button ng-click="openHome(); loadPageHeaderMessage()">
+                    <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+                </md-button>
+                <h3 ng-controller="RepositoryCtrl as ctrl">
                 <span>{{ctrl.connected()}}</span>
             </h3>
-            <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;"
-                     aria-label="Form"></md-icon>
-
-            <md-button ng-click="openContainer(); loadPageHeaderMessage()">Novo Form</md-button>
-
-            <md-icon md-svg-icon="cloud-upload"
-                     aria-label="Criar Repositório"></md-icon>
-
-            <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar Repositório</md-button>
-
-            <md-icon md-svg-icon="cloud-download"
-                     aria-label="Conectar Repositório"></md-icon>
-
-            <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar Repositório</md-button>
-
-            <md-icon md-svg-icon="account"
-                     aria-label="Configurações"></md-icon>
-
-            <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">Usuários</md-button>
-
-            <span flex></span>
-
-            <a class="navbar-brand" rel="home" title="Profile">
-                <img ng-src="shared/img/prof_bruce_duncan.jpg" class="image-user-div"/>
-            </a>
-
-            <md-button aria-label="Logout" ng-click="logout()">
-                <md-icon md-svg-icon="exit-to-app"
-                         aria-label="Logout"></md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
-
-    <md-toolbar class="md-toolbar-tools md-primary">
-        <h2 class="md-flex">{{pageMessage}}</h2>
-    </md-toolbar>
-    <br>
-    <br>
-</div>
-
-<!-- /#toolbar-system -->
-<div id="center">
-    <div ui-view></div>
-</div>
+                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Form"></md-icon>
+                <md-button ng-click="openContainer(); loadPageHeaderMessage()">Novo Form</md-button>
+                <md-icon md-svg-icon="cloud-upload" aria-label="Criar Repositório"></md-icon>
+                <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar Repositório</md-button>
+                <md-icon md-svg-icon="cloud-download" aria-label="Conectar Repositório"></md-icon>
+                <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar Repositório</md-button>
+                <md-icon md-svg-icon="account" aria-label="Configurações"></md-icon>
+                <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">Usuários</md-button>
+                <span flex></span>
+                <a class="navbar-brand" rel="home" title="Profile">
+                    <img ng-src="shared/img/prof_bruce_duncan.jpg" class="image-user-div" />
+                </a>
+                <md-button aria-label="Logout" ng-click="logout()">
+                    <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-toolbar class="md-toolbar-tools md-primary">
+            <h2 class="md-flex">{{pageMessage}}</h2>
+        </md-toolbar>
+        <br>
+        <br>
+    </div>
+    <!-- /#toolbar-system -->
+    <div id="center">
+        <div ui-view></div>
+    </div>
 </body>
+<!--build:js js/libs.min.js -->
 <!-- Angular Dependencies -->
 <script src="shared/lib/angularjs/angular.min.js"></script>
 <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
@@ -82,8 +61,10 @@
 <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-material.min.js"></script>
+<!-- endbuild -->
+<!--build:js js/application.min.js -->
 <!-- Application -->
-<link href="private/user/management/style.css" rel="stylesheet"/>
+<link href="private/user/management/style.css" rel="stylesheet" />
 <script src="private/home/module.js"></script>
 <script src="private/home/home-ctrl.js"></script>
 <script src="private/user/module.js"></script>
@@ -102,4 +83,6 @@
 <script src="private/studio/edit/sheet/preview/preview-ctrl.js"></script>
 <script src="private/studio/edit/container/container.module.js"></script>
 <script src="private/studio/toolbar-ctrl.js"></script>
+<!-- endbuild -->
+
 </html>
