@@ -1,25 +1,25 @@
 * {
-	padding: 0;
-	box-sizing: border-box;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-	overflow-y: hidden !important;
+    overflow-y: hidden !important;
 }
 
 .image-user-div {
-	border-radius: 35px;
-	float: right;
-	width: 46px;
-	margin-right: 10px;
+    border-radius: 35px;
+    float: right;
+    width: 46px;
+    margin-right: 10px;
 }
 
 .image-user-div img {
-	cursor: pointer;
-	height: inherit;
-	width: inherit;
-	border-radius: inherit;
-	height: inherit;
+    cursor: pointer;
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
+    height: inherit;
 }
 
 .icon-white {
@@ -27,9 +27,11 @@ body {
 }
 
 md-input-container.md-input-invalid>md-icon {
-	color: red;
+    color: red;
 }
 
-#center, #center>div {
-	height: 100%
+#subarea-toolbar {
+	background: #E0E0E0;
+	color: gray;
+	border-bottom: 1px solid #C7C7C7;
 }

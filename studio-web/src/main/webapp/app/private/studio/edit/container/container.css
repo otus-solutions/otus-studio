@@ -1,26 +1,26 @@
 .palette {
-	border-right: 1px solid #e1e1e1;
-	background-color: #FFFFFF;
+    border-right: 1px solid #E1E1E1;
+    background-color: #FFFFFF;
 }
 
 .resource {
-	border-left: 1px solid #e1e1e1;
-	background-color: #FFFFFF;
+    border-left: 1px solid #E1E1E1;
+    background-color: #FFFFFF;
 }
 
 .stage {
-	margin: 0 1px 0px;
-	padding-left: 8px;
-	padding-right: 8px;
-	background-color: #FAFAFA;
-	padding-top: 11px;
-	overflow-y: auto;
+    margin: 0 1px 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #F9F9F9;
+    padding-top: 11px;
 }
 
-.page {
-	overflow-y: hidden;
-    width: 210mm !important;
-    min-height: 297mm !important;
-    border: 1px solid #E0E0E0;
-    padding: 10mm;
+#stage-mode-selector {
+    min-height: 800px;
+	height: 100%;
+}
+
+div[preview-mode] {
+    border: none;
 }

@@ -1,17 +1,17 @@
-<link href="private/studio/edit/container/container.css" rel="stylesheet">
-
-<div layout="row" style="height: 100%">
-    <div class="palette" layout="column" flex="20">
-        <div ng-include src="'private/studio/edit/container/palette/palette-template.html'"></div>
-    </div>
-
-    <div class="stage" layout="column" flex="60">
-        <div class="include" layout="row">
-            <div flex class="page" ng-include src="'private/studio/edit/sheet/sheet.html'"></div>
-        </div>
-    </div>
-
-	<div class="resource" layout="column" flex="20">
-		<div ng-include src="'private/studio/edit/survey/properties/properties.html'"></div>
-	</div>
+<link href="private/studio/edit/container/container.css" rel="stylesheet" />
+<div class="palette" flex="20">
+    <div ng-include src="'private/studio/edit/container/palette/palette-template.html'"></div>
+</div>
+<div class="stage" flex>
+    <md-tabs id="stage-mode-selector">
+        <md-tab id="editing-tab" label="Edição">
+            <div ng-include src="'private/studio/edit/sheet/editing/editing-template.html'"></div>
+        </md-tab>
+        <md-tab id="preview-tab" label="Preview">
+            <div ng-include src="'private/studio/edit/sheet/preview/preview-template.html'"></div>
+        </md-tab>
+    </md-tabs>
+</div>
+<div class="resource" flex="20">
+    <div ng-include src="'private/studio/edit/survey/properties/properties.html'"></div>
 </div>

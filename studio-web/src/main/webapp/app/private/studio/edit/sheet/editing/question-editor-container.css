@@ -1,8 +1,13 @@
+#editor-container {
+    background: none;
+}
+
 .question-editor-container {
-    width: 100%;
-    min-height: 230px;
-    border: 1px dotted gray;
-    padding: 10px;
+    padding-top: 20px;
+}
+
+.filling-mode-selector {
+    margin-top: 30px;
 }
 
 .editable {
@@ -10,8 +15,4 @@
     color: gray;
     font-style: italic;
     font-size: 20pt;
-}
-
-md-tabs[md-border-bottom] md-tabs-wrapper {
-    border-style: none;
 }

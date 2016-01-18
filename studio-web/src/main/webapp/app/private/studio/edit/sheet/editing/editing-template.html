@@ -1,22 +1,6 @@
 <link rel="stylesheet" type="text/css" href="private/studio/edit/sheet/editing/question-editor-container.css">
-<md-content class="style-sheet" ng-controller="ContainerController" style="height: 100%">
-    <div class="page">
-        <survey-page class="md-padding" directive-generator control="binding" editing-source></survey-page>
-        <div class="question-editor-container">
-            <div class="editable">Insira seu texto.</div>
-            <md-tabs md-dynamic-height md-border-bottom style="margin-top: 20px">
-                <md-tab label="Resposta">
-                    <md-content class="md-padding">
-
-
-                    </md-content>
-                </md-tab>
-                <md-tab label="Metadado">
-                    <md-content class="md-padding">
-
-                    </md-content>
-                </md-tab>
-            </md-tabs>
-        </div>
+<md-content id="editor-container" ng-controller="ContainerController">
+    <div flex layout-align="center center" layout="column">
+        <div ng-include src="'private/studio/edit/sheet/sheet.html'"></div>
     </div>
 </md-content>
