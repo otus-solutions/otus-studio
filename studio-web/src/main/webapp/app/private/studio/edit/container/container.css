@@ -17,6 +17,10 @@
 	overflow-y: auto;
 }
 
-.page{
+.page {
 	overflow-y: hidden;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    border: 1px solid #E0E0E0;
+    padding: 10mm;
 }
