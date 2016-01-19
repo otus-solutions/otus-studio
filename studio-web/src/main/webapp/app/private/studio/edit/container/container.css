@@ -3,24 +3,27 @@
     background-color: #FFFFFF;
 }
 
+.stage {
+    margin: 0 1px 0px;
+    padding-top: 0px !important;
+    background-color: #F9F9F9 !important;
+    padding-top: 11px;
+}
+
 .resource {
     border-left: 1px solid #E1E1E1;
     background-color: #FFFFFF;
 }
 
-.stage {
-    margin: 0 1px 0px;
-    padding-left: 8px;
-    padding-right: 8px;
-    background-color: #F9F9F9;
-    padding-top: 11px;
-}
-
 #stage-mode-selector {
-    min-height: 800px;
-	height: 100%;
+
 }
 
 div[preview-mode] {
     border: none;
+}
+
+.boxWithHeight {
+    box-sizing: border-box;
+    height: 100%;
 }

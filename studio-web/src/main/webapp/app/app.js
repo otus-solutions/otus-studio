@@ -1,6 +1,6 @@
 angular
-    .module('StudioApp', ['ui.router', 'ngMaterial','ngMessages', 'ui.mask', 'Home', 'User', 'Repository', 'surveyEditing', 'editingEngine', 'Container'])
-    .config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider','$mdIconProvider',
+    .module('StudioApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ui.mask', 'Home', 'User', 'Repository', 'surveyEditing', 'editingEngine', 'Container'])
+    .config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$mdIconProvider',
         function($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider) {
             /**
              * The property 'templateUrl' will consider the url path
@@ -11,19 +11,47 @@ angular
             $stateProvider
                 .state('home', {
                     url: '/home',
-                    templateUrl: 'private/home/home.html'
+                    views: {
+                        'system-toolbar': {
+                            templateUrl: 'private/studio/system-toolbar.html'
+                        },
+                        'system-content': {
+                            templateUrl: 'private/home/home.html'
+                        }
+                    }
                 })
                 .state('container', {
                     url: '/container',
-                    templateUrl: 'private/studio/edit/container/container.html'
+                    views: {
+                        'system-toolbar': {
+                            templateUrl: 'private/studio/system-toolbar.html'
+                        },
+                        'system-content': {
+                            templateUrl: 'private/studio/edit/container/container.html'
+                        }
+                    }
                 })
                 .state('user-management', {
                     url: '/user-management',
-                    templateUrl: 'private/user/management/users.html'
+                    views: {
+                        'system-toolbar': {
+                            templateUrl: 'private/studio/system-toolbar.html'
+                        },
+                        'system-content': {
+                            templateUrl: 'private/user/management/users.html'
+                        }
+                    }
                 })
                 .state('repository', {
                     url: '/repository',
-                    templateUrl: 'private/repository/repository.html'
+                    views: {
+                        'system-toolbar': {
+                            templateUrl: 'private/studio/system-toolbar.html'
+                        },
+                        'system-content': {
+                            templateUrl: 'private/repository/repository.html'
+                        }
+                    }
                 });
 
             /* Configuration theme */

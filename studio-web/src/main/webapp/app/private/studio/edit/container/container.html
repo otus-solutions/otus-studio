@@ -1,9 +1,7 @@
 <link href="private/studio/edit/container/container.css" rel="stylesheet" />
-<div class="palette" flex="20">
-    <div ng-include src="'private/studio/edit/container/palette/palette-template.html'"></div>
-</div>
-<div class="stage" flex>
-    <md-tabs id="stage-mode-selector">
+<md-sidenav src="'private/studio/edit/container/palette/palette-template.html'" class="palette" md-is-locked-open="true" layout="column" flex="20" ng-include></md-sidenav>
+<md-content class="stage" layout="column" layout-padding flex>
+    <md-tabs id="stage-mode-selector" flex>
         <md-tab id="editing-tab" label="Edição">
             <div ng-include src="'private/studio/edit/sheet/editing/editing-template.html'"></div>
         </md-tab>
@@ -11,7 +9,5 @@
             <div ng-include src="'private/studio/edit/sheet/preview/preview-template.html'"></div>
         </md-tab>
     </md-tabs>
-</div>
-<div class="resource" flex="20">
-    <div ng-include src="'private/studio/edit/survey/properties/properties.html'"></div>
-</div>
+</md-content>
+<md-sidenav src="'private/studio/edit/survey/properties/properties.html'" class="resource" md-is-locked-open="true" layout="column" flex="20" ng-include></md-sidenav>
