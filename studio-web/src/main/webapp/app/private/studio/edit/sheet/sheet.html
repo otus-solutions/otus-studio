@@ -1,4 +1,170 @@
 <link href="private/studio/edit/sheet/sheet.css" rel="stylesheet">
-<div id="sheet">
-    <div class="editing-container" ng-include src="'private/studio/edit/sheet/editing/question/question-template.html'"></div>
-</div>
+<link href="private/studio/edit/sheet/editing/question-editor-container.css" rel="stylesheet">
+<md-content id="sheet" layout="column" flex>
+    <!-- Container de edição da Questão -->
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button" ng-click="">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>Questão Choice</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da Questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding" layout-padding>
+                           	    <md-radio-group ng-model="data.group1">
+							      <md-radio-button value="maca">Maça</md-radio-button>
+							      <md-radio-button value="banana">Banana</md-radio-button>
+							      <md-radio-button value="laranja">Laranja</md-radio-button>
+							      <md-radio-button value="uva">Uva</md-radio-button>
+							      <md-radio-button value="morango">Morango</md-radio-button>
+							      <md-radio-button value="abacaxi">Abacaxi</md-radio-button>
+							      <md-radio-button value="outra">Outra</md-radio-button>
+							    </md-radio-group>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da Questão -->
+            </md-content>
+            <!-- /Container de edição da Questão -->
+        </div>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>Questão Numérica</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da Questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da Questão -->
+            </md-content>
+            <!-- /Container de edição da Questão -->
+        </div>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>Questão de Tempo</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da Questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da Questão -->
+            </md-content>
+            <!-- /Container de edição da Questão -->
+        </div>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>Questão Data</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da Questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da Questão -->
+            </md-content>
+            <!-- /Container de edição da Questão -->
+        </div>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>Questão Texto</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da Questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da Questão -->
+            </md-content>
+            <!-- /Container de edição da Questão -->
+        </div>
+    </md-whiteframe>
+</md-content>
