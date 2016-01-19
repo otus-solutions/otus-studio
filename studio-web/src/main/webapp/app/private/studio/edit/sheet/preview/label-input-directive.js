@@ -6,7 +6,7 @@
             link: function(scope, element, attrs, controller) {
                 element.on('blur', function() {
                     var allElement = element.parent();
-                    allElement.replaceWith($compile('<p toogle-input>' + element.val() + '</p>')(scope));
+                    allElement.replaceWith($compile('<p flex toogle-input edit-mode>' + element.val() + '</p>')(scope));
                 });
             }
         };
@@ -18,7 +18,7 @@
             link: function(scope, element, attrs, controller) {
 
                 element.on('click', function() {
-                    var inputWithLabelTemplate = '<md-input-container class="md-block" md-theme="layoutTheme"> ' +
+                    var inputWithLabelTemplate = '<md-input-container edit-mode class="md-block" md-theme="layoutTheme" flex> ' +
                         '<input type="text" value="' + element.text() + '" aria-label="Label da questão" toogle-label /></input> ' +
                         '</md-input-container>';
                     element.replaceWith($compile(inputWithLabelTemplate)(scope)[0]);
