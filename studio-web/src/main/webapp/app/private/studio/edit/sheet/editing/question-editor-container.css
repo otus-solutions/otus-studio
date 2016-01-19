@@ -2,12 +2,7 @@
     background: none;
 }
 
-.question-editor-container {
-    padding-top: 20px;
-}
-
 .filling-mode-selector {
-    margin-top: 30px;
 }
 
 .editable {
@@ -15,4 +10,21 @@
     color: gray;
     font-style: italic;
     font-size: 20pt;
+}
+
+[preview-mode] {
+    border: none;
+}
+
+[edit-mode] {
+    border: 1px dashed #FFFFFF;
+    /*background-color: #fffae9;
+    border: 1px dashed #D0D0D0;
+    cursor: pointer*/
+}
+
+[edit-mode]:hover {
+    background-color: #fffae9;
+    border: 1px dashed #D0D0D0;
+    cursor: pointer
 }

@@ -1,9 +1,8 @@
 #sheet {
-    background-color: #FFFFFF !important;
     border: 1px solid #D8D6D6;
     margin-top: 20px;
 	margin-bottom: 20px;
-    height: 297mm !important;
+    min-height: 297mm !important;
     padding: 10mm;
     width: 210mm ;
     -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);

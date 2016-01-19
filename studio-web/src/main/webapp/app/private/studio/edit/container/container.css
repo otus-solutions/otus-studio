@@ -14,14 +14,6 @@
     background-color: #FFFFFF;
 }
 
-#stage-mode-selector {
-
-}
-
-div[preview-mode] {
-    border: none;
-}
-
 .boxWithHeight {
     box-sizing: border-box;
     height: 100%;

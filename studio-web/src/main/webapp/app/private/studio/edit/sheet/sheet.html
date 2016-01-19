@@ -1,4 +1,72 @@
 <link href="private/studio/edit/sheet/sheet.css" rel="stylesheet">
-<div id="sheet">
-    <div class="editing-container" ng-include src="'private/studio/edit/sheet/editing/question/question-template.html'"></div>
-</div>
+<link href="private/studio/edit/sheet/editing/question-editor-container.css" rel="stylesheet">
+<md-content id="sheet" layout="column" flex>
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+        <div layout="column" flex>
+            <div layout="row">
+                <md-button class="md-icon-button">
+                    <md-icon md-svg-icon="chevron-up"></md-icon>
+                </md-button>
+                <h3>FRM01</h3>
+            </div>
+            <md-content class="question-editor-container" edit-mode layout="row">
+                <!-- Template da questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" style="height: 60px;" layout-padding layout-align="left center">
+                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da questão -->
+            </md-content>
+            <!-- /Container de edição da questão -->
+        </div>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM02</h3>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM03</h3>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM04</h3>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM05</h3>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM06</h3>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="height: 50px; margin-top: 5px" layout layout-align="left center">
+        <md-button class="md-icon-button">
+            <md-icon md-svg-icon="chevron-up"></md-icon>
+        </md-button>
+        <h3>FRM07</h3>
+    </md-whiteframe>
+</md-content>
