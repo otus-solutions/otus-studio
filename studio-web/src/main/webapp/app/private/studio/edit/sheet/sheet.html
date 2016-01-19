@@ -1,160 +1,60 @@
 <link href="private/studio/edit/sheet/sheet.css" rel="stylesheet">
 <link href="private/studio/edit/sheet/editing/question-editor-container.css" rel="stylesheet">
-<md-content id="sheet" layout="column" flex>
+<md-content id="sheet" layout="column" flex ng-controller="SheetController as sheet">
     <!-- Container de edição da questão -->
     <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
         <div layout="column" flex>
             <div layout="row">
-                <md-button class="md-icon-button" ng-click="">
+                <md-button id="btn2" class="md-icon-button" ng-click="sheet.changeContainer($event)">
                     <md-icon md-svg-icon="chevron-up"></md-icon>
                 </md-button>
                 <h3>Questão Choice</h3>
             </div>
-            <md-content class="question-editor-container" edit-mode layout="row">
-                <!-- Template da questão -->
-                <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
-                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
-                    </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
-                        <md-tab label="Resposta">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Metadado">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Comentário">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
-                <!-- /Template da questão -->
-            </md-content>
-            <!-- /Container de edição da questão -->
+            <md-content class="question-editor-container" edit-mode layout="column"></md-content>
         </div>
     </md-whiteframe>
     <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
         <div layout="column" flex>
             <div layout="row">
-                <md-button class="md-icon-button">
+                <md-button id="btn3" class="md-icon-button" ng-click="sheet.changeContainer($event)">
                     <md-icon md-svg-icon="chevron-up"></md-icon>
                 </md-button>
                 <h3>Questão Numérica</h3>
             </div>
-            <md-content class="question-editor-container" edit-mode layout="row">
-                <!-- Template da questão -->
-                <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
-                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
-                    </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
-                        <md-tab label="Resposta">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Metadado">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Comentário">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
-                <!-- /Template da questão -->
-            </md-content>
-            <!-- /Container de edição da questão -->
+            <md-content class="question-editor-container" edit-mode layout="column"></md-content>
         </div>
     </md-whiteframe>
     <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
         <div layout="column" flex>
             <div layout="row">
-                <md-button class="md-icon-button">
+                <md-button id="btn4" class="md-icon-button" ng-click="sheet.changeContainer($event)">
                     <md-icon md-svg-icon="chevron-up"></md-icon>
                 </md-button>
                 <h3>Questão de Tempo</h3>
             </div>
-            <md-content class="question-editor-container" edit-mode layout="row">
-                <!-- Template da questão -->
-                <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
-                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
-                    </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
-                        <md-tab label="Resposta">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Metadado">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Comentário">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
-                <!-- /Template da questão -->
-            </md-content>
-            <!-- /Container de edição da questão -->
+            <md-content class="question-editor-container" edit-mode layout="column"></md-content>
         </div>
     </md-whiteframe>
     <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
         <div layout="column" flex>
             <div layout="row">
-                <md-button class="md-icon-button">
+                <md-button id="btn5" class="md-icon-button" ng-click="sheet.changeContainer($event)">
                     <md-icon md-svg-icon="chevron-up"></md-icon>
                 </md-button>
                 <h3>Questão Data</h3>
             </div>
-            <md-content class="question-editor-container" edit-mode layout="row">
-                <!-- Template da questão -->
-                <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
-                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
-                    </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
-                        <md-tab label="Resposta">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Metadado">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Comentário">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
-                <!-- /Template da questão -->
-            </md-content>
-            <!-- /Container de edição da questão -->
+            <md-content class="question-editor-container" edit-mode layout="column"></md-content>
         </div>
     </md-whiteframe>
     <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
         <div layout="column" flex>
             <div layout="row">
-                <md-button class="md-icon-button">
+                <md-button id="btn6" class="md-icon-button" ng-click="sheet.changeContainer($event)">
                     <md-icon md-svg-icon="chevron-up"></md-icon>
                 </md-button>
                 <h3>Questão Texto</h3>
             </div>
-            <md-content class="question-editor-container" edit-mode layout="row">
-                <!-- Template da questão -->
-                <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
-                        <label edit-mode style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</label>
-                    </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
-                        <md-tab label="Resposta">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Metadado">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                        <md-tab label="Comentário">
-                            <md-content class="md-padding"></md-content>
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
-                <!-- /Template da questão -->
-            </md-content>
-            <!-- /Container de edição da questão -->
+            <md-content class="question-editor-container" edit-mode layout="column"></md-content>
         </div>
     </md-whiteframe>
 </md-content>

@@ -1,11 +1,46 @@
 #sheet {
     border: 1px solid #D8D6D6;
     margin-top: 20px;
-	margin-bottom: 20px;
+    margin-bottom: 20px;
     min-height: 297mm !important;
     padding: 10mm;
-    width: 210mm ;
+    width: 210mm;
     -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+}
+
+.css-class-add,
+.css-class-remove {
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.css-class,
+.css-class-add.css-class-add-active {
+    font-size: 3em;
+}
+
+.css-class-remove.css-class-remove-active {
+    font-size: 1.0em;
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+
+.revert-rotate180 {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+}
+
+.unseen {
+    visibility: hidden;
+}
+
+.hide {
+    display: none;
 }
