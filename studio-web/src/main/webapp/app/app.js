@@ -1,5 +1,5 @@
 angular
-    .module('StudioApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ui.mask', 'Home', 'User', 'Repository', 'surveyEditing', 'editingEngine', 'Container', 'sheet'])
+    .module('StudioApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ui.mask', 'Home', 'User', 'Repository', 'surveyEditing', 'editingEngine', 'Container', 'sheet', 'ui.components'])
     .config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$mdIconProvider',
         function($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider) {
             /**
