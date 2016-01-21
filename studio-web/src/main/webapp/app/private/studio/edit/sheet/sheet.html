@@ -2,26 +2,26 @@
 <link href="private/studio/edit/sheet/editing/question-editor-container.css" rel="stylesheet">
 <md-content id="sheet" layout="column" flex ng-controller="SheetController as sheet">
     <!-- Container de edição da questão -->
-    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão Choice" flex>
-            <ui-accordion-content layout="column" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
                 <!-- Template da questão -->
                 <md-content layout="column" flex>
-                    <div layout="row" style="min-height: 60px;" layout-padding layout-align="left center">
+                    <div layout="row" layout-align="left center">
                         <p edit-mode toogle-input style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</p>
                     </div>
-                    <md-tabs class="filling-mode-selector" md-no-pagination>
+                    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                         <md-tab label="Resposta">
                             <md-content class="md-padding">
-                                <md-radio-group ng-model="data.group1">
+                                <md-radio-group ng-model="data.group1" class="radio-group">
                                     <md-radio-button value="maca">Maça</md-radio-button>
                                     <md-radio-button value="banana">Banana</md-radio-button>
                                     <md-radio-button value="laranja">Laranja</md-radio-button>
-                                    <md-radio-button value="uva">Uva</md-radio-button>
-                                    <md-radio-button value="morango">Morango</md-radio-button>
-                                    <md-radio-button value="abacaxi">Abacaxi</md-radio-button>
-                                    <md-radio-button value="outra">Outra</md-radio-button>
+                                    <md-radio-button value="maca">Maça</md-radio-button>
+                                    <md-radio-button value="banana">Banana</md-radio-button>
+                                    <md-radio-button value="laranja">Laranja</md-radio-button>
                                 </md-radio-group>
+                                <md-button class="md-raised" onclick="add()">Adicionar</md-button>
                             </md-content>
                         </md-tab>
                         <md-tab label="Metadado">
@@ -32,11 +32,12 @@
                         </md-tab>
                     </md-tabs>
                 </md-content>
+                <script src="private/studio/edit/sheet/editing/add-option-choice.js"></script>
                 <!-- /Template da questão -->
             </ui-accordion-content>
         </ui-accordion>
     </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão Numérica" flex>
             <ui-accordion-content layout="column" flex>
                 <md-content class="question-editor-container" edit-mode layout="column">
@@ -45,7 +46,7 @@
             </ui-accordion-content>
         </ui-accordion>
     </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão de Tempo" flex>
             <ui-accordion-content layout="column" flex>
                 <md-content class="question-editor-container" edit-mode layout="column">
@@ -54,7 +55,7 @@
             </ui-accordion-content>
         </ui-accordion>
     </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão Data" flex>
             <ui-accordion-content layout="column" flex>
                 <md-content class="question-editor-container" edit-mode layout="column">
@@ -63,7 +64,7 @@
             </ui-accordion-content>
         </ui-accordion>
     </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-1dp" style="margin-top: 5px" layout="row" layout-align="left center">
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão Texto" flex>
             <ui-accordion-content layout="column" flex>
                 <md-content class="question-editor-container" edit-mode layout="column">

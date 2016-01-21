@@ -16,7 +16,7 @@
                     transclude: true,
                     templateUrl: 'shared/ui-components/accordion/accordion-template.html',
                     scope: {
-                        title: '@title'
+                        title: '@'
                     },
                     link: function(scope, element, attrs, controller, transclude) {
                         var content = angular.element(transclude()[1]);
@@ -79,10 +79,8 @@
                         }
                     }
 
-                    function switchIcon(newState) {
-                        reference.children(0).removeClass(self.icon);
-                        reference.children(0).addClass(newState);
-                        self.icon = newState;
+                    function switchIcon(newIcon) {
+                        self.icon = newIcon;
                     }
                 };
 
