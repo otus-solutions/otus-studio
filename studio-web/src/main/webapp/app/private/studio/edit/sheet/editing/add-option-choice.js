@@ -9,6 +9,5 @@ function returnNewElement() {
 
 function add() {
   var newNode = returnNewElement();
-  document.getElementById("md-radio-group").appendChild(node);
-
+  document.getElementById("myList").appendChild(newNode);
 }
