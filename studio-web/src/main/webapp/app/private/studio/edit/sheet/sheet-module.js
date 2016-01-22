@@ -1,6 +1,6 @@
 var stSheet = (function() {
 
-    var module = angular.module('sheet', []);
+    var module = angular.module('sheet', ['survey.questions']);
 
     module.controller('SheetController', ['$scope', '$compile', '$templateRequest', '$templateCache', 'QuestionContainerButton',
         function($scope, $compile, $templateRequest, $templateCache, QuestionContainerButton) {
