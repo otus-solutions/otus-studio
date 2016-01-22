@@ -27,15 +27,3 @@
     border: 1px dashed #D0D0D0;
     cursor: pointer
 }
-
-ui-accordion-header {
-    border-bottom: 1px solid #E0E0E0;
-}
-
-ui-accordion-header button {
-    margin-top: 9px !important;
-}
-
-.question-whiteframe {
-    margin-top: 5px
-}

@@ -56,6 +56,7 @@ angular
 
             /* Configuration theme */
             $mdThemingProvider.theme('layoutTheme');
+            // $mdThemingProvider.theme('surveyEditorTheme');
 
             /*Configuration icons*/
             /* 24 is the size default of icons */

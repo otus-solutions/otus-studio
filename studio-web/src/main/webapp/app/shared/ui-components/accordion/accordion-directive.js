@@ -19,6 +19,17 @@
                         title: '@'
                     },
                     link: function(scope, element, attrs, controller, transclude) {
+                        // element.on('mouseover', function() {
+                        //     var editorToolbar = element.find('md-fab-speed-dial');
+                        //     editorToolbar.addClass('visible');
+                        //     editorToolbar.removeClass('hidden');
+                        // });
+                        // element.on('mouseout', function() {
+                        //     var editorToolbar = element.find('md-fab-speed-dial');
+                        //     editorToolbar.addClass('hidden');
+                        //     editorToolbar.removeClass('visible');
+                        // });
+
                         var content = angular.element(transclude()[1]);
                         content.addClass('hidden');
                         element.append(content);
@@ -103,6 +114,7 @@
 
                     /* Public scope */
                     self.changeState = changeState;
+                    self.isOpen = isOpen;
 
                     /* Private methods */
                     function changeState() {
@@ -122,6 +134,10 @@
                         reference.addClass(HIDDEN);
                         reference.removeClass(VISIBLE);
                         state = HIDDEN;
+                    }
+
+                    function isOpen() {
+                        return (state == OPENEND);
                     }
                 };
 

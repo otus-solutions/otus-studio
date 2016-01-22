@@ -1,6 +1,26 @@
-<ui-accordion-header layout="row" flex>
-    <md-button class="md-icon-button" ng-click="ctrl.stateChangerButton.click($event)">
+<ui-accordion-header layout="row" flex layout-align="left center">
+    <md-button aria-label="Abrir/Fechar" class="md-icon-button" ng-click="ctrl.stateChangerButton.click($event)">
         <md-icon md-svg-icon="{{ctrl.stateChangerButton.icon}}"></md-icon>
     </md-button>
-    <h3 class="accordion-header-title">{{title}}<h3>
+    <h3 class="accordion-header-title">{{title}}</h3>
+    <div flex layout="row" layout-align="end center" ng-cloak>
+        <md-fab-speed-dial md-direction="left" ng-class="'md-fling'" md-open="false">
+            <md-fab-trigger>
+                <md-button aria-label="Ações rápidas" class="md-fab">
+                    <md-icon md-svg-icon="menu"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <md-button aria-label="Mover para baixo" class="md-fab md-raised md-mini">
+                    <md-icon md-svg-icon="arrow-up-bold-circle" class="md-primary"></md-icon>
+                </md-button>
+                <md-button aria-label="Excluir" class="md-fab md-raised md-mini trash">
+                    <md-icon md-svg-icon="close-circle"></md-icon>
+                </md-button>
+                <md-button aria-label="Mover para cima" class="md-fab md-raised md-mini">
+                    <md-icon md-svg-icon="arrow-down-bold-circle"></md-icon>
+                </md-button>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+    </div>
 </ui-accordion-header>
