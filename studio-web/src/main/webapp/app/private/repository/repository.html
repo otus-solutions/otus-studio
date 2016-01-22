@@ -10,21 +10,22 @@
 
                 <div ng-messages="repositoryForm.name.$error">
                     <div ng-message="required">Obrigatório</div>
-                    <div ng-message="nameInUse">Repositório já cadastrado</div>
+                    <div ng-message="repositoryNameInUse">Repositório já cadastrado</div>
                 </div>
             </md-input-container>
             <div layout layout-sm="column">
                 <md-input-container flex>
                     <label>Nome Base de Dados</label>
-                    <input name="database" ng-model="repository.database" type="text" ng-required="true"/>
+                    <input name="database" ng-blur="validateDatabase(repository)" ng-model="repository.database" type="text" ng-required="true"/>
 
                     <div ng-messages="repositoryForm.database.$error">
                         <div ng-message="required">Obrigatório</div>
+                        <div ng-message="databaseAlreadyExist">Já existe uma base de dados com esse nome</div>
                     </div>
                 </md-input-container>
                 <md-input-container flex>
-                    <label>HOST</label>
-                    <input name="host" ng-model="repository.host" type="text" ng-required="true"/>
+                    <label>Servidor</label>
+                    <input name="host" ng-blur="validateDatabase(repository)" ng-model="repository.host" type="text" ng-required="true"/>
 
                     <div ng-messages="repositoryForm.host.$error">
                         <div ng-message="required">Obrigatório</div>
@@ -33,7 +34,7 @@
                 </md-input-container>
                 <md-input-container flex="30">
                     <label>Porta</label>
-                    <input name="port" ng-model="repository.port" type="number" ng-required="true"/>
+                    <input name="port" ng-blur="validateDatabase(repository)" ng-model="repository.port" type="number" ng-required="true"/>
 
                     <div ng-messages="repositoryForm.port.$error">
                         <div ng-message="required">Obrigatório</div>
@@ -63,7 +64,7 @@
             </md-input-container>
 
             <md-button class="md-raised md-accent" ng-disabled="repositoryForm.$invalid"
-                       ng-click="actionButton(repository)">{{connectButton}}
+                       ng-click="actionButton(repository)">Executar
             </md-button>
             <div layout="row" layout-sm="column" layout-align="center">
                 <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>

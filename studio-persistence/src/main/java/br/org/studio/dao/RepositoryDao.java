@@ -13,5 +13,5 @@ import java.util.List;
 public interface RepositoryDao extends GenericDao{
     List<Repository> fetch(String name) throws DataNotFoundException;
 
-	List<Repository> fetchAll() throws DataNotFoundException;
+    List<Repository> fetchAll() throws DataNotFoundException;
 }
