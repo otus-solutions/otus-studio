@@ -1,6 +1,6 @@
 (function() {
 
-    var editable = function() {
+    function editable() {
 
         var editableDDO = {
             templateUrl: "shared/ui-components/editable/editable-template.html",
@@ -9,35 +9,48 @@
             replace: false,
             transclude: true,
             link: function(scope, element, attrs, controller, transclude) {
+                console.log(element);
+                // Pega o texto dentro da tag p
                 scope.userPlaceholderText = transclude().text();
+                // Insere a tag p dentro do template
                 element.append(transclude());
 
-                element.on('click', function() {
-                    element.find('md-input-container').removeClass('hidden');
-                    element.find('md-input-container').addClass('visible');
-                    element.find('textarea').focus();
+                var mdInputContainer_node = element.find('md-input-container');
+                var textarea_node = element.find('textarea');
 
+                /**
+                 *
+                 * Atribui o evento de click ao elemento(p);
+                 *
+                 */
+                element.on('click', function() {
+                    // mostra input
+                    mdInputContainer_node.removeClass('hidden');
+                    mdInputContainer_node.addClass('visible');
+                    textarea_node.focus();
+
+
+                    // verifica se o texto é diferente ao que estava no p anteriormente
                     if (transclude().text() != scope.userPlaceholderText) {
-                        if (element.find('textarea').val().lenght == 0) {
-                            element.find('textarea').val(transclude().text());
+                        //verifica se tem algum texto no text area
+                        if (textarea_node.val().lenght == 0) {
+                            textarea_node.val(transclude().text());
                         }
                     } else {
-                        element.find('textarea').val('');
+                        textarea_node.val('');
                     }
-
                     transclude().text('');
                 });
 
-                var editor = element.find('textarea');
-                editor.on('blur', function() {
-                    element.find('md-input-container').removeClass('visible');
-                    element.find('md-input-container').addClass('hidden');
-                    console.log(element.find('textarea').val());
+                textarea_node.on('blur', function() {
+                    // esconde input
+                    mdInputContainer_node.removeClass('visible');
+                    mdInputContainer_node.addClass('hidden');
 
-                    if (element.find('textarea').val() == '')
+                    if (textarea_node.val() == '')
                         transclude().text(scope.userPlaceholderText);
                     else
-                        transclude().text(element.find('textarea').val());
+                        transclude().text(textarea_node.val());
                 });
             }
 
