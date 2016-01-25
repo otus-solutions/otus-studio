@@ -1,13 +1,16 @@
 <md-content class="numericQuestion">
-	<md-input-container class="md-block">
-		<label></label>
-		<input required="" type="number" step="any" name="maxValue" min="0" max="4999">
-	</md-input-container>
-	
-	<md-input-container class="md-block" flex-gt-sm="">
-		<label>Unit</label>
-		<input ng-model="theMax" type="text" minlength=0 maxlength=15>
-	</md-input-container>
+
+	<div layout-gt-sm="row">
+		<md-input-container class="md-block" flex-gt-sm="55">
+			<label></label>
+			<input required="" type="number" step="any" name="maxValue" min="0" max="4999">
+		</md-input-container>
+		
+		<md-input-container class="md-block" flex-gt-sm="30">
+			<label>Unit</label>
+			<input ng-model="theMax" type="text" minlength=0 maxlength=15>
+		</md-input-container>
+	</div>
 	
 <md-button class="md-raised" onclick="add()">Adicionar</md-button>
 
