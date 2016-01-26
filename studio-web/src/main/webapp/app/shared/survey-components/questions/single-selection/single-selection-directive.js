@@ -1,42 +1,22 @@
 (function() {
     angular
-        .module('survey.questions')
-        .directive('singleSelectionQuestion', function() {
+        .module('survey.questions', [])
+        .directive('singleSelectionQuestion', ['$compile', function ($compile) {
             var directive = {
-                templateUrl : "shared/survey-components/questions/single-selection/single-selection-question-template.html",
-                restrict : "E",
+                restrict : 'E',
+                templateUrl : 'shared/survey-components/questions/single-selection/single-selection-question-template.html',
                 link: function(scope, element, attrs) {
-                    var button = element.find("button");
-                    button.on("click", function() {
-                        var aux = element.find("md-radio-button");
-                        aux.append("<h1>Olá mundo</h1>");
-                    });
-                },
-                replace: false,
-                transclude: true,
-                scope: {
+                    var button = element.find('button');
+                    button.on('click', function() {
+                        var group = angular.element(element.find('md-radio-group'));
 
+                        var template = '<md-radio-button value="laranja">Laranja</md-radio-button>';
+                        var compiled = $compile(template)(scope);
+                        console.log(compiled);
+                        group.append(compiled);
+                    });
                 }
             };
             return directive;
-        });
+        }]);
 }());
-
-
-/**
-
-function returnNewElement() {
-    var radio = document.createElement("md-radio-button");
-    radio.setAttribute("value", "outro");
-    radio.setAttribute("editable", "");
-    radio.textContent = "outro";
-    return radio;
-}
-
-function add() {
-    var newNode = returnNewElement();
-    document.getElementById("myList").appendChild(newNode);
-}
-
-
-**/
