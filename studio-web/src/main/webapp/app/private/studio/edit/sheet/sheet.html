@@ -8,7 +8,7 @@
                 <!-- Template da questão -->
                 <md-content layout="column" flex>
                     <div layout="row" layout-align="left center">
-                        <p flex edit-mode editable style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</p>
+                        <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da label"></div>
                     </div>
                     <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                         <md-tab label="Resposta">
@@ -32,15 +32,15 @@
     <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
         <ui-accordion title="Questão Numérica" flex>
             <ui-accordion-content layout="column" layout-padding flex>
-            	<!-- Template da questão -->
+                <!-- Template da questão -->
                 <md-content layout="column" flex>
-                	<div layout="row" layout-align="left center">
-                        <p flex edit-mode editable style="font-style: italic; color: #A0A0A0">Clique para inserir o texto da label</p>
+                    <div layout="row" layout-align="left center">
+                        <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da label"></div>
                     </div>
                     <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                         <md-tab label="Resposta">
                             <md-content class="md-padding">
-                                	<numeric-question></numeric-question>
+                                <numeric-question></numeric-question>
                             </md-content>
                         </md-tab>
                         <md-tab label="Metadado">
