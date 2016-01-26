@@ -1,2 +1,4 @@
-<md-radio-button ></md-radio-button>
-<div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da opção de resposta"></div>
+<div layout="row">
+    <md-radio-button ng-repeat="d in radioData" ng-value="d.value"></md-radio-button>
+    <div flex contenteditable="true" edit-placeholder="Clique para inserir o texto da opção de resposta"></div>
+</div>

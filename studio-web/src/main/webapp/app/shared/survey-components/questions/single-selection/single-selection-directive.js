@@ -16,7 +16,7 @@
                             var compileResult = $compile(html)($scope),
                                 template = angular.element(compileResult);
 
-                            var group = angular.element(element.find('md-radio-group'));
+                            var group = angular.element($element.find('md-radio-group'));
                             group.append(template);
                         });
                     };
