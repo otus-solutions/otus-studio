@@ -26,6 +26,8 @@
 <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
 <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<!-- Moment.js, needs to refactor - install via NPM -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 <!-- UI Components -->
 <script src="shared/ui-components/ui-components-module.js"></script>
 <script src="shared/ui-components/accordion/accordion-directive.js"></script>
@@ -34,6 +36,7 @@
 <script src="shared/survey-components/questions/single-selection/single-selection-directive.js"></script>
 <script src="shared/survey-components/questions/numeric/numeric-directive.js"></script>
 <script src="shared/survey-components/questions/time-question/time-question-directive.js"></script>
+<script src="shared/survey-components/questions/calendar/calendar-directive.js"></script>
 <!-- Application -->
 <link href="private/user/management/style.css" rel="stylesheet" />
 <script src="private/home/module.js"></script>
@@ -45,6 +48,7 @@
 <script src="private/repository/repository.ctrl.js"></script>
 <script src="app.js"></script>
 <script src="config/theme.js"></script>
+<script src="config/date-locale-provider.js"></script>
 <script src="private/utils.module.js"></script>
 <script src="private/studio/survey.module.js"></script>
 <script src="private/studio/memory.module.js"></script>
