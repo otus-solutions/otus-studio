@@ -17,4 +17,4 @@
 
     angular.module('survey.questions').directive('singleSelectionQuestion', singleSelectionQuestion);
 
-}());
+}()); 

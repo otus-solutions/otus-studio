@@ -1,20 +1,18 @@
-<md-fab-toolbar md-open="false" md-direction="left" flex>
-    <md-fab-trigger class="align-with-text">
-        <md-button aria-label="menu" class="md-fab">
+<md-fab-speed-dial md-direction="left" ng-class="'md-fling'" md-open="false">
+    <md-fab-trigger>
+        <md-button aria-label="Ações rápidas" class="md-fab">
             <md-icon md-svg-icon="menu"></md-icon>
         </md-button>
     </md-fab-trigger>
-    <md-toolbar>
-        <md-fab-actions class="md-toolbar-tools">
-            <md-button aria-label="comment" class="md-icon-button">
-                <md-icon md-svg-icon="chevron-up"></md-icon>
-            </md-button>
-            <md-button aria-label="label" class="md-icon-button">
-                <md-icon md-svg-icon="chevron-up"></md-icon>
-            </md-button>
-            <md-button aria-label="photo" class="md-icon-button">
-                <md-icon md-svg-icon="chevron-up"></md-icon>
-            </md-button>
-        </md-fab-actions>
-    </md-toolbar>
-</md-fab-toolbar>
+    <md-fab-actions>
+        <md-button aria-label="Mover para baixo" class="md-fab md-raised md-mini">
+            <md-icon md-svg-icon="arrow-up-bold-circle" class="md-primary"></md-icon>
+        </md-button>
+        <md-button aria-label="Excluir" class="md-fab md-raised md-mini trash">
+            <md-icon md-svg-icon="close-circle"></md-icon>
+        </md-button>
+        <md-button aria-label="Mover para cima" class="md-fab md-raised md-mini">
+            <md-icon md-svg-icon="arrow-down-bold-circle"></md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>

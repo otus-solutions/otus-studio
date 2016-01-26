@@ -4,6 +4,7 @@ var stSheet = (function() {
 
     module.controller('SheetController', ['$scope', '$compile', '$templateRequest', '$templateCache', 'QuestionContainerButton',
         function($scope, $compile, $templateRequest, $templateCache, QuestionContainerButton) {
+            $scope.os = [];
             var self = this;
             self.buttonManager = {};
 
