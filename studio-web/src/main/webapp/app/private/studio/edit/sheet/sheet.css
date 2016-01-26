@@ -58,3 +58,7 @@ ui-accordion-header md-fab-speed-dial md-fab-actions button {
 ui-accordion-header md-fab-speed-dial md-fab-actions button.trash {
     background-color: red !important;
 }
+
+.label-container {
+    padding: 15px;
+}
