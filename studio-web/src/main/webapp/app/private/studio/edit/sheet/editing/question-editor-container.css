@@ -29,8 +29,12 @@
 }
 
 [contenteditable=true]:empty:before {
-  content: attr(edit-placeholder);
-  display: block;
-  font-style: italic;
-  color: #A0A0A0
+    content: attr(edit-placeholder);
+    display: block;
+    font-style: italic;
+    color: #A0A0A0
+}
+
+#sheet .md-tab {
+    text-transform: none !important;
 }
