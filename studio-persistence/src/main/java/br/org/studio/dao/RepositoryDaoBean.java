@@ -23,7 +23,7 @@ public class RepositoryDaoBean extends GenericDaoBean implements RepositoryDao{
 	@Override
     public List<Repository> fetchAll() throws DataNotFoundException {
     	Criteria criteria = createCriteria(Repository.class);
-    	
+
     	return listNotWaitingEmpty(criteria);
     }
 }

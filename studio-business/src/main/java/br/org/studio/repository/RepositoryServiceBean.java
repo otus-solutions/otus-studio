@@ -1,5 +1,7 @@
 package br.org.studio.repository;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 import br.org.studio.dao.RepositoryDao;
 import br.org.studio.entities.repository.Repository;
 import br.org.studio.exception.ConvertedDtoException;
+import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
 import br.org.studio.exceptions.DataNotFoundException;
@@ -82,16 +85,18 @@ public class RepositoryServiceBean implements RepositoryService {
     }
 
     @Override
-    public Boolean isServerRepositoryAccessible(RepositoryDto repositoryDto) {
+    public void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException, RepositoryAlreadyExistException {
         RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
-        return repositoryFacade.isRepositoryAccessible(configuration);
-    }
 
-    @Override
-    public void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException {
-        if (isServerRepositoryAccessible(repositoryDto)) {
-            buildRepositoryDatabase(repositoryDto);
-            connect(repositoryDto);
+        if (validationConnection(repositoryDto)) {
+
+            if (!validationDatabase(repositoryDto)) {
+                repositoryFacade.createRepository(configuration);
+                connect(repositoryDto);
+            } else {
+                throw new RepositoryAlreadyExistException();
+            }
+
         } else {
             throw new RepositoryOfflineException();
         }
@@ -109,14 +114,25 @@ public class RepositoryServiceBean implements RepositoryService {
         }
     }
 
-    private void buildRepositoryDatabase(RepositoryDto repositoryDto) throws SQLException {
-        RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+    @Override
+    public Boolean validationDatabase(RepositoryDto repositoryDto){
+        try{
+            RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+            return repositoryFacade.existRepository(configuration);
 
-        try {
-            repositoryFacade.createRepository(configuration);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            return Boolean.FALSE;
         }
     }
 
+    @Override
+    public Boolean validationConnection(RepositoryDto repositoryDto){
+        try{
+            RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+            return repositoryFacade.isRepositoryAccessible(configuration);
+
+        }catch (Exception e){
+            return Boolean.FALSE;
+        }
+    }
 }

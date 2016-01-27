@@ -23,27 +23,39 @@ public class RepositoryResource {
 
     @Inject
     private RepositoryService repositoryService;
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<RepositoryDto> getAll() {
-    	List<RepositoryDto> repositories = new ArrayList<RepositoryDto>();
-    	try {
-			repositories = repositoryService.fetchAll();
-		} catch (RepositoryNotFoundException e) {}
-    	
-		return repositories;
+        List<RepositoryDto> repositories = new ArrayList<RepositoryDto>();
+        try {
+            repositories = repositoryService.fetchAll();
+        } catch (RepositoryNotFoundException e) {
+        }
+
+        return repositories;
     }
-    
+
     @POST
-    @Path("/connectionStatus")
+    @Path("validate/connection")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String getConnectionStatus(String repository) {
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
         Response response = new Response();
 
-        response.setData(repositoryService.isServerRepositoryAccessible(convertedRepositoryDto));
+        response.setData(repositoryService.validationConnection(convertedRepositoryDto));
+        return response.toJson();
+    }
+
+    @POST
+    @Path("validate/database")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String existDatabase(String repository) {
+        Response response = new Response();
+        RepositoryDto repositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
+
+        response.setData(repositoryService.validationDatabase(repositoryDto));
         return response.toJson();
     }
 
@@ -52,7 +64,7 @@ public class RepositoryResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String existRepository(@QueryParam("repositoryName") String repositoryName) {
         Response response = new Response();
-        List<RepositoryDto> repositories = null;
+        List<RepositoryDto> repositories;
 
         try {
             repositories = repositoryService.fetchRepository(repositoryName);
@@ -65,7 +77,6 @@ public class RepositoryResource {
         return response.toJson();
     }
 
-
     @POST
     @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +88,7 @@ public class RepositoryResource {
         try {
             repositoryService.connect(convertedRepositoryDto);
             response.setData(Boolean.TRUE);
+
         } catch (Exception e) {
             response.setError(e);
         }
