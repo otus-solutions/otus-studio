@@ -1,88 +1,143 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="StudioApp">
+<html lang="en" ng-app="studio">
 
-<head>
-    <base href="../" />
-    <meta charset="UTF-8" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <link href="shared/img/otus-studio-img.png" rel="icon" />
-    <link href="shared/lib/angularjs/md/angular-material.min.css" rel="stylesheet" />
-    <link href="private/home/home.css" rel="stylesheet" />
-    <title>Otus Studio</title>
-</head>
+    <head>
+        <base href="../"/>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="expires" content="0"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <link href="shared/img/otus-studio-img.png" rel="icon"/>
+        <link href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel="stylesheet"/>
+        <title>Otus Studio</title>
+    </head>
 
-<body md-theme="layoutTheme">
-    <div id="toolbar-system" ng-controller="ToolbarCtrl">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <md-button ng-click="openHome(); loadPageHeaderMessage()">
-                    <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
-                </md-button>
-                <h3 ng-controller="RepositoryCtrl as ctrl">
-                <span>{{ctrl.connected()}}</span>
-            </h3>
-                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Form"></md-icon>
-                <md-button ng-click="openContainer(); loadPageHeaderMessage()">Novo Form</md-button>
-                <md-icon md-svg-icon="cloud-upload" aria-label="Criar Repositório"></md-icon>
-                <md-button ng-click="openNewRepository(); loadPageHeaderMessage()">Criar Repositório</md-button>
-                <md-icon md-svg-icon="cloud-download" aria-label="Conectar Repositório"></md-icon>
-                <md-button ng-click="openConnectRepository(); loadPageHeaderMessage()">Conectar Repositório</md-button>
-                <md-icon md-svg-icon="account" aria-label="Configurações"></md-icon>
-                <md-button ng-click="openAdministrationUsers(); loadPageHeaderMessage()">Usuários</md-button>
-                <span flex></span>
-                <a class="navbar-brand" rel="home" title="Profile">
-                    <img ng-src="shared/img/prof_bruce_duncan.jpg" class="image-user-div" />
-                </a>
-                <md-button aria-label="Logout" ng-click="logout()">
-                    <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-toolbar class="md-toolbar-tools md-primary">
-            <h2 class="md-flex">{{pageMessage}}</h2>
-        </md-toolbar>
-        <br>
-        <br>
-    </div>
-    <!-- /#toolbar-system -->
-    <div id="center">
-        <div ui-view></div>
-    </div>
-</body>
-<!--build:js js/libs.min.js -->
-<!-- Angular Dependencies -->
-<script src="shared/lib/angularjs/angular.min.js"></script>
-<script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
-<script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
-<script src="shared/lib/angularjs/external-lib/angular-ui-router.min.js"></script>
-<!-- Angular Material Dependencies -->
-<script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-material.min.js"></script>
-<!-- endbuild -->
-<!--build:js js/application.min.js -->
-<!-- Application -->
-<link href="private/user/management/style.css" rel="stylesheet" />
-<script src="private/home/module.js"></script>
-<script src="private/home/home-ctrl.js"></script>
-<script src="private/user/module.js"></script>
-<script src="private/user/management/users-ctrl.js"></script>
-<script src="private/repository/repository.module.js"></script>
-<script src="private/repository/repository.service.js"></script>
-<script src="private/repository/repository.ctrl.js"></script>
-<script src="app.js"></script>
-<script src="config/theme.js"></script>
-<script src="private/utils.module.js"></script>
-<script src="private/studio/survey.module.js"></script>
-<script src="private/studio/memory.module.js"></script>
-<script src="private/studio/editing-engine.module.js"></script>
-<script src="private/studio/survey-editing-engine.module.js"></script>
-<script src="private/studio/studio.module.js"></script>
-<script src="private/studio/edit/sheet/preview/preview-ctrl.js"></script>
-<script src="private/studio/edit/container/container.module.js"></script>
-<script src="private/studio/toolbar-ctrl.js"></script>
-<!-- endbuild -->
+    <body md-theme="layoutTheme" ng-cloak layout="column" flex>
+        <md-content ui-view="system-toolbar"></md-content>
+        <md-content ui-view="system-content" layout flex></md-content>
+    </body>
+
+    <!-- Angular Dependencies -->
+    <script src="shared/lib/angularjs/angular.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
+    <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-ui-router.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+    <!-- Moment.js, needs to refactor - install via NPM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+
+    <!-- UI Components -->
+    <script src="shared/ui-components/ui-components-module.js"></script>
+    <script src="shared/ui-components/accordion/accordion-directive.js"></script>
+
+    <!-- Survey Components -->
+    <script src="shared/survey-components/questions/survey-module.js"></script>
+    <script src="shared/survey-components/questions/calendar/calendar-directive.js"></script>
+    <script src="shared/survey-components/questions/numeric/numeric-directive.js"></script>
+    <script src="shared/survey-components/questions/single-selection/single-selection-directive.js"></script>
+    <script src="shared/survey-components/questions/text/text-directive.js"></script>
+    <script src="shared/survey-components/questions/time-question/time-question-directive.js"></script>
+
+    <!-- Utils -->
+    <script src="shared/utils-module.js"></script>
+
+    <!-- Assets -->
+    <link href="assets/styles.css" rel="stylesheet"/>
+
+    <!-- app -->
+    <script src="app.js"></script>
+
+    <!-- app.config -->
+    <script src="config/dependencies-configuration.js"></script>
+    <script src="config/locale-configuration.js"></script>
+    <script src="config/state-configuration.js"></script>
+    <script src="config/theme-configuration.js"></script>
+
+    <!-- app.private.main -->
+    <script src="private/main/main-module.js"></script>
+    <!-- app.private.main.home -->
+    <script src="private/main/home/ui/home-controller.js"></script>
+    <script src="private/main/home/ui/toolbar-controller.js"></script>
+
+    <!-- app.private.survey-editor -->
+    <script src="private/survey-editor/editor-module.js"></script>
+
+    <!-- app.private.survey-editor.engine -->
+    <script src="private/survey-editor/engine/editor-engine-module.js"></script>
+
+    <!-- app.private.survey-editor.engine.core -->
+    <script src="private/survey-editor/engine/core/core-module.js"></script>
+    <script src="private/survey-editor/engine/core/editing-source-directive.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.event -->
+    <script src="private/survey-editor/engine/core/event/editing-event-factory.js"></script>
+    <script src="private/survey-editor/engine/core/event/editing-event-handler-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.service -->
+    <script src="private/survey-editor/engine/core/service/editor-service.js"></script>
+    <script src="private/survey-editor/engine/core/service/question-service.js"></script>
+    <script src="private/survey-editor/engine/core/service/studio-editor-service.js"></script>
+    <script src="private/survey-editor/engine/core/service/survey-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.state -->
+    <script src="private/survey-editor/engine/core/state/editing-state-factory.js"></script>
+    <script src="private/survey-editor/engine/core/state/editing-state-service.js"></script>
+    <script src="private/survey-editor/engine/core/state/editing-state-tree-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger -->
+    <script src="private/survey-editor/engine/core/trigger/event-trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/event-trigger-processor-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/event-trigger-register-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/event-trigger-tree-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger.html -->
+    <script src="private/survey-editor/engine/core/trigger/html/button-event-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-tree-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/input-text-event-trigger-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger.question -->
+    <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-tree-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger.survey -->
+    <script src="private/survey-editor/engine/core/trigger/survey/survey-event-trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/survey/survey-event-trigger-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.memory -->
+    <script src="private/survey-editor/engine/memory/memory-module.js"></script>
+    <script src="private/survey-editor/engine/memory/memory-cache-factory.js"></script>
+    <script src="private/survey-editor/engine/memory/memory-management-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.model-wrapper -->
+    <script src="private/survey-editor/engine/model-wrapper/model-wrapper-module.js"></script>
+
+    <!-- app.private.survey-editor.ui -->
+    <script src="private/survey-editor/ui/editor-ui-module.js"></script>
+    <script src="private/survey-editor/ui/question-container-button-factory.js"></script>
+
+    <!-- app.private.survey-editor.ui.container -->
+    <script src="private/survey-editor/ui/container/container.js"></script>
+
+    <!-- app.private.survey-editor.ui.palette -->
+    <script src="private/survey-editor/ui/palette/question-palette-controller.js"></script>
+
+    <!-- app.private.survey-editor.ui.sheet -->
+    <script src="private/survey-editor/ui/sheet/sheet-controller.js"></script>
+
+    <!-- app.private.survey-preview.ui.preview -->
+    <script src="private/survey-preview/preview-module.js"></script>
+    <script src="private/survey-preview/preview-controller.js"></script>
+
+    <!-- app.private.survey-repository -->
+    <script src="private/survey-repository/repository-module.js"></script>
+    <script src="private/survey-repository/repository-controller.js"></script>
+    <script src="private/survey-repository/repository-service.js"></script>
+
+    <!-- app.private.user -->
+    <script src="private/user/user-module.js"></script>
+    <script src="private/user/management/user-controller.js"></script>
 
 </html>

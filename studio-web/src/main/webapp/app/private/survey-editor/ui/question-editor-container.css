@@ -1,0 +1,40 @@
+#editor-container {
+    background: none;
+}
+
+.filling-mode-selector {}
+
+.editable {
+    border-bottom: 1px dotted gray;
+    color: gray;
+    font-style: italic;
+    font-size: 20pt;
+}
+
+[preview-mode] {
+    border: none;
+}
+
+[edit-mode] {
+    border: 1px dashed #FFFFFF;
+    /*background-color: #fffae9;
+    border: 1px dashed #D0D0D0;
+    cursor: pointer*/
+}
+
+[edit-mode]:hover {
+    background-color: #fffae9;
+    border: 1px dashed #D0D0D0;
+    cursor: prompt;
+}
+
+[contenteditable=true]:empty:before {
+    content: attr(edit-placeholder);
+    display: block;
+    font-style: italic;
+    color: #A0A0A0
+}
+
+#sheet .md-tab {
+    text-transform: none !important;
+}
