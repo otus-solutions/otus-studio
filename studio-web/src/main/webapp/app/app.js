@@ -8,7 +8,8 @@
             /* Application modules */
             'repository',
             'editor',
-            'main'
+            'main',
+            'user'
         ]);
 
 }());
