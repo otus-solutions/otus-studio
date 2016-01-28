@@ -6,10 +6,9 @@
             /* External modules */
             'dependencies',
             /* Application modules */
+            'repository',
             'editor',
-            'main',
-            /* Application support modules */
-            'utils'
+            'main'
         ]);
 
 }());

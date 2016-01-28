@@ -1,6 +1,6 @@
 (function() {
 
-    var containerModule = angular.module('editor.editing');
+    var containerModule = angular.module('editor.ui');
     var questionCount = 0;
 
     /*
@@ -17,7 +17,7 @@
         $scope.binding = SharedDataService;
         $scope.isOpened = false;
         $scope.openClose = function() {
-            if ($scope.isOpened == false) {
+            if ($scope.isOpened === false) {
                 $scope.isOpened = true;
             } else {
                 $scope.isOpened = false;

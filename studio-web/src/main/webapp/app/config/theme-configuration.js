@@ -2,9 +2,9 @@
 
     angular
         .module('studio')
-        .config(themeConfiguration);
+        .config(['$mdThemingProvider', '$mdIconProvider', themeConfiguration]);
 
-    var themeConfiguration = function($mdThemingProvider) {
+    function themeConfiguration($mdThemingProvider, $mdIconProvider) {
 
         $mdThemingProvider.theme('layoutTheme')
             .primaryPalette('blue', {
@@ -16,13 +16,9 @@
             }).warnPalette('red');
 
 
-        /* Configuration theme */
-        $mdThemingProvider.theme('layoutTheme');
-        // $mdThemingProvider.theme('surveyEditorTheme');
-
         /*Configuration icons*/
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
-    };
+    }
 
 }());

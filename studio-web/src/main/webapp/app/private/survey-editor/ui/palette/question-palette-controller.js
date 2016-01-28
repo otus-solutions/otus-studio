@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('editor.editing')
+        .module('editor.ui')
         .service('QuestionPaletteController', QuestionPaletteController);
 
     function QuestionPaletteController() {

@@ -1,4 +1,4 @@
-<md-sidenav src="'private/editor/ui/container/palette/palette-template.html'"
+<md-sidenav src="'private/survey-editor/ui/palette/palette-template.html'"
             class="palette"
             md-is-locked-open="true"
             layout="column"
@@ -8,14 +8,14 @@
 <md-content class="stage" layout="column" layout-padding flex>
     <md-tabs id="stage-mode-selector" flex>
         <md-tab id="editing-tab" label="Edição">
-            <div ng-include src="'private/editor/ui/sheet/editing/editing-template.html'"></div>
+            <div ng-include src="'private/survey-editor/ui/editing-template.html'"></div>
         </md-tab>
         <md-tab id="preview-tab" label="Preview">
-            <div ng-include src="'private/editor/ui/sheet/preview/preview-template.html'"></div>
+            <div ng-include src="'private/survey-preview/preview-template.html'"></div>
         </md-tab>
     </md-tabs>
 </md-content>
-<md-sidenav src="'private/editor/ui/survey/properties/properties.html'"
+<md-sidenav src="'private/survey-editor/ui/survey/properties/properties.html'"
             class="resource"
             md-is-locked-open="true"
             layout="column"
