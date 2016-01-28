@@ -1,0 +1,25 @@
+<link href="private/editor/ui/container/container.css" rel="stylesheet" />
+<md-sidenav src="'private/editor/ui/container/palette/palette-template.html'"
+            class="palette"
+            md-is-locked-open="true"
+            layout="column"
+            flex="20"
+            ng-include>
+</md-sidenav>
+<md-content class="stage" layout="column" layout-padding flex>
+    <md-tabs id="stage-mode-selector" flex>
+        <md-tab id="editing-tab" label="Edição">
+            <div ng-include src="'private/editor/ui/sheet/editing/editing-template.html'"></div>
+        </md-tab>
+        <md-tab id="preview-tab" label="Preview">
+            <div ng-include src="'private/editor/ui/sheet/preview/preview-template.html'"></div>
+        </md-tab>
+    </md-tabs>
+</md-content>
+<md-sidenav src="'private/editor/ui/survey/properties/properties.html'"
+            class="resource"
+            md-is-locked-open="true"
+            layout="column"
+            flex="20"
+            ng-include>
+</md-sidenav>
