@@ -17,8 +17,34 @@ module.exports = function(config) {
         files: [
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            'app/private/studio/edit/container/container.module.js', {
-                pattern: 'tests/unit/*Spec.js',
+
+            'app/shared/lib/angularjs/external-lib/angular-messages.min.js',
+            'app/shared/lib/angularjs/external-lib/angular-ui-mask.min.js',
+            'app/shared/lib/angularjs/external-lib/angular-ui-router.min.js',
+            'app/shared/lib/angularjs/md/angular-animate.min.js',
+            'app/shared/lib/angularjs/md/angular-aria.min.js',
+            'app/shared/lib/angularjs/md/angular-material.min.js',
+
+            'app/private/home/module.js',
+            'app/private/home/home-ctrl.js',
+            'app/private/user/module.js',
+            'app/private/user/management/users-ctrl.js',
+            'app/private/repository/repository.module.js',
+            'app/private/repository/repository.service.js',
+            'app/private/repository/repository.ctrl.js',
+            'app/app.js',
+            'config/theme.js',
+            'app/private/utils.module.js',
+            'app/private/studio/survey.module.js',
+            'app/private/studio/memory.module.js',
+            'app/private/studio/editing-engine.module.js',
+            'app/private/studio/survey-editing-engine.module.js',
+            'app/private/studio/studio.module.js',
+            'app/private/studio/edit/sheet/preview/preview-ctrl.js',
+            'app/private/studio/edit/container/container.module.js',
+            'app/private/studio/toolbar-ctrl.js',
+            , {
+                pattern: 'tests/unit/*-spec.js',
                 included: true
             }
         ],
@@ -39,13 +65,13 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'html'],
-    
+
     htmlReporter: {
         outputFile: 'tests/unit/units.html',
-        
+
         //Optional
         pageTitle: 'Unit Tests'
-    	
+
     },
 
 
@@ -68,7 +94,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode

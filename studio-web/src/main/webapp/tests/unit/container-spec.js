@@ -1,4 +1,4 @@
-describe('ContainerController', function() { //describe your object type
+describe('Container', function() { //describe your object type
     beforeEach(module('Container')); //load module
 
     var $controller;
@@ -7,16 +7,16 @@ describe('ContainerController', function() { //describe your object type
         $controller = _$controller_;
     }));
 
-    describe('sum', function() {
-        it('1 + 1 should equal 2', function() {
+    describe('some test', function() {
+        it('some description', function() {
             var $scope = {};
             var controller = $controller('ContainerController', {
                 $scope: $scope
             });
-            expect($scope.isOpened).toEqual(false);
-            $scope.openClose();
-            expect($scope.isOpened).toEqual(true);
 
+            expect($scope.isOpened).toBe(false);
+            $scope.openClose();
+            expect($scope.isOpened).toBe(true);
         });
 
     });
