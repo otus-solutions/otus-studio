@@ -1,12 +1,14 @@
 (function() {
 
+    var systemToolbarPath = 'private/main/home/ui/system-toolbar.html';
+
     var stateConfiguration = function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
                 url: '/home',
                 views: {
                     'system-toolbar': {
-                        templateUrl: 'private/main/home/ui/system-toolbar.html'
+                        templateUrl: systemToolbarPath
                     },
                     'system-content': {
                         templateUrl: 'private/main/home/ui/home.html'
@@ -17,10 +19,10 @@
                 url: '/container',
                 views: {
                     'system-toolbar': {
-                        templateUrl: 'private/main/home/ui/system-toolbar.html'
+                        templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/editor/ui/container/container.html'
+                        templateUrl: 'private/survey-editor/ui/container/container.html'
                     }
                 }
             })
@@ -28,7 +30,7 @@
                 url: '/user-management',
                 views: {
                     'system-toolbar': {
-                        templateUrl: 'private/main/home/ui/system-toolbar.html'
+                        templateUrl: systemToolbarPath
                     },
                     'system-content': {
                         templateUrl: 'private/user/management/users.html'
@@ -39,10 +41,10 @@
                 url: '/repository',
                 views: {
                     'system-toolbar': {
-                        templateUrl: 'private/main/home/ui/system-toolbar.html'
+                        templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/repository/repository.html'
+                        templateUrl: 'private/survey-repository/repository.html'
                     }
                 }
             });

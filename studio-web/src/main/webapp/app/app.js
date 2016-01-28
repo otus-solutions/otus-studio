@@ -6,6 +6,7 @@
             /* External modules */
             'dependencies',
             /* Application modules */
+            'repository',
             'editor',
             'main'
         ]);
