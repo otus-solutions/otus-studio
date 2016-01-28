@@ -4,7 +4,7 @@ describe('Controller: home-ctrl', function() {
 
 	beforeEach(function() {
 
-		module('Home');
+		module('main');
 
 		inject(function($rootScope, $httpBackend) {
 			$rootScope = $rootScope;
@@ -20,7 +20,7 @@ describe('Controller: home-ctrl', function() {
 
 	});
 
-	it('verify is logged', function() {
+	/*it('verify user is Admin', function() {
 		var $scope = {};
 
 		/*
@@ -28,6 +28,11 @@ describe('Controller: home-ctrl', function() {
 		 * .sucess(function(data) { $scope.valid = true; $scope.response = data;
 		 * }).error(function(data) { $scope.valid = false; })
 		 */
-
+		
+		/*var controller = $controller('HomeController', {
+			$scope: $scope
+		});
+		expect($scope.isAdmin).toBe(true);
 	});
+	*/
 });

@@ -1,5 +1,5 @@
 describe('Container', function() { //describe your object type
-    beforeEach(module('Container')); //load module
+    beforeEach(module('editor.ui')); //load module
 
     var $controller;
 
