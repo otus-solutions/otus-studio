@@ -6,7 +6,7 @@
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
 
-	var systemToolbarPath = 'private/main/home/ui/system-toolbar.html';
+        var systemToolbarPath = 'private/main/home/ui/system-toolbar.html';
 
         $stateProvider
             .state('home', {
@@ -56,5 +56,7 @@
 
         /* Default state (route) */
         $urlRouterProvider.otherwise('/home');
+
+    }
 
 }());
