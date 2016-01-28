@@ -6,4 +6,5 @@
 *.metadata
 **/.idea
 *.iml
-*.swp:
+*.swp
+npm-debug.log
