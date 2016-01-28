@@ -7,9 +7,7 @@
             'dependencies',
             /* Application modules */
             'editor',
-            'main',
-            /* Application support modules */
-            'utils'
+            'main'
         ]);
 
 }());

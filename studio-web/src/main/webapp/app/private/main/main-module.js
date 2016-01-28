@@ -1,8 +1,6 @@
 (function() {
 
     angular
-        .module('main', [
-            'editor'
-        ]);
+        .module('main', []);
 
 }());

@@ -1,8 +1,6 @@
 (function() {
 
     angular
-        .module('editor.engine', [
-            'core'
-        ]);
+        .module('editor.engine', []);
 
 }());

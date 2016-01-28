@@ -1,6 +1,10 @@
 (function() {
 
-    var themeConfiguration = function($mdThemingProvider) {
+    angular
+        .module('studio')
+        .config(['$mdThemingProvider', themeConfiguration]);
+
+    function themeConfiguration($mdThemingProvider) {
 
         $mdThemingProvider.theme('layoutTheme')
             .primaryPalette('blue', {
@@ -19,10 +23,6 @@
         /*Configuration icons*/
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
-    };
-
-    angular
-        .module('studio')
-        .config(themeConfiguration);
+    }
 
 }());

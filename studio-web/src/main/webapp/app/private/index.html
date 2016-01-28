@@ -19,12 +19,12 @@
 
     <!-- Angular Dependencies -->
     <script src="shared/lib/angularjs/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-ui-router.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 
     <!-- Moment.js, needs to refactor - install via NPM -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
@@ -53,7 +53,7 @@
 
     <!-- app.config -->
     <script src="config/dependencies-configuration.js"></script>
-    <!-- <script src="config/locale-configuration.js"></script> -->
+    <script src="config/locale-configuration.js"></script>
     <script src="config/state-configuration.js"></script>
     <!-- <script src="config/theme-configuration.js"></script> -->
 
@@ -116,7 +116,10 @@
     <!-- app.private.survey-editor.engine.model-wrapper -->
     <script src="private/survey-editor/engine/model-wrapper/model-wrapper-module.js"></script>
 
-    <!-- app.private.survey-editor.editing.container -->
+    <!-- app.private.survey-editor.ui -->
+    <script src="private/survey-editor/ui/editor-ui-module.js"></script>
+
+    <!-- app.private.survey-editor.ui.container -->
     <script src="private/survey-editor/ui/container/container.js"></script>
 
     <!-- app.private.survey-editor.ui.palette -->
@@ -135,18 +138,6 @@
     <script src="private/repository/repository.module.js"></script>
     <script src="private/repository/repository.service.js"></script>
     <script src="private/repository/repository.ctrl.js"></script>
-
-    <script src="private/editor/survey.module.js"></script>
-    <script src="private/editor/memory.module.js"></script>
-    <script src="private/editor/editing-engine.module.js"></script>
-    <script src="private/editor/studio.module.js"></script>
-    <script src="private/editor/ui/sheet/preview/preview-ctrl.js"></script>
-    <script src="private/editor/ui/sheet/sheet-module.js"></script>
-    <script src="private/editor/ui/container/container.module.js"></script>
-    <script src="private/editor/ui/container/palette/question-palette-controller.js"></script>
-    <script src="private/editor/engine/editor-engine-module.js"></script>
-    <script src="private/editor/engine/survey-facade.js"></script>
-    <script src="private/editor/engine/question-facade.js"></script>
     -->
 
 </html>

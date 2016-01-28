@@ -2,9 +2,9 @@
 
     angular
         .module('main')
-        .controller('ToolbarController', ['$scope', '$location', 'StudioEditorService', '$mdDialog', '$window', '$http', ToolbarController]);
+        .controller('ToolbarController', ['$scope', '$location', '$mdDialog', '$window', '$http', ToolbarController]);
 
-    function ToolbarController($scope, $location, StudioEditorService, $mdDialog, $window, $http) {
+    function ToolbarController($scope, $location, $mdDialog, $window, $http) {
 
         var NEW_SURVEY = 'container';
         var USER_MANAGEMENT_STATE = 'user-management';
@@ -33,7 +33,7 @@
 
         $scope.openContainer = function() {
             $location.url(NEW_SURVEY);
-            StudioEditorService.createNewSurvey();
+            // StudioEditorService.createNewSurvey();
         };
 
         $scope.openHome = function() {
