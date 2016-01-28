@@ -43,7 +43,7 @@ module.exports = function(config) {
             'app/private/studio/edit/sheet/preview/preview-ctrl.js',
             'app/private/studio/edit/container/container.module.js',
             'app/private/studio/toolbar-ctrl.js',
-            , {
+             {
                 pattern: 'tests/unit/*-spec.js',
                 included: true
             }
@@ -67,7 +67,7 @@ module.exports = function(config) {
     reporters: ['progress', 'html'],
 
     htmlReporter: {
-        outputFile: 'tests/unit/units.html',
+        outputFile: 'tests/unit/unit-result.report.html',
 
         //Optional
         pageTitle: 'Unit Tests'
