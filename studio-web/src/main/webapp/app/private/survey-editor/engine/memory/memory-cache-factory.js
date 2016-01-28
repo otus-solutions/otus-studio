@@ -2,7 +2,7 @@
 
     angular
         .module('memory')
-        .factory('MemoryCache', [MemoryCache]);
+        .factory('MemoryCache', MemoryCache);
 
     function MemoryCache() {
         return function(size) {

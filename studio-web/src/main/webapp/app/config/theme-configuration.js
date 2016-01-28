@@ -1,5 +1,9 @@
 (function() {
 
+    angular
+        .module('studio')
+        .config(themeConfiguration);
+
     var themeConfiguration = function($mdThemingProvider) {
 
         $mdThemingProvider.theme('layoutTheme')
@@ -20,9 +24,5 @@
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
     };
-
-    angular
-        .module('studio')
-        .config(themeConfiguration);
 
 }());

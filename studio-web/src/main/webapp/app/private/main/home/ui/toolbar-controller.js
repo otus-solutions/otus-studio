@@ -2,7 +2,9 @@
 
     angular
         .module('main')
-        .controller('ToolbarController', ['$scope', '$location', 'StudioEditorService', '$mdDialog', '$window', '$http', ToolbarController]);
+        .controller('ToolbarController', ToolbarController);
+
+    ToolbarController.$inject = ['$scope', '$location', 'StudioEditorService', '$mdDialog', '$window', '$http'];
 
     function ToolbarController($scope, $location, StudioEditorService, $mdDialog, $window, $http) {
 

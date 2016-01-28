@@ -1,5 +1,9 @@
 (function() {
 
+    angular
+        .module('studio')
+        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration]);
+
     var stateConfiguration = function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
@@ -50,9 +54,5 @@
         /* Default state (route) */
         $urlRouterProvider.otherwise('/home');
     };
-
-    angular
-        .module('studio')
-        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration]);
 
 }());

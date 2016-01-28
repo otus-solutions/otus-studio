@@ -2,7 +2,9 @@
 
     angular
         .module('editor.preview')
-        .controller('PreviewController', ['StudioEditingService', PreviewController]);
+        .controller('PreviewController', PreviewController);
+
+    PreviewController.$inject = ['StudioEditingService'];
 
     function PreviewController(StudioEditingService) {
         var self = this;

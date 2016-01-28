@@ -2,7 +2,9 @@
 
     angular
         .module('memory')
-        .factory('MemoryManagement', ['MemoryCache', MemoryManagement]);
+        .factory('MemoryManagement', MemoryManagement);
+
+    MemoryManagement.$inject = ['MemoryCache'];
 
     function MemoryManagement(MemoryCache) {
         return function(memoryCacheSize) {

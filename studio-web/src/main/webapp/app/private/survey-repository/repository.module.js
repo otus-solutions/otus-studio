@@ -1,1 +1,5 @@
-angular.module('Repository', []);
+(function() {
+
+    angular.module('Repository', []);
+
+}());

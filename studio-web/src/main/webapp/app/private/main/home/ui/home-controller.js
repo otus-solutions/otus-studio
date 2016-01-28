@@ -2,7 +2,9 @@
 
     angular
         .module('main')
-        .controller('HomeController', ['$http', '$scope', '$rootScope', HomeController]);
+        .controller('HomeController', HomeController);
+
+    HomeController.$inject = ['$http','$scope','$rootScope'];
 
     function HomeController($http, $scope, $rootScope) {
         const $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/studio/session/rest/register/loggedUser';
