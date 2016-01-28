@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('StudioApp', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
+        .module('studio', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
         .controller(
             'RegisterUserCtrl', ['$scope', '$http', '$mdDialog', '$window',
                 function($scope, $http, $mdDialog, $window) {
