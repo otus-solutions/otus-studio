@@ -9,7 +9,9 @@
             'repository',
             'editor',
             'main',
-            'user'
+            'user',
+            'ui.components',
+            'survey.questions'
         ]);
 
 }());

@@ -1,5 +1,6 @@
 (function() {
 
-    angular.module('ui.components', ['ngAnimate']);
+    angular
+        .module('ui.components', []);
 
 }());
