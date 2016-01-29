@@ -5,7 +5,7 @@
 *.jsfdia
 *.metadata
 **/.idea
-**/.orig
 *.iml
 *.swp
-*.orig
+npm-debug.log
+studio-web/src/main/webapp/tests/unit/unit-result.report.html
