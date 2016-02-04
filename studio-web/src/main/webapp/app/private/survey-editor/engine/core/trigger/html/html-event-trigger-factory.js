@@ -2,42 +2,53 @@
 
     angular
         .module('core')
-        .factory('HtmlEventTriggerFactory', [
-            'EventTriggerRegister',
-            'InputTextEventTrigger',
-            'ButtonEventTrigger',
-            HtmlEventTriggerFactory
-        ]);
+        .factory('HtmlEventTriggerFactory', HtmlEventTriggerFactory);
 
-    function HtmlEventTriggerFactory(EventTriggerRegister, InputTextEventTrigger, ButtonEventTrigger) {
-        var factory = {
-            identifyComponent: function(element) {
-                return element.localName;
-            },
-            identifyType: function(element) {
-                return element.type;
-            },
-            selectEventTrigger: function(component, type, data, ngModel) {
-                var tree = EventTriggerRegister.getEventTriggerTree('html'),
-                    eventTrigger;
+    HtmlEventTriggerFactory.$inject = ['EventTriggerTreeRegister'];
 
-                if (type)
-                    eventTrigger = tree[component][type];
-                else
-                    eventTrigger = tree[component];
+    function HtmlEventTriggerFactory(EventTriggerTreeRegister) {
 
-                return eventTrigger;
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element[0]),
-                    type = this.identifyType(element[0]),
-                    eventTrigger = this.selectEventTrigger(component, type, element, ngModel);
+        var self = this;
 
-                eventTrigger.init(element, ngModel);
+        var hasType = null;
+
+        /* Public interface */
+        self.produce = produce;
+
+        function produce(editingSource) {
+            var componentName = identifyComponent(editingSource.component);
+            var componentType = identifyType(editingSource.component);
+            var eventTriggers = selectEventTriggers(editingSource);
+
+            return eventTriggers;
+        }
+
+        function identifyComponent(element) {
+            return element.localName;
+        }
+
+        function identifyType(element) {
+            if (element.type) {
+                hasType = true;
+            } else {
+                hasType = false;
             }
-        };
 
-        return factory;
+            return element.type;
+        }
+
+        function selectEventTriggers(editingSource) {
+            var domComponent = editingSource.component;
+
+            var eventTriggerTree = EventTriggerTreeRegister.getEventTriggerTree(EventTriggerTreeRegister.HTML);
+            var triggerTypePath = domComponent.localName.concat('.').concat(domComponent.type);
+            var triggerInitializer = eventTriggerTree.getTriggerInitializer(triggerTypePath);
+            var initializedTriggers = triggerInitializer.run(domComponent, editingSource.target);
+
+            return initializedTriggers;
+        }
+
+        return this;
     }
 
 }());

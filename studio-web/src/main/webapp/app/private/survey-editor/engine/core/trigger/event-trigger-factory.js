@@ -2,17 +2,17 @@
 
     angular
         .module('core')
-        .factory('EventTriggerFactory', [
-            'HtmlEventTriggerFactory',
-            'QuestionEventTriggerFactory',
-            'SurveyEventTriggerFactory',
-            'StringNormalizer',
-            EventTriggerFactory
-        ]);
+        .factory('EventTriggerFactory', EventTriggerFactory);
 
-    function EventTriggerFactory(HtmlEventTriggerFactory, QuestionEventTriggerFactory, SurveyEventTriggerFactory, StringNormalizer) {
+    EventTriggerFactory.$inject = ['HtmlEventTriggerFactory', 'StringNormalizer'];
+
+    function EventTriggerFactory(HtmlEventTriggerFactory, StringNormalizer) {
+
+        var self = this;
+
         var factoryMap = {
             input: HtmlEventTriggerFactory,
+            /*
             textarea: HtmlEventTriggerFactory,
             button: HtmlEventTriggerFactory,
             text: QuestionEventTriggerFactory,
@@ -20,25 +20,31 @@
             date: QuestionEventTriggerFactory,
             time: QuestionEventTriggerFactory,
             surveyPage: SurveyEventTriggerFactory,
-
-            get: function get(elementName) {
-                return this[elementName];
-            }
+            */
         };
 
-        /* Factory interface */
-        var factory = {
-            selectFactory: function selectFactory(element) {
-                var elementName = StringNormalizer.normalizeString(element.localName);
-                return factoryMap[elementName];
-            },
-            produce: function produce(element, ngModel) {
-                var selectedFactory = this.selectFactory(element[0]);
-                selectedFactory.produce(element, ngModel);
-            }
-        };
+        /* Public interface */
+        self.produce = produce;
 
-        return factory;
+        function produce(editingSource) {
+            var selectedFactory = selectFactory(editingSource.component);
+            var eventTriggerTree = selectedFactory.produce(editingSource);
+
+            return eventTriggerTree;
+        }
+
+        function selectFactory(domComponent) {
+            var componentName = StringNormalizer.normalizeString(domComponent.localName);
+            var factory = getFactoryByComponentName(componentName);
+
+            return factory;
+        }
+
+        function getFactoryByComponentName(componentName) {
+            return factoryMap[componentName];
+        }
+
+        return this;
     }
 
 }());

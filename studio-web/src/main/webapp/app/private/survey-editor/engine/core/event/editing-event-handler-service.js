@@ -2,9 +2,9 @@
 
     angular
         .module('core')
-        .service('EditingEventHandler', ['EditingService', EditingEventHandler]);
+        .service('EditingEventHandler', EditingEventHandler);
 
-    function EditingEventHandler(EditingService) {
+    function EditingEventHandler() {
         var self = this;
 
         /* PUblic interface */
@@ -12,7 +12,8 @@
 
         /* Public interface implementation */
         function handle(data) {
-            EditingService.editData(data);
+            //EditingService.editData(data);
+            console.log('EditingEventHandler.handle()');
         }
     }
 

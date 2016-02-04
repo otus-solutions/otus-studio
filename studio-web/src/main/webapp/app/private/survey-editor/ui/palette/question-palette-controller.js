@@ -2,7 +2,7 @@
 
     angular
         .module('editor.ui')
-        .service('QuestionPaletteController', QuestionPaletteController);
+        .controller('QuestionPaletteController', QuestionPaletteController);
 
     function QuestionPaletteController() {
         var self = this,

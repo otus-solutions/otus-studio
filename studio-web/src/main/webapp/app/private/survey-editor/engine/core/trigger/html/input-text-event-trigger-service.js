@@ -2,33 +2,57 @@
 
     angular
         .module('core')
-        .service('InputTextEventTrigger', [
-            'EventTriggerProcessor',
-            'EventTriggerRegister',
-            InputTextEventTrigger
-        ]);
+        .service('InputTextEventTriggerService', InputTextEventTriggerService);
 
-    function InputTextEventTrigger(EventTriggerProcessor, EventTriggerRegister) {
+    function InputTextEventTriggerService() {
+
+        var self = this;
+        self.trigger = null;
+
+        /* Public interface */
+        self.init = init;
+        self.getTrigger = getTrigger;
+
+        function init() {
+            self.trigger = new InputTextEventTrigger();
+        }
+
+        function getTrigger() {
+            return self.trigger;
+        }
+
+    }
+
+    function InputTextEventTrigger() {
+
         var self = this;
 
-        self.type = 'html';
-        self.source = 'input.text';
-        self.init = init;
+        self.name = 'InputTextEventTrigger';
+        self.tree = 'html';
+        self.sourceComponentType = 'input.text';
 
-        function init(element, ngModel) {
-            var processor = new EventTriggerProcessor(ngModel, 'update-model');
+        /* Public interface */
+        self.getInstance = getInstance;
+        self.watchDomComponent = watchDomComponent;
 
-            element.on('focus', function setOnFocus() {
-                processor.storeOldState(element);
+        function watchDomComponent(domComponent) {
+            // var processor = new EventTriggerProcessorFactory(ngModel, 'update-model');
+
+            var jqElement = angular.element(domComponent);
+
+            jqElement.on('focus', function setOnFocus() {
+                console.log('input on focus');
             });
 
-            element.on('blur', function setOnBlur() {
-                processor.storeNewState(element);
-                processor.run();
+            jqElement.on('blur', function setOnBlur() {
+                console.log('input on blur');
             });
         }
 
-        EventTriggerRegister.setEventTrigger(self);
+        function getInstance() {
+            return self;
+        }
+
     }
 
 }());

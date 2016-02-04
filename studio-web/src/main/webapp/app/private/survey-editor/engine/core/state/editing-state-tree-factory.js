@@ -2,7 +2,7 @@
 
     angular
         .module('core')
-        .factory('EditingStateTree', [EditingStateTree]);
+        .factory('EditingStateTree', EditingStateTree);
 
     function EditingStateTree() {
         /* Editing state model */

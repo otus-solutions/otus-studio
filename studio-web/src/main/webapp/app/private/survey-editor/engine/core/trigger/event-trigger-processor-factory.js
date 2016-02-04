@@ -2,13 +2,13 @@
 
     angular
         .module('core')
-        .factory('EventTriggerProcessorFactory', ['EditingEvent', 'EditingEventHandler', 'EditingStateFactory', EventTriggerProcessorFactory]);
+        .factory('EventTriggerProcessorFactory', ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory', EventTriggerProcessorFactory]);
 
 
-    function EventTriggerProcessorFactory(EditingEvent, EditingEventHandler, EditingStateFactory) {
+    function EventTriggerProcessorFactory(EditingEventFactory, EditingEventHandler, EditingStateFactory) {
         return function EventTriggerProcessor(target, eventType) {
             var type = eventType,
-                event = new EditingEvent();
+                event = new EditingEventFactory();
 
             this.storeOldState = function storeOldState(dataStructure) {
                 this.data = EditingStateFactory.produce(dataStructure[0], target);
@@ -22,7 +22,7 @@
                 event.target = target;
                 event.type = type;
                 EditingEventHandler.handle(event);
-                event = new EditingEvent();
+                event = new EditingEventFactory();
             };
         };
     }

@@ -2,49 +2,22 @@
 
     angular
         .module('core')
-        .factory('HtmlEventTriggerTree', [HtmlEventTriggerTree]);
+        .factory('HtmlEventTriggerTreeFactory', HtmlEventTriggerTreeFactory);
 
-    function HtmlEventTriggerTree() {
-        function TriggerType() {
-            this.triggers = [];
+    HtmlEventTriggerTreeFactory.$inject = ['HtmlTriggerTree'];
 
-            this.registerEventTrigger = function registerEventTrigger(eventTrigger) {
-                this.triggers.push(eventTrigger);
-            };
+    function HtmlEventTriggerTreeFactory(HtmlTriggerTree) {
 
-            this.init = function init(data, ngModel) {
-                this.triggers.forEach(function(trigger) {
-                    trigger.init(data, ngModel);
-                });
-            };
+        var self = this;
+
+        /* Public interface */
+        self.getTrigger = getTrigger;
+
+        function getTrigger(domComponent) {
+            return HtmlTriggerTree[domComponent];
         }
 
-        var tree = function HtmlEventTriggerTree() {
-            this.input = {
-                text: new TriggerType(),
-                password: new TriggerType(),
-                number: new TriggerType()
-            };
-            this.textarea = {
-                textarea: new TriggerType()
-            };
-            this.button = {
-                button: new TriggerType()
-            };
-
-            this.getTriggerType = function getTriggerType(triggerPath) {
-                var pathTokens = triggerPath.split('.');
-                var reference = this;
-
-                pathTokens.forEach(function(token) {
-                    reference = reference[token];
-                });
-
-                return reference;
-            };
-        };
-
-        return tree;
+        return self;
     }
 
 }());

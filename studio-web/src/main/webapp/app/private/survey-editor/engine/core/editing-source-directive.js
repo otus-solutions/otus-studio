@@ -1,40 +1,57 @@
 (function() {
+    'use strict';
 
     angular
         .module('core')
-        .directive('EditingSource', ['EventTriggerFactory']);
+        .directive('editingSource', directiveDefinition);
 
-    function EditingSource(EventTriggerFactory) {
-        var controller = function controller($scope, $element, $attrs) {
-            var self = this;
-
-            /* Public interface */
-            self.applyEventTrigger = applyEventTrigger;
-
-            /* Public interface implementations */
-            function applyEventTrigger() {
-                var target = null;
-                if ($attrs.editingSource.length > 0) {
-                    target = $attrs.editingSource.replace(/'/g, "-v-");
-                    target = target.replace(/"/g, "'");
-                    target = target.replace(/-v-/g, '"');
-                    var directive = JSON.parse(target);
-                    target = directive.target;
-                } else {
-                    target = $attrs.ngModel;
-                }
-                EventTriggerFactory.produce($element, target);
-            }
+    /*
+     * Directive initialization function
+     */
+    function directiveDefinition() {
+        var ddo = {
+            controller: Controller,
+            link: linkImpl
         };
 
-        var directive = {
-            controller: controller,
-            link: function link(scope, element, attr, controller) {
-                controller.applyEventTrigger();
-            }
+        return ddo;
+    }
+
+    /*
+     * Link function implementation
+     */
+    function linkImpl(scope, element, attr, controller) {
+        controller.catchEditingSourceComponent();
+        controller.attachEventTriggers();
+    }
+
+    /*
+     * Directive's controller implementation
+     */
+    Controller.$inject = ['$scope', '$element', '$attrs', 'EditingSourceFactory', 'EventTriggerFactory', 'EventTriggerTreeService'];
+
+    function Controller($scope, $element, $attrs, EditingSourceFactory, EventTriggerFactory, EventTriggerTreeService) {
+
+        var editingSource = null;
+
+        this.catchEditingSourceComponent = function catchEditingSourceComponent() {
+            editingSource = EditingSourceFactory.create($element, $attrs.esId, $attrs.esType, $attrs.esTarget);
+
+            /*========== DEV LOG ===========*/
+            // console.info('Diretiva editing-source encontrada:');
+            // console.log('ID: ' + editingSource.id);
+            // console.log('Na tag: ' + editingSource.component.localName);
+            // console.log('Tipo de evento: ' + editingSource.type);
+            // console.log('Modelo alvo: ' + editingSource.target);
+            /*==============================*/
         };
 
-        return directive;
+        this.attachEventTriggers = function attachEventTriggers() {
+            var eventTriggersToUse = EventTriggerFactory.produce(editingSource);
+            editingSource.activeTriggers = eventTriggersToUse;
+            console.log(editingSource);
+        };
+
     }
 
 }());

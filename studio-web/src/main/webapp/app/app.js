@@ -11,7 +11,8 @@
             'main',
             'user',
             'ui.components',
-            'survey.questions'
+            'survey.questions',
+            'utils'
         ]);
 
 }());
