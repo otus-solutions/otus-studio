@@ -2,8 +2,8 @@
 
     angular
         .module('core', [])
-        .run(function(TriggerTreeService) {
-            TriggerTreeService.loadTrigger();
+        .run(function(TriggerService) {
+            TriggerService.loadTrigger();
         });
 
 }());

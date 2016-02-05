@@ -19,7 +19,7 @@
         }
 
         function appendTriggersTo(editingSource) {
-            editingSource.activeTriggers = TriggerFactory.produceTriggers(editingSource);
+            editingSource.activeTrigger = TriggerFactory.produceTrigger(editingSource);
         }
 
     }

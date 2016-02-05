@@ -6,15 +6,10 @@
 
     function InputTextTriggerService() {
         var self = this;
-        self.trigger = null;
+        self.trigger = new InputTextTrigger();
 
         /* Public interface */
-        self.init = init;
         self.getTrigger = getTrigger;
-
-        function init() {
-            self.trigger = new InputTextTrigger();
-        }
 
         function getTrigger() {
             return self.trigger;
@@ -29,7 +24,6 @@
         self.sourceComponentType = 'input-text';
 
         /* Public interface */
-        self.getInstance = getInstance;
         self.watchDomComponent = watchDomComponent;
 
         function watchDomComponent(domComponent) {
@@ -44,10 +38,6 @@
             jqElement.on('blur', function setOnBlur() {
                 console.log('input on blur');
             });
-        }
-
-        function getInstance() {
-            return self;
         }
     }
 

@@ -29,16 +29,16 @@
         };
 
         /* Public interface */
-        self.produceTriggers = produceTriggers;
+        self.produceTrigger = produceTrigger;
 
         /*
          * Return a list of triggers that should be applied to editing source
          */
-        function produceTriggers(editingSource) {
+        function produceTrigger(editingSource) {
             var selectedFactory = selectFactory(editingSource);
-            var triggers = selectedFactory.produceTriggers(editingSource);
+            var trigger = selectedFactory.produceTrigger(editingSource);
 
-            return triggers;
+            return trigger;
         }
 
         /*

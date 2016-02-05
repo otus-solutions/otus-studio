@@ -19,22 +19,19 @@
 
     function TriggerInitializer() {
         var self = this;
-        self.triggers = [];
+        self.trigger = null;
 
         /* Public interface */
         self.run = run;
         self.wrapTrigger = wrapTrigger;
 
         function run(domComponent) {
-            self.triggers.forEach(function(trigger) {
-                trigger.watchDomComponent(domComponent);
-            });
-
-            return self.triggers;
+            self.trigger.watchDomComponent(domComponent);
+            return self.trigger;
         }
 
         function wrapTrigger(trigger) {
-            self.triggers.push(trigger);
+            self.trigger = trigger;
         }
     }
 

@@ -11,13 +11,13 @@
         var self = this;
 
         /* Public interface */
-        self.produceTriggers = produceTriggers;
+        self.produceTrigger = produceTrigger;
 
-        function produceTriggers(editingSource) {
+        function produceTrigger(editingSource) {
             var triggerInitializer = TriggerRegisterService.getInitializer(editingSource.type),
-                initializedTriggers = triggerInitializer.run(editingSource.component, editingSource.target);
+                initializedTrigger = triggerInitializer.run(editingSource.component, editingSource.target);
 
-            return initializedTriggers;
+            return initializedTrigger;
         }
 
         return self;

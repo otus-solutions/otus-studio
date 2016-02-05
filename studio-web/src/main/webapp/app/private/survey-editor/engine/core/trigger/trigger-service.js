@@ -2,11 +2,11 @@
 
     angular
         .module('core')
-        .service('TriggerTreeService', TriggerTreeService);
+        .service('TriggerService', TriggerService);
 
-    TriggerTreeService.$inject = ['TriggerRegisterService', 'TriggerMap'];
+    TriggerService.$inject = ['TriggerRegisterService', 'TriggerMap'];
 
-    function TriggerTreeService(TriggerRegisterService, TriggerMap) {
+    function TriggerService(TriggerRegisterService, TriggerMap) {
         var self = this;
 
         /* Public interface */
@@ -16,13 +16,13 @@
             /*========== DEV LOG ===========*/
             // console.info('Registro de triggers:');
             /*==============================*/
+
             for (var submap in TriggerMap) {
                 submap = TriggerMap[submap];
 
                 for (var triggerService in submap) {
-                    triggerService = submap[triggerService];
-                    triggerService.init();
-                    TriggerRegisterService.registerTrigger(triggerService.getTrigger());
+                    selectedTriggerService = submap[triggerService];
+                    TriggerRegisterService.registerTrigger(selectedTriggerService.getTrigger());
                 }
             }
 

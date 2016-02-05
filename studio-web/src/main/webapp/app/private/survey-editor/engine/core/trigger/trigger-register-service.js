@@ -8,20 +8,20 @@
 
     function TriggerRegisterService(TriggerInitializerFactory) {
         var self = this;
-        self.registeredInitializers = {};
+        self.initializers = {};
 
         /* Public interface */
         self.getInitializer = getInitializer;
         self.registerTrigger = registerTrigger;
 
         function getInitializer(initializerType) {
-            return self.registeredInitializers[initializerType];
+            return self.initializers[initializerType];
         }
 
         function registerTrigger(trigger) {
             var triggerInitializer = TriggerInitializerFactory.produceInitializer();
             triggerInitializer.wrapTrigger(trigger);
-            self.registeredInitializers[trigger.sourceComponentType] = triggerInitializer;
+            self.initializers[trigger.sourceComponentType] = triggerInitializer;
         }
     }
 
