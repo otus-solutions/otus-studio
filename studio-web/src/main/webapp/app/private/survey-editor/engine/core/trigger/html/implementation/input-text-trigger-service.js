@@ -4,9 +4,11 @@
         .module('core')
         .service('InputTextTriggerService', InputTextTriggerService);
 
-    function InputTextTriggerService() {
+    InputTextTriggerService.$inject = ['EditingEventService'];
+
+    function InputTextTriggerService(EditingEventService) {
         var self = this;
-        self.trigger = new InputTextTrigger();
+        self.trigger = new InputTextTrigger(EditingEventService);
 
         /* Public interface */
         self.getTrigger = getTrigger;
@@ -16,12 +18,13 @@
         }
     }
 
-    function InputTextTrigger() {
+    function InputTextTrigger(EditingEventService) {
         var self = this;
 
         self.name = 'InputTextTrigger';
         self.tree = 'html';
         self.sourceComponentType = 'input-text';
+        self.editingSource = null;
 
         /* Public interface */
         self.watchDomComponent = watchDomComponent;
@@ -33,10 +36,12 @@
 
             jqElement.on('focus', function setOnFocus() {
                 console.log('input on focus');
+                EditingEventService.update(self.editingSource);
             });
 
             jqElement.on('blur', function setOnBlur() {
                 console.log('input on blur');
+                EditingEventService.update(self.editingSource);
             });
         }
     }

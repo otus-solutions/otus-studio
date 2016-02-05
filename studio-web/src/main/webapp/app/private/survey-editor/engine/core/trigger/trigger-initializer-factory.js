@@ -25,8 +25,9 @@
         self.run = run;
         self.wrapTrigger = wrapTrigger;
 
-        function run(domComponent) {
-            self.trigger.watchDomComponent(domComponent);
+        function run(editingSource) {
+            self.trigger.editingSource = editingSource;
+            self.trigger.watchDomComponent(editingSource.component);
             return self.trigger;
         }
 

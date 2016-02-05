@@ -15,7 +15,7 @@
 
         function produceTrigger(editingSource) {
             var triggerInitializer = TriggerRegisterService.getInitializer(editingSource.type),
-                initializedTrigger = triggerInitializer.run(editingSource.component, editingSource.target);
+                initializedTrigger = triggerInitializer.run(editingSource);
 
             return initializedTrigger;
         }
