@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('EditingEventService', EditingEventService);
 
-    EditingEventService.$inject = ['EditingEventFactory', 'InputTextParser'];
+    EditingEventService.$inject = ['EditingEventFactory', 'EditingStateFactory'];
 
-    function EditingEventService(EditingEventFactory, InputTextParser) {
+    function EditingEventService(EditingEventFactory, EditingStateFactory) {
         var self = this;
 
         /* Public interface */
@@ -14,13 +14,13 @@
         self.performEditing = performEditing;
 
         function observeEditing(editingSource) {
-            editingSource.parsedDom = InputTextParser.parse(editingSource.component);
-            console.log(editingSource);
+            editingState = EditingStateFactory.create(editingSource);
+            console.log(editingState);
         }
 
         function performEditing(editingSource) {
-            editingSource.parsedDom = InputTextParser.parse(editingSource.component);
-            console.log(editingSource);
+            editingState = EditingStateFactory.create(editingSource);
+            console.log(editingState);
         }
     }
 

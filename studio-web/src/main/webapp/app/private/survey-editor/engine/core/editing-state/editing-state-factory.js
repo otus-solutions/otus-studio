@@ -2,35 +2,28 @@
 
     angular
         .module('editor.engine.core')
-        .factory('EditingStateFactory', ['EditingStateTree', EditingStateFactory]);
+        .factory('EditingStateFactory', EditingStateFactory);
 
-    function EditingStateFactory(EditingStateTree) {
-        var factory = {
-            identifyComponent: function identifyComponent(element) {
-                return element.localName;
-            },
-            identifyType: function identifyType(element) {
-                if (element.localName != 'question') {
-                    return element.type;
-                } else {
-                    return element.attributes.type.nodeValue;
-                }
-            },
-            selectDataStructure: function selectDataStructure(component, type, data, ngModel) {
-                if (type)
-                    return EditingStateTree[component][type](data, ngModel);
-                else
-                    return EditingStateTree[component](data, ngModel);
-            },
-            produce: function produce(element, ngModel) {
-                var component = this.identifyComponent(element),
-                    type = this.identifyType(element);
+    EditingStateFactory.$inject = ['DomParser'];
 
-                return this.selectDataStructure(component, type, element, ngModel);
-            }
-        };
+    function EditingStateFactory(DomParser) {
+        var self = this;
 
-        return factory;
+        /* Public interface */
+        self.create = create;
+
+        function create(editingSource) {
+            return new EditingState(editingSource, DomParser);
+        }
+
+        return self;
+    }
+
+    function EditingState(editingSource, DomParser) {
+        var self = this;
+
+        self.editingSource = editingSource;
+        self.domData = DomParser.parse(editingSource);
     }
 
 }());
