@@ -2,11 +2,11 @@
 
     angular
         .module('core')
-        .factory('EventTriggerProcessorFactory', ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory', EventTriggerProcessorFactory]);
+        .factory('TriggerProcessorFactory', ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory', TriggerProcessorFactory]);
 
 
-    function EventTriggerProcessorFactory(EditingEventFactory, EditingEventHandler, EditingStateFactory) {
-        return function EventTriggerProcessor(target, eventType) {
+    function TriggerProcessorFactory(EditingEventFactory, EditingEventHandler, EditingStateFactory) {
+        return function TriggerProcessorFactory(target, eventType) {
             var type = eventType,
                 event = new EditingEventFactory();
 

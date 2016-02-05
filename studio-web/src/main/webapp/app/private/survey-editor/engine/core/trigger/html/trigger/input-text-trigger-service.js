@@ -2,9 +2,9 @@
 
     angular
         .module('core')
-        .service('InputTextEventTriggerService', InputTextEventTriggerService);
+        .service('InputTextTriggerService', InputTextTriggerService);
 
-    function InputTextEventTriggerService() {
+    function InputTextTriggerService() {
 
         var self = this;
         self.trigger = null;
@@ -14,7 +14,7 @@
         self.getTrigger = getTrigger;
 
         function init() {
-            self.trigger = new InputTextEventTrigger();
+            self.trigger = new InputTextTrigger();
         }
 
         function getTrigger() {
@@ -23,11 +23,11 @@
 
     }
 
-    function InputTextEventTrigger() {
+    function InputTextTrigger() {
 
         var self = this;
 
-        self.name = 'InputTextEventTrigger';
+        self.name = 'InputTextTrigger';
         self.tree = 'html';
         self.sourceComponentType = 'input.text';
 

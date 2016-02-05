@@ -2,19 +2,24 @@
 
     angular
         .module('core')
-        .factory('EventTriggerFactory', EventTriggerFactory);
+        .factory('TriggerFactory', TriggerFactory);
 
-    EventTriggerFactory.$inject = ['HtmlEventTriggerFactory', 'StringNormalizer'];
+    TriggerFactory.$inject = ['HtmlTriggerFactory', 'StringNormalizer'];
 
-    function EventTriggerFactory(HtmlEventTriggerFactory, StringNormalizer) {
+    function TriggerFactory(HtmlTriggerFactory, StringNormalizer) {
 
         var self = this;
 
         var factoryMap = {
-            input: HtmlEventTriggerFactory,
+            /* Html */
+            input: HtmlTriggerFactory
             /*
             textarea: HtmlEventTriggerFactory,
             button: HtmlEventTriggerFactory,
+            */
+
+            /* Question */
+            /*
             text: QuestionEventTriggerFactory,
             number: QuestionEventTriggerFactory,
             date: QuestionEventTriggerFactory,
@@ -26,13 +31,20 @@
         /* Public interface */
         self.produce = produce;
 
+        /*
+         * Return a list of triggers that should be applied to editing source
+         */
         function produce(editingSource) {
             var selectedFactory = selectFactory(editingSource.component);
-            var eventTriggerTree = selectedFactory.produce(editingSource);
+            var triggers = selectedFactory.produce(editingSource);
 
-            return eventTriggerTree;
+            return triggers;
         }
 
+        /*
+         * The correct trigger factory is selected based on tag name of HTML component.
+         * The factoryMap object mapping tag name and respectives factory.
+         */
         function selectFactory(domComponent) {
             var componentName = StringNormalizer.normalizeString(domComponent.localName);
             var factory = getFactoryByComponentName(componentName);
@@ -44,7 +56,7 @@
             return factoryMap[componentName];
         }
 
-        return this;
+        return self;
     }
 
 }());

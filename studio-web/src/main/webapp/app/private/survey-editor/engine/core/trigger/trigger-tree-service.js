@@ -2,11 +2,11 @@
 
     angular
         .module('core')
-        .service('EventTriggerTreeService', EventTriggerTreeService);
+        .service('TriggerTreeService', TriggerTreeService);
 
-    EventTriggerTreeService.$inject = ['EventTriggerTreeRegister'];
+    TriggerTreeService.$inject = ['TriggerTreeRegisterService'];
 
-    function EventTriggerTreeService(EventTriggerTreeRegister) {
+    function TriggerTreeService(TriggerTreeRegisterService) {
 
         var self = this;
 
@@ -19,7 +19,7 @@
             /*==============================*/
 
             triggerService.init();
-            EventTriggerTreeRegister.registerEventTrigger(triggerService.getTrigger());
+            TriggerTreeRegisterService.registerTrigger(triggerService.getTrigger());
 
             /*========== DEV LOG ===========*/
             // console.log('Trigger para ' + triggerService.getTrigger().source + ' registrada');

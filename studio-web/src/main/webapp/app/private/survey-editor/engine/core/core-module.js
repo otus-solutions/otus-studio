@@ -2,8 +2,8 @@
 
     angular
         .module('core', [])
-        .run(function(EventTriggerTreeService, InputTextEventTriggerService) {
-            EventTriggerTreeService.loadTrigger(InputTextEventTriggerService);
+        .run(function(TriggerTreeService, InputTextTriggerService) {
+            TriggerTreeService.loadTrigger(InputTextTriggerService);
         });
 
 }());

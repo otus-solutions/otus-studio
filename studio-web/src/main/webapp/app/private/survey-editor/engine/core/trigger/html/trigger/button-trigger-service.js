@@ -2,9 +2,9 @@
 
     angular
         .module('core')
-        .service('ButtonEventTrigger', ['EventTriggerProcessor', 'EventTriggerRegister', ButtonEventTrigger]);
+        .service('ButtonTrigger', ['TriggerProcessor', 'TriggerRegister', ButtonTrigger]);
 
-    function ButtonEventTrigger(EventTriggerProcessor, EventTriggerRegister) {
+    function ButtonTrigger(TriggerProcessor, TriggerRegister) {
         var self = this;
 
         self.type = 'html';
@@ -12,7 +12,7 @@
         self.init = init;
 
         function init(element, ngModel) {
-            var processor = new EventTriggerProcessor(element[0].attributes.action.nodeValue, 'action');
+            var processor = new TriggerProcessor(element[0].attributes.action.nodeValue, 'action');
 
             element.on('click', function setOnFocus() {
                 processor.storeNewState(element);

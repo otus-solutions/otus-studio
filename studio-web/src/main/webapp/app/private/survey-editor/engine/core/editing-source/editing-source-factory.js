@@ -3,18 +3,20 @@
 
     angular
         .module('core')
-        .factory('EditingSourceFactory', API);
+        .factory('EditingSourceFactory', EditingSourceFactory);
 
     /* Factory interface */
-    function API() {
+    function EditingSourceFactory() {
+        var self = this;
+
         /*
          * Creates a simple EditingSource instance
          */
-        this.create = function create(esComponent, esId, esType, esTarget) {
+        self.produce = function produce(esComponent, esId, esType, esTarget) {
             return new EditingSource(esComponent, esId, esType, esTarget);
         };
 
-        return this;
+        return self;
     }
 
     /* EditingSource model used as factory product */

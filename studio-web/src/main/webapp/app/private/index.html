@@ -71,10 +71,13 @@
 
     <!-- app.private.survey-editor.engine.core -->
     <script src="private/survey-editor/engine/core/core-module.js"></script>
-    <script src="private/survey-editor/engine/core/editing-source-directive.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.editing-source -->
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-directive.js"></script>
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-factory.js"></script>
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.event -->
-    <script src="private/survey-editor/engine/core/event/editing-source-factory.js"></script>
     <script src="private/survey-editor/engine/core/event/editing-event-factory.js"></script>
     <script src="private/survey-editor/engine/core/event/editing-event-handler-service.js"></script>
 
@@ -90,18 +93,20 @@
     <script src="private/survey-editor/engine/core/state/editing-state-tree-factory.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger -->
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-processor-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-tree-register-service.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-tree-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-processor-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-tree-register-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-tree-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.html -->
-    <script src="private/survey-editor/engine/core/trigger/html/button-event-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-tree-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-trigger-factory.js"></script>
     <script src="private/survey-editor/engine/core/trigger/html/html-trigger-tree-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/input-text-event-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-trigger-tree-service.js"></script>
     <script src="private/survey-editor/engine/core/trigger/html/trigger-initializer-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger.html.trigger -->
+    <script src="private/survey-editor/engine/core/trigger/html/trigger/button-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/trigger/input-text-trigger-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.question -->
     <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-tree-factory.js"></script>

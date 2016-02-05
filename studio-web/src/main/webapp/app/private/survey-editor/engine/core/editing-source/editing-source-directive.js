@@ -28,14 +28,19 @@
     /*
      * Directive's controller implementation
      */
-    Controller.$inject = ['$scope', '$element', '$attrs', 'EditingSourceFactory', 'EventTriggerFactory', 'EventTriggerTreeService'];
+    Controller.$inject = ['$scope', '$element', '$attrs', 'EditingSourceService'];
 
-    function Controller($scope, $element, $attrs, EditingSourceFactory, EventTriggerFactory, EventTriggerTreeService) {
+    function Controller($scope, $element, $attrs, EditingSourceService) {
 
-        var editingSource = null;
+        var self = this,
+            editingSource = null;
 
-        this.catchEditingSourceComponent = function catchEditingSourceComponent() {
-            editingSource = EditingSourceFactory.create($element, $attrs.esId, $attrs.esType, $attrs.esTarget);
+        /* Public interface */
+        self.catchEditingSourceComponent = catchEditingSourceComponent;
+        self.attachEventTriggers = attachEventTriggers;
+
+        function catchEditingSourceComponent() {
+            editingSource = EditingSourceService.createEditingSource($element, $attrs);
 
             /*========== DEV LOG ===========*/
             // console.info('Diretiva editing-source encontrada:');
@@ -44,13 +49,16 @@
             // console.log('Tipo de evento: ' + editingSource.type);
             // console.log('Modelo alvo: ' + editingSource.target);
             /*==============================*/
-        };
+        }
 
-        this.attachEventTriggers = function attachEventTriggers() {
-            var eventTriggersToUse = EventTriggerFactory.produce(editingSource);
-            editingSource.activeTriggers = eventTriggersToUse;
+        function attachEventTriggers() {
+            EditingSourceService.appendTriggersTo(editingSource);
+
+            /*========== DEV LOG ===========*/
+            console.info('Novo objecto EditingSource:');
             console.log(editingSource);
-        };
+            /*==============================*/
+        }
 
     }
 
