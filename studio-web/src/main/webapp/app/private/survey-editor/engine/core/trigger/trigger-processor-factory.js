@@ -2,8 +2,9 @@
 
     angular
         .module('core')
-        .factory('TriggerProcessorFactory', ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory', TriggerProcessorFactory]);
+        .factory('TriggerProcessorFactory', TriggerProcessorFactory);
 
+    TriggerProcessorFactory.$inject = ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory'];
 
     function TriggerProcessorFactory(EditingEventFactory, EditingEventHandler, EditingStateFactory) {
         return function TriggerProcessorFactory(target, eventType) {

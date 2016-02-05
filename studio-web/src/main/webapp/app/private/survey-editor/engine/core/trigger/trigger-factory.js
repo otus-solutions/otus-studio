@@ -12,11 +12,11 @@
 
         var factoryMap = {
             /* Html */
-            input: HtmlTriggerFactory
-            /*
-            textarea: HtmlEventTriggerFactory,
-            button: HtmlEventTriggerFactory,
-            */
+            inputText: HtmlTriggerFactory,
+            inputNumber: HtmlTriggerFactory,
+            inputEmail: HtmlTriggerFactory,
+            textArea: HtmlTriggerFactory,
+            button: HtmlTriggerFactory
 
             /* Question */
             /*
@@ -35,7 +35,7 @@
          * Return a list of triggers that should be applied to editing source
          */
         function produceTriggers(editingSource) {
-            var selectedFactory = selectFactory(editingSource.component);
+            var selectedFactory = selectFactory(editingSource);
             var triggers = selectedFactory.produceTriggers(editingSource);
 
             return triggers;
@@ -45,8 +45,8 @@
          * The correct trigger factory is selected based on tag name of HTML component.
          * The factoryMap object mapping tag name and respectives factory.
          */
-        function selectFactory(domComponent) {
-            var componentName = StringNormalizer.normalizeString(domComponent.localName);
+        function selectFactory(editingSource) {
+            var componentName = StringNormalizer.normalizeString(editingSource.type);
             var factory = getFactoryByComponentName(componentName);
 
             return factory;

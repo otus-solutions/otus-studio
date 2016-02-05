@@ -2,36 +2,27 @@
 
     angular
         .module('core')
-        .service('TriggerTreeRegisterService', TriggerTreeRegister);
+        .service('TriggerRegisterService', TriggerRegisterService);
 
-    TriggerTreeRegister.$inject = ['HtmlTriggerTreeService'];
+    TriggerRegisterService.$inject = ['TriggerInitializerFactory'];
 
-    function TriggerTreeRegister(HtmlTriggerTreeService) {
-
+    function TriggerRegisterService(TriggerInitializerFactory) {
         var self = this;
-
-        self.HTML = 'html';
-
-        var treeMap = {
-            html: HtmlTriggerTreeService.getTree()
-        };
+        self.registeredInitializers = {};
 
         /* Public interface */
-        self.getHtmlTriggerTree = getHtmlTriggerTree;
+        self.getInitializer = getInitializer;
         self.registerTrigger = registerTrigger;
 
-        function getHtmlTriggerTree() {
-            return treeMap[self.HTML];
+        function getInitializer(initializerType) {
+            return self.registeredInitializers[initializerType];
         }
 
-        function registerTrigger(triggerToRegister) {
-            var trigger = triggerToRegister.getInstance();
-            var triggerTree = treeMap[trigger.tree];
-            var triggerInitializer = triggerTree.getTriggerInitializer(trigger.sourceComponentType);
-
-            triggerInitializer.registerTrigger(trigger);
+        function registerTrigger(trigger) {
+            var triggerInitializer = TriggerInitializerFactory.produceInitializer();
+            triggerInitializer.wrapTrigger(trigger);
+            self.registeredInitializers[trigger.sourceComponentType] = triggerInitializer;
         }
-
     }
 
 }());

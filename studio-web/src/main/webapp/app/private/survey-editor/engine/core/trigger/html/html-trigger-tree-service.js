@@ -30,32 +30,11 @@
     function HtmlTriggerTree(TriggerInitializerFactory) {
         var self = this;
 
-        self.input = {
-            text: TriggerInitializerFactory.produceInitializer(),
-            password: TriggerInitializerFactory.produceInitializer(),
-            number: TriggerInitializerFactory.produceInitializer()
-        };
-
-        self.textarea = {
-            textarea: TriggerInitializerFactory.produceInitializer()
-        };
-
-        self.button = {
-            button: TriggerInitializerFactory.produceInitializer()
-        };
-
         /* Public interface */
         self.getTriggerInitializer = getTriggerInitializer;
 
-        function getTriggerInitializer(triggerPath) {
-            var pathTokens = triggerPath.split('.');
-            var reference = self;
-
-            pathTokens.forEach(function(token) {
-                reference = reference[token];
-            });
-
-            return reference;
+        function getTriggerInitializer() {
+            return TriggerInitializerFactory.produceInitializer();
         }
     }
 

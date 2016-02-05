@@ -4,9 +4,9 @@
         .module('core')
         .service('TriggerTreeService', TriggerTreeService);
 
-    TriggerTreeService.$inject = ['TriggerTreeRegisterService', 'TriggerMap'];
+    TriggerTreeService.$inject = ['TriggerRegisterService', 'TriggerMap'];
 
-    function TriggerTreeService(TriggerTreeRegisterService, TriggerMap) {
+    function TriggerTreeService(TriggerRegisterService, TriggerMap) {
         var self = this;
 
         /* Public interface */
@@ -16,14 +16,13 @@
             /*========== DEV LOG ===========*/
             // console.info('Registro de triggers:');
             /*==============================*/
-
             for (var submap in TriggerMap) {
                 submap = TriggerMap[submap];
 
                 for (var triggerService in submap) {
                     triggerService = submap[triggerService];
                     triggerService.init();
-                    TriggerTreeRegisterService.registerTrigger(triggerService.getTrigger());
+                    TriggerRegisterService.registerTrigger(triggerService.getTrigger());
                 }
             }
 

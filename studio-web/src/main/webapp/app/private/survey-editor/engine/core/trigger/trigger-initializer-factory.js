@@ -23,7 +23,7 @@
 
         /* Public interface */
         self.run = run;
-        self.registerTrigger = registerTrigger;
+        self.wrapTrigger = wrapTrigger;
 
         function run(domComponent) {
             self.triggers.forEach(function(trigger) {
@@ -33,7 +33,7 @@
             return self.triggers;
         }
 
-        function registerTrigger(trigger) {
+        function wrapTrigger(trigger) {
             self.triggers.push(trigger);
         }
     }

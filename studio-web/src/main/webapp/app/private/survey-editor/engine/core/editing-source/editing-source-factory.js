@@ -15,33 +15,33 @@
         /*
          * Creates a simple EditingSource instance
          */
-        function produceEditingSource(esComponent, esId, esType, esTarget) {
-            return new EditingSource(esComponent, esId, esType, esTarget);
+        function produceEditingSource(esComponent, esType, esId, esTarget) {
+            return new EditingSource(esComponent, esType, esId, esTarget);
         }
 
         return self;
     }
 
     /* EditingSource model used as factory product */
-    function EditingSource(esComponent, esId, esType, esTarget) {
-
-        Object.defineProperty(this, 'id', {
-            value: esId,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'component', {
-            value: EditingSource.prototype.getComponent(esComponent),
-            writable: false
-        });
+    function EditingSource(esComponent, esType, esId, esTarget) {
 
         Object.defineProperty(this, 'type', {
             value: esType,
             writable: false
         });
 
+        Object.defineProperty(this, 'id', {
+            value: esId,
+            writable: false
+        });
+
         Object.defineProperty(this, 'target', {
             value: esTarget,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'component', {
+            value: EditingSource.prototype.getComponent(esComponent),
             writable: false
         });
 

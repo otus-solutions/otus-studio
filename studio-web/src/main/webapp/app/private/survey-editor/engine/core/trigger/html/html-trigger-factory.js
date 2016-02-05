@@ -4,23 +4,18 @@
         .module('core')
         .factory('HtmlTriggerFactory', HtmlTriggerFactory);
 
-    HtmlTriggerFactory.$inject = ['TriggerTreeRegisterService'];
+    HtmlTriggerFactory.$inject = ['TriggerRegisterService'];
 
-    function HtmlTriggerFactory(TriggerTreeRegisterService) {
+    function HtmlTriggerFactory(TriggerRegisterService) {
 
-        var self = this,
-            hasType = null;
+        var self = this;
 
         /* Public interface */
         self.produceTriggers = produceTriggers;
 
         function produceTriggers(editingSource) {
-            var domComponent = editingSource.component,
-                triggerPath = domComponent.localName.concat('.').concat(domComponent.type),
-
-                tree = TriggerTreeRegisterService.getHtmlTriggerTree(),
-                triggerInitializer = tree.getTriggerInitializer(triggerPath),
-                initializedTriggers = triggerInitializer.run(domComponent, editingSource.target);
+            var triggerInitializer = TriggerRegisterService.getInitializer(editingSource.type),
+                initializedTriggers = triggerInitializer.run(editingSource.component, editingSource.target);
 
             return initializedTriggers;
         }

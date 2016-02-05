@@ -8,7 +8,9 @@
         self.normalizeString = normalizeString;
 
         function normalizeString(directiveName) {
-            var directiveParts = directiveName.split('-'),
+            var tokenSeparator = (directiveName.indexOf('-') != -1) ? '-' : '.';
+
+            var directiveParts = directiveName.split(tokenSeparator),
                 loopSize = directiveParts.length,
                 normalizedString = directiveParts[0].toLowerCase();
 

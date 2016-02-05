@@ -26,7 +26,7 @@
 
         self.name = 'InputTextTrigger';
         self.tree = 'html';
-        self.sourceComponentType = 'input.text';
+        self.sourceComponentType = 'input-text';
 
         /* Public interface */
         self.getInstance = getInstance;
