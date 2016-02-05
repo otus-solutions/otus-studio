@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('core')
+        .module('editor.engine.core')
         .service('EditingSourceService', EditingSourceService);
 
     EditingSourceService.$inject = ['EditingSourceFactory', 'TriggerFactory'];

@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('core')
+        .module('editor.engine.core')
         .service('StudioEditorService', ['SurveyLoader', 'EditingService', StudioEditorService]);
 
     function StudioEditorService(SurveyLoader, EditingService) {

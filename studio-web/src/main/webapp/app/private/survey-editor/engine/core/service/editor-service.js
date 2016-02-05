@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('core')
+        .module('editor.engine.core')
         .service('EditorService', ['Survey', 'SurveyDataUpdater', 'EditingState', 'MemoryManagement', EditorService]);
 
     function EditorService(Survey, SurveyDataUpdater, EditingState, MemoryManagement) {

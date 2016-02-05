@@ -2,7 +2,7 @@
 
     angular
         .module('editor.engine', [
-            'core'
+            'editor.engine.core'
         ]);
 
 }());

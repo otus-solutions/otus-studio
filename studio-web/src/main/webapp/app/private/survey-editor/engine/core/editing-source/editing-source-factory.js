@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('core')
+        .module('editor.engine.core')
         .factory('EditingSourceFactory', EditingSourceFactory);
 
     /* Factory interface */

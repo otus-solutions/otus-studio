@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('core')
+        .module('editor.engine.core')
         .factory('TriggerProcessorFactory', TriggerProcessorFactory);
 
     TriggerProcessorFactory.$inject = ['EditingEventFactory', 'EditingStateFactory'];
