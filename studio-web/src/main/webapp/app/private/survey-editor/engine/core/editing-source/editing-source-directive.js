@@ -55,8 +55,8 @@
             EditingSourceService.appendTriggersTo(editingSource);
 
             /*========== DEV LOG ===========*/
-            console.info('Novo objecto EditingSource:');
-            console.log(editingSource);
+            // console.info('Novo objecto EditingSource:');
+            // console.log(editingSource);
             /*==============================*/
         }
 
