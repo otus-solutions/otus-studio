@@ -29,14 +29,14 @@
         };
 
         /* Public interface */
-        self.produce = produce;
+        self.produceTriggers = produceTriggers;
 
         /*
          * Return a list of triggers that should be applied to editing source
          */
-        function produce(editingSource) {
+        function produceTriggers(editingSource) {
             var selectedFactory = selectFactory(editingSource.component);
-            var triggers = selectedFactory.produce(editingSource);
+            var triggers = selectedFactory.produceTriggers(editingSource);
 
             return triggers;
         }

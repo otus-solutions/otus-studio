@@ -22,7 +22,7 @@
      */
     function linkImpl(scope, element, attr, controller) {
         controller.catchEditingSourceComponent();
-        controller.attachEventTriggers();
+        controller.attachTriggers();
     }
 
     /*
@@ -37,7 +37,7 @@
 
         /* Public interface */
         self.catchEditingSourceComponent = catchEditingSourceComponent;
-        self.attachEventTriggers = attachEventTriggers;
+        self.attachTriggers = attachTriggers;
 
         function catchEditingSourceComponent() {
             editingSource = EditingSourceService.createEditingSource($element, $attrs);
@@ -51,7 +51,7 @@
             /*==============================*/
         }
 
-        function attachEventTriggers() {
+        function attachTriggers() {
             EditingSourceService.appendTriggersTo(editingSource);
 
             /*========== DEV LOG ===========*/

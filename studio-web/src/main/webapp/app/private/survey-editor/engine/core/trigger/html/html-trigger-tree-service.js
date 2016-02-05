@@ -28,21 +28,20 @@
     }
 
     function HtmlTriggerTree(TriggerInitializerFactory) {
-
         var self = this;
 
         self.input = {
-            text: TriggerInitializerFactory.create(),
-            password: TriggerInitializerFactory.create(),
-            number: TriggerInitializerFactory.create()
+            text: TriggerInitializerFactory.produceInitializer(),
+            password: TriggerInitializerFactory.produceInitializer(),
+            number: TriggerInitializerFactory.produceInitializer()
         };
 
         self.textarea = {
-            textarea: TriggerInitializerFactory.create()
+            textarea: TriggerInitializerFactory.produceInitializer()
         };
 
         self.button = {
-            button: TriggerInitializerFactory.create()
+            button: TriggerInitializerFactory.produceInitializer()
         };
 
         /* Public interface */
@@ -58,7 +57,6 @@
 
             return reference;
         }
-
     }
 
 }());

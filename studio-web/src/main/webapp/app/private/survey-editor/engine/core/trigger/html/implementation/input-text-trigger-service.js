@@ -5,7 +5,6 @@
         .service('InputTextTriggerService', InputTextTriggerService);
 
     function InputTextTriggerService() {
-
         var self = this;
         self.trigger = null;
 
@@ -20,11 +19,9 @@
         function getTrigger() {
             return self.trigger;
         }
-
     }
 
     function InputTextTrigger() {
-
         var self = this;
 
         self.name = 'InputTextTrigger';
@@ -52,7 +49,6 @@
         function getInstance() {
             return self;
         }
-
     }
 
 }());

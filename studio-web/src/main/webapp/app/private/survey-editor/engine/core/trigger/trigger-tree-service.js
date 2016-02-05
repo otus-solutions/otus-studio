@@ -4,28 +4,33 @@
         .module('core')
         .service('TriggerTreeService', TriggerTreeService);
 
-    TriggerTreeService.$inject = ['TriggerTreeRegisterService'];
+    TriggerTreeService.$inject = ['TriggerTreeRegisterService', 'TriggerMap'];
 
-    function TriggerTreeService(TriggerTreeRegisterService) {
-
+    function TriggerTreeService(TriggerTreeRegisterService, TriggerMap) {
         var self = this;
 
         /* Public interface */
         self.loadTrigger = loadTrigger;
 
-        function loadTrigger(triggerService) {
+        function loadTrigger() {
             /*========== DEV LOG ===========*/
             // console.info('Registro de triggers:');
             /*==============================*/
 
-            triggerService.init();
-            TriggerTreeRegisterService.registerTrigger(triggerService.getTrigger());
+            for (var submap in TriggerMap) {
+                submap = TriggerMap[submap];
+
+                for (var triggerService in submap) {
+                    triggerService = submap[triggerService];
+                    triggerService.init();
+                    TriggerTreeRegisterService.registerTrigger(triggerService.getTrigger());
+                }
+            }
 
             /*========== DEV LOG ===========*/
             // console.log('Trigger para ' + triggerService.getTrigger().source + ' registrada');
             /*==============================*/
         }
-
     }
 
 }());

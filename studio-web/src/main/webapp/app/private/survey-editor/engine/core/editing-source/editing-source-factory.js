@@ -9,12 +9,15 @@
     function EditingSourceFactory() {
         var self = this;
 
+        /* Public interface */
+        self.produceEditingSource = produceEditingSource;
+
         /*
          * Creates a simple EditingSource instance
          */
-        self.produce = function produce(esComponent, esId, esType, esTarget) {
+        function produceEditingSource(esComponent, esId, esType, esTarget) {
             return new EditingSource(esComponent, esId, esType, esTarget);
-        };
+        }
 
         return self;
     }

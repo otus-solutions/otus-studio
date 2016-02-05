@@ -12,9 +12,9 @@
             hasType = null;
 
         /* Public interface */
-        self.produce = produce;
+        self.produceTriggers = produceTriggers;
 
-        function produce(editingSource) {
+        function produceTriggers(editingSource) {
             var domComponent = editingSource.component,
                 triggerPath = domComponent.localName.concat('.').concat(domComponent.type),
 

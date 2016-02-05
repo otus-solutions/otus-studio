@@ -15,11 +15,11 @@
         self.appendTriggersTo = appendTriggersTo;
 
         function createEditingSource(domComponent, attrs) {
-            return EditingSourceFactory.produce(domComponent, attrs.esId, attrs.esType, attrs.esTarget);
+            return EditingSourceFactory.produceEditingSource(domComponent, attrs.esId, attrs.esType, attrs.esTarget);
         }
 
         function appendTriggersTo(editingSource) {
-            editingSource.activeTriggers = TriggerFactory.produce(editingSource);
+            editingSource.activeTriggers = TriggerFactory.produceTriggers(editingSource);
         }
 
     }
