@@ -22,7 +22,7 @@
 
                 for (var triggerService in submap) {
                     selectedTriggerService = submap[triggerService];
-                    TriggerRegisterService.registerTrigger(selectedTriggerService.getTrigger());
+                    TriggerRegisterService.registerTriggerService(selectedTriggerService);
                 }
             }
 

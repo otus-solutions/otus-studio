@@ -19,22 +19,28 @@
 
     function TriggerInitializer() {
         var self = this;
-        self.triggers = [];
+        self.loader = {};
 
         /* Public interface */
         self.run = run;
         self.wrapTrigger = wrapTrigger;
 
         function run(editingSource) {
-            self.triggers.forEach(function(trigger) {
-                trigger.editingSource = editingSource;
-                trigger.watchDomComponent(editingSource.component);
-            });
-            return self.triggers;
+            var trigger = self.loader.service.getTrigger();
+            
+            trigger.editingSource = editingSource;
+            trigger.watchDomComponent(editingSource.component);
+            self.loader.triggersLoaded.push(trigger);
+
+            return trigger;
         }
 
-        function wrapTrigger(trigger) {
-            self.triggers.push(trigger);
+        function wrapTrigger(triggerService) {
+            var register = {
+                service: triggerService,
+                triggersLoaded: []
+            };
+            self.loader = register;
         }
     }
 

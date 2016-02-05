@@ -12,16 +12,16 @@
 
         /* Public interface */
         self.getInitializer = getInitializer;
-        self.registerTrigger = registerTrigger;
+        self.registerTriggerService = registerTriggerService;
 
         function getInitializer(initializerType) {
             return self.initializers[initializerType];
         }
 
-        function registerTrigger(trigger) {
+        function registerTriggerService(triggerService) {
             var triggerInitializer = TriggerInitializerFactory.produceInitializer();
-            triggerInitializer.wrapTrigger(trigger);
-            self.initializers[trigger.sourceComponentType] = triggerInitializer;
+            triggerInitializer.wrapTrigger(triggerService);
+            self.initializers[triggerService.getSourceComponentType()] = triggerInitializer;
         }
     }
 

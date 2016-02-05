@@ -7,14 +7,19 @@
     InputTextTriggerService.$inject = ['EditingEventService'];
 
     function InputTextTriggerService(EditingEventService) {
-        var self = this;
-        self.trigger = new InputTextTrigger(EditingEventService);
+        var self = this,
+            sourceComponentType = 'input-text';
 
         /* Public interface */
         self.getTrigger = getTrigger;
+        self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger() {
-            return self.trigger;
+            return new InputTextTrigger(EditingEventService);
+        }
+
+        function getSourceComponentType() {
+            return sourceComponentType;
         }
     }
 
