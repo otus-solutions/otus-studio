@@ -4,24 +4,24 @@
         .module('core')
         .service('EditingEventService', EditingEventService);
 
-    function EditingEventService() {
+    EditingEventService.$inject = ['EditingEventFactory'];
+
+    function EditingEventService(EditingEventFactory) {
         var self = this;
 
-        /* PUblic interface */
-        self.handle = handle;
-        self.update = update;
+        /* Public interface */
+        self.observeEditing = observeEditing;
+        self.performEditing = performEditing;
 
-        /* Public interface implementation */
-        function handle(data) {
-            //EditingService.editData(data);
-            console.log('EditingEventHandler.handle()');
+        function observeEditing(editingSource) {
+            console.log(EditingEventFactory.createEditingEvent(editingSource));
+            console.log(editingSource);
         }
 
-        function update(data) {
-            console.log('Ocorreu uma edição!');
-            console.log(data);
+        function performEditing(editingSource) {
+            console.log(EditingEventFactory.createEditingEvent(editingSource));
+            console.log(editingSource);
         }
-
     }
 
 }());

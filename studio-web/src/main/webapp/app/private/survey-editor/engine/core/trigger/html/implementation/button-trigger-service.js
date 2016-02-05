@@ -12,8 +12,6 @@
         self.init = init;
 
         function init(element, ngModel) {
-            // var processor = new TriggerProcessor(element[0].attributes.action.nodeValue, 'action');
-
             element.on('click', function setOnFocus() {
                 // processor.storeNewState(element);
                 // processor.run();

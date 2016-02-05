@@ -30,18 +30,14 @@
         self.watchDomComponent = watchDomComponent;
 
         function watchDomComponent(domComponent) {
-            // var processor = new EventTriggerProcessorFactory(ngModel, 'update-model');
-
             var jqElement = angular.element(domComponent);
 
             jqElement.on('focus', function setOnFocus() {
-                console.log('input on focus');
-                EditingEventService.update(self.editingSource);
+                EditingEventService.observeEditing(self.editingSource);
             });
 
             jqElement.on('blur', function setOnBlur() {
-                console.log('input on blur');
-                EditingEventService.update(self.editingSource);
+                EditingEventService.performEditing(self.editingSource);
             });
         }
     }

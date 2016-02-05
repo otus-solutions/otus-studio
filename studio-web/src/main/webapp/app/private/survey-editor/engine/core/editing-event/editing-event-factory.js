@@ -9,14 +9,14 @@
         /*
          * Creates a simple EditingEvent instance
          */
-        this.create = function create(editingSource) {
+        this.createEditingEvent = function createEditingEvent(editingSource) {
             return new EditingEvent(editingSource);
         };
 
         return this;
     }
 
-    function EditingEvent(source) {
+    function EditingEvent(editingSource) {
 
         Object.defineProperty(this, 'type', {
             value: null,
@@ -24,7 +24,7 @@
         });
 
         Object.defineProperty(this, 'target', {
-            value: source.target,
+            value: editingSource.target,
             writable: false
         });
 

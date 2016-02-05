@@ -19,20 +19,22 @@
 
     function TriggerInitializer() {
         var self = this;
-        self.trigger = null;
+        self.triggers = [];
 
         /* Public interface */
         self.run = run;
         self.wrapTrigger = wrapTrigger;
 
         function run(editingSource) {
-            self.trigger.editingSource = editingSource;
-            self.trigger.watchDomComponent(editingSource.component);
-            return self.trigger;
+            self.triggers.forEach(function(trigger) {
+                trigger.editingSource = editingSource;
+                trigger.watchDomComponent(editingSource.component);
+            });
+            return self.triggers;
         }
 
         function wrapTrigger(trigger) {
-            self.trigger = trigger;
+            self.triggers.push(trigger);
         }
     }
 

@@ -4,9 +4,9 @@
         .module('core')
         .factory('TriggerProcessorFactory', TriggerProcessorFactory);
 
-    TriggerProcessorFactory.$inject = ['EditingEventFactory', 'EditingEventHandler', 'EditingStateFactory'];
+    TriggerProcessorFactory.$inject = ['EditingEventFactory', 'EditingStateFactory'];
 
-    function TriggerProcessorFactory(EditingEventFactory, EditingEventHandler, EditingStateFactory) {
+    function TriggerProcessorFactory(EditingEventFactory, EditingStateFactory) {
         return function TriggerProcessorFactory(target, eventType) {
             var type = eventType,
                 event = new EditingEventFactory();
@@ -22,7 +22,6 @@
             this.run = function run() {
                 event.target = target;
                 event.type = type;
-                EditingEventHandler.handle(event);
                 event = new EditingEventFactory();
             };
         };
