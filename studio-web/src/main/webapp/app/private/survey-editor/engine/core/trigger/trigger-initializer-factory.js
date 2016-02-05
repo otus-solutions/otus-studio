@@ -26,21 +26,17 @@
         self.wrapTrigger = wrapTrigger;
 
         function run(editingSource) {
-            var trigger = self.loader.service.getTrigger();
-            
-            trigger.editingSource = editingSource;
-            trigger.watchDomComponent(editingSource.component);
-            self.loader.triggersLoaded.push(trigger);
-
-            return trigger;
+            var newTrigger = self.loader.service.getTrigger(editingSource);
+            self.loader.triggersLoaded.push(newTrigger);
+            return newTrigger;
         }
 
         function wrapTrigger(triggerService) {
-            var register = {
+            var newLoader = {
                 service: triggerService,
                 triggersLoaded: []
             };
-            self.loader = register;
+            self.loader = newLoader;
         }
     }
 

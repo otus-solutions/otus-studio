@@ -14,8 +14,8 @@
         self.getTrigger = getTrigger;
         self.getSourceComponentType = getSourceComponentType;
 
-        function getTrigger() {
-            return new InputTextTrigger(EditingEventService);
+        function getTrigger(editingSource) {
+            return new InputTextTrigger(EditingEventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,19 +23,18 @@
         }
     }
 
-    function InputTextTrigger(EditingEventService) {
+    function InputTextTrigger(EditingEventService, editingSource) {
         var self = this;
 
         self.name = 'InputTextTrigger';
         self.tree = 'html';
         self.sourceComponentType = 'input-text';
-        self.editingSource = null;
+        self.editingSource = editingSource;
 
-        /* Public interface */
-        self.watchDomComponent = watchDomComponent;
+        watchDomComponent();
 
-        function watchDomComponent(domComponent) {
-            var jqElement = angular.element(domComponent);
+        function watchDomComponent() {
+            var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('focus', function setOnFocus() {
                 EditingEventService.observeEditing(self.editingSource);
