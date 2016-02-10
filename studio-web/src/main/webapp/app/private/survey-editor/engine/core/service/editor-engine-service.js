@@ -52,6 +52,8 @@
         }
 
         function editData(editingEvent) {
+            console.log(editingEvent);
+
             var updater = UpdaterFactory.produceUpdater(editingEvent.target);
             updater.update(editingEvent, currentSurvey);
 
