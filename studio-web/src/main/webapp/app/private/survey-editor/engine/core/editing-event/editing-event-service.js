@@ -15,12 +15,13 @@
 
         function observeEditing(editingSource) {
             editingState = EditingStateFactory.create(editingSource);
-            console.log(editingState);
         }
 
         function performEditing(editingSource) {
-            editingState = EditingStateFactory.create(editingSource);
-            console.log(editingState);
+            var editingState = EditingStateFactory.create(editingSource),
+                editingEvent = EditingEventFactory.create(editingSource, editingState);
+
+            console.log(editingEvent);
         }
     }
 

@@ -63,6 +63,26 @@
     <script src="private/main/home/ui/home-controller.js"></script>
     <script src="private/main/home/ui/toolbar-controller.js"></script>
 
+    <!-- app.private.protocol-specification -->
+    <script src="private/protocol-specification/protocol-specification-module.js"></script>
+
+    <!-- app.private.protocol-specification.artifacts -->
+    <script src="private/protocol-specification/artifacts/label-content-factory.js"></script>
+    <script src="private/protocol-specification/artifacts/label-factory.js"></script>
+
+    <!-- app.private.protocol-specification.artifacts.question -->
+    <script src="private/protocol-specification/artifacts/question/checkbox-question-factory.js"></script>
+    <script src="private/protocol-specification/artifacts/question/text-question-factory.js"></script>
+
+    <!-- app.private.protocol-specification.artifacts.survey -->
+    <script src="private/protocol-specification/artifacts/survey/survey-factory.js"></script>
+    <script src="private/protocol-specification/artifacts/survey/survey-identity-factory.js"></script>
+
+    <!-- app.private.protocol-specification.service -->
+    <script src="private/protocol-specification/service/survey-data-update-service.js"></script>
+    <script src="private/protocol-specification/service/survey-loader-service.js"></script>
+    <script src="private/protocol-specification/service/text-question-parser-service.js"></script>
+
     <!-- app.private.survey-editor -->
     <script src="private/survey-editor/editor-module.js"></script>
 
@@ -80,6 +100,7 @@
     <script src="private/survey-editor/engine/core/editing-event/editing-event-factory.js"></script>
     <script src="private/survey-editor/engine/core/editing-event/editing-event-processor-factory.js"></script>
     <script src="private/survey-editor/engine/core/editing-event/editing-event-service.js"></script>
+    <script src="private/survey-editor/engine/core/editing-event/editing-event-type-factory.js"></script>
 
     <!-- app.private.survey-editor.engine.core.editing-source -->
     <script src="private/survey-editor/engine/core/editing-source/editing-source-directive.js"></script>
@@ -92,9 +113,7 @@
 
     <!-- app.private.survey-editor.engine.core.service -->
     <script src="private/survey-editor/engine/core/service/editor-service.js"></script>
-    <script src="private/survey-editor/engine/core/service/question-service.js"></script>
     <script src="private/survey-editor/engine/core/service/studio-editor-service.js"></script>
-    <script src="private/survey-editor/engine/core/service/survey-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger -->
     <script src="private/survey-editor/engine/core/trigger/trigger-factory.js"></script>
@@ -136,25 +155,6 @@
 
     <!-- app.private.survey-editor.ui.sheet -->
     <script src="private/survey-editor/ui/sheet/sheet-controller.js"></script>
-
-    <!-- app.private.protocol-specification -->
-    <script src="private/protocol-specification/protocol-specification-module.js"></script>
-
-    <!-- app.private.protocol-specification.artifacts -->
-    <script src="private/protocol-specification/artifacts/checkbox-question-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/label-content-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/label-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/survey-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/survey-identity-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/text-question-factory.js"></script>
-
-    <!-- app.private.protocol-specification.parser -->
-    <script src="private/protocol-specification/parser/checkbox-question-parser-service.js"></script>
-
-    <!-- app.private.protocol-specification.service -->
-    <script src="private/protocol-specification/service/survey-data-update-service.js"></script>
-    <script src="private/protocol-specification/service/survey-loader-service.js"></script>
-    <script src="private/protocol-specification/service/text-question-parser-service.js"></script>
 
     <!-- app.private.survey-preview.ui.preview -->
     <script src="private/survey-preview/preview-module.js"></script>

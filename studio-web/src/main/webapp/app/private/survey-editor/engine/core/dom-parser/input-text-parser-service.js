@@ -22,7 +22,6 @@
         self.id = domComponent.attr('id');
         self.name = domComponent.attr('name');
         self.value = domComponent.val();
-        self.disabled = domComponent.attr('disabled');
     }
 
 }());

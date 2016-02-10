@@ -20,10 +20,7 @@
     }
 
     function EditingState(editingSource, DomParser) {
-        var self = this;
-
-        self.editingSource = editingSource;
-        self.domData = DomParser.parse(editingSource);
+        this.domData = DomParser.parse(editingSource);
     }
 
 }());

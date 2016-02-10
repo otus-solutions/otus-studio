@@ -5,21 +5,34 @@
         .module('editor.engine.core')
         .factory('EditingEventFactory', EditingEventFactory);
 
-    function EditingEventFactory() {
+    EditingEventFactory.$inject = ['EditingEventTypeFactory'];
+
+    function EditingEventFactory(EditingEventTypeFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
         /*
          * Creates a simple EditingEvent instance
          */
-        this.createEditingEvent = function createEditingEvent(editingSource) {
-            return new EditingEvent(editingSource);
-        };
+        function create(editingSource, newState) {
+            var eventType = EditingEventTypeFactory.get(editingSource.type);
+            return new EditingEvent(editingSource, newState, eventType);
+        }
 
         return this;
     }
 
-    function EditingEvent(editingSource) {
+    function EditingEvent(editingSource, state, eventType) {
 
-        Object.defineProperty(this, 'type', {
-            value: null,
+        Object.defineProperty(this, 'source', {
+            value: editingSource,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'state', {
+            value: state,
             writable: false
         });
 
@@ -28,18 +41,8 @@
             writable: false
         });
 
-        Object.defineProperty(this, 'modelType', {
-            value: null,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'oldState', {
-            value: null,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'newState', {
-            value: null,
+        Object.defineProperty(this, 'type', {
+            value: eventType,
             writable: false
         });
 
