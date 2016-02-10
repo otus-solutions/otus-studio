@@ -2,9 +2,9 @@
 
     angular
         .module('editor.engine.core')
-        .service('StudioEditorService', ['SurveyLoader', 'EditingService', StudioEditorService]);
+        .service('StudioEditorService', ['SurveyLoaderService', 'EditorEngineService', StudioEditorService]);
 
-    function StudioEditorService(SurveyLoader, EditingService) {
+    function StudioEditorService(SurveyLoaderService, EditorEngineService) {
         var self = this;
 
         /* Public interface */
@@ -16,16 +16,16 @@
 
         /* Public interface implementation */
         function createNewSurvey() {
-            var survey = SurveyLoader.newSurvey();
+            var survey = SurveyLoaderService.newSurvey();
             initializeEditing(survey);
         }
 
         function closeSurvey() {
-            EditingService.close();
+            EditorEngineService.close();
         }
 
         function saveSurvey() {
-            EditingService.save();
+            EditorEngineService.save();
         }
 
         function loadSurvey() {
@@ -35,12 +35,12 @@
         }
 
         function initializeEditing(survey) {
-            EditingService.init(survey);
-            EditingService.open();
+            EditorEngineService.init(survey);
+            EditorEngineService.open();
         }
 
         function getCurrentSurvey() {
-            return EditingService.getSurvey();
+            return EditorEngineService.getSurvey();
         }
 
         function getCurrentQuestion() {

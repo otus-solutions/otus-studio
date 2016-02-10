@@ -1,19 +1,33 @@
 (function() {
+    'use strict';
 
     angular
         .module('protocolSpecification')
-        .factory('LabelFactory', ['LabelContent', LabelFactory]);
+        .factory('LabelFactory', LabelFactory);
 
-    function LabelFactory(LabelContent) {
-        return function Label() {
-            this.extends = 'StudioObject';
-            this.objectType = 'Label';
-            this.oid = '';
-            this.content = [new LabelContent()];
+    LabelFactory.$inject = ['LabelContentFactory'];
 
-            this.getContent = function getContent(index) {
-                return this.content[index];
-            };
+    function LabelFactory(LabelContentFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new Label(LabelContentFactory);
+        }
+
+        return self;
+    }
+
+    function Label() {
+        this.extends = 'StudioObject';
+        this.objectType = 'Label';
+        this.oid = '';
+        this.content = [LabelContentFactory.create()];
+
+        this.getContent = function getContent(index) {
+            return this.content[index];
         };
     }
 

@@ -1,10 +1,13 @@
 (function() {
+    'use strict';
 
     angular
         .module('protocolSpecification')
-        .service('SurveyLoader', ['Survey', SurveyLoader]);
+        .service('SurveyLoaderService', SurveyLoaderService);
 
-    function SurveyLoader(Survey) {
+    SurveyLoaderService.$inject = ['SurveyFactory'];
+
+    function SurveyLoaderService(SurveyFactory) {
         var self = this;
 
         /* Public interface */
@@ -12,7 +15,7 @@
 
         /* Public interface implementation */
         function newSurvey() {
-            return new Survey();
+            return SurveyFactory.create();
         }
     }
 

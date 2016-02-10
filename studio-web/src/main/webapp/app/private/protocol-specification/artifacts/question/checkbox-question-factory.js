@@ -2,19 +2,32 @@
 
     angular
         .module('protocolSpecification')
-        .factory('CheckboxQuestionFactory', ['Label', CheckboxQuestionFactory]);
+        .factory('CheckboxQuestionFactory', CheckboxQuestionFactory);
 
-    function CheckboxQuestionFactory(Label) {
-        return function CheckboxQuestion() {
-            this.extends = 'Question';
-            this.objectType = 'CheckboxQuestion';
-            this.dataType = 'Boolean';
-            this.oid = '';
-            this.labels = [new Label()];
+    CheckboxQuestionFactory.$inject = ['LabelFactory'];
 
-            this.getLabel = function getLabel(index) {
-                return this.labels[index];
-            };
+    function CheckboxQuestionFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.crate = create;
+
+        function create() {
+            return new CheckboxQuestion(LabelFactory);
+        }
+
+        return self;
+    }
+
+    function CheckboxQuestion(LabelFactory) {
+        this.extends = 'Question';
+        this.objectType = 'CheckboxQuestion';
+        this.dataType = 'Boolean';
+        this.oid = '';
+        this.labels = [LabelFactory.create()];
+
+        this.getLabel = function getLabel(index) {
+            return this.labels[index];
         };
     }
 

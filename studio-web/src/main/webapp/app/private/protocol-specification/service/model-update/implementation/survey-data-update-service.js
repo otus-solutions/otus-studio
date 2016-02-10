@@ -2,9 +2,9 @@
 
     angular
         .module('protocolSpecification')
-        .service('SurveyDataUpdater', ['StringNormalizer', 'TextQuestionParser', 'CheckboxQuestionParser', SurveyDataUpdater]);
+        .service('SurveyDataUpdater', ['StringNormalizer', 'TextQuestionParser', SurveyDataUpdater]);
 
-    function SurveyDataUpdater(StringNormalizer, TextQuestionParser, CheckboxQuestionParser) {
+    function SurveyDataUpdater(StringNormalizer, TextQuestionParser) {
         const NAME = 1;
         const PROPERTY = 2;
 

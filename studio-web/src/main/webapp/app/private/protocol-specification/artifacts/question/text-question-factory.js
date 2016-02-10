@@ -1,20 +1,34 @@
 (function() {
+    'use strict';
 
     angular
         .module('protocolSpecification')
-        .factory('TextQuestionFactory', ['Label', TextQuestionFactory]);
+        .factory('TextQuestionFactory', TextQuestionFactory);
 
-    function TextQuestionFactory(Label) {
-        return function TextQuestion() {
-            this.extends = 'Question';
-            this.objectType = 'TextQuestion';
-            this.dataType = 'String';
-            this.oid = '';
-            this.labels = [new Label()];
+    TextQuestionFactory.$inject = ['LabelFactory'];
 
-            this.getLabel = function getLabel(index) {
-                return this.labels[index];
-            };
+    function TextQuestionFactory(LabelFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new TextQuestion(LabelFactory);
+        }
+
+        return self;
+    }
+
+    function TextQuestion(Label) {
+        this.extends = 'Question';
+        this.objectType = 'TextQuestion';
+        this.dataType = 'String';
+        this.oid = '';
+        this.labels = [LabelFactory.create()];
+
+        this.getLabel = function getLabel(index) {
+            return this.labels[index];
         };
     }
 

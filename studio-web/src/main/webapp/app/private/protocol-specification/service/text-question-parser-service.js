@@ -2,15 +2,15 @@
 
     angular
         .module('protocolSpecification')
-        .service('TextQuestionParser', ['TextQuestion', TextQuestionParser]);
+        .service('TextQuestionParser', ['TextQuestionFactory', TextQuestionParser]);
 
-    function TextQuestionParser(TextQuestion) {
+    function TextQuestionParser(TextQuestionFactory) {
         var self = this;
 
         self.fromDom = fromDom;
 
         function fromDom(dom) {
-            var question = new TextQuestion();
+            var question = TextQuestionFactory.create();
             question.labels[0].content[0].text = dom.children[0].children[0].children[1].value;
             return question;
         }

@@ -1,18 +1,32 @@
 (function() {
+    'use strict';
 
     angular
         .module('protocolSpecification')
-        .factory('SurveyFactory', ['SurveyIdentity', SurveyFactory]);
+        .factory('SurveyFactory', SurveyFactory);
 
-    function SurveyFactory(SurveyIdentity) {
-        return function Survey() {
-            this.objectType = 'Survey';
-            this.identity = new SurveyIdentity();
-            this.questions = [];
+    SurveyFactory.$inject = ['SurveyIdentityFactory'];
 
-            this.getQuestion = function getQuestion(index) {
-                return this.questions[index];
-            };
+    function SurveyFactory(SurveyIdentityFactory) {
+        var self = this;
+
+        /* Public interdace */
+        self.create = create;
+
+        function create() {
+            return new Survey(SurveyIdentityFactory);
+        }
+
+        return self;
+    }
+
+    function Survey(SurveyIdentityFactory) {
+        this.objectType = 'Survey';
+        this.identity = SurveyIdentityFactory.create();
+        this.questions = [];
+
+        this.getQuestion = function getQuestion(index) {
+            return this.questions[index];
         };
     }
 
