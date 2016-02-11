@@ -13,23 +13,48 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new TextQuestion(LabelFactory);
+        function create(oid) {
+            return new TextQuestion(oid, LabelFactory);
         }
 
         return self;
     }
 
-    function TextQuestion(LabelFactory) {
-        this.extends = 'Question';
-        this.objectType = 'TextQuestion';
-        this.dataType = 'String';
-        this.oid = '';
-        this.labels = [LabelFactory.create()];
+    function TextQuestion(oid, LabelFactory) {
+        var self = this;
 
-        this.getLabel = function getLabel(index) {
-            return this.labels[index];
-        };
+        Object.defineProperty(this, 'extends', {
+            value: 'Question',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'TextQuestion',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'dataType', {
+            value: 'String',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: 'oid',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'labels', {
+            value: [],
+            /* LabelFactory.create() */
+            writable: false
+        });
+
+        /* Public interface */
+        self.getLabel = getLabel;
+
+        function getLabel(index) {
+            return self.labels[index];
+        }
     }
 
 }());
