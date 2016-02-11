@@ -20,7 +20,7 @@
         return self;
     }
 
-    function TextQuestion(Label) {
+    function TextQuestion(LabelFactory) {
         this.extends = 'Question';
         this.objectType = 'TextQuestion';
         this.dataType = 'String';

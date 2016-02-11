@@ -5,10 +5,13 @@
         .module('protocolSpecification')
         .service('UpdaterMapService', UpdaterMapService);
 
-    function UpdaterMapService(SurveyIdentityUpdateService) {
+    UpdaterMapService.$inject = ['SurveyIdentityUpdateService', 'SurveyQuestionsUpdateService'];
+
+    function UpdaterMapService(SurveyIdentityUpdateService, SurveyQuestionsUpdateService) {
         var self = this,
             updaterMap = {
-                'SurveyIdentityUpdateService': SurveyIdentityUpdateService
+                'SurveyIdentityUpdateService': SurveyIdentityUpdateService,
+                'SurveyQuestionsUpdateService': SurveyQuestionsUpdateService
             };
 
         /* Public interface */

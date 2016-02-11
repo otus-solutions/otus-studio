@@ -16,7 +16,8 @@
                         recommendedTo: 'SurveyIdentityUpdateService',
                         description: 'SurveyIdentityUpdateService',
                         keywords: 'SurveyIdentityUpdateService'
-                    }
+                    },
+                    questions: 'SurveyQuestionsUpdateService'
                 }
             };
 

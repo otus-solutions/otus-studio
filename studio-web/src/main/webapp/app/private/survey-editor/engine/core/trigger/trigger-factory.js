@@ -16,7 +16,7 @@
             inputNumber: HtmlTriggerFactory,
             inputEmail: HtmlTriggerFactory,
             textArea: HtmlTriggerFactory,
-            button: HtmlTriggerFactory
+            addButton: HtmlTriggerFactory
 
             /* Question */
             /*

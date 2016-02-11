@@ -1,0 +1,141 @@
+<md-content id="sheet" layout="column" flex ng-controller="SheetController">
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+        <ui-accordion title="Questão Choice" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
+                <!-- Template da questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" class="label-container" layout-align="left center">
+                        <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da questão"></div>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding">
+                                <single-selection-question></single-selection-question>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da questão -->
+            </ui-accordion-content>
+        </ui-accordion>
+    </md-whiteframe>
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+        <ui-accordion title="Questão Numérica" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
+                <!-- Template da questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" class="label-container" layout-align="left center">
+                        <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da questão"></div>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding">
+                                <numeric-question></numeric-question>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da questão -->
+            </ui-accordion-content>
+        </ui-accordion>
+    </md-whiteframe>
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+        <ui-accordion title="Questão de Tempo" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
+                <md-content class="question-editor-container" layout="column">
+                    <!-- Template da questão -->
+                    <md-content layout="column" flex>
+                        <div layout="row" class="label-container" layout-align="left center">
+                            <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da questão"></div>
+                        </div>
+                        <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                            <md-tab label="Resposta">
+                                <md-content class="md-padding">
+                                    <time-question></time-question>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="Metadado">
+                                <md-content class="md-padding"></md-content>
+                            </md-tab>
+                            <md-tab label="Comentário">
+                                <md-content class="md-padding"></md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-content>
+                    <!-- /Template da questão -->
+                </md-content>
+            </ui-accordion-content>
+        </ui-accordion>
+    </md-whiteframe>
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+        <ui-accordion title="Questão Data" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
+                <md-content class="question-editor-container" layout="column">
+                    <!-- Template da questão -->
+                    <md-content layout="column" flex>
+                        <div layout="row" class="label-container" layout-align="left center">
+                            <div flex contenteditable="true" edit-placeholder="Clique para inserir o texto da questão"></div>
+                        </div>
+                        <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                            <md-tab label="Resposta">
+                                <md-content class="md-padding">
+                                    <calendar-question></calendar-question>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="Metadado">
+                                <md-content class="md-padding"></md-content>
+                            </md-tab>
+                            <md-tab label="Comentário">
+                                <md-content class="md-padding"></md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-content>
+                    <!-- /Template da questão -->
+                </md-content>
+            </ui-accordion-content>
+        </ui-accordion>
+    </md-whiteframe>
+    <!-- Container de edição da questão -->
+    <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+        <ui-accordion title="Questão Texto" flex>
+            <ui-accordion-content layout="column" layout-padding flex>
+                <!-- Template da questão -->
+                <md-content layout="column" flex>
+                    <div layout="row" class="label-container" layout-align="left center">
+                        <div flex contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da label"></div>
+                    </div>
+                    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                        <md-tab label="Resposta">
+                            <md-content class="md-padding">
+                                <text-question></text-question>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Metadado">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                        <md-tab label="Comentário">
+                            <md-content class="md-padding"></md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+                <!-- /Template da questão -->
+            </ui-accordion-content>
+        </ui-accordion>
+    </md-whiteframe>
+</md-content>

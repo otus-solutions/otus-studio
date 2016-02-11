@@ -1,10 +1,13 @@
 (function() {
+    'use strict';
 
     angular
         .module('editor.engine.core')
-        .service('StudioEditorService', ['SurveyLoaderService', 'EditorEngineService', StudioEditorService]);
+        .service('StudioEditorService', StudioEditorService);
 
-    function StudioEditorService(SurveyLoaderService, EditorEngineService) {
+    StudioEditorService.$inject = ['SurveyEditorService'];
+
+    function StudioEditorService(SurveyEditorService) {
         var self = this;
 
         /* Public interface */
@@ -12,39 +15,26 @@
         self.closeSurvey = closeSurvey;
         self.loadSurvey = loadSurvey;
         self.getCurrentSurvey = getCurrentSurvey;
-        self.getCurrentQuestion = getCurrentQuestion;
 
         /* Public interface implementation */
         function createNewSurvey() {
-            var survey = SurveyLoaderService.newSurvey();
-            initializeEditing(survey);
+            var survey = SurveyEditorService.initializeNewSurvey();
         }
 
         function closeSurvey() {
-            EditorEngineService.close();
+            SurveyEditorService.close();
         }
 
         function saveSurvey() {
-            EditorEngineService.save();
+            SurveyEditorService.save();
         }
 
         function loadSurvey() {
-            // A persisted survey object should be load here.
-            // var survey = SurveyLoader.loadSurvey();
-            // initializeEditing(survey);
-        }
-
-        function initializeEditing(survey) {
-            EditorEngineService.init(survey);
-            EditorEngineService.open();
+            SurveyEditorService.loadSurvey();
         }
 
         function getCurrentSurvey() {
             return EditorEngineService.getSurvey();
-        }
-
-        function getCurrentQuestion() {
-
         }
 
     }

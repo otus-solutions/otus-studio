@@ -20,7 +20,7 @@
         return self;
     }
 
-    function Label() {
+    function Label(LabelContentFactory) {
         this.extends = 'StudioObject';
         this.objectType = 'Label';
         this.oid = '';

@@ -8,7 +8,7 @@
 
     function ToolbarController($scope, $location, $mdDialog, $window, $http, StudioEditorService) {
 
-        var NEW_SURVEY = 'container';
+        var NEW_SURVEY = 'editor';
         var USER_MANAGEMENT_STATE = 'user-management';
         var REPOSITORY_CONNECT_STATE = 'repository?actionType=CONNECT';
         var REPOSITORY_NEW_STATE = 'repository?actionType=NEW';

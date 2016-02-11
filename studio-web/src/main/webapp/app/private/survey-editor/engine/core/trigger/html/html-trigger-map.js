@@ -13,7 +13,7 @@
 
     function HtmlTriggerMap(ButtonTriggerService, InputTextTriggerService) {
         return {
-            /*ButtonTriggerService: ButtonTriggerService,*/
+            ButtonTriggerService: ButtonTriggerService,
             InputTextTriggerService: InputTextTriggerService
         };
     }

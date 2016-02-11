@@ -9,7 +9,8 @@
         var self = this;
 
         var eventTypeMap = {
-            'input-text': 'SET_VALUE'
+            'input-text': 'SET_VALUE',
+            'add-button': 'ADD_DATA'
         };
 
         /* Public interface */

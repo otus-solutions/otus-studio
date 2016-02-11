@@ -18,7 +18,12 @@
 
         function parse(editingSource) {
             var parser = parserMap[editingSource.type];
-            return parser.parse(editingSource.component);
+
+            if (parser) {
+                return parser.parse(editingSource.component);
+            }
+            
+            return null;
         }
     }
 
