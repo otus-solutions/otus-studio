@@ -27,7 +27,6 @@
 
         function addQuestion(question) {
             var widget = WidgetService.getWidgetForModel(question);
-
             requestEditorWidget(widget);
         }
 
@@ -41,10 +40,7 @@
 
         function loadTemplate(templateUrl, scopeData, callback) {
             $templateRequest(templateUrl).then(function(html) {
-                $scope.question = scopeData;
-                $scope.questionIndex = scopeData.model.oid;
-                $scope.questionHtml = scopeData.template;
-
+                $scope.questionWidget = scopeData;
                 var template = compileTemplate(html);
                 if (callback) callback(template);
             });
