@@ -4,7 +4,7 @@
         .module('editor.engine.ui')
         .directive('surveyPage', surveyPage);
 
-    surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'TextQuestionWidgetFactory', 'SurveyComponentsService'];
+    surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'WidgetService'];
 
     function surveyPage() {
         var ddo = {
@@ -17,7 +17,7 @@
     /*
      * Directive's controller implementation
      */
-    function SurveyPageController($scope, $compile, $templateRequest, $templateCache, $element, TextQuestionWidgetFactory, SurveyComponentsService) {
+    function SurveyPageController($scope, $compile, $templateRequest, $templateCache, $element, WidgetService) {
         const QUESTION_EDITOR_TEMPLATE_URL = 'private/survey-editor/ui/template/question-editor-template.html';
 
         var self = this;
@@ -26,8 +26,8 @@
         self.addQuestion = addQuestion;
 
         function addQuestion(question) {
-            var widget = TextQuestionWidgetFactory.create(question);
-            widget.template = SurveyComponentsService.TEXT_QUESTION_DIRECTIVE;
+            var widget = WidgetService.getWidgetForModel(question);
+
             requestEditorWidget(widget);
         }
 

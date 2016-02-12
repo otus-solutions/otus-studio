@@ -13,16 +13,16 @@
             scope: {
                 control: '='
             },
-            link: function linkImpl(scope, element, attrs, surveyPageController, transcludeFn) {
+            link: function linkImpl(scope, element, attrs, surveyPageDirectiveController, transcludeFn) {
                 scope.internalControl = scope.control || {};
 
                 scope.internalControl.addText = function addText() {
                     var question = SurveyQuestionEditorService.createTextQuestion();
-                    surveyPageController.addQuestion(question);
+                    surveyPageDirectiveController.addQuestion(question);
                 };
 
                 scope.internalControl.addCheckbox = function addCheckbox() {
-                    surveyPageController.addQuestion('private/studio/edit/survey/question/checkbox-question-template.html');
+                    surveyPageDirectiveController.addQuestion('private/studio/edit/survey/question/checkbox-question-template.html');
                 };
             }
         };

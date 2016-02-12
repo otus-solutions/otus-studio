@@ -5,10 +5,18 @@
         .service('SurveyComponentsService', SurveyComponentsService);
 
     function SurveyComponentsService() {
-        var self = this;
+        var self = this,
+
+            directiveTemplates = {
+                'TextQuestion': '<text-question></text-question>'
+            };
 
         /* Public interface */
-        self.TEXT_QUESTION_DIRECTIVE = '<text-question></text-question>';
+        self.getDirectiveTemplate = getDirectiveTemplate;
+
+        function getDirectiveTemplate(directive) {
+            return directiveTemplates[directive];
+        }
     }
 
 }());
