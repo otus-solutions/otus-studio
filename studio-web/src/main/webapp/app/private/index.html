@@ -31,25 +31,42 @@
     <!-- Moment.js, needs to refactor - install via NPM -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 
-    <!-- UI Components -->
+    <!-- ************************************* UI Components ************************************* -->
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
 
-    <!-- Survey Components -->
-    <script src="shared/survey-components/questions/survey-module.js"></script>
+    <!-- *********************************** Survey Components *********************************** -->
+    <!-- survey-components -->
+    <script src="shared/survey-components/survey-components-module.js"></script>
+    <script src="shared/survey-components/survey-components-service.js"></script>
+
+    <!-- survey-components.questions -->
+    <script src="shared/survey-components/questions/survey-questions-module.js"></script>
+
+    <!-- survey-components.questions.calendar -->
     <script src="shared/survey-components/questions/calendar/calendar-directive.js"></script>
+
+    <!-- survey-components.questions.numeric -->
     <script src="shared/survey-components/questions/numeric/numeric-directive.js"></script>
+
+    <!-- survey-components.questions.single-selection -->
     <script src="shared/survey-components/questions/single-selection/single-selection-directive.js"></script>
+
+    <!-- survey-components.questions.text -->
     <script src="shared/survey-components/questions/text/text-directive.js"></script>
     <script src="shared/survey-components/questions/text/text-question-widget-factory.js"></script>
+
+    <!-- survey-components.questions.time-question -->
     <script src="shared/survey-components/questions/time-question/time-question-directive.js"></script>
 
+    <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="shared/utils-module.js"></script>
 
-    <!-- Assets -->
+    <!-- **************************************** Assets ***************************************** -->
     <link href="assets/styles.css" rel="stylesheet"/>
 
+    <!-- ************************************** Application ************************************** -->
     <!-- app -->
     <script src="app.js"></script>
 
@@ -127,6 +144,7 @@
     <script src="private/survey-editor/engine/core/service/editor-engine-service.js"></script>
     <script src="private/survey-editor/engine/core/service/studio-editor-service.js"></script>
     <script src="private/survey-editor/engine/core/service/survey-editor-service.js"></script>
+    <script src="private/survey-editor/engine/core/service/survey-question-editor-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger -->
     <script src="private/survey-editor/engine/core/trigger/trigger-factory.js"></script>

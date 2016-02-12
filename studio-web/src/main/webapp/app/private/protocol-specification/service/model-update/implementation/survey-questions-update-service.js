@@ -12,9 +12,9 @@
 
         /* Public interface implementation */
         function update(editingEvent, survey) {
-            console.log(editingEvent);
-            console.log(survey);
-            console.log('questions updated!');
+            // console.log(editingEvent);
+            // console.log(survey);
+            // console.log('questions updated!');
         }
     }
 

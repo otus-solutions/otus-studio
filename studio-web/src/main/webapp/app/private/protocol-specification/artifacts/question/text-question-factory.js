@@ -39,7 +39,7 @@
         });
 
         Object.defineProperty(this, 'oid', {
-            value: 'oid',
+            value: oid,
             writable: false
         });
 

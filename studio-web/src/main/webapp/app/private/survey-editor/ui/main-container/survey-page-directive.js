@@ -4,7 +4,7 @@
         .module('editor.ui')
         .directive('surveyPage', surveyPage);
 
-    surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'TextQuestionWidgetFactory'];
+    surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'TextQuestionWidgetFactory', 'SurveyComponentsService'];
 
     function surveyPage() {
         var ddo = {
@@ -17,7 +17,7 @@
     /*
      * Directive's controller implementation
      */
-    function SurveyPageController($scope, $compile, $templateRequest, $templateCache, $element, TextQuestionWidgetFactory) {
+    function SurveyPageController($scope, $compile, $templateRequest, $templateCache, $element, TextQuestionWidgetFactory, SurveyComponentsService) {
         const QUESTION_EDITOR_TEMPLATE_URL = 'private/survey-editor/ui/template/question-editor-template.html';
 
         var self = this;
@@ -26,28 +26,47 @@
         self.addQuestion = addQuestion;
 
         function addQuestion(question) {
-            loadTemplate(TextQuestionWidgetFactory.TEMPLATE_URL, function(widgetTemplate) {
-                var widget = TextQuestionWidgetFactory.create(question);
-                widget.template = widgetTemplate[0].innerHTML;
-
-                loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, function(editorTemplate) {
-                    $element.append(editorTemplate);
-                }, widget);
+            requestQuestionWidget(question, function(questionWidget) {
+                requestEditorWidget(questionWidget);
             });
         }
 
-        function loadTemplate(templateUrl, callback, data) {
+        function requestQuestionWidget(question, callback) {
+            loadTemplate(TextQuestionWidgetFactory.TEMPLATE_URL, function(widgetTemplate) {
+                var widget = TextQuestionWidgetFactory.create(question);
+                widget.template = widgetTemplate;
+                callback(widget);
+            });
+        }
+
+        function requestEditorWidget(questionWidget) {
+            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, function(editorWidget) {
+                $element.append(editorWidget);
+            }, questionWidget);
+        }
+
+        function loadTemplate(templateUrl, callback, scopeData) {
             $templateRequest(templateUrl).then(function(html) {
-                if (data) {
-                    $scope.question = data;
-                    $scope.questionHtml = data.template;
+                if (scopeData) {
+                    $scope.question = scopeData;
+                    if (scopeData.template) {
+                        $scope.questionIndex = scopeData.model.oid;
+                        $scope.questionHtml = '<text-question></text-question>';
+                    }
                 }
 
-                var compileResult = $compile(html)($scope),
-                    template = angular.element(compileResult);
+                var template = compileTemplate(html);
 
-                callback(template);
+                if (callback) callback(template);
             });
+        }
+
+        function compileTemplate(html) {
+            return $compile(html)($scope);
+        }
+
+        function element(data) {
+            return angular.element(data);
         }
     }
 

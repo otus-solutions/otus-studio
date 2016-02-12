@@ -4,9 +4,9 @@
         .module('editor.ui')
         .directive('templateLoader', templateLoader);
 
-    templateLoader.$inject = ['$compile', '$templateRequest', '$templateCache', 'TextQuestionFactory'];
+    templateLoader.$inject = ['$compile', '$templateRequest', '$templateCache', 'SurveyQuestionEditorService'];
 
-    function templateLoader($compile, $templateRequest, $templateCache, TextQuestionFactory) {
+    function templateLoader($compile, $templateRequest, $templateCache, SurveyQuestionEditorService) {
         var ddo = {
             restrict: 'A',
             require: '^surveyPage',
@@ -17,7 +17,8 @@
                 scope.internalControl = scope.control || {};
 
                 scope.internalControl.addText = function addText() {
-                    surveyPageController.addQuestion(TextQuestionFactory.create(1));
+                    var question = SurveyQuestionEditorService.createTextQuestion();
+                    surveyPageController.addQuestion(question);
                 };
 
                 scope.internalControl.addCheckbox = function addCheckbox() {

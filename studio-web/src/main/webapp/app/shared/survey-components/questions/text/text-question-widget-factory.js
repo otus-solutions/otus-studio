@@ -24,6 +24,11 @@
     function TextQuestionWidget(model) {
         var self = this;
 
+        Object.defineProperty(this, 'model', {
+            value: model,
+            writable: false
+        });
+
         Object.defineProperty(this, 'type', {
             value: model.objectType,
             writable: false

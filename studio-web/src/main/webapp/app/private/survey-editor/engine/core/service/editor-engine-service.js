@@ -44,6 +44,7 @@
         }
 
         function getSurvey() {
+            return currentSurvey;
             // return surveyMemoryCache.getMostRecentState().data;
         }
 
@@ -52,12 +53,12 @@
         }
 
         function editData(editingEvent) {
-            console.log(editingEvent);
+            // console.log(editingEvent);
 
             var updater = UpdaterFactory.produceUpdater(editingEvent.target);
             updater.update(editingEvent, currentSurvey);
 
-            console.log(currentSurvey);
+            // console.log(currentSurvey);
             // generalEditingMemoryCache.storeState(editingEvent);
         }
     }
