@@ -1,19 +1,19 @@
 <div id="survey-questions" layout="column">
     <md-button class="md-raised md-primary">Questions</md-button>
     <div ng-show="true" layout="column">
+        <md-button class="md-primary" ng-click="binding.addCalendar()"
+            editing-source
+            es-type="add-button"
+            es-id="survey-questions-add-checkbox-question"
+            es-target="survey.questions">
+            Calendário
+        </md-button>
         <md-button class="md-primary" ng-click="binding.addText()"
             editing-source
             es-type="add-button"
             es-id="survey-questions-add-text-question"
             es-target="survey.questions">
-            Text
-        </md-button>
-        <md-button class="md-primary"
-            editing-source
-            es-type="add-button"
-            es-id="survey-questions-add-checkbox-question"
-            es-target="survey.questions">
-            Checkbox
+            Texto
         </md-button>
     </div>
 </div>

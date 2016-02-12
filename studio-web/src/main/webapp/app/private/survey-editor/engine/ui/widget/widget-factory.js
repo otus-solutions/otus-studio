@@ -5,13 +5,23 @@
         .module('editor.engine.ui')
         .factory('WidgetFactory', WidgetFactory);
 
-    WidgetFactory.$inject = ['TextQuestionWidgetFactory'];
+    WidgetFactory.$inject = [
+        'CalendarQuestionWidgetFactory',
+        'NumericQuestionWidgetFactory',
+        'SingleSelectionQuestionWidgetFactory',
+        'TextQuestionWidgetFactory',
+        'TimeQuestionWidgetFactory'
+    ];
 
-    function WidgetFactory(TextQuestionWidgetFactory) {
+    function WidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
         var self = this,
 
             widgetFactories = {
-                'TextQuestion': TextQuestionWidgetFactory
+                'CalendarQuestion': CalendarQuestionWidgetFactory,
+                'NumericQuestion': NumericQuestionWidgetFactory,
+                'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
+                'TextQuestion': TextQuestionWidgetFactory,
+                'TimeQuestion': TimeQuestionWidgetFactory,
             };
 
         /* Public interface */

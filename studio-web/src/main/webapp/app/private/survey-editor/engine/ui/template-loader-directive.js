@@ -16,13 +16,14 @@
             link: function linkImpl(scope, element, attrs, surveyPageDirectiveController, transcludeFn) {
                 scope.internalControl = scope.control || {};
 
-                scope.internalControl.addText = function addText() {
-                    var question = SurveyQuestionEditorService.createTextQuestion();
+                scope.internalControl.addCalendar = function addCalendar() {
+                    var question = SurveyQuestionEditorService.createCalendarQuestion();
                     surveyPageDirectiveController.addQuestion(question);
                 };
 
-                scope.internalControl.addCheckbox = function addCheckbox() {
-                    surveyPageDirectiveController.addQuestion('private/studio/edit/survey/question/checkbox-question-template.html');
+                scope.internalControl.addText = function addText() {
+                    var question = SurveyQuestionEditorService.createTextQuestion();
+                    surveyPageDirectiveController.addQuestion(question);
                 };
             }
         };

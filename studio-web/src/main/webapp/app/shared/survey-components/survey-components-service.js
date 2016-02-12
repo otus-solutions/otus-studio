@@ -8,7 +8,11 @@
         var self = this,
 
             directiveTemplates = {
-                'TextQuestion': '<text-question></text-question>'
+                'CalendarQuestion': '<calendar-question></calendar-question>',
+                'NumericQuestion': '<numeric-question></numeric-question>',
+                'SingleSelectionQuestion': '<single-selection-question></single-selection-question>',
+                'TextQuestion': '<text-question></text-question>',
+                'TimeQuestion': '<time-question></time-question>',
             };
 
         /* Public interface */

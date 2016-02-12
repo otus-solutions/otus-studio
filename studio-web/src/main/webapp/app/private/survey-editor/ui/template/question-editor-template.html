@@ -1,6 +1,6 @@
 <!-- Editor container -->
 <md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
-    <ui-accordion title="{{questionWidget.type}}" flex>
+    <ui-accordion title="{{::questionWidget.type}}" flex>
         <ui-accordion-content layout="column" layout-padding flex>
             <md-content layout="column" flex>
                 <div layout="row" class="label-container" layout-align="left center">
@@ -12,7 +12,7 @@
                 </div>
                 <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                     <md-tab label="Resposta">
-                        <md-content class="md-padding" bind-html-compile="questionWidget.template"></md-content>
+                        <md-content class="md-padding" bind-html-compile="::questionWidget.template"></md-content>
                     </md-tab>
                     <md-tab label="Metadado">
                         <md-content class="md-padding"></md-content>
