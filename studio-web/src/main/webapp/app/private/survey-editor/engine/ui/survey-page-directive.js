@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('editor.ui')
+        .module('editor.engine.ui')
         .directive('surveyPage', surveyPage);
 
     surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'TextQuestionWidgetFactory', 'SurveyComponentsService'];
@@ -26,37 +26,26 @@
         self.addQuestion = addQuestion;
 
         function addQuestion(question) {
-            requestQuestionWidget(question, function(questionWidget) {
-                requestEditorWidget(questionWidget);
-            });
-        }
-
-        function requestQuestionWidget(question, callback) {
-            loadTemplate(TextQuestionWidgetFactory.TEMPLATE_URL, function(widgetTemplate) {
-                var widget = TextQuestionWidgetFactory.create(question);
-                widget.template = widgetTemplate;
-                callback(widget);
-            });
+            var widget = TextQuestionWidgetFactory.create(question);
+            widget.template = SurveyComponentsService.TEXT_QUESTION_DIRECTIVE;
+            requestEditorWidget(widget);
         }
 
         function requestEditorWidget(questionWidget) {
-            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, function(editorWidget) {
-                $element.append(editorWidget);
-            }, questionWidget);
+            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, questionWidget, appendEditorWidget);
         }
 
-        function loadTemplate(templateUrl, callback, scopeData) {
+        function appendEditorWidget(editorWidget) {
+            $element.append(editorWidget);
+        }
+
+        function loadTemplate(templateUrl, scopeData, callback) {
             $templateRequest(templateUrl).then(function(html) {
-                if (scopeData) {
-                    $scope.question = scopeData;
-                    if (scopeData.template) {
-                        $scope.questionIndex = scopeData.model.oid;
-                        $scope.questionHtml = '<text-question></text-question>';
-                    }
-                }
+                $scope.question = scopeData;
+                $scope.questionIndex = scopeData.model.oid;
+                $scope.questionHtml = scopeData.template;
 
                 var template = compileTemplate(html);
-
                 if (callback) callback(template);
             });
         }

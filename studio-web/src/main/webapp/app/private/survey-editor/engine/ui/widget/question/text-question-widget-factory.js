@@ -2,14 +2,11 @@
     'use strict';
 
     angular
-        .module('survey.questions')
+        .module('editor.engine.ui')
         .factory('TextQuestionWidgetFactory', TextQuestionWidgetFactory);
 
-    TextQuestionWidgetFactory.$inject = ['$compile', '$templateRequest', '$templateCache'];
-
-    function TextQuestionWidgetFactory($compile, $templateRequest, $templateCache) {
+    function TextQuestionWidgetFactory() {
         var self = this;
-        self.TEMPLATE_URL = 'shared/survey-components/questions/text/text-question-template.html';
 
         /* Public interface */
         self.create = create;

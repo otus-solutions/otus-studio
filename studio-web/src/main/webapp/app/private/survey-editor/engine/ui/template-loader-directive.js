@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('editor.ui')
+        .module('editor.engine.ui')
         .directive('templateLoader', templateLoader);
 
     templateLoader.$inject = ['$compile', '$templateRequest', '$templateCache', 'SurveyQuestionEditorService'];

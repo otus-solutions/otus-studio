@@ -1,14 +1,14 @@
 (function() {
 
     angular
-        .module('editor.ui')
-        .service('SharedDataService', SharedDataService);
+        .module('editor.engine.ui')
+        .service('UIDataService', UIDataService);
 
     /*
      *    This service is used only for share the variable
      *    binding between differents instances of the ContainerController
      */
-    function SharedDataService() {
+    function UIDataService() {
         return {
             binding: ''
         };

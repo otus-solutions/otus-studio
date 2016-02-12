@@ -4,10 +4,10 @@
         .module('editor.ui')
         .controller('MainContainerController', MainContainerController);
 
-    MainContainerController.$inject = ['$scope', 'SharedDataService'];
+    MainContainerController.$inject = ['$scope', 'UIDataService'];
 
-    function MainContainerController($scope, SharedDataService) {
-        $scope.binding = SharedDataService;
+    function MainContainerController($scope, UIDataService) {
+        $scope.binding = UIDataService;
     }
 
 }());
