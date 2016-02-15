@@ -5,7 +5,7 @@
         .service('SurveyQuestionEditorService', SurveyQuestionEditorService);
 
     SurveyQuestionEditorService.$inject = [
-        'EditorEngineService',
+        'SurveyEditorService',
         'CalendarQuestionFactory',
         'NumericQuestionFactory',
         'SingleSelectionQuestionFactory',
@@ -13,7 +13,7 @@
         'TimeQuestionFactory'
     ];
 
-    function SurveyQuestionEditorService(EditorEngineService, CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory) {
+    function SurveyQuestionEditorService(SurveyEditorService, CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory) {
         var self = this;
 
         /* Public interface */
@@ -44,7 +44,7 @@
         }
 
         function createQuestion(questionFactory) {
-            var survey = EditorEngineService.getSurvey(),
+            var survey = SurveyEditorService.getCurrentSurvey(),
                 oid = survey.questions.length,
                 question = questionFactory.create(oid);
 

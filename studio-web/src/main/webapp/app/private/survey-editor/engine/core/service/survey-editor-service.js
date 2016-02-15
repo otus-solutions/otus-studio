@@ -5,23 +5,25 @@
         .module('editor.engine.core')
         .service('SurveyEditorService', SurveyEditorService);
 
-    SurveyEditorService.$inject = ['SurveyLoaderService', 'EditorEngineService', 'TextQuestionFactory'];
+    SurveyEditorService.$inject = ['SurveyLoaderService', 'UpdaterFactory'];
 
-    function SurveyEditorService(SurveyLoaderService, EditorEngineService, TextQuestionFactory) {
+    function SurveyEditorService(SurveyLoaderService, UpdaterFactory) {
         var self = this,
             currentSurvey = null;
             self.currentQuestionList = [];
 
         /* Public interface */
         self.initializeNewSurvey = initializeNewSurvey;
-        self.addQuestion = addQuestion;
+        self.getCurrentSurvey = getCurrentSurvey;
+        self.editData = editData;
 
         function initializeNewSurvey() {
             currentSurvey = SurveyLoaderService.newSurvey();
-            EditorEngineService.init(currentSurvey);
-            EditorEngineService.open();
             self.currentQuestionList = [];
             console.info('New survey initialized.');
+
+            // surveyMemoryCache = new MemoryManagement();
+            // generalEditingMemoryCache = new MemoryManagement(GENERAL_MEM_SIZE);
         }
 
         function closeSurvey() {
@@ -42,13 +44,17 @@
         }
 
         function getCurrentSurvey() {
-            return EditorEngineService.getSurvey();
+            return currentSurvey;
         }
 
-        function addQuestion(type) {
-            self.currentQuestionList.push(TextQuestionFactory.create());
-            console.info(type + ' question added.');
-            console.log(self.currentQuestionList);
+        function editData(editingEvent) {
+            // console.log(editingEvent);
+
+            var updater = UpdaterFactory.produceUpdater(editingEvent.target);
+            updater.update(editingEvent, currentSurvey);
+
+            // console.log(currentSurvey);
+            // generalEditingMemoryCache.storeState(editingEvent);
         }
     }
 
