@@ -18,13 +18,32 @@
 
                 scope.internalControl.addCalendar = function addCalendar() {
                     var question = SurveyQuestionEditorService.createCalendarQuestion();
-                    surveyPageDirectiveController.addQuestion(question);
+                    addQuestion(question);
+                };
+
+                scope.internalControl.addNumeric = function addNumeric() {
+                    var question = SurveyQuestionEditorService.createNumericQuestion();
+                    addQuestion(question);
+                };
+
+                scope.internalControl.addSingleSelection = function addSingleSelection() {
+                    var question = SurveyQuestionEditorService.createSingleSelectionQuestion();
+                    addQuestion(question);
                 };
 
                 scope.internalControl.addText = function addText() {
                     var question = SurveyQuestionEditorService.createTextQuestion();
-                    surveyPageDirectiveController.addQuestion(question);
+                    addQuestion(question);
                 };
+
+                scope.internalControl.addTime = function addTime() {
+                    var question = SurveyQuestionEditorService.createTimeQuestion();
+                    addQuestion(question);
+                };
+
+                function addQuestion(question) {
+                    surveyPageDirectiveController.addQuestion(question);
+                }
             }
         };
 

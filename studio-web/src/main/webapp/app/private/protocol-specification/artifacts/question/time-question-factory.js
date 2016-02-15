@@ -3,24 +3,24 @@
 
     angular
         .module('protocolSpecification')
-        .factory('CalendarQuestionFactory', CalendarQuestionFactory);
+        .factory('TimeQuestionFactory', TimeQuestionFactory);
 
-    CalendarQuestionFactory.$inject = ['LabelFactory'];
+    TimeQuestionFactory.$inject = ['LabelFactory'];
 
-    function CalendarQuestionFactory(LabelFactory) {
+    function TimeQuestionFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid) {
-            return new CalendarQuestion(oid, LabelFactory);
+            return new TimeQuestion(oid, LabelFactory);
         }
 
         return self;
     }
 
-    function CalendarQuestion(oid, LabelFactory) {
+    function TimeQuestion(oid, LabelFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -29,12 +29,12 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'CalendarQuestion',
+            value: 'TimeQuestion',
             writable: false
         });
 
         Object.defineProperty(this, 'dataType', {
-            value: 'LocalDate',
+            value: 'LocalTime',
             writable: false
         });
 

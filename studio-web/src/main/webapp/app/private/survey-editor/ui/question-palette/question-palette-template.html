@@ -8,12 +8,33 @@
             es-target="survey.questions">
             Calendário
         </md-button>
+        <md-button class="md-primary" ng-click="binding.addNumeric()"
+            editing-source
+            es-type="add-button"
+            es-id="survey-questions-add-numeric-question"
+            es-target="survey.questions">
+            Numérica
+        </md-button>
+        <md-button class="md-primary" ng-click="binding.addSingleSelection()"
+            editing-source
+            es-type="add-button"
+            es-id="survey-questions-add-single-selection-question"
+            es-target="survey.questions">
+            Seleção simples
+        </md-button>
         <md-button class="md-primary" ng-click="binding.addText()"
             editing-source
             es-type="add-button"
             es-id="survey-questions-add-text-question"
             es-target="survey.questions">
             Texto
+        </md-button>
+        <md-button class="md-primary" ng-click="binding.addTime()"
+            editing-source
+            es-type="add-button"
+            es-id="survey-questions-add-time-question"
+            es-target="survey.questions">
+            Relógio
         </md-button>
     </div>
 </div>
