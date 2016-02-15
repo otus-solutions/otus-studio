@@ -20,9 +20,6 @@
             self.isOpened = !self.isOpened;
         }
 
-        function addTextQuestion() {
-        }
-
     }
 
 }());

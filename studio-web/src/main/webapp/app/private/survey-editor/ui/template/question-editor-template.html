@@ -8,11 +8,11 @@
                         editing-source
                         es-type="input-text"
                         es-id="survey-editor-questions"
-                        es-target="survey.questions[{{::questionWidget.questionIndex}}].labels[0].content[0].text"></div>
+                        es-target="survey.questions[{{::questionIndex}}].labels[0].content[0].text"></div>
                 </div>
                 <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                     <md-tab label="Resposta">
-                        <md-content class="md-padding" bind-html-compile="::questionWidgetList[{{::questionWidget.questionIndex}}]"></md-content>
+                        <md-content class="md-padding" bind-html-compile="widgetTemplateList[{{::questionIndex}}]"></md-content>
                     </md-tab>
                     <md-tab label="Metadado">
                         <md-content class="md-padding"></md-content>
