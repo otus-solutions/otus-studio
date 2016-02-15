@@ -9,6 +9,7 @@
         var CONNECT_REPOSITORY = window.location.origin + '/studio/session/rest/repository/connect';
         var GET_REPOSITORY = window.location.origin + '/studio/session/rest/repository/get';
         var CHECK_CONNECTION_REPOSITORY = window.location.origin + '/studio/session/rest/repository/validate/connection';
+        var VALIDATE_CREDENTIALS = window.location.origin + '/studio/session/rest/repository/validate/credentials';
         var CHECK_NAME_DATABASE = window.location.origin + '/studio/session/rest/repository/validate/database';
         var REPOSITORIES = window.location.origin + '/studio/session/rest/repository';
         var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
@@ -72,6 +73,18 @@
 
             }
         };
+
+        $scope.validateCredentials = function(repository) {
+         $http.get(VALIDATE_CREDENTIALS, repository)
+                .success(function(data) {
+                    console.log(data);
+                    $scope.repositoryForm.username.$setValidity('credentials', data);
+                    $scope.repositoryForm.password.$setValidity('credentials', data);
+                })
+                .error(function(data) {
+                    console.log('Erro + ', data);
+                });
+        }
 
         $scope.existRepository = function(repository) {
             $http.get(GET_REPOSITORY, {

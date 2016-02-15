@@ -45,14 +45,16 @@
 
                 <div ng-messages="repositoryForm.username.$error">
                     <div ng-message="required">Obrigatório</div>
+                    <div ng-message="credentials">Problema na autenticação. Verifique se os dados estão corretos.</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Senha</label>
-                <input name="password" ng-model="repository.password" ng-required="true" type="password"/>
+                <input name="password" ng-blur="validateCredentials(repository)" ng-model="repository.password" ng-required="true" type="password"/>
 
                 <div ng-messages="repositoryForm.password.$error">
                     <div ng-message="required">Obrigatório</div>
+                    <div ng-message="credentials">Problema na autenticação. Verifique se os dados estão corretos.</div>
                 </div>
             </md-input-container>
 

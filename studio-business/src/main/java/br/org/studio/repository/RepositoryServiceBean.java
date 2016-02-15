@@ -21,6 +21,7 @@ import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+import br.org.studio.tool.mongodb.database.MongoConnector;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 import br.org.tutty.Equalizer;
 
@@ -135,4 +136,17 @@ public class RepositoryServiceBean implements RepositoryService {
             return Boolean.FALSE;
         }
     }
+    
+    @Override
+    public Boolean checkRepositoryCredentials(RepositoryDto repositoryDto){
+    	try{
+    		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+    		MongoConnector.getConnector(configuration.getHostName(), configuration.getPort()).isValidCredentials(configuration.getUser(), configuration.getPassword());
+    		return Boolean.TRUE;
+    		
+    	}catch (Exception e){
+    		return Boolean.FALSE;
+    	}
+    }
+    
 }
