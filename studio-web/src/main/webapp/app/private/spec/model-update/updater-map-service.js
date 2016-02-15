@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('protocolSpecification')
+        .module('spec')
         .service('UpdaterMapService', UpdaterMapService);
 
     UpdaterMapService.$inject = ['SurveyIdentityUpdateService', 'SurveyQuestionsUpdateService'];

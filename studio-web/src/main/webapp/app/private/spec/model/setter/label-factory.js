@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('protocolSpecification')
+        .module('spec')
         .factory('LabelFactory', LabelFactory);
 
     LabelFactory.$inject = ['LabelContentFactory'];

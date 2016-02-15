@@ -2,25 +2,25 @@
     'use strict';
 
     angular
-        .module('protocolSpecification')
-        .factory('TimeQuestionFactory', TimeQuestionFactory);
+        .module('spec')
+        .factory('NumericQuestionFactory', NumericQuestionFactory);
 
-    TimeQuestionFactory.$inject = ['LabelFactory'];
+    NumericQuestionFactory.$inject = ['LabelFactory'];
 
-    function TimeQuestionFactory(LabelFactory) {
+    function NumericQuestionFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid) {
-            return new TimeQuestion(oid, LabelFactory);
+            return new NumericQuestion(oid, LabelFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(oid, LabelFactory) {
+    function NumericQuestion(oid, LabelFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -29,12 +29,12 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'TimeQuestion',
+            value: 'NumericQuestion',
             writable: false
         });
 
         Object.defineProperty(this, 'dataType', {
-            value: 'LocalTime',
+            value: 'Double',
             writable: false
         });
 

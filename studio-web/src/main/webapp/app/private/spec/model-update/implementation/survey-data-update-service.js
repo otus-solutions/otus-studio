@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('protocolSpecification')
+        .module('spec')
         .service('SurveyDataUpdater', ['StringNormalizer', 'TextQuestionParser', SurveyDataUpdater]);
 
     function SurveyDataUpdater(StringNormalizer, TextQuestionParser) {

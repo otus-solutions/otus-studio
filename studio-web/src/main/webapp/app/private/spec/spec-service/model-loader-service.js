@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('protocolSpecification')
+        .module('spec')
         .service('SurveyLoaderService', SurveyLoaderService);
 
     SurveyLoaderService.$inject = ['SurveyFactory'];

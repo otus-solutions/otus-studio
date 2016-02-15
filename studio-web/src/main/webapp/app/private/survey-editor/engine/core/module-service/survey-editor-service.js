@@ -5,12 +5,12 @@
         .module('editor.engine.core')
         .service('SurveyEditorService', SurveyEditorService);
 
-    SurveyEditorService.$inject = ['SurveyLoaderService', 'UpdaterFactory'];
+    SurveyEditorService.$inject = ['SurveyLoaderService', 'ModelService'];
 
-    function SurveyEditorService(SurveyLoaderService, UpdaterFactory) {
+    function SurveyEditorService(SurveyLoaderService, ModelService) {
         var self = this,
             currentSurvey = null;
-            self.currentQuestionList = [];
+        self.currentQuestionList = [];
 
         /* Public interface */
         self.initializeNewSurvey = initializeNewSurvey;
@@ -50,8 +50,7 @@
         function editData(editingEvent) {
             // console.log(editingEvent);
 
-            var updater = UpdaterFactory.produceUpdater(editingEvent.target);
-            updater.update(editingEvent, currentSurvey);
+            ModelService.update(editingEvent, currentSurvey);
 
             // console.log(currentSurvey);
             // generalEditingMemoryCache.storeState(editingEvent);

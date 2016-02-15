@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('protocolSpecification')
+        .module('spec')
         .service('SurveyQuestionsUpdateService', SurveyQuestionsUpdateService);
 
     function SurveyQuestionsUpdateService() {

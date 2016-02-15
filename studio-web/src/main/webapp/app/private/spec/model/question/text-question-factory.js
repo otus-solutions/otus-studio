@@ -2,25 +2,25 @@
     'use strict';
 
     angular
-        .module('protocolSpecification')
-        .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
+        .module('spec')
+        .factory('TextQuestionFactory', TextQuestionFactory);
 
-    SingleSelectionQuestionFactory.$inject = ['LabelFactory'];
+    TextQuestionFactory.$inject = ['LabelFactory'];
 
-    function SingleSelectionQuestionFactory(LabelFactory) {
+    function TextQuestionFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid) {
-            return new SingleSelectionQuestion(oid, LabelFactory);
+            return new TextQuestion(oid, LabelFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(oid, LabelFactory) {
+    function TextQuestion(oid, LabelFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -29,12 +29,12 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'SingleSelectionQuestion',
+            value: 'TextQuestion',
             writable: false
         });
 
         Object.defineProperty(this, 'dataType', {
-            value: 'Integer',
+            value: 'String',
             writable: false
         });
 

@@ -2,11 +2,11 @@
 
     angular
         .module('editor.engine.ui')
-        .directive('templateLoader', templateLoader);
+        .directive('questionWidgetLoader', questionWidgetLoader);
 
-    templateLoader.$inject = ['$compile', '$templateRequest', '$templateCache', 'SurveyQuestionEditorService'];
+    questionWidgetLoader.$inject = ['$compile', '$templateRequest', '$templateCache', 'SurveyQuestionEditorService'];
 
-    function templateLoader($compile, $templateRequest, $templateCache, SurveyQuestionEditorService) {
+    function questionWidgetLoader($compile, $templateRequest, $templateCache, SurveyQuestionEditorService) {
         var ddo = {
             restrict: 'A',
             require: '^surveyPage',
