@@ -6,15 +6,17 @@
 
     var inject = [
         'ButtonTriggerService',
-        'InputTextTriggerService'
+        'InputTextTriggerService',
+        'DivEditableTriggerService'
     ];
 
     HtmlTriggerMap.$inject = inject;
 
-    function HtmlTriggerMap(ButtonTriggerService, InputTextTriggerService) {
+    function HtmlTriggerMap(ButtonTriggerService, InputTextTriggerService, DivEditableTriggerService) {
         return {
             ButtonTriggerService: ButtonTriggerService,
-            InputTextTriggerService: InputTextTriggerService
+            InputTextTriggerService: InputTextTriggerService,
+            DivEditableTriggerService: DivEditableTriggerService
         };
     }
 

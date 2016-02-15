@@ -5,16 +5,16 @@
         .module('spec')
         .factory('UpdaterFactory', UpdaterFactory);
 
-    UpdaterFactory.$inject = ['ModelUpdaterMapService', 'UpdaterMapService'];
+    UpdaterFactory.$inject = ['TargetToUpdaterMapServer', 'UpdaterMapService'];
 
-    function UpdaterFactory(ModelUpdaterMapService, UpdaterMapService) {
+    function UpdaterFactory(TargetToUpdaterMapServer, UpdaterMapService) {
         var self = this;
 
         /* Public interface */
         self.produceUpdater = produceUpdater;
 
         function produceUpdater(editingTarget) {
-            var updaterName = ModelUpdaterMapService.getUpdaterName(editingTarget),
+            var updaterName = TargetToUpdaterMapServer.getUpdaterName(editingTarget),
                 updater = UpdaterMapService.getUpdater(updaterName);
 
             return updater;

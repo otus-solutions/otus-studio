@@ -5,13 +5,18 @@
         .module('spec')
         .service('UpdaterMapService', UpdaterMapService);
 
-    UpdaterMapService.$inject = ['SurveyIdentityUpdateService', 'SurveyQuestionsUpdateService'];
+    UpdaterMapService.$inject = [
+        'SurveyIdentityUpdateService',
+        'SurveyQuestionsUpdateService',
+        'LabelUpdateService'
+    ];
 
-    function UpdaterMapService(SurveyIdentityUpdateService, SurveyQuestionsUpdateService) {
+    function UpdaterMapService(SurveyIdentityUpdateService, SurveyQuestionsUpdateService, LabelUpdateService) {
         var self = this,
             updaterMap = {
                 'SurveyIdentityUpdateService': SurveyIdentityUpdateService,
-                'SurveyQuestionsUpdateService': SurveyQuestionsUpdateService
+                'SurveyQuestionsUpdateService': SurveyQuestionsUpdateService,
+                'LabelUpdateService': LabelUpdateService
             };
 
         /* Public interface */

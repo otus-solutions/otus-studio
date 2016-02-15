@@ -49,10 +49,8 @@
 
         function editData(editingEvent) {
             // console.log(editingEvent);
-
             ModelService.update(editingEvent, currentSurvey);
-
-            // console.log(currentSurvey);
+            console.log(currentSurvey);
             // generalEditingMemoryCache.storeState(editingEvent);
         }
     }

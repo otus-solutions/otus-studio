@@ -3,9 +3,9 @@
 
     angular
         .module('spec')
-        .service('ModelUpdaterMapService', ModelUpdaterMapService);
+        .service('TargetToUpdaterMapServer', TargetToUpdaterMapServer);
 
-    function ModelUpdaterMapService(UpdaterMapService) {
+    function TargetToUpdaterMapServer(UpdaterMapService) {
         var self = this,
             updaterMap = {
                 survey: {
@@ -17,7 +17,14 @@
                         description: 'SurveyIdentityUpdateService',
                         keywords: 'SurveyIdentityUpdateService'
                     },
-                    questions: 'SurveyQuestionsUpdateService'
+                    questions: {
+                        array: 'SurveyQuestionsUpdateService',
+                        labels: {
+                            content: {
+                                text: 'LabelUpdateService'
+                            }
+                        }
+                    }
                 }
             };
 
@@ -25,18 +32,29 @@
         self.getUpdaterName = getUpdaterName;
 
         function getUpdaterName(editingTarget) {
-            return searchUpdater(editingTarget);
+            var filteredTarget = filter(editingTarget);
+            return searchUpdater(filteredTarget);
         }
 
         function searchUpdater(editingTarget) {
-            var targetPath = editingTarget.split('.');
-            var reference = updaterMap;
+            var targetPath = editingTarget.split('.'),
+                reference = updaterMap;
 
             targetPath.forEach(function(path) {
                 reference = reference[path];
             });
 
             return reference;
+        }
+
+        function filter(target) {
+            target = target.replace(/\[.\]/g, '');
+
+            if (target == 'survey.questions') {
+                target += '.array';
+            }
+
+            return target;
         }
     }
 

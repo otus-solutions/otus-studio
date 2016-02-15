@@ -44,8 +44,7 @@
         });
 
         Object.defineProperty(this, 'labels', {
-            value: [],
-            /* LabelFactory.create() */
+            value: [LabelFactory.create()],
             writable: false
         });
 

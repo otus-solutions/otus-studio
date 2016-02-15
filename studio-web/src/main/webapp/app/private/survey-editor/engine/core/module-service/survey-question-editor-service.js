@@ -10,10 +10,11 @@
         'NumericQuestionFactory',
         'SingleSelectionQuestionFactory',
         'TextQuestionFactory',
-        'TimeQuestionFactory'
+        'TimeQuestionFactory',
+        'SurveyQuestionsUpdateService'
     ];
 
-    function SurveyQuestionEditorService(SurveyEditorService, CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory) {
+    function SurveyQuestionEditorService(SurveyEditorService, CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, SurveyQuestionsUpdateService) {
         var self = this;
 
         /* Public interface */
@@ -44,15 +45,9 @@
         }
 
         function createQuestion(questionFactory) {
-            var survey = SurveyEditorService.getCurrentSurvey(),
-                oid = survey.questions.length,
-                question = questionFactory.create(oid);
-
-            survey.questions.push(question);
-
-            return question;
+            var survey = SurveyEditorService.getCurrentSurvey();
+            return SurveyQuestionsUpdateService.addQuestion(questionFactory, survey);
         }
-
     }
 
 }());

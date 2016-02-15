@@ -4,13 +4,14 @@
         .module('editor.engine.core')
         .service('DomParser', DomParser);
 
-    DomParser.$inject = ['InputTextParser'];
+    DomParser.$inject = ['InputTextParser', 'DivEditableParser'];
 
-    function DomParser(InputTextParser) {
+    function DomParser(InputTextParser, DivEditableParser) {
         var self = this;
 
         var parserMap = {
-            'input-text': InputTextParser
+            'input-text': InputTextParser,
+            'div-editable': DivEditableParser,
         };
 
         /* Public interface */
@@ -22,7 +23,7 @@
             if (parser) {
                 return parser.parse(editingSource.component);
             }
-            
+
             return null;
         }
     }
