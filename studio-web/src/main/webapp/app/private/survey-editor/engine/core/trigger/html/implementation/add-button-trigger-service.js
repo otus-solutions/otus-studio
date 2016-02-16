@@ -2,11 +2,11 @@
 
     angular
         .module('editor.engine.core')
-        .service('ButtonTriggerService', ButtonTriggerService);
+        .service('AddButtonTriggerService', AddButtonTriggerService);
 
-    ButtonTriggerService.$inject = ['EditingEventService'];
+    AddButtonTriggerService.$inject = ['EditingEventService'];
 
-    function ButtonTriggerService(EditingEventService) {
+    function AddButtonTriggerService(EditingEventService) {
         var self = this,
             sourceComponentType = 'add-button';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new ButtonTrigger(EditingEventService, editingSource);
+            return new AddButtonTrigger(EditingEventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,10 +23,10 @@
         }
     }
 
-    function ButtonTrigger(EditingEventService, editingSource) {
+    function AddButtonTrigger(EditingEventService, editingSource) {
         var self = this;
 
-        self.name = 'ButtonTrigger';
+        self.name = 'AddButtonTrigger';
         self.tree = 'html';
         self.sourceComponentType = 'add-button';
         self.editingSource = editingSource;

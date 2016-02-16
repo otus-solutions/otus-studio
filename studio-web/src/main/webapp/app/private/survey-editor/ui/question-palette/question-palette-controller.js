@@ -5,21 +5,17 @@
         .module('editor.ui')
         .controller('QuestionPaletteController', QuestionPaletteController);
 
-    QuestionPaletteController.$inject = ['$scope', 'SurveyEditorService'];
-
-    function QuestionPaletteController($scope, SurveyEditorService) {
+    function QuestionPaletteController() {
         var self = this;
         self.isOpened = false;
 
         /* Public interface */
         self.changeState = changeState;
-        self.addTextQuestion = addTextQuestion;
 
         /* Public interface implemenation */
         function changeState() {
             self.isOpened = !self.isOpened;
         }
-
     }
 
 }());

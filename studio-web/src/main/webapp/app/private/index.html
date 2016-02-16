@@ -88,6 +88,7 @@
     <!-- app.private.spec.model.question -->
     <script src="private/spec/model/question/calendar-question-factory.js"></script>
     <script src="private/spec/model/question/numeric-question-factory.js"></script>
+    <script src="private/spec/model/question/question-factory.js"></script>
     <script src="private/spec/model/question/single-selection-question-factory.js"></script>
     <script src="private/spec/model/question/text-question-factory.js"></script>
     <script src="private/spec/model/question/time-question-factory.js"></script>
@@ -147,7 +148,7 @@
     <!-- app.private.survey-editor.engine.core.service -->
     <script src="private/survey-editor/engine/core/module-service/studio-editor-service.js"></script>
     <script src="private/survey-editor/engine/core/module-service/survey-editor-service.js"></script>
-    <script src="private/survey-editor/engine/core/module-service/survey-question-editor-service.js"></script>
+    <!-- <script src="private/survey-editor/engine/core/module-service/survey-question-editor-service.js"></script> -->
 
     <!-- app.private.survey-editor.engine.core.trigger -->
     <script src="private/survey-editor/engine/core/trigger/trigger-factory.js"></script>
@@ -161,9 +162,10 @@
     <script src="private/survey-editor/engine/core/trigger/html/html-trigger-map.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.html.implementation -->
-    <script src="private/survey-editor/engine/core/trigger/html/implementation/button-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/add-button-trigger-service.js"></script>
     <script src="private/survey-editor/engine/core/trigger/html/implementation/div-editable-trigger-service.js"></script>
     <script src="private/survey-editor/engine/core/trigger/html/implementation/input-text-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/remove-button-trigger-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.question -->
     <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-tree-factory.js"></script>
@@ -180,9 +182,11 @@
 
     <!-- app.private.survey-editor.engine.ui -->
     <script src="private/survey-editor/engine/ui/ui-module.js"></script>
-    <script src="private/survey-editor/engine/ui/survey-page-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/question-widget-loader-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/ui-data-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.survey-page -->
+    <script src="private/survey-editor/engine/ui/survey-page/survey-page-controller.js"></script>
+    <script src="private/survey-editor/engine/ui/survey-page/survey-page-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/survey-page/widget-loader-service.js"></script>
 
     <!-- app.private.survey-editor.engine.ui.widget -->
     <script src="private/survey-editor/engine/ui/widget/widget-factory.js"></script>
@@ -198,9 +202,6 @@
     <!-- app.private.survey-editor.ui -->
     <script src="private/survey-editor/ui/editor-ui-module.js"></script>
     <script src="private/survey-editor/ui/question-container-button-factory.js"></script>
-
-    <!-- app.private.survey-editor.ui.container -->
-    <script src="private/survey-editor/ui/main-container/main-container-controller.js"></script>
 
     <!-- app.private.survey-editor.ui.question-palette -->
     <script src="private/survey-editor/ui/question-palette/question-palette-controller.js"></script>

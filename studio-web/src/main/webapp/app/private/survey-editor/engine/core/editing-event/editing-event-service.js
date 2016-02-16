@@ -20,7 +20,7 @@
         function performEditing(editingSource) {
             var editingState = EditingStateFactory.create(editingSource),
                 editingEvent = EditingEventFactory.create(editingSource, editingState);
-
+            
             SurveyEditorService.editData(editingEvent);
         }
     }

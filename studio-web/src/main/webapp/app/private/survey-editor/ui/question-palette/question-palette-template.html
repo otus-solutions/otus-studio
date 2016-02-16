@@ -1,38 +1,43 @@
 <div id="survey-questions" layout="column">
     <md-button class="md-raised md-primary">Questions</md-button>
     <div ng-show="true" layout="column">
-        <md-button class="md-primary" ng-click="binding.addCalendar()"
+        <md-button class="md-primary"
             editing-source
+            es-id="survey-questions-add-calendar-question"
             es-type="add-button"
-            es-id="survey-questions-add-checkbox-question"
+            es-model="calendar-question"
             es-target="survey.questions">
             Calendário
         </md-button>
-        <md-button class="md-primary" ng-click="binding.addNumeric()"
+        <md-button class="md-primary"
             editing-source
-            es-type="add-button"
             es-id="survey-questions-add-numeric-question"
+            es-type="add-button"
+            es-model="numeric-question"
             es-target="survey.questions">
             Numérica
         </md-button>
-        <md-button class="md-primary" ng-click="binding.addSingleSelection()"
+        <md-button class="md-primary"
             editing-source
-            es-type="add-button"
             es-id="survey-questions-add-single-selection-question"
+            es-type="add-button"
+            es-model="single-selection-question"
             es-target="survey.questions">
             Seleção simples
         </md-button>
-        <md-button class="md-primary" ng-click="binding.addText()"
+        <md-button class="md-primary"
             editing-source
-            es-type="add-button"
             es-id="survey-questions-add-text-question"
+            es-type="add-button"
+            es-model="text-question"
             es-target="survey.questions">
             Texto
         </md-button>
-        <md-button class="md-primary" ng-click="binding.addTime()"
+        <md-button class="md-primary"
             editing-source
-            es-type="add-button"
             es-id="survey-questions-add-time-question"
+            es-type="add-button"
+            es-model="time-question"
             es-target="survey.questions">
             Relógio
         </md-button>

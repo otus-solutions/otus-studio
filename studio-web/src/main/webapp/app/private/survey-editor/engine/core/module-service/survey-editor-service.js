@@ -49,6 +49,7 @@
 
         function editData(editingEvent) {
             // console.log(editingEvent);
+            console.log('editData from SurveyEditorService');
             ModelService.update(editingEvent, currentSurvey);
             console.log(currentSurvey);
             // generalEditingMemoryCache.storeState(editingEvent);

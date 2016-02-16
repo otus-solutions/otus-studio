@@ -13,11 +13,12 @@
         var factoryMap = {
             /* Html */
             inputText: HtmlTriggerFactory,
-            divEditable: HtmlTriggerFactory,
-            inputNumber: HtmlTriggerFactory,
-            inputEmail: HtmlTriggerFactory,
             textArea: HtmlTriggerFactory,
-            addButton: HtmlTriggerFactory
+            divEditable: HtmlTriggerFactory,
+            addButton: HtmlTriggerFactory,
+            removeButton: HtmlTriggerFactory,
+            inputNumber: HtmlTriggerFactory,
+            inputEmail: HtmlTriggerFactory
 
             /* Question */
             /*

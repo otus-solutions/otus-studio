@@ -2,29 +2,33 @@
 
     angular
         .module('editor.engine.ui')
-        .directive('surveyPage', surveyPage);
+        .controller('SurveyPageController', SurveyPageController);
 
-    surveyPage.$inject = ['$compile', '$templateRequest', '$templateCache', 'WidgetService'];
+    SurveyPageController.$inject = [
+        '$scope',
+        '$compile',
+        '$element',
+        '$templateRequest',
+        '$templateCache',
+        'WidgetService',
+        'SurveyQuestionsUpdateService'
+    ];
 
-    function surveyPage() {
-        var ddo = {
-            controller: SurveyPageController
-        };
-
-        return ddo;
-    }
-
-    /*
-     * Directive's controller implementation
-     */
-    function SurveyPageController($scope, $compile, $templateRequest, $templateCache, $element, WidgetService) {
-        $scope.widgetTemplateList = [];
+    function SurveyPageController($scope, $compile, $element, $templateRequest, $templateCache, WidgetService, SurveyQuestionsUpdateService) {
         const QUESTION_EDITOR_TEMPLATE_URL = 'private/survey-editor/ui/template/question-editor-template.html';
+        $scope.widgetTemplateList = [];
 
         var self = this;
 
         /* Public interface */
         self.addQuestion = addQuestion;
+        self.update = update;
+
+        SurveyQuestionsUpdateService.registerObserver(self);
+
+        function update(question) {
+            addQuestion(question);
+        }
 
         function addQuestion(question) {
             var widget = WidgetService.getWidgetForModel(question);
