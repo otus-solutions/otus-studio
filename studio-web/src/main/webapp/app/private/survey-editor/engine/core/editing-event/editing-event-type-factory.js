@@ -10,7 +10,8 @@
 
         var eventTypeMap = {
             'input-text': 'SET_VALUE',
-            'add-button': 'ADD_DATA'
+            'add-button': 'ADD_DATA',
+            'remove-button': 'REMOVE_DATA'
         };
 
         /* Public interface */

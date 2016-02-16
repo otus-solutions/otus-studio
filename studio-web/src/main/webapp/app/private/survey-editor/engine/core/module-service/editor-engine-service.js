@@ -3,11 +3,11 @@
 
     angular
         .module('editor.engine.core')
-        .service('SurveyEditorService', SurveyEditorService);
+        .service('EditorEngineService', EditorEngineService);
 
-    SurveyEditorService.$inject = ['SurveyLoaderService', 'ModelService'];
+    EditorEngineService.$inject = ['SurveyLoaderService', 'ModelService'];
 
-    function SurveyEditorService(SurveyLoaderService, ModelService) {
+    function EditorEngineService(SurveyLoaderService, ModelService) {
         var self = this,
             currentSurvey = null;
         self.currentQuestionList = [];
@@ -27,12 +27,10 @@
         }
 
         function closeSurvey() {
-            EditorEngineService.close();
             console.info('Current survey closed.');
         }
 
         function saveSurvey() {
-            EditorEngineService.save();
             console.info('Current survey saved.');
         }
 
@@ -49,7 +47,6 @@
 
         function editData(editingEvent) {
             // console.log(editingEvent);
-            console.log('editData from SurveyEditorService');
             ModelService.update(editingEvent, currentSurvey);
             console.log(currentSurvey);
             // generalEditingMemoryCache.storeState(editingEvent);

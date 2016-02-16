@@ -15,11 +15,15 @@
         self.registerObserver = registerObserver;
 
         function update(editingEvent, survey) {
+            var question = null;
+
             if (editingEvent.type == 'ADD_DATA') {
-                addQuestion(editingEvent.source.model, survey);
+                question = addQuestion(editingEvent.source.model, survey);
             } else {
-                removeQuestion(questionIndex, survey);
+                question = extractModelIndex(editingEvent.target);
+                removeQuestion(question, survey);
             }
+            notifyObservers(question, editingEvent.type);
         }
 
         function addQuestion(questionType, survey) {
@@ -27,21 +31,29 @@
                 newQuestion = QuestionFactory.create(questionType, nextOID);
 
             survey.questions.push(newQuestion);
-            notifyObservers(newQuestion);
+            return newQuestion;
         }
 
         function removeQuestion(questionIndex, survey) {
+            var removedQuestion = survey.questions[questionIndex];
             survey.questions.splice(questionIndex, 1);
+            return removedQuestion;
         }
 
-        function notifyObservers(question) {
+        function notifyObservers(question, updateType) {
             observers.forEach(function(observer) {
-                observer.update(question);
+                observer.update(question, updateType);
             });
         }
 
         function registerObserver(observer) {
             observers.push(observer);
+        }
+
+        function extractModelIndex(modelName) {
+            var index = modelName.replace(/(.*\[)/, '');
+            index = index.replace(/(\])/, '');
+            return parseInt(index);
         }
     }
 

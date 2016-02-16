@@ -5,9 +5,9 @@
         .module('editor.engine.core')
         .service('StudioEditorService', StudioEditorService);
 
-    StudioEditorService.$inject = ['SurveyEditorService'];
+    StudioEditorService.$inject = ['EditorEngineService'];
 
-    function StudioEditorService(SurveyEditorService) {
+    function StudioEditorService(EditorEngineService) {
         var self = this;
 
         /* Public interface */
@@ -18,7 +18,7 @@
 
         /* Public interface implementation */
         function createNewSurvey() {
-            var survey = SurveyEditorService.initializeNewSurvey();
+            var survey = EditorEngineService.initializeNewSurvey();
         }
 
         function closeSurvey() {

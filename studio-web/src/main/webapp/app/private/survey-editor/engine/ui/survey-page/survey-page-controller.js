@@ -25,12 +25,19 @@
             SurveyQuestionsUpdateService.registerObserver(self);
         }
 
-        function update(question) {
-            addQuestion(question);
+        function update(question, updateType) {
+            if (updateType == 'ADD_DATA')
+                addQuestion(question);
+            else
+                removeQuestion();
         }
 
         function addQuestion(question) {
             WidgetLoaderService.loadWidget(question, $scope, appendToPage);
+        }
+
+        function removeQuestion(questionIndex) {
+            angular.element($element.children()[0]).remove();
         }
 
         function appendToPage(widget) {

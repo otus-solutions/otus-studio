@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('EditingEventService', EditingEventService);
 
-    EditingEventService.$inject = ['EditingEventFactory', 'EditingStateFactory', 'SurveyEditorService'];
+    EditingEventService.$inject = ['EditingEventFactory', 'EditingStateFactory', 'EditorEngineService'];
 
-    function EditingEventService(EditingEventFactory, EditingStateFactory, SurveyEditorService) {
+    function EditingEventService(EditingEventFactory, EditingStateFactory, EditorEngineService) {
         var self = this;
 
         /* Public interface */
@@ -20,8 +20,8 @@
         function performEditing(editingSource) {
             var editingState = EditingStateFactory.create(editingSource),
                 editingEvent = EditingEventFactory.create(editingSource, editingState);
-            
-            SurveyEditorService.editData(editingEvent);
+
+            EditorEngineService.editData(editingEvent);
         }
     }
 
