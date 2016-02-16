@@ -22,22 +22,19 @@
             }
         }
 
-        /* Public interface implementation */
         function addQuestion(questionType, survey) {
             var nextOID = survey.questions.length,
                 newQuestion = QuestionFactory.create(questionType, nextOID);
 
             survey.questions.push(newQuestion);
-            notify(newQuestion);
-
-            return newQuestion;
+            notifyObservers(newQuestion);
         }
 
         function removeQuestion(questionIndex, survey) {
             survey.questions.splice(questionIndex, 1);
         }
 
-        function notify(question) {
+        function notifyObservers(question) {
             observers.forEach(function(observer) {
                 observer.update(question);
             });
