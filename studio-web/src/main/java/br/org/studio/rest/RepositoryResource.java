@@ -52,7 +52,7 @@ public class RepositoryResource {
     @Path("validate/credentials")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String isValidRepositoryCredentials(String repository) {
+    public String isValidRepositoryCredentials(@QueryParam("repositoryData") String repository) {
     	RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
     	Response response = new Response();
     	

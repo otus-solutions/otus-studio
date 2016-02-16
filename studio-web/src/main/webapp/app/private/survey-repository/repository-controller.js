@@ -75,15 +75,16 @@
         };
 
         $scope.validateCredentials = function(repository) {
-         $http.get(VALIDATE_CREDENTIALS, repository)
-                .success(function(data) {
-                    console.log(data);
-                    $scope.repositoryForm.username.$setValidity('credentials', data);
-                    $scope.repositoryForm.password.$setValidity('credentials', data);
-                })
-                .error(function(data) {
-                    console.log('Erro + ', data);
-                });
+            if ($scope.repository.username && $scope.repository.password && $scope.repository.host && $scope.repository.port) {
+                $http.get(VALIDATE_CREDENTIALS, {params: {repositoryData: repository}})
+                    .success(function(data) {
+                        $scope.repositoryForm.username.$setValidity('credentials', data.data);
+                        $scope.repositoryForm.password.$setValidity('credentials', data.data);
+                    })
+                    .error(function(data) {
+                        console.log('Erro + ', data);
+                    });
+            }
         }
 
         $scope.existRepository = function(repository) {
