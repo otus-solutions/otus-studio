@@ -10,16 +10,16 @@
         /* Public interface */
         self.update = update;
 
-        function update(editingEvent, survey) {
-            updateLabelValue(editingEvent, survey);
+        function update(updateWork) {
+            updateLabelValue(updateWork);
         }
 
-        function updateLabelValue(editingEvent, survey) {
-            var targetPath = editingEvent.target.split('.'),
+        function updateLabelValue(updateWork) {
+            var targetPath = updateWork.target.split('.'),
                 selectedQuestion = targetPath[2];
 
-            survey.question[selectedQuestion].label.ptBR.plainText = editingEvent.state.domData.textContent;
-            survey.question[selectedQuestion].label.ptBR.formattedText = editingEvent.state.domData.innerHTML;
+            updateWork.survey.question[selectedQuestion].label.ptBR.plainText = updateWork.data.plainText;
+            updateWork.survey.question[selectedQuestion].label.ptBR.formattedText = updateWork.data.formattedText;
         }
     }
 

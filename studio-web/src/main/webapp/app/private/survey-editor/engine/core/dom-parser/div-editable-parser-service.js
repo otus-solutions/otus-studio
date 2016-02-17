@@ -21,8 +21,8 @@
 
         self.id = domComponent.attr('id');
         self.name = domComponent.attr('name');
-        self.textContent = domComponent.text();
-        self.innerHTML = domComponent.html();
+        self.plainText = domComponent.text();
+        self.formattedText = domComponent.html();
     }
 
 }());

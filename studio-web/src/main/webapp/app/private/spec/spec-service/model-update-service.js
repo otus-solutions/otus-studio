@@ -12,9 +12,9 @@
         /* Public interface */
         self.update = update;
 
-        function update(data, survey) {
-            var updater = UpdaterFactory.produceUpdater(data.target);
-            updater.update(data, survey);
+        function update(updateWork) {
+            var updater = UpdaterFactory.produceUpdater(updateWork.target);
+            updater.update(updateWork);
         }
     }
 

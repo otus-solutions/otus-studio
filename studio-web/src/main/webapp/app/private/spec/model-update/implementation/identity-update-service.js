@@ -11,11 +11,11 @@
         self.update = update;
 
         /* Public interface implementation */
-        function update(editingEvent, survey) {
-            if (isKeywordsTargeted(editingEvent.target)) {
-                updateKeywords(editingEvent, survey);
+        function update(updateWork) {
+            if (isKeywordsTargeted(updateWork.target)) {
+                updateKeywords(updateWork);
             } else {
-                updateIdentityValue(editingEvent, survey);
+                updateIdentityValue(updateWork);
             }
         }
 
@@ -23,21 +23,21 @@
             return (target == 'survey.identity.keywords');
         }
 
-        function updateKeywords(editingEvent, survey) {
-            var keywords = editingEvent.state.domData.value.split(',');
-            survey.identity.keywords = [];
+        function updateKeywords(updateWork) {
+            var keywords = updateWork.data.value.split(',');
+            updateWork.survey.identity.keywords = [];
 
             keywords.forEach(function(keyword) {
                 keyword = keyword.trim();
                 if (keyword.length > 0) {
-                    survey.identity.keywords.push(keyword);
+                    updateWork.survey.identity.keywords.push(keyword);
                 }
             });
         }
 
-        function updateIdentityValue(editingEvent, survey) {
-            var target = searchTarget(editingEvent.target);
-            survey.identity[target] = editingEvent.state.domData.value;
+        function updateIdentityValue(updateWork) {
+            var target = searchTarget(updateWork.target);
+            updateWork.survey.identity[target] = updateWork.data.value;
         }
 
         function searchTarget(editingTarget) {
