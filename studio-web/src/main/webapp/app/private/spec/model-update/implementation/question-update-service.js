@@ -20,9 +20,12 @@
 
             if (updateWork.type == 'ADD_DATA') {
                 question = addQuestion(updateWork);
-            } else {
+            } else if (updateWork.type == 'REMOVE_DATA') {
                 question = removeQuestion(updateWork);
+            } else if (updateWork.type == 'SET_VALUE') {
+                updateQuestion(updateWork);
             }
+
             notifyObservers(question, updateWork.type);
         }
 
@@ -41,6 +44,13 @@
 
             delete updateWork.survey.question[selectedQuestion];
             return questionToRemove;
+        }
+
+        function updateQuestion(updateWork) {
+            // var selectedQuestion = updateWork.target.split('.')[2],
+            //     questionToUpdate = updateWork.survey.question[selectedQuestion];
+            //
+            // questionsToUpdate.label.ptBR.text = updateWork.data.value;
         }
 
         function notifyObservers(question, updateType) {

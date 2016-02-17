@@ -46,7 +46,7 @@
         }
 
         function editData(editingEvent) {
-            console.log(editingEvent);
+            // console.log(editingEvent);
             var updateWork = UpdateWorkFactory.create();
             updateWork.survey = currentSurvey;
             updateWork.target = editingEvent.target;
@@ -57,7 +57,7 @@
             updateWork.type = editingEvent.type;
             updateWork.model = editingEvent.source.model;
 
-            console.log(updateWork);
+            // console.log(updateWork);
 
             ModelService.update(updateWork);
             console.log(currentSurvey);
