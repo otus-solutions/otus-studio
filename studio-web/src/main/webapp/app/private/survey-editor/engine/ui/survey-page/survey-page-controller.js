@@ -37,8 +37,8 @@
             WidgetLoaderService.loadWidget(question, $scope, appendToPage);
         }
 
-        function removeQuestion(questionIndex) {
-            UIUtils.jq($element).find('[question-target="survey.questions[' + questionIndex + ']"]').remove();
+        function removeQuestion(question) {
+            UIUtils.jq($element).find('[question-target="' + question.oid + '"]').remove();
         }
 
         function appendToPage(widget) {

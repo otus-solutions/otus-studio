@@ -20,8 +20,7 @@
             if (editingEvent.type == 'ADD_DATA') {
                 question = addQuestion(editingEvent.source.model, survey);
             } else {
-                question = extractModelIndex(editingEvent.target);
-                removeQuestion(question, survey);
+                question = removeQuestion(editingEvent.target, survey);
             }
             notifyObservers(question, editingEvent.type);
         }
@@ -34,13 +33,11 @@
             return newQuestion;
         }
 
-        function removeQuestion(oid, survey) {
-            var questionToRemove = survey.questions.filter(function(entry) {
-                return entry.oid == oid;
-            });
+        function removeQuestion(target, survey) {
+            var selectedQuestion = target.split('.')[2];
+                questionToRemove =survey.question[selectedQuestion];
 
-            var indexToRemove = survey.questions.indexOf(questionToRemove[0]);
-            survey.question.splice(indexToRemove, 1);
+            delete survey.question[selectedQuestion];
             return questionToRemove;
         }
 
@@ -52,12 +49,6 @@
 
         function registerObserver(observer) {
             observers.push(observer);
-        }
-
-        function extractModelIndex(modelName) {
-            var index = modelName.replace(/(.*\[)/, '');
-            index = index.replace(/(\])/, '');
-            return parseInt(index);
         }
     }
 
