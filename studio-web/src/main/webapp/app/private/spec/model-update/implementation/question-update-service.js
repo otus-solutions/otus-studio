@@ -8,7 +8,8 @@
 
     function SurveyQuestionsUpdateService(QuestionFactory) {
         var self = this,
-            observers = [];
+            observers = [],
+            nextOIDNumber = -1;
 
         /* Public interface */
         self.update = update;
@@ -26,10 +27,10 @@
         }
 
         function addQuestion(updateWork) {
-            var nextOID = updateWork.survey.identity.acronym + Object.keys(updateWork.survey.question).length,
+            var nextOID = updateWork.survey.identity.acronym + (++nextOIDNumber),
                 newQuestion = QuestionFactory.create(updateWork.model, nextOID);
 
-            updateWork.survey.question[newQuestion.oid] = newQuestion;
+            updateWork.survey.question[nextOID] = newQuestion;
 
             return newQuestion;
         }
