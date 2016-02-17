@@ -8,10 +8,11 @@
         '$scope',
         '$element',
         'WidgetLoaderService',
-        'SurveyQuestionsUpdateService'
+        'SurveyQuestionsUpdateService',
+        'UIUtils'
     ];
 
-    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService) {
+    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService, UIUtils) {
         var self = this;
 
         /* Public interface */
@@ -29,7 +30,7 @@
             if (updateType == 'ADD_DATA')
                 addQuestion(question);
             else
-                removeQuestion();
+                removeQuestion(question);
         }
 
         function addQuestion(question) {
@@ -37,7 +38,7 @@
         }
 
         function removeQuestion(questionIndex) {
-            angular.element($element.children()[0]).remove();
+            UIUtils.jq($element).find('[question-target="survey.questions[' + questionIndex + ']"]').remove();
         }
 
         function appendToPage(widget) {

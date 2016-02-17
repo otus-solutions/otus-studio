@@ -16,7 +16,7 @@
         function getWidgetForModel(model) {
             var widget = WidgetFactory.create(model);
             widget.template = SurveyComponentsService.getDirectiveTemplate(model.objectType);
-            widget.questionIndex = model.oid;
+            widget.oid = model.oid;
             return widget;
         }
     }

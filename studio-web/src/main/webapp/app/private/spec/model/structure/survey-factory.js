@@ -23,7 +23,7 @@
     function Survey(SurveyIdentityFactory) {
         this.objectType = 'Survey';
         this.identity = SurveyIdentityFactory.create();
-        this.questions = [];
+        this.questions = {};
 
         this.getQuestion = function getQuestion(index) {
             return this.questions[index];

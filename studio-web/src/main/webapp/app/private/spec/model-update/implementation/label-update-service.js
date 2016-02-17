@@ -24,10 +24,10 @@
                 if (model == 'questions') questionIndex = index;
                 else if (model == 'labels') labelIndex = index;
                 else if (model == 'content') contentIndex = index;
-
             });
 
             survey.questions[questionIndex].labels[labelIndex].content[contentIndex].text = editingEvent.state.domData.value;
+            var indexToRemove = survey.questions.indexOf(questionToRemove[0]);
         }
 
         function extractModel(modelName) {

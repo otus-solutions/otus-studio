@@ -6,52 +6,26 @@
         .service('TargetToUpdaterMapServer', TargetToUpdaterMapServer);
 
     function TargetToUpdaterMapServer(UpdaterMapService) {
-        var self = this,
-            updaterMap = {
-                survey: {
-                    identity: {
-                        name: 'SurveyIdentityUpdateService',
-                        acronym: 'SurveyIdentityUpdateService',
-                        version: 'SurveyIdentityUpdateService',
-                        recommendedTo: 'SurveyIdentityUpdateService',
-                        description: 'SurveyIdentityUpdateService',
-                        keywords: 'SurveyIdentityUpdateService'
-                    },
-                    questions: {
-                        array: 'SurveyQuestionsUpdateService',
-                        labels: {
-                            content: {
-                                text: 'LabelUpdateService'
-                            }
-                        }
-                    }
-                }
-            };
+        var self = this;
 
         /* Public interface */
         self.getUpdaterName = getUpdaterName;
 
         function getUpdaterName(editingTarget) {
-            var filteredTarget = filter(editingTarget);
-            return searchUpdater(filteredTarget);
-        }
-
-        function searchUpdater(editingTarget) {
-            var targetPath = editingTarget.split('.'),
-                reference = updaterMap;
-
-            targetPath.forEach(function(path) {
-                reference = reference[path];
-            });
-
-            return reference;
+            return filter(editingTarget);
         }
 
         function filter(target) {
-            target = target.replace(/\[.\]/g, '');
+            var IDENTITY_REGEX = /^survey\.identity$/;
+            var QUESTIONS_REGEX = /^survey\.questions$/;
+            var LABELS_REGEX = /survey\.questions\.[\d|\w|\-]+\.labels/;
 
-            if (target == 'survey.questions') {
-                target += '.array';
+            if (LABELS_REGEX.test(target)) {
+                return 'LabelUpdateService';
+            } else if (QUESTIONS_REGEX.test(target)) {
+                return 'SurveyQuestionsUpdateService';
+            } else if (IDENTITY_REGEX.test(target)) {
+                return 'SurveyIdentityUpdateService';
             }
 
             return target;

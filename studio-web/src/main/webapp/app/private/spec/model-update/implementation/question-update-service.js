@@ -27,17 +27,21 @@
         }
 
         function addQuestion(questionType, survey) {
-            var nextOID = survey.questions.length,
+            var nextOID = Object.keys(survey.questions).length,
                 newQuestion = QuestionFactory.create(questionType, nextOID);
 
-            survey.questions.push(newQuestion);
+            survey.questions[newQuestion.oid] = newQuestion;
             return newQuestion;
         }
 
-        function removeQuestion(questionIndex, survey) {
-            var removedQuestion = survey.questions[questionIndex];
-            survey.questions.splice(questionIndex, 1);
-            return removedQuestion;
+        function removeQuestion(oid, survey) {
+            var questionToRemove = survey.questions.filter(function(entry) {
+                return entry.oid == oid;
+            });
+
+            var indexToRemove = survey.questions.indexOf(questionToRemove[0]);
+            survey.questions.splice(indexToRemove, 1);
+            return questionToRemove;
         }
 
         function notifyObservers(question, updateType) {

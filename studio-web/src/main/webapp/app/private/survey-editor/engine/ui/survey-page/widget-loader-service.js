@@ -33,9 +33,9 @@
 
         function loadTemplate(templateUrl, data, scope, callback) {
             $templateRequest(templateUrl).then(function(html) {
-                scope.questionIndex = data.questionIndex;
+                scope.questionOID = data.oid;
                 scope.questionWidget = data;
-                scope.widgetTemplateList[scope.questionIndex] = data.template;
+                scope.widgetTemplateList[scope.questionOID] = data.template;
                 var template = compileTemplate(html, scope);
                 if (callback) callback(template);
             });
