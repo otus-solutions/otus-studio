@@ -1,6 +1,6 @@
 <!-- Editor container -->
-<md-whiteframe question-target="{{::widget.questionId}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
-    <ui-accordion title="{{::widget.title}}" widget="::widget" flex>
+<md-whiteframe question-target="{{::questionOID}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+    <ui-accordion title="{{::questionWidget.type}}" question-widget="::questionWidget" flex>
         <ui-accordion-content layout="column" layout-padding flex>
             <md-content layout="column" flex>
                 <div layout="row" class="label-container" layout-align="left center">
@@ -8,11 +8,11 @@
                         editing-source
                         es-type="div-editable"
                         es-id="survey-editor-questions"
-                        es-target="{{::widget.labelTarget}}"></div>
+                        es-target="survey.questions.{{::questionOID}}.labels[0]content[0]text"></div>
                 </div>
                 <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
                     <md-tab label="Resposta">
-                        <md-content class="md-padding" bind-html-compile="widgetTemplateList[{{::widget.questionId}}]"></md-content>
+                        <md-content class="md-padding" bind-html-compile="widgetTemplateList[{{::questionOID}}]"></md-content>
                     </md-tab>
                     <md-tab label="Metadado">
                         <md-content class="md-padding"></md-content>

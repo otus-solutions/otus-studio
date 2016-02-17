@@ -18,7 +18,8 @@
             var targetPath = editingEvent.target.split('.'),
                 selectedQuestion = targetPath[2];
 
-            survey.question[selectedQuestion].label.ptBR.text = editingEvent.state.domData.value;
+            survey.question[selectedQuestion].label.ptBR.plainText = editingEvent.state.domData.textContent;
+            survey.question[selectedQuestion].label.ptBR.formattedText = editingEvent.state.domData.innerHTML;
         }
     }
 

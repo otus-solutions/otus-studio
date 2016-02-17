@@ -5,19 +5,27 @@
         .module('editor.engine.ui')
         .service('WidgetService', WidgetService);
 
-    WidgetService.$inject = ['SurveyComponentsService', 'WidgetFactory'];
+    WidgetService.$inject = [
+        'SurveyComponentsService',
+        'QuestionWidgetFactory',
+        'QuestionEditorWidgetFactory'
+    ];
 
-    function WidgetService(SurveyComponentsService, WidgetFactory) {
+    function WidgetService(SurveyComponentsService, QuestionWidgetFactory, QuestionEditorWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
+        self.getQuestionEditorWidget = getQuestionEditorWidget;
 
         function getWidgetForModel(model) {
-            var widget = WidgetFactory.create(model);
+            var widget = QuestionWidgetFactory.create(model);
             widget.template = SurveyComponentsService.getDirectiveTemplate(model.objectType);
-            widget.oid = model.oid;
             return widget;
+        }
+
+        function getQuestionEditorWidget(questionWidget) {
+            return QuestionEditorWidgetFactory.create(questionWidget);
         }
     }
 

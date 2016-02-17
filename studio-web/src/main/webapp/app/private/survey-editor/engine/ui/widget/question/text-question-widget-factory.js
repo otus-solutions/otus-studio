@@ -11,23 +11,26 @@
         /* Public interface */
         self.create = create;
 
-        function create(model) {
-            return new TextQuestionWidget(model);
+        function create(prototype) {
+            return new TextQuestionWidget(prototype);
         }
 
         return self;
     }
 
-    function TextQuestionWidget(model) {
-        var self = this;
-
+    function TextQuestionWidget(prototype) {
         Object.defineProperty(this, 'model', {
-            value: model,
+            value: prototype.model,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'questionId', {
+            value: prototype.questionId,
             writable: false
         });
 
         Object.defineProperty(this, 'type', {
-            value: model.objectType,
+            value: prototype.type,
             writable: false
         });
     }

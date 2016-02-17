@@ -3,9 +3,9 @@
 
     angular
         .module('editor.engine.ui')
-        .factory('WidgetFactory', WidgetFactory);
+        .factory('QuestionWidgetFactory', QuestionWidgetFactory);
 
-    WidgetFactory.$inject = [
+    QuestionWidgetFactory.$inject = [
         'CalendarQuestionWidgetFactory',
         'NumericQuestionWidgetFactory',
         'SingleSelectionQuestionWidgetFactory',
@@ -13,7 +13,7 @@
         'TimeQuestionWidgetFactory'
     ];
 
-    function WidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
+    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
         var self = this,
 
             widgetFactories = {
@@ -28,10 +28,28 @@
         self.create = create;
 
         function create(model) {
-            return widgetFactories[model.objectType].create(model);
+            var widget = new QuestionWidget(model);
+            return widgetFactories[model.objectType].create(widget);
         }
 
         return self;
+    }
+
+    function QuestionWidget(model) {
+        Object.defineProperty(this, 'model', {
+            value: model,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'questionId', {
+            value: model.oid,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'type', {
+            value: model.objectType,
+            writable: false
+        });
     }
 
 }());

@@ -26,7 +26,7 @@
         }
 
         function addQuestion(questionType, survey) {
-            var nextOID = Object.keys(survey.question).length,
+            var nextOID = survey.identity.acronym + Object.keys(survey.question).length,
                 newQuestion = QuestionFactory.create(questionType, nextOID);
 
             survey.question[newQuestion.oid] = newQuestion;

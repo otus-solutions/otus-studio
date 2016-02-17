@@ -36,7 +36,8 @@
             writable: false
         });
 
-        self.text = '';
+        self.plainText = '';
+        self.formattedText = '';
     }
 
 }());

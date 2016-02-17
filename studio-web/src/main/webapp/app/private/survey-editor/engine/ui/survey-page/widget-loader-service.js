@@ -21,23 +21,23 @@
 
         function loadWidget(model, scope, callback) {
             scope.widgetTemplateList = [];
-            var modelWidget = WidgetService.getWidgetForModel(model);
-            loadEditorWidget(modelWidget, scope, callback);
+            var questionWidget = WidgetService.getWidgetForModel(model);
+            loadEditorWidget(questionWidget, scope, callback);
         }
 
         function loadEditorWidget(modelWidget, scope, callback) {
-            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, modelWidget, scope, function(template) {
-                if (callback) callback(template);
+            var widget = WidgetService.getQuestionEditorWidget(modelWidget);
+            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, widget, scope, function(widget) {
+                if (callback) callback(widget.template);
             });
         }
 
         function loadTemplate(templateUrl, data, scope, callback) {
             $templateRequest(templateUrl).then(function(html) {
-                scope.questionOID = data.oid;
-                scope.questionWidget = data;
-                scope.widgetTemplateList[scope.questionOID] = data.template;
-                var template = compileTemplate(html, scope);
-                if (callback) callback(template);
+                scope.widget = data;
+                scope.widget.template = compileTemplate(html, scope);
+                scope.widgetTemplateList[data.questionId] = data.questionTemplate;
+                if (callback) callback(scope.widget);
             });
         }
 
