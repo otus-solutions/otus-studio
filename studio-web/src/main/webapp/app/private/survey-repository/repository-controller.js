@@ -24,6 +24,7 @@
         self.connected = connected;
 
         $scope.actionButton = function(repository) {
+            getActionType();
             if (angular.equals($scope.actionType, REPOSITORY_CONNECT_ACTION)) {
                 connectRepository(repository);
 
@@ -105,9 +106,14 @@
         function init() {
             $scope.connectedRepository = RepositoryService.connectedRepository;
             getRepositories();
+            getActionType();
+        }
 
+        function getActionType() {
             $scope.actionType = $location.search().actionType;
         }
+
+
 
         function getRepositories() {
             $http.get(REPOSITORIES)
