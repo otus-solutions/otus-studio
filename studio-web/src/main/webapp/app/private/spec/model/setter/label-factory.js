@@ -5,30 +5,38 @@
         .module('spec')
         .factory('LabelFactory', LabelFactory);
 
-    LabelFactory.$inject = ['LabelContentFactory'];
-
-    function LabelFactory(LabelContentFactory) {
+    function LabelFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new Label(LabelContentFactory);
+            return new Label();
         }
 
         return self;
     }
 
-    function Label(LabelContentFactory) {
-        this.extends = 'StudioObject';
-        this.objectType = 'Label';
-        this.oid = '';
-        this.content = [LabelContentFactory.create()];
+    function Label() {
+        var self = this;
 
-        this.getContent = function getContent(index) {
-            return this.content[index];
-        };
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'objectType', {
+            value: 'Label',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'oid', {
+            value: '',
+            writable: false
+        });
+
+        self.text = '';
     }
 
 }());

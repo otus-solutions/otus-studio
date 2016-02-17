@@ -16,7 +16,7 @@
         }
 
         function filter(target) {
-            var IDENTITY_REGEX = /^survey\.identity$/;
+            var IDENTITY_REGEX = /^survey\.identity/;
             var QUESTIONS_REGEX = /^survey\.questions$/;
             var LABELS_REGEX = /survey\.questions\.[\d|\w|\-]+\.labels/;
 

@@ -5,26 +5,24 @@
         .module('spec')
         .factory('NumericQuestionFactory', NumericQuestionFactory);
 
-    NumericQuestionFactory.$inject = ['LabelFactory'];
-
-    function NumericQuestionFactory(LabelFactory) {
+    function NumericQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid) {
-            return new NumericQuestion(oid, LabelFactory);
+        function create(oid, prototype) {
+            return new NumericQuestion(oid, prototype);
         }
 
         return self;
     }
 
-    function NumericQuestion(oid, LabelFactory) {
+    function NumericQuestion(oid, prototype) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
-            value: 'Question',
+            value: prototype.objectType,
             writable: false
         });
 
@@ -33,27 +31,20 @@
             writable: false
         });
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'Double',
-            writable: false
-        });
-
         Object.defineProperty(this, 'oid', {
-            value: oid,
+            value: prototype.oid,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'dataType', {
+            value: 'LocalDate',
             writable: false
         });
 
-        Object.defineProperty(this, 'labels', {
-            value: [LabelFactory.create()],
-            writable: false
+        Object.defineProperty(this, 'label', {
+            value: prototype.label,
+            writable: true
         });
-
-        /* Public interface */
-        self.getLabel = getLabel;
-
-        function getLabel(index) {
-            return self.labels[index];
-        }
     }
 
 }());

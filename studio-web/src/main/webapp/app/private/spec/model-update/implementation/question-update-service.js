@@ -27,10 +27,10 @@
         }
 
         function addQuestion(questionType, survey) {
-            var nextOID = Object.keys(survey.questions).length,
+            var nextOID = Object.keys(survey.question).length,
                 newQuestion = QuestionFactory.create(questionType, nextOID);
 
-            survey.questions[newQuestion.oid] = newQuestion;
+            survey.question[newQuestion.oid] = newQuestion;
             return newQuestion;
         }
 
@@ -40,7 +40,7 @@
             });
 
             var indexToRemove = survey.questions.indexOf(questionToRemove[0]);
-            survey.questions.splice(indexToRemove, 1);
+            survey.question.splice(indexToRemove, 1);
             return questionToRemove;
         }
 

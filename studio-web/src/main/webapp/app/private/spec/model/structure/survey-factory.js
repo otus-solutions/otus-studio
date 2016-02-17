@@ -21,13 +21,25 @@
     }
 
     function Survey(SurveyIdentityFactory) {
-        this.objectType = 'Survey';
-        this.identity = SurveyIdentityFactory.create();
-        this.questions = {};
+        Object.defineProperty(this, 'extends', {
+            value: 'StudioObject',
+            writable: false
+        });
 
-        this.getQuestion = function getQuestion(index) {
-            return this.questions[index];
-        };
+        Object.defineProperty(this, 'objectType', {
+            value: 'Survey',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'identity', {
+            value: SurveyIdentityFactory.create(),
+            writable: false
+        });
+
+        Object.defineProperty(this, 'question', {
+            value: {},
+            writable: false
+        });
     }
 
 }());

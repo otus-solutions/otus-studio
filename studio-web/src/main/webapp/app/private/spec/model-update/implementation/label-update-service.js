@@ -15,29 +15,10 @@
         }
 
         function updateLabelValue(editingEvent, survey) {
-            var targetPath = editingEvent.target.split('.');
+            var targetPath = editingEvent.target.split('.'),
+                selectedQuestion = targetPath[2];
 
-            targetPath.forEach(function(path) {
-                var model = extractModel(path),
-                    index = extractModelIndex(path);
-
-                if (model == 'questions') questionIndex = index;
-                else if (model == 'labels') labelIndex = index;
-                else if (model == 'content') contentIndex = index;
-            });
-
-            survey.questions[questionIndex].labels[labelIndex].content[contentIndex].text = editingEvent.state.domData.value;
-            var indexToRemove = survey.questions.indexOf(questionToRemove[0]);
-        }
-
-        function extractModel(modelName) {
-            return modelName.replace(/\[.\]/, '');
-        }
-
-        function extractModelIndex(modelName) {
-            var index = modelName.replace(/(.*\[)/, '');
-            index = index.replace(/(\])/, '');
-            return parseInt(index);
+            survey.question[selectedQuestion].label.ptBR.text = editingEvent.state.domData.value;
         }
     }
 

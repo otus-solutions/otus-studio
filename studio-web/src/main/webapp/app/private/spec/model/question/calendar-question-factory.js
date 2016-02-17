@@ -5,26 +5,22 @@
         .module('spec')
         .factory('CalendarQuestionFactory', CalendarQuestionFactory);
 
-    CalendarQuestionFactory.$inject = ['LabelFactory'];
-
-    function CalendarQuestionFactory(LabelFactory) {
+    function CalendarQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid) {
-            return new CalendarQuestion(oid, LabelFactory);
+        function create(oid, prototype) {
+            return new CalendarQuestion(oid, prototype);
         }
 
         return self;
     }
 
-    function CalendarQuestion(oid, LabelFactory) {
-        var self = this;
-
+    function CalendarQuestion(oid, prototype) {
         Object.defineProperty(this, 'extends', {
-            value: 'Question',
+            value: prototype.objectType,
             writable: false
         });
 
@@ -33,27 +29,20 @@
             writable: false
         });
 
+        Object.defineProperty(this, 'oid', {
+            value: prototype.oid,
+            writable: true
+        });
+
         Object.defineProperty(this, 'dataType', {
             value: 'LocalDate',
             writable: false
         });
 
-        Object.defineProperty(this, 'oid', {
-            value: oid,
-            writable: false
+        Object.defineProperty(this, 'label', {
+            value: prototype.label,
+            writable: true
         });
-
-        Object.defineProperty(this, 'labels', {
-            value: [LabelFactory.create()],
-            writable: false
-        });
-
-        /* Public interface */
-        self.getLabel = getLabel;
-
-        function getLabel(index) {
-            return self.labels[index];
-        }
     }
 
 }());
