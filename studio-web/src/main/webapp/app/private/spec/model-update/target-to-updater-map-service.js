@@ -17,13 +17,13 @@
 
         function filter(target) {
             var IDENTITY_REGEX = /^survey\.identity/;
-            var QUESTION_REGEX = /^survey\.question$/;
+            var QUESTION_CONTAINER_REGEX = /^survey\.question$/;
             var SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/;
             var LABELS_REGEX = /survey\.questions\.[\d|\w|\-]+\.labels/;
 
             if (LABELS_REGEX.test(target)) {
                 return 'LabelUpdateService';
-            } else if (QUESTION_REGEX.test(target)) {
+            } else if (QUESTION_CONTAINER_REGEX.test(target)) {
                 return 'SurveyQuestionsUpdateService';
             } else if (SELECTED_QUESTION_REGEX.test(target)) {
                 return 'SurveyQuestionsUpdateService';

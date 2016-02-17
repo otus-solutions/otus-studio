@@ -19,15 +19,6 @@
             removeButton: HtmlTriggerFactory,
             inputNumber: HtmlTriggerFactory,
             inputEmail: HtmlTriggerFactory
-
-            /* Question */
-            /*
-            text: QuestionEventTriggerFactory,
-            number: QuestionEventTriggerFactory,
-            date: QuestionEventTriggerFactory,
-            time: QuestionEventTriggerFactory,
-            surveyPage: SurveyEventTriggerFactory,
-            */
         };
 
         /* Public interface */
