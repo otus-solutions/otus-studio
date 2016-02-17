@@ -20,14 +20,14 @@
                     }
                 }
             })
-            .state('container', {
-                url: '/container',
+            .state('editor', {
+                url: '/editor',
                 views: {
                     'system-toolbar': {
                         templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/survey-editor/ui/container/container.html'
+                        templateUrl: 'private/survey-editor/ui/main-container/main-container.html'
                     }
                 }
             })

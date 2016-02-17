@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" ng-app="studio">
 
     <head>
@@ -11,16 +12,21 @@
         <title>Otus Studio</title>
     </head>
 
-    <body md-theme="layoutTheme" ng-cloak layout="column" flex>
+    <body md-theme="layoutTheme" layout="column" flex>
         <md-content ui-view="system-toolbar"></md-content>
         <md-content ui-view="system-content" layout flex></md-content>
     </body>
+
+    <!-- jQuery -->
+    <script src="shared/lib/jquery-2.2.0.min.js"></script>
 
     <!-- Angular Dependencies -->
     <script src="shared/lib/angularjs/angular.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
     <script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-bind-html-compile.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
+    <script src="shared/lib/angularjs/external-lib/angular-sanitize.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
     <script src="shared/lib/angularjs/external-lib/angular-ui-router.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
@@ -28,24 +34,41 @@
     <!-- Moment.js, needs to refactor - install via NPM -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 
-    <!-- UI Components -->
+    <!-- ************************************* UI Components ************************************* -->
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
 
-    <!-- Survey Components -->
-    <script src="shared/survey-components/questions/survey-module.js"></script>
+    <!-- *********************************** Survey Components *********************************** -->
+    <!-- survey-components -->
+    <script src="shared/survey-components/survey-components-module.js"></script>
+    <script src="shared/survey-components/survey-components-service.js"></script>
+
+    <!-- survey-components.questions -->
+    <script src="shared/survey-components/questions/survey-questions-module.js"></script>
+
+    <!-- survey-components.questions.calendar -->
     <script src="shared/survey-components/questions/calendar/calendar-directive.js"></script>
+
+    <!-- survey-components.questions.numeric -->
     <script src="shared/survey-components/questions/numeric/numeric-directive.js"></script>
+
+    <!-- survey-components.questions.single-selection -->
     <script src="shared/survey-components/questions/single-selection/single-selection-directive.js"></script>
+
+    <!-- survey-components.questions.text -->
     <script src="shared/survey-components/questions/text/text-directive.js"></script>
+
+    <!-- survey-components.questions.time-question -->
     <script src="shared/survey-components/questions/time-question/time-question-directive.js"></script>
 
+    <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="shared/utils-module.js"></script>
 
-    <!-- Assets -->
+    <!-- **************************************** Assets ***************************************** -->
     <link href="assets/styles.css" rel="stylesheet"/>
 
+    <!-- ************************************** Application ************************************** -->
     <!-- app -->
     <script src="app.js"></script>
 
@@ -62,6 +85,39 @@
     <script src="private/main/home/ui/home-controller.js"></script>
     <script src="private/main/home/ui/toolbar-controller.js"></script>
 
+    <!-- app.private.spec -->
+    <script src="private/spec/spec-module.js"></script>
+
+    <!-- app.private.spec.model.question -->
+    <script src="private/spec/model/question/calendar-question-factory.js"></script>
+    <script src="private/spec/model/question/numeric-question-factory.js"></script>
+    <script src="private/spec/model/question/question-factory.js"></script>
+    <script src="private/spec/model/question/single-selection-question-factory.js"></script>
+    <script src="private/spec/model/question/text-question-factory.js"></script>
+    <script src="private/spec/model/question/time-question-factory.js"></script>
+
+    <!-- app.private.spec.model.setter -->
+    <script src="private/spec/model/setter/label-factory.js"></script>
+
+    <!-- app.private.spec.model.structure -->
+    <script src="private/spec/model/structure/survey-factory.js"></script>
+    <script src="private/spec/model/structure/survey-identity-factory.js"></script>
+
+    <!-- app.private.spec.model-update -->
+    <script src="private/spec/model-update/target-to-updater-map-service.js"></script>
+    <script src="private/spec/model-update/updater-factory.js"></script>
+    <script src="private/spec/model-update/updater-map-service.js"></script>
+
+    <!-- app.private.spec.model-update.implementation -->
+    <script src="private/spec/model-update/implementation/identity-update-service.js"></script>
+    <script src="private/spec/model-update/implementation/label-update-service.js"></script>
+    <script src="private/spec/model-update/implementation/question-update-service.js"></script>
+    <script src="private/spec/model-update/implementation/survey-data-update-service.js"></script>
+
+    <!-- app.private.spec.service -->
+    <script src="private/spec/spec-service/model-loader-service.js"></script>
+    <script src="private/spec/spec-service/model-update-service.js"></script>
+
     <!-- app.private.survey-editor -->
     <script src="private/survey-editor/editor-module.js"></script>
 
@@ -70,38 +126,51 @@
 
     <!-- app.private.survey-editor.engine.core -->
     <script src="private/survey-editor/engine/core/core-module.js"></script>
-    <script src="private/survey-editor/engine/core/editing-source-directive.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.event -->
-    <script src="private/survey-editor/engine/core/event/editing-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/editing-event-handler-service.js"></script>
+    <!-- app.private.survey-editor.engine.core.dom-parser -->
+    <script src="private/survey-editor/engine/core/dom-parser/div-editable-parser-service.js"></script>
+    <script src="private/survey-editor/engine/core/dom-parser/dom-parser-service.js"></script>
+    <script src="private/survey-editor/engine/core/dom-parser/input-text-parser-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.editing-event -->
+    <script src="private/survey-editor/engine/core/editing-event/editing-event-factory.js"></script>
+    <script src="private/survey-editor/engine/core/editing-event/editing-event-processor-factory.js"></script>
+    <script src="private/survey-editor/engine/core/editing-event/editing-event-service.js"></script>
+    <script src="private/survey-editor/engine/core/editing-event/editing-event-type-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.editing-source -->
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-directive.js"></script>
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-factory.js"></script>
+    <script src="private/survey-editor/engine/core/editing-source/editing-source-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.editing-state -->
+    <script src="private/survey-editor/engine/core/editing-state/editing-state-factory.js"></script>
+    <script src="private/survey-editor/engine/core/editing-state/editing-state-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.service -->
-    <script src="private/survey-editor/engine/core/service/editor-service.js"></script>
-    <script src="private/survey-editor/engine/core/service/question-service.js"></script>
-    <script src="private/survey-editor/engine/core/service/studio-editor-service.js"></script>
-    <script src="private/survey-editor/engine/core/service/survey-service.js"></script>
-
-    <!-- app.private.survey-editor.engine.core.state -->
-    <script src="private/survey-editor/engine/core/state/editing-state-factory.js"></script>
-    <script src="private/survey-editor/engine/core/state/editing-state-service.js"></script>
-    <script src="private/survey-editor/engine/core/state/editing-state-tree-factory.js"></script>
+    <script src="private/survey-editor/engine/core/module-service/editor-engine-service.js"></script>
+    <script src="private/survey-editor/engine/core/module-service/studio-editor-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger -->
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-processor-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-register-service.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/event-trigger-tree-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-initializer-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-map.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-register-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/trigger-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.html -->
-    <script src="private/survey-editor/engine/core/trigger/html/button-event-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/html-event-trigger-tree-factory.js"></script>
-    <script src="private/survey-editor/engine/core/trigger/html/input-text-event-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-trigger-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/html-trigger-map.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.trigger.html.implementation -->
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/add-button-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/div-editable-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/input-text-trigger-service.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/html/implementation/remove-button-trigger-service.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.question -->
-    <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-factory.js"></script>
     <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-tree-factory.js"></script>
+    <script src="private/survey-editor/engine/core/trigger/question/question-event-trigger-factory.js"></script>
 
     <!-- app.private.survey-editor.engine.core.trigger.survey -->
     <script src="private/survey-editor/engine/core/trigger/survey/survey-event-trigger-factory.js"></script>
@@ -112,37 +181,35 @@
     <script src="private/survey-editor/engine/memory/memory-cache-factory.js"></script>
     <script src="private/survey-editor/engine/memory/memory-management-factory.js"></script>
 
+    <!-- app.private.survey-editor.engine.ui -->
+    <script src="private/survey-editor/engine/ui/ui-module.js"></script>
+    <script src="private/survey-editor/engine/ui/ui-utils-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.survey-page -->
+    <script src="private/survey-editor/engine/ui/survey-page/survey-page-controller.js"></script>
+    <script src="private/survey-editor/engine/ui/survey-page/survey-page-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/survey-page/widget-loader-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget -->
+    <script src="private/survey-editor/engine/ui/widget/widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/widget-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question -->
+    <script src="private/survey-editor/engine/ui/widget/question/calendar-question-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/numeric-question-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/single-selection-question-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/text-question-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/time-question-widget-factory.js"></script>
+
     <!-- app.private.survey-editor.ui -->
     <script src="private/survey-editor/ui/editor-ui-module.js"></script>
     <script src="private/survey-editor/ui/question-container-button-factory.js"></script>
 
-    <!-- app.private.survey-editor.ui.container -->
-    <script src="private/survey-editor/ui/container/container.js"></script>
-
-    <!-- app.private.survey-editor.ui.palette -->
-    <script src="private/survey-editor/ui/palette/question-palette-controller.js"></script>
+    <!-- app.private.survey-editor.ui.question-palette -->
+    <script src="private/survey-editor/ui/question-palette/question-palette-controller.js"></script>
 
     <!-- app.private.survey-editor.ui.sheet -->
     <script src="private/survey-editor/ui/sheet/sheet-controller.js"></script>
-
-    <!-- app.private.protocol-specification -->
-    <script src="private/protocol-specification/protocol-specification-module.js"></script>
-
-    <!-- app.private.protocol-specification.artifacts -->
-    <script src="private/protocol-specification/artifacts/checkbox-question-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/label-content-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/label-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/survey-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/survey-identity-factory.js"></script>
-    <script src="private/protocol-specification/artifacts/text-question-factory.js"></script>
-
-    <!-- app.private.protocol-specification.parser -->
-    <script src="private/protocol-specification/parser/checkbox-question-parser-service.js"></script>
-
-    <!-- app.private.protocol-specification.service -->
-    <script src="private/protocol-specification/service/survey-data-update-service.js"></script>
-    <script src="private/protocol-specification/service/survey-loader-service.js"></script>
-    <script src="private/protocol-specification/service/text-question-parser-service.js"></script>
 
     <!-- app.private.survey-preview.ui.preview -->
     <script src="private/survey-preview/preview-module.js"></script>

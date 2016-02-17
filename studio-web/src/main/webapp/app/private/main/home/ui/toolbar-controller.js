@@ -4,11 +4,11 @@
         .module('main')
         .controller('ToolbarController', ToolbarController);
 
-    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http'];
+    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http', 'StudioEditorService'];
 
-    function ToolbarController($scope, $location, $mdDialog, $window, $http) {
+    function ToolbarController($scope, $location, $mdDialog, $window, $http, StudioEditorService) {
 
-        var NEW_SURVEY = 'container';
+        var NEW_SURVEY = 'editor';
         var USER_MANAGEMENT_STATE = 'user-management';
         var REPOSITORY_CONNECT_STATE = 'repository?actionType=CONNECT';
         var REPOSITORY_NEW_STATE = 'repository?actionType=NEW';
@@ -35,7 +35,7 @@
 
         $scope.openContainer = function() {
             $location.url(NEW_SURVEY);
-            // StudioEditorService.createNewSurvey();
+            StudioEditorService.createNewSurvey();
         };
 
         $scope.openHome = function() {

@@ -1,5 +1,4 @@
 (function() {
-    // 'Home', 'User', 'Repository', 'surveyEditing', 'editingEngine', 'Container', 'sheet', 'ui.components',
 
     angular
         .module('studio', [
@@ -10,8 +9,10 @@
             'editor',
             'main',
             'user',
+            /* Otus platform modules */
             'ui.components',
-            'survey.questions'
+            'surveyComponents',
+            'utils'
         ]);
 
 }());

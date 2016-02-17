@@ -16,7 +16,8 @@
                     transclude: true,
                     templateUrl: 'shared/ui-components/accordion/accordion-template.html',
                     scope: {
-                        title: '@'
+                        title: '@',
+                        questionWidget: '='
                     },
                     link: function(scope, element, attrs, controller, transclude) {
                         // element.on('mouseover', function() {
