@@ -5,20 +5,22 @@
         .module('spec')
         .factory('NumericQuestionFactory', NumericQuestionFactory);
 
-    function NumericQuestionFactory() {
+    NumericQuestionFactory.$inject = ['UnitFactory'];
+
+    function NumericQuestionFactory(UnitFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new NumericQuestion(oid, prototype);
+            return new NumericQuestion(oid, prototype, UnitFactory);
         }
 
         return self;
     }
 
-    function NumericQuestion(oid, prototype) {
+    function NumericQuestion(oid, prototype, UnitFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -43,6 +45,15 @@
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'unit', {
+            value: {
+                'ptBR': UnitFactory.create(),
+                'enUS': UnitFactory.create(),
+                'esES': UnitFactory.create()
+            },
             writable: true
         });
     }

@@ -10,7 +10,11 @@
 			name="maxValue" min="0"> </md-input-container>
 		<div flex>
 			<div contenteditable="true" class="unit-label" edit-mode
-				edit-placeholder="Insira a unidade"></div>
+				edit-placeholder="Insira a unidade"
+				editing-source
+				es-type="div-editable"
+				es-id="survey-properties-identity-name"
+				es-target="{{::widget.unitTarget}}">{{::widget.unitTarget}}</div>
 		</div>
 	</div>
 

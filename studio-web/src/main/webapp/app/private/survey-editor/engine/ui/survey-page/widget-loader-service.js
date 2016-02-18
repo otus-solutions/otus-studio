@@ -20,7 +20,6 @@
         self.loadWidget = loadWidget;
 
         function loadWidget(model, scope, callback) {
-            scope.widgetTemplateList = [];
             var questionWidget = WidgetService.getWidgetForModel(model);
             loadEditorWidget(questionWidget, scope, callback);
         }
@@ -36,7 +35,6 @@
             $templateRequest(templateUrl).then(function(html) {
                 scope.widget = data;
                 scope.widget.template = compileTemplate(html, scope);
-                scope.widgetTemplateList[data.questionId] = data.questionTemplate;
                 if (callback) callback(scope.widget);
             });
         }

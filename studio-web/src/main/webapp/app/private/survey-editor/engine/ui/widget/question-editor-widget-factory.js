@@ -35,12 +35,17 @@
         });
 
         Object.defineProperty(this, 'labelTarget', {
-            value: 'survey.questions.' + questionWidget.questionId + '.labels[0]content[0]text',
+            value: 'survey.question.' + questionWidget.questionId + '.label',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'unitTarget', {
+            value: 'survey.question.' + questionWidget.questionId + '.unit',
             writable: false
         });
 
         Object.defineProperty(this, 'questionTarget', {
-            value: 'survey.questions.' + questionWidget.questionId,
+            value: 'survey.question.' + questionWidget.questionId,
             writable: false
         });
 

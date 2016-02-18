@@ -19,10 +19,13 @@
             var IDENTITY_REGEX = /^survey\.identity/;
             var QUESTION_CONTAINER_REGEX = /^survey\.question$/;
             var SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/;
-            var LABELS_REGEX = /survey\.questions\.[\d|\w|\-]+\.labels/;
+            var LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/;
+            var UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/;
 
-            if (LABELS_REGEX.test(target)) {
+            if (LABEL_REGEX.test(target)) {
                 return 'LabelUpdateService';
+            } else if (UNIT_REGEX.test(target)) {
+                return 'UnitUpdateService';
             } else if (QUESTION_CONTAINER_REGEX.test(target)) {
                 return 'SurveyQuestionsUpdateService';
             } else if (SELECTED_QUESTION_REGEX.test(target)) {

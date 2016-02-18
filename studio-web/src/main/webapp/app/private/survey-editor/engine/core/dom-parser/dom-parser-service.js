@@ -11,7 +11,7 @@
 
         var parserMap = {
             'input-text': InputTextParser,
-            'div-editable': DivEditableParser,
+            'div-editable': DivEditableParser
         };
 
         /* Public interface */
