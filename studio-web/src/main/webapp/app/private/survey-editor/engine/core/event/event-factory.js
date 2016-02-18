@@ -3,11 +3,11 @@
 
     angular
         .module('editor.engine.core')
-        .factory('EditingEventFactory', EditingEventFactory);
+        .factory('EventFactory', EventFactory);
 
-    EditingEventFactory.$inject = ['EditingEventTypeFactory'];
+    EventFactory.$inject = ['EventTypeFactory'];
 
-    function EditingEventFactory(EditingEventTypeFactory) {
+    function EventFactory(EventTypeFactory) {
         var self = this;
 
         /* Public interface */
@@ -17,14 +17,14 @@
          * Creates a simple EditingEvent instance
          */
         function create(editingSource, newState) {
-            var eventType = EditingEventTypeFactory.get(editingSource.type);
-            return new EditingEvent(editingSource, newState, eventType);
+            var eventType = EventTypeFactory.get(editingSource.type);
+            return new Event(editingSource, newState, eventType);
         }
 
         return this;
     }
 
-    function EditingEvent(editingSource, state, eventType) {
+    function Event(editingSource, state, eventType) {
 
         Object.defineProperty(this, 'source', {
             value: editingSource,

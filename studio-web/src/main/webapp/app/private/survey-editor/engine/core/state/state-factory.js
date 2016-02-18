@@ -2,24 +2,24 @@
 
     angular
         .module('editor.engine.core')
-        .factory('EditingStateFactory', EditingStateFactory);
+        .factory('StateFactory', StateFactory);
 
-    EditingStateFactory.$inject = ['DomParser'];
+    StateFactory.$inject = ['DomParser'];
 
-    function EditingStateFactory(DomParser) {
+    function StateFactory(DomParser) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(editingSource) {
-            return new EditingState(editingSource, DomParser);
+            return new State(editingSource, DomParser);
         }
 
         return self;
     }
 
-    function EditingState(editingSource, DomParser) {
+    function State(editingSource, DomParser) {
         this.domData = DomParser.parse(editingSource);
     }
 

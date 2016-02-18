@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('RemoveButtonTriggerService', RemoveButtonTriggerService);
 
-    RemoveButtonTriggerService.$inject = ['EditingEventService'];
+    RemoveButtonTriggerService.$inject = ['EventService'];
 
-    function RemoveButtonTriggerService(EditingEventService) {
+    function RemoveButtonTriggerService(EventService) {
         var self = this,
             sourceComponentType = 'remove-button';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new RemoveButtonTrigger(EditingEventService, editingSource);
+            return new RemoveButtonTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,7 +23,7 @@
         }
     }
 
-    function RemoveButtonTrigger(EditingEventService, editingSource) {
+    function RemoveButtonTrigger(EventService, editingSource) {
         var self = this;
 
         self.name = 'RemoveButtonTrigger';
@@ -37,7 +37,7 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('click', function setClickTrigger() {
-                EditingEventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource);
             });
         }
     }

@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('QuestionEditorTriggerService', QuestionEditorTriggerService);
 
-    QuestionEditorTriggerService.$inject = ['EditingEventService'];
+    QuestionEditorTriggerService.$inject = ['EventService'];
 
-    function QuestionEditorTriggerService(EditingEventService) {
+    function QuestionEditorTriggerService(EventService) {
         var self = this,
             sourceComponentType = 'question-editor';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new QuestionEditorTrigger(EditingEventService, editingSource);
+            return new QuestionEditorTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,7 +23,7 @@
         }
     }
 
-    function QuestionEditorTrigger(EditingEventService, editingSource) {
+    function QuestionEditorTrigger(EventService, editingSource) {
         var self = this;
 
         self.name = 'QuestionEditorTrigger';
@@ -37,7 +37,7 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('click', function setFocusTrigger() {
-                EditingEventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource);
             });
         }
     }

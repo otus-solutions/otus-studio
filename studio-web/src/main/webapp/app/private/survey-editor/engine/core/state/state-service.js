@@ -2,9 +2,9 @@
 
     angular
         .module('editor.engine.core')
-        .service('EditingState', [EditingState]);
+        .service('State', State);
 
-    function EditingState() {
+    function State() {
         var self = this;
 
         /* Public interface */

@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('DivEditableTriggerService', DivEditableTriggerService);
 
-    DivEditableTriggerService.$inject = ['EditingEventService'];
+    DivEditableTriggerService.$inject = ['EventService'];
 
-    function DivEditableTriggerService(EditingEventService) {
+    function DivEditableTriggerService(EventService) {
         var self = this,
             sourceComponentType = 'div-editable';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new DivEditableTrigger(EditingEventService, editingSource);
+            return new DivEditableTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,7 +23,7 @@
         }
     }
 
-    function DivEditableTrigger(EditingEventService, editingSource) {
+    function DivEditableTrigger(EventService, editingSource) {
         var self = this;
 
         self.name = 'DivEditableTrigger';
@@ -37,11 +37,11 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('focus', function setFocusTrigger() {
-                EditingEventService.observeEvent(self.editingSource);
+                EventService.observeEvent(self.editingSource);
             });
 
             jqElement.on('blur', function setBlurTrigger() {
-                EditingEventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource);
             });
         }
     }

@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('InputTextTriggerService', InputTextTriggerService);
 
-    InputTextTriggerService.$inject = ['EditingEventService'];
+    InputTextTriggerService.$inject = ['EventService'];
 
-    function InputTextTriggerService(EditingEventService) {
+    function InputTextTriggerService(EventService) {
         var self = this,
             sourceComponentType = 'input-text';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new InputTextTrigger(EditingEventService, editingSource);
+            return new InputTextTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,7 +23,7 @@
         }
     }
 
-    function InputTextTrigger(EditingEventService, editingSource) {
+    function InputTextTrigger(EventService, editingSource) {
         var self = this;
 
         self.name = 'InputTextTrigger';
@@ -37,11 +37,11 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('focus', function setFocusTrigger() {
-                EditingEventService.observeEvent(self.editingSource);
+                EventService.observeEvent(self.editingSource);
             });
 
             jqElement.on('blur', function setBlurTrigger() {
-                EditingEventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource);
             });
         }
     }

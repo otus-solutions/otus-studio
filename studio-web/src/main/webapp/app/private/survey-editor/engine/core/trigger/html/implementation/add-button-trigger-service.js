@@ -4,9 +4,9 @@
         .module('editor.engine.core')
         .service('AddButtonTriggerService', AddButtonTriggerService);
 
-    AddButtonTriggerService.$inject = ['EditingEventService'];
+    AddButtonTriggerService.$inject = ['EventService'];
 
-    function AddButtonTriggerService(EditingEventService) {
+    function AddButtonTriggerService(EventService) {
         var self = this,
             sourceComponentType = 'add-button';
 
@@ -15,7 +15,7 @@
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new AddButtonTrigger(EditingEventService, editingSource);
+            return new AddButtonTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,7 +23,7 @@
         }
     }
 
-    function AddButtonTrigger(EditingEventService, editingSource) {
+    function AddButtonTrigger(EventService, editingSource) {
         var self = this;
 
         self.name = 'AddButtonTrigger';
@@ -37,7 +37,7 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('click', function setClickTrigger() {
-                EditingEventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource);
             });
         }
     }

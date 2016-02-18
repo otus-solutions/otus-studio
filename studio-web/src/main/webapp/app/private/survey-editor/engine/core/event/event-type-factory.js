@@ -3,9 +3,9 @@
 
     angular
         .module('editor.engine.core')
-        .factory('EditingEventTypeFactory', EditingEventTypeFactory);
+        .factory('EventTypeFactory', EventTypeFactory);
 
-    function EditingEventTypeFactory() {
+    function EventTypeFactory() {
         var self = this;
 
         var eventTypeMap = {
