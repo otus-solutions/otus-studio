@@ -1,5 +1,9 @@
 <!-- Editor container -->
-<md-whiteframe question-target="{{::widget.questionId}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
+<md-whiteframe question-target="{{::widget.questionId}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center"
+    editing-source
+    es-type="question-editor"
+    es-id="question-editor-question-{{::widget.questionId}}"
+    es-target="{{::widget.questionTarget}}">
     <ui-accordion title="{{::widget.title}}" widget="::widget" flex>
         <ui-accordion-content layout="column" layout-padding flex>
             <md-content layout="column" flex>

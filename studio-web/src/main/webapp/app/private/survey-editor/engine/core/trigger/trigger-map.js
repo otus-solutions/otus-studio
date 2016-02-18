@@ -4,11 +4,15 @@
         .module('editor.engine.core')
         .factory('TriggerMap', TriggerMap);
 
-    TriggerMap.$inject = ['HtmlTriggerMap'];
+    TriggerMap.$inject = [
+        'HtmlTriggerMap',
+        'QuestionTriggerMap'
+    ];
 
-    function TriggerMap(HtmlTriggerMap) {
+    function TriggerMap(HtmlTriggerMap, QuestionTriggerMap) {
         return {
-            HtmlTriggerMap: HtmlTriggerMap
+            HtmlTriggerMap: HtmlTriggerMap,
+            QuestionTriggerMap: QuestionTriggerMap
         };
     }
 

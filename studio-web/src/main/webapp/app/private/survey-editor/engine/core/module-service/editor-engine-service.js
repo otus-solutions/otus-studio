@@ -47,21 +47,23 @@
 
         function editData(editingEvent) {
             // console.log(editingEvent);
-            var updateWork = UpdateWorkFactory.create();
-            updateWork.survey = currentSurvey;
-            updateWork.target = editingEvent.target;
+            if (editingEvent.type == 'SELECT_DATA') {
+                console.log(editingEvent.source.id);
+            } else {
+                var updateWork = UpdateWorkFactory.create();
+                updateWork.survey = currentSurvey;
+                updateWork.target = editingEvent.target;
 
-            if (editingEvent.state.domData)
-                updateWork.data = editingEvent.state.domData;
+                if (editingEvent.state.domData)
+                    updateWork.data = editingEvent.state.domData;
 
-            updateWork.type = editingEvent.type;
-            updateWork.model = editingEvent.source.model;
+                updateWork.type = editingEvent.type;
+                updateWork.model = editingEvent.source.model;
 
-            // console.log(updateWork);
-
-            ModelService.update(updateWork);
-            console.log(currentSurvey);
-            // generalEditingMemoryCache.storeState(editingEvent);
+                ModelService.update(updateWork);
+                console.log(currentSurvey);
+                // generalEditingMemoryCache.storeState(editingEvent);
+            }
         }
     }
 

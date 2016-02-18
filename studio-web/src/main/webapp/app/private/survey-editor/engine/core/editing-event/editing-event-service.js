@@ -10,14 +10,14 @@
         var self = this;
 
         /* Public interface */
-        self.observeEditing = observeEditing;
-        self.performEditing = performEditing;
+        self.observeEvent = observeEvent;
+        self.performEvent = performEvent;
 
-        function observeEditing(editingSource) {
+        function observeEvent(editingSource) {
             editingState = EditingStateFactory.create(editingSource);
         }
 
-        function performEditing(editingSource) {
+        function performEvent(editingSource) {
             var editingState = EditingStateFactory.create(editingSource),
                 editingEvent = EditingEventFactory.create(editingSource, editingState);
 

@@ -36,8 +36,8 @@
         function watchDomComponent() {
             var jqElement = angular.element(self.editingSource.component);
 
-            jqElement.on('click', function setOnFocus() {
-                EditingEventService.performEditing(self.editingSource);
+            jqElement.on('click', function setClickTrigger() {
+                EditingEventService.performEvent(self.editingSource);
             });
         }
     }

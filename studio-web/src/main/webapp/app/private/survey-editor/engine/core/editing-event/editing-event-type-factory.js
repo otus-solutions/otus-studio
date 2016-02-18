@@ -11,7 +11,8 @@
         var eventTypeMap = {
             'input-text': 'SET_VALUE',
             'add-button': 'ADD_DATA',
-            'remove-button': 'REMOVE_DATA'
+            'remove-button': 'REMOVE_DATA',
+            'question-editor': 'SELECT_DATA'
         };
 
         /* Public interface */

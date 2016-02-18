@@ -2,20 +2,20 @@
 
     angular
         .module('editor.engine.core')
-        .service('RemoveButtonTriggerService', RemoveButtonTriggerService);
+        .service('QuestionEditorTriggerService', QuestionEditorTriggerService);
 
-    RemoveButtonTriggerService.$inject = ['EditingEventService'];
+    QuestionEditorTriggerService.$inject = ['EditingEventService'];
 
-    function RemoveButtonTriggerService(EditingEventService) {
+    function QuestionEditorTriggerService(EditingEventService) {
         var self = this,
-            sourceComponentType = 'remove-button';
+            sourceComponentType = 'question-editor';
 
         /* Public interface */
         self.getTrigger = getTrigger;
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new RemoveButtonTrigger(EditingEventService, editingSource);
+            return new QuestionEditorTrigger(EditingEventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -23,12 +23,12 @@
         }
     }
 
-    function RemoveButtonTrigger(EditingEventService, editingSource) {
+    function QuestionEditorTrigger(EditingEventService, editingSource) {
         var self = this;
 
-        self.name = 'RemoveButtonTrigger';
-        self.tree = 'html';
-        self.sourceComponentType = 'remove-button';
+        self.name = 'QuestionEditorTrigger';
+        self.tree = 'question';
+        self.sourceComponentType = 'question-editor';
         self.editingSource = editingSource;
 
         watchDomComponent();
@@ -36,7 +36,7 @@
         function watchDomComponent() {
             var jqElement = angular.element(self.editingSource.component);
 
-            jqElement.on('click', function setClickTrigger() {
+            jqElement.on('click', function setFocusTrigger() {
                 EditingEventService.performEvent(self.editingSource);
             });
         }

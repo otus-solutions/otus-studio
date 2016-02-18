@@ -4,9 +4,13 @@
         .module('editor.engine.core')
         .factory('TriggerFactory', TriggerFactory);
 
-    TriggerFactory.$inject = ['HtmlTriggerFactory', 'StringNormalizer'];
+    TriggerFactory.$inject = [
+        'HtmlTriggerFactory',
+        'QuestionTriggerFactory',
+        'StringNormalizer'
+    ];
 
-    function TriggerFactory(HtmlTriggerFactory, StringNormalizer) {
+    function TriggerFactory(HtmlTriggerFactory, QuestionTriggerFactory, StringNormalizer) {
 
         var self = this;
 
@@ -18,7 +22,10 @@
             addButton: HtmlTriggerFactory,
             removeButton: HtmlTriggerFactory,
             inputNumber: HtmlTriggerFactory,
-            inputEmail: HtmlTriggerFactory
+            inputEmail: HtmlTriggerFactory,
+
+            /* Html */
+            questionEditor: QuestionTriggerFactory
         };
 
         /* Public interface */

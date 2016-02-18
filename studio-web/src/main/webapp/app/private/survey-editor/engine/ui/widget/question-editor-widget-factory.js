@@ -39,6 +39,11 @@
             writable: false
         });
 
+        Object.defineProperty(this, 'questionTarget', {
+            value: 'survey.questions.' + questionWidget.questionId,
+            writable: false
+        });
+
         Object.defineProperty(this, 'questionTemplate', {
             value: questionWidget.template,
             writable: false
