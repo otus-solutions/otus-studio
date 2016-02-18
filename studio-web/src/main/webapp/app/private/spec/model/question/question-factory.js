@@ -40,17 +40,17 @@
 
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: true
+            writable: false
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'Question',
-            writable: true
+            writable: false
         });
 
         Object.defineProperty(this, 'oid', {
             value: oid,
-            writable: true
+            writable: false
         });
 
         Object.defineProperty(this, 'label', {

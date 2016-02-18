@@ -33,7 +33,7 @@
 
         Object.defineProperty(this, 'oid', {
             value: prototype.oid,
-            writable: true
+            writable: false
         });
 
         Object.defineProperty(this, 'dataType', {
