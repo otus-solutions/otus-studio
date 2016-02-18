@@ -5,7 +5,11 @@
             <input required="" type="time" min="0" max="4999">
         </md-input-container>
         <div flex>
-            <div contenteditable="true" class="unit-label" edit-mode edit-placeholder="Insira a unidade"></div>
+            <div contenteditable="true" class="unit-label" edit-mode edit-placeholder="Insira a unidade"edit-placeholder="Insira a unidade"
+                editing-source
+                es-type="div-editable"
+                es-id="survey-editor-question-{{::widget.questionId}}-unit"
+                es-target="{{::widget.unitTarget}}"></div>
         </div>
     </div>
     <style>

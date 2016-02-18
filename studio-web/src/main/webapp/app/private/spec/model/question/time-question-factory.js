@@ -5,20 +5,22 @@
         .module('spec')
         .factory('TimeQuestionFactory', TimeQuestionFactory);
 
-    function TimeQuestionFactory() {
+    TimeQuestionFactory.$inject = ['UnitFactory'];
+
+    function TimeQuestionFactory(UnitFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new TimeQuestion(oid, prototype);
+            return new TimeQuestion(oid, prototype, UnitFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(oid, prototype) {
+    function TimeQuestion(oid, prototype, UnitFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -43,6 +45,15 @@
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'unit', {
+            value: {
+                'ptBR': UnitFactory.create(),
+                'enUS': UnitFactory.create(),
+                'esES': UnitFactory.create()
+            },
             writable: true
         });
     }
