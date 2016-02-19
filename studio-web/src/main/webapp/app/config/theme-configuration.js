@@ -18,7 +18,7 @@
 
         /*Configuration icons*/
         /* 24 is the size default of icons */
-        $mdIconProvider.defaultIconSet('shared/img/icons/mdi.svg', 24);
+        $mdIconProvider.defaultIconSet('assets/img/icons/mdi.svg', 24);
     }
 
 }());
