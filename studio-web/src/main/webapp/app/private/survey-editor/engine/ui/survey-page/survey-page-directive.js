@@ -6,6 +6,7 @@
 
     function surveyPage() {
         var ddo = {
+            restrict: 'E',
             controller: 'SurveyPageController'
         };
 

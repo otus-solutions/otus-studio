@@ -5,22 +5,22 @@
         .module('spec')
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-    SingleSelectionQuestionFactory.$inject = ['QuestionAnswerOptionFactory'];
+    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory'];
 
-    function SingleSelectionQuestionFactory(QuestionAnswerOptionFactory) {
+    function SingleSelectionQuestionFactory(AnswerOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new SingleSelectionQuestion(oid, prototype, QuestionAnswerOptionFactory);
+            return new SingleSelectionQuestion(oid, prototype, AnswerOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(oid, prototype, QuestionAnswerOptionFactory) {
+    function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {

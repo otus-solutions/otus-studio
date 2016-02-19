@@ -6,13 +6,13 @@
         .service('WidgetService', WidgetService);
 
     WidgetService.$inject = [
-        'SurveyComponentsService',
+        'WidgetTemplateService',
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory'
     ];
 
-    function WidgetService(SurveyComponentsService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory) {
+    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory) {
         var self = this;
 
         /* Public interface */
@@ -22,7 +22,7 @@
 
         function getWidgetForModel(model) {
             var widget = QuestionWidgetFactory.create(model);
-            widget.template = SurveyComponentsService.getDirectiveTemplate(model.objectType);
+            widget.template = WidgetTemplateService.getDirectiveTemplate(model.objectType);
             return widget;
         }
 

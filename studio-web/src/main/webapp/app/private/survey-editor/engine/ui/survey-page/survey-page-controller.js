@@ -13,9 +13,7 @@
         'UIUtils'
     ];
 
-    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService,
-        LabelUpdateService, UIUtils) {
-
+    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService, LabelUpdateService, UIUtils) {
         var self = this,
             surveyPage = null;
 

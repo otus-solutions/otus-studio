@@ -4,12 +4,11 @@
         .module('spec')
         .service('AnswerOptionUpdateService', AnswerOptionUpdateService);
 
-    AnswerOptionUpdateService.$inject = ['QuestionAnswerOptionFactory'];
+    AnswerOptionUpdateService.$inject = ['AnswerOptionFactory'];
 
-    function AnswerOptionUpdateService(QuestionAnswerOptionFactory) {
+    function AnswerOptionUpdateService(AnswerOptionFactory) {
         var self = this,
-            observers = [],
-            nextOID = -1;
+            observers = [];
 
         /* Public interface */
         self.update = update;
@@ -30,9 +29,11 @@
         }
 
         function addOption(updateWork) {
-            var newOption = QuestionAnswerOptionFactory.create(++nextOID),
-                selectedQuestion = extractQuestionReference(updateWork.target);
+            var selectedQuestion = extractQuestionReference(updateWork.target);
 
+            var nextOID = Object.keys(updateWork.survey.question[selectedQuestion].option).length;
+
+            var newOption = AnswerOptionFactory.create(nextOID, selectedQuestion);
             updateWork.survey.question[selectedQuestion].option[nextOID] = newOption;
 
             return newOption;
@@ -40,9 +41,10 @@
 
         function removeOption(updateWork) {
             var selectedQuestion = updateWork.target.split('.')[2],
-                questionToRemove = updateWork.survey.question[selectedQuestion];
+                indexToRemove = Object.keys(updateWork.survey.question[selectedQuestion].option).length - 1,
+                questionToRemove = updateWork.survey.question[selectedQuestion].option[indexToRemove];
 
-            delete updateWork.survey.question[selectedQuestion];
+            delete updateWork.survey.question[selectedQuestion].option[indexToRemove];
             return questionToRemove;
         }
 

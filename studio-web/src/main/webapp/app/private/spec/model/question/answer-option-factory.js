@@ -3,24 +3,24 @@
 
     angular
         .module('spec')
-        .factory('QuestionAnswerOptionFactory', QuestionAnswerOptionFactory);
+        .factory('AnswerOptionFactory', AnswerOptionFactory);
 
-    QuestionAnswerOptionFactory.$inject = ['LabelFactory'];
+    AnswerOptionFactory.$inject = ['LabelFactory'];
 
-    function QuestionAnswerOptionFactory(LabelFactory) {
+    function AnswerOptionFactory(LabelFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid) {
-            return new QuestionAnswerOption(oid, LabelFactory);
+        function create(oid, questionOID) {
+            return new QuestionAnswerOption(oid, questionOID, LabelFactory);
         }
 
         return self;
     }
 
-    function QuestionAnswerOption(oid, LabelFactory) {
+    function QuestionAnswerOption(oid, questionOID, LabelFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -40,6 +40,11 @@
 
         Object.defineProperty(this, 'dataType', {
             value: 'Integer',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'parentQuestion', {
+            value: questionOID,
             writable: false
         });
 

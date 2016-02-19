@@ -2,9 +2,9 @@
 
     angular
         .module('editor.engine.ui')
-        .service('SurveyComponentsService', SurveyComponentsService);
+        .service('WidgetTemplateService', WidgetTemplateService);
 
-    function SurveyComponentsService() {
+    function WidgetTemplateService() {
         var self = this,
 
             directiveTemplates = {
