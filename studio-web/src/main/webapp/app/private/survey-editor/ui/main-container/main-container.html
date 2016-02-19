@@ -1,5 +1,5 @@
 <div layout flex>
-    <md-sidenav src="'private/survey-editor/ui/question-palette/question-palette-template.html'"
+    <md-sidenav src="'private/survey-editor/ui/main-container/widget-container/question-palette/question-palette-template.html'"
                 class="palette"
                 md-is-locked-open="true"
                 layout="column"
@@ -9,7 +9,7 @@
     <md-content class="stage" layout="column" layout-padding flex>
         <md-tabs id="stage-mode-selector" flex>
             <md-tab id="editing-tab" label="Edição">
-                <div ng-include src="'private/survey-editor/ui/editing-template.html'"></div>
+                <div ng-include src="'private/survey-editor/ui/main-container/stage-container/stage.html'"></div>
             </md-tab>
             <!-- RECUSO NÃO IMPLEMENTADO, ENTÃO NÃO PRECISA APARECER PARA O USUÁRIO
             <md-tab id="preview-tab" label="Preview">
@@ -18,7 +18,7 @@
             -->
         </md-tabs>
     </md-content>
-    <md-sidenav src="'private/survey-editor/ui/survey/properties/properties.html'"
+    <md-sidenav src="'private/survey-editor/ui/main-container/tool-container/survey/properties.html'"
                 class="resource"
                 md-is-locked-open="true"
                 layout="column"

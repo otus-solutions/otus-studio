@@ -5,15 +5,14 @@
         .service('WidgetLoaderService', WidgetLoaderService);
 
     WidgetLoaderService.$inject = [
+        'editor.engine.ui.mpath',
         '$compile',
         '$templateRequest',
         '$templateCache',
         'WidgetService'
     ];
 
-    function WidgetLoaderService($compile, $templateRequest, $templateCache, WidgetService) {
-        const QUESTION_EDITOR_TEMPLATE_URL = 'private/survey-editor/ui/template/question-editor-template.html';
-
+    function WidgetLoaderService(mpath, $compile, $templateRequest, $templateCache, WidgetService) {
         var self = this;
 
         /* Public interface */
@@ -33,7 +32,7 @@
 
         function loadEditorWidget(modelWidget, scope, callback) {
             var widget = WidgetService.getQuestionEditorWidget(modelWidget);
-            loadTemplate(QUESTION_EDITOR_TEMPLATE_URL, widget, scope, function(widget) {
+            loadTemplate(mpath.getQuestionEditorWidgetPath(), widget, scope, function(widget) {
                 if (callback) callback(widget.template);
             });
         }
