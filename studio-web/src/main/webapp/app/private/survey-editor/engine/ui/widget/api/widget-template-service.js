@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('surveyComponents')
+        .module('editor.engine.ui')
         .service('SurveyComponentsService', SurveyComponentsService);
 
     function SurveyComponentsService() {

@@ -8,15 +8,17 @@
     WidgetService.$inject = [
         'SurveyComponentsService',
         'QuestionWidgetFactory',
-        'QuestionEditorWidgetFactory'
+        'QuestionEditorWidgetFactory',
+        'QuestionAnswerOptionEditorWidgetFactory'
     ];
 
-    function WidgetService(SurveyComponentsService, QuestionWidgetFactory, QuestionEditorWidgetFactory) {
+    function WidgetService(SurveyComponentsService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
         self.getQuestionEditorWidget = getQuestionEditorWidget;
+        self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
 
         function getWidgetForModel(model) {
             var widget = QuestionWidgetFactory.create(model);
@@ -24,8 +26,12 @@
             return widget;
         }
 
-        function getQuestionEditorWidget(questionWidget) {
-            return QuestionEditorWidgetFactory.create(questionWidget);
+        function getQuestionEditorWidget(model) {
+            return QuestionEditorWidgetFactory.create(model);
+        }
+
+        function getQuestionAnswerOptionWidget(model) {
+            return QuestionAnswerOptionEditorWidgetFactory.create(model);
         }
     }
 

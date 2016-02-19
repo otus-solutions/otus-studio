@@ -44,6 +44,11 @@
             writable: false
         });
 
+        Object.defineProperty(this, 'optionTarget', {
+            value: 'survey.question.' + questionWidget.questionId + '.option',
+            writable: false
+        });
+
         Object.defineProperty(this, 'questionTarget', {
             value: 'survey.question.' + questionWidget.questionId,
             writable: false

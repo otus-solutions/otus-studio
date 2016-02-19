@@ -13,7 +13,9 @@
         'UIUtils'
     ];
 
-    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService, LabelUpdateService, UIUtils) {
+    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService,
+        LabelUpdateService, UIUtils) {
+
         var self = this,
             surveyPage = null;
 
@@ -30,13 +32,13 @@
             surveyPage = UIUtils.jq($element);
         }
 
-        function update(question, updateType) {
+        function update(data, updateType) {
             if (updateType == 'ADD_DATA')
-                addQuestion(question);
+                addQuestion(data);
             else if (updateType == 'REMOVE_DATA')
-                removeQuestion(question);
+                removeQuestion(data);
             else if (updateType == 'SET_VALUE')
-                updateQuestion(question);
+                updateQuestion(data);
         }
 
         function addQuestion(question) {

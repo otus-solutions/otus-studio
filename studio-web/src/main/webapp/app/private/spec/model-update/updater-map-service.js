@@ -9,16 +9,18 @@
         'SurveyIdentityUpdateService',
         'SurveyQuestionsUpdateService',
         'LabelUpdateService',
-        'UnitUpdateService'
+        'UnitUpdateService',
+        'QuestionAnswerOptionUpdateService'
     ];
 
-    function UpdaterMapService(SurveyIdentityUpdateService, SurveyQuestionsUpdateService, LabelUpdateService, UnitUpdateService) {
+    function UpdaterMapService(SurveyIdentityUpdateService, SurveyQuestionsUpdateService, LabelUpdateService, UnitUpdateService, QuestionAnswerOptionUpdateService) {
         var self = this,
             updaterMap = {
                 'SurveyIdentityUpdateService': SurveyIdentityUpdateService,
                 'SurveyQuestionsUpdateService': SurveyQuestionsUpdateService,
                 'LabelUpdateService': LabelUpdateService,
-                'UnitUpdateService': UnitUpdateService
+                'UnitUpdateService': UnitUpdateService,
+                'QuestionAnswerOptionUpdateService': QuestionAnswerOptionUpdateService
             };
 
         /* Public interface */

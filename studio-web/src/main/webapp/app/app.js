@@ -11,7 +11,6 @@
             'user',
             /* Otus platform modules */
             'ui.components',
-            'surveyComponents',
             'utils'
         ]);
 

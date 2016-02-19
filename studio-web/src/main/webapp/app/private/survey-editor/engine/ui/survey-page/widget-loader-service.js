@@ -20,8 +20,15 @@
         self.loadWidget = loadWidget;
 
         function loadWidget(model, scope, callback) {
-            var questionWidget = WidgetService.getWidgetForModel(model);
-            loadEditorWidget(questionWidget, scope, callback);
+            scope.widgetTemplateList = scope.widgetTemplateList || [];
+
+            if (model.extends == 'Question') {
+                var questionWidget = WidgetService.getWidgetForModel(model);
+                loadEditorWidget(questionWidget, scope, callback);
+            } else if (model.objectType == 'QuestionAnswerOption') {
+                var widget = WidgetService.getQuestionAnswerOptionWidget(model);
+                if (callback) callback(widget);
+            }
         }
 
         function loadEditorWidget(modelWidget, scope, callback) {
@@ -34,7 +41,10 @@
         function loadTemplate(templateUrl, data, scope, callback) {
             $templateRequest(templateUrl).then(function(html) {
                 scope.widget = data;
+                scope.templateIndex = data.questionId;
+                scope.widgetTemplateList[scope.templateIndex] = data.questionTemplate;
                 scope.widget.template = compileTemplate(html, scope);
+
                 if (callback) callback(scope.widget);
             });
         }

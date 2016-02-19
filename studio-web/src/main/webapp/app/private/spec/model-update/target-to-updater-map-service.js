@@ -21,6 +21,7 @@
             var SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/;
             var LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/;
             var UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/;
+            var ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelUpdateService';
@@ -32,6 +33,8 @@
                 return 'SurveyQuestionsUpdateService';
             } else if (IDENTITY_REGEX.test(target)) {
                 return 'SurveyIdentityUpdateService';
+            } else if (ANSWER_OPTION_REGEX.test(target)) {
+                return 'QuestionAnswerOptionUpdateService';
             }
 
             return target;

@@ -5,20 +5,22 @@
         .module('spec')
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-    function SingleSelectionQuestionFactory() {
+    SingleSelectionQuestionFactory.$inject = ['QuestionAnswerOptionFactory'];
+
+    function SingleSelectionQuestionFactory(QuestionAnswerOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new SingleSelectionQuestion(oid, prototype);
+            return new SingleSelectionQuestion(oid, prototype, QuestionAnswerOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(oid, prototype) {
+    function SingleSelectionQuestion(oid, prototype, QuestionAnswerOptionFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -43,6 +45,11 @@
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'option', {
+            value: {},
             writable: true
         });
     }

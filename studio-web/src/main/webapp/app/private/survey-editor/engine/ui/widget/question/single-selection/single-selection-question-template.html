@@ -1,0 +1,20 @@
+<md-radio-group class="radio-group">
+    <div ng-repeat="option in options track by $index" layout="row" style="margin: 10px">
+        <md-radio-button aria-label="opção" ng-value="$index" flex style="margin: 0"></md-radio-button>
+        <div flex="95" contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da opção de resposta"
+            editing-source
+            es-type="div-editable"
+            es-id="survey-editor-question-{{::widget.questionId}}-option"
+            es-target="{{::widget.optionTarget}}.{{::optionWidget.optionIndex}}"></div>
+    </div>
+</md-radio-group>
+
+<div>
+    <md-button class="md-raised" type="button"
+        editing-source
+        es-type="add-button"
+        es-id="survey-editor-question-{{::widget.questionId}}-option"
+        es-target="{{::widget.optionTarget}}">Adicionar</md-button>
+
+    <md-button class="md-raised" ng-click="removeItem()" type="button">Remover</md-button>
+</div>

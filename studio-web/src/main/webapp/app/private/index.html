@@ -38,29 +38,6 @@
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
 
-    <!-- *********************************** Survey Components *********************************** -->
-    <!-- survey-components -->
-    <script src="shared/survey-components/survey-components-module.js"></script>
-    <script src="shared/survey-components/survey-components-service.js"></script>
-
-    <!-- survey-components.questions -->
-    <script src="shared/survey-components/questions/survey-questions-module.js"></script>
-
-    <!-- survey-components.questions.calendar -->
-    <script src="shared/survey-components/questions/calendar/calendar-directive.js"></script>
-
-    <!-- survey-components.questions.numeric -->
-    <script src="shared/survey-components/questions/numeric/numeric-directive.js"></script>
-
-    <!-- survey-components.questions.single-selection -->
-    <script src="shared/survey-components/questions/single-selection/single-selection-directive.js"></script>
-
-    <!-- survey-components.questions.text -->
-    <script src="shared/survey-components/questions/text/text-directive.js"></script>
-
-    <!-- survey-components.questions.time-question -->
-    <script src="shared/survey-components/questions/time-question/time-question-directive.js"></script>
-
     <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="shared/utils-module.js"></script>
@@ -91,6 +68,7 @@
     <!-- app.private.spec.model.question -->
     <script src="private/spec/model/question/calendar-question-factory.js"></script>
     <script src="private/spec/model/question/numeric-question-factory.js"></script>
+    <script src="private/spec/model/question/question-answer-option-factory.js"></script>
     <script src="private/spec/model/question/question-factory.js"></script>
     <script src="private/spec/model/question/single-selection-question-factory.js"></script>
     <script src="private/spec/model/question/text-question-factory.js"></script>
@@ -113,6 +91,7 @@
     <!-- app.private.spec.model-update.implementation -->
     <script src="private/spec/model-update/implementation/identity-update-service.js"></script>
     <script src="private/spec/model-update/implementation/label-update-service.js"></script>
+    <script src="private/spec/model-update/implementation/question-answer-option-update-service.js"></script>
     <script src="private/spec/model-update/implementation/question-update-service.js"></script>
     <script src="private/spec/model-update/implementation/unit-update-service.js"></script>
 
@@ -183,7 +162,10 @@
 
     <!-- app.private.survey-editor.engine.ui -->
     <script src="private/survey-editor/engine/ui/ui-module.js"></script>
-    <script src="private/survey-editor/engine/ui/ui-utils-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.api -->
+    <script src="private/survey-editor/engine/ui/api/mpath-service.js"></script>
+    <script src="private/survey-editor/engine/ui/api/ui-utils-service.js"></script>
 
     <!-- app.private.survey-editor.engine.ui.survey-page -->
     <script src="private/survey-editor/engine/ui/survey-page/survey-page-controller.js"></script>
@@ -192,15 +174,34 @@
 
     <!-- app.private.survey-editor.engine.ui.widget -->
     <script src="private/survey-editor/engine/ui/widget/question-editor-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/widget-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.api -->
+    <script src="private/survey-editor/engine/ui/widget/api/widget-service.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/api/widget-template-service.js"></script>
 
     <!-- app.private.survey-editor.engine.ui.widget.question -->
-    <script src="private/survey-editor/engine/ui/widget/question/calendar-question-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/numeric-question-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection-question-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/text-question-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/time-question-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.calendar -->
+    <script src="private/survey-editor/engine/ui/widget/question/calendar/calendar-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/calendar/calendar-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.numeric -->
+    <script src="private/survey-editor/engine/ui/widget/question/numeric/numeric-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/numeric/numeric-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.single-selection -->
+    <script src="private/survey-editor/engine/ui/widget/question/single-selection/question-answer-option-widget-factory.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/single-selection/single-selection-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/single-selection/single-selection-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.text -->
+    <script src="private/survey-editor/engine/ui/widget/question/text/text-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/text/text-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.time -->
+    <script src="private/survey-editor/engine/ui/widget/question/time/time-question-directive.js"></script>
+    <script src="private/survey-editor/engine/ui/widget/question/time/time-question-widget-factory.js"></script>
 
     <!-- app.private.survey-editor.ui -->
     <script src="private/survey-editor/ui/editor-ui-module.js"></script>

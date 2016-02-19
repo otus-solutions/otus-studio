@@ -10,6 +10,7 @@
 
         var eventTypeMap = {
             'input-text': 'SET_VALUE',
+            'div-editable': 'SET_VALUE',
             'add-button': 'ADD_DATA',
             'remove-button': 'REMOVE_DATA',
             'question-editor': 'SELECT_DATA'
