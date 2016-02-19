@@ -48,6 +48,18 @@ public class RepositoryResource {
         return response.toJson();
     }
 
+    @GET
+    @Path("validate/credentials")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String isValidRepositoryCredentials(@QueryParam("repositoryData") String repository) {
+    	RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
+    	Response response = new Response();
+    	
+    	response.setData(repositoryService.checkRepositoryCredentials(convertedRepositoryDto));
+    	return response.toJson();
+    }
+    
     @POST
     @Path("validate/database")
     @Produces(MediaType.APPLICATION_JSON)

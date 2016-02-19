@@ -4,7 +4,7 @@
         .module('main')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$http','$scope','$rootScope'];
+    HomeController.$inject = ['$http', '$scope', '$rootScope'];
 
     function HomeController($http, $scope, $rootScope) {
         const $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/studio/session/rest/register/loggedUser';
@@ -24,7 +24,9 @@
         };
 
         $scope.doesNotHasRepository = function() {
-            return $rootScope.repositories.length;
+            if ($rootScope.repositories) {
+                return $rootScope.repositories.length;
+            }
         };
 
     }

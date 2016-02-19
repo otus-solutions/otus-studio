@@ -23,4 +23,6 @@ public interface RepositoryService {
     Boolean validationDatabase(RepositoryDto repositoryDto);
 
     Boolean validationConnection(RepositoryDto repositoryDto);
+
+	Boolean checkRepositoryCredentials(RepositoryDto repositoryDto);
 }
