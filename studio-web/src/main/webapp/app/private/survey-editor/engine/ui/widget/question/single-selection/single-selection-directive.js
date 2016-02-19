@@ -7,12 +7,12 @@
     singleSelectionQuestion.$inject = [
         'editor.engine.ui.mpath',
         'LabelUpdateService',
-        'QuestionAnswerOptionUpdateService',
+        'AnswerOptionUpdateService',
         'WidgetLoaderService',
         'UIUtils'
     ];
 
-    function singleSelectionQuestion(mpath, LabelUpdateService, QuestionAnswerOptionUpdateService, WidgetLoaderService, UIUtils) {
+    function singleSelectionQuestion(mpath, LabelUpdateService, AnswerOptionUpdateService, WidgetLoaderService, UIUtils) {
         var directiveScope = null;
 
         var ddo = {
@@ -35,7 +35,7 @@
 
                 function init() {
                     LabelUpdateService.registerObserver(self);
-                    QuestionAnswerOptionUpdateService.registerObserver(self);
+                    AnswerOptionUpdateService.registerObserver(self);
                     question = UIUtils.jq($element);
                 }
 

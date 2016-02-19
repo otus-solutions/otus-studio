@@ -34,7 +34,7 @@
             } else if (IDENTITY_REGEX.test(target)) {
                 return 'SurveyIdentityUpdateService';
             } else if (ANSWER_OPTION_REGEX.test(target)) {
-                return 'QuestionAnswerOptionUpdateService';
+                return 'AnswerOptionUpdateService';
             }
 
             return target;

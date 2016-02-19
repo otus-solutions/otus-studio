@@ -2,11 +2,11 @@
 
     angular
         .module('spec')
-        .service('QuestionAnswerOptionUpdateService', QuestionAnswerOptionUpdateService);
+        .service('AnswerOptionUpdateService', AnswerOptionUpdateService);
 
-    QuestionAnswerOptionUpdateService.$inject = ['QuestionAnswerOptionFactory'];
+    AnswerOptionUpdateService.$inject = ['QuestionAnswerOptionFactory'];
 
-    function QuestionAnswerOptionUpdateService(QuestionAnswerOptionFactory) {
+    function AnswerOptionUpdateService(QuestionAnswerOptionFactory) {
         var self = this,
             observers = [],
             nextOID = -1;
