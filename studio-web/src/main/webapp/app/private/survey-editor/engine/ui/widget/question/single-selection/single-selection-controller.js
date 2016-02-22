@@ -19,7 +19,6 @@
 
         /* Public interface */
         self.update = update;
-        self.answerOptions = answerOptions;
 
         /* Initialization */
         init();
@@ -39,18 +38,18 @@
         }
 
         function addAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId)
-                AnswerOptionContentService.loadOptionWidget(answerOption, $scope, appendToQuestion);
+            if (answerOption.parentQuestion == $scope.widget.questionId) {
+                var widget = AnswerOptionContentService.loadOptionWidget(answerOption, $scope);
+                appendToQuestion(widget);
+            }
         }
 
         function removeAnswerOption(answerOption) {
-            singleSelection.find('[radio-container]').last().remove();
-            $scope.options.splice(-1);
-            $scope.lastOptionIndex = $scope.options.length - 1;
-        }
-
-        function answerOptions() {
-            return options;
+            if (answerOption.parentQuestion == $scope.widget.questionId) {
+                singleSelection.find('[radio-container]').last().remove();
+                $scope.options.splice(-1);
+                $scope.lastOptionIndex = $scope.options.length - 1;
+            }
         }
 
         function appendToQuestion(widget) {

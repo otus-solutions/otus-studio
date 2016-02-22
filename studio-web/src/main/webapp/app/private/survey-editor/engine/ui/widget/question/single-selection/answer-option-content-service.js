@@ -5,22 +5,17 @@
         .service('AnswerOptionContentService', AnswerOptionContentService);
 
     AnswerOptionContentService.$inject = [
-        'editor.engine.ui.mpath',
-        '$compile',
-        '$templateRequest',
-        '$templateCache',
         'WidgetService'
     ];
 
-    function AnswerOptionContentService(mpath, $compile, $templateRequest, $templateCache, WidgetService) {
+    function AnswerOptionContentService(WidgetService) {
         var self = this;
 
         /* Public interface */
         self.loadOptionWidget = loadOptionWidget;
 
-        function loadOptionWidget(model, scope, callback) {
-            var widget = WidgetService.getQuestionAnswerOptionWidget(model);
-            if (callback) callback(widget);
+        function loadOptionWidget(model, scope) {
+            return WidgetService.getQuestionAnswerOptionWidget(model);
         }
     }
 
