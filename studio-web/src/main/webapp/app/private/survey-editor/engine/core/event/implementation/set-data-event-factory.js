@@ -6,7 +6,7 @@
 
     SetDataEventFactory.$inject = ['EditorEngineService', 'MemoryService'];
 
-    function SetDataEventFactory(EditorEngineService) {
+    function SetDataEventFactory(EditorEngineService, MemoryService) {
         var self = this;
 
         /* Public interface */
