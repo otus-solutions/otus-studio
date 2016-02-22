@@ -4,15 +4,13 @@
         .module('editor.engine.memory.ui')
         .service('UIMemoryService', UIMemoryService);
 
-    UIMemoryService.$inject = ['LiveCacheFactory'];
-
-    function UIMemoryService(LiveCacheFactory) {
+    function UIMemoryService() {
         var self = this;
 
         /* Public interface */
-        self.prompt = prompt;
+        self.storeData = storeData;
 
-        function prompt(data) {
+        function storeData(data) {
             console.log(data);
         }
     }

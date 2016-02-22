@@ -4,16 +4,16 @@
         .module('editor.engine.core')
         .factory('SelectDataEventFactory', SelectDataEventFactory);
 
-    SelectDataEventFactory.$inject = ['UIMemoryService'];
+    SelectDataEventFactory.$inject = ['MemoryService'];
 
-    function SelectDataEventFactory(UIMemoryService) {
+    function SelectDataEventFactory(MemoryService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new SelectDataEvent(prototype, UIMemoryService);
+            return new SelectDataEvent(prototype, MemoryService);
         }
 
         return self;
@@ -26,7 +26,7 @@
         self.forward = forward;
 
         function forward() {
-            dispatcher.prompt(prototype);
+            dispatcher.storeData(prototype);
         }
     }
 

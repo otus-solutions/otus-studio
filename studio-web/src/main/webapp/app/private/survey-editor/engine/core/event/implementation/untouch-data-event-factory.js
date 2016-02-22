@@ -4,16 +4,16 @@
         .module('editor.engine.core')
         .factory('UntouchDataEventFactory', UntouchDataEventFactory);
 
-    UntouchDataEventFactory.$inject = ['UIMemoryService'];
+    UntouchDataEventFactory.$inject = ['MemoryService'];
 
-    function UntouchDataEventFactory(UIMemoryService) {
+    function UntouchDataEventFactory(MemoryService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new UntouchDataEvent(prototype, UIMemoryService);
+            return new UntouchDataEvent(prototype, MemoryService);
         }
 
         return self;
@@ -26,7 +26,7 @@
         self.forward = forward;
 
         function forward() {
-            dispatcher.prompt(prototype);
+            dispatcher.storeData(prototype);
         }
     }
 

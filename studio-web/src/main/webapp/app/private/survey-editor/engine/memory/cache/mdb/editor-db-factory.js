@@ -12,7 +12,7 @@
         /* Public interface */
         self.create = create;
 
-        function create(Loki) {
+        function create() {
             return new EditorDb(Loki);
         }
 
@@ -21,7 +21,9 @@
 
     function EditorDb(Loki) {
         var self = this,
-            editorDb = null;
+            instance = null;
+
+        const DATA_STATE_COLLECTION = 'dataStates';
 
         /* Public interface */
         self.addDataState = addDataState;
@@ -29,13 +31,12 @@
         init();
 
         function init() {
-            editorDb = new Loki('editor-db.json');
-            editorDb.addCollection('dataStates');
+            instance = new Loki('editor-db.json');
+            instance.addCollection(DATA_STATE_COLLECTION);
         }
 
         function addDataState(state) {
-            editorDb.insert(state);
-            console.log(editorDb);
+            instance.getCollection(DATA_STATE_COLLECTION).insert(state);
         }
     }
 
