@@ -4,16 +4,16 @@
         .module('editor.engine.core')
         .factory('UntouchDataEventFactory', UntouchDataEventFactory);
 
-    UntouchDataEventFactory.$inject = ['MemoryUIService'];
+    UntouchDataEventFactory.$inject = ['UIMemoryService'];
 
-    function UntouchDataEventFactory(MemoryUIService) {
+    function UntouchDataEventFactory(UIMemoryService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new UntouchDataEvent(prototype, MemoryUIService);
+            return new UntouchDataEvent(prototype, UIMemoryService);
         }
 
         return self;

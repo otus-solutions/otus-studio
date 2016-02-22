@@ -7,11 +7,10 @@
     EventService.$inject = [
         'EventFactory',
         'StateFactory',
-        'EditorEngineService',
-        'MemoryUIService'
+        'EditorEngineService'
     ];
 
-    function EventService(EventFactory, StateFactory, EditorEngineService, MemoryUIService) {
+    function EventService(EventFactory, StateFactory, EditorEngineService) {
         var self = this;
 
         /* Public interface */

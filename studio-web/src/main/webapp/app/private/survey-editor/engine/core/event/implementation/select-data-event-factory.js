@@ -4,16 +4,16 @@
         .module('editor.engine.core')
         .factory('SelectDataEventFactory', SelectDataEventFactory);
 
-    SelectDataEventFactory.$inject = ['MemoryUIService'];
+    SelectDataEventFactory.$inject = ['UIMemoryService'];
 
-    function SelectDataEventFactory(MemoryUIService) {
+    function SelectDataEventFactory(UIMemoryService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new SelectDataEvent(prototype, MemoryUIService);
+            return new SelectDataEvent(prototype, UIMemoryService);
         }
 
         return self;

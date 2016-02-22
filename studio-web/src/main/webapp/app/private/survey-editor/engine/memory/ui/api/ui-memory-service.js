@@ -2,9 +2,11 @@
 
     angular
         .module('editor.engine.memory.ui')
-        .service('MemoryUIService', MemoryUIService);
+        .service('UIMemoryService', UIMemoryService);
 
-    function MemoryUIService() {
+    UIMemoryService.$inject = ['LiveCacheFactory'];
+
+    function UIMemoryService(LiveCacheFactory) {
         var self = this;
 
         /* Public interface */
