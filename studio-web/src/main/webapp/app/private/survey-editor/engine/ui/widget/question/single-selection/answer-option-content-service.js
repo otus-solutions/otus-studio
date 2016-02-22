@@ -12,10 +12,19 @@
         var self = this;
 
         /* Public interface */
-        self.loadOptionWidget = loadOptionWidget;
+        self.loadOption = loadOption;
+        self.unloadOption = unloadOption;
 
-        function loadOptionWidget(model, scope) {
-            return WidgetService.getQuestionAnswerOptionWidget(model);
+        function loadOption(model, scope) {
+            var widget = WidgetService.getQuestionAnswerOptionWidget(model);
+            scope.answerOptions.push(widget);
+            scope.lastOptionIndex = scope.answerOptions.length - 1;
+        }
+
+        function unloadOption(singleSelection, scope) {
+            singleSelection.find('[radio-container]').last().remove();
+            scope.answerOptions.splice(-1);
+            scope.lastOptionIndex = scope.answerOptions.length - 1;
         }
     }
 

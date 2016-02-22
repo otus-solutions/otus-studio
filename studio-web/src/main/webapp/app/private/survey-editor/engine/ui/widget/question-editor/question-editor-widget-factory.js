@@ -19,13 +19,14 @@
     }
 
     function QuestionEditorWidget(questionWidget) {
-        Object.defineProperty(this, 'title', {
-            value: questionWidget.questionId + ':' + questionWidget.type,
+        Object.defineProperty(this, 'questionWidget', {
+            value: questionWidget,
             writable: false
         });
 
-        Object.defineProperty(this, 'questionWidget', {
-            value: questionWidget,
+        /* Question editor widget */
+        Object.defineProperty(this, 'title', {
+            value: questionWidget.questionId + ':' + questionWidget.type,
             writable: false
         });
 
@@ -41,11 +42,6 @@
 
         Object.defineProperty(this, 'unitTarget', {
             value: 'survey.question.' + questionWidget.questionId + '.unit',
-            writable: false
-        });
-
-        Object.defineProperty(this, 'optionTarget', {
-            value: 'survey.question.' + questionWidget.questionId + '.option',
             writable: false
         });
 

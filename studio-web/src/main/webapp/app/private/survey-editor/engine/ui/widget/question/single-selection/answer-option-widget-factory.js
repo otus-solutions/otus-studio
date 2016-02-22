@@ -24,8 +24,23 @@
             writable: false
         });
 
-        Object.defineProperty(this, 'optionIndex', {
-            value: model.oid,
+        Object.defineProperty(this, 'esId', {
+            value: 'single-selection-' + model.parentQuestion + '-option-' + model.oid,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'esTarget', {
+            value: 'survey.question.' + model.parentQuestion + '.option.' + model.oid,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'addButtonTarget', {
+            value: 'survey.question.' + model.parentQuestion + '.option.',
+            writable: false
+        });
+
+        Object.defineProperty(this, 'removeButtonTarget', {
+            value: 'survey.question.' + model.parentQuestion + '.option.' + model.oid,
             writable: false
         });
     }
