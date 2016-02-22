@@ -7,11 +7,10 @@
     SurveyPageContentService.$inject = [
         'editor.engine.ui.mpath',
         'TemplateLoaderService',
-        'WidgetService',
-        'UIUtils'
+        'WidgetService'
     ];
 
-    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService, UIUtils) {
+    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService) {
         var self = this,
             scope = null,
             surveyPage = null;
@@ -35,7 +34,7 @@
         }
 
         function unloadQuestion(question) {
-            UIUtils.jq(surveyPage).find('[question-target="' + question.oid + '"]').remove();
+            surveyPage.find('[question-target="' + question.oid + '"]').remove();
         }
 
         function loadQuestionWidget(question) {
