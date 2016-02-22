@@ -19,14 +19,14 @@
         return self;
     }
 
-    function SelectDataEvent(prototype, dispatcher) {
+    function SelectDataEvent(prototype, memory) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
-            dispatcher.storeData(prototype);
+            memory.store(prototype);
         }
     }
 

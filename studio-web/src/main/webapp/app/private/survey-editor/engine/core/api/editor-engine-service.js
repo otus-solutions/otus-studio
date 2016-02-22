@@ -16,7 +16,7 @@
         self.closeSurvey = closeSurvey;
         self.loadSurvey = loadSurvey;
         self.getSurvey = getSurvey;
-        self.editData = editData;
+        self.edit = edit;
 
         function newSurvey() {
             survey = SurveyLoaderService.newSurvey();
@@ -42,8 +42,9 @@
             return survey;
         }
 
-        function editData(editingEvent) {
+        function edit(editingEvent) {
             ModelService.update(buildUpdateWork(editingEvent));
+            console.log(getSurvey());
         }
 
         function buildUpdateWork(editingEvent) {

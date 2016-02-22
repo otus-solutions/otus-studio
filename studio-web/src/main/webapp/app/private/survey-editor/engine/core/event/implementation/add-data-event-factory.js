@@ -26,8 +26,8 @@
         self.forward = forward;
 
         function forward() {
-            editor.editData(prototype);
-            memory.storeData(prototype);
+            editor.edit(prototype);
+            memory.store(prototype);
         }
     }
 

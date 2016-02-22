@@ -19,14 +19,14 @@
         return self;
     }
 
-    function TouchDataEvent(prototype, dispatcher) {
+    function TouchDataEvent(prototype, memory) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
-            dispatcher.storeData(prototype);
+            memory.store(prototype);
         }
     }
 

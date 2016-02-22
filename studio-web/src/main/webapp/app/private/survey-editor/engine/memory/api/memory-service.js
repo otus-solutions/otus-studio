@@ -10,9 +10,9 @@
         var self = this;
 
         /* Public interface */
-        self.storeData = storeData;
+        self.store = store;
 
-        function storeData(data) {
+        function store(data) {
             UIMemoryService.storeData(data);
             MDbService.storeData(data);
         }
