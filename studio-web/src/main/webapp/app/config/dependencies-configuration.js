@@ -7,7 +7,8 @@
         'ngAnimate',
         /* 3rd-party modules */
         'ui.mask',
-        'ui.router'
+        'ui.router',
+        'lokijs'
     ]);
 
 }());
