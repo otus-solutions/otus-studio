@@ -7,15 +7,13 @@
     SurveyPageController.$inject = [
         '$scope',
         '$element',
-        'WidgetLoaderService',
+        'SurveyPageContentService',
         'SurveyQuestionsUpdateService',
-        'LabelUpdateService',
-        'UIUtils'
+        'LabelUpdateService'
     ];
 
-    function SurveyPageController($scope, $element, WidgetLoaderService, SurveyQuestionsUpdateService, LabelUpdateService, UIUtils) {
-        var self = this,
-            surveyPage = null;
+    function SurveyPageController($scope, $element, SurveyPageContentService, SurveyQuestionsUpdateService, LabelUpdateService) {
+        var self = this;
 
         /* Public interface */
         self.update = update;
@@ -27,7 +25,7 @@
             // TODO: transformar essa implementação de observer para o 'modo angular' de tratar eventos
             SurveyQuestionsUpdateService.registerObserver(self);
             LabelUpdateService.registerObserver(self);
-            surveyPage = UIUtils.jq($element);
+            SurveyPageContentService.init($scope, $element);
         }
 
         function update(data, updateType) {
@@ -40,21 +38,17 @@
         }
 
         function addQuestion(question) {
-            WidgetLoaderService.loadWidget(question, $scope, appendToPage);
+            SurveyPageContentService.loadQuestion(question);
         }
 
         function removeQuestion(question) {
-            UIUtils.jq($element).find('[question-target="' + question.oid + '"]').remove();
+            SurveyPageContentService.unloadQuestion(question);
         }
 
         function updateQuestion(question) {
             var targetExpression = '[es-id="survey-editor-question-' + question.oid + '-label"]';
             var targetLabel = UIUtils.jq(surveyPage.find(targetExpression)[0]);
             targetLabel.text(question.label.ptBR.plainText);
-        }
-
-        function appendToPage(widget) {
-            $element.append(widget);
         }
     }
 
