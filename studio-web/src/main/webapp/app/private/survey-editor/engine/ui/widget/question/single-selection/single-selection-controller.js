@@ -7,13 +7,13 @@
     SingleSelectionController.$inject = [
         '$scope',
         '$element',
-        'ContentLoaderService',
+        'AnswerOptionContentService',
         'LabelUpdateService',
         'AnswerOptionUpdateService',
         'UIUtils'
     ];
 
-    function SingleSelectionController($scope, $element, ContentLoaderService, LabelUpdateService, AnswerOptionUpdateService, UIUtils) {
+    function SingleSelectionController($scope, $element, AnswerOptionContentService, LabelUpdateService, AnswerOptionUpdateService, UIUtils) {
         var self = this,
             singleSelection = null;
 
@@ -40,7 +40,7 @@
 
         function addAnswerOption(answerOption) {
             if (answerOption.parentQuestion == $scope.widget.questionId)
-                ContentLoaderService.loadWidget(answerOption, $scope, appendToQuestion);
+                AnswerOptionContentService.loadOptionWidget(answerOption, $scope, appendToQuestion);
         }
 
         function removeAnswerOption(answerOption) {
