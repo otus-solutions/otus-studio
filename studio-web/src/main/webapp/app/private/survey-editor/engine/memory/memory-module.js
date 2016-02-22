@@ -1,5 +1,7 @@
 (function() {
 
-    angular.module('memory', []);
+    angular.module('editor.engine.memory', [
+        'editor.engine.memory.ui'
+    ]);
 
 }());

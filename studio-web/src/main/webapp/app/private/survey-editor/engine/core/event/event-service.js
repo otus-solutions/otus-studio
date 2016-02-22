@@ -4,9 +4,14 @@
         .module('editor.engine.core')
         .service('EventService', EventService);
 
-    EventService.$inject = ['EventFactory', 'StateFactory', 'EditorEngineService'];
+    EventService.$inject = [
+        'EventFactory',
+        'StateFactory',
+        'EditorEngineService',
+        'MemoryUIService'
+    ];
 
-    function EventService(EventFactory, StateFactory, EditorEngineService) {
+    function EventService(EventFactory, StateFactory, EditorEngineService, MemoryUIService) {
         var self = this;
 
         /* Public interface */
@@ -17,11 +22,11 @@
             editingState = StateFactory.create(editingSource);
         }
 
-        function performEvent(editingSource) {
+        function performEvent(editingSource, listener) {
             var editingState = StateFactory.create(editingSource),
-                editingEvent = EventFactory.create(editingSource, editingState);
+                event = EventFactory.create(editingSource, editingState, listener);
 
-            EditorEngineService.editData(editingEvent);
+            event.forward();
         }
     }
 

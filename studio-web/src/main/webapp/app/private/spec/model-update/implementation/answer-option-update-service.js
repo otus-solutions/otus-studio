@@ -21,7 +21,7 @@
                 answerOption = addOption(updateWork);
             } else if (updateWork.type == 'REMOVE_DATA') {
                 answerOption = removeOption(updateWork);
-            } else if (updateWork.type == 'SET_VALUE') {
+            } else if (updateWork.type == 'SET_DATA') {
                 updateOption(updateWork);
             }
 

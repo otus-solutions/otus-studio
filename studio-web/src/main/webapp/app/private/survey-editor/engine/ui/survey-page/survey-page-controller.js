@@ -35,7 +35,7 @@
                 addQuestion(data);
             else if (updateType == 'REMOVE_DATA')
                 removeQuestion(data);
-            else if (updateType == 'SET_VALUE')
+            else if (updateType == 'SET_DATA')
                 updateQuestion(data);
         }
 

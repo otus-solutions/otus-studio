@@ -5,20 +5,38 @@
         .module('editor.engine.core')
         .factory('EventFactory', EventFactory);
 
-    EventFactory.$inject = ['EventTypeFactory'];
+    EventFactory.$inject = [
+        'EventTypeFactory',
+        'AddDataEventFactory',
+        'RemoveDataEventFactory',
+        'SelectDataEventFactory',
+        'SetDataEventFactory',
+        'TouchDataEventFactory',
+        'UntouchDataEventFactory'
+    ];
 
-    function EventFactory(EventTypeFactory) {
-        var self = this;
+    function EventFactory(EventTypeFactory, AddDataEventFactory, RemoveDataEventFactory, SelectDataEventFactory, SetDataEventFactory, TouchDataEventFactory,
+        UntouchDataEventFactory) {
+
+        var self = this,
+
+            factories = {
+                'ADD_DATA': AddDataEventFactory,
+                'REMOVE_DATA': RemoveDataEventFactory,
+                'SELECT_DATA': SelectDataEventFactory,
+                'SET_DATA': SetDataEventFactory,
+                'TOUCH_DATA': TouchDataEventFactory,
+                'UNTOUCH_DATA': UntouchDataEventFactory
+            };
 
         /* Public interface */
         self.create = create;
 
-        /*
-         * Creates a simple EditingEvent instance
-         */
-        function create(editingSource, newState) {
-            var eventType = EventTypeFactory.get(editingSource.type);
-            return new Event(editingSource, newState, eventType);
+        function create(editingSource, newState, listener) {
+            var eventType = EventTypeFactory.get(editingSource.type, listener),
+                eventPrototype = new Event(editingSource, newState, eventType);
+
+            return factories[eventType].create(eventPrototype);
         }
 
         return this;

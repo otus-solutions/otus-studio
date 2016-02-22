@@ -22,7 +22,7 @@
                 question = addQuestion(updateWork);
             } else if (updateWork.type == 'REMOVE_DATA') {
                 question = removeQuestion(updateWork);
-            } else if (updateWork.type == 'SET_VALUE') {
+            } else if (updateWork.type == 'SET_DATA') {
                 updateQuestion(updateWork);
             }
 

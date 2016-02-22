@@ -37,7 +37,15 @@
             var jqElement = angular.element(self.editingSource.component);
 
             jqElement.on('click', function setFocusTrigger() {
-                EventService.performEvent(self.editingSource);
+                EventService.performEvent(self.editingSource, 'click');
+            });
+
+            jqElement.on('mouseenter', function setFocusTrigger() {
+                EventService.performEvent(self.editingSource, 'mouseenter');
+            });
+
+            jqElement.on('mouseleave', function setFocusTrigger() {
+                EventService.performEvent(self.editingSource, 'mouseleave');
             });
         }
     }
