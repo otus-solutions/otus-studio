@@ -2,30 +2,34 @@
     'use strict';
 
     angular
-        .module('spec')
-        .factory('CalendarQuestionFactory', CalendarQuestionFactory);
+        .module('otusjs')
+        .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-    function CalendarQuestionFactory() {
+    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory'];
+
+    function SingleSelectionQuestionFactory(AnswerOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new CalendarQuestion(oid, prototype);
+            return new SingleSelectionQuestion(oid, prototype, AnswerOptionFactory);
         }
 
         return self;
     }
 
-    function CalendarQuestion(oid, prototype) {
+    function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory) {
+        var self = this;
+
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'CalendarQuestion',
+            value: 'SingleSelectionQuestion',
             writable: false
         });
 
@@ -41,6 +45,11 @@
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'option', {
+            value: {},
             writable: true
         });
     }

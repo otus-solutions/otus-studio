@@ -2,23 +2,23 @@
     'use strict';
 
     angular
-        .module('spec')
-        .factory('LabelFactory', LabelFactory);
+        .module('otusjs')
+        .factory('SurveyIdentityFactory', SurveyIdentityFactory);
 
-    function LabelFactory() {
+    function SurveyIdentityFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new Label();
+            return new SurveyIdentity();
         }
 
         return self;
     }
 
-    function Label() {
+    function SurveyIdentity() {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -27,7 +27,7 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'Label',
+            value: 'SurveyIdentity',
             writable: false
         });
 
@@ -36,8 +36,12 @@
             writable: false
         });
 
-        self.plainText = '';
-        self.formattedText = '';
+        self.name = '';
+        self.acronym = '';
+        self.version = '';
+        self.recommendedTo = '';
+        self.description = '';
+        self.keywords = [];
     }
 
 }());

@@ -2,25 +2,25 @@
     'use strict';
 
     angular
-        .module('spec')
-        .factory('TimeQuestionFactory', TimeQuestionFactory);
+        .module('otusjs')
+        .factory('NumericQuestionFactory', NumericQuestionFactory);
 
-    TimeQuestionFactory.$inject = ['UnitFactory'];
+    NumericQuestionFactory.$inject = ['UnitFactory'];
 
-    function TimeQuestionFactory(UnitFactory) {
+    function NumericQuestionFactory(UnitFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new TimeQuestion(oid, prototype, UnitFactory);
+            return new NumericQuestion(oid, prototype, UnitFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(oid, prototype, UnitFactory) {
+    function NumericQuestion(oid, prototype, UnitFactory) {
         var self = this;
 
         Object.defineProperty(this, 'extends', {
@@ -29,7 +29,7 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'TimeQuestion',
+            value: 'NumericQuestion',
             writable: false
         });
 

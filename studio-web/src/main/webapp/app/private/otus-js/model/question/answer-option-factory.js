@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('spec')
+        .module('otusjs')
         .factory('AnswerOptionFactory', AnswerOptionFactory);
 
     AnswerOptionFactory.$inject = ['LabelFactory'];

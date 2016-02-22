@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('spec')
+        .module('otusjs')
         .service('AnswerOptionUpdateService', AnswerOptionUpdateService);
 
     AnswerOptionUpdateService.$inject = ['AnswerOptionFactory'];

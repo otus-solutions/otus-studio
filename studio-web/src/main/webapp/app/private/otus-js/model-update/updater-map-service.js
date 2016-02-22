@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('spec')
+        .module('otusjs')
         .service('UpdaterMapService', UpdaterMapService);
 
     UpdaterMapService.$inject = [

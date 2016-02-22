@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('spec')
+        .module('otusjs')
         .service('SurveyIdentityUpdateService', SurveyIdentityUpdateService);
 
     function SurveyIdentityUpdateService() {

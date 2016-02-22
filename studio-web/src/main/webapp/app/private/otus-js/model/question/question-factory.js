@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('spec')
+        .module('otusjs')
         .factory('QuestionFactory', QuestionFactory);
 
     QuestionFactory.$inject = [

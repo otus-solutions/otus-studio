@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('spec')
+        .module('otusjs')
         .service('TargetToUpdaterMapServer', TargetToUpdaterMapServer);
 
     function TargetToUpdaterMapServer(UpdaterMapService) {

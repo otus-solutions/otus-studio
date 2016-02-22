@@ -2,34 +2,30 @@
     'use strict';
 
     angular
-        .module('spec')
-        .factory('NumericQuestionFactory', NumericQuestionFactory);
+        .module('otusjs')
+        .factory('CalendarQuestionFactory', CalendarQuestionFactory);
 
-    NumericQuestionFactory.$inject = ['UnitFactory'];
-
-    function NumericQuestionFactory(UnitFactory) {
+    function CalendarQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new NumericQuestion(oid, prototype, UnitFactory);
+            return new CalendarQuestion(oid, prototype);
         }
 
         return self;
     }
 
-    function NumericQuestion(oid, prototype, UnitFactory) {
-        var self = this;
-
+    function CalendarQuestion(oid, prototype) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'NumericQuestion',
+            value: 'CalendarQuestion',
             writable: false
         });
 
@@ -45,15 +41,6 @@
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
-            writable: true
-        });
-
-        Object.defineProperty(this, 'unit', {
-            value: {
-                'ptBR': UnitFactory.create(),
-                'enUS': UnitFactory.create(),
-                'esES': UnitFactory.create()
-            },
             writable: true
         });
     }

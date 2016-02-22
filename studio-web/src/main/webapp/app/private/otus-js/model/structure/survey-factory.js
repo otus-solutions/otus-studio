@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('spec')
+        .module('otusjs')
         .factory('SurveyFactory', SurveyFactory);
 
     SurveyFactory.$inject = ['SurveyIdentityFactory'];
