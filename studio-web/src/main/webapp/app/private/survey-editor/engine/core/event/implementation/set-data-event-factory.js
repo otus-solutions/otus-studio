@@ -4,7 +4,7 @@
         .module('editor.engine.core')
         .factory('SetDataEventFactory', SetDataEventFactory);
 
-    SetDataEventFactory.$inject = ['EditorEngineService'];
+    SetDataEventFactory.$inject = ['EditorEngineService', 'MemoryService'];
 
     function SetDataEventFactory(EditorEngineService) {
         var self = this;
@@ -13,20 +13,21 @@
         self.create = create;
 
         function create(prototype) {
-            return new SetDataEvent(prototype, EditorEngineService);
+            return new SetDataEvent(prototype, EditorEngineService, MemoryService);
         }
 
         return self;
     }
 
-    function SetDataEvent(prototype, dispatcher) {
+    function SetDataEvent(prototype, editor, memory) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
-            dispatcher.editData(prototype);
+            editor.editData(prototype);
+            memory.storeData(prototype);
         }
     }
 

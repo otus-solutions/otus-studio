@@ -4,9 +4,9 @@
         .module('main')
         .controller('ToolbarController', ToolbarController);
 
-    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http', 'StudioEditorService'];
+    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http', 'EditorEngineService'];
 
-    function ToolbarController($scope, $location, $mdDialog, $window, $http, StudioEditorService) {
+    function ToolbarController($scope, $location, $mdDialog, $window, $http, EditorEngineService) {
 
         var NEW_SURVEY = 'editor';
         var USER_MANAGEMENT_STATE = 'user-management';
@@ -35,7 +35,7 @@
 
         $scope.openContainer = function() {
             $location.url(NEW_SURVEY);
-            StudioEditorService.createNewSurvey();
+            EditorEngineService.newSurvey();
         };
 
         $scope.openHome = function() {

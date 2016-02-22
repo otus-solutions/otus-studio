@@ -9,21 +9,18 @@
 
     function EditorEngineService(SurveyLoaderService, ModelService, UpdateWorkFactory) {
         var self = this,
-            currentSurvey = null;
-        self.currentQuestionList = [];
+            survey = null;
 
         /* Public interface */
-        self.initializeNewSurvey = initializeNewSurvey;
-        self.getCurrentSurvey = getCurrentSurvey;
+        self.newSurvey = newSurvey;
+        self.closeSurvey = closeSurvey;
+        self.loadSurvey = loadSurvey;
+        self.getSurvey = getSurvey;
         self.editData = editData;
 
-        function initializeNewSurvey() {
-            currentSurvey = SurveyLoaderService.newSurvey();
-            self.currentQuestionList = [];
+        function newSurvey() {
+            survey = SurveyLoaderService.newSurvey();
             console.info('New survey initialized.');
-
-            // surveyMemoryCache = new MemoryManagement();
-            // generalEditingMemoryCache = new MemoryManagement(GENERAL_MEM_SIZE);
         }
 
         function closeSurvey() {
@@ -41,14 +38,17 @@
             console.info('Survey loaded.');
         }
 
-        function getCurrentSurvey() {
-            return currentSurvey;
+        function getSurvey() {
+            return survey;
         }
 
         function editData(editingEvent) {
-            console.log(editingEvent);
+            ModelService.update(buildUpdateWork(editingEvent));
+        }
+
+        function buildUpdateWork(editingEvent) {
             var updateWork = UpdateWorkFactory.create();
-            updateWork.survey = currentSurvey;
+            updateWork.survey = getSurvey();
             updateWork.target = editingEvent.target;
 
             if (editingEvent.state.domData)
@@ -57,9 +57,7 @@
             updateWork.type = editingEvent.type;
             updateWork.model = editingEvent.source.model;
 
-            ModelService.update(updateWork);
-            // console.log(currentSurvey);
-            // generalEditingMemoryCache.storeState(editingEvent);
+            return updateWork;
         }
     }
 

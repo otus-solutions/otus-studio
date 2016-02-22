@@ -18,12 +18,12 @@
         self.performEvent = performEvent;
 
         function observeEvent(editingSource) {
-            editingState = StateFactory.create(editingSource);
+            state = StateFactory.create(editingSource);
         }
 
         function performEvent(editingSource, listener) {
-            var editingState = StateFactory.create(editingSource),
-                event = EventFactory.create(editingSource, editingState, listener);
+            var state = StateFactory.create(editingSource),
+                event = EventFactory.create(editingSource, state, listener);
 
             event.forward();
         }
