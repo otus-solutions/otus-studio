@@ -26,10 +26,9 @@
         self.registerObserver = registerObserver;
 
         function initializeWorkspace(ownerWorkSession) {
-            // MemoryService.getLiveCache().resetAll();
             self.workspace = WorkspaceFactory.create(ownerWorkSession);
             questionIdCounter = -1;
-            notifyObservers(null, 'NEW_PROJECT');
+            notifyObservers({ type: 'NEW_PROJECT' });
         }
 
         function startNewProject() {
@@ -55,9 +54,9 @@
             return ++questionIdCounter;
         }
 
-        function notifyObservers(question, updateType) {
+        function notifyObservers(update) {
             observers.forEach(function(observer) {
-                observer.update(question, updateType);
+                observer.update(update);
             });
         }
 

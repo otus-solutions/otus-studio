@@ -8,13 +8,16 @@
     SurveyPageController.$inject = [
         '$scope',
         '$element',
-        'SurveyPageContentService',
         'SurveyQuestionsUpdateService',
+        'SurveyPageContentService',
         'LabelUpdateService',
-        'WorkspaceService'
+        'WorkspaceService',
+        'UIUpdateCommandFactory'
     ];
 
-    function SurveyPageController($scope, $element, SurveyPageContentService, SurveyQuestionsUpdateService, LabelUpdateService, WorkspaceService) {
+    function SurveyPageController($scope, $element, SurveyQuestionsUpdateService, SurveyPageContentService, LabelUpdateService, WorkspaceService,
+        UIUpdateCommandFactory) {
+
         var self = this;
 
         /* Public interface */
@@ -32,15 +35,9 @@
             SurveyPageContentService.init($scope, $element);
         }
 
-        function update(data, updateType) {
-            if (updateType == 'NEW_PROJECT')
-                SurveyPageContentService.reset(data);
-            else if (updateType.isAddData())
-                SurveyPageContentService.loadQuestion(data);
-            else if (updateType.isRemoveData())
-                SurveyPageContentService.unloadQuestion(data);
-            else if (updateType.isUpdateData())
-                SurveyPageContentService.updateQuestion(data);
+        function update(update) {
+            var uiUpdateCommand = UIUpdateCommandFactory.create(update);
+            uiUpdateCommand.execute();
         }
     }
 

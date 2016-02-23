@@ -50,9 +50,10 @@
             // questionsToUpdate.label.ptBR.text = updateWork.data.value;
         }
 
-        function notifyObservers(question, updateType) {
+        function notifyObservers(question, update) {
+            update.data = question;
             observers.forEach(function(observer) {
-                observer.update(question, updateType);
+                observer.update(update);
             });
         }
 
