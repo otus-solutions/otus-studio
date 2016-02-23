@@ -21,7 +21,6 @@
         function edit(editingEvent) {
             var updateWork = buildUpdateWork(editingEvent);
             ModelService.update(updateWork);
-            console.log(updateWork);
         }
 
         function buildUpdateWork(editingEvent) {
