@@ -24,7 +24,6 @@
             writable: false
         });
 
-        /* Question editor widget */
         Object.defineProperty(this, 'title', {
             value: questionWidget.questionId + ':' + questionWidget.type,
             writable: false

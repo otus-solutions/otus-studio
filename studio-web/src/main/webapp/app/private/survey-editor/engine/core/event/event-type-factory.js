@@ -9,31 +9,70 @@
         var self = this;
 
         var eventTypeMap = {
-            'input-text': 'SET_DATA',
-            'div-editable': 'SET_DATA',
-            'add-button': 'ADD_DATA',
-            'remove-button': 'REMOVE_DATA',
+            'input-text': new EventType('UPDATE_DATA'),
+            'div-editable': new EventType('UPDATE_DATA'),
+            'add-button': new EventType('ADD_DATA'),
+            'remove-button': new EventType('REMOVE_DATA'),
             'question-editor': {
-                'click': 'SELECT_DATA',
-                'mouseenter': 'TOUCH_DATA',
-                'mouseleave': 'UNTOUCH_DATA'
+                'click': new EventType('SELECT_DATA'),
+                'mouseenter': new EventType('TOUCH_DATA'),
+                'mouseleave': new EventType('UNTOUCH_DATA')
             }
         };
 
         /* Public interface */
-        self.get = get;
+        self.create = create;
 
         /*
          * Creates a simple EditingEvent instance
          */
-        function get(editingSourceType, listener) {
-            if (listener)
+        function create(editingSourceType, listener) {
+            if (listener) {
                 return eventTypeMap[editingSourceType][listener];
-            else
+            } else {
                 return eventTypeMap[editingSourceType];
+            }
         }
 
         return this;
+    }
+
+    function EventType(type) {
+        var self = this;
+
+        self.type = type;
+
+        /* Public interface */
+        self.isAddData = isAddData;
+        self.isRemoveData = isRemoveData;
+        self.isUpdateData = isUpdateData;
+        self.isSelectData = isSelectData;
+        self.isTouchData = isTouchData;
+        self.isUntouchData = isUntouchData;
+
+        function isAddData() {
+            return (self.type == 'ADD_DATA');
+        }
+
+        function isRemoveData() {
+            return (self.type == 'REMOVE_DATA');
+        }
+
+        function isUpdateData() {
+            return (self.type == 'UPDATE_DATA');
+        }
+
+        function isSelectData() {
+            return (self.type == 'SELECT_DATA');
+        }
+
+        function isTouchData() {
+            return (self.type == 'TOUCH_DATA');
+        }
+
+        function isUntouchData() {
+            return (self.type == 'UNTOUCH_DATA');
+        }
     }
 
 }());

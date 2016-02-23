@@ -29,11 +29,11 @@
         }
 
         function update(data, updateType) {
-            if (updateType == 'ADD_DATA')
+            if (updateType.isAddData())
                 SurveyPageContentService.loadQuestion(data);
-            else if (updateType == 'REMOVE_DATA')
+            else if (updateType.isRemoveData())
                 SurveyPageContentService.unloadQuestion(data);
-            else if (updateType == 'SET_DATA')
+            else if (updateType.isUpdateData())
                 SurveyPageContentService.updateQuestion(data);
         }
     }

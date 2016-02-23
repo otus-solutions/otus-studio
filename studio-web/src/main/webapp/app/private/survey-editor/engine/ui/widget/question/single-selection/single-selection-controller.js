@@ -29,9 +29,9 @@
         }
 
         function update(data, updateType) {
-            if (updateType == 'ADD_DATA')
+            if (updateType.isAddData())
                 addAnswerOption(data);
-            else if (updateType == 'REMOVE_DATA')
+            else if (updateType.isRemoveData())
                 removeAnswerOption(data);
         }
 

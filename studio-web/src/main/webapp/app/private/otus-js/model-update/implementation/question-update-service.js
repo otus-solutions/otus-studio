@@ -18,11 +18,11 @@
         function update(updateWork) {
             var question = null;
 
-            if (updateWork.type == 'ADD_DATA') {
+            if (updateWork.type.isAddData()) {
                 question = addQuestion(updateWork);
-            } else if (updateWork.type == 'REMOVE_DATA') {
+            } else if (updateWork.type.isRemoveData()) {
                 question = removeQuestion(updateWork);
-            } else if (updateWork.type == 'SET_DATA') {
+            } else if (updateWork.type.isUpdateData()) {
                 updateQuestion(updateWork);
             }
 

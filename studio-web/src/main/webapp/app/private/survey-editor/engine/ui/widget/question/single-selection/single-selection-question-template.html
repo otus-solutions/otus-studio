@@ -1,7 +1,7 @@
 <md-content>
     <md-radio-group class="radio-group">
         <div radio-container ng-repeat="answerOption in answerOptions track by $index" layout="row" style="margin: 10px">
-            <md-radio-button aria-label="opção" ng-value="$index" flex style="margin: 0"></md-radio-button>
+            <md-radio-button aria-label="{{answerOption.id}}" ng-value="$index" flex style="margin: 0"></md-radio-button>
             <div flex="95" contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da opção de resposta"
                 editing-source
                 es-type="div-editable"
@@ -14,13 +14,13 @@
         <md-button class="md-raised" type="button"
             editing-source
             es-type="add-button"
-            es-id="survey-editor-question-{{::$parent.$parent.widget.questionId}}-option"
-            es-target="survey.question.{{::$parent.$parent.widget.questionId}}.option">Adicionar</md-button>
+            es-id="single-selection-{{::widget.questionId}}-add-option"
+            es-target="survey.question.{{::widget.questionId}}.option">Adicionar</md-button>
 
         <md-button class="md-raised" type="button"
             editing-source
             es-type="remove-button"
-            es-id="survey-editor-question-{{::$parent.$parent.widget.questionId}}-option"
-            es-target="survey.question.{{::$parent.$parent.widget.questionId}}.option.{{lastOptionIndex}}">Remover</md-button>
+            es-id="single-selection-{{::widget.questionId}}-remove-option"
+            es-target="survey.question.{{::widget.questionId}}.option.{{lastOptionIndex}}">Remover</md-button>
     </div>
 </md-content>

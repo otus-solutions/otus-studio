@@ -24,7 +24,7 @@
                 'ADD_DATA': AddDataEventFactory,
                 'REMOVE_DATA': RemoveDataEventFactory,
                 'SELECT_DATA': SelectDataEventFactory,
-                'SET_DATA': SetDataEventFactory,
+                'UPDATE_DATA': SetDataEventFactory,
                 'TOUCH_DATA': TouchDataEventFactory,
                 'UNTOUCH_DATA': UntouchDataEventFactory
             };
@@ -33,10 +33,10 @@
         self.create = create;
 
         function create(editingSource, newState, listener) {
-            var eventType = EventTypeFactory.get(editingSource.type, listener),
+            var eventType = EventTypeFactory.create(editingSource.type, listener),
                 eventPrototype = new Event(editingSource, newState, eventType);
 
-            return factories[eventType].create(eventPrototype);
+            return factories[eventType.type].create(eventPrototype);
         }
 
         return this;

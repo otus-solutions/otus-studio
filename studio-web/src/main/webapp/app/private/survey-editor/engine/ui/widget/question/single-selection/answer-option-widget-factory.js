@@ -24,6 +24,11 @@
             writable: false
         });
 
+        Object.defineProperty(this, 'id', {
+            value: model.oid,
+            writable: false
+        });
+
         Object.defineProperty(this, 'esId', {
             value: 'single-selection-' + model.parentQuestion + '-option-' + model.oid,
             writable: false

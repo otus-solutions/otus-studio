@@ -17,11 +17,11 @@
         function update(updateWork) {
             var answerOption = null;
 
-            if (updateWork.type == 'ADD_DATA') {
+            if (updateWork.type.isAddData()) {
                 answerOption = addOption(updateWork);
-            } else if (updateWork.type == 'REMOVE_DATA') {
+            } else if (updateWork.type.isRemoveData()) {
                 answerOption = removeOption(updateWork);
-            } else if (updateWork.type == 'SET_DATA') {
+            } else if (updateWork.type.isUpdateData()) {
                 updateOption(updateWork);
             }
 

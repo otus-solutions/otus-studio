@@ -40,10 +40,10 @@
         }
 
         function updateQuestion(question) {
-            var targetExpression = '[es-id="survey-editor-question-' + question.oid + '-label"]',
-                targetLabel = UIUtils.jq(surveyPage.find(targetExpression)[0]);
+            var target = '[es-id="survey-editor-question-' + question.oid + '-label"]',
+                label = UIUtils.jq(surveyPage.find(target)[0]);
 
-            targetLabel.text(question.label.ptBR.plainText);
+            label.text(question.label.ptBR.plainText);
         }
 
         function loadQuestionWidget(question) {
@@ -54,11 +54,11 @@
             return WidgetService.getQuestionEditorWidget(questionWidget);
         }
 
-        function mergeScopeData(data) {
+        function mergeScopeData(editorWidget) {
             scope.widgetTemplateList = scope.widgetTemplateList || [];
-            scope.widget = data;
-            scope.templateIndex = data.questionId;
-            scope.widgetTemplateList[scope.templateIndex] = data.questionTemplate;
+            scope.widget = editorWidget;
+            scope.templateIndex = editorWidget.questionId;
+            scope.widgetTemplateList[scope.templateIndex] = editorWidget.questionTemplate;
         }
 
         function loadTemplate() {
