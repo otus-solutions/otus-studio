@@ -22,10 +22,15 @@
         self.loadQuestion = loadQuestion;
         self.unloadQuestion = unloadQuestion;
         self.updateQuestion = updateQuestion;
+        self.reset = reset;
 
         function init(scopeReference, surveyPageReference) {
             scope = scopeReference;
             surveyPage = surveyPageReference;
+        }
+
+        function reset() {
+            surveyPage.find('[question-target]').remove();
         }
 
         function loadQuestion(question) {

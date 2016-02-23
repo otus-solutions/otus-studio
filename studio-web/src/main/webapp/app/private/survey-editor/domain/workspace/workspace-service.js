@@ -11,9 +11,10 @@
         'SurveyLoaderService'
     ];
 
-    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService) {
+    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController) {
         var self = this,
-            questionIdCounter = -1;
+            questionIdCounter = -1,
+            observers = [];
 
         /* Public interface */
         self.initializeWorkspace = initializeWorkspace;
@@ -22,12 +23,14 @@
         self.closeProject = closeProject;
         self.saveProject = saveProject;
         self.getQuestionId = getQuestionId;
+        self.registerObserver = registerObserver;
 
         function initializeWorkspace(ownerWorkSession) {
             // MemoryService.getLiveCache().resetAll();
             console.log('Initializing workspace...');
             self.workspace = WorkspaceFactory.create(ownerWorkSession);
             questionIdCounter = -1;
+            notifyObservers(null, 'NEW_PROJECT');
             console.log('Workspace intialized.');
         }
 
@@ -56,6 +59,16 @@
 
         function getQuestionId() {
             return ++questionIdCounter;
+        }
+
+        function notifyObservers(question, updateType) {
+            observers.forEach(function(observer) {
+                observer.update(question, updateType);
+            });
+        }
+
+        function registerObserver(observer) {
+            observers.push(observer);
         }
     }
 
