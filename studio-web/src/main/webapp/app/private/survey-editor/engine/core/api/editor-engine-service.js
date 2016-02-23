@@ -26,14 +26,18 @@
 
         function buildUpdateWork(editingEvent) {
             var updateWork = UpdateWorkFactory.create();
+
             updateWork.survey = WorkspaceService.workspace.project.survey;
             updateWork.target = editingEvent.target;
+            updateWork.type = editingEvent.type;
 
             if (editingEvent.state.domData)
                 updateWork.data = editingEvent.state.domData;
 
-            updateWork.type = editingEvent.type;
-            updateWork.model = editingEvent.source.model;
+            if (editingEvent.source.model) {
+                updateWork.model = editingEvent.source.model;
+                updateWork.questionId = updateWork.survey.identity.acronym + WorkspaceService.getQuestionId();
+            }
 
             return updateWork;
         }

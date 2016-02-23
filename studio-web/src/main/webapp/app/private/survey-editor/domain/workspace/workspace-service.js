@@ -12,7 +12,8 @@
     ];
 
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService) {
-        var self = this;
+        var self = this,
+            questionIdCounter = -1;
 
         /* Public interface */
         self.initializeWorkspace = initializeWorkspace;
@@ -20,11 +21,13 @@
         self.importProject = importProject;
         self.closeProject = closeProject;
         self.saveProject = saveProject;
+        self.getQuestionId = getQuestionId;
 
         function initializeWorkspace(ownerWorkSession) {
             // MemoryService.getLiveCache().resetAll();
             console.log('Initializing workspace...');
             self.workspace = WorkspaceFactory.create(ownerWorkSession);
+            questionIdCounter = -1;
             console.log('Workspace intialized.');
         }
 
@@ -49,6 +52,10 @@
 
         function saveProject() {
 
+        }
+
+        function getQuestionId() {
+            return ++questionIdCounter;
         }
     }
 
