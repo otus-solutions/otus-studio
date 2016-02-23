@@ -1,12 +1,13 @@
 (function() {
+    'use strict';
 
     angular
         .module('main')
         .controller('ToolbarController', ToolbarController);
 
-    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http', 'EditorEngineService'];
+    ToolbarController.$inject = ['$scope', '$location', '$mdDialog', '$window', '$http', 'WorkspaceService'];
 
-    function ToolbarController($scope, $location, $mdDialog, $window, $http, EditorEngineService) {
+    function ToolbarController($scope, $location, $mdDialog, $window, $http, WorkspaceService) {
 
         var NEW_SURVEY = 'editor';
         var USER_MANAGEMENT_STATE = 'user-management';
@@ -35,7 +36,9 @@
 
         $scope.openContainer = function() {
             $location.url(NEW_SURVEY);
-            EditorEngineService.newSurvey();
+            WorkspaceService.initializeWorkspace({owner: 'user'});
+            WorkspaceService.startNewProject();
+            console.log(WorkspaceService.workspace);
         };
 
         $scope.openHome = function() {

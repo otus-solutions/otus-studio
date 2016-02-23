@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     angular
         .module('editor.engine.core')
@@ -18,7 +19,7 @@
         self.performEvent = performEvent;
 
         function observeEvent(editingSource) {
-            state = StateFactory.create(editingSource);
+            var state = StateFactory.create(editingSource);
         }
 
         function performEvent(editingSource, listener) {

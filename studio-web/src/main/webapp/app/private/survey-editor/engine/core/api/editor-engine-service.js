@@ -6,56 +6,27 @@
         .service('EditorEngineService', EditorEngineService);
 
     EditorEngineService.$inject = [
-        'MemoryService',
-        'SurveyLoaderService',
         'ModelService',
-        'UpdateWorkFactory'
+        'UpdateWorkFactory',
+        'WorkspaceService'
     ];
 
-    function EditorEngineService(MemoryService, SurveyLoaderService, ModelService, UpdateWorkFactory) {
+    function EditorEngineService(ModelService, UpdateWorkFactory, WorkspaceService) {
         var self = this,
             survey = null;
 
         /* Public interface */
-        self.newSurvey = newSurvey;
-        self.closeSurvey = closeSurvey;
-        self.loadSurvey = loadSurvey;
-        self.getSurvey = getSurvey;
         self.edit = edit;
 
-        function newSurvey() {
-            survey = SurveyLoaderService.newSurvey();
-            MemoryService.getLiveCache().resetAll();
-            console.info('New survey initialized.');
-        }
-
-        function closeSurvey() {
-            console.info('Current survey closed.');
-        }
-
-        function saveSurvey() {
-            console.info('Current survey saved.');
-        }
-
-        function loadSurvey() {
-            // A persisted survey object should be load here.
-            // var survey = SurveyLoader.loadSurvey();
-            // initializeEditing(survey);
-            console.info('Survey loaded.');
-        }
-
-        function getSurvey() {
-            return survey;
-        }
-
         function edit(editingEvent) {
-            ModelService.update(buildUpdateWork(editingEvent));
-            console.log(getSurvey());
+            var updateWork = buildUpdateWork(editingEvent);
+            ModelService.update(updateWork);
+            console.log(updateWork);
         }
 
         function buildUpdateWork(editingEvent) {
             var updateWork = UpdateWorkFactory.create();
-            updateWork.survey = getSurvey();
+            updateWork.survey = WorkspaceService.workspace.project.survey;
             updateWork.target = editingEvent.target;
 
             if (editingEvent.state.domData)

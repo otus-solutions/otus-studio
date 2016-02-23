@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     angular
         .module('editor.engine.core')
@@ -21,7 +22,7 @@
                 submap = TriggerMap[submap];
 
                 for (var triggerService in submap) {
-                    selectedTriggerService = submap[triggerService];
+                    var selectedTriggerService = submap[triggerService];
                     TriggerRegisterService.registerTriggerService(selectedTriggerService);
                 }
             }

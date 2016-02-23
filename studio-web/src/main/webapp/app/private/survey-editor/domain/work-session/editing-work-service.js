@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     angular
         .module('editor.model')
@@ -10,7 +11,7 @@
         /* Public interface */
         self.startNewWork = startNewWork;
         self.loadWork = loadWork;
-        
+
     }
 
 }());
