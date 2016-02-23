@@ -5,9 +5,14 @@
         .module('editor.engine.core')
         .service('EditorEngineService', EditorEngineService);
 
-    EditorEngineService.$inject = ['SurveyLoaderService', 'ModelService', 'UpdateWorkFactory'];
+    EditorEngineService.$inject = [
+        'MemoryService',
+        'SurveyLoaderService',
+        'ModelService',
+        'UpdateWorkFactory'
+    ];
 
-    function EditorEngineService(SurveyLoaderService, ModelService, UpdateWorkFactory) {
+    function EditorEngineService(MemoryService, SurveyLoaderService, ModelService, UpdateWorkFactory) {
         var self = this,
             survey = null;
 
@@ -20,6 +25,7 @@
 
         function newSurvey() {
             survey = SurveyLoaderService.newSurvey();
+            MemoryService.getLiveCache().resetAll();
             console.info('New survey initialized.');
         }
 

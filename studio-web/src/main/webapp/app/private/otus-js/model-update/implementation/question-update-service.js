@@ -4,12 +4,11 @@
         .module('otusjs')
         .service('SurveyQuestionsUpdateService', SurveyQuestionsUpdateService);
 
-    SurveyQuestionsUpdateService.$inject = ['QuestionFactory'];
+    SurveyQuestionsUpdateService.$inject = ['MemoryService', 'QuestionFactory'];
 
-    function SurveyQuestionsUpdateService(QuestionFactory) {
+    function SurveyQuestionsUpdateService(MemoryService, QuestionFactory) {
         var self = this,
-            observers = [],
-            nextOIDNumber = -1;
+            observers = [];
 
         /* Public interface */
         self.update = update;
@@ -30,7 +29,7 @@
         }
 
         function addQuestion(updateWork) {
-            var nextOID = updateWork.survey.identity.acronym + (++nextOIDNumber),
+            var nextOID = updateWork.survey.identity.acronym + (MemoryService.getLiveCache().useNextQuestionOIDNumber()),
                 newQuestion = QuestionFactory.create(updateWork.model, nextOID);
 
             updateWork.survey.question[nextOID] = newQuestion;
