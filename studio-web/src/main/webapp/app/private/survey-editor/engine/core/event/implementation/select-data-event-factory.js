@@ -5,29 +5,29 @@
         .module('editor.engine.core')
         .factory('SelectDataEventFactory', SelectDataEventFactory);
 
-    SelectDataEventFactory.$inject = ['MemoryService'];
+    SelectDataEventFactory.$inject = ['WorkspaceService'];
 
-    function SelectDataEventFactory(MemoryService) {
+    function SelectDataEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new SelectDataEvent(prototype, MemoryService);
+            return new SelectDataEvent(prototype, WorkspaceService);
         }
 
         return self;
     }
 
-    function SelectDataEvent(prototype, memory) {
+    function SelectDataEvent(prototype, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
-            memory.store(prototype);
+            WorkspaceService.workspace.database.editordb.store(prototype);
         }
     }
 

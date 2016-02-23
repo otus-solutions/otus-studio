@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.memory.cache')
+        .module('editor.engine.database.cache')
         .service('MDbService', MDbService);
 
     MDbService.$inject = ['MDbFactory'];
@@ -12,7 +12,7 @@
             editorDb = null;
 
         /* Public interface */
-        self.storeData = storeData;
+        self.store = store;
 
         init();
 
@@ -20,8 +20,8 @@
             editorDb = MDbFactory.create();
         }
 
-        function storeData(data) {
-            editorDb.addDataState(data);
+        function store(data) {
+            editorDb.store(data);
         }
     }
 

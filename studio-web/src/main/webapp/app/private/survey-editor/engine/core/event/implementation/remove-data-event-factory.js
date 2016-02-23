@@ -5,22 +5,22 @@
         .module('editor.engine.core')
         .factory('RemoveDataEventFactory', RemoveDataEventFactory);
 
-    RemoveDataEventFactory.$inject = ['EditorEngineService', 'MemoryService'];
+    RemoveDataEventFactory.$inject = ['EditorEngineService', 'WorkspaceService'];
 
-    function RemoveDataEventFactory(EditorEngineService, MemoryService) {
+    function RemoveDataEventFactory(EditorEngineService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new RemoveDataEvent(prototype, EditorEngineService, MemoryService);
+            return new RemoveDataEvent(prototype, EditorEngineService, WorkspaceService);
         }
 
         return self;
     }
 
-    function RemoveDataEvent(prototype, editor, memory) {
+    function RemoveDataEvent(prototype, editor, WorkspaceService) {
         var self = this;
 
         /* Public interface */
@@ -28,7 +28,7 @@
 
         function forward() {
             editor.edit(prototype);
-            memory.store(prototype);
+            WorkspaceService.workspace.database.editordb.store(prototype);
         }
     }
 

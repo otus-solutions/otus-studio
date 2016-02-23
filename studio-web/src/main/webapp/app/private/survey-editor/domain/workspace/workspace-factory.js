@@ -5,21 +5,24 @@
         .module('editor.domain')
         .factory('WorkspaceFactory', WorkspaceFactory);
 
-    function WorkspaceFactory() {
+    WorkspaceFactory.$inject = ['WorkspaceDatabaseFactory'];
+
+    function WorkspaceFactory(WorkspaceDatabaseFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(workSession) {
-            return new Workspace(workSession);
+            return new Workspace(workSession, WorkspaceDatabaseFactory);
         }
 
         return self;
     }
 
-    function Workspace(workSession) {
+    function Workspace(workSession, WorkspaceDatabaseFactory) {
         var self = this;
+        self.database = WorkspaceDatabaseFactory.create();
 
         /* Public interface */
         self.importProject = importProject;

@@ -23,7 +23,7 @@
             } else if (updateWork.type.isRemoveData()) {
                 answerOption = removeOption(updateWork);
             } else if (updateWork.type.isUpdateData()) {
-                updateOption(updateWork);
+                answerOption = updateOption(updateWork);
             }
 
             notifyObservers(answerOption, updateWork.type);
@@ -31,7 +31,6 @@
 
         function addOption(updateWork) {
             var selectedQuestion = extractQuestionReference(updateWork.target);
-
             var nextOID = Object.keys(updateWork.survey.question[selectedQuestion].option).length;
 
             var newOption = AnswerOptionFactory.create(nextOID, selectedQuestion);
@@ -56,15 +55,17 @@
 
             optionToUpdate.label.ptBR.plainText = updateWork.data.plainText || updateWork.data.value;
             optionToUpdate.label.ptBR.formattedText = updateWork.data.formattedText;
+            return optionToUpdate;
         }
 
         function extractQuestionReference(target) {
             return target.split('.')[2];
         }
 
-        function notifyObservers(question, updateType) {
+        function notifyObservers(question, update) {
+            update.data = question;
             observers.forEach(function(observer) {
-                observer.update(question, updateType);
+                observer.update(update);
             });
         }
 

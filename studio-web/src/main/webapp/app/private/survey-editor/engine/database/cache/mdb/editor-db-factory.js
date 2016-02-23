@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('editor.engine.memory.cache')
-        .factory('MDbFactory', MDbFactory);
+        .module('editor.engine.database.cache')
+        .factory('EditorDbFactory', EditorDbFactory);
 
-    MDbFactory.$inject = ['Loki'];
+    EditorDbFactory.$inject = ['Loki'];
 
-    function MDbFactory(Loki) {
+    function EditorDbFactory(Loki) {
         var self = this;
 
         /* Public interface */
@@ -27,17 +27,17 @@
         const DATA_STATE_COLLECTION = 'dataStates';
 
         /* Public interface */
-        self.addDataState = addDataState;
+        self.store = store;
 
         init();
 
         function init() {
             instance = new Loki('editor-db.json');
-            instance.addCollection(DATA_STATE_COLLECTION);
+            self[DATA_STATE_COLLECTION] = instance.addCollection(DATA_STATE_COLLECTION);
         }
 
-        function addDataState(state) {
-            instance.getCollection(DATA_STATE_COLLECTION).insert(state);
+        function store(state) {
+            self[DATA_STATE_COLLECTION].insert(state);
         }
     }
 

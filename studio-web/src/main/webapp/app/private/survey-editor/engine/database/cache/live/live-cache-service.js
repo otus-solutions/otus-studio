@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.memory.cache')
+        .module('editor.engine.database.cache')
         .service('LiveCacheService', LiveCacheService);
 
     function LiveCacheService() {

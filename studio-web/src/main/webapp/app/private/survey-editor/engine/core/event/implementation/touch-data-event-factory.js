@@ -5,29 +5,29 @@
         .module('editor.engine.core')
         .factory('TouchDataEventFactory', TouchDataEventFactory);
 
-    TouchDataEventFactory.$inject = ['MemoryService'];
+    TouchDataEventFactory.$inject = ['WorkspaceService'];
 
-    function TouchDataEventFactory(MemoryService) {
+    function TouchDataEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new TouchDataEvent(prototype, MemoryService);
+            return new TouchDataEvent(prototype, WorkspaceService);
         }
 
         return self;
     }
 
-    function TouchDataEvent(prototype, memory) {
+    function TouchDataEvent(prototype, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
-            memory.store(prototype);
+            // WorkspaceService.workspace.database.editordb.store(prototype);
         }
     }
 

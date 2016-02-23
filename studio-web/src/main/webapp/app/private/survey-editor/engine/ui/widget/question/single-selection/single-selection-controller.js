@@ -29,11 +29,15 @@
             $scope.answerOptions = [];
         }
 
-        function update(data, updateType) {
-            if (updateType.isAddData())
-                addAnswerOption(data);
-            else if (updateType.isRemoveData())
-                removeAnswerOption(data);
+        function update(update) {
+            if (update.data.objectType == 'QuestionAnswerOption') {
+                if (update.isAddData())
+                    addAnswerOption(update.data);
+                else if (update.isRemoveData())
+                    removeAnswerOption(update.data);
+                // else if (update.isUpdateData())
+                //     updateAnswerOption(update.data);
+            }
         }
 
         function addAnswerOption(answerOption) {
@@ -46,6 +50,12 @@
                 AnswerOptionContentService.unloadOption($element, $scope);
             }
         }
+
+        // function updateAnswerOption(answerOption) {
+        //     if (answerOption.parentQuestion == $scope.widget.questionId) {
+        //         AnswerOptionContentService.updateOption($element, answerOption);
+        //     }
+        // }
     }
 
 }());

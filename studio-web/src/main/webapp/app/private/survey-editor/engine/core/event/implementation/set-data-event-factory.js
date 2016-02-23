@@ -5,22 +5,22 @@
         .module('editor.engine.core')
         .factory('SetDataEventFactory', SetDataEventFactory);
 
-    SetDataEventFactory.$inject = ['EditorEngineService', 'MemoryService'];
+    SetDataEventFactory.$inject = ['EditorEngineService', 'WorkspaceService'];
 
-    function SetDataEventFactory(EditorEngineService, MemoryService) {
+    function SetDataEventFactory(EditorEngineService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new SetDataEvent(prototype, EditorEngineService, MemoryService);
+            return new SetDataEvent(prototype, EditorEngineService, WorkspaceService);
         }
 
         return self;
     }
 
-    function SetDataEvent(prototype, editor, memory) {
+    function SetDataEvent(prototype, editor, WorkspaceService) {
         var self = this;
 
         /* Public interface */
@@ -28,7 +28,7 @@
 
         function forward() {
             editor.edit(prototype);
-            memory.store(prototype);
+            WorkspaceService.workspace.database.editordb.store(prototype);
         }
     }
 
