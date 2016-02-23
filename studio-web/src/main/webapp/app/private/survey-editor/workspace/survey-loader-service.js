@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs')
+        .module('editor.workspace')
         .service('SurveyLoaderService', SurveyLoaderService);
 
     SurveyLoaderService.$inject = ['SurveyFactory'];

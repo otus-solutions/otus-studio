@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.model')
+        .module('editor.workspace')
         .factory('EditingWorkFactory', EditingWorkFactory);
 
     function EditingWorkFactory() {

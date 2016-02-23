@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.domain')
+        .module('editor.workspace')
         .factory('WorkspaceDatabaseFactory', WorkspaceDatabaseFactory);
 
     WorkspaceDatabaseFactory.$inject = ['EditorDbFactory'];

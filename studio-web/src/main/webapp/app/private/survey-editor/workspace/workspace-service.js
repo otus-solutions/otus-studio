@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.domain')
+        .module('editor.workspace')
         .service('WorkspaceService', WorkspaceService);
 
     WorkspaceService.$inject = [

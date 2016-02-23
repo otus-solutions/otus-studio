@@ -3,9 +3,10 @@
 
     angular
         .module('editor', [
-            'editor.domain',
+            'editor.database',
             'editor.engine',
             'editor.ui',
+            'editor.workspace',
             'otusjs'
         ]);
 

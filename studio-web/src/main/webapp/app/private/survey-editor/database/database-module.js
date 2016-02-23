@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('editor.engine.memory', [
+    angular.module('editor.database', [
         'editor.engine.database.cache',
-        'editor.engine.memory.ui'
+        'editor.database.ui'
     ]);
 
 }());

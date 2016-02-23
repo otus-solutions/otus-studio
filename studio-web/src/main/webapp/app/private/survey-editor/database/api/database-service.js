@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.memory')
+        .module('editor.database')
         .service('MemoryService', MemoryService);
 
     MemoryService.$inject = ['UIMemoryService', 'LiveCacheService', 'MDbService'];

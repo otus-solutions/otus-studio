@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.memory.ui')
+        .module('editor.database.ui')
         .service('UIMemoryService', UIMemoryService);
 
     function UIMemoryService() {
