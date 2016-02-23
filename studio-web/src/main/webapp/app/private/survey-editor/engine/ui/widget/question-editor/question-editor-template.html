@@ -2,7 +2,7 @@
 <md-whiteframe question-target="{{::widget.questionId}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center"
     editing-source
     es-type="question-editor"
-    es-id="question-editor-question-{{::widget.questionId}}"
+    es-id="question-editor-{{::widget.questionId}}"
     es-target="{{::widget.questionTarget}}">
 
     <ui-accordion title="{{::widget.title}}" widget="::widget" flex>
@@ -12,7 +12,7 @@
                     <div flex contenteditable="true" edit-mode edit-placeholder="Clique aqui para inserir o texto da label"
                         editing-source
                         es-type="div-editable"
-                        es-id="survey-editor-question-{{::widget.questionId}}-label"
+                        es-id="question-editor-{{::widget.questionId}}-label"
                         es-target="{{::widget.labelTarget}}"></div>
                 </div>
                 <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>

@@ -30,25 +30,11 @@
 
         function update(data, updateType) {
             if (updateType == 'ADD_DATA')
-                addQuestion(data);
+                SurveyPageContentService.loadQuestion(data);
             else if (updateType == 'REMOVE_DATA')
-                removeQuestion(data);
+                SurveyPageContentService.unloadQuestion(data);
             else if (updateType == 'SET_DATA')
-                updateQuestion(data);
-        }
-
-        function addQuestion(question) {
-            SurveyPageContentService.loadQuestion(question);
-        }
-
-        function removeQuestion(question) {
-            SurveyPageContentService.unloadQuestion(question);
-        }
-
-        function updateQuestion(question) {
-            var targetExpression = '[es-id="survey-editor-question-' + question.oid + '-label"]';
-            var targetLabel = UIUtils.jq(surveyPage.find(targetExpression)[0]);
-            targetLabel.text(question.label.ptBR.plainText);
+                SurveyPageContentService.updateQuestion(data);
         }
     }
 

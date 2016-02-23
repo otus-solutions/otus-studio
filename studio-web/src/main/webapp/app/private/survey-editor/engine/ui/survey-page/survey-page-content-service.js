@@ -7,10 +7,11 @@
     SurveyPageContentService.$inject = [
         'editor.engine.ui.mpath',
         'TemplateLoaderService',
-        'WidgetService'
+        'WidgetService',
+        'UIUtils'
     ];
 
-    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService) {
+    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService, UIUtils) {
         var self = this,
             scope = null,
             surveyPage = null;
@@ -19,6 +20,7 @@
         self.init = init;
         self.loadQuestion = loadQuestion;
         self.unloadQuestion = unloadQuestion;
+        self.updateQuestion = updateQuestion;
 
         function init(scopeReference, surveyPageReference) {
             scope = scopeReference;
@@ -35,6 +37,13 @@
 
         function unloadQuestion(question) {
             surveyPage.find('[question-target="' + question.oid + '"]').remove();
+        }
+
+        function updateQuestion(question) {
+            var targetExpression = '[es-id="survey-editor-question-' + question.oid + '-label"]',
+                targetLabel = UIUtils.jq(surveyPage.find(targetExpression)[0]);
+
+            targetLabel.text(question.label.ptBR.plainText);
         }
 
         function loadQuestionWidget(question) {

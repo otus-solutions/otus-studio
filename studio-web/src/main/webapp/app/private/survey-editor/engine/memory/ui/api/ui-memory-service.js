@@ -11,7 +11,7 @@
         self.storeData = storeData;
 
         function storeData(data) {
-            console.log(data);
+            // console.log(data);
         }
     }
 
