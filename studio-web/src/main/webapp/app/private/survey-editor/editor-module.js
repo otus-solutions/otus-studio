@@ -3,7 +3,6 @@
 
     angular
         .module('editor', [
-            'editor.database',
             'editor.engine',
             'editor.ui',
             'editor.workspace',

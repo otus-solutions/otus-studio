@@ -5,24 +5,24 @@
         .module('editor.workspace')
         .factory('WorkspaceFactory', WorkspaceFactory);
 
-    WorkspaceFactory.$inject = ['WorkspaceDatabaseFactory'];
+    WorkspaceFactory.$inject = ['InSessionDatabaseService'];
 
-    function WorkspaceFactory(WorkspaceDatabaseFactory) {
+    function WorkspaceFactory(InSessionDatabaseService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(workSession) {
-            return new Workspace(workSession, WorkspaceDatabaseFactory);
+            return new Workspace(workSession, InSessionDatabaseService);
         }
 
         return self;
     }
 
-    function Workspace(workSession, WorkspaceDatabaseFactory) {
+    function Workspace(workSession, InSessionDatabaseService) {
         var self = this;
-        self.database = WorkspaceDatabaseFactory.create();
+        self.isdb = InSessionDatabaseService;
 
         /* Public interface */
         self.importProject = importProject;
@@ -49,7 +49,7 @@
         }
 
         function loadProjectConfiguration() {
-            console.log('Loading...');
+
         }
     }
 
