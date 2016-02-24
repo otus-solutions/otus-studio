@@ -27,7 +27,7 @@
         self.forward = forward;
 
         function forward() {
-            WorkspaceService.workspace.database.editordb.store(prototype);
+            WorkspaceService.workspace.isdb.userEdits.store(prototype);
         }
     }
 
