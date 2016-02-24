@@ -3,24 +3,24 @@
 
     angular
         .module('editor.engine.core')
-        .factory('AddDataEventFactory', AddDataEventFactory);
+        .factory('UpdateDataEventFactory', UpdateDataEventFactory);
 
-    AddDataEventFactory.$inject = ['EditorEngineService', 'WorkspaceService'];
+    UpdateDataEventFactory.$inject = ['EditorEngineService', 'WorkspaceService'];
 
-    function AddDataEventFactory(EditorEngineService, WorkspaceService) {
+    function UpdateDataEventFactory(EditorEngineService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new AddDataEvent(prototype, EditorEngineService, WorkspaceService);
+            return new UpdateDataEvent(prototype, EditorEngineService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddDataEvent(prototype, editor, WorkspaceService) {
+    function UpdateDataEvent(prototype, editor, WorkspaceService) {
         var self = this;
 
         /* Public interface */

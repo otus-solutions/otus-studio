@@ -28,7 +28,7 @@
 
         function forward() {
             editor.edit(prototype);
-            WorkspaceService.workspace.database.editordb.store(prototype);
+            WorkspaceService.workspace.isdb.userEdits.store(prototype);
         }
     }
 

@@ -35,8 +35,7 @@
     }
 
     function Collection(collectionReference) {
-        var self = this,
-            collection;
+        var self = this;
 
         /* Public interface */
         self.store = store;
@@ -44,11 +43,14 @@
         init();
 
         function init() {
-            collection = collectionReference;
+            Object.defineProperty(self, 'collection', {
+                value: collectionReference,
+                writable: false
+            });
         }
 
         function store(data) {
-            collection.insert(data);
+            self.collection.insert(data);
         }
     }
 

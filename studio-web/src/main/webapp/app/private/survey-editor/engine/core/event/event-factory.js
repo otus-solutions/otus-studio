@@ -10,12 +10,12 @@
         'AddDataEventFactory',
         'RemoveDataEventFactory',
         'SelectDataEventFactory',
-        'SetDataEventFactory',
+        'UpdateDataEventFactory',
         'TouchDataEventFactory',
         'UntouchDataEventFactory'
     ];
 
-    function EventFactory(EventTypeFactory, AddDataEventFactory, RemoveDataEventFactory, SelectDataEventFactory, SetDataEventFactory, TouchDataEventFactory,
+    function EventFactory(EventTypeFactory, AddDataEventFactory, RemoveDataEventFactory, SelectDataEventFactory, UpdateDataEventFactory, TouchDataEventFactory,
         UntouchDataEventFactory) {
 
         var self = this,
@@ -24,7 +24,7 @@
                 'ADD_DATA': AddDataEventFactory,
                 'REMOVE_DATA': RemoveDataEventFactory,
                 'SELECT_DATA': SelectDataEventFactory,
-                'UPDATE_DATA': SetDataEventFactory,
+                'UPDATE_DATA': UpdateDataEventFactory,
                 'TOUCH_DATA': TouchDataEventFactory,
                 'UNTOUCH_DATA': UntouchDataEventFactory
             };
