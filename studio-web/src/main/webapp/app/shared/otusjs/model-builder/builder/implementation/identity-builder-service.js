@@ -14,6 +14,7 @@
         self.execute = execute;
         self.getWorkResult = getWorkResult;
 
+        // TODO: Implement validator to run here
         function runValidations(work) {
             workResult = true;
         }

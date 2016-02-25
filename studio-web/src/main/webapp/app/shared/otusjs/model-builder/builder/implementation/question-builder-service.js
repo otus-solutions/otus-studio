@@ -21,6 +21,7 @@
         /* Observable interface */
         self.registerObserver = registerObserver;
 
+        // TODO: Implement validator to run here
         function runValidations(work) {
             workResult = true;
         }
