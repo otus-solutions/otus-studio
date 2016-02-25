@@ -19,8 +19,6 @@
     }
 
     function SurveyIdentity() {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
@@ -36,12 +34,41 @@
             writable: false
         });
 
-        self.name = '';
-        self.acronym = '';
-        self.version = '';
-        self.recommendedTo = '';
-        self.description = '';
-        self.keywords = [];
+        Object.defineProperty(this, 'name', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'acronym', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'version', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'recommendedTo', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'description', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'keywords', {
+            value: [],
+            writable: true,
+            enumerable: true
+        });
     }
 
 }());
