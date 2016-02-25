@@ -30,11 +30,11 @@
 
         function init() {
             instance = new Loki('in-session-db.json');
-            self[USER_EDITS_COLLECTION] = new Collection(instance.addCollection(USER_EDITS_COLLECTION));
+            self[USER_EDITS_COLLECTION] = new CollectionFacade(instance.addCollection(USER_EDITS_COLLECTION));
         }
     }
 
-    function Collection(collectionReference) {
+    function CollectionFacade(collectionReference) {
         var self = this;
 
         /* Public interface */

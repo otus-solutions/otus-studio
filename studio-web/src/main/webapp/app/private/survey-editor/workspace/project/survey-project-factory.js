@@ -22,6 +22,7 @@
         var self = this;
 
         self.configuration = {};
+        var contributors = [];
 
         Object.defineProperty(this, 'survey', {
             value: survey,
@@ -37,8 +38,6 @@
             value: author,
             writable: false
         });
-
-        var contributors = [];
 
         /* Public interface */
         self.addContributor = addContributor;

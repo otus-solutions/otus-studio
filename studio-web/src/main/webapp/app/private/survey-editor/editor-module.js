@@ -5,8 +5,7 @@
         .module('editor', [
             'editor.engine',
             'editor.ui',
-            'editor.workspace',
-            'otusjs'
+            'editor.workspace'
         ]);
 
 }());

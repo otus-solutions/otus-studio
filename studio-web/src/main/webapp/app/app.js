@@ -10,6 +10,7 @@
             'main',
             'user',
             /* Otus platform modules */
+            'otusjs',
             'ui.components',
             'utils'
         ]);
