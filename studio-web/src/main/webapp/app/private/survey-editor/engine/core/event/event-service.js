@@ -15,12 +15,7 @@
         var self = this;
 
         /* Public interface */
-        self.observeEvent = observeEvent;
         self.performEvent = performEvent;
-
-        function observeEvent(editingSource) {
-            var state = StateFactory.create(editingSource);
-        }
 
         function performEvent(editingSource, listener) {
             var state = StateFactory.create(editingSource),

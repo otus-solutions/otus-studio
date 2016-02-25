@@ -37,10 +37,6 @@
         function watchDomComponent() {
             var jqElement = angular.element(self.editingSource.component);
 
-            jqElement.on('focus', function setFocusTrigger() {
-                EventService.observeEvent(self.editingSource);
-            });
-
             jqElement.on('blur', function setBlurTrigger() {
                 EventService.performEvent(self.editingSource);
             });
