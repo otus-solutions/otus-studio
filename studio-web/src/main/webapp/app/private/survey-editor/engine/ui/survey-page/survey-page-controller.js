@@ -8,14 +8,13 @@
     SurveyPageController.$inject = [
         '$scope',
         '$element',
-        'QuestionBuilderService',
-        'LabelBuilderService',
+        'ModelBuilderHubService',
         'SurveyPageContentService',
         'WorkspaceService',
         'UIUpdateCommandFactory'
     ];
 
-    function SurveyPageController($scope, $element, QuestionBuilderService, LabelBuilderService, SurveyPageContentService, WorkspaceService,
+    function SurveyPageController($scope, $element, ModelBuilderHubService, SurveyPageContentService, WorkspaceService,
         UIUpdateCommandFactory) {
 
         var self = this;
@@ -28,8 +27,8 @@
 
         function init() {
             // TODO: transformar essa implementação de observer para o 'modo angular' de tratar eventos
-            QuestionBuilderService.registerObserver(self);
-            LabelBuilderService.registerObserver(self);
+            ModelBuilderHubService.plugToLabelBuilder(self);
+            ModelBuilderHubService.plugToQuestionBuilder(self);
             WorkspaceService.registerObserver(self);
 
             SurveyPageContentService.init($scope, $element);
