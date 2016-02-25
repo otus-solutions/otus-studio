@@ -8,13 +8,13 @@
     SingleSelectionController.$inject = [
         '$scope',
         '$element',
+        'LabelBuilderService',
+        'AnswerOptionBuilderService',
         'AnswerOptionContentService',
-        'LabelUpdateService',
-        'AnswerOptionUpdateService',
         'UIUtils'
     ];
 
-    function SingleSelectionController($scope, $element, AnswerOptionContentService, LabelUpdateService, AnswerOptionUpdateService, UIUtils) {
+    function SingleSelectionController($scope, $element, LabelBuilderService, AnswerOptionBuilderService, AnswerOptionContentService, UIUtils) {
         var self = this;
 
         /* Public interface */
@@ -24,8 +24,8 @@
         init();
 
         function init() {
-            LabelUpdateService.registerObserver(self);
-            AnswerOptionUpdateService.registerObserver(self);
+            LabelBuilderService.registerObserver(self);
+            AnswerOptionBuilderService.registerObserver(self);
             $scope.answerOptions = [];
         }
 

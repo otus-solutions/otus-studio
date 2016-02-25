@@ -46,10 +46,56 @@
     <!-- Utils -->
     <script src="shared/utils-module.js"></script>
 
-    <!-- **************************************** Assets ***************************************** -->
-    <link href="assets/styles.css" rel="stylesheet"/>
+    <!-- ************************************** OtusJS ************************************** -->
+    <!-- app.shared.otusjs -->
+    <script src="shared/otusjs/otusjs-module.js"></script>
+
+    <!-- === otusjs-model === -->
+    <!-- app.shared.otusjs.model -->
+    <script src="shared/otusjs/model/otusjs-model-module.js"></script>
+
+    <!-- app.shared.otusjs.model.question -->
+    <script src="shared/otusjs/model/question/answer-option-factory.js"></script>
+    <script src="shared/otusjs/model/question/calendar-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/numeric-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/question-factory.js"></script>
+    <script src="shared/otusjs/model/question/single-selection-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/text-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/time-question-factory.js"></script>
+
+    <!-- app.shared.otusjs.model.setter -->
+    <script src="shared/otusjs/model/setter/label-factory.js"></script>
+    <script src="shared/otusjs/model/setter/unit-factory.js"></script>
+
+    <!-- app.shared.otusjs.model.structure -->
+    <script src="shared/otusjs/model/structure/survey-factory.js"></script>
+    <script src="shared/otusjs/model/structure/survey-identity-factory.js"></script>
+
+    <!-- === otusjs-model-builder === -->
+    <!-- app.shared.otusjs.model-builder -->
+    <script src="shared/otusjs/model-builder/otusjs-model-builder-module.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.api -->
+    <script src="shared/otusjs/model-builder/api/build-work-factory.js"></script>
+    <script src="shared/otusjs/model-builder/api/model-builder-service.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.builder -->
+    <script src="shared/otusjs/model-builder/builder/builder-factory.js"></script>
+    <script src="shared/otusjs/model-builder/builder/builder-map-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/builder-selector-service.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.builder.implementation -->
+    <script src="shared/otusjs/model-builder/builder/implementation/answer-option-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/identity-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/label-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/question-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/question-navigation-factory.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/unit-builder-service.js"></script>
 
     <!-- ************************************** Application ************************************** -->
+    <!-- assets -->
+    <link href="assets/styles.css" rel="stylesheet"/>
+
     <!-- app -->
     <script src="app.js"></script>
 
@@ -65,43 +111,6 @@
     <!-- app.private.main.home -->
     <script src="private/main/home/ui/home-controller.js"></script>
     <script src="private/main/home/ui/toolbar-controller.js"></script>
-
-    <!-- app.private.otus-js -->
-    <script src="private/otus-js/otus-js-module.js"></script>
-
-    <!-- app.private.otus-js.api -->
-    <script src="private/otus-js/api/model-update-service.js"></script>
-
-    <!-- app.private.otus-js.model.question -->
-    <script src="private/otus-js/model/question/calendar-question-factory.js"></script>
-    <script src="private/otus-js/model/question/numeric-question-factory.js"></script>
-    <script src="private/otus-js/model/question/answer-option-factory.js"></script>
-    <script src="private/otus-js/model/question/question-factory.js"></script>
-    <script src="private/otus-js/model/question/single-selection-question-factory.js"></script>
-    <script src="private/otus-js/model/question/text-question-factory.js"></script>
-    <script src="private/otus-js/model/question/time-question-factory.js"></script>
-
-    <!-- app.private.otus-js.model.setter -->
-    <script src="private/otus-js/model/setter/label-factory.js"></script>
-    <script src="private/otus-js/model/setter/unit-factory.js"></script>
-
-    <!-- app.private.otus-js.model.structure -->
-    <script src="private/otus-js/model/structure/survey-factory.js"></script>
-    <script src="private/otus-js/model/structure/survey-identity-factory.js"></script>
-
-    <!-- app.private.otus-js.model-update -->
-    <script src="private/otus-js/model-update/question-list-factory.js"></script>
-    <script src="private/otus-js/model-update/target-to-updater-map-service.js"></script>
-    <script src="private/otus-js/model-update/update-work-factory.js"></script>
-    <script src="private/otus-js/model-update/updater-factory.js"></script>
-    <script src="private/otus-js/model-update/updater-map-service.js"></script>
-
-    <!-- app.private.otus-js.model-update.implementation -->
-    <script src="private/otus-js/model-update/implementation/identity-update-service.js"></script>
-    <script src="private/otus-js/model-update/implementation/label-update-service.js"></script>
-    <script src="private/otus-js/model-update/implementation/answer-option-update-service.js"></script>
-    <script src="private/otus-js/model-update/implementation/question-update-service.js"></script>
-    <script src="private/otus-js/model-update/implementation/unit-update-service.js"></script>
 
     <!-- app.private.survey-editor -->
     <script src="private/survey-editor/editor-module.js"></script>

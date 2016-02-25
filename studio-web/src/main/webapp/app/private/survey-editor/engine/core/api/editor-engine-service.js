@@ -6,12 +6,12 @@
         .service('EditorEngineService', EditorEngineService);
 
     EditorEngineService.$inject = [
-        'ModelService',
-        'UpdateWorkFactory',
+        'ModelBuilderService',
+        'BuildWorkFactory',
         'WorkspaceService'
     ];
 
-    function EditorEngineService(ModelService, UpdateWorkFactory, WorkspaceService) {
+    function EditorEngineService(ModelBuilderService, BuildWorkFactory, WorkspaceService) {
         var self = this,
             survey = null;
 
@@ -19,27 +19,27 @@
         self.edit = edit;
 
         function edit(editingEvent) {
-            var updateWork = buildUpdateWork(editingEvent);
-            ModelService.update(updateWork);
+            var work = buildWork(editingEvent);
+            ModelBuilderService.build(work);
         }
 
-        function buildUpdateWork(editingEvent) {
-            var updateWork = UpdateWorkFactory.create();
+        function buildWork(editingEvent) {
+            var work = BuildWorkFactory.create();
 
-            updateWork.survey = WorkspaceService.workspace.project.survey;
-            updateWork.target = editingEvent.target;
-            updateWork.type = editingEvent.type;
-            updateWork.id = editingEvent.id;
+            work.survey = WorkspaceService.workspace.project.survey;
+            work.target = editingEvent.target;
+            work.type = editingEvent.type;
+            work.id = editingEvent.id;
 
             if (editingEvent.state.domData)
-                updateWork.data = editingEvent.state.domData;
+                work.data = editingEvent.state.domData;
 
             if (editingEvent.source.model) {
-                updateWork.model = editingEvent.source.model;
-                updateWork.questionId = updateWork.survey.identity.acronym + WorkspaceService.getQuestionId();
+                work.model = editingEvent.source.model;
+                work.questionId = work.survey.identity.acronym + WorkspaceService.getQuestionId();
             }
 
-            return updateWork;
+            return work;
         }
     }
 
