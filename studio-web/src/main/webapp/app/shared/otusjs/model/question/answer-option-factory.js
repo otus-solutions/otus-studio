@@ -21,8 +21,6 @@
     }
 
     function QuestionAnswerOption(oid, questionOID, LabelFactory) {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false

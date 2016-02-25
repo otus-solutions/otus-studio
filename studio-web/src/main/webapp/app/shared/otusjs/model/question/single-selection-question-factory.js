@@ -21,8 +21,6 @@
     }
 
     function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory) {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false

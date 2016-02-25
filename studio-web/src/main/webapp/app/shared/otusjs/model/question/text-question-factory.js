@@ -19,8 +19,6 @@
     }
 
     function TextQuestion(oid, prototype) {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false

@@ -21,8 +21,6 @@
     }
 
     function TimeQuestion(oid, prototype, UnitFactory) {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false

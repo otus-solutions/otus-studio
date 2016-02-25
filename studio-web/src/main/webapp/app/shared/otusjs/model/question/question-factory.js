@@ -37,8 +37,6 @@
     }
 
     function Question(oid, LabelFactory) {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
