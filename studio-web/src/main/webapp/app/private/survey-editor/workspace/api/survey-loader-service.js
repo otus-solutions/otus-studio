@@ -5,9 +5,9 @@
         .module('editor.workspace')
         .service('SurveyLoaderService', SurveyLoaderService);
 
-    SurveyLoaderService.$inject = ['SurveyFactory'];
+    SurveyLoaderService.$inject = ['ModelFacadeService'];
 
-    function SurveyLoaderService(SurveyFactory) {
+    function SurveyLoaderService(ModelFacadeService) {
         var self = this;
 
         /* Public interface */
@@ -15,7 +15,7 @@
 
         /* Public interface implementation */
         function newSurvey() {
-            return SurveyFactory.create();
+            return ModelFacadeService.getSurveyFactory().create();
         }
     }
 
