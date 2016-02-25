@@ -19,8 +19,10 @@
         self.edit = edit;
 
         function edit(editingEvent) {
-            var work = buildWork(editingEvent);
-            ModelBuilderService.build(work);
+            var work = buildWork(editingEvent),
+                workResult = ModelBuilderService.build(work);
+
+            console.log(workResult);
         }
 
         function buildWork(editingEvent) {

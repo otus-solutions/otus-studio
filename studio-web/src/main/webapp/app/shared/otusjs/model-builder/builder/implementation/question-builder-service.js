@@ -10,11 +10,26 @@
     function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory) {
         var self = this,
             observers = [],
-            questionLinkedList = QuestionNavigationFactory.create();
+            questionLinkedList = QuestionNavigationFactory.create(),
+            workResult = null;
 
         /* Public interface */
+        self.runValidations = runValidations;
         self.execute = execute;
+        self.getWorkResult = getWorkResult;
+
+        /* Observable interface */
         self.registerObserver = registerObserver;
+
+        function runValidations(work) {
+            workResult = true;
+        }
+
+        function getWorkResult() {
+            return {
+                result: workResult
+            };
+        }
 
         function execute(work) {
             var question = null;

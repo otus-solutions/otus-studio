@@ -7,11 +7,26 @@
 
     function UnitBuilderService() {
         var self = this,
-            observers = [];
+            observers = [],
+            workResult = null;
 
         /* Public interface */
+        self.runValidations = runValidations;
         self.execute = execute;
+        self.getWorkResult = getWorkResult;
+
+        /* Observable interface */
         self.registerObserver = registerObserver;
+
+        function runValidations(work) {
+            workResult = true;
+        }
+
+        function getWorkResult() {
+            return {
+                result: workResult
+            };
+        }
 
         function execute(work) {
             var question = updateLabelValue(work);

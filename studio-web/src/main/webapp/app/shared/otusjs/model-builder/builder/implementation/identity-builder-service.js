@@ -6,12 +6,24 @@
         .service('SurveyIdentityBuilderService', SurveyIdentityBuilderService);
 
     function SurveyIdentityBuilderService() {
-        var self = this;
+        var self = this,
+            workResult = null;
 
         /* Public interface */
+        self.runValidations = runValidations;
         self.execute = execute;
+        self.getWorkResult = getWorkResult;
 
-        /* Public interface implementation */
+        function runValidations(work) {
+            workResult = true;
+        }
+
+        function getWorkResult() {
+            return {
+                result: workResult
+            };
+        }
+
         function execute(work) {
             if (isKeywordsTargeted(work.target)) {
                 updateKeywords(work);
