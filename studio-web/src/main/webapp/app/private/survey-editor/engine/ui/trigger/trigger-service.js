@@ -14,10 +14,6 @@
         self.loadTrigger = loadTrigger;
 
         function loadTrigger() {
-            /*========== DEV LOG ===========*/
-            // console.info('Registro de triggers:');
-            /*==============================*/
-
             for (var submap in TriggerMap) {
                 submap = TriggerMap[submap];
 
@@ -26,10 +22,6 @@
                     TriggerRegisterService.registerTriggerService(selectedTriggerService);
                 }
             }
-
-            /*========== DEV LOG ===========*/
-            // console.log('Trigger para ' + triggerService.getTrigger().source + ' registrada');
-            /*==============================*/
         }
     }
 
