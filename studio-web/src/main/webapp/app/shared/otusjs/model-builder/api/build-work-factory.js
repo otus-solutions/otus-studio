@@ -19,14 +19,41 @@
     }
 
     function BuildWork() {
-        var self = this;
+        Object.defineProperty(this, 'survey', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
 
-        self.survey = null;
-        self.data = null;
-        self.type = null;
-        self.id = null;
-        self.target = null;
-        self.model = null;
+        Object.defineProperty(this, 'data', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'type', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'id', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'target', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'model', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
     }
 
 }());
