@@ -22,6 +22,7 @@
             divEditable: HtmlTriggerFactory,
             addButton: HtmlTriggerFactory,
             removeButton: HtmlTriggerFactory,
+            updateButton: HtmlTriggerFactory,
             inputNumber: HtmlTriggerFactory,
             inputEmail: HtmlTriggerFactory,
 

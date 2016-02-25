@@ -5,21 +5,21 @@
         .module('editor.engine.core')
         .factory('HtmlTriggerMap', HtmlTriggerMap);
 
-    var inject = [
+    HtmlTriggerMap.$inject = [
         'AddButtonTriggerService',
         'RemoveButtonTriggerService',
+        'UpdateButtonTriggerService',
         'InputTextTriggerService',
         'DivEditableTriggerService'
     ];
 
-    HtmlTriggerMap.$inject = inject;
-
-    function HtmlTriggerMap(AddButtonTriggerService, RemoveButtonTriggerService, InputTextTriggerService, DivEditableTriggerService) {
+    function HtmlTriggerMap(AddButtonTriggerService, RemoveButtonTriggerService, UpdateButtonTriggerService, InputTextTriggerService, DivEditableTriggerService) {
         return {
-            AddButtonTriggerService: AddButtonTriggerService,
-            RemoveButtonTriggerService: RemoveButtonTriggerService,
-            InputTextTriggerService: InputTextTriggerService,
-            DivEditableTriggerService: DivEditableTriggerService
+            'AddButtonTriggerService': AddButtonTriggerService,
+            'RemoveButtonTriggerService': RemoveButtonTriggerService,
+            'UpdateButtonTriggerService': UpdateButtonTriggerService,
+            'InputTextTriggerService': InputTextTriggerService,
+            'DivEditableTriggerService': DivEditableTriggerService
         };
     }
 

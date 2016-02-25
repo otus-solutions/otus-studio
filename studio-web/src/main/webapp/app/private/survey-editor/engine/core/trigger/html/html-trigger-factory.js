@@ -8,7 +8,6 @@
     HtmlTriggerFactory.$inject = ['TriggerRegisterService'];
 
     function HtmlTriggerFactory(TriggerRegisterService) {
-
         var self = this;
 
         /* Public interface */

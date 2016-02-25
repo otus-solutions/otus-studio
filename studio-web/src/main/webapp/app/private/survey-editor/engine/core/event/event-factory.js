@@ -64,6 +64,10 @@
             writable: false
         });
 
+        Object.defineProperty(this, 'id', {
+            value: editingSource.id,
+            writable: false
+        });
     }
 
 }());

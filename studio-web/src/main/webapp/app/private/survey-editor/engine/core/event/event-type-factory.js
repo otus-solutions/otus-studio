@@ -13,6 +13,7 @@
             'div-editable': new EventType('UPDATE_DATA'),
             'add-button': new EventType('ADD_DATA'),
             'remove-button': new EventType('REMOVE_DATA'),
+            'update-button': new EventType('UPDATE_DATA'),
             'question-editor': {
                 'click': new EventType('SELECT_DATA'),
                 'mouseenter': new EventType('TOUCH_DATA'),

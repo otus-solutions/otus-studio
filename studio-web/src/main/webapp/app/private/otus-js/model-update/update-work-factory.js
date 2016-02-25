@@ -22,9 +22,10 @@
         var self = this;
 
         self.survey = null;
-        self.target = null;
         self.data = null;
         self.type = null;
+        self.id = null;
+        self.target = null;
         self.model = null;
     }
 

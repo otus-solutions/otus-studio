@@ -62,6 +62,16 @@
             },
             writable: true
         });
+
+        Object.defineProperty(this, 'previousQuestion', {
+            value: oid,
+            writable: true
+        });
+
+        Object.defineProperty(this, 'nextQuestion', {
+            value: oid,
+            writable: true
+        });
     }
 
 }());

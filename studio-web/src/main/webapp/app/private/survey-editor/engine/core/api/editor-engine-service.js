@@ -29,6 +29,7 @@
             updateWork.survey = WorkspaceService.workspace.project.survey;
             updateWork.target = editingEvent.target;
             updateWork.type = editingEvent.type;
+            updateWork.id = editingEvent.id;
 
             if (editingEvent.state.domData)
                 updateWork.data = editingEvent.state.domData;
