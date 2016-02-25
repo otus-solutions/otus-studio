@@ -28,14 +28,14 @@
 
         function run(editingSource) {
             var newTrigger = self.loader.service.getTrigger(editingSource);
-            self.loader.triggersLoaded.push(newTrigger);
+            self.loader.triggersLoaded = newTrigger;
             return newTrigger;
         }
 
         function wrapTrigger(triggerService) {
             var newLoader = {
                 service: triggerService,
-                triggersLoaded: []
+                triggersLoaded: null
             };
             self.loader = newLoader;
         }

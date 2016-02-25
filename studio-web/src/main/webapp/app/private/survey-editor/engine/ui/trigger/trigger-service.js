@@ -11,9 +11,9 @@
         var self = this;
 
         /* Public interface */
-        self.loadTrigger = loadTrigger;
+        self.loadTriggers = loadTriggers;
 
-        function loadTrigger() {
+        function loadTriggers() {
             for (var submap in TriggerMap) {
                 submap = TriggerMap[submap];
 
