@@ -19,8 +19,6 @@
     }
 
     function Label() {
-        var self = this;
-
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
@@ -36,8 +34,17 @@
             writable: false
         });
 
-        self.plainText = '';
-        self.formattedText = '';
+        Object.defineProperty(this, 'plainText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'formattedText', {
+            value: '',
+            writable: true,
+            enumerable: true
+        });
     }
 
 }());
