@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
+        .module('editor.engine.ui')
         .directive('editingSource', directiveDefinition);
 
     /*

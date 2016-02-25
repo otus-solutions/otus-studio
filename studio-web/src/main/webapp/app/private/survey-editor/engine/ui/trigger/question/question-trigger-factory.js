@@ -2,12 +2,13 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
-        .factory('HtmlTriggerFactory', HtmlTriggerFactory);
+        .module('editor.engine.ui')
+        .factory('QuestionTriggerFactory', QuestionTriggerFactory);
 
-    HtmlTriggerFactory.$inject = ['TriggerRegisterService'];
+    QuestionTriggerFactory.$inject = ['TriggerRegisterService'];
 
-    function HtmlTriggerFactory(TriggerRegisterService) {
+    function QuestionTriggerFactory(TriggerRegisterService) {
+
         var self = this;
 
         /* Public interface */

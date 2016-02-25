@@ -2,21 +2,21 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
-        .service('AddButtonTriggerService', AddButtonTriggerService);
+        .module('editor.engine.ui')
+        .service('UpdateButtonTriggerService', UpdateButtonTriggerService);
 
-    AddButtonTriggerService.$inject = ['EventService'];
+    UpdateButtonTriggerService.$inject = ['EventService'];
 
-    function AddButtonTriggerService(EventService) {
+    function UpdateButtonTriggerService(EventService) {
         var self = this,
-            sourceComponentType = 'add-button';
+            sourceComponentType = 'update-button';
 
         /* Public interface */
         self.getTrigger = getTrigger;
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new AddButtonTrigger(EventService, editingSource);
+            return new UpdateButtonTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -24,12 +24,12 @@
         }
     }
 
-    function AddButtonTrigger(EventService, editingSource) {
+    function UpdateButtonTrigger(EventService, editingSource) {
         var self = this;
 
-        self.name = 'AddButtonTrigger';
+        self.name = 'RemoveButtonTrigger';
         self.tree = 'html';
-        self.sourceComponentType = 'add-button';
+        self.sourceComponentType = 'update-button';
         self.editingSource = editingSource;
 
         watchDomComponent();

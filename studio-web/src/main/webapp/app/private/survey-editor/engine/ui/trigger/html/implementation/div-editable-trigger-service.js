@@ -2,21 +2,21 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
-        .service('RemoveButtonTriggerService', RemoveButtonTriggerService);
+        .module('editor.engine.ui')
+        .service('DivEditableTriggerService', DivEditableTriggerService);
 
-    RemoveButtonTriggerService.$inject = ['EventService'];
+    DivEditableTriggerService.$inject = ['EventService'];
 
-    function RemoveButtonTriggerService(EventService) {
+    function DivEditableTriggerService(EventService) {
         var self = this,
-            sourceComponentType = 'remove-button';
+            sourceComponentType = 'div-editable';
 
         /* Public interface */
         self.getTrigger = getTrigger;
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new RemoveButtonTrigger(EventService, editingSource);
+            return new DivEditableTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -24,12 +24,12 @@
         }
     }
 
-    function RemoveButtonTrigger(EventService, editingSource) {
+    function DivEditableTrigger(EventService, editingSource) {
         var self = this;
 
-        self.name = 'RemoveButtonTrigger';
+        self.name = 'DivEditableTrigger';
         self.tree = 'html';
-        self.sourceComponentType = 'remove-button';
+        self.sourceComponentType = 'div-editable';
         self.editingSource = editingSource;
 
         watchDomComponent();
@@ -37,7 +37,11 @@
         function watchDomComponent() {
             var jqElement = angular.element(self.editingSource.component);
 
-            jqElement.on('click', function setClickTrigger() {
+            jqElement.on('focus', function setFocusTrigger() {
+                EventService.observeEvent(self.editingSource);
+            });
+
+            jqElement.on('blur', function setBlurTrigger() {
                 EventService.performEvent(self.editingSource);
             });
         }

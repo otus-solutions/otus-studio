@@ -2,21 +2,21 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
-        .service('DivEditableTriggerService', DivEditableTriggerService);
+        .module('editor.engine.ui')
+        .service('InputTextTriggerService', InputTextTriggerService);
 
-    DivEditableTriggerService.$inject = ['EventService'];
+    InputTextTriggerService.$inject = ['EventService'];
 
-    function DivEditableTriggerService(EventService) {
+    function InputTextTriggerService(EventService) {
         var self = this,
-            sourceComponentType = 'div-editable';
+            sourceComponentType = 'input-text';
 
         /* Public interface */
         self.getTrigger = getTrigger;
         self.getSourceComponentType = getSourceComponentType;
 
         function getTrigger(editingSource) {
-            return new DivEditableTrigger(EventService, editingSource);
+            return new InputTextTrigger(EventService, editingSource);
         }
 
         function getSourceComponentType() {
@@ -24,12 +24,12 @@
         }
     }
 
-    function DivEditableTrigger(EventService, editingSource) {
+    function InputTextTrigger(EventService, editingSource) {
         var self = this;
 
-        self.name = 'DivEditableTrigger';
+        self.name = 'InputTextTrigger';
         self.tree = 'html';
-        self.sourceComponentType = 'div-editable';
+        self.sourceComponentType = 'input-text';
         self.editingSource = editingSource;
 
         watchDomComponent();

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.engine.core')
+        .module('editor.engine.ui')
         .service('TriggerRegisterService', TriggerRegisterService);
 
     TriggerRegisterService.$inject = ['TriggerInitializerFactory'];
