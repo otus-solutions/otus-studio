@@ -9,15 +9,19 @@
         'NewSurveyFormDialogService',
         'LogoutDialogService',
         'ApplicationStateService',
-        'SurveyEditorService'
+        'SurveyEditorService',
+        '$mdSidenav'
     ];
 
-    function SystemToolbarController(NewSurveyFormDialogService, LogoutDialogService, ApplicationStateService, SurveyEditorService) {
+    function SystemToolbarController(NewSurveyFormDialogService, LogoutDialogService, ApplicationStateService, SurveyEditorService, $mdSidenav) {
         var self = this;
 
         /* Public interface */
         self.getSelectedSystemArea = getSelectedSystemArea;
+        self.open = open;
+        self.close = close;
         self.openHome = openHome;
+        self.openSurveyForms = openSurveyForms;
         self.openEditor = openEditor;
         self.openCreateRepository = openCreateRepository;
         self.openConnectRepository = openConnectRepository;
@@ -28,8 +32,20 @@
             return ApplicationStateService.currentState;
         }
 
+        function open() {
+            $mdSidenav('left').toggle();
+        }
+
+        function close() {
+            $mdSidenav('left').close();
+        }
+
         function openHome() {
             ApplicationStateService.goToHome();
+        }
+
+        function openSurveyForms() {
+            ApplicationStateService.goToSurveyForms();
         }
 
         function openEditor() {

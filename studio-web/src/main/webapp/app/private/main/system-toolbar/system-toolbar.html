@@ -1,40 +1,22 @@
-<md-toolbar id="system-toolbar" ng-controller="SystemToolbarController as systemToolbarController" flex>
-    <div class="md-toolbar-tools">
-        <md-button ng-click="systemToolbarController.openHome()">
-            <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important" flex>
+    <md-toolbar id="system-toolbar" layout="row">
+        <md-button ng-click="systemToolbarController.open()">
+            <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+            Otus Studio
         </md-button>
-        <md-button id="new-surveyform-button" ng-click="systemToolbarController.openEditor($event)">
-            <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
-            Novo Formulário
-        </md-button>
-        <md-button ng-click="systemToolbarController.openCreateRepository()">
-            <md-icon md-svg-icon="cloud-upload" aria-label="Criar Repositório"></md-icon>
-            Criar Repositório
-        </md-button>
-        <md-button ng-click="systemToolbarController.openConnectRepository()">
-            <md-icon md-svg-icon="cloud-download" aria-label="Conectar Repositório"></md-icon>
-            Conectar Repositório
-        </md-button>
-        <md-button ng-click="systemToolbarController.openUserManagement()">
-            <md-icon md-svg-icon="account" aria-label="Configurações"></md-icon>
-            Usuários
-        </md-button>
-        <span flex></span>
-        <h3 ng-controller="RepositoryController as repositoryController">
-            <span>{{repositoryController.connected()}}</span>
-        </h3>
-        <span flex="5"></span>
-        <a class="navbar-brand" rel="home" title="Profile">
-            <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div"/>
-        </a>
-        <md-button aria-label="Logout" ng-click="systemToolbarController.logout()">
-            <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
-        </md-button>
-    </div>
-</md-toolbar>
-<!-- /#system-toolbar -->
-
-<md-toolbar id="subarea-toolbar" class="md-toolbar-tools md-primary" layout-align="center center">
-    <h2 class="md-flex">{{systemToolbarController.getSelectedSystemArea()}}</h2>
-</md-toolbar>
-<!-- /#subarea-toolbar -->
+    </md-toolbar>
+    <md-list>
+        <md-list-item class="md-1-line">
+            <md-button id="new-surveyform-button" ng-click="systemToolbarController.openHome($event)" layout="row">
+                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
+                Home
+            </md-button>
+        </md-list-item>
+        <md-list-item class="md-1-line">
+            <md-button id="new-surveyform-button" ng-click="systemToolbarController.openEditor($event)" layout="row">
+                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
+                Formulários
+            </md-button>
+        </md-list-item>
+    </md-list>
+</md-sidenav>

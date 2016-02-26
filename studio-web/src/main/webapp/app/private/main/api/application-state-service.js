@@ -17,6 +17,7 @@
 
         /* Public interface */
         self.goToHome = goToHome;
+        self.goToSurveyForms = goToSurveyForms;
         self.goToEditor = goToEditor;
         self.goToCreateRepository = goToCreateRepository;
         self.goToConnectRepository = goToConnectRepository;
@@ -32,6 +33,11 @@
         function goToHome() {
             self.currentState = 'Home';
             $location.url(APP_STATE.HOME);
+        }
+
+        function goToSurveyForms() {
+            self.currentState = 'SurveyForms';
+            $location.url(APP_STATE.SURVEY_FORMS);
         }
 
         function goToEditor() {

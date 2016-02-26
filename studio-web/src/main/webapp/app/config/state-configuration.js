@@ -5,6 +5,7 @@
         .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
+            'SURVEY_FORMS': 'survey-forms',
             'EDITOR': 'editor',
             'USER_MANAGEMENT': 'user-management',
             'CREATE_REPOSITORY': 'repository?actionType=NEW',
@@ -25,6 +26,17 @@
                     },
                     'system-content': {
                         templateUrl: 'private/main/home/home.html'
+                    }
+                }
+            })
+            .state('survey-forms', {
+                url: '/survey-forms',
+                views: {
+                    'system-toolbar': {
+                        templateUrl: systemToolbarPath
+                    },
+                    'system-content': {
+                        templateUrl: 'private/main/survey-forms-dashboard/survey-forms-dashboard.html'
                     }
                 }
             })
