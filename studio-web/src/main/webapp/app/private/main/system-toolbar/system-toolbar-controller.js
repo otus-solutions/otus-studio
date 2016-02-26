@@ -6,14 +6,12 @@
         .controller('SystemToolbarController', SystemToolbarController);
 
     SystemToolbarController.$inject = [
-        'NewSurveyFormDialogService',
         'LogoutDialogService',
         'ApplicationStateService',
-        'SurveyEditorService',
         '$mdSidenav'
     ];
 
-    function SystemToolbarController(NewSurveyFormDialogService, LogoutDialogService, ApplicationStateService, SurveyEditorService, $mdSidenav) {
+    function SystemToolbarController(LogoutDialogService, ApplicationStateService, $mdSidenav) {
         var self = this;
 
         /* Public interface */
@@ -22,7 +20,6 @@
         self.close = close;
         self.openHome = openHome;
         self.openSurveyForms = openSurveyForms;
-        self.openEditor = openEditor;
         self.openCreateRepository = openCreateRepository;
         self.openConnectRepository = openConnectRepository;
         self.openUserManagement = openUserManagement;
@@ -46,14 +43,6 @@
 
         function openSurveyForms() {
             ApplicationStateService.goToSurveyForms();
-        }
-
-        function openEditor() {
-            NewSurveyFormDialogService.showDialog()
-                .onConfirm(function onConfirm() {
-                    SurveyEditorService.startEditor();
-                    ApplicationStateService.goToEditor();
-                });
         }
 
         function openCreateRepository() {
