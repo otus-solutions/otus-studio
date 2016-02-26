@@ -1,7 +1,6 @@
 (function() {
     'use strict';
 
-    angular
-        .module('main', []);
+    angular.module('studio.main', []);
 
 }());

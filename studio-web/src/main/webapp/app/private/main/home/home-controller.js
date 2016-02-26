@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('main')
+        .module('studio.main')
         .controller('HomeController', HomeController);
 
     HomeController.$inject = ['$http', '$scope', '$rootScope'];

@@ -4,14 +4,13 @@
     <head>
         <base href="../"/>
         <meta charset="UTF-8"/>
-        <meta http-equiv="cache-control" content="no-cache"/>
-        <meta http-equiv="expires" content="0"/>
-        <meta http-equiv="pragma" content="no-cache"/>
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link href="assets/img/otus-studio-img.png" rel="icon"/>
         <title>Otus Studio</title>
     </head>
 
-    <body md-theme="layoutTheme" layout="column" flex>
+    <body md-theme="layoutTheme" layout="column" flex class="md-body-2">
         <md-content ui-view="system-toolbar"></md-content>
         <md-content ui-view="system-content" layout flex></md-content>
     </body>
@@ -115,8 +114,11 @@
     <script src="private/main/main-module.js"></script>
 
     <!-- app.private.main.home -->
-    <script src="private/main/home/ui/home-controller.js"></script>
-    <script src="private/main/home/ui/toolbar-controller.js"></script>
+    <script src="private/main/home/home-controller.js"></script>
+
+    <!-- app.private.main.system-toolbar -->
+    <script src="private/main/system-toolbar/system-toolbar-controller.js"></script>
+    <script src="private/main/system-toolbar/system-toolbar-service.js"></script>
 
     <!-- app.private.survey-editor -->
     <script src="private/survey-editor/editor-module.js"></script>
@@ -248,6 +250,9 @@
 
     <!-- app.private.survey-editor.ui -->
     <script src="private/survey-editor/ui/editor-ui-module.js"></script>
+
+    <!-- app.private.survey-editor.ui.dialog.new-surveyform -->
+    <script src="private/survey-editor/ui/dialog/new-surveyform/new-surveyform-dialog-service.js"></script>
 
     <!-- app.private.survey-editor.ui.main-container.widget-container.question-palette -->
     <script src="private/survey-editor/ui/main-container/widget-container/question-palette/question-palette-controller.js"></script>

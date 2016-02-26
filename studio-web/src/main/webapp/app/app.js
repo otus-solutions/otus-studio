@@ -5,9 +5,9 @@
             /* External modules */
             'dependencies',
             /* Application modules */
-            'repository',
+            'studio.main',
             'editor',
-            'main',
+            'repository',
             'user',
             /* Otus platform modules */
             'otusjs',

@@ -2,11 +2,19 @@
 
     angular
         .module('studio')
-        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration]);
+        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
+        .constant('APP_STATE', {
+            'HOME': 'home',
+            'EDITOR': 'editor',
+            'USER_MANAGEMENT': 'user-management',
+            'CREATE_REPOSITORY': 'repository?actionType=NEW',
+            'CONNECT_REPOSITORY': 'repository?actionType=CONNECT',
+            'LOGOUT': '/studio/session/rest/authentication/logout'
+        });
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
 
-        var systemToolbarPath = 'private/main/home/ui/system-toolbar.html';
+        var systemToolbarPath = 'private/main/system-toolbar/system-toolbar.html';
 
         $stateProvider
             .state('home', {
@@ -16,7 +24,7 @@
                         templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/main/home/ui/home.html'
+                        templateUrl: 'private/main/home/home.html'
                     }
                 }
             })
