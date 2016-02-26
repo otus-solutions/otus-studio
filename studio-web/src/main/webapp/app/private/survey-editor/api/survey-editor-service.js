@@ -14,14 +14,11 @@
         self.startEditor = startEditor;
 
         function startEditor() {
-            if (WorkspaceService.existsWorkInProgress()) {
-                WorkspaceService.loadWork();
-            } else {
-                WorkspaceService.initializeWorkspace({
-                    owner: 'user'
-                });
-                WorkspaceService.startNewProject();
-            }
+            WorkspaceService.initializeWorkspace({
+                owner: 'user'
+            });
+            WorkspaceService.startNewProject();
+            console.log(WorkspaceService.workspace);
         }
     }
 

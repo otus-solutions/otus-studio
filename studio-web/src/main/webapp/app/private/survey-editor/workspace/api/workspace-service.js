@@ -14,8 +14,7 @@
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController) {
         var self = this,
             questionIdCounter = -1,
-            observers = [],
-            workInProgress = false;
+            observers = [];
 
         /* Public interface */
         self.initializeWorkspace = initializeWorkspace;
@@ -31,7 +30,6 @@
         function initializeWorkspace(ownerWorkSession) {
             self.workspace = WorkspaceFactory.create(ownerWorkSession);
             questionIdCounter = -1;
-            workInProgress = true;
             notifyObservers({
                 type: 'NEW_PROJECT'
             });

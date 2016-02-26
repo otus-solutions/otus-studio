@@ -24,7 +24,6 @@
 
         function init() {
             ModelBuilderHubService.plugToAnswerOptionBuilder(self);
-            ModelBuilderHubService.plugToQuestionBuilder(self);
             $scope.answerOptions = [];
         }
 
