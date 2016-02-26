@@ -58,7 +58,7 @@
                         templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/user/management/users.html'
+                        templateUrl: 'shared/otus-domain/user/management/users.html'
                     }
                 }
             })
@@ -69,7 +69,7 @@
                         templateUrl: systemToolbarPath
                     },
                     'system-content': {
-                        templateUrl: 'private/survey-repository/repository.html'
+                        templateUrl: 'shared/otus-domain/survey-repository/repository.html'
                     }
                 }
             });
