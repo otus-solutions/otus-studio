@@ -7,11 +7,12 @@
 
     SystemToolbarController.$inject = [
         'NewSurveyFormDialogService',
-        'SystemToolbarService',
-        'APP_STATE'
+        'LogoutDialogService',
+        'ApplicationStateService',
+        'SurveyEditorService'
     ];
 
-    function SystemToolbarController(NewSurveyFormDialogService, SystemToolbarService, APP_STATE) {
+    function SystemToolbarController(NewSurveyFormDialogService, LogoutDialogService, ApplicationStateService, SurveyEditorService) {
         var self = this;
 
         /* Public interface */
@@ -24,40 +25,36 @@
         self.logout = logout;
 
         function getSelectedSystemArea() {
-            return SystemToolbarService.getSelectedSystemArea();
+            return ApplicationStateService.currentState;
         }
 
         function openHome() {
-            SystemToolbarService.openHome();
+            ApplicationStateService.goToHome();
         }
 
         function openEditor() {
             NewSurveyFormDialogService.showDialog()
-                .onConfirm(SystemToolbarService.openEditor);
+                .onConfirm(function onConfirm() {
+                    SurveyEditorService.startEditor();
+                    ApplicationStateService.goToEditor();
+                });
         }
 
         function openCreateRepository() {
-            SystemToolbarService.openCreateRepository();
+            ApplicationStateService.goToCreateRepository();
         }
 
         function openConnectRepository() {
-            SystemToolbarService.openConnectRepository();
+            ApplicationStateService.goToConnectRepository();
         }
 
         function openUserManagement() {
-            SystemToolbarService.openUserManagement();
+            ApplicationStateService.goToUserManagement();
         }
 
         function logout() {
-            var alert = $mdDialog.confirm()
-                .title('Sair')
-                .content('Você tem certeza que deseja sair do sistema?')
-                .ok('Confirmar')
-                .cancel('Cancelar');
-
-            $mdDialog
-                .show(alert)
-                .then(SystemToolbarService.logout);
+            LogoutDialogService.showDialog()
+                .onConfirm(ApplicationStateService.logout);
         }
     }
 

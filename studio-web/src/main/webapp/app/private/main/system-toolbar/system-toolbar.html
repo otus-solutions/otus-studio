@@ -1,21 +1,21 @@
-<md-toolbar id="system-toolbar" ng-controller="SystemToolbarController as toolbarController" flex>
+<md-toolbar id="system-toolbar" ng-controller="SystemToolbarController as systemToolbarController" flex>
     <div class="md-toolbar-tools">
-        <md-button ng-click="toolbarController.openHome()">
+        <md-button ng-click="systemToolbarController.openHome()">
             <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
         </md-button>
-        <md-button id="new-surveyform-button" ng-click="toolbarController.openEditor($event)">
+        <md-button id="new-surveyform-button" ng-click="systemToolbarController.openEditor($event)">
             <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
             Novo Formulário
         </md-button>
-        <md-button ng-click="toolbarController.openCreateRepository()">
+        <md-button ng-click="systemToolbarController.openCreateRepository()">
             <md-icon md-svg-icon="cloud-upload" aria-label="Criar Repositório"></md-icon>
             Criar Repositório
         </md-button>
-        <md-button ng-click="toolbarController.openConnectRepository()">
+        <md-button ng-click="systemToolbarController.openConnectRepository()">
             <md-icon md-svg-icon="cloud-download" aria-label="Conectar Repositório"></md-icon>
             Conectar Repositório
         </md-button>
-        <md-button ng-click="toolbarController.openUserManagement()">
+        <md-button ng-click="systemToolbarController.openUserManagement()">
             <md-icon md-svg-icon="account" aria-label="Configurações"></md-icon>
             Usuários
         </md-button>
@@ -27,13 +27,14 @@
         <a class="navbar-brand" rel="home" title="Profile">
             <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div"/>
         </a>
-        <md-button aria-label="Logout" ng-click="toolbarController.logout()">
+        <md-button aria-label="Logout" ng-click="systemToolbarController.logout()">
             <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
         </md-button>
     </div>
 </md-toolbar>
 <!-- /#system-toolbar -->
+
 <md-toolbar id="subarea-toolbar" class="md-toolbar-tools md-primary" layout-align="center center">
-    <h2 class="md-flex">{{toolbarController.getSelectedSystemArea()}}</h2>
+    <h2 class="md-flex">{{systemToolbarController.getSelectedSystemArea()}}</h2>
 </md-toolbar>
 <!-- /#subarea-toolbar -->

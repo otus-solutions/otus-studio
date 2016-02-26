@@ -14,24 +14,35 @@
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController) {
         var self = this,
             questionIdCounter = -1,
-            observers = [];
+            observers = [],
+            workInProgress = false;
 
         /* Public interface */
         self.initializeWorkspace = initializeWorkspace;
         self.startNewProject = startNewProject;
+        self.loadWork = loadWork;
         self.importProject = importProject;
         self.closeProject = closeProject;
         self.saveProject = saveProject;
         self.getQuestionId = getQuestionId;
+        self.existsWorkInProgress = existsWorkInProgress;
         self.registerObserver = registerObserver;
 
         function initializeWorkspace(ownerWorkSession) {
             self.workspace = WorkspaceFactory.create(ownerWorkSession);
             questionIdCounter = -1;
-            notifyObservers({ type: 'NEW_PROJECT' });
+            workInProgress = true;
+            notifyObservers({
+                type: 'NEW_PROJECT'
+            });
         }
 
         function startNewProject() {
+            var survey = SurveyLoaderService.newSurvey();
+            importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
+        }
+
+        function loadWork() {
             var survey = SurveyLoaderService.newSurvey();
             importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
         }
@@ -52,6 +63,10 @@
 
         function getQuestionId() {
             return ++questionIdCounter;
+        }
+
+        function existsWorkInProgress() {
+            return workInProgress;
         }
 
         function notifyObservers(update) {
