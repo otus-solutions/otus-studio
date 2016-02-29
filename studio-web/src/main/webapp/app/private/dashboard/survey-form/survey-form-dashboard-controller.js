@@ -3,15 +3,15 @@
 
     angular
         .module('studio.dashboard')
-        .controller('SurveyFormController', SurveyFormController);
+        .controller('SurveyFormDashboardController', SurveyFormDashboardController);
 
-    SurveyFormController.$inject = [
+    SurveyFormDashboardController.$inject = [
         'NewSurveyFormDialogService',
         'DashboardStateService',
         'SurveyEditorService'
     ];
 
-    function SurveyFormController(NewSurveyFormDialogService, ApplicationStateService, SurveyEditorService) {
+    function SurveyFormDashboardController(NewSurveyFormDialogService, ApplicationStateService, SurveyEditorService) {
         var self = this;
 
         /* Public interface */

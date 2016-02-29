@@ -18,7 +18,7 @@
         function init() {
             self.dialogSettings = {
                 parent: angular.element(document.body),
-                templateUrl: 'private/survey-editor/ui/dialog/new-surveyform/new-surveyform-dialog.html',
+                templateUrl: 'private/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog.html',
                 controller: DialogController,
                 controllerAs: 'controller',
                 openFrom: '#system-toolbar',

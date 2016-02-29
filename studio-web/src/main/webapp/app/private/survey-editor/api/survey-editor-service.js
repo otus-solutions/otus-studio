@@ -17,7 +17,7 @@
             WorkspaceService.initializeWorkspace({
                 owner: 'user'
             });
-            WorkspaceService.startNewProject(data);
+            WorkspaceService.startNewWork(data);
             console.log(WorkspaceService.workspace);
         }
     }

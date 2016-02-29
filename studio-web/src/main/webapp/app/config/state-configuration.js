@@ -45,7 +45,8 @@
                         templateUrl: dashboardMenu
                     },
                     'system-content': {
-                        templateUrl: 'private/dashboard/template/dashboard-content-template.html'
+                        templateUrl: 'private/dashboard/template/dashboard-content-template.html',
+                        controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
                     'section-info@survey-forms': {
                         templateUrl: 'private/dashboard/survey-form/survey-form-info-section.html'
