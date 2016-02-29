@@ -3,15 +3,14 @@
 
 <head>
     <base href="/studio/app/"/>
-
     <meta charset="UTF-8"/>
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link href="assets/img/otus-studio-img.png" rel="icon"/>
-    <link rel="stylesheet" type="text/css" href="public/login.css"/>
-    <link rel="stylesheet" href="shared/lib/angularjs/md/angular-material.min.css">
+    <title>Otus Studio</title>
+
+    <link href="shared/angular-material/angular-material.min.css" rel="stylesheet" />
+    <link href="public/login.css" rel="stylesheet" />
     <title>Tela de login</title>
 </head>
 
@@ -68,17 +67,14 @@
 </body>
 
 <!-- Angular Material Dependencies -->
-<!--build:js js/libs.min.js -->
-<script src="shared/lib/angularjs/angular.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-material.min.js"></script>
-<script src="shared/lib/angularjs/external-lib/angular-ui-mask.min.js"></script>
-<script src="shared/lib/angularjs/external-lib/angular-messages.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-animate.min.js"></script>
-<script src="shared/lib/angularjs/md/angular-aria.min.js"></script>
- <!-- endbuild -->
- <!--build:js js/application.min.js -->
+<script src="shared/angular/angular.min.js"></script>
+<script src="shared/angular-animate/angular-animate.min.js"></script>
+<script src="shared/angular-aria/angular-aria.min.js"></script>
+<script src="shared/angular-material/angular-material.min.js"></script>
+<script src="shared/angular-messages/angular-messages.min.js"></script>
+<script src="shared/angular-ui-mask/angular-ui-mask.min.js"></script>
+
 <script src="app.js"></script>
-<script src="config/theme.js"></script>
+<script src="config/theme-configuration.js"></script>
 <script src="public/login.ctrl.js"></script>
-<!-- endbuild -->
 </html>

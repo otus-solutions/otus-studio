@@ -14,9 +14,9 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages', 'passwo
         $mdDialog
             .show(alert)
             .finally(function () {
-                $window.location.href = window.location.origin + '/studio/'
+                $window.location.href = window.location.origin + '/studio/';
             });
-    };
+    }
 
     $scope.register = function (systemConf) {
         $scope.isLoading = true;
@@ -72,4 +72,3 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages', 'passwo
 
 	$mdThemingProvider.theme('layoutTheme');
 }]);
-

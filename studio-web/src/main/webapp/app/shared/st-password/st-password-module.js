@@ -11,14 +11,14 @@ angular
                     return ngModel.$modelValue;
 
                 }, function (value) {
-                    if (regex.test(value) && value.length > 6 && value.length < 32) {
+                    if (regex.test(value) && value.length >= 6 && value.length <= 32) {
                         ngModel.$setValidity('passwordPattern', true);
                     } else {
                         ngModel.$setValidity('passwordPattern', false);
                     }
                 });
             }
-        }
+        };
     })
     .directive('stPasswordMatch', function () {
         return {
@@ -52,5 +52,5 @@ angular
                     }
                 }
             }
-        }
+        };
     });
