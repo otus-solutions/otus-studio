@@ -43,7 +43,6 @@
     }
 
     function Event(editingSource, state, eventType) {
-
         Object.defineProperty(this, 'source', {
             value: editingSource,
             writable: false

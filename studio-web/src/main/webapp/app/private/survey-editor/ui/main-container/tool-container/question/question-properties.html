@@ -1,0 +1,20 @@
+<div flex id="question-properties" class="properties-frame" ng-controller="QuestionPropertiesController as questionPropertiesController">
+    <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+            <span>Propriedades da questão</span>
+        </h2>
+    </md-toolbar>
+    <md-content class="md-padding properties-frame-body" flex>
+        <md-input-container class="md-block">
+            <label>Nome</label>
+            <input name="oid" type="text"
+                ng-model="questionPropertiesController.survey.name"
+                editing-source
+                es-type="input-text"
+                es-id="survey-properties-identity-name"
+                es-target="survey.identity.name"
+                disabled/>
+        </md-input-container>
+    </md-content>
+</div>
+<md-divider></md-divider>

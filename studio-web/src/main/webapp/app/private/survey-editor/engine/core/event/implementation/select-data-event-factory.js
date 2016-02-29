@@ -5,28 +5,29 @@
         .module('editor.engine.core')
         .factory('SelectDataEventFactory', SelectDataEventFactory);
 
-    SelectDataEventFactory.$inject = ['WorkspaceService'];
+    SelectDataEventFactory.$inject = ['WorkspaceService', 'UIDataSelector'];
 
-    function SelectDataEventFactory(WorkspaceService) {
+    function SelectDataEventFactory(WorkspaceService, UIDataSelector) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(prototype) {
-            return new SelectDataEvent(prototype, WorkspaceService);
+            return new SelectDataEvent(prototype, WorkspaceService, UIDataSelector);
         }
 
         return self;
     }
 
-    function SelectDataEvent(prototype, WorkspaceService) {
+    function SelectDataEvent(prototype, WorkspaceService, UIDataSelector) {
         var self = this;
 
         /* Public interface */
         self.forward = forward;
 
         function forward() {
+            UIDataSelector.select(prototype.target);
             WorkspaceService.workspace.isdb.userEdits.store(prototype);
         }
     }

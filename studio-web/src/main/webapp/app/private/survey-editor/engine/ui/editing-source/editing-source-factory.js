@@ -24,7 +24,6 @@
 
     /* EditingSource model used as factory product */
     function EditingSource(esComponent, esType, esId, esModel, esTarget) {
-
         Object.defineProperty(this, 'type', {
             value: esType,
             writable: false

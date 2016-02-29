@@ -18,13 +18,13 @@
 
         /* Public interface */
         self.initializeWorkspace = initializeWorkspace;
-        self.startNewProject = startNewProject;
+        self.startNewWork = startNewWork;
         self.loadWork = loadWork;
-        self.importProject = importProject;
-        self.closeProject = closeProject;
-        self.saveProject = saveProject;
+        self.closeWork = closeWork;
+        self.saveWork = saveWork;
         self.getQuestionId = getQuestionId;
-        self.existsWorkInProgress = existsWorkInProgress;
+
+        /* Observable interface */
         self.registerObserver = registerObserver;
 
         function initializeWorkspace(ownerWorkSession) {
@@ -35,7 +35,7 @@
             });
         }
 
-        function startNewProject(data) {
+        function startNewWork(data) {
             var survey = SurveyLoaderService.newSurvey(data.name, data.acronym, data.version);
             importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
         }
@@ -45,17 +45,12 @@
             importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
         }
 
-        function importProject(project) {
-            self.workspace.importProject(project);
-            self.workspace.loadProjectConfiguration();
-        }
-
-        function closeProject() {
+        function closeWork() {
             saveProject();
             self.workspace.project.close('now');
         }
 
-        function saveProject() {
+        function saveWork() {
 
         }
 
@@ -63,10 +58,12 @@
             return ++questionIdCounter;
         }
 
-        function existsWorkInProgress() {
-            return workInProgress;
+        function importProject(project) {
+            self.workspace.importProject(project);
+            self.workspace.loadProjectConfiguration();
         }
 
+        /* Observable interface */
         function notifyObservers(update) {
             observers.forEach(function(observer) {
                 observer.update(update);
