@@ -18,7 +18,7 @@
         function init() {
             self.dialogSettings = {
                 parent: angular.element(document.body),
-                templateUrl: 'private/main/api/dialog/logout/logout-dialog.html',
+                templateUrl: 'private/dashboard/dialog/logout/logout-dialog.html',
                 controller: DialogController,
                 controllerAs: 'controller',
                 openFrom: '#system-toolbar',
