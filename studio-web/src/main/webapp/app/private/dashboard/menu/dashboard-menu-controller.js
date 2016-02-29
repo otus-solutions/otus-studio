@@ -11,7 +11,7 @@
         '$mdSidenav'
     ];
 
-    function DashboardMenuController(LogoutDialogService, ApplicationStateService, $mdSidenav) {
+    function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav) {
         var self = this;
 
         /* Public interface */
@@ -26,7 +26,7 @@
         self.logout = logout;
 
         function getSelectedSystemArea() {
-            return ApplicationStateService.currentState;
+            return DashboardStateService.currentState;
         }
 
         function open() {
@@ -38,33 +38,33 @@
         }
 
         function openHome() {
-            ApplicationStateService.goToHome();
+            DashboardStateService.goToHome();
             close();
         }
 
         function openSurveyForms() {
-            ApplicationStateService.goToSurveyForms();
+            DashboardStateService.goToSurveyForms();
             close();
         }
 
         function openCreateRepository() {
-            ApplicationStateService.goToCreateRepository();
+            DashboardStateService.goToCreateRepository();
             close();
         }
 
         function openConnectRepository() {
-            ApplicationStateService.goToConnectRepository();
+            DashboardStateService.goToConnectRepository();
             close();
         }
 
         function openUserManagement() {
-            ApplicationStateService.goToUserManagement();
+            DashboardStateService.goToUserManagement();
             close();
         }
 
         function logout() {
             LogoutDialogService.showDialog()
-                .onConfirm(ApplicationStateService.logout);
+                .onConfirm(DashboardStateService.logout);
         }
     }
 

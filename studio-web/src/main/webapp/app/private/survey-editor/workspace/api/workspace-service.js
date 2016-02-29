@@ -35,14 +35,14 @@
             });
         }
 
-        function startNewWork(data) {
-            var survey = SurveyLoaderService.newSurvey(data.name, data.acronym, data.version);
-            importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
+        function startNewWork(initializationData) {
+            var survey = SurveyLoaderService.newSurvey(initializationData.name, initializationData.acronym, initializationData.version);
+            importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
         function loadWork() {
             var survey = SurveyLoaderService.newSurvey();
-            importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
+            importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
         function closeWork() {

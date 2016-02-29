@@ -33,7 +33,7 @@
 
         function init() {
             self.isdb = inSessionDatabase;
-            self.workSessions = {
+            self.sessions = {
                 workspaceOwner: workSession
             };
         }
@@ -46,7 +46,7 @@
         }
 
         function attachWorkeSession(workSession) {
-            self.workSessions[workSession.owner.username] = workSession;
+            self.sessions[workSession.owner.username] = workSession;
         }
 
         function loadProjectConfiguration() {

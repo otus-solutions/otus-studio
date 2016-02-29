@@ -215,3 +215,7 @@ ui-accordion-header md-fab-speed-dial md-fab-actions button.trash {
 #sheet .md-tab {
     text-transform: none !important;
 }
+
+.uppercase-text {
+    text-transform: uppercase;
+}

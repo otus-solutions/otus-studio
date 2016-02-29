@@ -11,7 +11,7 @@
         'SurveyEditorService'
     ];
 
-    function SurveyFormDashboardController(NewSurveyFormDialogService, ApplicationStateService, SurveyEditorService) {
+    function SurveyFormDashboardController(NewSurveyFormDialogService, DashboardStateService, SurveyEditorService) {
         var self = this;
 
         /* Public interface */
@@ -19,9 +19,9 @@
 
         function startNewSurveyForm() {
             NewSurveyFormDialogService.showDialog()
-                .onConfirm(function onConfirm(data) {
-                    SurveyEditorService.startEditor(data);
-                    ApplicationStateService.goToEditor();
+                .onConfirm(function onConfirm(workInitializationData) {
+                    SurveyEditorService.startEditor(workInitializationData);
+                    DashboardStateService.goToEditor();
                 });
         }
     }
