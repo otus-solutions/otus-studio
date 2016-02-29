@@ -13,11 +13,11 @@
         /* Public interface */
         self.startEditor = startEditor;
 
-        function startEditor() {
+        function startEditor(data) {
             WorkspaceService.initializeWorkspace({
                 owner: 'user'
             });
-            WorkspaceService.startNewProject();
+            WorkspaceService.startNewProject(data);
             console.log(WorkspaceService.workspace);
         }
     }

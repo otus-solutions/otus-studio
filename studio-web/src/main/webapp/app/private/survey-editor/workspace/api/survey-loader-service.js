@@ -14,8 +14,8 @@
         self.newSurvey = newSurvey;
 
         /* Public interface implementation */
-        function newSurvey() {
-            return ModelFacadeService.getSurveyFactory().create();
+        function newSurvey(name, acronym, version) {
+            return ModelFacadeService.getSurveyFactory().create(name, acronym, version);
         }
     }
 

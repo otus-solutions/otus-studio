@@ -35,8 +35,8 @@
             });
         }
 
-        function startNewProject() {
-            var survey = SurveyLoaderService.newSurvey();
+        function startNewProject(data) {
+            var survey = SurveyLoaderService.newSurvey(data.name, data.acronym, data.version);
             importProject(SurveyProjectFactory.create(survey, self.workspace.workSessions.workspaceOwner));
         }
 

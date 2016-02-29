@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="studio">
-
     <head>
         <base href="../"/>
         <meta charset="UTF-8"/>
@@ -12,48 +11,11 @@
 
     <body layout="row" flex class="md-body-2" md-theme="layoutTheme" ng-controller="SystemToolbarController as systemToolbarController">
         <md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
-            <md-toolbar id="system-toolbar">
-                <md-button ng-click="systemToolbarController.open()">
-                    <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-                    Otus Studio
-                </md-button>
-            </md-toolbar>
-            <md-list>
-                <md-list-item class="md-1-line">
-                    <md-button id="new-surveyform-button" ng-click="systemToolbarController.openHome()">
-                        <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
-                        Home
-                    </md-button>
-                </md-list-item>
-                <md-list-item class="md-1-line">
-                    <md-button id="new-surveyform-button" ng-click="systemToolbarController.openSurveyForms()">
-                        <md-icon md-svg-icon="file-document-box" aria-label="Formulários"></md-icon>
-                        Formulários
-                    </md-button>
-                </md-list-item>
-                <md-list-item class="md-1-line">
-                    <md-button id="new-surveyform-button" ng-click="systemToolbarController.openCreateRepository()">
-                        <md-icon md-svg-icon="cloud-upload" aria-label="Criar repositório"></md-icon>
-                        Criar repositório
-                    </md-button>
-                </md-list-item>
-                <md-list-item class="md-1-line">
-                    <md-button id="new-surveyform-button" ng-click="systemToolbarController.openConnectRepository()">
-                        <md-icon md-svg-icon="cloud-download" aria-label="Conectar repositório"></md-icon>
-                        Conectar repositório
-                    </md-button>
-                </md-list-item>
-                <md-list-item class="md-1-line">
-                    <md-button id="new-surveyform-button" ng-click="systemToolbarController.openUserManagement()">
-                        <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
-                        Usuários
-                    </md-button>
-                </md-list-item>
-            </md-list>
+            <md-content ui-view="system-toolbar"></md-content>
         </md-sidenav>
 
         <md-content layout="column" flex ng-cloak>
-            <md-toolbar id="system-toolbar" layout="row">
+            <md-toolbar layout="row">
                 <md-button ng-click="systemToolbarController.open()">
                     <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
                     Otus Studio
@@ -333,6 +295,9 @@
 
     <!-- app.private.survey-editor.ui.dialog.new-surveyform -->
     <script src="private/survey-editor/ui/dialog/new-surveyform/new-surveyform-dialog-service.js"></script>
+
+    <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
+    <script src="private/survey-editor/ui/main-container/tool-container/survey/survey-properties-controller.js"></script>
 
     <!-- app.private.survey-editor.ui.main-container.widget-container.question-palette -->
     <script src="private/survey-editor/ui/main-container/widget-container/question-palette/question-palette-controller.js"></script>

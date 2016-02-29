@@ -1,22 +1,36 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important" flex>
-    <md-toolbar id="system-toolbar" layout="row">
-        <md-button ng-click="systemToolbarController.open()">
-            <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-            Otus Studio
+<md-button ng-click="systemToolbarController.open()">
+    <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+    Otus Studio
+</md-button>
+<md-list>
+    <md-list-item class="md-1-line">
+        <md-button id="home-menu" ng-click="systemToolbarController.openHome()">
+            <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+            Home
         </md-button>
-    </md-toolbar>
-    <md-list>
-        <md-list-item class="md-1-line">
-            <md-button id="new-surveyform-button" ng-click="systemToolbarController.openHome($event)" layout="row">
-                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
-                Home
-            </md-button>
-        </md-list-item>
-        <md-list-item class="md-1-line">
-            <md-button id="new-surveyform-button" ng-click="systemToolbarController.openEditor($event)" layout="row">
-                <md-icon md-svg-icon="file-document-box" style="margin-left: 1em;" aria-label="Novo Formulário"></md-icon>
-                Formulários
-            </md-button>
-        </md-list-item>
-    </md-list>
-</md-sidenav>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="surveyforms-menu" ng-click="systemToolbarController.openSurveyForms()">
+            <md-icon md-svg-icon="file-document-box" aria-label="Formulários"></md-icon>
+            Formulários
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="create-repository-menu" ng-click="systemToolbarController.openCreateRepository()">
+            <md-icon md-svg-icon="cloud-upload" aria-label="Criar repositório"></md-icon>
+            Criar repositório
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="connect-repository-menu" ng-click="systemToolbarController.openConnectRepository()">
+            <md-icon md-svg-icon="cloud-download" aria-label="Conectar repositório"></md-icon>
+            Conectar repositório
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="user-management-menu" ng-click="systemToolbarController.openUserManagement()">
+            <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
+            Usuários
+        </md-button>
+    </md-list-item>
+</md-list>

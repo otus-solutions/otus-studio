@@ -19,8 +19,8 @@
 
         function openEditor() {
             NewSurveyFormDialogService.showDialog()
-                .onConfirm(function onConfirm() {
-                    SurveyEditorService.startEditor();
+                .onConfirm(function onConfirm(data) {
+                    SurveyEditorService.startEditor(data);
                     ApplicationStateService.goToEditor();
                 });
         }

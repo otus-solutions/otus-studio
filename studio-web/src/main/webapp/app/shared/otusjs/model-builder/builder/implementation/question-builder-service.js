@@ -83,7 +83,14 @@
         }
 
         function registerObserver(observer) {
-            observers.push(observer);
+            var registered = observers.filter(function (o) {
+                if (o.identifier === observer.identifier) {
+                    return o;
+                }
+            });
+
+            if (registered.length === 0)
+                observers.push(observer);
         }
 
         function getQuestionOID(target) {

@@ -39,22 +39,27 @@
 
         function openHome() {
             ApplicationStateService.goToHome();
+            close();
         }
 
         function openSurveyForms() {
             ApplicationStateService.goToSurveyForms();
+            close();
         }
 
         function openCreateRepository() {
             ApplicationStateService.goToCreateRepository();
+            close();
         }
 
         function openConnectRepository() {
             ApplicationStateService.goToConnectRepository();
+            close();
         }
 
         function openUserManagement() {
             ApplicationStateService.goToUserManagement();
+            close();
         }
 
         function logout() {

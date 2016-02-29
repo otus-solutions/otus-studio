@@ -18,6 +18,7 @@
         UIUpdateCommandFactory) {
 
         var self = this;
+        self.identifier = 'SurveyPageController';
 
         /* Public interface */
         self.update = update;

@@ -13,14 +13,18 @@
         /* Public interdace */
         self.create = create;
 
-        function create() {
-            return new Survey(SurveyIdentityFactory);
+        function create(name, acronym, version) {
+            var identity = SurveyIdentityFactory.create();
+            identity.name = name;
+            identity.acronym = acronym;
+            identity.version = version;
+            return new Survey(identity);
         }
 
         return self;
     }
 
-    function Survey(SurveyIdentityFactory) {
+    function Survey(identity) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
@@ -32,7 +36,7 @@
         });
 
         Object.defineProperty(this, 'identity', {
-            value: SurveyIdentityFactory.create(),
+            value: identity,
             writable: false
         });
 
