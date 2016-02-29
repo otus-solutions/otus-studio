@@ -61,10 +61,10 @@
         }
 
         function mergeScopeData(editorWidget) {
-            scope.widgetTemplateList = scope.widgetTemplateList || [];
+            scope.widgetTemplateList = scope.widgetTemplateList || {};
             scope.widget = editorWidget;
-            scope.templateIndex = editorWidget.questionId;
-            scope.widgetTemplateList[scope.templateIndex] = editorWidget.questionTemplate;
+            // scope.templateIndex = editorWidget.questionId;
+            scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
         }
 
         function loadTemplate() {
