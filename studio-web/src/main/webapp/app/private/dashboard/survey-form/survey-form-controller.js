@@ -7,7 +7,7 @@
 
     SurveyFormController.$inject = [
         'NewSurveyFormDialogService',
-        'ApplicationStateService',
+        'DashboardStateService',
         'SurveyEditorService'
     ];
 

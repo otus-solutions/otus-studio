@@ -7,7 +7,7 @@
 
     DashboardMenuController.$inject = [
         'LogoutDialogService',
-        'ApplicationStateService',
+        'DashboardStateService',
         '$mdSidenav'
     ];
 

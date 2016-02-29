@@ -3,16 +3,16 @@
 
     angular
         .module('studio.dashboard')
-        .service('ApplicationStateService', ApplicationStateService);
+        .service('DashboardStateService', DashboardStateService);
 
-    ApplicationStateService.$inject = [
+    DashboardStateService.$inject = [
         '$location',
         '$http',
         '$window',
         'APP_STATE'
     ];
 
-    function ApplicationStateService($location, $http, $window, APP_STATE) {
+    function DashboardStateService($location, $http, $window, APP_STATE) {
         var self = this;
 
         /* Public interface */
