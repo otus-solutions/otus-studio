@@ -15,36 +15,54 @@
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
 
-        var systemToolbarPath = 'private/main/system-toolbar/system-toolbar.html';
+        var dashboardMenu = 'private/dashboard/menu/dashboard-menu.html';
 
         $stateProvider
             .state('home', {
                 url: '/home',
                 views: {
-                    'system-toolbar': {
-                        templateUrl: systemToolbarPath
+                    'dashboard-menu': {
+                        templateUrl: dashboardMenu
                     },
                     'system-content': {
-                        templateUrl: 'private/main/home/home.html'
+                        templateUrl: 'private/dashboard/template/dashboard-content-template.html'
+                    },
+                    'section-info@home': {
+                        templateUrl: 'private/dashboard/home/home-info-section.html'
+                    },
+                    'section-view@home': {
+                        templateUrl: 'private/dashboard/home/home-view-section.html'
+                    },
+                    'section-commands@home': {
+                        templateUrl: 'private/dashboard/home/home-commands-section.html'
                     }
                 }
             })
             .state('survey-forms', {
                 url: '/survey-forms',
                 views: {
-                    'system-toolbar': {
-                        templateUrl: systemToolbarPath
+                    'dashboard-menu': {
+                        templateUrl: dashboardMenu
                     },
                     'system-content': {
-                        templateUrl: 'private/main/survey-forms-dashboard/survey-forms-dashboard.html'
+                        templateUrl: 'private/dashboard/template/dashboard-content-template.html'
+                    },
+                    'section-info@survey-forms': {
+                        templateUrl: 'private/dashboard/survey-form/survey-form-info-section.html'
+                    },
+                    'section-view@survey-forms': {
+                        templateUrl: 'private/dashboard/survey-form/survey-form-view-section.html'
+                    },
+                    'section-commands@survey-forms': {
+                        templateUrl: 'private/dashboard/survey-form/survey-form-commands-section.html'
                     }
                 }
             })
             .state('editor', {
                 url: '/editor',
                 views: {
-                    'system-toolbar': {
-                        templateUrl: systemToolbarPath
+                    'dashboard-menu': {
+                        templateUrl: dashboardMenu
                     },
                     'system-content': {
                         templateUrl: 'private/survey-editor/ui/main-container/main-container.html'
@@ -54,8 +72,8 @@
             .state('user-management', {
                 url: '/user-management',
                 views: {
-                    'system-toolbar': {
-                        templateUrl: systemToolbarPath
+                    'dashboard-menu': {
+                        templateUrl: dashboardMenu
                     },
                     'system-content': {
                         templateUrl: 'shared/otus-domain/user/management/users.html'
@@ -65,8 +83,8 @@
             .state('repository', {
                 url: '/repository',
                 views: {
-                    'system-toolbar': {
-                        templateUrl: systemToolbarPath
+                    'dashboard-menu': {
+                        templateUrl: dashboardMenu
                     },
                     'system-content': {
                         templateUrl: 'shared/otus-domain/survey-repository/repository.html'

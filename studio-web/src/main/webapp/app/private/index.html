@@ -9,14 +9,14 @@
         <title>Otus Studio</title>
     </head>
 
-    <body layout="row" flex class="md-body-2" md-theme="layoutTheme" ng-controller="SystemToolbarController as systemToolbarController">
+    <body layout="row" flex class="md-body-2" md-theme="layoutTheme" ng-controller="DashboardMenuController as dashboardMenu">
         <md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
-            <md-content ui-view="system-toolbar"></md-content>
+            <md-content ui-view="dashboard-menu"></md-content>
         </md-sidenav>
 
         <md-content layout="column" flex ng-cloak>
             <md-toolbar layout="row">
-                <md-button ng-click="systemToolbarController.open()">
+                <md-button ng-click="dashboardMenu.open()">
                     <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
                     Otus Studio
                 </md-button>
@@ -28,7 +28,7 @@
                 <a class="navbar-brand" rel="home" title="Profile">
                     <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div"/>
                 </a>
-                <md-button aria-label="Logout" ng-click="systemToolbarController.logout()">
+                <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
                     <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
                 </md-button>
             </md-toolbar>
@@ -60,13 +60,17 @@
     <!-- ************************************* Moment ************************************* -->
     <script src="shared/moment/moment.js"></script>
 
-    <!-- ************************************* UI Components ************************************* -->
-    <script src="shared/ui-components/ui-components-module.js"></script>
-    <script src="shared/ui-components/accordion/accordion-directive.js"></script>
-
     <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="shared/st-utils/st-utils-module.js"></script>
+
+    <!-- ***************************************** Statehelper ***************************************** -->
+    <!-- Utils -->
+    <!-- <script src="shared/statehelper/statehelper.min.js"></script> -->
+
+    <!-- ************************************* UI Components ************************************* -->
+    <script src="shared/ui-components/ui-components-module.js"></script>
+    <script src="shared/ui-components/accordion/accordion-directive.js"></script>
 
     <!-- ************************************** OtusJS ************************************** -->
     <!-- app.shared.otusjs -->
@@ -128,7 +132,7 @@
     <script src="shared/otus-domain/user/user-module.js"></script>
     <script src="shared/otus-domain/user/management/user-controller.js"></script>
 
-    <!-- ************************************** Application ************************************** -->
+    <!-- ************************************** Studio Assets and Configurations ************************************** -->
     <!-- assets -->
     <link href="assets/styles.css" rel="stylesheet"/>
 
@@ -141,24 +145,29 @@
     <script src="config/state-configuration.js"></script>
     <script src="config/theme-configuration.js"></script>
 
-    <!-- app.private.main -->
-    <script src="private/main/main-module.js"></script>
+    <!-- ************************************** Studio Dashboard ************************************** -->
+    <!-- app.private.dashboard -->
+    <script src="private/dashboard/dashboard-module.js"></script>
 
-    <!-- app.private.main.api -->
-    <script src="private/main/api/application-state-service.js"></script>
+    <!-- app.private.main.dashboard -->
+    <script src="private/dashboard/api/application-state-service.js"></script>
 
-    <!-- app.private.main.api.dialog -->
-    <script src="private/main/api/dialog/logout/logout-dialog-service.js"></script>
+    <!-- app.private.dashboard.api.dialog -->
+    <script src="private/dashboard/api/dialog/logout/logout-dialog-service.js"></script>
 
-    <!-- app.private.main.home-dashboard -->
-    <script src="private/main/home-dashboard/home-controller.js"></script>
+    <!-- app.private.dashboard.home -->
+    <script src="private/dashboard/home/home-controller.js"></script>
 
-    <!-- app.private.main.survey-forms-dashboard -->
-    <script src="private/main/survey-forms-dashboard/survey-forms-dashboard-controller.js"></script>
+    <!-- app.private.dashboard.menu -->
+    <script src="private/dashboard/menu/dashboard-menu-controller.js"></script>
 
-    <!-- app.private.main.system-toolbar -->
-    <script src="private/main/system-toolbar/system-toolbar-controller.js"></script>
+    <!-- app.private.dashboard.survey-form -->
+    <script src="private/dashboard/survey-form/survey-form-controller.js"></script>
 
+    <!-- app.private.dashboard.survey-form.dialog.new-survey-form -->
+    <script src="private/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
+
+    <!-- ************************************** Studio Editor ************************************** -->
     <!-- app.private.survey-editor -->
     <script src="private/survey-editor/editor-module.js"></script>
 
@@ -294,15 +303,13 @@
     <!-- app.private.survey-editor.ui -->
     <script src="private/survey-editor/ui/editor-ui-module.js"></script>
 
-    <!-- app.private.survey-editor.ui.dialog.new-surveyform -->
-    <script src="private/survey-editor/ui/dialog/new-surveyform/new-surveyform-dialog-service.js"></script>
-
     <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
     <script src="private/survey-editor/ui/main-container/tool-container/survey/survey-properties-controller.js"></script>
 
     <!-- app.private.survey-editor.ui.main-container.widget-container.question-palette -->
     <script src="private/survey-editor/ui/main-container/widget-container/question-palette/question-palette-controller.js"></script>
 
+    <!-- ************************************** Studio Preview ************************************** -->
     <!-- app.private.survey-preview.ui.preview -->
     <script src="private/survey-preview/preview-module.js"></script>
     <script src="private/survey-preview/preview-controller.js"></script>

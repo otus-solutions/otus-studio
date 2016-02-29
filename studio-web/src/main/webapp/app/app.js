@@ -5,7 +5,7 @@
             /* External modules */
             'dependencies',
             /* Application modules */
-            'studio.main',
+            'studio.dashboard',
             'editor',
             'repository',
             'user',

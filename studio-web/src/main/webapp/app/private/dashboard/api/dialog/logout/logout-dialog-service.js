@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('studio.main')
-        .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
+        .module('studio.dashboard')
+        .service('LogoutDialogService', LogoutDialogService);
 
-    NewSurveyFormDialogService.$inject = ['$mdDialog'];
+    LogoutDialogService.$inject = ['$mdDialog'];
 
-    function NewSurveyFormDialogService($mdDialog) {
+    function LogoutDialogService($mdDialog) {
         var self = this;
 
         /* Public interface */
@@ -18,7 +18,7 @@
         function init() {
             self.dialogSettings = {
                 parent: angular.element(document.body),
-                templateUrl: 'private/survey-editor/ui/dialog/new-surveyform/new-surveyform-dialog.html',
+                templateUrl: 'private/main/api/dialog/logout/logout-dialog.html',
                 controller: DialogController,
                 controllerAs: 'controller',
                 openFrom: '#system-toolbar',
@@ -44,7 +44,7 @@
         }
 
         function forwardSuccessfulExecution(response) {
-            if (response.action == 'create') {
+            if (response.action == 'confirm') {
                 if (self.callback) self.callback(response.data);
             }
         }
@@ -59,13 +59,13 @@
 
         /* Public interface */
         self.cancel = cancel;
-        self.createSurveyForm = createSurveyForm;
+        self.confirm = confirm;
 
         function cancel(response) {
             $mdDialog.hide(response);
         }
 
-        function createSurveyForm(response) {
+        function confirm(response) {
             $mdDialog.hide(response);
         }
     }

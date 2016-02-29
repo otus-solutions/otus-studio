@@ -2,16 +2,16 @@
     'use strict';
 
     angular
-        .module('studio.main')
-        .controller('SystemToolbarController', SystemToolbarController);
+        .module('studio.dashboard')
+        .controller('DashboardMenuController', DashboardMenuController);
 
-    SystemToolbarController.$inject = [
+    DashboardMenuController.$inject = [
         'LogoutDialogService',
         'ApplicationStateService',
         '$mdSidenav'
     ];
 
-    function SystemToolbarController(LogoutDialogService, ApplicationStateService, $mdSidenav) {
+    function DashboardMenuController(LogoutDialogService, ApplicationStateService, $mdSidenav) {
         var self = this;
 
         /* Public interface */

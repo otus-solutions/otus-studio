@@ -2,22 +2,22 @@
     'use strict';
 
     angular
-        .module('studio.main')
-        .controller('SurveyFormsDashboardController', SurveyFormsDashboardController);
+        .module('studio.dashboard')
+        .controller('SurveyFormController', SurveyFormController);
 
-    SurveyFormsDashboardController.$inject = [
+    SurveyFormController.$inject = [
         'NewSurveyFormDialogService',
         'ApplicationStateService',
         'SurveyEditorService'
     ];
 
-    function SurveyFormsDashboardController(NewSurveyFormDialogService, ApplicationStateService, SurveyEditorService) {
+    function SurveyFormController(NewSurveyFormDialogService, ApplicationStateService, SurveyEditorService) {
         var self = this;
 
         /* Public interface */
-        self.openEditor = openEditor;
+        self.startNewSurveyForm = startNewSurveyForm;
 
-        function openEditor() {
+        function startNewSurveyForm() {
             NewSurveyFormDialogService.showDialog()
                 .onConfirm(function onConfirm(data) {
                     SurveyEditorService.startEditor(data);

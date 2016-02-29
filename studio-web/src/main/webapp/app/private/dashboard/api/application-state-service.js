@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('studio.main')
+        .module('studio.dashboard')
         .service('ApplicationStateService', ApplicationStateService);
 
     ApplicationStateService.$inject = [
