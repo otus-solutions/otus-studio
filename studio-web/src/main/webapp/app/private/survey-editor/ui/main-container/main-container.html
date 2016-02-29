@@ -18,11 +18,14 @@
             -->
         </md-tabs>
     </md-content>
-    <md-sidenav src="'private/survey-editor/ui/main-container/tool-container/survey/survey-properties.html'"
-                class="resource"
+    <md-sidenav class="resource"
                 md-is-locked-open="true"
                 layout="column"
-                flex="20"
-                ng-include>
+                flex="20">
+        <md-content src="'private/survey-editor/ui/main-container/tool-container/survey/survey-properties.html'"
+            ng-include></md-content>
+        <md-content src="'private/survey-editor/ui/main-container/tool-container/question/question-properties.html'"
+            ng-include
+            ng-show="mainContainer.showQuestionProperties"></md-content>
     </md-sidenav>
 </div>

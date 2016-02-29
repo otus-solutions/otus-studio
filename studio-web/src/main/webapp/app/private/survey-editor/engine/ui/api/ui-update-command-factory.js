@@ -5,39 +5,57 @@
         .module('editor.engine.ui')
         .factory('UIUpdateCommandFactory', UIUpdateCommandFactory);
 
-    UIUpdateCommandFactory.$inject = ['SurveyPageContentService'];
+    UIUpdateCommandFactory.$inject = [
+        'SurveyPageContentService',
+        'QuestionPropertiesContentService',
+        'MainContainerContentService'
+    ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService) {
+    function UIUpdateCommandFactory(SurveyPageContentService, QuestionPropertiesContentService, MainContainerContentService) {
         var self = this,
 
             updateCommandMap = {
-                'NEW_PROJECT': SurveyPageContentService.reset,
-                'ADD_DATA': SurveyPageContentService.loadQuestion,
-                'REMOVE_DATA': SurveyPageContentService.unloadQuestion,
-                'UPDATE_DATA': SurveyPageContentService.updateQuestion
+                'NEW_PROJECT': [SurveyPageContentService.reset],
+                'ADD_DATA': [SurveyPageContentService.loadQuestion],
+                'REMOVE_DATA': [SurveyPageContentService.unloadQuestion],
+                'UPDATE_DATA': [SurveyPageContentService.updateQuestion],
+                'SELECT_DATA': {
+                    'Question': [
+                        QuestionPropertiesContentService.loadQuestion,
+                        MainContainerContentService.showWidget
+                    ]
+                }
             };
 
         /* Public interface */
         self.create = create;
 
         function create(update) {
-            var updateCommand = updateCommandMap[update.type];
-            return new UIUpdate(updateCommand, update.data);
+            var updateCommands = null;
+
+            if (update.dataModel)
+                updateCommands = updateCommandMap[update.type][update.dataModel];
+            else
+                updateCommands = updateCommandMap[update.type];
+
+            return new UIUpdate(updateCommands, update.data);
         }
 
         return self;
     }
 
-    function UIUpdate(updateCommand, updateData) {
+    function UIUpdate(updateCommands, updateData) {
         var self = this,
-            command = updateCommand,
+            commands = updateCommands,
             data = updateData;
 
         /* Public interface */
         self.execute = execute;
 
         function execute() {
-            command(data);
+            commands.forEach(function executeCommand(command) {
+                command(data);
+            });
         }
     }
 
