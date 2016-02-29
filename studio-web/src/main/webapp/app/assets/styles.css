@@ -127,14 +127,6 @@ ui-accordion-content.visible {
     display: flex;
 }
 
-ui-accordion-header md-fab-speed-dial md-fab-actions button {
-    background-color: gray !important;
-}
-
-ui-accordion-header md-fab-speed-dial md-fab-actions button.trash {
-    background-color: red !important;
-}
-
 .label-container {
     padding: 15px;
 }

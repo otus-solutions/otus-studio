@@ -20,17 +20,6 @@
                         widget: '='
                     },
                     link: function(scope, element, attrs, controller, transclude) {
-                        // element.on('mouseover', function() {
-                        //     var editorToolbar = element.find('md-fab-speed-dial');
-                        //     editorToolbar.addClass('visible');
-                        //     editorToolbar.removeClass('hidden');
-                        // });
-                        // element.on('mouseout', function() {
-                        //     var editorToolbar = element.find('md-fab-speed-dial');
-                        //     editorToolbar.addClass('hidden');
-                        //     editorToolbar.removeClass('visible');
-                        // });
-
                         var content = angular.element(transclude()[1]);
                         content.addClass('hidden');
                         element.append(content);
