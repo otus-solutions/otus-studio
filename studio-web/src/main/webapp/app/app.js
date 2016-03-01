@@ -7,9 +7,9 @@
             /* Application modules */
             'studio.dashboard',
             'editor',
+            /* Otus platform modules */
             'repository',
             'user',
-            /* Otus platform modules */
             'otusjs',
             'ui.components',
             'utils'

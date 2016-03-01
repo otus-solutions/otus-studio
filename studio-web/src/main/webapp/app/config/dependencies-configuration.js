@@ -6,7 +6,6 @@
         'ngMessages',
         'ngAnimate',
         /* 3rd-party modules */
-        'angular-bind-html-compile',
         'ui.mask',
         'ui.router',
         'lokijs'

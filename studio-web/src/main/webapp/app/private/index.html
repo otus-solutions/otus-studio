@@ -37,6 +37,7 @@
         </md-content>
     </body>
 
+    <!-- Script imports -->
     <!-- ************************************* jQuery ************************************* -->
     <script src="shared/jquery/jquery-2.2.0.min.js"></script>
 
@@ -65,13 +66,22 @@
     <!-- Utils -->
     <script src="shared/st-utils/st-utils-module.js"></script>
 
-    <!-- ***************************************** Statehelper ***************************************** -->
-    <!-- Utils -->
-    <!-- <script src="shared/statehelper/statehelper.min.js"></script> -->
 
     <!-- ************************************* UI Components ************************************* -->
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
+
+
+    <!-- ************************************** Otus Domain ************************************** -->
+    <!-- app.shared.otus-domain.survey-repository -->
+    <script src="shared/otus-domain/survey-repository/repository-module.js"></script>
+    <script src="shared/otus-domain/survey-repository/repository-controller.js"></script>
+    <script src="shared/otus-domain/survey-repository/repository-service.js"></script>
+
+    <!-- app.shared.otus-domain.user -->
+    <script src="shared/otus-domain/user/user-module.js"></script>
+    <script src="shared/otus-domain/user/management/user-controller.js"></script>
+
 
     <!-- ************************************** OtusJS ************************************** -->
     <!-- app.shared.otusjs -->
@@ -123,22 +133,11 @@
     <script src="shared/otusjs/model-builder/builder/implementation/question-navigation-factory.js"></script>
     <script src="shared/otusjs/model-builder/builder/implementation/unit-builder-service.js"></script>
 
-    <!-- ************************************** Otus Domain ************************************** -->
-    <!-- app.shared.otus-domain.survey-repository -->
-    <script src="shared/otus-domain/survey-repository/repository-module.js"></script>
-    <script src="shared/otus-domain/survey-repository/repository-controller.js"></script>
-    <script src="shared/otus-domain/survey-repository/repository-service.js"></script>
 
-    <!-- app.shared.otus-domain.user -->
-    <script src="shared/otus-domain/user/user-module.js"></script>
-    <script src="shared/otus-domain/user/management/user-controller.js"></script>
+    <script src="app.js"></script>
 
-    <!-- ************************************** Studio Assets and Configurations ************************************** -->
     <!-- assets -->
     <link href="assets/styles.css" rel="stylesheet"/>
-
-    <!-- app -->
-    <script src="app.js"></script>
 
     <!-- app.config -->
     <script src="config/dependencies-configuration.js"></script>
@@ -146,184 +145,176 @@
     <script src="config/state-configuration.js"></script>
     <script src="config/theme-configuration.js"></script>
 
+
     <!-- ************************************** Studio Dashboard ************************************** -->
-    <!-- app.private.dashboard -->
     <script src="private/dashboard/dashboard-module.js"></script>
 
-    <!-- app.private.dashboard.api -->
+    <!-- API -->
     <script src="private/dashboard/api/dashboard-state-service.js"></script>
 
-    <!-- app.private.dashboard.dialog -->
+    <!-- DIALOG -->
     <script src="private/dashboard/dialog/logout/logout-dialog-service.js"></script>
 
-    <!-- app.private.dashboard.home -->
+    <!-- HOME -->
     <script src="private/dashboard/home/home-controller.js"></script>
 
-    <!-- app.private.dashboard.menu -->
+    <!-- MENU -->
     <script src="private/dashboard/menu/dashboard-menu-controller.js"></script>
 
-    <!-- app.private.dashboard.survey-form -->
+    <!-- SURVEY-FORM -->
     <script src="private/dashboard/survey-form/survey-form-dashboard-controller.js"></script>
 
-    <!-- app.private.dashboard.survey-form.dialog.new-survey-form -->
+    <!-- SURVEY-FORM.DIALOG-NEW-SURVYE-FORM -->
     <script src="private/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
 
+
     <!-- ************************************** Studio Editor ************************************** -->
-    <!-- app.private.survey-editor -->
-    <script src="private/survey-editor/editor-module.js"></script>
+    <script src="private/editor/editor-module.js"></script>
 
-    <!-- app.private.survey-editor.api -->
-    <script src="private/survey-editor/api/survey-editor-service.js"></script>
+    <!-- API -->
+    <script src="private/editor/api/survey-editor-service.js"></script>
 
-    <!-- app.private.survey-editor.workspace -->
-    <script src="private/survey-editor/workspace/editor-workspace-module.js"></script>
 
-    <!-- app.private.survey-editor.workspace.api -->
-    <script src="private/survey-editor/workspace/api/survey-loader-service.js"></script>
-    <script src="private/survey-editor/workspace/api/workspace-factory.js"></script>
-    <script src="private/survey-editor/workspace/api/workspace-service.js"></script>
+    <!-- ************************************** Studio Editor Core ************************************** -->
+    <script src="private/editor/core/editor-core-module.js"></script>
 
-    <!-- app.private.survey-editor.workspace.database -->
-    <script src="private/survey-editor/workspace/database/workspace-database-module.js"></script>
+    <!-- API -->
+    <script src="private/editor/core/api/editor-engine-service.js"></script>
 
-    <!-- app.private.survey-editor.workspace.database.in-session -->
-    <script src="private/survey-editor/workspace/database/in-session/in-session-database-factory.js"></script>
+    <!-- DOM-PARSER -->
+    <script src="private/editor/core/dom-parser/div-editable-parser-service.js"></script>
+    <script src="private/editor/core/dom-parser/dom-parser-service.js"></script>
+    <script src="private/editor/core/dom-parser/input-text-parser-service.js"></script>
 
-    <!-- app.private.survey-editor.workspace.project -->
-    <script src="private/survey-editor/workspace/project/survey-project-factory.js"></script>
+    <!-- EDITING-SOURCE -->
+    <script src="private/editor/core/editing-source/editing-source-controller.js"></script>
+    <script src="private/editor/core/editing-source/editing-source-directive.js"></script>
+    <script src="private/editor/core/editing-source/editing-source-factory.js"></script>
+    <script src="private/editor/core/editing-source/editing-source-service.js"></script>
 
-    <!-- app.private.survey-editor.engine -->
-    <script src="private/survey-editor/engine/editor-engine-module.js"></script>
+    <!-- EVENT -->
+    <script src="private/editor/core/event/event-factory.js"></script>
+    <script src="private/editor/core/event/event-service.js"></script>
+    <script src="private/editor/core/event/event-type-factory.js"></script>
+    <!-- EVENT.IMPLEMENTATION -->
+    <script src="private/editor/core/event/implementation/add-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/remove-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/select-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/touch-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/untouch-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/update-data-event-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.core -->
-    <script src="private/survey-editor/engine/core/core-module.js"></script>
+    <!-- STATE -->
+    <script src="private/editor/core/state/state-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.api -->
-    <script src="private/survey-editor/engine/core/api/editor-engine-service.js"></script>
+    <!-- TRIGGER -->
+    <script src="private/editor/core/trigger/trigger-factory.js"></script>
+    <script src="private/editor/core/trigger/trigger-initializer-factory.js"></script>
+    <script src="private/editor/core/trigger/trigger-map.js"></script>
+    <script src="private/editor/core/trigger/trigger-register-service.js"></script>
+    <script src="private/editor/core/trigger/trigger-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.dom-parser -->
-    <script src="private/survey-editor/engine/core/dom-parser/div-editable-parser-service.js"></script>
-    <script src="private/survey-editor/engine/core/dom-parser/dom-parser-service.js"></script>
-    <script src="private/survey-editor/engine/core/dom-parser/input-text-parser-service.js"></script>
+    <!-- TRIGGER.HTML -->
+    <script src="private/editor/core/trigger/html/html-trigger-map.js"></script>
+    <!-- TRIGGER.HTML.IMPLEMENTATION -->
+    <script src="private/editor/core/trigger/html/implementation/add-button-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/div-editable-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/input-text-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/remove-button-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/update-button-trigger-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.event -->
-    <script src="private/survey-editor/engine/core/event/event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/event-service.js"></script>
-    <script src="private/survey-editor/engine/core/event/event-type-factory.js"></script>
+    <!-- TRIGGER.QUESTION -->
+    <script src="private/editor/core/trigger/question/question-trigger-map.js"></script>
+    <!-- TRIGGER.QUESTION.IMPLEMENTATION -->
+    <script src="private/editor/core/trigger/question/implementation/question-editor-trigger-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.event.implementation -->
-    <script src="private/survey-editor/engine/core/event/implementation/add-data-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/implementation/remove-data-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/implementation/select-data-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/implementation/touch-data-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/implementation/untouch-data-event-factory.js"></script>
-    <script src="private/survey-editor/engine/core/event/implementation/update-data-event-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.core.state -->
-    <script src="private/survey-editor/engine/core/state/state-factory.js"></script>
+    <!-- ************************************** Studio Editor Database ************************************** -->
+    <script src="private/editor/database/editor-database-module.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui -->
-    <script src="private/survey-editor/engine/ui/ui-module.js"></script>
+    <!-- IN-SESSION -->
+    <script src="private/editor/database/in-session/in-session-database-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.api -->
-    <script src="private/survey-editor/engine/ui/api/mpath-service.js"></script>
-    <script src="private/survey-editor/engine/ui/api/ui-data-selector-service.js"></script>
-    <script src="private/survey-editor/engine/ui/api/ui-update-command-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/api/ui-utils-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.editing-source -->
-    <script src="private/survey-editor/engine/ui/editing-source/editing-source-controller.js"></script>
-    <script src="private/survey-editor/engine/ui/editing-source/editing-source-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/editing-source/editing-source-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/editing-source/editing-source-service.js"></script>
+    <!-- ************************************** Studio Editor UI ************************************** -->
+    <script src="private/editor/ui/editor-ui-module.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.survey-page -->
-    <script src="private/survey-editor/engine/ui/survey-page/survey-page-content-service.js"></script>
-    <script src="private/survey-editor/engine/ui/survey-page/survey-page-controller.js"></script>
-    <script src="private/survey-editor/engine/ui/survey-page/survey-page-directive.js"></script>
+    <!-- API -->
+    <script src="private/editor/ui/api/mpath-service.js"></script>
+    <script src="private/editor/ui/api/ui-data-selector-service.js"></script>
+    <script src="private/editor/ui/api/ui-update-command-factory.js"></script>
+    <script src="private/editor/ui/api/ui-utils-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.template -->
-    <script src="private/survey-editor/engine/ui/template/template-loader-service.js"></script>
+    <!-- CORE.SURVEY-PAGE -->
+    <script src="private/editor/ui/core/survey-page/survey-page-content-service.js"></script>
+    <script src="private/editor/ui/core/survey-page/survey-page-controller.js"></script>
+    <script src="private/editor/ui/core/survey-page/survey-page-directive.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.trigger -->
-    <script src="private/survey-editor/engine/ui/trigger/trigger-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/trigger-initializer-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/trigger-map.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/trigger-register-service.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/trigger-service.js"></script>
+    <!-- CORE.TEMPLATE -->
+    <script src="private/editor/ui/core/template/template-loader-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.trigger.html -->
-    <script src="private/survey-editor/engine/ui/trigger/html/html-trigger-map.js"></script>
+    <!-- WIDGET.API -->
+    <script src="private/editor/ui/core/widget/api/widget-service.js"></script>
+    <script src="private/editor/ui/core/widget/api/widget-template-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.trigger.html.implementation -->
-    <script src="private/survey-editor/engine/ui/trigger/html/implementation/add-button-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/html/implementation/div-editable-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/html/implementation/input-text-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/html/implementation/remove-button-trigger-service.js"></script>
-    <script src="private/survey-editor/engine/ui/trigger/html/implementation/update-button-trigger-service.js"></script>
+    <!-- WIDGET.QUESTION -->
+    <script src="private/editor/ui/core/widget/question/question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.trigger.question -->
-    <script src="private/survey-editor/engine/ui/trigger/question/question-trigger-map.js"></script>
+    <!-- WIDGET.QUESTION.CALENDAR -->
+    <script src="private/editor/ui/core/widget/question/calendar/calendar-directive.js"></script>
+    <script src="private/editor/ui/core/widget/question/calendar/calendar-question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.trigger.question.implementation -->
-    <script src="private/survey-editor/engine/ui/trigger/question/implementation/question-editor-trigger-service.js"></script>
+    <!-- WIDGET.QUESTION.NUMERIC -->
+    <script src="private/editor/ui/core/widget/question/numeric/numeric-directive.js"></script>
+    <script src="private/editor/ui/core/widget/question/numeric/numeric-question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget -->
-    <script src="private/survey-editor/engine/ui/widget/question-editor/question-editor-widget-factory.js"></script>
+    <!-- WIDGET.QUESTION.SINGLE-SELECTION -->
+    <script src="private/editor/ui/core/widget/question/single-selection/answer-option-widget-factory.js"></script>
+    <script src="private/editor/ui/core/widget/question/single-selection/answer-option-content-service.js"></script>
+    <script src="private/editor/ui/core/widget/question/single-selection/single-selection-controller.js"></script>
+    <script src="private/editor/ui/core/widget/question/single-selection/single-selection-directive.js"></script>
+    <script src="private/editor/ui/core/widget/question/single-selection/single-selection-question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.api -->
-    <script src="private/survey-editor/engine/ui/widget/api/widget-service.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/api/widget-template-service.js"></script>
+    <!--WIDGET.QUESTION.TEXT -->
+    <script src="private/editor/ui/core/widget/question/text/text-directive.js"></script>
+    <script src="private/editor/ui/core/widget/question/text/text-question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question -->
-    <script src="private/survey-editor/engine/ui/widget/question/question-widget-factory.js"></script>
+    <!-- WIDGET.QUESTION.TIME -->
+    <script src="private/editor/ui/core/widget/question/time/time-question-directive.js"></script>
+    <script src="private/editor/ui/core/widget/question/time/time-question-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question.calendar -->
-    <script src="private/survey-editor/engine/ui/widget/question/calendar/calendar-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/calendar/calendar-question-widget-factory.js"></script>
+    <!-- WIDGET.QUESTION-EDITOR -->
+    <script src="private/editor/ui/core/widget/question-editor/question-editor-widget-factory.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question.numeric -->
-    <script src="private/survey-editor/engine/ui/widget/question/numeric/numeric-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/numeric/numeric-question-widget-factory.js"></script>
+    <!-- MAIN -->
+    <script src="private/editor/ui/main/main-container-content-service.js"></script>
+    <script src="private/editor/ui/main/main-container-controller.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question.single-selection -->
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection/answer-option-widget-factory.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection/answer-option-content-service.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection/single-selection-controller.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection/single-selection-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/single-selection/single-selection-question-widget-factory.js"></script>
+    <!-- QUESTION-DATA-EDITOR -->
+    <script src="private/editor/ui/question-data-editor/question-properties-controller.js"></script>
+    <script src="private/editor/ui/question-data-editor/question-properties-content-service.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question.text -->
-    <script src="private/survey-editor/engine/ui/widget/question/text/text-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/text/text-question-widget-factory.js"></script>
+    <!-- QUESTION-PALETTE -->
+    <script src="private/editor/ui/question-palette/question-palette-controller.js"></script>
 
-    <!-- app.private.survey-editor.engine.ui.widget.question.time -->
-    <script src="private/survey-editor/engine/ui/widget/question/time/time-question-directive.js"></script>
-    <script src="private/survey-editor/engine/ui/widget/question/time/time-question-widget-factory.js"></script>
+    <!-- SURVEY-DATA-EDITOR -->
+    <script src="private/editor/ui/survey-data-editor/survey-properties-controller.js"></script>
 
-    <!-- app.private.survey-editor.ui -->
-    <script src="private/survey-editor/ui/editor-ui-module.js"></script>
 
-    <!-- app.private.survey-editor.ui.main-container -->
-    <script src="private/survey-editor/ui/main-container/main-container-content-service.js"></script>
-    <script src="private/survey-editor/ui/main-container/main-container-controller.js"></script>
+    <!-- ************************************** Studio Editor Workspace ************************************** -->
+    <script src="private/editor/workspace/editor-workspace-module.js"></script>
 
-    <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
-    <script src="private/survey-editor/ui/main-container/tool-container/survey/survey-properties-controller.js"></script>
+    <!-- API -->
+    <script src="private/editor/workspace/api/survey-loader-service.js"></script>
+    <script src="private/editor/workspace/api/workspace-factory.js"></script>
+    <script src="private/editor/workspace/api/workspace-service.js"></script>
 
-    <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
-    <script src="private/survey-editor/ui/main-container/tool-container/question/question-properties-controller.js"></script>
-    <script src="private/survey-editor/ui/main-container/tool-container/question/question-properties-content-service.js"></script>
+    <!-- PROJECT -->
+    <script src="private/editor/workspace/project/survey-project-factory.js"></script>
 
-    <!-- app.private.survey-editor.ui.main-container.widget-container.question-palette -->
-    <script src="private/survey-editor/ui/main-container/widget-container/question-palette/question-palette-controller.js"></script>
 
     <!-- ************************************** Studio Preview ************************************** -->
     <!-- app.private.survey-preview.ui.preview -->
     <script src="private/survey-preview/preview-module.js"></script>
     <script src="private/survey-preview/preview-controller.js"></script>
-
 </html>
-
-
-<!-- app.private.survey-editor.ui.main-container.toolcontent-servicecontainer.survey -->

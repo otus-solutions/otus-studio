@@ -66,7 +66,7 @@
                         templateUrl: dashboardMenu
                     },
                     'system-content': {
-                        templateUrl: 'private/survey-editor/ui/main-container/main-container.html',
+                        templateUrl: 'private/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer'
                     }
                 }

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studio">
+    <head>
+        <base href="../"/>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="assets/img/otus-studio-img.png" rel="icon"/>
+        <title>Otus Studio</title>
+    </head>
+
+    <body layout="row" flex class="md-body-2" md-theme="layoutTheme" ng-controller="DashboardMenuController as dashboardMenu">
+        <md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
+            <md-content ui-view="dashboard-menu"></md-content>
+        </md-sidenav>
+
+        <md-content layout="column" flex ng-cloak>
+            <md-toolbar layout="row" id="system-toolbar">
+                <md-button ng-click="dashboardMenu.open()">
+                    <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+                    Otus Studio
+                </md-button>
+                <span flex></span>
+                <h3 ng-controller="RepositoryController as repositoryController">
+                    <span>{{repositoryController.connected()}}</span>
+                </h3>
+                <span flex="5"></span>
+                <a class="navbar-brand" rel="home" title="Profile">
+                    <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div"/>
+                </a>
+                <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
+                    <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+                </md-button>
+            </md-toolbar>
+            <md-content ui-view="system-content" layout="row" flex></md-content>
+        </md-content>
+    </body>
+
+    <link rel="import" href="external-dependencies.html" >
+
+    <!-- ************************************* jQuery ************************************* -->
+    <script src="shared/jquery/jquery-2.2.0.min.js"></script>
+
+    <!-- ************************************* Angular ************************************* -->
+    <script src="shared/angular/angular.min.js"></script>
+    <script src="shared/angular-animate/angular-animate.min.js"></script>
+    <script src="shared/angular-aria/angular-aria.min.js"></script>
+    <script src="shared/angular-bind-html-compile/angular-bind-html-compile.js"></script>
+    <script src="shared/angular-messages/angular-messages.min.js"></script>
+    <script src="shared/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="shared/angular-ui-mask/angular-ui-mask.min.js"></script>
+    <script src="shared/angular-ui-router/angular-ui-router.min.js"></script>
+
+    <!-- ************************************* Angular Material ************************************* -->
+    <link href="shared/angular-material/angular-material.min.css" rel="stylesheet"/>
+    <script src="shared/angular-material/angular-material.min.js"></script>
+
+    <!-- ************************************* Lokijs ************************************* -->
+    <script src="shared/lokijs/lokijs.min.js"></script>
+    <script src="shared/lokijs/loki-angular.js"></script>
+
+    <!-- ************************************* Moment ************************************* -->
+    <script src="shared/moment/moment.js"></script>
+
+    <!-- ***************************************** Utils ***************************************** -->
+    <!-- Utils -->
+    <script src="shared/st-utils/st-utils-module.js"></script>
+
+    <!-- ***************************************** Statehelper ***************************************** -->
+    <!-- Utils -->
+    <!-- <script src="shared/statehelper/statehelper.min.js"></script> -->
+
+    <!-- ************************************* UI Components ************************************* -->
+    <script src="shared/ui-components/ui-components-module.js"></script>
+    <script src="shared/ui-components/accordion/accordion-directive.js"></script>
+
+    <!-- ************************************** OtusJS ************************************** -->
+    <!-- app.shared.otusjs -->
+    <script src="shared/otusjs/otusjs-module.js"></script>
+
+    <!-- === otusjs-model === -->
+    <!-- app.shared.otusjs.model -->
+    <script src="shared/otusjs/model/otusjs-model-module.js"></script>
+
+    <!-- app.shared.otusjs.model.api -->
+    <script src="shared/otusjs/model/api/model-facade-service.js"></script>
+
+    <!-- app.shared.otusjs.model.question -->
+    <script src="shared/otusjs/model/question/answer-option-factory.js"></script>
+    <script src="shared/otusjs/model/question/calendar-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/numeric-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/question-factory.js"></script>
+    <script src="shared/otusjs/model/question/single-selection-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/text-question-factory.js"></script>
+    <script src="shared/otusjs/model/question/time-question-factory.js"></script>
+
+    <!-- app.shared.otusjs.model.setter -->
+    <script src="shared/otusjs/model/setter/label-factory.js"></script>
+    <script src="shared/otusjs/model/setter/unit-factory.js"></script>
+
+    <!-- app.shared.otusjs.model.structure -->
+    <script src="shared/otusjs/model/structure/survey-factory.js"></script>
+    <script src="shared/otusjs/model/structure/survey-identity-factory.js"></script>
+
+    <!-- === otusjs-model-builder === -->
+    <!-- app.shared.otusjs.model-builder -->
+    <script src="shared/otusjs/model-builder/otusjs-model-builder-module.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.api -->
+    <script src="shared/otusjs/model-builder/api/build-work-factory.js"></script>
+    <script src="shared/otusjs/model-builder/api/model-builder-hub-service.js"></script>
+    <script src="shared/otusjs/model-builder/api/model-builder-service.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.builder -->
+    <script src="shared/otusjs/model-builder/builder/builder-factory.js"></script>
+    <script src="shared/otusjs/model-builder/builder/builder-map-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/builder-selector-service.js"></script>
+
+    <!-- app.shared.otusjs.model-builder.builder.implementation -->
+    <script src="shared/otusjs/model-builder/builder/implementation/answer-option-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/identity-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/label-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/question-builder-service.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/question-navigation-factory.js"></script>
+    <script src="shared/otusjs/model-builder/builder/implementation/unit-builder-service.js"></script>
+
+    <!-- ************************************** Otus Domain ************************************** -->
+    <!-- app.shared.otus-domain.survey-repository -->
+    <script src="shared/otus-domain/survey-repository/repository-module.js"></script>
+    <script src="shared/otus-domain/survey-repository/repository-controller.js"></script>
+    <script src="shared/otus-domain/survey-repository/repository-service.js"></script>
+
+    <!-- app.shared.otus-domain.user -->
+    <script src="shared/otus-domain/user/user-module.js"></script>
+    <script src="shared/otus-domain/user/management/user-controller.js"></script>
+
+    <!-- ************************************** Studio Assets and Configurations ************************************** -->
+    <!-- assets -->
+    <link href="assets/styles.css" rel="stylesheet"/>
+
+    <!-- app -->
+    <script src="app.js"></script>
+
+    <!-- app.config -->
+    <script src="config/dependencies-configuration.js"></script>
+    <script src="config/locale-configuration.js"></script>
+    <script src="config/state-configuration.js"></script>
+    <script src="config/theme-configuration.js"></script>
+
+    <!-- ************************************** Studio Dashboard ************************************** -->
+    <!-- app.private.dashboard -->
+    <script src="private/dashboard/dashboard-module.js"></script>
+
+    <!-- app.private.dashboard.api -->
+    <script src="private/dashboard/api/dashboard-state-service.js"></script>
+
+    <!-- app.private.dashboard.dialog -->
+    <script src="private/dashboard/dialog/logout/logout-dialog-service.js"></script>
+
+    <!-- app.private.dashboard.home -->
+    <script src="private/dashboard/home/home-controller.js"></script>
+
+    <!-- app.private.dashboard.menu -->
+    <script src="private/dashboard/menu/dashboard-menu-controller.js"></script>
+
+    <!-- app.private.dashboard.survey-form -->
+    <script src="private/dashboard/survey-form/survey-form-dashboard-controller.js"></script>
+
+    <!-- app.private.dashboard.survey-form.dialog.new-survey-form -->
+    <script src="private/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
+
+    <!-- ************************************** Studio Editor ************************************** -->
+    <!-- app.private.survey-editor -->
+    <script src="private/editor/editor-module.js"></script>
+
+    <!-- app.private.survey-editor.api -->
+    <script src="private/editor/api/survey-editor-service.js"></script>
+
+    <!-- app.private.survey-editor.workspace -->
+    <script src="private/editor/workspace/editor-workspace-module.js"></script>
+
+    <!-- app.private.survey-editor.workspace.api -->
+    <script src="private/editor/workspace/api/survey-loader-service.js"></script>
+    <script src="private/editor/workspace/api/workspace-factory.js"></script>
+    <script src="private/editor/workspace/api/workspace-service.js"></script>
+
+    <!-- app.private.survey-editor.workspace.database -->
+    <script src="private/editor/workspace/database/workspace-database-module.js"></script>
+
+    <!-- app.private.survey-editor.workspace.database.in-session -->
+    <script src="private/editor/workspace/database/in-session/in-session-database-factory.js"></script>
+
+    <!-- app.private.survey-editor.workspace.project -->
+    <script src="private/editor/workspace/project/survey-project-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine -->
+    <script src="private/editor/engine/editor-engine-module.js"></script>
+
+    <!-- app.private.survey-editor.engine.core -->
+    <script src="private/editor/engine/core/core-module.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.api -->
+    <script src="private/editor/engine/core/api/editor-engine-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.dom-parser -->
+    <script src="private/editor/engine/core/dom-parser/div-editable-parser-service.js"></script>
+    <script src="private/editor/engine/core/dom-parser/dom-parser-service.js"></script>
+    <script src="private/editor/engine/core/dom-parser/input-text-parser-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.event -->
+    <script src="private/editor/engine/core/event/event-factory.js"></script>
+    <script src="private/editor/engine/core/event/event-service.js"></script>
+    <script src="private/editor/engine/core/event/event-type-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.event.implementation -->
+    <script src="private/editor/engine/core/event/implementation/add-data-event-factory.js"></script>
+    <script src="private/editor/engine/core/event/implementation/remove-data-event-factory.js"></script>
+    <script src="private/editor/engine/core/event/implementation/select-data-event-factory.js"></script>
+    <script src="private/editor/engine/core/event/implementation/touch-data-event-factory.js"></script>
+    <script src="private/editor/engine/core/event/implementation/untouch-data-event-factory.js"></script>
+    <script src="private/editor/engine/core/event/implementation/update-data-event-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.core.state -->
+    <script src="private/editor/engine/core/state/state-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui -->
+    <script src="private/editor/engine/ui/ui-module.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.api -->
+    <script src="private/editor/engine/ui/api/mpath-service.js"></script>
+    <script src="private/editor/engine/ui/api/ui-data-selector-service.js"></script>
+    <script src="private/editor/engine/ui/api/ui-update-command-factory.js"></script>
+    <script src="private/editor/engine/ui/api/ui-utils-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.editing-source -->
+    <script src="private/editor/engine/ui/editing-source/editing-source-controller.js"></script>
+    <script src="private/editor/engine/ui/editing-source/editing-source-directive.js"></script>
+    <script src="private/editor/engine/ui/editing-source/editing-source-factory.js"></script>
+    <script src="private/editor/engine/ui/editing-source/editing-source-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.survey-page -->
+    <script src="private/editor/engine/ui/survey-page/survey-page-content-service.js"></script>
+    <script src="private/editor/engine/ui/survey-page/survey-page-controller.js"></script>
+    <script src="private/editor/engine/ui/survey-page/survey-page-directive.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.template -->
+    <script src="private/editor/engine/ui/template/template-loader-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.trigger -->
+    <script src="private/editor/engine/ui/trigger/trigger-factory.js"></script>
+    <script src="private/editor/engine/ui/trigger/trigger-initializer-factory.js"></script>
+    <script src="private/editor/engine/ui/trigger/trigger-map.js"></script>
+    <script src="private/editor/engine/ui/trigger/trigger-register-service.js"></script>
+    <script src="private/editor/engine/ui/trigger/trigger-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.trigger.html -->
+    <script src="private/editor/engine/ui/trigger/html/html-trigger-map.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.trigger.html.implementation -->
+    <script src="private/editor/engine/ui/trigger/html/implementation/add-button-trigger-service.js"></script>
+    <script src="private/editor/engine/ui/trigger/html/implementation/div-editable-trigger-service.js"></script>
+    <script src="private/editor/engine/ui/trigger/html/implementation/input-text-trigger-service.js"></script>
+    <script src="private/editor/engine/ui/trigger/html/implementation/remove-button-trigger-service.js"></script>
+    <script src="private/editor/engine/ui/trigger/html/implementation/update-button-trigger-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.trigger.question -->
+    <script src="private/editor/engine/ui/trigger/question/question-trigger-map.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.trigger.question.implementation -->
+    <script src="private/editor/engine/ui/trigger/question/implementation/question-editor-trigger-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget -->
+    <script src="private/editor/engine/ui/widget/question-editor/question-editor-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.api -->
+    <script src="private/editor/engine/ui/widget/api/widget-service.js"></script>
+    <script src="private/editor/engine/ui/widget/api/widget-template-service.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question -->
+    <script src="private/editor/engine/ui/widget/question/question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.calendar -->
+    <script src="private/editor/engine/ui/widget/question/calendar/calendar-directive.js"></script>
+    <script src="private/editor/engine/ui/widget/question/calendar/calendar-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.numeric -->
+    <script src="private/editor/engine/ui/widget/question/numeric/numeric-directive.js"></script>
+    <script src="private/editor/engine/ui/widget/question/numeric/numeric-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.single-selection -->
+    <script src="private/editor/engine/ui/widget/question/single-selection/answer-option-widget-factory.js"></script>
+    <script src="private/editor/engine/ui/widget/question/single-selection/answer-option-content-service.js"></script>
+    <script src="private/editor/engine/ui/widget/question/single-selection/single-selection-controller.js"></script>
+    <script src="private/editor/engine/ui/widget/question/single-selection/single-selection-directive.js"></script>
+    <script src="private/editor/engine/ui/widget/question/single-selection/single-selection-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.text -->
+    <script src="private/editor/engine/ui/widget/question/text/text-directive.js"></script>
+    <script src="private/editor/engine/ui/widget/question/text/text-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.engine.ui.widget.question.time -->
+    <script src="private/editor/engine/ui/widget/question/time/time-question-directive.js"></script>
+    <script src="private/editor/engine/ui/widget/question/time/time-question-widget-factory.js"></script>
+
+    <!-- app.private.survey-editor.ui -->
+    <script src="private/editor/ui/editor-ui-module.js"></script>
+
+    <!-- app.private.survey-editor.ui.main-container -->
+    <script src="private/editor/ui/main/main-container-content-service.js"></script>
+    <script src="private/editor/ui/main/main-container-controller.js"></script>
+
+    <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
+    <script src="private/editor/ui/main/tool-container/survey/survey-properties-controller.js"></script>
+
+    <!-- app.private.survey-editor.ui.main-container.tool-container.survey -->
+    <script src="private/editor/ui/main/tool-container/question/question-properties-controller.js"></script>
+    <script src="private/editor/ui/main/tool-container/question/question-properties-content-service.js"></script>
+
+    <!-- app.private.survey-editor.ui.main-container.widget-container.question-palette -->
+    <script src="private/editor/ui/main/widget-container/question-palette/question-palette-controller.js"></script>
+
+    <!-- ************************************** Studio Preview ************************************** -->
+    <!-- app.private.survey-preview.ui.preview -->
+    <script src="private/survey-preview/preview-module.js"></script>
+    <script src="private/survey-preview/preview-controller.js"></script>
+
+</html>
+
+
+<!-- app.private.survey-editor.ui.main-container.toolcontent-servicecontainer.survey -->
