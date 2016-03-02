@@ -7,11 +7,11 @@
 
     UIUpdateCommandFactory.$inject = [
         'SurveyPageContentService',
-        'QuestionPropertiesContentService',
+        'QuestionDataEditorContentService',
         'MainContainerContentService'
     ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService, QuestionPropertiesContentService, MainContainerContentService) {
+    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService) {
         var self = this,
 
             updateCommandMap = {
@@ -21,8 +21,7 @@
                 'UPDATE_DATA': [SurveyPageContentService.updateQuestion],
                 'SELECT_DATA': {
                     'Question': [
-                        QuestionPropertiesContentService.loadQuestion,
-                        MainContainerContentService.showWidget
+                        MainContainerContentService.showQuestionDataEditor
                     ]
                 }
             };

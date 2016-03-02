@@ -9,19 +9,11 @@
     function MainContainerController(MainContainerContentService) {
         var self = this;
 
-        /* Public interface */
-        self.update = update;
-
         init();
 
         function init() {
-            MainContainerContentService.registerObserver(self);
-
             self.showQuestionProperties = false;
-        }
-
-        function update(showState) {
-            self.showQuestionProperties = showState;
+            MainContainerContentService.init(self);
         }
     }
 

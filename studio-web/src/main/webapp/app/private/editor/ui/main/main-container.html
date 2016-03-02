@@ -1,15 +1,14 @@
 <div layout flex>
-    <md-sidenav src="'private/editor/ui/question-palette/question-palette-template.html'"
+    <md-sidenav ng-include="'private/editor/ui/question-palette/question-palette-template.html'"
                 class="palette"
                 md-is-locked-open="true"
                 layout="column"
-                flex="20"
-                ng-include>
+                flex="20">
     </md-sidenav>
-    <md-content class="stage" layout="column" layout-padding flex>
+    <md-content layout="column" layout-padding flex class="stage">
         <md-tabs id="stage-mode-selector" flex>
             <md-tab id="editing-tab" label="Edição">
-                <div ng-include src="'private/editor/ui/stage/stage.html'"></div>
+                <div ng-include="'private/editor/ui/stage/stage.html'"></div>
             </md-tab>
             <!-- RECUSO NÃO IMPLEMENTADO, ENTÃO NÃO PRECISA APARECER PARA O USUÁRIO
             <md-tab id="preview-tab" label="Preview">
@@ -18,14 +17,8 @@
             -->
         </md-tabs>
     </md-content>
-    <md-sidenav class="resource"
-                md-is-locked-open="true"
-                layout="column"
-                flex="20">
-        <md-content src="'private/editor/ui/survey-data-editor/survey-properties.html'"
-            ng-include></md-content>
-        <md-content src="'private/editor/ui/question-data-editor/question-properties.html'"
-            ng-include
-            ng-show="mainContainer.showQuestionProperties"></md-content>
+    <md-sidenav layout="column" flex="20" md-is-locked-open="true" class="resource" ng-cloak>
+        <ng-include src="'private/editor/ui/survey-data-editor/survey-properties.html'"></ng-include>
+        <datatool></datatool>
     </md-sidenav>
 </div>

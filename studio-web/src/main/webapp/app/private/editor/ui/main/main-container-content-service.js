@@ -5,35 +5,22 @@
         .module('editor.ui')
         .service('MainContainerContentService', MainContainerContentService);
 
-    // MainContainerContentService.$inject = ['WorkspaceService'];
+    MainContainerContentService.$inject = ['DataToolContentService'];
 
-    function MainContainerContentService() {
+    function MainContainerContentService(DataToolContentService) {
         var self = this,
-            observers = [];
+            controllerReference = null;
 
         /* Public interface */
-        self.showWidget = showWidget;
-        self.registerObserver = registerObserver;
+        self.showQuestionDataEditor = showQuestionDataEditor;
+        self.init = init;
 
-        function showWidget() {
-            notifyObservers(true);
+        function init(cotroller) {
+            controllerReference = cotroller;
         }
 
-        function registerObserver(observer) {
-            var registered = observers.filter(function (o) {
-                if (o.identifier === observer.identifier) {
-                    return o;
-                }
-            });
-
-            if (registered.length === 0)
-                observers.push(observer);
-        }
-
-        function notifyObservers(question) {
-            observers.forEach(function(observer) {
-                observer.update(question);
-            });
+        function showQuestionDataEditor(data) {
+            DataToolContentService.loadQuestionDataEditor(data);
         }
     }
 

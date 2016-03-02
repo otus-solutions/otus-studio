@@ -46,7 +46,7 @@
         }
 
         function updateQuestion(question) {
-            var target = '[es-id="survey-editor-question-' + question.oid + '-label"]',
+            var target = '[es-id="question-editor-' + question.oid + '-label"]',
                 label = UIUtils.jq(surveyPage.find(target)[0]);
 
             label.text(question.label.ptBR.plainText);
@@ -63,7 +63,6 @@
         function mergeScopeData(editorWidget) {
             scope.widgetTemplateList = scope.widgetTemplateList || {};
             scope.widget = editorWidget;
-            // scope.templateIndex = editorWidget.questionId;
             scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
         }
 

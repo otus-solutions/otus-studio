@@ -42,13 +42,16 @@
         });
 
         Object.defineProperty(this, 'questionId', {
-            value: model.oid,
-            writable: false
+            value: model.oid
         });
 
         Object.defineProperty(this, 'type', {
             value: model.objectType,
             writable: false
+        });
+
+        Object.defineProperty(this, 'label', {
+            value: model.label.ptBR.plainText
         });
     }
 
