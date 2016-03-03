@@ -22,6 +22,9 @@ describe('SurveyIdentity suite:', function() {
             expect(actual.objectType).toBe('SurveyIdentity');
         });
 
+        xit('should return an Unit with oid', function() {
+        });
+
         it('should return an SurveyIdentity with name', function() {
             expect(actual.name).toBe(name);
         });

@@ -23,6 +23,9 @@ describe('Survey suite:', function() {
             expect(actual.metainfo.objectType).toBe('SurveyMetaInfo');
         });
 
+        xit('should return an Unit with oid', function() {
+        });
+
         it('should return an Survey with a not null SurveyMetaInfo', function() {
             expect(actual.metainfo).not.toBeNull();
         });
