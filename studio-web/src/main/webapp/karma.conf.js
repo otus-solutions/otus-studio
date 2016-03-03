@@ -44,13 +44,14 @@ module.exports = function(config) {
                 APP_PRIVATE_ROOT_PATH + '**/*-module.js',
                 APP_PRIVATE_ROOT_PATH + '**/*.js',
                 {
-                    pattern: 'tests/unit/*-spec.js',
+                    pattern: 'tests/unit/**/*-spec.js',
                     included: true
                 }
             ],
 
         // list of files to exclude
         exclude: [
+            'tests/unit/**/*-spec-sample.js'
         ],
 
         // preprocess matching files before serving them to the browser
@@ -65,10 +66,8 @@ module.exports = function(config) {
 
         htmlReporter: {
             outputFile: 'tests/unit/unit-result.report.html',
-
             //Optional
             pageTitle: 'Unit Tests'
-
         },
         // web server port
         port: 9876,
@@ -81,7 +80,7 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+        autoWatch: true,
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
