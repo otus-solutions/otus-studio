@@ -20,10 +20,6 @@
             var metainfo = SurveyMetaInfoFactory.create(),
                 identity = SurveyIdentityFactory.create();
 
-            identity.name = name;
-            identity.acronym = acronym;
-            identity.version = version;
-
             return new Survey(metainfo, identity);
         }
 

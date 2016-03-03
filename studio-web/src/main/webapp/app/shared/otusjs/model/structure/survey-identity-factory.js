@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new SurveyIdentity();
+        function create(name, acronym, version) {
+            return new SurveyIdentity(name, acronym, version);
         }
 
         return self;
     }
 
-    function SurveyIdentity() {
+    function SurveyIdentity(name, acronym, version) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
@@ -35,19 +35,19 @@
         });
 
         Object.defineProperty(this, 'name', {
-            value: '',
+            value: name,
             writable: true,
             enumerable: true
         });
 
         Object.defineProperty(this, 'acronym', {
-            value: '',
+            value: acronym,
             writable: true,
             enumerable: true
         });
 
         Object.defineProperty(this, 'version', {
-            value: '',
+            value: version,
             writable: true,
             enumerable: true
         });

@@ -2,11 +2,14 @@ describe('SurveyMetaInfo suite:', function() {
     beforeEach(module('otusjs.modelBuilder'));
     beforeEach(module('otusjs.model'));
 
-    var SurveyMetaInfoFactory, OIDHashGenerator;
+    var SurveyMetaInfoFactory,
+        OIDHashGenerator,
+        actual;
 
     beforeEach(inject(function(_SurveyMetaInfoFactory_, _OIDHashGenerator_) {
         SurveyMetaInfoFactory = _SurveyMetaInfoFactory_;
         OIDHashGenerator = _OIDHashGenerator_;
+        actual = SurveyMetaInfoFactory.create();
     }));
 
     describe('SurveyMetaInfoFactory.create()', function() {
@@ -27,14 +30,10 @@ describe('SurveyMetaInfo suite:', function() {
         });
 
         it('should return an SurveyMetaInfo that extends from StudioObject', function() {
-            var actual = SurveyMetaInfoFactory.create();
-
             expect(actual.extends).toBe('StudioObject');
         });
 
         it('should return an SurveyMetaInfo object type', function() {
-            var actual = SurveyMetaInfoFactory.create();
-
             expect(actual.objectType).toBe('SurveyMetaInfo');
         });
 
