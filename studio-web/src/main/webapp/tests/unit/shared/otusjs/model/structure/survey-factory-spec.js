@@ -2,12 +2,10 @@ describe('Survey suite:', function() {
     beforeEach(module('otusjs.modelBuilder'));
     beforeEach(module('otusjs.model'));
 
-    var SurveyFactory,
-        actual;
+    var actual;
 
     beforeEach(inject(function(_SurveyFactory_) {
-        SurveyFactory = _SurveyFactory_;
-        actual = SurveyFactory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+        actual = _SurveyFactory_.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
     }));
 
     describe('SurveyFactory.create()', function() {

@@ -2,15 +2,13 @@ describe('SurveyIdentity suite:', function() {
     beforeEach(module('otusjs.modelBuilder'));
     beforeEach(module('otusjs.model'));
 
-    var SurveyIdentityFactory,
-        name = 'Identity Name',
+    var name = 'Identity Name',
         acronym = 'ACRONYM',
         version = 'A',
         actual;
 
     beforeEach(inject(function(_SurveyIdentityFactory_) {
-        SurveyIdentityFactory = _SurveyIdentityFactory_;
-        actual = SurveyIdentityFactory.create(name, acronym, version);
+        actual = _SurveyIdentityFactory_.create(name, acronym, version);
     }));
 
     describe('SurveyIdentityFactory.create()', function() {

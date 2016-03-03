@@ -9,7 +9,7 @@ describe('SurveyMetaInfo suite:', function() {
     beforeEach(inject(function(_SurveyMetaInfoFactory_, _OIDHashGenerator_) {
         SurveyMetaInfoFactory = _SurveyMetaInfoFactory_;
         OIDHashGenerator = _OIDHashGenerator_;
-        actual = SurveyMetaInfoFactory.create();
+        actual = _SurveyMetaInfoFactory_.create();
     }));
 
     describe('SurveyMetaInfoFactory.create()', function() {
