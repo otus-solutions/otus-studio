@@ -8,7 +8,7 @@
     HomeController.$inject = ['$http', '$scope', '$rootScope'];
 
     function HomeController($http, $scope, $rootScope) {
-        const $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/studio/session/rest/register/loggedUser';
+        var $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/studio/session/rest/register/loggedUser';
 
         $scope.loggedUser = {};
 

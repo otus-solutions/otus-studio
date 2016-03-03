@@ -6,8 +6,8 @@
         .service('editor.ui.mpath', mpath);
 
     function mpath() {
-        const MODULE = 'private/editor/ui/';
-        const QUESTION_EDITOR_TEMPLATE = 'private/editor/ui/core/widget/question-editor/question-editor-template.html';
+        var MODULE = 'private/editor/ui/';
+        var QUESTION_EDITOR_TEMPLATE = 'private/editor/ui/core/widget/question-editor/question-editor-template.html';
 
         var self = this;
 

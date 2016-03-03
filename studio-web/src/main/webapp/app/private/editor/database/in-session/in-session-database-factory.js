@@ -24,7 +24,7 @@
         var self = this,
             instance = null;
 
-        const USER_EDITS_COLLECTION = 'userEdits';
+        var USER_EDITS_COLLECTION = 'userEdits';
 
         init();
 
