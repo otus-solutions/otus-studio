@@ -5,26 +5,32 @@
         .module('otusjs.model')
         .factory('SurveyFactory', SurveyFactory);
 
-    SurveyFactory.$inject = ['SurveyIdentityFactory'];
+    SurveyFactory.$inject = [
+        'SurveyIdentityFactory',
+        'SurveyMetaInfoFactory'
+    ];
 
-    function SurveyFactory(SurveyIdentityFactory) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory) {
         var self = this;
 
         /* Public interdace */
         self.create = create;
 
         function create(name, acronym, version) {
-            var identity = SurveyIdentityFactory.create();
+            var metainfo = SurveyMetaInfoFactory.create(),
+                identity = SurveyIdentityFactory.create();
+
             identity.name = name;
             identity.acronym = acronym;
             identity.version = version;
-            return new Survey(identity);
+
+            return new Survey(metainfo, identity);
         }
 
         return self;
     }
 
-    function Survey(identity) {
+    function Survey(metainfo, identity) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false
@@ -37,6 +43,11 @@
 
         Object.defineProperty(this, 'identity', {
             value: identity,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'metainfo', {
+            value: metainfo,
             writable: false
         });
 
