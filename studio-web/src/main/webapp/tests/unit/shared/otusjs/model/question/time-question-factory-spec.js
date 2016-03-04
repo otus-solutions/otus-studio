@@ -65,7 +65,7 @@ describe('TimeQuestionFactory', function() {
     });
 
     function mockQuestion($injector) {
-        Mock.Question = $injector.get('QuestionFactory').create('numeric-question', OID);
+        Mock.Question = $injector.get('QuestionFactory').create('time-question', OID);
     }
 
 });
