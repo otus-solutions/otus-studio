@@ -37,7 +37,7 @@
         });
 
         Object.defineProperty(this, 'dataType', {
-            value: 'LocalDate',
+            value: 'LocalTime',
             writable: false
         });
 
