@@ -1,32 +1,37 @@
 describe('Label suite:', function() {
-    beforeEach(module('otusjs.modelBuilder'));
-    beforeEach(module('otusjs.model'));
 
-    var actual;
+    /* @BeforeScenario */
+    beforeEach(function() {
+        module('otusjs.model');
 
-    beforeEach(inject(function(_LabelFactory_) {
-        actual = _LabelFactory_.create();
-    }));
+        inject(function(_$injector_) {
+            factory = _$injector_.get('LabelFactory');
+        });
+
+        label = factory.create();
+    });
 
     describe('LabelFactory.create()', function() {
+
         it('should return an Survey that extends from StudioObject', function() {
-            expect(actual.extends).toBe('StudioObject');
+            expect(label.extends).toBe('StudioObject');
         });
 
         it('should return an Label object type', function() {
-            expect(actual.objectType).toBe('Label');
+            expect(label.objectType).toBe('Label');
         });
 
         xit('should return an Label with oid', function() {
         });
 
         it('should return an Label with plainText equal to empty String', function() {
-            expect(actual.plainText.length).toBe(0);
+            expect(label.plainText.length).toBe(0);
         });
 
         it('should return an Label with formattedText equal to empty String', function() {
-            expect(actual.formattedText.length).toBe(0);
+            expect(label.formattedText.length).toBe(0);
         });
+
     });
 
 });

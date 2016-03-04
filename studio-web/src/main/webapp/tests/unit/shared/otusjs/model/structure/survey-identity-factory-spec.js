@@ -1,51 +1,59 @@
 describe('SurveyIdentity suite:', function() {
-    beforeEach(module('otusjs.modelBuilder'));
-    beforeEach(module('otusjs.model'));
+    var Mock = {},
+        factory;
 
-    var name = 'Identity Name',
-        acronym = 'ACRONYM',
-        version = 'A',
-        actual;
+    var NAME = 'Identity Name',
+        ACRONYM = 'ACRONYM',
+        VERSION = 'A';
 
-    beforeEach(inject(function(_SurveyIdentityFactory_) {
-        actual = _SurveyIdentityFactory_.create(name, acronym, version);
-    }));
+    /* @BeforeScenario */
+    beforeEach(function() {
+        module('otusjs.model');
+
+        inject(function(_$injector_) {
+            factory = _$injector_.get('SurveyIdentityFactory');
+        });
+
+        surveyIdentity = factory.create(NAME, ACRONYM, VERSION);
+    });
 
     describe('SurveyIdentityFactory.create()', function() {
+
         it('should return an SurveyIdentity that extends from StudioObject', function() {
-            expect(actual.extends).toBe('StudioObject');
+            expect(surveyIdentity.extends).toBe('StudioObject');
         });
 
         it('should return an SurveyIdentity object type', function() {
-            expect(actual.objectType).toBe('SurveyIdentity');
+            expect(surveyIdentity.objectType).toBe('SurveyIdentity');
         });
 
         xit('should return an Unit with oid', function() {
         });
 
         it('should return an SurveyIdentity with name', function() {
-            expect(actual.name).toBe(name);
+            expect(surveyIdentity.name).toBe(NAME);
         });
 
         it('should return an SurveyIdentity with acronym', function() {
-            expect(actual.acronym).toBe(acronym);
+            expect(surveyIdentity.acronym).toBe(ACRONYM);
         });
 
         it('should return an SurveyIdentity with acronym', function() {
-            expect(actual.version).toBe(version);
+            expect(surveyIdentity.version).toBe(VERSION);
         });
 
         it('should return an SurveyIdentity with recommendedTo equal to empty String', function() {
-            expect(actual.recommendedTo.length).toBe(0);
+            expect(surveyIdentity.recommendedTo.length).toBe(0);
         });
 
         it('should return an SurveyIdentity with description equal to empty String', function() {
-            expect(actual.description.length).toBe(0);
+            expect(surveyIdentity.description.length).toBe(0);
         });
 
         it('should return an SurveyIdentity an empty array of keywords', function() {
-            expect(actual.keywords.length).toBe(0);
+            expect(surveyIdentity.keywords.length).toBe(0);
         });
+
     });
 
 });

@@ -1,59 +1,81 @@
-describe('SurveyMetaInfo suite:', function() {
-    beforeEach(module('otusjs.modelBuilder'));
-    beforeEach(module('otusjs.model'));
+describe('SurveyMetaInfoFactory', function() {
+    var Mock = {},
+        factory;
 
-    var SurveyMetaInfoFactory,
-        OIDHashGenerator,
-        actual;
+    /* @BeforeScenario */
+    beforeEach(function() {
+        module('otusjs.model');
+        module('otusjs.modelBuilder');
 
-    beforeEach(inject(function(_SurveyMetaInfoFactory_, _OIDHashGenerator_) {
-        SurveyMetaInfoFactory = _SurveyMetaInfoFactory_;
-        OIDHashGenerator = _OIDHashGenerator_;
-        actual = _SurveyMetaInfoFactory_.create();
-    }));
+        inject(function(_$injector_) {
+            /* @InjectMocks */
+            factory = _$injector_.get('SurveyMetaInfoFactory', {
+                OIDHashGenerator: mockOIDHashGenerator(_$injector_)
+            });
+        });
+    });
 
-    describe('SurveyMetaInfoFactory.create()', function() {
-        it('should call Date.now()', function() {
+    describe('Dependencies uses', function() {
+
+        it('Date.now() should be called in create() method', function() {
             spyOn(Date, 'now');
 
-            SurveyMetaInfoFactory.create();
+            factory.create();
 
             expect(Date.now).toHaveBeenCalled();
         });
 
-        it('should call OIDHashGenerator.generateHash(now.toString())', function() {
-            spyOn(OIDHashGenerator, 'generateHash');
+        it('OIDHashGenerator.generateHash() should be called with a seed parameter', function() {
+            spyOn(Mock.OIDHashGenerator, 'generateHash');
 
-            SurveyMetaInfoFactory.create();
+            factory.create();
 
-            expect(OIDHashGenerator.generateHash).toHaveBeenCalledWith(jasmine.any(String));
+            expect(Mock.OIDHashGenerator.generateHash).toHaveBeenCalledWith(jasmine.any(String));
+        });
+
+    });
+
+    describe('SurveyMetaInfoFactory.create()', function() {
+
+        it('should return an SurveyMetaInfo with creation date time equal to now date', function() {
+            var now = new Date(Date.now());
+            jasmine.clock().mockDate(now);
+
+            var surveyMetaInfo = factory.create();
+
+            expect(surveyMetaInfo.creationDatetime).toEqual(now);
         });
 
         it('should return an SurveyMetaInfo that extends from StudioObject', function() {
-            expect(actual.extends).toBe('StudioObject');
+            var surveyMetaInfo = factory.create();
+
+            expect(surveyMetaInfo.extends).toBe('StudioObject');
         });
 
         it('should return an SurveyMetaInfo object type', function() {
-            expect(actual.objectType).toBe('SurveyMetaInfo');
+            var surveyMetaInfo = factory.create();
+
+            expect(surveyMetaInfo.objectType).toBe('SurveyMetaInfo');
         });
 
-        xit('should return an OIDHash', function() {
-            var now = new Date(Date.now());
-            jasmine.clock().mockDate(now);
+        it('should return an SurveyMetaInfo with an OIDHash', function() {
+            var expected = Mock.OIDHashGenerator.generateHash(jasmine.any(String)),
+                surveyMetaInfo = factory.create();
 
-            var expected = OIDHashGenerator.generateHash(now.toString());
-            var actual = SurveyMetaInfoFactory.create();
-
-            expect(actual.oid).toBe(expected);
+            expect(surveyMetaInfo.oid).toBe(expected);
         });
 
-        xit('should return an SurveyMetaInfo with a creation date time', function() {
-            var now = new Date(Date.now());
-            jasmine.clock().mockDate(now);
-
-            var actual = SurveyMetaInfoFactory.create();
-            expect(actual.creationDatetime).toEqual(now);
-        });
     });
+
+    function mockOIDHashGenerator($injector) {
+        Mock.OIDHashGenerator = $injector.get('OIDHashGenerator');
+
+        /* Overrides original behavior */
+        Mock.OIDHashGenerator.generateHash = function(seed) {
+            return 0;
+        };
+
+        return Mock.OIDHashGenerator;
+    }
 
 });

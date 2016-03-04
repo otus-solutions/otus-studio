@@ -1,44 +1,64 @@
 describe('Survey suite:', function() {
-    beforeEach(module('otusjs.modelBuilder'));
-    beforeEach(module('otusjs.model'));
+    var Mock = {},
+        factory;
 
-    var actual;
+    /* @BeforeScenario */
+    beforeEach(function() {
+        module('otusjs.model');
+        module('otusjs.modelBuilder');
 
-    beforeEach(inject(function(_SurveyFactory_) {
-        actual = _SurveyFactory_.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
-    }));
+        inject(function(_$injector_) {
+            /* @InjectMocks */
+            factory = _$injector_.get('SurveyFactory', {
+                SurveyIdentityFactory: mockSurveyIdentityFactory(_$injector_),
+                SurveyMetaInfoFactory: mockSurveyMetaInfoFactory(_$injector_)
+            });
+
+            survey = factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+        });
+    });
 
     describe('SurveyFactory.create()', function() {
+
         it('should return an Survey that extends from StudioObject', function() {
-            expect(actual.extends).toBe('StudioObject');
+            expect(survey.extends).toBe('StudioObject');
         });
 
         it('should return an Survey object type', function() {
-            expect(actual.objectType).toBe('Survey');
+            expect(survey.objectType).toBe('Survey');
         });
 
         it('should return an Survey with a SurveyMetaInfo object type', function() {
-            expect(actual.metainfo.objectType).toBe('SurveyMetaInfo');
+            expect(survey.metainfo.objectType).toBe('SurveyMetaInfo');
         });
 
         xit('should return an Unit with oid', function() {
         });
 
         it('should return an Survey with a not null SurveyMetaInfo', function() {
-            expect(actual.metainfo).not.toBeNull();
+            expect(survey.metainfo).not.toBeNull();
         });
 
         it('should return an Survey with a not null SurveyIdentity', function() {
-            expect(actual.identity).not.toBeNull();
+            expect(survey.identity).not.toBeNull();
         });
 
         it('should return an Survey with a SurveyIdentity object type', function() {
-            expect(actual.identity.objectType).toBe('SurveyIdentity');
+            expect(survey.identity.objectType).toBe('SurveyIdentity');
         });
 
         it('should return an Survey with a literal object in question property', function() {
-            expect(actual.question).toEqual({});
+            expect(survey.question).toEqual({});
         });
+
     });
+
+    function mockSurveyIdentityFactory($injector) {
+        return $injector.get('SurveyIdentityFactory');
+    }
+
+    function mockSurveyMetaInfoFactory($injector) {
+        return $injector.get('SurveyMetaInfoFactory');
+    }
 
 });

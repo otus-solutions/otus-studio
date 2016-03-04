@@ -22,7 +22,7 @@
                 'numeric-question': NumericQuestionFactory,
                 'single-selection-question': SingleSelectionQuestionFactory,
                 'text-question': TextQuestionFactory,
-                'time-question': TimeQuestionFactory,
+                'time-question': TimeQuestionFactory
             };
 
         /* Public interface */
@@ -61,11 +61,13 @@
             writable: true
         });
 
+        // TODO: revisar essa propriedade quando for implementada a navegação
         Object.defineProperty(this, 'previousQuestion', {
             value: oid,
             writable: true
         });
 
+        // TODO: revisar essa propriedade quando for implementada a navegação
         Object.defineProperty(this, 'nextQuestion', {
             value: oid,
             writable: true
