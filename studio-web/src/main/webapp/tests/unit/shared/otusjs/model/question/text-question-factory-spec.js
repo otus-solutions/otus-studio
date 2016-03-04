@@ -1,4 +1,4 @@
-describe('SingleSelectionQuestionFactory', function() {
+describe('TextQuestionFactory', function() {
     var Mock = {},
 
         OID = 'OID';
@@ -11,11 +11,11 @@ describe('SingleSelectionQuestionFactory', function() {
             /* @Mock */
             mockQuestion(_$injector_);
 
-            factory = _$injector_.get('SingleSelectionQuestionFactory');
+            factory = _$injector_.get('TextQuestionFactory');
         });
     });
 
-    describe('SingleSelectionQuestion', function() {
+    describe('TextQuestion', function() {
 
         xit('returned object should extends Question', function() {
             var question = factory.create(OID, Mock.Question);
@@ -23,10 +23,10 @@ describe('SingleSelectionQuestionFactory', function() {
             expect(question.extends).toBe('Question');
         });
 
-        it('returned object should have objectType equal to SingleSelectionQuestion', function() {
+        it('returned object should have objectType equal to TextQuestion', function() {
             var question = factory.create(OID, Mock.Question);
 
-            expect(question.objectType).toBe('SingleSelectionQuestion');
+            expect(question.objectType).toBe('TextQuestion');
         });
 
         it('returned object should have a not null oid', function() {
@@ -35,10 +35,10 @@ describe('SingleSelectionQuestionFactory', function() {
             expect(question.oid).toBe(OID);
         });
 
-        it('returned object should have dataType equal to Integer', function() {
+        it('returned object should have dataType equal to String', function() {
             var question = factory.create(OID, Mock.Question);
 
-            expect(question.dataType).toBe('Integer');
+            expect(question.dataType).toBe('String');
         });
 
         it('returned object should have a label object for ptBR locale', function() {

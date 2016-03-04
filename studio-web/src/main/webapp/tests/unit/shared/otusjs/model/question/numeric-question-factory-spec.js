@@ -35,7 +35,7 @@ describe('NumericQuestionFactory', function() {
             expect(question.oid).toBe(OID);
         });
 
-        it('returned object should have dataType equal to LocalDate', function() {
+        it('returned object should have dataType equal to Integer', function() {
             var question = factory.create(OID, Mock.Question);
 
             expect(question.dataType).toBe('Integer');
