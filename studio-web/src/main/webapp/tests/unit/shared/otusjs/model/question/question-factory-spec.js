@@ -68,7 +68,7 @@ describe('QuestionFactory', function() {
         it('returned object should extends Question', function() {
             var question = factory.create('calendar-question', jasmine.any(String));
 
-            expect(question.extends).toBe('Question');
+            expect(question.extends).toBe('QuestionFactory');
         });
 
         it('returned object should have a not null oid', function() {

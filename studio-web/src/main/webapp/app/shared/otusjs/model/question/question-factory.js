@@ -43,7 +43,7 @@
         });
 
         Object.defineProperty(this, 'objectType', {
-            value: 'Question',
+            value: 'QuestionFactory',
             writable: false
         });
 
