@@ -14,10 +14,12 @@ body {
 }
 
 .image-user-div {
-    border-radius: 35px;
+	border-radius: 35px;
     float: right;
-    width: 46px;
-    margin-right: 10px;
+    width: 45px;
+    height: 45px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .image-user-div img {
@@ -26,6 +28,15 @@ body {
     width: inherit;
     border-radius: inherit;
     height: inherit;
+}
+
+.image-component{
+	border-radius: 35px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
 }
 
 .icon-white {
