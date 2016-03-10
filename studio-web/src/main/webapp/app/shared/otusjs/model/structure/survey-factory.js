@@ -18,7 +18,7 @@
 
         function create(name, acronym, version) {
             var metainfo = SurveyMetaInfoFactory.create(),
-                identity = SurveyIdentityFactory.create();
+                identity = SurveyIdentityFactory.create(name, acronym, version);
 
             return new Survey(metainfo, identity);
         }
