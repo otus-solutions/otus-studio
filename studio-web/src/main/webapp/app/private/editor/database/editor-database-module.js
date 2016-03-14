@@ -8,7 +8,8 @@
             $indexedDBProvider
                 .connection('otus-studio')
                 .upgradeDatabase(1, function(event, db, tx) {
-                    db.createObjectStore('survey_template', { keyPath: 'template_oid' });
+                    var store = db.createObjectStore('survey_template', { keyPath: 'template_oid' });
+                    store.createIndex('contribuitor_idx', 'contribuitor', { unique: false });
                 });
         });
 

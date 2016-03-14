@@ -13,12 +13,13 @@
         var self = this;
 
         /* Public interface */
-        self.saveSurveyTemplate = saveSurveyTemplate;
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
 
-        function saveSurveyTemplate(template) {
+        function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore('survey_template', function(store) {
                 var entry = {
                     'template_oid': Date.now() + '-' + template.oid,
+                    'contribuitor': session.owner,
                     template: template
                 };
 

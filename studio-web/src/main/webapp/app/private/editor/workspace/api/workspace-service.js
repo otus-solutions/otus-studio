@@ -52,7 +52,7 @@
         }
 
         function saveWork() {
-            CrossSessionDatabaseService.saveSurveyTemplate(self.workspace.project.survey);
+            CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
         }
 
         function getQuestionId() {
