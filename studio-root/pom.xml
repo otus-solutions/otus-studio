@@ -24,7 +24,7 @@
 
     <modules>
         <module>../studio-web</module>
-        <module>../studio-js</module>
+        <module>../otus-studio</module>
         <module>../studio-business</module>
         <module>../studio-ear</module>
         <module>../studio-persistence</module>

@@ -1,0 +1,228 @@
+/**
+ *
+ * Home.css
+ *
+ **/
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-y: hidden !important;
+}
+
+.image-user-div {
+	border-radius: 35px;
+    float: right;
+    width: 45px;
+    height: 45px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.image-user-div img {
+    cursor: pointer;
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
+    height: inherit;
+}
+
+.image-component{
+	border-radius: 35px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
+}
+
+.icon-white {
+    color: white!important;
+}
+
+md-input-container.md-input-invalid>md-icon {
+    color: red;
+}
+
+#subarea-toolbar {
+    background: #E0E0E0;
+    color: gray;
+    border-bottom: 1px solid #C7C7C7;
+}
+
+/**
+ *
+ * Container.css
+ *
+ **/
+
+.palette {
+    border-right: 1px solid #E1E1E1;
+    background-color: #FFFFFF;
+}
+
+.stage {
+    margin: 0 1px 0px;
+    padding-top: 0px !important;
+    background-color: #F9F9F9 !important;
+}
+
+.resource {
+    border-left: 1px solid #E1E1E1;
+    background-color: #FFFFFF;
+}
+
+.boxWithHeight {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+/**
+ *
+ * Sheet.css
+ *
+ **/
+
+#sheet {
+    border: 1px solid #D8D6D6;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 297mm !important;
+    padding: 10mm;
+    width: 210mm;
+    -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+    -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+    box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+}
+
+.question-whiteframe {
+    margin-top: 5px
+}
+
+ui-accordion-header {
+    min-height: 75px;
+}
+
+ui-accordion-header {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+ui-accordion-header button {
+    margin-top: 7px !important;
+}
+
+ui-accordion-header md-fab-speed-dial * {
+    display: inherit;
+}
+
+ui-accordion-header md-fab-speed-dial.hidden {
+    display: none;
+}
+
+ui-accordion-header md-fab-speed-dial.visible {
+    display: flex;
+}
+
+ui-accordion-content {
+    transition: all .3s cubic-bezier(.55, 0, .55, .2)
+}
+
+ui-accordion-content.hidden {
+    display: none;
+}
+
+ui-accordion-content.visible {
+    display: flex;
+}
+
+.label-container {
+    padding: 15px;
+}
+
+/**
+ *
+ * Properties.css
+ *
+ **/
+
+.properties-frame {
+    background-color: #FFFFFF;
+    max-height: 315px;
+}
+
+.properties-frame-body {
+    overflow-y: scroll;
+    max-height: 215px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+/**
+ *
+ * Repository.css
+ *
+**/
+
+#repository {
+    width: 55%;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+/**
+ *
+ * question-editor.css
+ *
+**/
+
+#editor-container {
+    background: none;
+}
+
+.filling-mode-selector {}
+
+.editable {
+    border-bottom: 1px dotted gray;
+    color: gray;
+    font-style: italic;
+    font-size: 20pt;
+}
+
+[preview-mode] {
+    border: none;
+}
+
+[edit-mode] {
+    border: 1px dashed #FFFFFF;
+}
+
+[edit-mode]:hover {
+    background-color: #fffae9;
+    border: 1px dashed #D0D0D0;
+    cursor: prompt;
+    cursor: pointer;
+}
+
+[contenteditable=true]:empty:before {
+    content: attr(edit-placeholder);
+    display: block;
+    font-style: italic;
+    color: #A0A0A0
+}
+
+#sheet .md-tab {
+    text-transform: none !important;
+}
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+md-backdrop {
+    z-index: 65 !important
+}
