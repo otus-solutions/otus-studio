@@ -19,7 +19,7 @@
             $indexedDB.openStore('survey_template', function(store) {
                 var entry = {
                     'template_oid': Date.now() + '-' + template.oid,
-                    'contribuitor': session.owner,
+                    'contributor': session.owner,
                     template: template
                 };
 
