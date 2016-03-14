@@ -1,0 +1,45 @@
+<div id="survey-questions" layout="column">
+    <md-button class="md-raised md-primary">Questões</md-button>
+    <div ng-show="true" layout="column">
+        <md-button class="md-primary"
+            editing-source
+            es-id="survey-questions-add-calendar-question"
+            es-type="add-button"
+            es-model="calendar-question"
+            es-target="survey.question">
+            Calendário
+        </md-button>
+        <md-button class="md-primary"
+            editing-source
+            es-id="survey-questions-add-numeric-question"
+            es-type="add-button"
+            es-model="numeric-question"
+            es-target="survey.question">
+            Numérica
+        </md-button>
+        <md-button class="md-primary"
+            editing-source
+            es-id="survey-questions-add-single-selection-question"
+            es-type="add-button"
+            es-model="single-selection-question"
+            es-target="survey.question">
+            Seleção simples
+        </md-button>
+        <md-button class="md-primary"
+            editing-source
+            es-id="survey-questions-add-text-question"
+            es-type="add-button"
+            es-model="text-question"
+            es-target="survey.question">
+            Texto
+        </md-button>
+        <md-button class="md-primary"
+            editing-source
+            es-id="survey-questions-add-time-question"
+            es-type="add-button"
+            es-model="time-question"
+            es-target="survey.question">
+            Relógio
+        </md-button>
+    </div>
+</div>
