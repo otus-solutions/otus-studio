@@ -36,15 +36,14 @@
         }
 
         function loadQuestionDataEditor(question) {
+            scope.widget = WidgetService.getWidgetForModel(question);
+            loadTemplate();
             component.children().remove();
-            var questionWidget = WidgetService.getWidgetForModel(question);
-            loadTemplate(questionWidget);
             component.show();
         }
 
-        function loadTemplate(questionWidget) {
+        function loadTemplate() {
             TemplateLoaderService.load('private/editor/ui/question-data-editor/question-data-editor.html', scope, function(template) {
-                scope.widget = questionWidget;
                 component.append(template);
             });
         }

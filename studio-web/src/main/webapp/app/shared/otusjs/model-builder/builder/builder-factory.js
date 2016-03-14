@@ -5,7 +5,10 @@
         .module('otusjs.modelBuilder')
         .factory('BuilderFactory', BuilderFactory);
 
-    BuilderFactory.$inject = ['BuilderSelectorService', 'BuilderMapService'];
+    BuilderFactory.$inject = [
+        'BuilderSelectorService',
+        'BuilderMapService'
+    ];
 
     function BuilderFactory(BuilderSelectorService, BuilderMapService) {
         var self = this;

@@ -49,10 +49,10 @@
         .factory('StateChangerButton', [
             function() {
                 var button = function(element, controller) {
-                    const CLOSED = 0;
-                    const OPENED = 1;
-                    const CHEVRON_UP = 'chevron-up';
-                    const CHEVRON_DOWN = 'chevron-down';
+                    var CLOSED = 0;
+                    var OPENED = 1;
+                    var CHEVRON_UP = 'chevron-up';
+                    var CHEVRON_DOWN = 'chevron-down';
 
                     var self = this;
 
@@ -94,8 +94,8 @@
         .factory('ContentContainer', [
             function() {
                 var content = function(element) {
-                    const HIDDEN = 'hidden';
-                    const VISIBLE = 'visible';
+                    var HIDDEN = 'hidden';
+                    var VISIBLE = 'visible';
 
                     /* Private scope */
                     var self = this,

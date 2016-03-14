@@ -222,3 +222,7 @@ ui-accordion-content.visible {
 .uppercase-text {
     text-transform: uppercase;
 }
+
+md-backdrop {
+    z-index: 65 !important
+}
