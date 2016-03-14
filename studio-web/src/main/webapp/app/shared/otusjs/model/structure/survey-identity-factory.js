@@ -21,17 +21,20 @@
     function SurveyIdentity() {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'SurveyIdentity',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: '',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'name', {

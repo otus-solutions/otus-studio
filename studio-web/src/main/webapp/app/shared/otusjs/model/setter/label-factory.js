@@ -21,28 +21,33 @@
     function Label() {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'Label',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: '',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'plainText', {
             value: '',
             writable: true,
+            enumerable: true,
             enumerable: true
         });
 
         Object.defineProperty(this, 'formattedText', {
             value: '',
             writable: true,
+            enumerable: true,
             enumerable: true
         });
     }
