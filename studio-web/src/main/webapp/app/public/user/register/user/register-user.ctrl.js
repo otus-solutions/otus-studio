@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('studio', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
+        .module('register.user', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
         .controller(
             'RegisterUserCtrl', ['$scope', '$http', '$mdDialog', '$window',
                 function($scope, $http, $mdDialog, $window) {
@@ -44,7 +44,7 @@
             }]);
 
     angular
-        .module('StudioApp')
+        .module('register.user')
         .directive(
             'unique', ['$http', '$q',
                 function($http, $q) {

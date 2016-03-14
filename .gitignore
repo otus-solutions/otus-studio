@@ -8,4 +8,5 @@
 *.iml
 *.swp
 npm-debug.log
-studio-web/src/main/webapp/tests/unit/unit-result.report.html
+**/unit-result.report.html
+/*/node_modules/

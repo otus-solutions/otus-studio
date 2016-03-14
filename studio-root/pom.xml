@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.org.studio</groupId>
     <artifactId>studio-root</artifactId>
-    <version>0.14.18-SNAPSHOT</version>
+    <version>0.17.20-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>studio-root</name>
 
@@ -24,6 +24,7 @@
 
     <modules>
         <module>../studio-web</module>
+        <module>../otus-studio</module>
         <module>../studio-business</module>
         <module>../studio-ear</module>
         <module>../studio-persistence</module>

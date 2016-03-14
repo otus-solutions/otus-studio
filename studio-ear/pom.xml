@@ -8,7 +8,7 @@
     <parent>
         <groupId>br.org.studio</groupId>
         <artifactId>studio-root</artifactId>
-        <version>0.14.18-SNAPSHOT</version>
+        <version>0.17.20-SNAPSHOT</version>
         <relativePath>../studio-root/pom.xml</relativePath>
     </parent>
 
