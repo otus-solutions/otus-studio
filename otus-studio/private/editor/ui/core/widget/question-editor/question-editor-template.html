@@ -1,0 +1,32 @@
+<!-- Editor container -->
+<md-whiteframe question-target="{{::widget.questionId}}" class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center"
+    editing-source
+    es-type="question-editor"
+    es-id="question-editor-{{::widget.questionId}}"
+    es-target="{{::widget.questionTarget}}">
+
+    <ui-accordion title="{{::widget.title}}" widget="::widget" flex>
+        <ui-accordion-content layout="column" layout-padding flex>
+            <md-content layout="column" flex>
+                <div layout="row" class="label-container" layout-align="left center">
+                    <div flex contenteditable="true" edit-mode edit-placeholder="Clique aqui para inserir o texto da label"
+                        editing-source
+                        es-type="div-editable"
+                        es-id="question-editor-{{::widget.questionId}}-label"
+                        es-target="{{::widget.labelTarget}}"></div>
+                </div>
+                <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+                    <md-tab label="Resposta">
+                        <md-content class="md-padding" bind-html-compile="widgetTemplateList['{{::widget.questionId}}']"></md-content>
+                    </md-tab>
+                    <md-tab label="Metadado">
+                        <md-content class="md-padding"></md-content>
+                    </md-tab>
+                    <md-tab label="Comentário">
+                        <md-content class="md-padding"></md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </ui-accordion-content>
+    </ui-accordion>
+</md-whiteframe>

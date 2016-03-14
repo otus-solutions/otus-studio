@@ -1,0 +1,28 @@
+<div flex id="question-properties" class="properties-frame">
+    <md-toolbar class="md-theme-light md-layoutTheme-theme">
+        <h2 class="md-toolbar-tools">
+            <span>Propriedades da questão</span>
+        </h2>
+    </md-toolbar>
+    <md-content class="md-padding properties-frame-body" flex>
+        <md-input-container class="md-block">
+            <label>ID</label>
+            <input name="questionOID" type="text"
+                ng-model="widget.model.oid"
+                editing-source
+                es-type="input-text"
+                es-id="question-properties-oid"
+                es-target="survey.question.{{widget.questionId}}.oid" disabled />
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Label</label>
+            <input name="questionLabel" type="text"
+                ng-model="widget.model.label.ptBR.plainText"
+                editing-source
+                es-type="input-text"
+                es-id="question-properties-label"
+                es-target="survey.question.{{widget.questionId}}.label" />
+        </md-input-container>
+    </md-content>
+</div>
+<md-divider></md-divider>

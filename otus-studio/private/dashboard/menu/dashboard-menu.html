@@ -1,0 +1,36 @@
+<md-button ng-click="dashboardMenu.open()">
+    <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+    Otus Studio
+</md-button>
+<md-list>
+    <md-list-item class="md-1-line">
+        <md-button id="home-menu" ng-click="dashboardMenu.openHome()">
+            <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+            Home
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="surveyforms-menu" ng-click="dashboardMenu.openSurveyForms()">
+            <md-icon md-svg-icon="file-document-box" aria-label="Formulários"></md-icon>
+            Formulários
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="create-repository-menu" ng-click="dashboardMenu.openCreateRepository()">
+            <md-icon md-svg-icon="cloud-upload" aria-label="Criar repositório"></md-icon>
+            Criar repositório
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="connect-repository-menu" ng-click="dashboardMenu.openConnectRepository()">
+            <md-icon md-svg-icon="cloud-download" aria-label="Conectar repositório"></md-icon>
+            Conectar repositório
+        </md-button>
+    </md-list-item>
+    <md-list-item class="md-1-line">
+        <md-button id="user-management-menu" ng-click="dashboardMenu.openUserManagement()">
+            <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
+            Usuários
+        </md-button>
+    </md-list-item>
+</md-list>
