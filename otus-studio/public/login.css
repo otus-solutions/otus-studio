@@ -5,7 +5,7 @@
 }
 
 body {
-	padding-top: 10rem;
+	/**padding-top: 10rem;*/
 }
 
 #labelInfo {
@@ -20,6 +20,19 @@ body {
 	width: 55%;
 	margin: 0 auto;
 }
+
+#divtop{
+	background-color: #448AFF;
+	height:40%;	
+
+}
+
+#divDown{
+	background-color: gray;
+	height: 60%;
+}
+
+
 
 h1 {
 	margin: 0 auto;
@@ -36,14 +49,14 @@ h1 {
 }
 
 footer {
-	background-color: #333333;
-	color: white;
+	background-color: #B3B3B3;
+	color: black;
 	width: 100%;
 	height: 100px;
 	position: absolute;
 	bottom: 0px;
 	text-align: center;
-	border-top: 2px solid black;
+	border-top: 2px solid #ECEFF1;
 }
 
 footer p {
