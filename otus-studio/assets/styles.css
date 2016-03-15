@@ -41,10 +41,10 @@ body {
 
 .image-otus-toolbar {
     height: 41px;
-    width: 51px;
+    width: 54px;
     margin: 10px;
    	margin-top: inherit;
-   	min-width: 51px;
+   	min-width: 54px;
     min-height: 41px;
 }
 
