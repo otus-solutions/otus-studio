@@ -39,6 +39,15 @@ body {
     min-height: 45px;
 }
 
+.image-otus-toolbar {
+    height: 41px;
+    width: 54px;
+    margin: 10px;
+   	margin-top: inherit;
+   	min-width: 54px;
+    min-height: 41px;
+}
+
 .icon-white {
     color: white!important;
 }
@@ -62,6 +71,19 @@ md-input-container.md-input-invalid>md-icon {
 .palette {
     border-right: 1px solid #E1E1E1;
     background-color: #FFFFFF;
+}
+
+.editor-toolbar {
+	border-bottom: 1px solid #E1E1E1;
+	height: 24px;
+	min-height: 50px;
+}
+
+.editor-icon {
+	height: 37px;
+    width: 35px;
+    min-width:35px;
+    min-height: 37px;
 }
 
 .stage {

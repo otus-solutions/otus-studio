@@ -1,24 +1,42 @@
-<div layout flex>
-    <md-sidenav ng-include="'private/editor/ui/question-palette/question-palette-template.html'"
-                class="palette"
-                md-is-locked-open="true"
-                layout="column"
-                flex="20">
-    </md-sidenav>
-    <md-content layout="column" layout-padding flex class="stage">
-        <md-tabs id="stage-mode-selector" flex>
-            <md-tab id="editing-tab" label="Edição">
-                <div ng-include="'private/editor/ui/stage/stage.html'"></div>
-            </md-tab>
-            <!-- RECUSO NÃO IMPLEMENTADO, ENTÃO NÃO PRECISA APARECER PARA O USUÁRIO
-            <md-tab id="preview-tab" label="Preview">
-                <div ng-include src="'private/survey-preview/preview-template.html'"></div>
-            </md-tab>
-            -->
-        </md-tabs>
-    </md-content>
-    <md-sidenav layout="column" flex="20" md-is-locked-open="true" class="resource" ng-cloak>
-        <ng-include src="'private/editor/ui/survey-data-editor/survey-properties.html'"></ng-include>
-        <datatool></datatool>
-    </md-sidenav>
+<div layout="column" flex>
+		<md-toolbar layout="column" class="md-primary editor-toolbar">
+			<div layout="row" layout-align="center center">
+				<md-button aria-label="Salvar" class="editor-icon">
+	                    <md-icon md-svg-icon="content-save"></md-icon>
+	                    <md-tooltip md-direction="down">
+          					Salvar
+        				</md-tooltip>
+	            </md-button>
+	             <md-button aria-label="Exportar" class="editor-icon">
+	            	<md-icon md-svg-icon="file-export"></md-icon>
+	            	<md-tooltip md-direction="down">
+          					Exportar
+        			</md-tooltip>
+	            </md-button>
+	        </div>
+		</md-toolbar>
+	<md-content layout flex="20">
+	    <md-sidenav ng-include="'private/editor/ui/question-palette/question-palette-template.html'"
+	                class="palette"
+	                md-is-locked-open="true"
+	                layout="column"
+	                flex="20">
+	    </md-sidenav>
+	    <md-content layout="column" layout-padding flex class="stage">
+	        <md-tabs id="stage-mode-selector" flex>
+	            <md-tab id="editing-tab" label="Edição">
+	                <div ng-include="'private/editor/ui/stage/stage.html'"></div>
+	            </md-tab>
+	            <!-- RECUSO NÃO IMPLEMENTADO, ENTÃO NÃO PRECISA APARECER PARA O USUÁRIO
+	            <md-tab id="preview-tab" label="Preview">
+	                <div ng-include src="'private/survey-preview/preview-template.html'"></div>
+	            </md-tab>
+	            -->
+	        </md-tabs>
+	    </md-content>
+	    <md-sidenav layout="column" flex="20" md-is-locked-open="true" class="resource" ng-cloak>
+	        <ng-include src="'private/editor/ui/survey-data-editor/survey-properties.html'"></ng-include>
+	        <datatool></datatool>
+	    </md-sidenav>
+	</md-content>
 </div>
