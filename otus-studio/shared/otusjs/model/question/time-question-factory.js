@@ -23,27 +23,32 @@
     function TimeQuestion(oid, prototype, UnitFactory) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'TimeQuestion',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: prototype.oid,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'dataType', {
             value: 'LocalTime',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
-            writable: true
+            writable: true,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'unit', {
@@ -52,7 +57,8 @@
                 'enUS': UnitFactory.create(),
                 'esES': UnitFactory.create()
             },
-            writable: true
+            writable: true,
+            enumerable: true
         });
     }
 
