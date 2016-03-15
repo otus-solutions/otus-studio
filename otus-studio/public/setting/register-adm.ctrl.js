@@ -21,7 +21,7 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages', 'passwo
     $scope.register = function (systemConf) {
         $scope.isLoading = true;
         $scope.validateEmailService(systemConf).then(function () {
-            $http.post(window.location.origin + '/studio/session/rest/system/config', systemConf).then(function (response) {
+            $http.post(window.location.origin + '/otus-domain-rest/session/rest/system/config', systemConf).then(function (response) {
                     $scope.isLoading = false;
                     confirmAlertToNavigate();
                 },
@@ -38,7 +38,7 @@ angular.module('RegisterModule', ['ngMaterial', 'ui.mask', 'ngMessages', 'passwo
 
         if (systemConf.emailSender.email && systemConf.emailSender.password && systemConf.emailSender.passwordConfirm) {
 
-            $http.post(window.location.origin + '/studio/session/rest/system/validation/emailService', systemConf).then(function (response) {
+            $http.post(window.location.origin + '/otus-domain-rest/session/rest/system/validation/emailService', systemConf).then(function (response) {
                 if (response.data.data) {
                     $scope.resetValidationEmail();
                     deferred.resolve(true);

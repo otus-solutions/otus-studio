@@ -10,7 +10,7 @@
             'USER_MANAGEMENT': 'user-management',
             'CREATE_REPOSITORY': 'repository?actionType=NEW',
             'CONNECT_REPOSITORY': 'repository?actionType=CONNECT',
-            'LOGOUT': '/studio/session/rest/authentication/logout'
+            'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
