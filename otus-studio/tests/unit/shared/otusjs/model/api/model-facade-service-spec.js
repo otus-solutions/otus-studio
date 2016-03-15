@@ -5,6 +5,7 @@ describe('ModelFacadeService', function() {
     beforeEach(function() {
         module('otusjs.model');
         module('otusjs.modelBuilder');
+        module('utils');
 
         inject(function(_$injector_) {
             /* @InjectMocks */

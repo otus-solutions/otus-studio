@@ -1,5 +1,9 @@
 <div layout="column" flex>
+<<<<<<< HEAD
+		<md-toolbar layout="column" class="md-primary editor-toolbar" ng-controller="MainContainerController as toolbarController">
+=======
 		<md-toolbar layout="column" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
+>>>>>>> 19e6980bc74aff1c0859fd97100f87c88a35b82c
 			<div layout="row" layout-align="center center">
 				<md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
 	                    <md-icon md-svg-icon="content-save"></md-icon>
@@ -7,7 +11,7 @@
           					Salvar
         				</md-tooltip>
 	            </md-button>
-	             <md-button ng-href="data:{{editorToolbarController.a}}" ng-click="editorToolbarController.exportWork()" download="data.json" aria-label="Exportar" class="editor-icon">
+	             <md-button ng-href="data:{{toolbarController.a}}" ng-click="toolbarController.exportWork()" download="data.json" aria-label="Exportar" class="editor-icon">
 	            	<md-icon md-svg-icon="file-export"></md-icon>
 	            	<md-tooltip md-direction="down">
           					Exportar

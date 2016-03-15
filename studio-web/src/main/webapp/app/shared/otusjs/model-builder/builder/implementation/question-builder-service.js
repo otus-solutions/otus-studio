@@ -10,7 +10,6 @@
     function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory) {
         var self = this,
             observers = [],
-            questionLinkedList = QuestionNavigationFactory.create(),
             workResult = null;
 
         /* Public interface */
@@ -49,7 +48,6 @@
         function addQuestion(work) {
             var newQuestion = QuestionFactory.create(work.model, work.questionId);
             work.survey.question[work.questionId] = newQuestion;
-            questionLinkedList.addAtEnd(newQuestion);
 
             return newQuestion;
         }

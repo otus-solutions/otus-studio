@@ -23,27 +23,32 @@
     function QuestionAnswerOption(oid, questionOID, LabelFactory) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'QuestionAnswerOption',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: oid,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'dataType', {
             value: 'Integer',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'parentQuestion', {
             value: questionOID,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'label', {
@@ -52,7 +57,8 @@
                 'enUS': LabelFactory.create(),
                 'esES': LabelFactory.create()
             },
-            writable: true
+            writable: true,
+            enumerable: true
         });
     }
 

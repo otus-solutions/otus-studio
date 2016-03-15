@@ -9,11 +9,17 @@
         'WorkspaceFactory',
         'SurveyProjectFactory',
         'SurveyLoaderService',
-        'CrossSessionDatabaseService',
+<<<<<<< HEAD
         'SurveyExportService'
     ];
 
+    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController, SurveyExportService) {
+=======
+        'CrossSessionDatabaseService'
+    ];
+
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService) {
+>>>>>>> 19e6980bc74aff1c0859fd97100f87c88a35b82c
         var self = this,
             questionIdCounter = -1,
             observers = [];
@@ -55,7 +61,6 @@
 
         function saveWork() {
             CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
-
         }
 
         function exportWork() {

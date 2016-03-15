@@ -24,22 +24,26 @@
     function SurveyMetaInfo(creationDatetime, oidHash) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'SurveyMetaInfo',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: oidHash,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'creationDatetime', {
             value: creationDatetime,
-            writable: false
+            writable: false,
+            enumerable: true
         });
     }
 

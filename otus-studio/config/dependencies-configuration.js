@@ -8,7 +8,8 @@
         /* 3rd-party modules */
         'ui.mask',
         'ui.router',
-        'lokijs'
+        'lokijs',
+        'indexedDB'
     ]);
 
 }());

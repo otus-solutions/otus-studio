@@ -21,27 +21,32 @@
     function CalendarQuestion(oid, prototype) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'CalendarQuestion',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: prototype.oid,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'dataType', {
             value: 'LocalDate',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'label', {
             value: prototype.label,
-            writable: true
+            writable: true,
+            enumerable: true
         });
     }
 

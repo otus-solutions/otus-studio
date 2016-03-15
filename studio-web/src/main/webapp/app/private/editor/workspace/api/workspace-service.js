@@ -8,10 +8,11 @@
     WorkspaceService.$inject = [
         'WorkspaceFactory',
         'SurveyProjectFactory',
-        'SurveyLoaderService'
+        'SurveyLoaderService',
+        'CrossSessionDatabaseService'
     ];
 
-    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController) {
+    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService) {
         var self = this,
             questionIdCounter = -1,
             observers = [];
@@ -51,7 +52,7 @@
         }
 
         function saveWork() {
-
+            CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
         }
 
         function getQuestionId() {

@@ -1,17 +1,18 @@
 describe('Survey suite:', function() {
-    var Mock = {},
-        factory;
+    var Mock = {};
 
     /* @BeforeScenario */
     beforeEach(function() {
         module('otusjs.model');
         module('otusjs.modelBuilder');
+        module('utils');
 
         inject(function(_$injector_) {
             /* @InjectMocks */
             factory = _$injector_.get('SurveyFactory', {
-                SurveyIdentityFactory: mockSurveyIdentityFactory(_$injector_),
-                SurveyMetaInfoFactory: mockSurveyMetaInfoFactory(_$injector_)
+                'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
+                'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
+                'UUID': mockUUID(_$injector_)
             });
 
             survey = factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
@@ -51,6 +52,14 @@ describe('Survey suite:', function() {
             expect(survey.question).toEqual({});
         });
 
+        it('should call UUID.generateUUID()', function() {
+            spyOn(Mock.UUID, 'generateUUID');
+
+            factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+
+            expect(Mock.UUID.generateUUID).toHaveBeenCalled();
+        });
+
     });
 
     function mockSurveyIdentityFactory($injector) {
@@ -59,6 +68,11 @@ describe('Survey suite:', function() {
 
     function mockSurveyMetaInfoFactory($injector) {
         return $injector.get('SurveyMetaInfoFactory');
+    }
+
+    function mockUUID($injector) {
+        Mock.UUID = $injector.get('UUID');
+        return Mock.UUID;
     }
 
 });
