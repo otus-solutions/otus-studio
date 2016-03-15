@@ -8,10 +8,11 @@
     WorkspaceService.$inject = [
         'WorkspaceFactory',
         'SurveyProjectFactory',
-        'SurveyLoaderService'
+        'SurveyLoaderService',
+        'SurveyExportService'
     ];
 
-    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController) {
+    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, SurveyPageController, SurveyExportService) {
         var self = this,
             questionIdCounter = -1,
             observers = [];
@@ -23,6 +24,7 @@
         self.closeWork = closeWork;
         self.saveWork = saveWork;
         self.getQuestionId = getQuestionId;
+        self.exportWork = exportWork;
 
         /* Observable interface */
         self.registerObserver = registerObserver;
@@ -52,6 +54,10 @@
 
         function saveWork() {
 
+        }
+
+        function exportWork() {
+            return SurveyExportService.exportSurvey(self.workspace.project.survey);
         }
 
         function getQuestionId() {
