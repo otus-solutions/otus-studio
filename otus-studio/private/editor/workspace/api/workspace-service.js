@@ -26,6 +26,7 @@
         self.saveWork = saveWork;
         self.getQuestionId = getQuestionId;
         self.exportWork = exportWork;
+        self.getSurvey = getSurvey;
 
         /* Observable interface */
         self.registerObserver = registerObserver;
@@ -63,6 +64,10 @@
 
         function getQuestionId() {
             return ++questionIdCounter;
+        }
+
+        function getSurvey() {
+            return self.workspace.project.survey;
         }
 
         function importProject(project) {

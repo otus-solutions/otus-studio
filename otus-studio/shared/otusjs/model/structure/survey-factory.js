@@ -28,41 +28,53 @@
     }
 
     function Survey(metainfo, identity, uuid) {
-        Object.defineProperty(this, 'extends', {
+        var self = this;
+
+        Object.defineProperty(self, 'extends', {
             value: 'StudioObject',
             writable: false,
             enumerable: true
         });
 
-        Object.defineProperty(this, 'objectType', {
+        Object.defineProperty(self, 'objectType', {
             value: 'Survey',
             writable: false,
             enumerable: true
         });
 
-        Object.defineProperty(this, 'oid', {
+        Object.defineProperty(self, 'oid', {
             value: uuid,
             writable: false,
             enumerable: true
         });
 
-        Object.defineProperty(this, 'identity', {
+        Object.defineProperty(self, 'identity', {
             value: identity,
             writable: false,
             enumerable: true
         });
 
-        Object.defineProperty(this, 'metainfo', {
+        Object.defineProperty(self, 'metainfo', {
             value: metainfo,
             writable: false,
             enumerable: true
         });
 
-        Object.defineProperty(this, 'question', {
+        Object.defineProperty(self, 'question', {
             value: {},
             writable: false,
             enumerable: true
         });
+
+        /*Public interface*/
+        self.questionsCount = questionsCount;
+
+        function questionsCount() {
+            var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
+                return ((typeof property) != 'function');
+            });
+            return propertyList.length;
+        }
     }
 
 }());

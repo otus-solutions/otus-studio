@@ -20,8 +20,8 @@
         }
 
         function isSurveyEmpty() {
-            console.log(WorkspaceService.questionIdCounter);
-            return WorkspaceService.questionIdCounter == -1 ? false : true;
+            console.log(WorkspaceService.getSurvey().questionsCount());
+            return WorkspaceService.getSurvey().questionsCount() === 0 ? true : false;
         }
     }
 
