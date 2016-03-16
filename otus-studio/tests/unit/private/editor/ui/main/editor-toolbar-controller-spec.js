@@ -3,12 +3,11 @@ describe('EditorToolbarController', function() {
 
     /* @BeforeScenario */
     beforeEach(function() {
-        module('editor.ui');
-        module('editor.workspace');
+        module('studio');
 
-        inject(function(_$injector_) {
+        inject(function(_$controller_, _$injector_) {
             /* @InjectMocks */
-            controller = _$injector_.get('EditorToolbarController', {
+            controller = _$controller_('EditorToolbarController', {
                 'WorkspaceService': mockWorkspaceService(_$injector_)
             });
         });
@@ -16,7 +15,7 @@ describe('EditorToolbarController', function() {
 
     describe('saveOfflineWork method', function() {
 
-        xit('should call WorkspaceService.saveWork', function() {
+        it('should call WorkspaceService.saveWork', function() {
             spyOn(Mock.WorkspaceService, 'saveWork');
 
             controller.saveOfflineWork();
