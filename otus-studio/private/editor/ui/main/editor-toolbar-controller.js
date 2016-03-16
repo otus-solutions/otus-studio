@@ -20,7 +20,6 @@
         }
 
         function isSurveyEmpty() {
-            console.log(WorkspaceService.getSurvey().questionsCount());
             return WorkspaceService.getSurvey().questionsCount() === 0 ? true : false;
         }
     }
