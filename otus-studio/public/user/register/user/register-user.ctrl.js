@@ -8,7 +8,7 @@
 
                     var self = this;
 
-                    const $HTTP_POST_URL_CREATE = window.location.origin + '/studio/session/rest/register/user';
+                    const $HTTP_POST_URL_CREATE = window.location.origin + '/otus-domain-rest/session/rest/register/user';
 
                     /* Public interface */
                     self.register = register;
@@ -49,7 +49,7 @@
             'unique', ['$http', '$q',
                 function($http, $q) {
 
-                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/studio/session/rest/register/user/email/exists';
+                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain/session/rest/register/user/email/exists';
 
                     return {
                         restrict: 'A',

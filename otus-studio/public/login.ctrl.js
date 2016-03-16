@@ -1,8 +1,8 @@
 angular.module('Login', ['ngMaterial', 'ngMessages', 'ui.mask']).controller('LoginController', function($scope, $http, $window) {
 
-    var HTTP_POST_URL = window.location.origin + '/studio/session/rest/authentication/login';
-    var HTTP_GET_SYSTEM_CONFIG_STATUS = window.location.origin + '/studio/session/rest/system/config/ready';
-    var HTTP_GET_IS_LOGGED = window.location.origin + '/studio/session/rest/authentication/isLogged';
+    var HTTP_POST_URL = window.location.origin + '/otus-domain-rest/session/rest/authentication/login';
+    var HTTP_GET_SYSTEM_CONFIG_STATUS = window.location.origin + '/otus-domain-rest/session/rest/system/config/ready';
+    var HTTP_GET_IS_LOGGED = window.location.origin + '/otus-domain-rest/session/rest/authentication/isLogged';
 
     var HTTP_URL_LOGIN_SUCCESS = window.location.origin + '/otus-studio/private/index.html';
     var HTTP_URL_REGISTER_PAGE = window.location.origin + '/otus-studio/public/user/register/user/register-user.html';
