@@ -28,6 +28,7 @@
     "angular-aria": "^1.4.7",
     "angular-material": "^1.x",
     "angular-material-icons": "0.6.0",
+    "angular-messages": "^1.5.0",
     "browser-sync": "2.x",
     "ui-router": "1.0.0-alpha0"
   },
@@ -44,6 +45,7 @@
     "karma-htmlfile-reporter": "^0.2.2",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": ">=1.9",
     "phantomjs-prebuilt": "^2.1.2"
   }
 }

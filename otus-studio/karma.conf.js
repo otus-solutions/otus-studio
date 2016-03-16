@@ -8,7 +8,7 @@ module.exports = function(config) {
 
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: './',
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -22,6 +22,7 @@ module.exports = function(config) {
                 DEPENDENCIES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
                 DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
                 DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
+                DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
                 DEPENDENCIES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
                 DEPENDENCIES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
                 DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
@@ -76,10 +77,10 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_ERROR,
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        autoWatch: false,
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
