@@ -47,11 +47,11 @@ h1 {
 
 .logo {
     margin: 0 auto;
-    height: 45%;
+    height: 47%;
     display: block;
     z-index: 3;
     position: absolute;
-    bottom: 68%;
+    bottom: 67%;
     left: 38%;
     
 }
@@ -86,7 +86,7 @@ label[for="phonenumber"] {
 }
 
 #content {
-	margin-top: 10%;
+	margin-top: 11%;
 	padding: 10px;
 	
 }
