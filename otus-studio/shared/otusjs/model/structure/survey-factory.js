@@ -8,10 +8,11 @@
     SurveyFactory.$inject = [
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
-        'UUID'
+        'UUID',
+        '$window'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, UUID) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, UUID, $window) {
         var self = this;
 
         /* Public interdace */

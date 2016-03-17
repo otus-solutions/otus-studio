@@ -20,7 +20,7 @@ angular.module('Login', ['ngMaterial', 'ngMessages', 'ui.mask']).controller('Log
                 if(response.data.data){
                     $window.location.href = HTTP_URL_HOME_PAGE;
                 }
-            })
+            });
         }
     });
 
@@ -28,8 +28,8 @@ angular.module('Login', ['ngMaterial', 'ngMessages', 'ui.mask']).controller('Log
         $scope.invalidLogin = false;
 
         $http.post(HTTP_POST_URL, user).then(function(response) {
-
-            if (response.data) {
+            if (!response.data.hasErrors) {
+                $window.sessionStorage.userUUID = response.data.data;
                 $window.location.href = HTTP_URL_LOGIN_SUCCESS;
                 $scope.invalidLogin = false;
             } else {
@@ -39,11 +39,11 @@ angular.module('Login', ['ngMaterial', 'ngMessages', 'ui.mask']).controller('Log
         }, function(response) {
             console.log(response);
         });
-    }
+    };
 
     $scope.register = function() {
         $window.location.href = HTTP_URL_REGISTER_PAGE;
-    }
+    };
 
 }).config(['$mdThemingProvider', function($mdThemingProvider){
 
