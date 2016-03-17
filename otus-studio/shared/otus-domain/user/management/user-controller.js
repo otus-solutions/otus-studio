@@ -11,9 +11,9 @@
         $scope.users.disabledUsers = [];
         $scope.users.activedUsers = [];
 
-        var URL_GET_USERS = window.location.origin + '/studio/session/rest/administration/users/fetch';
-        var URL_DISABLE_USERS = window.location.origin + '/studio/session/rest/administration/users/disable';
-        var URL_ENABLE_USERS = window.location.origin + '/studio/session/rest/administration/users/enable';
+        var URL_GET_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/fetch';
+        var URL_DISABLE_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/disable';
+        var URL_ENABLE_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/enable';
 
         $scope.loadUsers = fetchUsers();
 
