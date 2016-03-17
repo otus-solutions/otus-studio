@@ -20,53 +20,56 @@
 
 	<div id="divtop">
 		<h2 class="nameStudio">
-			<span class="md-display-2">Otus Studio</span>
+			<span class="md-display-1">Otus Studio</span>
 		</h2>
 		<div id="center">
 			<div ng-controller="LoginController" layout="column">
 				<div class="logo" id="logo_test"></div>
-				<md-content>
-				<div id="content">
-					<form name="loginForm" novalidate>
-						<br>
-						<h6 class="md-subhead error-message" ng-show="invalidLogin">Login
-							invalido. Verifique os dados informados.</h6>
-						<br />
-						<md-input-container class="md-block"> <label>Email</label>
-						<input name="userEmail" ng-model="user.email" required />
+				<div>
+					<div id="content" flex>
+						<form name="loginForm" novalidate>
+							<br>
+							<h6 class="md-subhead error-message" ng-show="invalidLogin">Login
+								invalido. Verifique os dados informados.</h6>
+							<br />
+							<md-input-container class="md-block"> <label>Email</label>
+							<input name="userEmail" ng-model="user.email" required />
 
-						<div ng-messages="loginForm.userEmail.$error">
-							<div ng-message="required">Obrigatório</div>
-						</div>
-						</md-input-container>
+							<div ng-messages="loginForm.userEmail.$error">
+								<div ng-message="required">Obrigatório</div>
+							</div>
+							</md-input-container>
 
-						<md-input-container class="md-block"> <label>Senha</label>
-						<input name="userPassword" ng-model="user.password"
-							type="password" required />
+							<md-input-container class="md-block"> <label>Senha</label>
+							<input name="userPassword" ng-model="user.password"
+								type="password" required />
 
-						<div ng-messages="loginForm.userPassword.$error">
-							<div ng-message="required">Obrigatório</div>
-						</div>
-						</md-input-container>
-						<br />
+							<div ng-messages="loginForm.userPassword.$error">
+								<div ng-message="required">Obrigatório</div>
+							</div>
+							</md-input-container>
+							<br />
 
-						<div layout="row" layout-sm="column">
-							<md-button class="md-raised md-accent buttonAlign"
-								ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
-							</md-button>
-							<md-button class="md-raised md-accent buttonAlign"
-								ng-click="register()">Cadastrar-se</md-button>
-						</div>
-					</form>
-				</md-content>
+							<div layout="row" layout-sm="column">
+								<md-button class="md-raised md-accent"
+									ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
+								</md-button>
+								<md-button class="md-raised md-accent"
+									ng-click="register()">Cadastrar-se</md-button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="divDown" />
-	<footer class="md-subhead">
-		<h2>2015 ELSA Brasil. Corporation.</h2>
+		<div id="divDown" />
+	<footer>
+			<div class="md-subhead">
+			<p>2015 ELSA Brasil. Corporation.</p>
+		</div>
 	</footer>
 	</div>
+
 </body>
 
 <!-- Angular Material Dependencies -->
