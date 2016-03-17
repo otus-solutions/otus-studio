@@ -1,6 +1,7 @@
 describe('Tests for survey-template-export-service', function() {
 
     var Mock = {};
+    var returnedJSON = {};
 
     /* @BeforeScenario */
     beforeEach(function() {
@@ -15,13 +16,18 @@ describe('Tests for survey-template-export-service', function() {
     });
 
     describe("unit test for return the json", function functionName() {
-
+        
         it("should return format correct Json", function functionName() {
 
         });
 
         it("should return object type Json", function functionName() {
 
+        });
+
+        it("Should have returned JSON if call has completed", function() {
+            expect(returnedJSON).not.toEqual({});
+            expect(returnedJSON).not.toBeUndefined();
         });
     });
 
