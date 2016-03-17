@@ -39,17 +39,20 @@
     function Question(oid, LabelFactory) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'objectType', {
             value: 'Question',
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'oid', {
             value: oid,
-            writable: false
+            writable: false,
+            enumerable: true
         });
 
         Object.defineProperty(this, 'label', {
@@ -58,19 +61,8 @@
                 'enUS': LabelFactory.create(),
                 'esES': LabelFactory.create()
             },
-            writable: true
-        });
-
-        // TODO: revisar essa propriedade quando for implementada a navegação
-        Object.defineProperty(this, 'previousQuestion', {
-            value: oid,
-            writable: true
-        });
-
-        // TODO: revisar essa propriedade quando for implementada a navegação
-        Object.defineProperty(this, 'nextQuestion', {
-            value: oid,
-            writable: true
+            writable: true,
+            enumerable: true
         });
     }
 

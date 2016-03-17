@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="studio">
     <head>
-        <base href="/otus-studio/"/>
+        <base href="../"/>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="initial-scale=1">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
@@ -62,6 +62,11 @@
     <!-- ************************************* Lokijs ************************************* -->
     <script src="shared/lokijs/lokijs.min.js"></script>
     <script src="shared/lokijs/loki-angular.js"></script>
+
+
+    <!-- ************************************* IndexedDB ************************************* -->
+    <script src="shared/angular-indexed-db/angular-indexed-db.min.js"></script>
+
 
     <!-- ************************************* Moment ************************************* -->
     <script src="shared/moment/moment.js"></script>
@@ -237,6 +242,9 @@
     <!-- ************************************** Studio Editor Database ************************************** -->
     <script src="private/editor/database/editor-database-module.js"></script>
 
+    <!-- CROSS-SESSION -->
+    <script src="private/editor/database/cross-session/cross-session-database-service.js"></script>
+
     <!-- IN-SESSION -->
     <script src="private/editor/database/in-session/in-session-database-factory.js"></script>
 
@@ -297,6 +305,7 @@
     <script src="private/editor/ui/data-tool/data-tool-directive.js"></script>
 
     <!-- MAIN -->
+    <script src="private/editor/ui/main/editor-toolbar-controller.js"></script>
     <script src="private/editor/ui/main/main-container-content-service.js"></script>
     <script src="private/editor/ui/main/main-container-controller.js"></script>
 
