@@ -9,7 +9,7 @@
 
     function surveyTemplateExport(WorkspaceService) {
         var ddo = {
-            restrict: "A",
+            restrict: 'A',
             link: function(scope, element) {
                 element.on('click', function() {
                     var downloadElement = document.createElement('a');
