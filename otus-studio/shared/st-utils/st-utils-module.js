@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     var module = angular.module('utils', []);
 
@@ -23,18 +24,50 @@
         }
     }]);
 
-    module.service('UUID', [function() {
+    /**
+    *
+    *   UUID Generator Service
+    *
+    */
+    module.service('UUID', UUID);
+
+    function UUID() {
+
         var self = this;
 
         self.generateUUID = generateUUID;
 
         /**
-        * node-uuid package
-        * Generate a v1 (time-based) id
-        */
+         * node-uuid package
+         * Generate a v1 (time-based) id
+         */
         function generateUUID() {
             return uuid.v1();
         }
-    }]);
+    }
+
+    /**
+    *
+    *   Survey UUID Generator Service
+    *
+    */
+    module.service('SurveyUUIDGenerator', SurveyUUIDGenerator);
+
+    SurveyUUIDGenerator.$inject = ['$window', 'UUID'];
+
+    function SurveyUUIDGenerator($window, UUID) {
+
+        var userUUID = "userUUID:[" + $window.sessionStorage.userUUID + "]";
+        var surveyUUID = "surveyUUID:[" + UUID.generateUUID() + "]";
+        var repositoryUUID = "repositoryUUID:[ Not done yet ]";
+
+        var self = this;
+
+        self.generateSurveyUUID = generateSurveyUUID;
+
+        function generateSurveyUUID() {
+            return Base64.encode(userUUID + surveyUUID + repositoryUUID);
+        }
+    }
 
 }());
