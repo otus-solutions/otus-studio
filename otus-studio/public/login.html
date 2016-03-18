@@ -2,67 +2,73 @@
 <html lang="en" ng-app="Login">
 
 <head>
-    <base href="/otus-studio/"/>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link href="assets/img/coruja_construtora.png" rel="icon"/>
-    <title>Otus Studio</title>
+<base href="/otus-studio/" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="initial-scale=1">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link href="assets/img/coruja_construtora.png" rel="icon" />
+<title>Otus Studio</title>
 
-    <link href="shared/angular-material/angular-material.min.css" rel="stylesheet" />
-    <link href="public/login.css" rel="stylesheet" />
-    <title>Tela de login</title>
+<link href="shared/angular-material/angular-material.min.css"
+	rel="stylesheet" />
+<link href="public/login.css" rel="stylesheet" />
+<title>Tela de login</title>
 </head>
 
 <body md-theme="layoutTheme">
-<img class="logo" src="assets/img/coruja_construtora.png">
 
-<h1>Studio</h1>
+	<div id="divtop">
+		<h2 class="nameStudio">
+			<span class="md-display-1">Otus Studio</span>
+		</h2>
+		<div id="center">
+			<div ng-controller="LoginController" layout="column">
+				<div class="logo" id="logo_test"></div>
+				<div>
+					<div id="content" flex>
+						<form name="loginForm" novalidate>
+							<br>
+							<h6 class="md-subhead error-message" ng-show="invalidLogin">Login
+								invalido. Verifique os dados informados.</h6>
+							<br />
+							<md-input-container class="md-block"> <label>Email</label>
+							<input name="userEmail" ng-model="user.email" required />
 
-<div id="center">
-    <div ng-controller="LoginController" layout="column">
-        <md-content layout-padding class="autoScroll">
-            <md-toolbar class="md-theme-light">
-                <h2 class="md-toolbar-tools">
-                    <span>Login</span>
-                </h2>
-            </md-toolbar>
-            <form name="loginForm" novalidate>
-                <br>
-                <h6 class="md-subhead error-message" ng-show="invalidLogin">Login invalido. Verifique os dados
-                    informados.</h6>
-                <br/>
-                <md-input-container class="md-block">
-                    <label>Email</label>
-                    <input name="userEmail" ng-model="user.email" required/>
+							<div ng-messages="loginForm.userEmail.$error">
+								<div ng-message="required">Obrigatório</div>
+							</div>
+							</md-input-container>
 
-                    <div ng-messages="loginForm.userEmail.$error">
-                        <div ng-message="required">Obrigatório</div>
-                    </div>
-                </md-input-container>
+							<md-input-container class="md-block"> <label>Senha</label>
+							<input name="userPassword" ng-model="user.password"
+								type="password" required />
 
-                <md-input-container class="md-block">
-                    <label>Senha</label>
-                    <input name="userPassword" ng-model="user.password" type="password" required/>
+							<div ng-messages="loginForm.userPassword.$error">
+								<div ng-message="required">Obrigatório</div>
+							</div>
+							</md-input-container>
+							<br />
 
-                    <div ng-messages="loginForm.userPassword.$error">
-                        <div ng-message="required">Obrigatório</div>
-                    </div>
-                </md-input-container>
-                <br/>
-
-                <div layout="row" layout-sm="column">
-                    <md-button class="md-raised md-accent" ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
-                    </md-button>
-                    <md-button class="md-raised md-accent" ng-click="register()">Cadastrar-se</md-button>
-                </div>
-            </form>
-        </md-content>
-    </div>
-</div>
-<footer>
-    <p>Copyright © 2015 ELSA Brasil. Corporation.</p>
-</footer>
+							<div layout="row" layout-sm="column">
+								<md-button class="md-raised md-accent"
+									ng-click="authenticate(user)" ng-disabled="loginForm.$invalid">Logar
+								</md-button>
+								<md-button class="md-raised md-accent"
+									ng-click="register()">Cadastrar-se</md-button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="divDown" />
+	<footer>
+			<div class="md-subhead">
+			<p>2015 ELSA Brasil. Corporation.</p>
+		</div>
+	</footer>
+	</div>
 
 </body>
 

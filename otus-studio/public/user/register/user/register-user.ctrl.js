@@ -49,7 +49,7 @@
             'unique', ['$http', '$q',
                 function($http, $q) {
 
-                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain/session/rest/register/user/email/exists';
+                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain-rest/session/rest/register/user/email/exists';
 
                     return {
                         restrict: 'A',
