@@ -1,6 +1,16 @@
-describe('Tests for survey-template-export-directive', function() {
-    it("should mount element link correct", function functionName() {
-        
+describe('SurveyTemplateExportDirective', function() {
+    var Mock = {};
+
+    /* @BeforeScenario */
+    beforeEach(function functionName() {
+        module('studio');
+
+        inject(function(_$injector_) {
+            /* @InjectMocks */
+            directive = _$injector_.get('surveyTemplateExport', {
+                'WorkspaceService': mockWorkspaceService(_$injector_)
+            });
+        });
     });
 
 });
