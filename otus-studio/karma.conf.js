@@ -22,7 +22,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
 DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
-            NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
+DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
 DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
