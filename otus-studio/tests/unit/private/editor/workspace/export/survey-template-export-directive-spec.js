@@ -1,18 +1,27 @@
 describe('surveyTemplateExportDirective', function() {
-    var $compile,
-        $rootScope;
+    var compile, scope, directiveElem;
 
-    beforeEach(module('editor.workspace'));
+    beforeEach(function() {
+        module('editor.workspace');
 
-    beforeEach(inject(function(_$compile_, _$rootScope_) {
-        $compile = _$compile_;
-        $rootScope = _$rootScope_;
-    }));
+        inject(function($compile, $rootScope) {
+            compile = $compile;
+            scope = $rootScope.$new();
+        });
 
-    it('Replaces the element with the appropriate content', function() {
-        var node = $compile('<md-toolbar><md-button survey-template-export></md-button></md-toolbar>')($rootScope);
-        var contents = node.contents();
-        expect(contents[0].nodeType).toEqual(node.COMMENT_NODE);
-        expect(contents[1].nodeType).toEqual(node.ELEMENT_NODE);
+        directiveElem = getCompiledElement();
+
     });
+
+    it('should have survey-template-export in md-button', function() {
+        var element = directiveElem.find('button[survey-template-export]');
+        expect(element.length).toBe(1);
+    });
+
+    function getCompiledElement() {
+        var compiledDirective = compile(angular.element('<button id="test" survey-template-export></button>'))(scope);
+        scope.$digest();
+        return compiledDirective;
+    }
+
 });
