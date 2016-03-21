@@ -38,10 +38,6 @@ describe('SurveyIdentity suite:', function() {
             expect(surveyIdentity.acronym).toBe(ACRONYM);
         });
 
-        it('should return an SurveyIdentity with acronym', function() {
-            expect(surveyIdentity.version).toBe(VERSION);
-        });
-
         it('should return an SurveyIdentity with recommendedTo equal to empty String', function() {
             expect(surveyIdentity.recommendedTo.length).toBe(0);
         });

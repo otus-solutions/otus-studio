@@ -7,7 +7,7 @@
     <parent>
         <groupId>br.org.otus.studio</groupId>
         <artifactId>otus-studio-root</artifactId>
-        <version>0.18.24-SNAPSHOT</version>
+        <version>1.18.25-SNAPSHOT</version>
         <relativePath>../otus-studio-root/pom.xml</relativePath>
     </parent>
 
@@ -23,6 +23,7 @@
                     <webResources>
                         <resource>
                             <directory>${project.basedir}</directory>
+                            <filtering>true</filtering>
                         </resource>
                     </webResources>
                     <archive>

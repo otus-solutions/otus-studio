@@ -11,8 +11,8 @@
         /* Public interface */
         self.create = create;
 
-        function create(name, acronym, version) {
-            return new SurveyIdentity(name, acronym, version);
+        function create(name, acronym) {
+            return new SurveyIdentity(name, acronym);
         }
 
         return self;
@@ -45,12 +45,6 @@
 
         Object.defineProperty(this, 'acronym', {
             value: acronym,
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'version', {
-            value: version,
             writable: true,
             enumerable: true
         });
