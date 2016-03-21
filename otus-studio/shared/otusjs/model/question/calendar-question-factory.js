@@ -4,21 +4,23 @@
     angular
         .module('otusjs.model')
         .factory('CalendarQuestionFactory', CalendarQuestionFactory);
+    
+    CalendarQuestionFactory.$inject = ['MetadataGroupFactory'];
 
-    function CalendarQuestionFactory() {
+    function CalendarQuestionFactory(MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new CalendarQuestion(oid, prototype);
+            return new CalendarQuestion(oid, prototype, MetadataGroupFactory);
         }
 
         return self;
     }
 
-    function CalendarQuestion(oid, prototype) {
+    function CalendarQuestion(oid, prototype, MetadataGroupFactory) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false,
@@ -47,6 +49,12 @@
             value: prototype.label,
             writable: true,
             enumerable: true
+        });
+        
+        Object.defineProperty(this, 'metadata', {
+        	value: MetadataGroupFactory.create(),
+        	writable : true, 
+        	enumerable : true
         });
     }
 

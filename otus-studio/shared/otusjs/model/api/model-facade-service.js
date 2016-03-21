@@ -13,10 +13,11 @@
         'UnitFactory',
         /* Structure */
         'SurveyFactory',
-        'SurveyIdentityFactory'
+        'SurveyIdentityFactory',
+        'MetadataGroupFactory'
     ];
 
-    function ModelFacadeService(QuestionFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory) {
+    function ModelFacadeService(QuestionFactory, LabelFactory, UnitFactory, SurveyFactory, SurveyIdentityFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
@@ -25,6 +26,7 @@
         self.getUnitFactory = getUnitFactory;
         self.getSurveyFactory = getSurveyFactory;
         self.getSurveyIdentityFactory = getSurveyIdentityFactory;
+        self.getMetadataGroupFactory = getMetadataGroupFactory;
 
         function getQuestionFactory() {
             return QuestionFactory;
@@ -44,6 +46,10 @@
 
         function getSurveyIdentityFactory() {
             return SurveyIdentityFactory;
+        }
+        
+        function getMetadataGroupFactory() {
+        	return MetadataGroupFactory;
         }
     }
 

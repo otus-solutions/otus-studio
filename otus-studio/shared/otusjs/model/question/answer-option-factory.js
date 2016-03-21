@@ -20,7 +20,7 @@
         return self;
     }
 
-    function QuestionAnswerOption(oid, questionOID, LabelFactory) {
+    function QuestionAnswerOption(oid, questionOID, LabelFactory, MetadataGroupFactory) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false,

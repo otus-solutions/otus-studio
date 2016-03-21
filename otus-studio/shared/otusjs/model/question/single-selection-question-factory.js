@@ -5,22 +5,22 @@
         .module('otusjs.model')
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory'];
+    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory', 'MetadataGroupFactory'];
 
-    function SingleSelectionQuestionFactory(AnswerOptionFactory) {
+    function SingleSelectionQuestionFactory(AnswerOptionFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new SingleSelectionQuestion(oid, prototype, AnswerOptionFactory);
+            return new SingleSelectionQuestion(oid, prototype, AnswerOptionFactory, MetadataGroupFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory) {
+    function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory, MetadataGroupFactory) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false,
@@ -55,6 +55,12 @@
             value: {},
             writable: true,
             enumerable: true
+        });
+        
+        Object.defineProperty(this, 'metadata', {
+        	value: MetadataGroupFactory.create(),
+        	writable : true, 
+        	enumerable : true
         });
     }
 

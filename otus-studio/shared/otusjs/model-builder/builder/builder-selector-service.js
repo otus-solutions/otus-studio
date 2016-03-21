@@ -21,7 +21,8 @@
                 SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/,
                 LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/,
                 UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/,
-                ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
+                ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/,
+                METADATA_REGEX = /survey\.question\.[\d|\w|\-]+\.metadata.option/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelBuilderService';
@@ -35,6 +36,8 @@
                 return 'SurveyIdentityBuilderService';
             } else if (ANSWER_OPTION_REGEX.test(target)) {
                 return 'AnswerOptionBuilderService';
+            } else if (METADATA_REGEX.test(target)) {
+            	return 'MetadataAnswerBuilderService';
             }
 
             return target;
