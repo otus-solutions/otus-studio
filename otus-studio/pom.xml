@@ -23,6 +23,7 @@
                     <webResources>
                         <resource>
                             <directory>${project.basedir}</directory>
+                            <filtering>true</filtering>
                         </resource>
                     </webResources>
                     <archive>

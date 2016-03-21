@@ -17,9 +17,9 @@
         /* Public interdace */
         self.create = create;
 
-        function create(name, acronym, version) {
+        function create(name, acronym) {
             var metainfo = SurveyMetaInfoFactory.create(),
-                identity = SurveyIdentityFactory.create(name, acronym, version);
+                identity = SurveyIdentityFactory.create(name, acronym);
 
             return new Survey(metainfo, identity, UUID.generateUUID());
         }

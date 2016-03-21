@@ -14,14 +14,15 @@
         self.create = create;
 
         function create() {
+            var otusStudioVersion = "${project.version}";
             var now = new Date(Date.now());
-            return new SurveyMetaInfo(now, OIDHashGenerator.generateHash(now.toString()));
+            return new SurveyMetaInfo(now, OIDHashGenerator.generateHash(now.toString()), otusStudioVersion);
         }
 
         return self;
     }
 
-    function SurveyMetaInfo(creationDatetime, oidHash) {
+    function SurveyMetaInfo(creationDatetime, oidHash, otusStudioVersion) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false,
@@ -42,6 +43,12 @@
 
         Object.defineProperty(this, 'creationDatetime', {
             value: creationDatetime,
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'otusStudioVersion', {
+            value: otusStudioVersion,
             writable: false,
             enumerable: true
         });
