@@ -8,10 +8,10 @@ describe('Navigation', function() {
         mockDestinations();
 
         inject(function(_$injector_) {
-            service = _$injector_.get('NavigationFactory');
+            factory = _$injector_.get('NavigationFactory');
         });
 
-        navigation = service.create('ORIGIN_OID');
+        navigation = factory.create('ORIGIN_OID');
     });
 
     describe('addDestination method', function() {
@@ -33,7 +33,7 @@ describe('Navigation', function() {
             navigation.addDestination(Mock.destinationB);
         });
 
-        it('should remove the destination from destinations array', function() {
+        it('should remove the destination from destinations map', function() {
             navigation.removeDestination(Mock.destinationA.oid);
 
             expect(navigation.getDestinationsCount()).toBe(1);

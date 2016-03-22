@@ -5,15 +5,17 @@ describe('NavigationFactory', function() {
         module('studio');
 
         inject(function(_$injector_) {
-            service = _$injector_.get('NavigationFactory', {
+            factory = _$injector_.get('NavigationFactory', {
                 'UUID': mockUUID(_$injector_)
             });
         });
-
-        navigation = service.create('ORIGIN_OID');
     });
 
     describe('create method', function() {
+
+        beforeEach(function() {
+            navigation = factory.create('ORIGIN_OID');
+        });
 
         it('should call UUID.generateUUID', function() {
             expect(Mock.UUID.generateUUID).toHaveBeenCalled();
