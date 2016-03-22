@@ -1,28 +1,37 @@
 describe('surveyTemplateExportDirective', function() {
-    var scope, directiveElem;
+    var element, scope, compiledDirective, WorkspaceService;
+    var Mock = {};
 
+    /* @BeforeScenario */
     beforeEach(function() {
-        module('editor.workspace');
+        module('studio');
 
-        inject(function($compile, $rootScope) {
-            elementButton = angular.element('<button survey-template-export></button>');
+        inject(function(_$injector_) {
+            /* @InjectMocks */
+            $rootScope = _$injector_.get('$rootScope');
+            $compile = _$injector_.get('$compile');
+            WorkspaceService = _$injector_.get('WorkspaceService');
 
-            scope = $rootScope.$new();
-            $compile(elementButton)(scope);
-            scope.$digest();
+            compiledDirective = getCompiledDirective($rootScope, $compile);
         });
-
     });
 
-    it('should have survey-template-export in md-button', function() {
-        var element = elementButton.find('md-button[survey-template-export]');
-        expect(element.length).toBe(1);
+    it('should has compiled with sucess', function() {
+        expect(compiledDirective).toBeDefined();
     });
 
-    function getCompiledElement() {
-        var compiledDirective = compile(angular.element('<button survey-template-export></button>'))(scope);
+    it('should calls WorkspaceService.exportWork method when receives the click', function() {
+        spyOn(WorkspaceService, 'exportWork');
+        compiledDirective.triggerHandler('click');
+        expect(WorkspaceService.exportWork).toHaveBeenCalled();
+    });
+
+    function getCompiledDirective($rootScope, $compile) {
+        scope = $rootScope.$new();
+        element = '<button survey-template-export ></button>';
+        element = $compile(element)(scope);
         scope.$digest();
-        return compiledDirective;
+        return element;
     }
 
 });
