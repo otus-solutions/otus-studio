@@ -5,6 +5,7 @@ module.exports = function(config) {
     var APP_PRIVATE_ROOT_PATH = 'private/';
     var APP_PUBLIC_ROOT_PATH = 'public/';
     var DEPENDENCIES_ROOT_PATH = 'shared/';
+    var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -14,40 +15,42 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'],
 
-            // list of files / patterns to load in the browser
-            files: [
-                /* External dependencies */
-                DEPENDENCIES_ROOT_PATH + 'angular/angular.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
-                DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
-                DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
-                DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
-                DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
-                /* Otus platform */
-                DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
-                DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
-                DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
-                DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
-                DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*.js',
-                DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
-                DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
-                /* Application files */
-                'app.js',
-                'config/**/*-configuration.js',
-                APP_PRIVATE_ROOT_PATH + '**/*-module.js',
-                APP_PRIVATE_ROOT_PATH + '**/*.js',
-                {
-                    pattern: 'tests/unit/**/*-spec.js',
-                    included: true
-                }
-            ],
+        // list of files / patterns to load in the browser
+        files: [
+            /* External dependencies */
+            NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
+DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
+DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
+DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
+DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
+DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
+DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
+DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
+DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
+            NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
+            NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+
+            /* Otus platform */
+            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
+            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*.js',
+            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
+            /* Application files */
+            'app.js',
+            'config/**/*-configuration.js',
+            APP_PRIVATE_ROOT_PATH + '**/*-module.js',
+            APP_PRIVATE_ROOT_PATH + '**/*.js', {
+                pattern: 'tests/unit/**/*-spec.js',
+                included: true
+            }
+        ],
 
         // list of files to exclude
         exclude: [
@@ -56,8 +59,7 @@ module.exports = function(config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-        },
+        preprocessors: {},
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -77,7 +79,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_INFO,
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,

@@ -8,10 +8,10 @@
     SurveyFactory.$inject = [
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
-        'UUID'
+        'SurveyUUIDGenerator'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, UUID) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator) {
         var self = this;
 
         /* Public interdace */
@@ -21,7 +21,7 @@
             var metainfo = SurveyMetaInfoFactory.create(),
                 identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, UUID.generateUUID());
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
         }
 
         return self;
