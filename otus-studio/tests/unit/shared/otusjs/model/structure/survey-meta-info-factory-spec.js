@@ -25,14 +25,6 @@ describe('SurveyMetaInfoFactory', function() {
             expect(Date.now).toHaveBeenCalled();
         });
 
-        it('OIDHashGenerator.generateHash() should be called with a seed parameter', function() {
-            spyOn(Mock.OIDHashGenerator, 'generateHash');
-
-            factory.create();
-
-            expect(Mock.OIDHashGenerator.generateHash).toHaveBeenCalledWith(jasmine.any(String));
-        });
-
     });
 
     describe('SurveyMetaInfoFactory.create()', function() {
@@ -56,13 +48,6 @@ describe('SurveyMetaInfoFactory', function() {
             var surveyMetaInfo = factory.create();
 
             expect(surveyMetaInfo.objectType).toBe('SurveyMetaInfo');
-        });
-
-        it('should return an SurveyMetaInfo with an OIDHash', function() {
-            var expected = Mock.OIDHashGenerator.generateHash(jasmine.any(String)),
-                surveyMetaInfo = factory.create();
-
-            expect(surveyMetaInfo.oid).toBe(expected);
         });
 
     });

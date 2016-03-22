@@ -12,7 +12,7 @@ describe('Survey suite:', function() {
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
-                'UUID': mockUUID(_$injector_)
+                'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_)
             });
 
             survey = factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
@@ -52,12 +52,12 @@ describe('Survey suite:', function() {
             expect(survey.question).toEqual({});
         });
 
-        it('should call UUID.generateUUID()', function() {
-            spyOn(Mock.UUID, 'generateUUID');
+        it('should call SurveyUUIDGenerator.generateSurveyUUID()', function() {
+            spyOn(Mock.SurveyUUIDGenerator, 'generateSurveyUUID');
 
             factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
 
-            expect(Mock.UUID.generateUUID).toHaveBeenCalled();
+            expect(Mock.SurveyUUIDGenerator.generateSurveyUUID).toHaveBeenCalled();
         });
 
     });
@@ -70,9 +70,9 @@ describe('Survey suite:', function() {
         return $injector.get('SurveyMetaInfoFactory');
     }
 
-    function mockUUID($injector) {
-        Mock.UUID = $injector.get('UUID');
-        return Mock.UUID;
+    function mockSurveyUUIDGenerator($injector) {
+        Mock.SurveyUUIDGenerator = $injector.get('SurveyUUIDGenerator');
+        return Mock.SurveyUUIDGenerator;
     }
 
 });
