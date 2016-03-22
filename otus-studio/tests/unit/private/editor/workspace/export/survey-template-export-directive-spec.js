@@ -26,28 +26,3 @@ describe('surveyTemplateExportDirective', function() {
     }
 
 });
-
-
-
-
-describe('surveyTemplateExportDirective:?', function() {
-	beforeEach(module('editor.workspace'));
-
-	var element, scope;
-
-	beforeEach(module('views/templates/albums.html'));
-
-	beforeEach(inject(function($rootScope, $compile) {
-		element = angular.element('<button survey-template-export></button>');
-
-		scope = $rootScope;
-		$compile(element)(scope);
-		scope.$digest();
-	}));
-
-    it('should have survey-template-export in md-button', function() {
-        var element = directiveElem.find('md-button[survey-template-export]');
-        expect(element.length).toBe(1);
-    });
-
-});
