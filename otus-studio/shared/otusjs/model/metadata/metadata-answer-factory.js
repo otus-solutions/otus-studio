@@ -14,7 +14,7 @@
 		self.create = create;
 
 		function create(oid, questionOID) {
-			return new QuestionAnswerOption(oid, questionOID, LabelFactory);
+			return new MetadataAnswer(oid, questionOID, LabelFactory);
 		}
 
 		return self;
