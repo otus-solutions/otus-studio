@@ -35,6 +35,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
             /* Otus platform */
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
@@ -81,7 +82,7 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        autoWatch: false,
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -89,7 +90,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false,
+        singleRun: true,
 
         // Concurrency level
         // how many browser should be started simultaneous

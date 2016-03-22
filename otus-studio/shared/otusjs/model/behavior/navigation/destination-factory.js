@@ -5,22 +5,22 @@
         .module('otusjs')
         .factory('DestinationFactory', DestinationFactory);
 
-    DestinationFactory.$inject = ['UUID'];
+    DestinationFactory.$inject = ['UUID', 'ClonerService'];
 
-    function DestinationFactory(UUID) {
+    function DestinationFactory(UUID, ClonerService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(position) {
-            return new Destination(UUID.generateUUID(), position);
+            return new Destination(UUID.generateUUID(), position, ClonerService);
         }
 
         return self;
     }
 
-    function Destination(oid, position) {
+    function Destination(oid, position, ClonerService) {
         var self = this;
 
         Object.defineProperty(self, 'extends', {
@@ -55,11 +55,17 @@
 
         /* Public interface */
         self.getRulesCount = getRulesCount;
+        self.getRule = getRule;
         self.addRule = addRule;
         self.removeRule = removeRule;
 
         function getRulesCount() {
             return Object.keys(self.rule).length;
+        }
+
+        function getRule(ruleName) {
+            var selectedRule = self.rule[ruleName];
+            return ClonerService.clone(selectedRule);
         }
 
         function addRule(rule) {
@@ -69,6 +75,7 @@
         function removeRule(ruleName) {
             delete self.rule[ruleName];
         }
+
     }
 
 }());

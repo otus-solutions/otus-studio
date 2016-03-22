@@ -41,6 +41,21 @@ describe('Destination', function() {
 
     });
 
+    describe('getRule method', function() {
+
+        beforeEach(function() {
+            destination.addRule(Mock.ruleA);
+            destination.addRule(Mock.ruleB);
+        });
+
+        it('should return a rule by name selection', function() {
+            var returnedRule = destination.getRule('A');
+
+            expect(returnedRule).toEqual(Mock.ruleA);
+        });
+
+    });
+
     function mockRules() {
         Mock.ruleA = {
             name: 'A'

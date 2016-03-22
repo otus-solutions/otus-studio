@@ -29,8 +29,8 @@ describe('RuleFactory', function() {
             expect(rule.name).toEqual('RULE_NAME');
         });
 
-        xit('should return a Rule object with a valid rule value', function() {
-            expect(rule.rule).toBeDefined();
+        it('should return a Rule object with a valid conditions map', function() {
+            expect(rule.condition).toBeDefined();
         });
 
     });

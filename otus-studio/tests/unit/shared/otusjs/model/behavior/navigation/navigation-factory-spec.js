@@ -33,10 +33,6 @@ describe('NavigationFactory', function() {
             expect(navigation.objectType).toBe('Navigation');
         });
 
-        it('should return a Navigation object with a valid oid value', function() {
-            expect(navigation.oid).toBeDefined();
-        });
-
         it('should return a Navigation object with a valid origin value', function() {
             expect(navigation.origin).toBeDefined();
         });
