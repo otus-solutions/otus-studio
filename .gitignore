@@ -8,5 +8,5 @@
 *.iml
 *.swp
 npm-debug.log
-**/unit-result.report.html
+/otus-studio/**/unit-result.report.html
 **/node_modules/
