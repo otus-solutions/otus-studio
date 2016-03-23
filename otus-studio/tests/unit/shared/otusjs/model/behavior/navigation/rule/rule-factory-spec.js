@@ -1,11 +1,11 @@
-describe('RuleConditionFactory', function() {
+describe('RuleFactory', function() {
     var Mock = {};
 
     beforeEach(function() {
         module('studio');
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('RuleConditionFactory');
+            factory = _$injector_.get('RuleFactory');
         });
 
         ruleCondition = factory.create('QUESTION_ID');
@@ -22,7 +22,7 @@ describe('RuleConditionFactory', function() {
         });
 
         it('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
-            expect(ruleCondition.objectType).toBe('RuleCondition');
+            expect(ruleCondition.objectType).toBe('Rule');
         });
 
         it('should return a RuleCondition object with a valid when value', function() {

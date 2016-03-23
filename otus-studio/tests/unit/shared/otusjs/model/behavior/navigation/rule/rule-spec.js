@@ -1,10 +1,10 @@
-describe('RuleCondition', function() {
+describe('Rule', function() {
 
     beforeEach(function() {
         module('studio');
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('RuleConditionFactory');
+            factory = _$injector_.get('RuleFactory');
         });
 
         ruleCondition = factory.create('QUESTION_ID');

@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(name) {
-            return new Rule(name);
+        function create(when) {
+            return new Rule(when);
         }
 
         return self;
     }
 
-    function Rule(name) {
+    function Rule(when) {
         var self = this;
 
         Object.defineProperty(self, 'extends', {
@@ -33,30 +33,61 @@
             enumerable: true
         });
 
-        Object.defineProperty(self, 'name', {
-            value: name,
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'condition', {
-            value: [],
+        Object.defineProperty(self, 'when', {
+            value: when,
             writable: true,
             enumerable: true
         });
 
         /* Public interface */
-        self.addCondition = addCondition;
-        self.removeCondition = removeCondition;
+        self.within = within;
+        self.equal = equal;
+        self.greater = greater;
+        self.greaterEqual = greaterEqual;
+        self.lower = lower;
+        self.lowerEqual = lowerEqual;
+        self.between = between;
+        self.contains = contains;
 
-        function addCondition(condition) {
-            var conditionNotExist = (self.condition.indexOf(condition) === -1);
-            if (conditionNotExist) self.condition.push(condition);
+        function within(arrayValues) {
+            defineAnswer('within', arrayValues);
         }
 
-        function removeCondition(condition) {
-            var indexToRemove = self.condition.indexOf(condition);
-            self.condition.splice(indexToRemove, 1);
+        function equal(value) {
+            defineAnswer('equal', value);
+        }
+
+        function greater(value) {
+            defineAnswer('greater', value);
+        }
+
+        function greaterEqual(value) {
+            defineAnswer('greaterEqual', value);
+        }
+
+        function lower(value) {
+            defineAnswer('lower', value);
+        }
+
+        function lowerEqual(value) {
+            defineAnswer('lowerEqual', value);
+        }
+
+        function between(start, end) {
+            if (Array.isArray(start)) {
+                defineAnswer('between', start);
+            } else {
+                defineAnswer('between', [start, end]);
+            }
+        }
+
+        function contains(value) {
+            defineAnswer('contains', value);
+        }
+
+        function defineAnswer(operator, value) {
+            self.answer = {};
+            self.answer[operator] = value;
         }
     }
 

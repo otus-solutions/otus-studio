@@ -3,7 +3,8 @@
 
     var module = angular.module('otusjs', [
         'otusjs.model',
-        'otusjs.modelBuilder'
+        'otusjs.modelBuilder',
+        'otusjs.navigation'
     ]);
 
 }());

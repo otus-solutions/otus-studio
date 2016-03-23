@@ -1,0 +1,20 @@
+/* Rota direta, sem condição a ser respeitada */
+builder
+    .createRoute()
+    .from('CID')
+    .to('NID');
+
+/* Rota que ocorre sob determinada condição */
+builder
+    .createRoute()
+    .from('CID')
+    .to('NID')
+    .underCondition
+    .thatQuestion('QID')
+    .answer
+    .isEqualTo(5)
+    .or
+    .isGreaterThan(10)
+    .and
+    .thatQuestion('BQID')
+    .hasNotAnswer();
