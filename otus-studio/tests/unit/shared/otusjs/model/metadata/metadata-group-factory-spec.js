@@ -1,7 +1,7 @@
 describe('MetadataGroupFactory', function(){
 	var Mock = {},
-
-		OID = 'OID';
+		NAME = 'NAME',
+		QUESTION_ID = 'QUESTION_ID';
 
 	/*@BeforeScenario*/
 	beforeEach(function() {
@@ -13,37 +13,39 @@ describe('MetadataGroupFactory', function(){
 			});
 		});
 
-		answer = factory.create();
+		metadataGroup = factory.create(NAME, QUESTION_ID);
 	});
 
 	describe('MetadataGroupFactory.create()', function() {
 
+		it('should returned an object defined', function(){
+			expect(metadataGroup).toBeDefined();
+		});
+
 		/*Scenario Extends*/
 		it('returned object should extends Question', function(){
-			expect(answer.extends).toBe('StudioObject');
+			expect(metadataGroup.extends).toBe('StudioObject');
 		});
 
 		/*Scenario ObjectType*/
 		it('return should an Label ObjectType', function() {
-			expect(answer.objectType).toBe('MetadataGroup');
+			expect(metadataGroup.objectType).toBe('MetadataGroup');
 		});
 
 		/*Scenario oid*/
-		xit('return should an answer represent oid', function() {
+		it('return should an metadataGroup represent name', function() {
+			expect(metadataGroup.name).toBe(NAME);
 		});
 
-		/*Scenario parentQuestion
-		it('return should an answer parentQuestion', function() {
-			expect(answer.parentQuestion).toBe(questionOID);
-		});*/
-
+		//Scenario parentQuestion
+		it('return should an metadataGroup parentQuestion', function() {
+			expect(metadataGroup.parentQuestion).toBe(QUESTION_ID);
+		});
 
 		/*Scenario option*/
-		it('return should an answer option', function() {
-			 expect({}).toEqual(jasmine.any(Object));
+		it('return should an metadataGroup option', function() {
+			 expect(metadataGroup.option).toEqual(jasmine.any(Object));
 		});
-
-
 	});
 
 	function mockMetadataAnswerFactory($injector) {

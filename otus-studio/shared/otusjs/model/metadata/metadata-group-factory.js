@@ -13,14 +13,14 @@
 		/* Public interface */
 		self.create = create;
 
-		function create() {
-			return new MetadataGroup('', MetadataAnswerFactory);
+		function create(name, questionOID) {
+			return new MetadataGroup(name, questionOID);
 		}
 
 		return self;
 	}
 
-	function MetadataGroup(oid, questionOID) {
+	function MetadataGroup(name, questionOID) {
 		Object.defineProperty(this, 'extends', {
 			value : 'StudioObject',
 			writable : false,
@@ -33,8 +33,8 @@
 			enumerable : true
 		});
 
-		Object.defineProperty(this, 'oid', {
-			value : oid,
+		Object.defineProperty(this, 'name', {
+			value : name,
 			writable : false,
 			enumerable : true
 		});
