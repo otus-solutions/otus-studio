@@ -9,10 +9,11 @@
         'WorkspaceFactory',
         'SurveyProjectFactory',
         'SurveyLoaderService',
-        'CrossSessionDatabaseService'
+        'CrossSessionDatabaseService',
+        'SurveyExportService'
     ];
 
-    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService) {
+    function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService, SurveyExportService) {
         var self = this,
             questionIdCounter = -1,
             observers = [];
@@ -24,6 +25,8 @@
         self.closeWork = closeWork;
         self.saveWork = saveWork;
         self.getQuestionId = getQuestionId;
+        self.exportWork = exportWork;
+        self.getSurvey = getSurvey;
 
         /* Observable interface */
         self.registerObserver = registerObserver;
@@ -55,8 +58,16 @@
             CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
         }
 
+        function exportWork() {
+            return SurveyExportService.exportSurvey(self.workspace.project.survey);
+        }
+
         function getQuestionId() {
             return ++questionIdCounter;
+        }
+
+        function getSurvey() {
+            return self.workspace.project.survey;
         }
 
         function importProject(project) {
