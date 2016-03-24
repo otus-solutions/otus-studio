@@ -1,10 +1,6 @@
 describe('MetadataBuilderService', function(){
 	var Mock = {};
 	var work = 'work';
-	var NEW_OPTION = 'NEW_OPTION';
-	
-	var OID = 'OID';
-	var QUESTION_OID;
 
 	beforeEach(function() {
 		module('otusjs');
@@ -12,11 +8,9 @@ describe('MetadataBuilderService', function(){
 		inject(function(_$injector_) {
 			service = _$injector_.get('MetadataAnswerBuilderService', {
 				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_)
-				
+
 			});
 		});
-
-		//MetadataAnswerFactory = MetadataAnswerFactory.create(OID, QUESTION_OID);
 
 	});
 
@@ -31,7 +25,7 @@ describe('MetadataBuilderService', function(){
 		});
 
 		/*Testa se o método execute da classe Builder está sendo chamado*/
-		it('Test if execute it is called', function(){
+		it('Test if execute method is called', function(){
 			service.runValidations();
 
 			var work = service.getWorkResult();
@@ -39,29 +33,18 @@ describe('MetadataBuilderService', function(){
 			expect(service.execute).toBeDefined();
 		});
 
-		it('Test if method addOption return newOption', function() {
-			/*service.runValidations();
-
-			var work = service.getWorkResult();
-
-			var NEW_OPTION = Mock.MetadataAnswerFactory.create(); //create(oid, questionOID)
-
-			spyOn(Mock.MetadataAnswerFactory, 'create');
-			service.addOption(work);
-
-			expect(Mock.WorkspaceService).toHaveBeenCalled();*/
+		xit('Test if method addOption return newOption', function() {
 
 		});
 	});
-	
+
     function mockMetadataAnswerFactory($injector) {
     	Mock.MetadataAnswerFactory = $injector.get('MetadataAnswerFactory');
     	return Mock.MetadataAnswerFactory;
     }
 
-    /*Mock workspace service*/
-    function mockWorkspaceService($injector) {
-    	Mock.WorkspaceService = $injector.get('WorkspaceService');
+    /*Mock build work factory service*/
+    function mockEditorEngineService($injector) {
     	return Mock.WorkspaceService;
     }
 });
