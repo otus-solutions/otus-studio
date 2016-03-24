@@ -1,14 +1,15 @@
 describe('MetadataBuilderService', function(){
 	var Mock = {};
 	var work = 'work';
+	var nextOID = 'nextOID';
 
 	beforeEach(function() {
 		module('otusjs');
 
 		inject(function(_$injector_) {
 			service = _$injector_.get('MetadataAnswerBuilderService', {
-				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_)
-
+				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_),
+				BuildWorkFactory : mockBuildWorkFactory(_$injector_)
 			});
 		});
 
@@ -33,7 +34,18 @@ describe('MetadataBuilderService', function(){
 			expect(service.execute).toBeDefined();
 		});
 
-		xit('Test if method addOption return newOption', function() {
+		it('Test if method addOption return newOption', function() {
+			var selectedQuestion;
+			var target = Mock.BuildWorkFactory.BuildWork.target;
+
+			selectedQuestion = target;
+			service.runValidations();
+
+			var work = service.getWorkResult();
+
+			var newOption = Mock.MetadataAnswerFactory.create(nextOID , selectedQuestion);
+			
+			//console.log(newOption); 
 
 		});
 	});
@@ -44,7 +56,18 @@ describe('MetadataBuilderService', function(){
     }
 
     /*Mock build work factory service*/
-    function mockEditorEngineService($injector) {
-    	return Mock.WorkspaceService;
+    function mockBuildWorkFactory($injector) {
+    	Mock.BuildWorkFactory = $injector.get('BuildWorkFactory');
+
+    	Mock.BuildWorkFactory.BuildWork = {
+    		BuildWork : {
+    			'survey' : Mock.survey,
+    			'data' : Mock.data,
+    			'type' : Mock.type,
+    			'target' : Mock.target
+    		}
+    	}
+
+    	return Mock.BuildWorkFactory;
     }
 });
