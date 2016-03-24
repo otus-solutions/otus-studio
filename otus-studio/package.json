@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "bsync": "browser-sync start --server --files=\"*.html, *.js, *.css\"",
+    "bsync": "browser-sync start --server --files=\"**/*.html, **/*.js, **/*.css\"",
     "gulp": "gulp",
     "start": "concurrent \"npm run bsync\" ",
     "karma": "karma"
