@@ -10,11 +10,11 @@ builder
     .from('CID')
     .to('NID')
     .underCondition
-    .thatQuestion('QID')
+    .question('QID')
     .answer
     .isEqualTo(5)
     .or
     .isGreaterThan(10)
     .and
-    .thatQuestion('BQID')
+    .question('BQID')
     .hasNotAnswer();

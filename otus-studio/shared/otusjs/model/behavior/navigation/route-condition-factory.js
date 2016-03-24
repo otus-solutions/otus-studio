@@ -46,15 +46,15 @@
         });
 
         /* Public interface */
-        self.addCondition = addCondition;
-        self.removeCondition = removeCondition;
+        self.addRule = addRule;
+        self.removeRule = removeRule;
 
-        function addCondition(rule) {
+        function addRule(rule) {
             var ruleNotExist = (self.rules.indexOf(rule) === -1);
             if (ruleNotExist) self.rules.push(rule);
         }
 
-        function removeCondition(rule) {
+        function removeRule(rule) {
             var indexToRemove = self.rules.indexOf(rule);
             self.rules.splice(indexToRemove, 1);
         }

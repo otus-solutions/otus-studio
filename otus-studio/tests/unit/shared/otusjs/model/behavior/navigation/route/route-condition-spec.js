@@ -13,41 +13,41 @@ describe('Rule', function() {
         routeCondition = factory.create('RULE_NAME');
     });
 
-    describe('addCondition method', function() {
+    describe('addRule method', function() {
 
         it('should put a condition in conditions map', function() {
-            routeCondition.addCondition(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.routeConditionConditionA);
 
             expect(routeCondition.rules.length).toBe(1);
         });
 
         it('should not put a condition twice', function() {
-            routeCondition.addCondition(Mock.routeConditionConditionA);
-            routeCondition.addCondition(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.routeConditionConditionA);
 
-            routeCondition.addCondition(Mock.routeConditionConditionB);
-            routeCondition.addCondition(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.routeConditionConditionB);
 
             expect(routeCondition.rules.length).toBe(2);
         });
 
     });
 
-    describe('addCondition method', function() {
+    describe('removeRule method', function() {
 
         beforeEach(function() {
-            routeCondition.addCondition(Mock.routeConditionConditionA);
-            routeCondition.addCondition(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.routeConditionConditionB);
         });
 
         it('should remove the condition from conditions map', function() {
-            routeCondition.removeCondition(Mock.routeConditionConditionA);
+            routeCondition.removeRule(Mock.routeConditionConditionA);
 
             expect(routeCondition.rules.length).toBe(1);
         });
 
         it('should remove exactly the specified condition from conditions map', function() {
-            routeCondition.addCondition(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.routeConditionConditionB);
 
             expect(routeCondition.rules[0].answer.equal).toBeDefined();
         });

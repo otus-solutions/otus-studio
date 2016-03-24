@@ -37,9 +37,7 @@ describe('RouteBuilder', function() {
         var object = null;
 
         beforeEach(function() {
-            object = builder
-                        .createRoute()
-                        .from(ORIGIN);
+            object = builder.createRoute().from(ORIGIN);
         });
 
         it('should return the routerBuilder with "to" function attached', function() {
@@ -56,10 +54,7 @@ describe('RouteBuilder', function() {
         var object = null;
 
         beforeEach(function() {
-            object = builder
-                        .createRoute()
-                        .from(ORIGIN)
-                        .to(DESTINATION);
+            object = builder.createRoute().from(ORIGIN).to(DESTINATION);
         });
 
         it('should call RouteFactory.create with origin and destination', function() {

@@ -20,6 +20,7 @@
 
     function Rule(when) {
         var self = this;
+        var operator;
 
         Object.defineProperty(self, 'extends', {
             value: 'StudioObject',
@@ -48,6 +49,7 @@
         self.lowerEqual = lowerEqual;
         self.between = between;
         self.contains = contains;
+        self.toRuleFormat = toRuleFormat;
 
         function within(arrayValues) {
             defineAnswer('within', arrayValues);
@@ -85,9 +87,19 @@
             defineAnswer('contains', value);
         }
 
-        function defineAnswer(operator, value) {
+        function defineAnswer(ruleOperator, value) {
+            operator = ruleOperator;
             self.answer = {};
             self.answer[operator] = value;
+        }
+
+        function toRuleFormat() {
+            var result = {
+                when: self.when,
+                answer: self.answer
+            };
+
+            return JSON.stringify(result);
         }
     }
 
