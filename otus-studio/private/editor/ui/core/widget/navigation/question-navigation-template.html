@@ -1,0 +1,65 @@
+<div flex ng-controller="QuestionNavigationController as questionNavigationController">
+    <div layout-align="left center" flex>
+
+        <div id="navigations" ng-repeat="navigation in questionNavigationController.navigations"
+        layout-margin>
+            <div flex>
+                <div layout="row">
+                    <md-input-container flex>
+                        <label>Nome</label>
+                        <md-icon class="material-icons">low_priority</md-icon>
+                        <input ng-model="navigation.name" aria-label="Name" flex></input>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Destino</label>
+                        <input ng-model="navigation.to" aria-label="Destino" flex>
+                        </input>
+                    </md-input-container>
+                </div>
+
+                <div layout="column">
+                    <div id="rules" ng-repeat="rule in navigation.rules" layout="row" layout-align="center center"
+                    flex>
+                        <md-input-container layout="row">
+                            <label>Expressão</label>
+                            <input aria-label="Expressão" ng-model="rule.expression" flex>
+                        </md-input-container>
+
+                        <span>:</span>
+
+                        <md-input-container layout="row">
+                            <label>Valor</label>
+                            <input aria-label="Valor" ng-model="rule.value" flex>
+                        </md-input-container>
+                    </div>
+                    <div id="add-rules" layout="row" flex layout-align="center center">
+                        <md-input-container layout="row">
+                            <label>Expressão</label>
+                            <input aria-label="Expressão" flex>
+                        </md-input-container>
+
+                        <span>:</span>
+
+                        <md-input-container layout="row">
+                            <label>Valor</label>
+                            <input aria-label="Valor" flex>
+                        </md-input-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div layout="row" layout-margin>
+        <md-input-container flex>
+            <label>Nome</label>
+            <md-icon class="material-icons">low_priority</md-icon>
+            <input aria-label="Name" flex></input>
+        </md-input-container>
+        <md-input-container flex>
+            <label>Destino</label>
+            <input aria-label="Destino" flex>
+            </input>
+        </md-input-container>
+    </div>
+</div>

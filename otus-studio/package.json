@@ -1,6 +1,6 @@
 {
   "name": "otus-studio",
- "version": "0.0.1",
+  "version": "0.0.1",
   "description": "The tool to build survey forms to be used in Otus Studio.",
   "keywords": [
     "otus",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "bsync": "browser-sync start --server --files=\"*.html, *.js, *.css\"",
+    "bsync": "browser-sync start --server --files=\"**/*.html, **/*.js, **/*.css\"",
     "gulp": "gulp",
     "start": "concurrent \"npm run bsync\" ",
     "karma": "karma"
@@ -26,9 +26,9 @@
     "angular": "^1.4.7",
     "angular-animate": "^1.4.7",
     "angular-aria": "^1.4.7",
-    "angular-material-icons": "0.6.0",
     "angular-messages": "^1.5.0",
     "js-base64": "^2.1.9",
+    "material-design-icons": "^2.2.3",
     "node-uuid": "^1.4.7"
   },
   "devDependencies": {
