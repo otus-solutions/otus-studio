@@ -7,6 +7,7 @@
             /* Application modules */
             'studio.dashboard',
             'editor',
+            'preview',
             /* Otus platform modules */
             'repository',
             'user',
