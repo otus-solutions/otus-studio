@@ -10,13 +10,14 @@
     ];
 
     function QuestionEditorToolbarService(TemplateLoaderService) {
+        var NAVIGATION_TEMPLATE = "private/editor/ui/core/widget/navigation/question-navigation-template.html";
         var self = this;
 
         self.loadNavigation = loadNavigation;
         self.closeNavigation = closeNavigation;
 
         function loadNavigation(contentArea, scope){
-            TemplateLoaderService.load('private/editor/ui/core/widget/navigation/question-navigation-template.html', scope, function (template){
+            TemplateLoaderService.load(NAVIGATION_TEMPLATE, scope, function (template){
                 contentArea.append(template);
             })
         }
