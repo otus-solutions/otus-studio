@@ -6,49 +6,106 @@ describe('MetadataBuilderService', function(){
 	beforeEach(function() {
 		module('otusjs');
 
+		mockSurvey();
+
 		inject(function(_$injector_) {
 			service = _$injector_.get('MetadataAnswerBuilderService', {
-				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_),
-				BuildWorkFactory : mockBuildWorkFactory(_$injector_)
+				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_)
 			});
 		});
 
 	});
 
-	describe('Part of code manage test scenario', function() {
+	describe('getWorkResult', function() {
 
-		it('Test if variable work returned true', function() {
+		it('should return true', function() {
 			service.runValidations();
 
 			var work = service.getWorkResult();
 
 			expect(work.result).toBe(true);
 		});
-
-		/*Testa se o método execute da classe Builder está sendo chamado*/
-		it('Test if execute method is called', function(){
-			service.runValidations();
-
-			var work = service.getWorkResult();
-
-			expect(service.execute).toBeDefined();
-		});
-
-		it('Test if method addOption return newOption', function() {
-			var selectedQuestion;
-			var target = Mock.BuildWorkFactory.BuildWork.target;
-
-			selectedQuestion = target;
-			service.runValidations();
-
-			var work = service.getWorkResult();
-
-			var newOption = Mock.MetadataAnswerFactory.create(nextOID , selectedQuestion);
-			
-			//console.log(newOption); 
-
-		});
 	});
+
+	describe('When an add option work is executed', function() {
+
+		it('should return newOption', function() {
+			mockNewSurvey();
+			mockAddDataWork();
+
+			service.execute(Mock.BuildWork);
+
+			expect(Mock.BuildWork.type.data).toBeDefined();
+			expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
+		});
+
+		it('the option should be added', function() {
+			mockNewSurvey();
+			mockAddDataWork();
+
+			service.execute(Mock.BuildWork);
+
+			var count = Object.keys(Mock.survey.question.A0.metadata.option).length;
+			expect(count).toEqual(1);
+		});
+
+
+
+		it('should calls the MetadataAnswerFactory.create method', function() {
+			mockAddDataWork();
+			spyOn(Mock.MetadataAnswerFactory, 'create');
+
+			service.execute(Mock.BuildWork);
+
+			expect(Mock.MetadataAnswerFactory.create).toHaveBeenCalled();
+		});
+
+	});
+
+	describe('When an remove option work is executed', function() {
+
+		it('Should return optionToRemove', function() {
+			mockRemoveData();
+
+			service.execute(Mock.BuildWork);
+
+			expect(Mock.BuildWork.type.data).toBeDefined();
+			expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
+		});
+
+		it('the option should be removed from options', function() {
+			mockRemoveData();
+
+			service.execute(Mock.BuildWork);
+
+			var count = Object.keys(Mock.survey.question.A0.metadata.option).length;
+			expect(count).toEqual(0);
+		});
+
+	});
+
+	describe('When an update option work is executed', function() {
+
+		it('Should return optionToUpdate', function() {
+			mockUpdateOption();
+
+			service.execute(Mock.BuildWork);
+			expect(Mock.BuildWork.type.data).toBeDefined();
+			expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
+		});
+
+		it('the data should be updated', function() {
+			var label = Mock.survey.question.A0.metadata.option.fake.label;
+			mockUpdateOption();
+
+			service.execute(Mock.BuildWork);
+
+			expect(label.ptBR.plainText).toEqual(Mock.BuildWork.data.plainText);
+			expect(label.ptBR.formattedText).toEqual(Mock.BuildWork.data.formattedText);
+		});
+
+	});
+
 
     function mockMetadataAnswerFactory($injector) {
     	Mock.MetadataAnswerFactory = $injector.get('MetadataAnswerFactory');
@@ -56,18 +113,99 @@ describe('MetadataBuilderService', function(){
     }
 
     /*Mock build work factory service*/
-    function mockBuildWorkFactory($injector) {
-    	Mock.BuildWorkFactory = $injector.get('BuildWorkFactory');
-
-    	Mock.BuildWorkFactory.BuildWork = {
-    		BuildWork : {
-    			'survey' : Mock.survey,
-    			'data' : Mock.data,
-    			'type' : Mock.type,
-    			'target' : Mock.target
+    function mockAddDataWork() {
+    	var workType = {
+    		isAddData: function() {
+    			return true;
     		}
-    	}
+    	};
 
-    	return Mock.BuildWorkFactory;
+
+    	Mock.BuildWork = {
+			'survey' : Mock.survey,
+			'type' : workType,
+			'target' : 'survey.question.A0'
+    	};
     }
+
+    function mockRemoveData() {
+    	var workType = {
+    		isAddData: function() {
+    			return false;
+    		},
+    		isRemoveData: function() {
+    			return true;
+    		}
+    	};
+
+
+    	Mock.BuildWork = {
+			'survey' : Mock.survey,
+			'type' : workType,
+			'target' : 'survey.question.A0'
+    	};
+    }
+
+    function mockUpdateOption() {
+    	var workType = {
+    		isAddData: function() {
+    			return false;
+    		},
+    		isRemoveData: function() {
+    			return false;
+    		},
+    		isUpdateData: function() {
+    			return true;
+    		}
+    	};
+
+
+    	Mock.BuildWork = {
+			'survey' : Mock.survey,
+			'type' : workType,
+			'target' : 'survey.question.A0.metadata.option.fake',
+			'data' : {
+				plainText : 'plain',
+				value: '',
+				formattedText : 'formatted'
+			}
+    	};
+    }
+
+    function mockSurvey() {
+    	Mock.survey = {
+    		question: {
+    			A0: {
+    				metadata: {
+	    				option: {
+	    					fake: {
+	    						objectType: 'MetadataAnswer',
+	    						label:  {
+	    							ptBR :{
+	    								plainText : '',
+	    								formattedText : ''
+	    							}
+	    						}
+	    					}
+	    				}
+	    			}
+    			}
+    		}
+    	};
+    }
+
+     function mockNewSurvey() {
+    	Mock.survey = {
+    		question: {
+    			A0: {
+    				metadata: {
+	    				option: {
+	    					
+	    				}
+	    			}
+    			}
+    		}
+    	};
+    }
+
 });

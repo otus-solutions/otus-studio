@@ -12,15 +12,15 @@
         <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1">Browser: PhantomJS 2.1.1 (Windows 7 0.0.0)</td>
       </tr>
       <tr class="overview">
-        <td colspan="3">Timestamp: 2016-03-24 15:18:16</td>
+        <td colspan="3">Timestamp: 2016-03-28 12:11:39</td>
       </tr>
       <tr>
         <td colspan="3">
-          131 tests / 
+          136 tests / 
           0 errors / 
           0 failures / 
           10 skipped / 
-          runtime: 1.132s
+          runtime: 1.123s
         </td>
       </tr>
       <tr class="header">
@@ -29,62 +29,62 @@
         <td>Suite / Results</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.521s</td>
+        <td>Passed in 0.525s</td>
         <td>should call $indexedDB.openStore with name "survey_template"</td>
         <td>CrossSessionDatabaseService &raquo; saveSurveyTemplateRevision method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.044s</td>
+        <td>Passed in 0.033s</td>
         <td>should call store.upsert</td>
         <td>CrossSessionDatabaseService &raquo; saveSurveyTemplateRevision method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.038s</td>
+        <td>Passed in 0.032s</td>
         <td>should call store.upsert with correct entry format</td>
         <td>CrossSessionDatabaseService &raquo; saveSurveyTemplateRevision method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.055s</td>
+        <td>Passed in 0.042s</td>
         <td>should call WorkspaceService.saveWork</td>
         <td>EditorToolbarController &raquo; saveOfflineWork method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.087s</td>
+        <td>Passed in 0.047s</td>
         <td>should has compiled with sucess</td>
         <td>surveyTemplateExportDirective</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.064s</td>
+        <td>Passed in 0.032s</td>
         <td>should calls WorkspaceService.exportWork method when receives the click</td>
         <td>surveyTemplateExportDirective</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.043s</td>
+        <td>Passed in 0.031s</td>
         <td>should return correct string for download</td>
         <td>SurveyExportService &raquo; service.exportSurvey method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.043s</td>
+        <td>Passed in 0.039s</td>
         <td>should call JSON.stringify</td>
         <td>SurveyExportService &raquo; service.exportSurvey method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.052s</td>
+        <td>Passed in 0.122s</td>
         <td>should call encodeURIComponent</td>
         <td>SurveyExportService &raquo; service.exportSurvey method</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.004s</td>
         <td>when parameter is equalt to "SurveyIdentityBuilderService"</td>
         <td>BuilderMapService &raquo; getBuilder method should return an object</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>when parameter is equalt to "QuestionBuilderService"</td>
         <td>BuilderMapService &raquo; getBuilder method should return an object</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>when parameter is equalt to "LabelBuilderService"</td>
         <td>BuilderMapService &raquo; getBuilder method should return an object</td>
       </tr>
@@ -94,7 +94,7 @@
         <td>BuilderMapService &raquo; getBuilder method should return an object</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.003s</td>
         <td>when parameter is equalt to "AnswerOptionBuilderService"</td>
         <td>BuilderMapService &raquo; getBuilder method should return an object</td>
       </tr>
@@ -104,7 +104,7 @@
         <td>BuilderSelectorService &raquo; getBuilderName method return</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should be equal to UnitBuilderService when parameter match regex: "/survey.question.[d|w|-]+.unit/"</td>
         <td>BuilderSelectorService &raquo; getBuilderName method return</td>
       </tr>
@@ -130,36 +130,61 @@
       </tr>
       <tr class="pass">
         <td>Passed in 0.001s</td>
-        <td>Test if variable work returned true</td>
-        <td>MetadataBuilderService &raquo; Part of code manage test scenario</td>
+        <td>should return true</td>
+        <td>MetadataBuilderService &raquo; getWorkResult</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
-        <td>Test if execute it is called</td>
-        <td>MetadataBuilderService &raquo; Part of code manage test scenario</td>
-      </tr>
-      <tr class="pass">
-        <td>Passed in 0.001s</td>
-        <td>Test if method addOption return newOption</td>
-        <td>MetadataBuilderService &raquo; Part of code manage test scenario</td>
+        <td>Passed in 0.003s</td>
+        <td>should return newOption</td>
+        <td>MetadataBuilderService &raquo; When an add option work is executed</td>
       </tr>
       <tr class="pass">
         <td>Passed in 0.002s</td>
+        <td>the option should be added</td>
+        <td>MetadataBuilderService &raquo; When an add option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should calls the MetadataAnswerFactory.create method</td>
+        <td>MetadataBuilderService &raquo; When an add option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>Should return optionToRemove</td>
+        <td>MetadataBuilderService &raquo; When an remove option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>the option should be removed from options</td>
+        <td>MetadataBuilderService &raquo; When an remove option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>Should return optionToUpdate</td>
+        <td>MetadataBuilderService &raquo; When an update option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>the data should be updated</td>
+        <td>MetadataBuilderService &raquo; When an update option work is executed</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
         <td>getQuestionFactory should return a QuestionFactory</td>
         <td>ModelFacadeService &raquo; Getting question factories</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>getLabelFactory should return a LabelFactory</td>
         <td>ModelFacadeService &raquo; Getting question factories</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>getUnitFactory should return a UnitFactory</td>
         <td>ModelFacadeService &raquo; Getting question factories</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>getSurveyFactory should return a SurveyFactory</td>
         <td>ModelFacadeService &raquo; Getting question factories</td>
       </tr>
@@ -169,7 +194,7 @@
         <td>ModelFacadeService &raquo; Getting question factories</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should extends Question</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
@@ -179,7 +204,7 @@
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a not null oid</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
@@ -189,37 +214,37 @@
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have parentQuestion equal to Question.oid</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.003s</td>
         <td>returned object should have a label object for ptBR</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have a label object for ptBR</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>call LabelFactory.create()</td>
         <td>MetadataAnswerFactory &raquo; MetadataAnswer</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should returned an object defined</td>
         <td>MetadataGroupFactory &raquo; MetadataGroupFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should extends Question</td>
         <td>MetadataGroupFactory &raquo; MetadataGroupFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>return should an Label ObjectType</td>
         <td>MetadataGroupFactory &raquo; MetadataGroupFactory.create()</td>
       </tr>
@@ -254,27 +279,27 @@
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have dataType equal to Integer</td>
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have parentQuestion equal to Question.oid</td>
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a label object for ptBR locale</td>
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>AnswerOptionFactory &raquo; AnswerOption</td>
       </tr>
@@ -284,17 +309,17 @@
         <td>CalendarQuestionFactory &raquo; CalendarQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.003s</td>
         <td>returned object should have objectType equal to CalendarQuestion</td>
         <td>CalendarQuestionFactory &raquo; CalendarQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a not null oid</td>
         <td>CalendarQuestionFactory &raquo; CalendarQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have dataType equal to LocalDate</td>
         <td>CalendarQuestionFactory &raquo; CalendarQuestion</td>
       </tr>
@@ -315,11 +340,11 @@
       </tr>
       <tr class="skip">
         <td>Skipped</td>
-        <td>returned object should extends Question</td>
+        <td>returned should extends Question</td>
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.003s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have objectType equal to NumericQuestion</td>
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
@@ -329,17 +354,17 @@
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have dataType equal to Integer</td>
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a label object for ptBR locale</td>
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>NumericQuestionFactory &raquo; NumericQuestion</td>
       </tr>
@@ -369,7 +394,7 @@
         <td>QuestionFactory &raquo; Specialized factory use</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.006s</td>
         <td>TimeQuestionFactory.create should be called when parameter is time-question</td>
         <td>QuestionFactory &raquo; Specialized factory use</td>
       </tr>
@@ -384,7 +409,7 @@
         <td>QuestionFactory &raquo; Question</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have a label object for ptBR locale</td>
         <td>QuestionFactory &raquo; Question</td>
       </tr>
@@ -394,7 +419,7 @@
         <td>QuestionFactory &raquo; Question</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>QuestionFactory &raquo; Question</td>
       </tr>
@@ -404,17 +429,17 @@
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.013s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have objectType equal to SingleSelectionQuestion</td>
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.003s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a not null oid</td>
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have dataType equal to Integer</td>
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
@@ -429,7 +454,7 @@
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>SingleSelectionQuestionFactory &raquo; SingleSelectionQuestion</td>
       </tr>
@@ -449,7 +474,7 @@
         <td>TextQuestionFactory &raquo; TextQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have dataType equal to String</td>
         <td>TextQuestionFactory &raquo; TextQuestion</td>
       </tr>
@@ -459,12 +484,12 @@
         <td>TextQuestionFactory &raquo; TextQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.006s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>TextQuestionFactory &raquo; TextQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.004s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>TextQuestionFactory &raquo; TextQuestion</td>
       </tr>
@@ -474,42 +499,42 @@
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.003s</td>
         <td>returned object should have objectType equal to TimeQuestion</td>
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have a not null oid</td>
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>returned object should have dataType equal to LocalTime</td>
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.003s</td>
         <td>returned object should have a label object for ptBR locale</td>
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.01s</td>
-        <td>returned object should have a label object for enUS locale</td>
-        <td>TimeQuestionFactory &raquo; TimeQuestion</td>
-      </tr>
-      <tr class="pass">
         <td>Passed in 0.002s</td>
         <td>returned object should have a label object for enUS locale</td>
         <td>TimeQuestionFactory &raquo; TimeQuestion</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.004s</td>
+        <td>returned object should have a label object for enUS locale</td>
+        <td>TimeQuestionFactory &raquo; TimeQuestion</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
         <td>should return an Survey that extends from StudioObject</td>
         <td>Label suite: &raquo; LabelFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return an Label object type</td>
         <td>Label suite: &raquo; LabelFactory.create()</td>
       </tr>
@@ -519,7 +544,7 @@
         <td>Label suite: &raquo; LabelFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>should return an Label with plainText equal to empty String</td>
         <td>Label suite: &raquo; LabelFactory.create()</td>
       </tr>
@@ -544,22 +569,22 @@
         <td>Unit suite: &raquo; UnitFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.006s</td>
         <td>should return an Unit with plainText equal to empty String</td>
         <td>Unit suite: &raquo; UnitFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return an Unit with formattedText equal to empty String</td>
         <td>Unit suite: &raquo; UnitFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.003s</td>
         <td>should return an Survey that extends from StudioObject</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return an Survey object type</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
@@ -574,17 +599,17 @@
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return an Survey with a not null SurveyMetaInfo</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.012s</td>
+        <td>Passed in 0.001s</td>
         <td>should return an Survey with a not null SurveyIdentity</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>should return an Survey with a SurveyIdentity object type</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
@@ -594,7 +619,7 @@
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should call SurveyUUIDGenerator.generateSurveyUUID()</td>
         <td>Survey suite: &raquo; SurveyFactory.create()</td>
       </tr>
@@ -604,7 +629,7 @@
         <td>SurveyIdentity suite: &raquo; SurveyIdentityFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.001s</td>
         <td>should return an SurveyIdentity object type</td>
         <td>SurveyIdentity suite: &raquo; SurveyIdentityFactory.create()</td>
       </tr>
@@ -634,17 +659,17 @@
         <td>SurveyIdentity suite: &raquo; SurveyIdentityFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.007s</td>
         <td>should return an SurveyIdentity an empty array of keywords</td>
         <td>SurveyIdentity suite: &raquo; SurveyIdentityFactory.create()</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>Date.now() should be called in create() method</td>
         <td>SurveyMetaInfoFactory &raquo; Dependencies uses</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return an SurveyMetaInfo with creation date time equal to now date</td>
         <td>SurveyMetaInfoFactory &raquo; SurveyMetaInfoFactory.create()</td>
       </tr>
