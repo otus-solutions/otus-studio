@@ -10,7 +10,7 @@
         'NumericQuestionWidgetFactory',
         'SingleSelectionQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
-        'TimeQuestionWidgetFactory'
+        'TimeQuestionWidgetFactory',
     ];
 
     function QuestionWidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
@@ -53,6 +53,7 @@
         Object.defineProperty(this, 'label', {
             value: model.label.ptBR.plainText
         });
+
     }
 
 }());

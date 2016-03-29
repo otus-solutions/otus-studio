@@ -34,8 +34,9 @@
         }
 
         function loadQuestion(question) {
-            var questionWidget = loadQuestionWidget(question),
-                editorWidget = loadEditorWidget(questionWidget);
+            var questionWidget = loadQuestionWidget(question);
+            var metadataWidget = loadMetadataWidget(question);
+            var editorWidget = loadEditorWidget(questionWidget, metadataWidget);
 
             mergeScopeData(editorWidget);
             loadTemplate();
@@ -56,6 +57,10 @@
             return WidgetService.getWidgetForModel(question);
         }
 
+        function loadMetadataWidget(question) {
+            return WidgetService.getMetadataWidget(question);
+        }
+
         function loadEditorWidget(questionWidget) {
             return WidgetService.getQuestionEditorWidget(questionWidget);
         }
@@ -64,6 +69,7 @@
             scope.widgetTemplateList = scope.widgetTemplateList || {};
             scope.widget = editorWidget;
             scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
+            scope.widgetMetadata = '';
         }
 
         function loadTemplate() {

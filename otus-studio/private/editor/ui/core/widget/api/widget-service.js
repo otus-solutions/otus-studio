@@ -9,14 +9,16 @@
         'WidgetTemplateService',
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
-        'QuestionAnswerOptionEditorWidgetFactory'
+        'QuestionAnswerOptionEditorWidgetFactory',
+        'MetadataAnswerOptionWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory) {
+    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, MetadataQuestionWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
+        self.getMetadataWidget = getMetadataWidget;
         self.getQuestionEditorWidget = getQuestionEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
 
@@ -24,6 +26,10 @@
             var widget = QuestionWidgetFactory.create(model);
             widget.template = WidgetTemplateService.getDirectiveTemplate(model.objectType);
             return widget;
+        }
+
+        function getMetadataWidget(model) {
+            return MetadataQuestionWidgetFactory.create(model);
         }
 
         function getQuestionEditorWidget(model) {
