@@ -4,55 +4,57 @@
     angular
         .module('preview.navigation')
         .service('NavigationPreviewService', NavigationPreviewService);
-    var navigationGraph = null,
-        renderer = null,
-        layouter = null;
 
     function NavigationPreviewService() {
         var self = this;
 
         // Public interface
         self.createGraph = createGraph;
-    }
 
-    function createGraph(navigationRules) {
-        init();
-        iterate(navigationRules, drawNodes);
-        iterate(navigationRules, drawEdges);
-        draw();
-    }
+        // Private Interface
+        var navigationGraph,
+        renderer,
+        layouter;
 
-    function init() {
-        navigationGraph = new Graph();
-    }
-
-    function iterate(navigationRules, drawOptions) {
-        for (var navigationRule in navigationRules) {
-            drawOptions(navigationRules[navigationRule]);
+        function createGraph(navigationRules) {
+            init();
+            iterate(navigationRules, drawNodes);
+            iterate(navigationRules, drawEdges);
+            draw();
         }
-    }
 
-    function drawNodes(navigationRule) {
-        if (navigationRule.hasOwnProperty('origin')) {
-            navigationGraph.addNode(navigationRule.origin);
+        function init() {
+            navigationGraph = new Graph();
         }
-    }
 
-    function drawEdges(navigationRule) {
-        if (navigationRule.hasOwnProperty('destinations')) {
-            for (var i = 0; i < navigationRule.destinations.length; i++) {
-                navigationGraph.addEdge(navigationRule.origin, navigationRule.destinations[i].to, {
-                    directed: true
-                });
+        function iterate(navigationRules, drawOptions) {
+            for (var navigationRule in navigationRules) {
+                drawOptions(navigationRules[navigationRule]);
             }
         }
-    }
 
-    function draw() {
-        layouter = new Graph.Layout.Spring(navigationGraph);
-        renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, 600, 600);
-        layouter.layout();
-        renderer.draw();
+        function drawNodes(navigationRule) {
+            if (navigationRule.hasOwnProperty('origin')) {
+                navigationGraph.addNode(navigationRule.origin);
+            }
+        }
+
+        function drawEdges(navigationRule) {
+            if (navigationRule.hasOwnProperty('destinations')) {
+                for (var i = 0; i < navigationRule.destinations.length; i++) {
+                    navigationGraph.addEdge(navigationRule.origin, navigationRule.destinations[i].to, {
+                        directed: true
+                    });
+                }
+            }
+        }
+
+        function draw() {
+            layouter = new Graph.Layout.Spring(navigationGraph);
+            renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
+            layouter.layout();
+            renderer.draw();
+        }
     }
 
 }());
