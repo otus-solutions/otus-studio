@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.preview')
+        .module('preview')
         .controller('PreviewController', PreviewController);
 
     PreviewController.$inject = ['StudioEditingService'];

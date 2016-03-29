@@ -71,6 +71,12 @@
     <!-- ************************************* Moment ************************************* -->
     <script src="shared/moment/moment.js"></script>
 
+    <!-- ************************************* draculaJS ************************************* -->
+    <script src="shared/dracula-js/raphael-min.js"></script>
+    <script src="shared/dracula-js/dracula_graffle.js"></script>
+    <script src="shared/dracula-js/dracula_graph.js"></script>
+
+
     <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="node_modules/node-uuid/uuid.js"></script>
@@ -96,6 +102,7 @@
     <!-- ************************************** OtusJS ************************************** -->
     <!-- app.shared.otusjs -->
     <script src="shared/otusjs/otusjs-module.js"></script>
+    <script src="shared/otusjs/navigation/otusjs-navigation-module.js"></script>
 
     <!-- === otusjs-model === -->
     <!-- app.shared.otusjs.model -->
@@ -300,6 +307,15 @@
     <!-- WIDGET.QUESTION-EDITOR -->
     <script src="private/editor/ui/core/widget/question-editor/question-editor-widget-factory.js"></script>
 
+    <!-- WIDGET.QUESTION-EDITOR-TOOLBAR -->
+    <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-directive.js"></script>
+    <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-service.js"></script>
+    <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-controller.js"></script>
+
+    <!-- WIDGET.QUESTION-EDITOR-NAVIGATION -->
+    <script src="private/editor/ui/navigation/question-navigation-directive.js"></script>
+    <script src="private/editor/ui/navigation/question-navigation-controller.js"></script>
+
     <!-- DATA-TOOL -->
     <script src="private/editor/ui/data-tool/data-tool-content-service.js"></script>
     <script src="private/editor/ui/data-tool/data-tool-controller.js"></script>
@@ -335,7 +351,17 @@
 
 
     <!-- ************************************** Studio Preview ************************************** -->
-    <!-- app.private.survey-preview.ui.preview -->
-    <script src="private/survey-preview/preview-module.js"></script>
-    <script src="private/survey-preview/preview-controller.js"></script>
+    <script src="private/preview/preview-module.js"></script>
+
+    <!-- API -->
+    <script src="private/preview/api/preview-controller.js"></script>
+
+    <!-- app.private.survey-preview -->
+    <!-- SURVEY -->
+
+    <!-- NAVIGATION -->
+    <script src="private/preview/navigation/survey-navigation-preview-module.js"></script>
+    <script src="private/preview/navigation/api/navigation-preview-service.js"></script>
+    <script src="private/preview/navigation/survey-navigation-preview-directive.js"></script>
+
 </html>
