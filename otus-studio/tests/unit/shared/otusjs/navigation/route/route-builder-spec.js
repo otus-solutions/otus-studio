@@ -62,11 +62,25 @@ describe('RouteBuilder', function() {
         });
 
         it('should return the routerBuilder with "getRoute" function attached', function() {
-            expect(builder.getRoute).toBeDefined();
+            expect(builder.build).toBeDefined();
         });
 
         it('should should return the routerBuilder itself', function() {
             expect(object).toEqual(builder);
+        });
+
+    });
+
+    describe('underCondition method', function() {
+
+        it('should add a condition to route', function() {
+            var route = builder.createRoute()
+                        .from(ORIGIN)
+                        .to(DESTINATION)
+                        .underCondition()
+                        .build();
+
+            expect(route.getConditionSetSize()).toEqual(1);
         });
 
     });

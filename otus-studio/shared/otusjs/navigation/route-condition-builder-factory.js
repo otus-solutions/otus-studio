@@ -25,7 +25,6 @@
 
     function RouteConditionBuilder(RuleFactory, RouteConditionFactory) {
         var self = this;
-        var conditions = [];
         var rulesToFlush = [];
         var currentCondition;
         var currentRule;
@@ -118,15 +117,18 @@
             return self.orBuilder;
         }
 
-        function build() {
-            flushRules();
-            conditions.push(currentCondition);
-            return conditions;
+        function build(conditionName) {
+            if (!conditionName) {
+                return null;
+            } else {
+                flushRules();
+                currentCondition.name = conditionName;
+                return currentCondition;
+            }
         }
 
         function createNewCondition() {
-            var conditionName = String(Object.keys(conditions).length);
-            currentCondition = RouteConditionFactory.create(conditionName);
+            currentCondition = RouteConditionFactory.create('');
         }
 
         function createNewRule(ruleSubject) {

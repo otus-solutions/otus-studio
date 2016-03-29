@@ -49,7 +49,7 @@
         self.lowerEqual = lowerEqual;
         self.between = between;
         self.contains = contains;
-        self.toRuleFormat = toRuleFormat;
+        self.toJsonString = toJsonString;
 
         function within(arrayValues) {
             defineAnswer('within', arrayValues);
@@ -93,7 +93,7 @@
             self.answer[operator] = value;
         }
 
-        function toRuleFormat() {
+        function toJsonString() {
             var result = {
                 when: self.when,
                 answer: self.answer

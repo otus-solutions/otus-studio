@@ -16,17 +16,17 @@ describe('Rule', function() {
     describe('addRule method', function() {
 
         it('should put a condition in conditions map', function() {
-            routeCondition.addRule(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.ruleA);
 
             expect(routeCondition.rules.length).toBe(1);
         });
 
         it('should not put a condition twice', function() {
-            routeCondition.addRule(Mock.routeConditionConditionA);
-            routeCondition.addRule(Mock.routeConditionConditionA);
+            routeCondition.addRule(Mock.ruleA);
+            routeCondition.addRule(Mock.ruleA);
 
-            routeCondition.addRule(Mock.routeConditionConditionB);
-            routeCondition.addRule(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.ruleB);
+            routeCondition.addRule(Mock.ruleB);
 
             expect(routeCondition.rules.length).toBe(2);
         });
@@ -36,18 +36,18 @@ describe('Rule', function() {
     describe('removeRule method', function() {
 
         beforeEach(function() {
-            routeCondition.addRule(Mock.routeConditionConditionA);
-            routeCondition.addRule(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.ruleA);
+            routeCondition.addRule(Mock.ruleB);
         });
 
         it('should remove the condition from conditions map', function() {
-            routeCondition.removeRule(Mock.routeConditionConditionA);
+            routeCondition.removeRule(Mock.ruleA);
 
             expect(routeCondition.rules.length).toBe(1);
         });
 
         it('should remove exactly the specified condition from conditions map', function() {
-            routeCondition.addRule(Mock.routeConditionConditionB);
+            routeCondition.addRule(Mock.ruleB);
 
             expect(routeCondition.rules[0].answer.equal).toBeDefined();
         });
@@ -55,12 +55,12 @@ describe('Rule', function() {
     });
 
     function mockRuleConditions() {
-        Mock.routeConditionConditionA = {
+        Mock.ruleA = {
             answer: {
                 equal: jasmine.any(Object)
             }
         };
-        Mock.routeConditionConditionB = {
+        Mock.ruleB = {
             answer: {
                 within: jasmine.any(Object)
             }
