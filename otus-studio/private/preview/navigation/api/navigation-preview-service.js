@@ -50,7 +50,7 @@
 
     function draw() {
         layouter = new Graph.Layout.Spring(navigationGraph);
-        renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, 600, 600);
+        renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, 700, 1200);
         layouter.layout();
         renderer.draw();
     }
