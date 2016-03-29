@@ -8,12 +8,14 @@
     function mpath() {
         var MODULE = 'private/editor/ui/';
         var QUESTION_EDITOR_TEMPLATE = 'private/editor/ui/core/widget/question-editor/question-editor-template.html';
+        var METADATA_TEMPLATE = 'private/editor/ui/core/widget/metadata/metadata-question-template.html';
 
         var self = this;
 
         /* Public interface */
         self.getWidgetPath = getWidgetPath;
         self.getQuestionEditorWidgetPath = getQuestionEditorWidgetPath;
+        self.getMetadataWidgetPath = getMetadataWidgetPath;
 
         function getWidgetPath(directive) {
             return MODULE.concat('core/widget/question/'.concat(directive).concat('/'.concat(directive.concat('-question-template.html'))));
@@ -21,6 +23,10 @@
 
         function getQuestionEditorWidgetPath() {
             return QUESTION_EDITOR_TEMPLATE;
+        }
+
+        function getMetadataWidgetPath() {
+            return METADATA_TEMPLATE;
         }
     }
 

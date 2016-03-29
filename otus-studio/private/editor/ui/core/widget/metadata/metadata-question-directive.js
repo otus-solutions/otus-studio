@@ -14,7 +14,7 @@
             scope: {},
             restrict: 'E',
             controller: 'MetadataController',
-            templateUrl: mpath.getWidgetPath('metadata'),
+            templateUrl: mpath.getMetadataWidgetPath(),
             link: function(scope, element, attrs, controller) {
                 scope.widget = scope.$parent.$parent.widget;
             }

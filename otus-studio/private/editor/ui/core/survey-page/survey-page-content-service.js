@@ -61,15 +61,15 @@
             return WidgetService.getMetadataWidget(question);
         }
 
-        function loadEditorWidget(questionWidget) {
-            return WidgetService.getQuestionEditorWidget(questionWidget);
+        function loadEditorWidget(questionWidget, metadataWidget) {
+            return WidgetService.getQuestionEditorWidget(questionWidget, metadataWidget);
         }
 
         function mergeScopeData(editorWidget) {
             scope.widgetTemplateList = scope.widgetTemplateList || {};
             scope.widget = editorWidget;
             scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
-            scope.widgetMetadata = '';
+            scope.widgetMetadata = editorWidget.metadataTemplate;
         }
 
         function loadTemplate() {

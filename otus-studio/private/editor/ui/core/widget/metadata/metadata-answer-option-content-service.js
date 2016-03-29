@@ -18,8 +18,8 @@
         // self.updateOption = updateOption;
 
         function loadOption(answerOption, scope) {
-            var widget = WidgetService.getQuestionAnswerOptionWidget(answerOption);
-            scope.answerOptions.push(widget);
+            var widget = WidgetService.getMetadataAnswerOptionWidget(answerOption);
+            scope.answerOption.push(widget);
             scope.lastOptionIndex = scope.answerOptions.length - 1;
         }
 

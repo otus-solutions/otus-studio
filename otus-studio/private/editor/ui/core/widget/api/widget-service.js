@@ -10,10 +10,11 @@
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory',
+        'MetadataQuestionWidgetFactory',
         'MetadataAnswerOptionWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, MetadataQuestionWidgetFactory) {
+    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, MetadataQuestionWidgetFactory, MetadataAnswerOptionWidgetFactory) {
         var self = this;
 
         /* Public interface */
@@ -21,6 +22,7 @@
         self.getMetadataWidget = getMetadataWidget;
         self.getQuestionEditorWidget = getQuestionEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
+        self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
 
         function getWidgetForModel(model) {
             var widget = QuestionWidgetFactory.create(model);
@@ -29,15 +31,21 @@
         }
 
         function getMetadataWidget(model) {
-            return MetadataQuestionWidgetFactory.create(model);
+            var widget = MetadataQuestionWidgetFactory.create(model);
+            widget.template = WidgetTemplateService.getDirectiveTemplate('MetadataGroup');
+            return widget;
         }
 
-        function getQuestionEditorWidget(model) {
-            return QuestionEditorWidgetFactory.create(model);
+        function getQuestionEditorWidget(model, metadataWidget) {
+            return QuestionEditorWidgetFactory.create(model, metadataWidget);
         }
 
         function getQuestionAnswerOptionWidget(model) {
             return QuestionAnswerOptionEditorWidgetFactory.create(model);
+        }
+
+         function getMetadataAnswerOptionWidget(model) {
+            return MetadataAnswerOptionWidgetFactory.create(model);
         }
     }
 
