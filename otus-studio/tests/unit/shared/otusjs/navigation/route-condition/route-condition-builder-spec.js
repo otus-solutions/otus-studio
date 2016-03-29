@@ -309,7 +309,7 @@ describe('RouteConditionBuilderFactory', function() {
             expect(conditions[0].rules[0].when).toEqual(Mock.QUESTION_ID);
         });
 
-        it('should return an object with second rule having when property equal to Mock.QUESTION_2ID', function() {
+        xit('should return an object with second rule having when property equal to Mock.QUESTION_2ID', function() {
             // builder.question(Mock.QUESTION_ID).answer.isGreaterThan(13);
             builder = factory.create();
             builder.question(Mock.QUESTION_2ID).answer.contains(17);
