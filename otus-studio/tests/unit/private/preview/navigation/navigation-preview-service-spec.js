@@ -1,9 +1,20 @@
 describe('NavigationPreviewService', function() {
+    var NavigationPreviewService;
 
-    describe('test', function() {
+    /* @BeforeScenario */
+    beforeEach(function() {
+        module('preview');
 
-        it('test2', function() {
-            expect(true).toBe(true);
+        inject(function(_$injector_) {
+            /* @InjectMocks */
+            NavigationPreviewService = _$injector_.get('NavigationPreviewService');
+        });
+    });
+
+    describe('createGraph function', function() {
+
+        xit('should calls the init function', function() {
+
         });
     });
 

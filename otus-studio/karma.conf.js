@@ -33,6 +33,10 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+            DEPENDENCIES_ROOT_PATH + 'jquery/jquery-2.2.0.min.js',
+            DEPENDENCIES_ROOT_PATH + 'dracula-js/raphael-min.js',
+            DEPENDENCIES_ROOT_PATH + 'dracula-js/dracula_graffle.js',
+            DEPENDENCIES_ROOT_PATH + 'dracula-js/dracula_graph.js',
             /* Otus platform */
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',

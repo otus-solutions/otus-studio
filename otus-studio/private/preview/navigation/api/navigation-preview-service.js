@@ -51,8 +51,9 @@
 
         function draw() {
             layouter = new Graph.Layout.Spring(navigationGraph);
-            renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
             layouter.layout();
+
+            renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
             renderer.draw();
         }
     }
