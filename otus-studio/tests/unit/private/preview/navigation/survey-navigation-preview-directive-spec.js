@@ -45,8 +45,4 @@ describe('surveyNavigationPreviewGenerator', function functionName() {
         return element;
     }
 
-    function mockDomLocationsNavegationGraph() {
-
-    }
-
 });
