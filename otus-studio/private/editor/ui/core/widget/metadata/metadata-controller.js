@@ -23,12 +23,12 @@
         init();
 
         function init() {
-            ModelBuilderHubService.plugToAnswerOptionBuilder(self);
+            ModelBuilderHubService.plugToMetadataAnswerBuilder(self);
             $scope.metadataAnswerOptions = [];
         }
 
         function update(update) {
-            if (update.data.objectType == 'QuestionAnswerOption') {
+            if (!!update.data && update.data.objectType == 'MetadataAnswer') {
                 if (update.isAddData())
                     addAnswerOption(update.data);
                 else if (update.isRemoveData())

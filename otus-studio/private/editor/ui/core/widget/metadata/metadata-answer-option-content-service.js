@@ -17,16 +17,16 @@
         self.unloadOption = unloadOption;
         // self.updateOption = updateOption;
 
-        function loadOption(answerOption, scope) {
-            var widget = WidgetService.getMetadataAnswerOptionWidget(answerOption);
-            scope.answerOption.push(widget);
-            scope.lastOptionIndex = scope.answerOptions.length - 1;
+        function loadOption(metadataAnswerOptions, scope) {
+            var widget = WidgetService.getMetadataAnswerOptionWidget(metadataAnswerOptions);
+            scope.metadataAnswerOptions.push(widget);
+            scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
 
         function unloadOption(singleSelection, scope) {
             singleSelection.find('[radio-container]').last().remove();
-            scope.answerOptions.splice(-1);
-            scope.lastOptionIndex = scope.answerOptions.length - 1;
+            scope.metadataAnswerOptions.splice(-1);
+            scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
 
         // function updateOption(singleSelection, answerOption) {

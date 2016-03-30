@@ -79,8 +79,8 @@
             return target.split('.')[2];
         }
         
-        function notifyObservers(question, workType) {
-            workType.data = question;
+        function notifyObservers(metadata, workType) {
+            workType.data = metadata;
             observers.forEach(function(observer) {
                 observer.update(workType);
             });

@@ -22,7 +22,7 @@
             var work = buildWork(editingEvent),
                 workResult = ModelBuilderService.build(work);
 
-            console.log(workResult);
+            console.log(work.survey);
         }
 
         function buildWork(editingEvent) {
