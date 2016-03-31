@@ -15,8 +15,7 @@
         function link(scope, element, attrs) {
             element.on('click', function(){
                 if(element.find(DOM_LOCATION_NAVEGATION_GRAPH)){
-                    var graph = angular.element(document.querySelector(DOM_LOCATION_NAVEGATION_GRAPH));
-                    graph.remove();
+                    $(DOM_LOCATION_NAVEGATION_GRAPH).remove();
                 }
                 var createdGraph = NavigationPreviewService.createGraph(navigationObject);
                 NavigationPreviewService.renderGraph(createdGraph);
