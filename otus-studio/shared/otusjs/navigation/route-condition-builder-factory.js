@@ -16,19 +16,20 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new RouteConditionBuilder(RuleFactory, RouteConditionFactory);
+        function create(conditionName) {
+            return new RouteConditionBuilder(RuleFactory, RouteConditionFactory, conditionName);
         }
 
         return self;
     }
 
-    function RouteConditionBuilder(RuleFactory, RouteConditionFactory) {
+    function RouteConditionBuilder(RuleFactory, RouteConditionFactory, conditionName) {
         var self = this;
         var rulesToFlush = [];
         var currentCondition;
         var currentRule;
         var currentRuleSubject;
+        var expectedConditionName = conditionName;
 
         /* Public interface */
         self.question = question;
@@ -117,14 +118,10 @@
             return self.orBuilder;
         }
 
-        function build(conditionName) {
-            if (!conditionName) {
-                return null;
-            } else {
-                flushRules();
-                currentCondition.name = conditionName;
-                return currentCondition;
-            }
+        function build() {
+            flushRules();
+            currentCondition.name = expectedConditionName;
+            return currentCondition;            
         }
 
         function createNewCondition() {

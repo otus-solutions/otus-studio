@@ -16,7 +16,7 @@ describe('RouteConditionBuilderFactory', function() {
         mockQuestionAnswer();
         mockAnswerRange();
 
-        builder = factory.create();
+        builder = factory.create(Mock.CONDITION_NAME);
     });
 
     describe('build method', function() {

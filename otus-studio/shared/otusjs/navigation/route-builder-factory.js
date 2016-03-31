@@ -29,6 +29,7 @@
         var routeOrigin = null;
         var conditionsToFlush = [];
         var currentCondition;
+        var conditionBuilder;
 
         /* Public interface */
         self.createRoute = createRoute;
@@ -36,15 +37,28 @@
         self.question = question;
 
         /* RouteConditionBuilder proxy */
-        self.answerBuilder = {};
-        self.answerBuilder.answer = {};
-        self.answerBuilder.answer.isEqualTo = isEqualTo;
-        self.answerBuilder.answer.isGreaterThan = isGreaterThan;
-        self.answerBuilder.answer.isGreaterEqualTo = isGreaterEqualTo;
-        self.answerBuilder.answer.isLowerThan = isLowerThan;
-        self.answerBuilder.answer.isLowerEqualTo = isLowerEqualTo;
-        self.answerBuilder.answer.isBetween = isBetween;
-        self.answerBuilder.answer.contains = contains;
+        self.answer = {};
+        self.answer.isEqualTo = isEqualTo;
+        self.answer.isGreaterThan = isGreaterThan;
+        self.answer.isGreaterEqualTo = isGreaterEqualTo;
+        self.answer.isLowerThan = isLowerThan;
+        self.answer.isLowerEqualTo = isLowerEqualTo;
+        self.answer.isBetween = isBetween;
+        self.answer.contains = contains;
+
+        /* And interface */
+        self.andBuilder = {};
+        self.andBuilder.question = self.question;
+        self.andBuilder.answer = self.answer;
+        self.andBuilder.build = build;
+        self.and = and;
+
+        /* Or interface */
+        self.orBuilder = {};
+        self.orBuilder.underCondition = self.underCondition;
+        self.orBuilder.question = self.question;
+        self.orBuilder.answer = self.answer;
+        self.or = or;
 
         function createRoute() {
             self.from = from;
@@ -64,7 +78,54 @@
         }
 
         function underCondition(conditionName) {
-            currentCondition = RouteConditionBuilderFactory.create();
+            conditionBuilder = RouteConditionBuilderFactory.create(conditionName);
+            return self;
+        }
+
+        function question(questionID) {
+            conditionBuilder.question(questionID);
+            return self;
+        }
+
+        function isEqualTo(value) {
+            conditionBuilder.answer.isEqualTo(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function isGreaterThan(value) {
+            conditionBuilder.answer.isGreaterThan(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function isGreaterEqualTo(value) {
+            conditionBuilder.answer.isGreaterEqualTo(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function isLowerThan(value) {
+            conditionBuilder.answer.isLowerThan(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function isLowerEqualTo(value) {
+            conditionBuilder.answer.isLowerEqualTo(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function isBetween(start, end) {
+            conditionBuilder.answer.isBetween(value);
+            conditionsToFlush.push(conditionBuilder.build());
+            return self;
+        }
+
+        function contains(value) {
+            conditionBuilder.answer.contains(value);
+            conditionsToFlush.push(conditionBuilder.build());
             return self;
         }
 
@@ -79,9 +140,13 @@
             });
         }
 
-        /* RouteConditionBuilder proxy implementation */
-        function question(questionID) {
-            return self.answerBuilder;
+        function and() {
+            conditionBuilder.and();
+            return self.andBuilder;
+        }
+
+        function or() {
+            return self.orBuilder;
         }
     }
 

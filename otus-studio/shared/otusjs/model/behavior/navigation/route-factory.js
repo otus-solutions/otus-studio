@@ -67,7 +67,7 @@
 
         function addCondition(condition) {
             self.conditionSet = self.conditionSet || {};
-            self.conditionSet[condition.name] = condition.rules;
+            self.conditionSet[condition.name] = condition;
         }
 
         function removeCondition(condition) {

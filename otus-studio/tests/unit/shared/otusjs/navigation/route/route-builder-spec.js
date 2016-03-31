@@ -7,6 +7,9 @@ describe('RouteBuilder', function() {
         module('otusjs');
         module('utils');
 
+        mockConditionName();
+        mockQuestionID();
+
         inject(function(_$injector_) {
             factory = _$injector_.get('RouteBuilderFactory', {
                 'RouteFactory': mockRouteFactory(_$injector_)
@@ -71,16 +74,154 @@ describe('RouteBuilder', function() {
 
     });
 
-    describe('underCondition method', function() {
+    describe('build method', function() {
 
-        it('should add a condition to route', function() {
-            var route = builder.createRoute()
-                        .from(ORIGIN)
-                        .to(DESTINATION)
-                        .underCondition()
-                        .build();
+        var route;
 
+        beforeEach(function() {
+            route = builder.createRoute()
+                    .from(ORIGIN)
+                    .to(DESTINATION)
+                    .underCondition(Mock.CONDITION_A)
+                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                    .build();
+        });
+
+        it('should add a condition in condition set', function() {
+            expect(route.conditionSet[Mock.CONDITION_A]).toBeDefined();
             expect(route.getConditionSetSize()).toEqual(1);
+        });
+
+        it('should add a condition in condition set with key equal to condition name', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].name).toEqual(Mock.CONDITION_A);
+        });
+
+        it('should add a rule in condition', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules.length).toEqual(1);
+        });
+
+        it('should add a rule in condition where "when" property should be defined', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[0].when).toBeDefined();
+        });
+
+        it('should add a rule in condition where "when" property should be defined with value equal to question method parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[0].when).toEqual(Mock.QUESTION_ID);
+        });
+
+        it('should add a rule in condition where answer should be compared with operator called', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[0].answer.equal).toBeDefined();
+        });
+
+        it('should add a rule in condition where answer should be compared against comparator parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[0].answer.equal).toEqual(5);
+        });
+
+    });
+
+    describe('and operator', function() {
+
+        var route;
+
+        beforeEach(function() {
+            route = builder.createRoute()
+                    .from(ORIGIN)
+                    .to(DESTINATION)
+                    .underCondition(Mock.CONDITION_A)
+                    .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
+                    .and()
+                    .question(Mock.QUESTION_ID).answer.isLowerThan(15)
+                    .build();
+        });
+
+        it('should add another rule in condition', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules.length).toEqual(2);
+        });
+
+        it('should add another rule in condition where "when" property should be defined', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[1].when).toBeDefined();
+        });
+
+        it('should add another rule in condition where "when" property should be defined with value equal to question method parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[1].when).toEqual(Mock.QUESTION_ID);
+        });
+
+        it('should add another rule in condition where answer should be compared with operator called', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[1].answer.lower).toBeDefined();
+        });
+
+        it('should add another rule in condition where answer should be compared against comparator parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_A].rules[1].answer.lower).toEqual(15);
+        });
+
+    });
+
+    describe('or operator', function() {
+
+        var route;
+
+        beforeEach(function() {
+            route = builder.createRoute()
+                    .from(ORIGIN)
+                    .to(DESTINATION)
+                    .underCondition(Mock.CONDITION_A)
+                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                    .or()
+                    .underCondition(Mock.CONDITION_B)
+                    .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                    .build();
+        });
+
+        it('should add another condition in condition set', function() {
+            expect(route.conditionSet[Mock.CONDITION_B]).toBeDefined();
+            expect(route.getConditionSetSize()).toEqual(2);
+        });
+
+        it('should add a condition in condition set with key equal to condition name', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].name).toEqual(Mock.CONDITION_B);
+        });
+
+        it('should add a rule in condition', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules.length).toEqual(1);
+        });
+
+    });
+
+    describe('or operator with and operator', function() {
+
+        var route;
+
+        beforeEach(function() {
+            route = builder.createRoute()
+                    .from(ORIGIN)
+                    .to(DESTINATION)
+                    .underCondition(Mock.CONDITION_A)
+                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                    .or()
+                    .underCondition(Mock.CONDITION_B)
+                    .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                    .and()
+                    .question(Mock.QUESTION_2ID).answer.contains(3)
+                    .build();
+        });
+
+        it('should add another rule in condition', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules.length).toEqual(2);
+        });
+
+        it('should add another rule in condition where "when" property should be defined', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules[1].when).toBeDefined();
+        });
+
+        it('should add another rule in condition where "when" property should be defined with value equal to question method parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules[1].when).toEqual(Mock.QUESTION_2ID);
+        });
+
+        it('should add another rule in condition where answer should be compared with operator called', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules[1].answer.contains).toBeDefined();
+        });
+
+        it('should add another rule in condition where answer should be compared against comparator parameter', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules[1].answer.contains).toEqual(3);
         });
 
     });
@@ -89,6 +230,16 @@ describe('RouteBuilder', function() {
         Mock.RouteFactory = $injector.get('RouteFactory');
         spyOn(Mock.RouteFactory, 'create').and.callThrough();
         return Mock.RouteFactory;
+    }
+
+    function mockConditionName() {
+        Mock.CONDITION_A = 'CONDITION_A';
+        Mock.CONDITION_B = 'CONDITION_B';
+    }
+
+    function mockQuestionID() {
+        Mock.QUESTION_ID = 'QID';
+        Mock.QUESTION_2ID = 'Q2ID';
     }
 
 });
