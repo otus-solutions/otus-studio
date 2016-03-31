@@ -1,13 +1,17 @@
 describe('Rule', function() {
+    var Mock = {};
 
     beforeEach(function() {
-        module('studio');
+        module('otusjs');
+
+        mockWhen();
+        mockAnswer();
 
         inject(function(_$injector_) {
             factory = _$injector_.get('RuleFactory');
         });
 
-        ruleCondition = factory.create('QUESTION_ID');
+        rule = factory.create(Mock.WHEN);
     });
 
     describe('within method', function() {
@@ -15,15 +19,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUES = [1, 2, 3];
 
         beforeEach(function() {
-            ruleCondition.within(POSSIBLE_VALUES);
+            rule.within(POSSIBLE_VALUES);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "within" property', function() {
-            expect(ruleCondition.answer.within).toBe(POSSIBLE_VALUES);
+            expect(rule.answer.within).toBe(POSSIBLE_VALUES);
         });
 
     });
@@ -33,15 +37,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUE = 'POSSIBLE_VALUE';
 
         beforeEach(function() {
-            ruleCondition.equal(POSSIBLE_VALUE);
+            rule.equal(POSSIBLE_VALUE);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "equal" property', function() {
-            expect(ruleCondition.answer.equal).toBe(POSSIBLE_VALUE);
+            expect(rule.answer.equal).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -51,15 +55,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUE = 'POSSIBLE_VALUE';
 
         beforeEach(function() {
-            ruleCondition.greater(POSSIBLE_VALUE);
+            rule.greater(POSSIBLE_VALUE);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "greater" property', function() {
-            expect(ruleCondition.answer.greater).toBe(POSSIBLE_VALUE);
+            expect(rule.answer.greater).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -69,15 +73,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUE = 2;
 
         beforeEach(function() {
-            ruleCondition.greaterEqual(POSSIBLE_VALUE);
+            rule.greaterEqual(POSSIBLE_VALUE);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "greaterEqual" property', function() {
-            expect(ruleCondition.answer.greaterEqual).toBe(POSSIBLE_VALUE);
+            expect(rule.answer.greaterEqual).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -87,15 +91,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUE = 2;
 
         beforeEach(function() {
-            ruleCondition.lower(POSSIBLE_VALUE);
+            rule.lower(POSSIBLE_VALUE);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "lower" property', function() {
-            expect(ruleCondition.answer.lower).toBe(POSSIBLE_VALUE);
+            expect(rule.answer.lower).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -105,15 +109,15 @@ describe('Rule', function() {
         var POSSIBLE_VALUE = 2;
 
         beforeEach(function() {
-            ruleCondition.lowerEqual(POSSIBLE_VALUE);
+            rule.lowerEqual(POSSIBLE_VALUE);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "lowerEqual" property', function() {
-            expect(ruleCondition.answer.lowerEqual).toBe(POSSIBLE_VALUE);
+            expect(rule.answer.lowerEqual).toBe(POSSIBLE_VALUE);
         });
 
     });
@@ -122,41 +126,68 @@ describe('Rule', function() {
 
         var POSSIBLE_RANGE = [1, 10];
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            ruleCondition.between(1, 10);
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            rule.between(1, 10);
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "between" property', function() {
-            ruleCondition.between([1, 10]);
+            rule.between([1, 10]);
 
-            expect(ruleCondition.answer.between).toEqual(POSSIBLE_RANGE);
+            expect(rule.answer.between).toEqual(POSSIBLE_RANGE);
         });
 
         it('should set the array values to "between" property', function() {
-            ruleCondition.between(1, 10);
+            rule.between(1, 10);
 
-            expect(ruleCondition.answer.between).toEqual(POSSIBLE_RANGE);
+            expect(rule.answer.between).toEqual(POSSIBLE_RANGE);
         });
 
     });
 
     describe('contains method', function() {
 
-        var SHOULD_CONTAIN = 'text to search';
-
         beforeEach(function() {
-            ruleCondition.contains(SHOULD_CONTAIN);
+            rule.contains(Mock.ANSWER);
         });
 
-        it('should attach the condition to ruleCondition.answer', function() {
-            expect(ruleCondition.answer).toBeDefined();
+        it('should attach the condition to rule.answer', function() {
+            expect(rule.answer).toBeDefined();
         });
 
         it('should set the array values to "contains" property', function() {
-            expect(ruleCondition.answer.contains).toBe(SHOULD_CONTAIN);
+            expect(rule.answer.contains).toBe(Mock.ANSWER);
         });
 
     });
+
+    describe('toJson method', function() {
+        var json;
+
+        beforeEach(function() {
+            rule.contains(Mock.ANSWER);
+            json = rule.toJson();
+        });
+
+        it('result a json version with when attribute', function() {
+            expect(json.when).toBeDefined();
+            expect(json.when).toEqual(Mock.WHEN);
+        });
+
+        it('result a json version with answer attribute', function() {
+            expect(json.when).toBeDefined();
+            expect(json.answer.contains).toBeDefined();
+            expect(json.answer.contains).toEqual(Mock.ANSWER);
+        });
+
+    });
+
+    function mockWhen() {
+        Mock.WHEN = 'QUESTION_ID';
+    }
+
+    function mockAnswer() {
+        Mock.ANSWER = 'ANSWER';
+    }
 
 });

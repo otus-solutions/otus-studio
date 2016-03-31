@@ -29,24 +29,24 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('should return an object with when property defined', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].when).toBeDefined();
         });
 
         it('should return an object with when property equal to question', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].when).toEqual(Mock.QUESTION_ID);
         });
 
         it('should return an object with answer property defined', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer).toBeDefined();
         });
@@ -70,16 +70,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('should set answer with equal operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.equal).toBeDefined();
         });
 
         it('should set equal operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.equal).toEqual(5);
         });
@@ -94,16 +94,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isGreaterThan method should set answer with greater operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.greater).toBeDefined();
         });
 
         it('isGreaterThan method should set greater operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.greater).toEqual(5);
         });
@@ -118,16 +118,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isGreaterEqualTo method should set answer with greaterEqual operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.greaterEqual).toBeDefined();
         });
 
         it('isGreaterEqualTo method should set greaterEqual operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.greaterEqual).toEqual(5);
         });
@@ -142,16 +142,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isLowerThan method should set answer with lower operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isLowerThan(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isLowerThan(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.lower).toBeDefined();
         });
 
         it('isLowerThan method should set lower operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isLowerThan(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isLowerThan(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.lower).toEqual(5);
         });
@@ -166,16 +166,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isLowerEqualTo method should set answer with lowerEqual operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isLowerEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isLowerEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.lowerEqual).toBeDefined();
         });
 
         it('isLowerEqualTo method should set lowerEqual operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isLowerEqualTo(5)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isLowerEqualTo(5)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.lowerEqual).toEqual(5);
         });
@@ -198,16 +198,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isBetween method should set answer with between operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isBetween(5, 10)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isBetween(5, 10)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.between).toBeDefined();
         });
 
         it('isBetween method should set between operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isBetween(5, 10)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isBetween(5, 10)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.between).toEqual([5, 10]);
         });
@@ -222,16 +222,16 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('isLowerEqualTo method should set answer with contains operator', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.contains('Value to compare')
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.contains('Value to compare')
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.contains).toBeDefined();
         });
 
         it('isLowerEqualTo method should set contains operator with value equal to parameter', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.contains('Value to compare')
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.contains('Value to compare')
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].answer.contains).toEqual('Value to compare');
         });
@@ -258,32 +258,32 @@ describe('RouteConditionBuilderFactory', function() {
 
         it('should return an object with answer property defined', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
-                            .and()
-                            .answer.isLowerThan(17)
-                            .and()
-                            .answer.contains(15)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
+                .and()
+                .answer.isLowerThan(17)
+                .and()
+                .answer.contains(15)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules.length).toEqual(3);
         });
 
         it('should return an object with first rule having when property equal to Mock.QUESTION_ID', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
-                            .and()
-                            .answer.isLowerThan(17)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
+                .and()
+                .answer.isLowerThan(17)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[0].when).toEqual(Mock.QUESTION_ID);
         });
 
         it('should return an object with second rule having when property equal to Mock.QUESTION_2ID', function() {
             var condition = builder
-                            .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
-                            .and()
-                            .question(Mock.QUESTION_2ID).answer.contains(17)
-                            .build(Mock.CONDITION_NAME);
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(13)
+                .and()
+                .question(Mock.QUESTION_2ID).answer.contains(17)
+                .build(Mock.CONDITION_NAME);
 
             expect(condition.rules[1].when).toEqual(Mock.QUESTION_2ID);
         });

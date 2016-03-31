@@ -121,7 +121,7 @@
         function build() {
             flushRules();
             currentCondition.name = expectedConditionName;
-            return currentCondition;            
+            return currentCondition;
         }
 
         function createNewCondition() {
@@ -153,6 +153,10 @@
             });
 
             return clone;
+        }
+
+        function toJson() {
+
         }
 
     }

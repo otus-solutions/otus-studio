@@ -49,7 +49,7 @@
         self.lowerEqual = lowerEqual;
         self.between = between;
         self.contains = contains;
-        self.toJsonString = toJsonString;
+        self.toJson = toJson;
 
         function within(arrayValues) {
             defineAnswer('within', arrayValues);
@@ -93,13 +93,13 @@
             self.answer[operator] = value;
         }
 
-        function toJsonString() {
+        function toJson() {
             var result = {
                 when: self.when,
                 answer: self.answer
             };
 
-            return JSON.stringify(result);
+            return result;
         }
     }
 

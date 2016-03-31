@@ -55,7 +55,7 @@
         self.getConditionSetSize = getConditionSetSize;
         self.addCondition = addCondition;
         self.removeCondition = removeCondition;
-        self.toRouteFormat = toRouteFormat;
+        self.toJson = toJson;
 
         function getConditionSetSize() {
             if (self.conditionSet) {
@@ -77,7 +77,7 @@
             if (getConditionSetSize() === 0) delete self.conditionSet;
         }
 
-        function toRouteFormat() {
+        function toJson() {
             var result = {
                 name: self.name,
                 origin: self.origin,
@@ -85,7 +85,11 @@
             };
 
             if (self.conditionSet) {
-                result.conditionSet = self.conditionSet;
+                result.conditionSet = {};
+
+                for (var conditionName in self.conditionSet) {
+                    result.conditionSet[conditionName] = self.conditionSet[conditionName].toJson().rules;
+                }
             }
 
             return result;

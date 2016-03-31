@@ -48,6 +48,7 @@
         /* Public interface */
         self.addRule = addRule;
         self.removeRule = removeRule;
+        self.toJson = toJson;
 
         function addRule(rule) {
             var ruleNotExist = (self.rules.indexOf(rule) === -1);
@@ -57,6 +58,19 @@
         function removeRule(rule) {
             var indexToRemove = self.rules.indexOf(rule);
             self.rules.splice(indexToRemove, 1);
+        }
+
+        function toJson() {
+            var result = {
+                name: self.name,
+                rules: []
+            };
+
+            self.rules.forEach(function(rule) {
+                result.rules.push(rule.toJson());
+            });
+
+            return result;
         }
     }
 
