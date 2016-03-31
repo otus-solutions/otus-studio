@@ -224,3 +224,13 @@ ui-accordion-content.visible {
 md-backdrop {
     z-index: 65 !important
 }
+
+/**
+ *
+ * Toolbar Edit and Preview Navegação
+ *
+**/
+md-tabs-canvas {
+    background-color: #F9F9F9;
+    z-index: 10;
+}

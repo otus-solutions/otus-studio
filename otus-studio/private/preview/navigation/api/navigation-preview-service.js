@@ -4,55 +4,64 @@
     angular
         .module('preview.navigation')
         .service('NavigationPreviewService', NavigationPreviewService);
-    var navigationGraph = null,
-        renderer = null,
-        layouter = null;
 
-    function NavigationPreviewService() {
+        NavigationPreviewService.$inject = ['GraphFactory'];
+
+    function NavigationPreviewService(GraphFactory) {
         var self = this;
 
         // Public interface
         self.createGraph = createGraph;
-    }
+        self.renderGraph = renderGraph;
 
-    function createGraph(navigationRules) {
-        init();
-        iterate(navigationRules, drawNodes);
-        iterate(navigationRules, drawEdges);
-        draw();
-    }
+        // Private Interface
+        var navigationGraph,
+        renderer,
+        layouter;
 
-    function init() {
-        navigationGraph = new Graph();
-    }
-
-    function iterate(navigationRules, drawOptions) {
-        for (var navigationRule in navigationRules) {
-            drawOptions(navigationRules[navigationRule]);
+        function createGraph(navigationRules) {
+            init();
+            iterate(navigationRules, drawNodes);
+            iterate(navigationRules, drawEdges);
+            draw();
+            return navigationGraph;
         }
-    }
 
-    function drawNodes(navigationRule) {
-        if (navigationRule.hasOwnProperty('origin')) {
-            navigationGraph.addNode(navigationRule.origin);
+        function init() {
+            navigationGraph = GraphFactory.create();
         }
-    }
 
-    function drawEdges(navigationRule) {
-        if (navigationRule.hasOwnProperty('destinations')) {
-            for (var i = 0; i < navigationRule.destinations.length; i++) {
-                navigationGraph.addEdge(navigationRule.origin, navigationRule.destinations[i].to, {
-                    directed: true
-                });
+        function iterate(navigationRules, drawOptions) {
+            for (var navigationRule in navigationRules) {
+                drawOptions(navigationRules[navigationRule]);
             }
         }
-    }
 
-    function draw() {
-        layouter = new Graph.Layout.Spring(navigationGraph);
-        renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, 600, 600);
-        layouter.layout();
-        renderer.draw();
+        function drawNodes(navigationRule) {
+            if (navigationRule.hasOwnProperty('origin')) {
+                navigationGraph.addNode(navigationRule.origin);
+            }
+        }
+
+        function drawEdges(navigationRule) {
+            if (navigationRule.hasOwnProperty('destinations')) {
+                for (var i = 0; i < navigationRule.destinations.length; i++) {
+                    navigationGraph.addEdge(navigationRule.origin, navigationRule.destinations[i].to, {
+                        directed: true
+                    });
+                }
+            }
+        }
+
+        function draw() {
+            layouter = new Graph.Layout.Spring(navigationGraph);
+            layouter.layout();
+        }
+
+        function renderGraph(createdGraph) {
+           renderer = new Graph.Renderer.Raphael('survey-navigation-graph', createdGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
+           renderer.draw();
+        }
     }
 
 }());

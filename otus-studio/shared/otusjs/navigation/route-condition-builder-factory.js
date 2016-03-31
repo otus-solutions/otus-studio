@@ -49,6 +49,7 @@
         self.andBuilder = {};
         self.andBuilder.question = self.question;
         self.andBuilder.answer = self.answer;
+        self.andBuilder.build = build;
         self.and = and;
 
         /* Or interface */
@@ -58,59 +59,56 @@
         self.or = or;
 
         createNewCondition();
-        createNewRule();
 
         function question(ruleSubject) {
-            currentRuleSubject = ruleSubject;
-            rulesToFlush.push(currentRule);
+            createNewRule(ruleSubject);
             return self;
         }
 
         function isEqualTo(value) {
             currentRule.equal(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function isGreaterThan(value) {
             currentRule.greater(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function isGreaterEqualTo(value) {
             currentRule.greaterEqual(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function isLowerThan(value) {
             currentRule.lower(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function isLowerEqualTo(value) {
             currentRule.lowerEqual(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function isBetween(start, end) {
             currentRule.between(start, end);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function contains(value) {
             currentRule.contains(value);
-            rulesToFlush.push(currentRule);
+            addRuleToFlush(currentRule);
             return self;
         }
 
         function and() {
-            // currentCondition.addRule(currentRule);
-            createNewRule();
+            createNewRule(currentRule.when);
             return self.andBuilder;
         }
 
@@ -123,7 +121,6 @@
         function build() {
             flushRules();
             conditions.push(currentCondition);
-            console.log(conditions);
             return conditions;
         }
 
@@ -132,17 +129,31 @@
             currentCondition = RouteConditionFactory.create(conditionName);
         }
 
-        function createNewRule() {
-            currentRule = RuleFactory.create(currentRuleSubject);
+        function createNewRule(ruleSubject) {
+            currentRule = RuleFactory.create(ruleSubject);
+        }
+
+        function addRuleToFlush(rule) {
+            var clone = cloneRule(rule);
+            rulesToFlush.push(clone);
         }
 
         function flushRules() {
             rulesToFlush.forEach(function(rule) {
-                console.log(rule.toRuleFormat());
-                currentCondition.addRule(rule.toRuleFormat());
+                currentCondition.addRule(rule);
             });
 
-            console.log(currentCondition);
+            rulesToFlush = [];
+        }
+
+        function cloneRule(rule) {
+            var clone = {};
+
+            Object.keys(rule).forEach(function(property) {
+                clone[property] = rule[property];
+            });
+
+            return clone;
         }
 
     }
