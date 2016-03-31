@@ -13,9 +13,14 @@
 
         /* Public interface */
         self.saveOfflineWork = saveOfflineWork;
+        self.isSurveyEmpty = isSurveyEmpty;
 
         function saveOfflineWork() {
             WorkspaceService.saveWork();
+        }
+
+        function isSurveyEmpty() {
+            return WorkspaceService.getSurvey().questionsCount() === 0 ? true : false;
         }
     }
 

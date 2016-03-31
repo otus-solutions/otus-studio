@@ -31,12 +31,6 @@
             enumerable: true
         });
 
-        Object.defineProperty(this, 'oid', {
-            value: '',
-            writable: false,
-            enumerable: true
-        });
-
         Object.defineProperty(this, 'name', {
             value: name,
             writable: true,

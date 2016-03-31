@@ -6,10 +6,11 @@
         .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
 
     CrossSessionDatabaseService.$inject = [
-        '$indexedDB'
+        '$indexedDB',
+        'InsertHelperService'
     ];
 
-    function CrossSessionDatabaseService($indexedDB) {
+    function CrossSessionDatabaseService($indexedDB, InsertHelperService) {
         var self = this;
 
         /* Public interface */
@@ -20,7 +21,7 @@
                 var entry = {
                     'template_oid': template.oid,
                     'contributor': session.owner,
-                    template: template
+                    template: InsertHelperService.cloneObject(template)
                 };
 
                 store.upsert(entry).then(function(e) {
