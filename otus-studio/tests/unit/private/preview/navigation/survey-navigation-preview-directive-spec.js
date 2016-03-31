@@ -31,10 +31,9 @@ describe('surveyNavigationPreviewGenerator', function functionName() {
 
         xit('should be removed element graph', function() {
             //* quando compiled directive chamar o método find e retornar true, deve verificar se jquery chamou remove
-            spyOn($.fn, 'remove');
             spyOn(compiledDirective, 'find').and.returnValue(true);
             compiledDirective.triggerHandler('click');
-            expect('remove').toHaveBeenCalled();
+            expect('find').toHaveBeenCalled();
         });
 
     });
