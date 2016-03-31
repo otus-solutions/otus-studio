@@ -2,17 +2,17 @@
     'use strict';
 
     angular
-    .module('editor.ui')
-    .controller('QuestionNavigationController', QuestionNavigationController);
+        .module('editor.ui')
+        .controller('QuestionNavigationController', QuestionNavigationController);
 
+    QuestionNavigationController.$inject = [
+        'QuestionNavigationWidgetFactory',
+        'QuestionNavigationExpressionWidgetFactory'
+    ];
 
-    function QuestionNavigationController() {
+    function QuestionNavigationController(QuestionNavigationWidgetFactory, QuestionNavigationExpressionWidgetFactory) {
         var self = this;
-
-        var navigations = [
-            { "name":"1", "to":"ELEA1", "rules":[{"expression": "Igual", "value": "10"}, {"expression": "Igual", "value": "50"}]},
-            { "name":"3", "to":"ELEA3", "rules":[{"expression": "Menor", "value": "0"}]}
-        ];
+        var navigations = [];
 
         /* Public interface */
         self.navigations = navigations;
@@ -21,22 +21,11 @@
         init();
 
         function init() {
-        }
+            var model = {name:'1', to:'ELEA1'};
+            var navigation = QuestionNavigationWidgetFactory.create(model);
 
-        function addNavigation(){
-
-        }
-
-        function removeNavigation(){
-
-        }
-
-        function addRule(){
-
-        }
-
-        function removeRule(){
-
+            navigation.rules.push(QuestionNavigationExpressionWidgetFactory.create(model));
+            navigations.push(navigation);
         }
 
     }

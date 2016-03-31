@@ -24,14 +24,14 @@
                     <div id="rules" ng-repeat="rule in navigation.rules" layout="row" layout-align="center center"
                     flex>
                         <md-input-container layout="row">
-                            <label>Expressão</label>
+                            <label>Quando</label>
                             <input aria-label="Expressão" ng-model="rule.expression">
                         </md-input-container>
 
                         <span></span>
 
                         <md-input-container layout="row">
-                            <label>Valor</label>
+                            <label>Resposta</label>
                             <input aria-label="Valor" ng-model="rule.value">
                         </md-input-container>
 
@@ -41,14 +41,14 @@
                     </div>
                     <div id="add-rules" layout="row" layout-align="center center" flex>
                         <md-input-container layout="row">
-                            <label>Expressão</label>
+                            <label>Quanto</label>
                             <input aria-label="Expressão">
                         </md-input-container>
 
                         <span></span>
 
                         <md-input-container layout="row">
-                            <label>Valor</label>
+                            <label>Resposta</label>
                             <input aria-label="Valor">
                         </md-input-container>
 
@@ -64,16 +64,19 @@
         <md-input-container layout="row">
             <label>Nome</label>
             <md-icon class="material-icons">low_priority</md-icon>
-            <input aria-label="Name"></input>
+            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text" es-id="survey-navigation-name" es-target="survey-navigation-name"
+            aria-label="Name">
+            </input>
         </md-input-container>
 
         <md-input-container layout="row">
             <label>Destino</label>
-            <input aria-label="Destino">
+            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text" es-id="survey-navigation-to" es-target="survey-navigation-to"
+            aria-label="Destino">
             </input>
         </md-input-container>
 
-        <md-button>
+        <md-button editing-source es-type="pre-add-button" es-id="survey-navigation-save" es-target="survey-navigation">
             <md-icon class="material-icons">save</md-icon>
         </md-button>
     </div>

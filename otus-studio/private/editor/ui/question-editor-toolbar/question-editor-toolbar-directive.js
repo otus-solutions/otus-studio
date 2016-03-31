@@ -8,7 +8,9 @@
 
     function questionEditorToolbar() {
         var ddo = {
-            scope: {},
+            scope: {
+                widget: '='
+            },
             restrict: 'E',
             controller: 'QuestionEditorToolbarController',
             templateUrl: 'private/editor/ui/question-editor-toolbar/question-editor-toolbar-template.html',

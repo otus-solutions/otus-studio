@@ -16,7 +16,7 @@
         self.appendTriggersTo = appendTriggersTo;
 
         function createEditingSource(domComponent, attrs) {
-            return EditingSourceFactory.produceEditingSource(domComponent, attrs.esType, attrs.esId, attrs.esModel, attrs.esTarget);
+            return EditingSourceFactory.produceEditingSource(domComponent, attrs.esType, attrs.esId, attrs.esModel, attrs.esTarget, attrs.esProcessor);
         }
 
         function appendTriggersTo(editingSource) {
