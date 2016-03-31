@@ -5,11 +5,14 @@
         .module('preview.navigation')
         .service('NavigationPreviewService', NavigationPreviewService);
 
-    function NavigationPreviewService() {
+        NavigationPreviewService.$inject = ['GraphFactory'];
+
+    function NavigationPreviewService(GraphFactory) {
         var self = this;
 
         // Public interface
         self.createGraph = createGraph;
+        self.renderGraph = renderGraph;
 
         // Private Interface
         var navigationGraph,
@@ -21,10 +24,11 @@
             iterate(navigationRules, drawNodes);
             iterate(navigationRules, drawEdges);
             draw();
+            return navigationGraph;
         }
 
         function init() {
-            navigationGraph = new Graph();
+            navigationGraph = GraphFactory.create();
         }
 
         function iterate(navigationRules, drawOptions) {
@@ -52,9 +56,11 @@
         function draw() {
             layouter = new Graph.Layout.Spring(navigationGraph);
             layouter.layout();
+        }
 
-            renderer = new Graph.Renderer.Raphael('survey-navigation-graph', navigationGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
-            renderer.draw();
+        function renderGraph(createdGraph) {
+           renderer = new Graph.Renderer.Raphael('survey-navigation-graph', createdGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
+           renderer.draw();
         }
     }
 

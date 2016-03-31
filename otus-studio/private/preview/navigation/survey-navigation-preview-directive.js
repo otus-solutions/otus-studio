@@ -17,7 +17,8 @@
                 if(element.find(DOM_LOCATION_NAVEGATION_GRAPH)){
                     $(DOM_LOCATION_NAVEGATION_GRAPH).remove();
                 }
-                NavigationPreviewService.createGraph(navigationObject);
+                var createdGraph = NavigationPreviewService.createGraph(navigationObject);
+                NavigationPreviewService.renderGraph(createdGraph);
             });
         }
 
