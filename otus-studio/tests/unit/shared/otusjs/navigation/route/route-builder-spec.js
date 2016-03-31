@@ -80,11 +80,11 @@ describe('RouteBuilder', function() {
 
         beforeEach(function() {
             route = builder.createRoute()
-                    .from(ORIGIN)
-                    .to(DESTINATION)
-                    .underCondition(Mock.CONDITION_A)
-                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                    .build();
+                .from(ORIGIN)
+                .to(DESTINATION)
+                .underCondition(Mock.CONDITION_A)
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .build();
         });
 
         it('should add a condition in condition set', function() {
@@ -124,13 +124,13 @@ describe('RouteBuilder', function() {
 
         beforeEach(function() {
             route = builder.createRoute()
-                    .from(ORIGIN)
-                    .to(DESTINATION)
-                    .underCondition(Mock.CONDITION_A)
-                    .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
-                    .and()
-                    .question(Mock.QUESTION_ID).answer.isLowerThan(15)
-                    .build();
+                .from(ORIGIN)
+                .to(DESTINATION)
+                .underCondition(Mock.CONDITION_A)
+                .question(Mock.QUESTION_ID).answer.isGreaterThan(5)
+                .and()
+                .question(Mock.QUESTION_ID).answer.isLowerThan(15)
+                .build();
         });
 
         it('should add another rule in condition', function() {
@@ -161,14 +161,14 @@ describe('RouteBuilder', function() {
 
         beforeEach(function() {
             route = builder.createRoute()
-                    .from(ORIGIN)
-                    .to(DESTINATION)
-                    .underCondition(Mock.CONDITION_A)
-                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                    .or()
-                    .underCondition(Mock.CONDITION_B)
-                    .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
-                    .build();
+                .from(ORIGIN)
+                .to(DESTINATION)
+                .underCondition(Mock.CONDITION_A)
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .or()
+                .underCondition(Mock.CONDITION_B)
+                .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                .build();
         });
 
         it('should add another condition in condition set', function() {
@@ -192,16 +192,16 @@ describe('RouteBuilder', function() {
 
         beforeEach(function() {
             route = builder.createRoute()
-                    .from(ORIGIN)
-                    .to(DESTINATION)
-                    .underCondition(Mock.CONDITION_A)
-                    .question(Mock.QUESTION_ID).answer.isEqualTo(5)
-                    .or()
-                    .underCondition(Mock.CONDITION_B)
-                    .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
-                    .and()
-                    .question(Mock.QUESTION_2ID).answer.contains(3)
-                    .build();
+                .from(ORIGIN)
+                .to(DESTINATION)
+                .underCondition(Mock.CONDITION_A)
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .or()
+                .underCondition(Mock.CONDITION_B)
+                .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                .and()
+                .question(Mock.QUESTION_2ID).answer.contains(3)
+                .build();
         });
 
         it('should add another rule in condition', function() {
@@ -222,6 +222,37 @@ describe('RouteBuilder', function() {
 
         it('should add another rule in condition where answer should be compared against comparator parameter', function() {
             expect(route.conditionSet[Mock.CONDITION_B].rules[1].answer.contains).toEqual(3);
+        });
+
+    });
+
+    describe('or operator', function() {
+
+        var route;
+
+        beforeEach(function() {
+            route = builder.createRoute()
+                .from(ORIGIN)
+                .to(DESTINATION)
+                .underCondition(Mock.CONDITION_A)
+                .question(Mock.QUESTION_ID).answer.isEqualTo(5)
+                .or()
+                .underCondition(Mock.CONDITION_B)
+                .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                .build();
+        });
+
+        it('should add another condition in condition set', function() {
+            expect(route.conditionSet[Mock.CONDITION_B]).toBeDefined();
+            expect(route.getConditionSetSize()).toEqual(2);
+        });
+
+        it('should add a condition in condition set with key equal to condition name', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].name).toEqual(Mock.CONDITION_B);
+        });
+
+        it('should add a rule in condition', function() {
+            expect(route.conditionSet[Mock.CONDITION_B].rules.length).toEqual(1);
         });
 
     });
