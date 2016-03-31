@@ -44,6 +44,7 @@ describe('surveyNavigationPreviewGenerator', function functionName() {
         element = $compile(element)(scope);
         scope.$digest();
         return element;
+
     }
 
 });

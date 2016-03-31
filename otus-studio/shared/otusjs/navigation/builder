@@ -9,12 +9,14 @@ builder
     .createRoute()
     .from('CID')
     .to('NID')
-    .underCondition
+    .underCondition('CONDITION_A')
     .question('QID')
     .answer
-    .isEqualTo(5)
-    .or
-    .isGreaterThan(10)
-    .and
+    .isGreaterThan(5)
+    .and()
+    .answer
+    .isLowerThan(10)
+    .or()
+    .underCondition('CONDITION_A')
     .question('BQID')
     .hasNotAnswer();
