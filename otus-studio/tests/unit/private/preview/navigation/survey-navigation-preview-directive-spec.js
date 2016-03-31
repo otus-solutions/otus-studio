@@ -21,10 +21,12 @@ describe('surveyNavigationPreviewGenerator', function functionName() {
             expect(compiledDirective).toBeDefined();
         });
 
-        xit('should call function createGraph', function() {
-            spyOn(NavigationPreviewService, 'createGraph');
+        it('should call function createGraph and renderGraph', function() {
+            spyOn(NavigationPreviewService, 'createGraph').and.returnValue(true);
+            spyOn(NavigationPreviewService, 'renderGraph').and.returnValue(true);
             compiledDirective.triggerHandler('click');
             expect(NavigationPreviewService.createGraph).toHaveBeenCalled();
+            expect(NavigationPreviewService.renderGraph).toHaveBeenCalled();
         });
 
         xit('should be removed element graph', function() {
