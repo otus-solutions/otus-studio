@@ -23,8 +23,8 @@
             scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
 
-        function unloadOption(singleSelection, scope) {
-            singleSelection.find('[radio-container]').last().remove();
+        function unloadOption(metadataQuestion, scope) {
+            metadataQuestion.find('[radio-container]').last().remove();
             scope.metadataAnswerOptions.splice(-1);
             scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }

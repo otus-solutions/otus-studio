@@ -1,5 +1,6 @@
 describe('MetadataQuestionWidgetFactory', function() {
 	var Mock = {};
+	var question = {questionId: 'id', type: 'type'};
 
 	beforeEach(function() {
 		module('editor.ui');
@@ -14,14 +15,26 @@ describe('MetadataQuestionWidgetFactory', function() {
 
 	describe('MetadataQuestionWidgetFactory', function() {
 		it('returned object should model', function() {
-			var option = factory.create(Mock.question);
+			var option = factory.create(question);
 
-			expect(option.model).toBe(Mock.question.question);
+			expect(option.model).toBe(question);
 		});
+
+		it('returned object should questionId', function() {
+			var option = factory.create(question);
+
+			expect(option.questionId).toBe(question.questionId);
+		});
+
+		it('returned object should type', function() {
+			var option = factory.create(question);
+
+			expect(option.type).toBe(question.type);
+		});
+
 	});
 
 	function mockMetadataAnswerFactory($injector) {
 		Mock.MetadataAnswerFactory = $injector.get('MetadataAnswerFactory');
-		Mock.question = Mock.MetadataAnswerFactory.create('oid', 'questionOID')
 	}
 });
