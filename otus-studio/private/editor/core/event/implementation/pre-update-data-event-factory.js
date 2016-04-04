@@ -14,13 +14,13 @@
         self.create = create;
 
         function create(prototype) {
-            return new PreUpdateDataEvent(prototype, EditorEngineService, WorkspaceService);
+            return new PreUpdateDataEvent(prototype, WorkspaceService);
         }
 
         return self;
     }
 
-    function PreUpdateDataEvent(prototype, editor, WorkspaceService) {
+    function PreUpdateDataEvent(prototype, WorkspaceService) {
         var self = this;
 
         /* Public interface */

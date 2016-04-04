@@ -28,11 +28,13 @@
 
         function forward() {
             var relatedEvents = WorkspaceService.workspace.isdb.userEdits.fetchEventBy('source.processor', prototype.id);
-            EditorEngineService.edit(prototype);
+            editor.edit(prototype);
 
             relatedEvents.forEach(function(event){
-                EditorEngineService.edit(event);
+                editor.edit(event);
             });
+
+            WorkspaceService.workspace.isdb.userEdits.storeUnique(prototype);
         }
     }
 }());

@@ -5,7 +5,6 @@
         .module('editor.core')
         .factory('EditingSourceFactory', EditingSourceFactory);
 
-    /* Factory interface */
     function EditingSourceFactory() {
         var self = this;
 
