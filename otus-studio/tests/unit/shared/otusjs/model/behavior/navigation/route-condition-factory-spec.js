@@ -2,7 +2,7 @@ describe('RuleFactory', function() {
     var Mock = {};
 
     beforeEach(function() {
-        module('studio');
+        module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('RouteConditionFactory');

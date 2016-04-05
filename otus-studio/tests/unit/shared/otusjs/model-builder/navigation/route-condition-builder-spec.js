@@ -3,7 +3,6 @@ describe('RouteConditionBuilderFactory', function() {
 
     beforeEach(function() {
         module('otusjs');
-        module('utils');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('RouteConditionBuilderFactory', {

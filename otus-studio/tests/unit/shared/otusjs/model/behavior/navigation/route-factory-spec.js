@@ -2,7 +2,7 @@ describe('RouteFactory', function() {
     var Mock = {};
 
     beforeEach(function() {
-        module('studio');
+        module('otusjs');
 
         /* Mock*/
         mockOrigin();

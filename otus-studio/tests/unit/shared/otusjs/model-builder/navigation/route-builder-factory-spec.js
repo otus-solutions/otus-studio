@@ -1,17 +1,16 @@
-describe('RouteConditionBuilderFactory', function() {
+describe('RouteBuilderFactory', function() {
 
     beforeEach(function() {
         module('otusjs');
-        module('utils');
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('RouteConditionBuilderFactory');
+            factory = _$injector_.get('RouteBuilderFactory');
         });
     });
 
     describe('create method', function() {
 
-        it('should return a RouteConditionBuilder', function() {
+        it('should return a RouterBuilder', function() {
             var builder = factory.create();
 
             expect(builder).toBeDefined();

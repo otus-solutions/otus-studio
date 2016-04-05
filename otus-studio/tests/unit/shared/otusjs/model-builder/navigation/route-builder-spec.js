@@ -5,7 +5,6 @@ describe('RouteBuilder', function() {
 
     beforeEach(function() {
         module('otusjs');
-        module('utils');
 
         mockConditionName();
         mockQuestionID();

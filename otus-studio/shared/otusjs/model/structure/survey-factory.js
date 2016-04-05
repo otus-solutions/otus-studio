@@ -29,6 +29,7 @@
 
     function Survey(metainfo, identity, uuid) {
         var self = this;
+        var navigations = [];
 
         Object.defineProperty(self, 'extends', {
             value: 'StudioObject',
@@ -68,6 +69,9 @@
 
         /*Public interface*/
         self.questionsCount = questionsCount;
+        self.addNavigation = addNavigation;
+        self.removeNavigation = removeNavigation;
+        self.listNavigations = listNavigations;
 
         function questionsCount() {
             var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
@@ -75,6 +79,24 @@
             });
             return propertyList.length;
         }
+
+        function listNavigations() {
+            return navigations;
+        }
+
+        function addNavigation(navigation) {
+            navigations.push(navigation);
+        }
+
+        function removeNavigation(origin) {
+            var navigationToRemove = navigations.filter(function(navigation) {
+                return navigation.origin === origin;
+            });
+
+            var indexToRemove = navigations.indexOf(navigationToRemove[0]);
+            if (indexToRemove > -1) navigations.splice(indexToRemove, 1);
+        }
+
     }
 
 }());
