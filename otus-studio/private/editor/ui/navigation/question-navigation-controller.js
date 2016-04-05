@@ -2,17 +2,17 @@
     'use strict';
 
     angular
-    .module('editor.ui')
-    .controller('QuestionNavigationController', QuestionNavigationController);
+        .module('editor.ui')
+        .controller('QuestionNavigationController', QuestionNavigationController);
 
+    QuestionNavigationController.$inject = [
+        'QuestionNavigationWidgetFactory',
+        'QuestionNavigationConditionWidgetFactory'
+    ];
 
-    function QuestionNavigationController() {
+    function QuestionNavigationController(QuestionNavigationWidgetFactory, QuestionNavigationConditionWidgetFactory) {
         var self = this;
-
-        var navigations = [
-            { "name":"1", "to":"ELEA1", "rules":[{"expression": "Igual", "value": "10"}, {"expression": "Igual", "value": "50"}]},
-            { "name":"3", "to":"ELEA3", "rules":[{"expression": "Menor", "value": "0"}]}
-        ];
+        var navigations = [];
 
         /* Public interface */
         self.navigations = navigations;
@@ -21,24 +21,18 @@
         init();
 
         function init() {
+            var modelNavigation = {name:'1', origin:'ELEA1', destination:'ELEA2'};
+            var navigation = QuestionNavigationWidgetFactory.create(modelNavigation);
+
+            var modelCondition = {when:'Equal', answer:'1'};
+            var modelConditionTwo = {when:'Less', answer:'2'};
+            var modelConditionThree = {when:'Equal', answer:'YES'};
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelCondition));
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelConditionTwo));
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelConditionThree));
+
+            navigations.push(navigation);
         }
-
-        function addNavigation(){
-
-        }
-
-        function removeNavigation(){
-
-        }
-
-        function addRule(){
-
-        }
-
-        function removeRule(){
-
-        }
-
     }
 
 }());

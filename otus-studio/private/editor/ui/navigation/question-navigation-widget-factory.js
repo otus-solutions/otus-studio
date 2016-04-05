@@ -1,4 +1,3 @@
-
 (function() {
     'use strict';
 
@@ -12,14 +11,39 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new QuestionNavigationWidget();
+        function create(model) {
+            return new QuestionNavigationWidget(model);
         }
 
         return self;
     }
 
-    function QuestionNavigationWidget() {
+    function QuestionNavigationWidget(model) {
+        Object.defineProperty(this, 'model', {
+            value: model,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'name', {
+            value: model.name,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'origin', {
+            value: model.origin,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'destination', {
+            value: model.destination,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'conditionSet', {
+            value: [],
+            writable: false,
+            enumerable: true
+        });
     }
 
 }());

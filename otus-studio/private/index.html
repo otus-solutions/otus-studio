@@ -217,11 +217,13 @@
     <script src="private/editor/core/event/event-type-factory.js"></script>
     <!-- EVENT.IMPLEMENTATION -->
     <script src="private/editor/core/event/implementation/add-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/pre-add-data-event-factory.js"></script>
     <script src="private/editor/core/event/implementation/remove-data-event-factory.js"></script>
     <script src="private/editor/core/event/implementation/select-data-event-factory.js"></script>
     <script src="private/editor/core/event/implementation/touch-data-event-factory.js"></script>
     <script src="private/editor/core/event/implementation/untouch-data-event-factory.js"></script>
     <script src="private/editor/core/event/implementation/update-data-event-factory.js"></script>
+    <script src="private/editor/core/event/implementation/pre-update-data-event-factory.js"></script>
 
     <!-- STATE -->
     <script src="private/editor/core/state/state-factory.js"></script>
@@ -237,8 +239,10 @@
     <script src="private/editor/core/trigger/html/html-trigger-map.js"></script>
     <!-- TRIGGER.HTML.IMPLEMENTATION -->
     <script src="private/editor/core/trigger/html/implementation/add-button-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/pre-add-button-trigger-service.js"></script>
     <script src="private/editor/core/trigger/html/implementation/div-editable-trigger-service.js"></script>
     <script src="private/editor/core/trigger/html/implementation/input-text-trigger-service.js"></script>
+    <script src="private/editor/core/trigger/html/implementation/pre-input-text-trigger-service.js"></script>
     <script src="private/editor/core/trigger/html/implementation/remove-button-trigger-service.js"></script>
     <script src="private/editor/core/trigger/html/implementation/update-button-trigger-service.js"></script>
 
@@ -315,10 +319,13 @@
     <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-directive.js"></script>
     <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-service.js"></script>
     <script src="private/editor/ui/question-editor-toolbar/question-editor-toolbar-controller.js"></script>
+    <link href="private/editor/ui/question-editor-toolbar/styles.css" rel="stylesheet"/>
 
     <!-- WIDGET.QUESTION-EDITOR-NAVIGATION -->
     <script src="private/editor/ui/navigation/question-navigation-directive.js"></script>
     <script src="private/editor/ui/navigation/question-navigation-controller.js"></script>
+    <script src="private/editor/ui/navigation/question-navigation-widget-factory.js"></script>
+    <script src="private/editor/ui/navigation/question-navigation-condition-widget-factory.js"></script>
 
     <!-- DATA-TOOL -->
     <script src="private/editor/ui/data-tool/data-tool-content-service.js"></script>

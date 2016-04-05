@@ -5,7 +5,6 @@
         .module('editor.core')
         .factory('EditingSourceFactory', EditingSourceFactory);
 
-    /* Factory interface */
     function EditingSourceFactory() {
         var self = this;
 
@@ -15,15 +14,15 @@
         /*
          * Creates a simple EditingSource instance
          */
-        function produceEditingSource(esComponent, esType, esId, esModel, esTarget) {
-            return new EditingSource(esComponent, esType, esId, esModel, esTarget);
+        function produceEditingSource(esComponent, esType, esId, esModel, esTarget, esProcessor) {
+            return new EditingSource(esComponent, esType, esId, esModel, esTarget, esProcessor);
         }
 
         return self;
     }
 
     /* EditingSource model used as factory product */
-    function EditingSource(esComponent, esType, esId, esModel, esTarget) {
+    function EditingSource(esComponent, esType, esId, esModel, esTarget, esProcessor) {
         Object.defineProperty(this, 'type', {
             value: esType,
             writable: false
@@ -41,6 +40,11 @@
 
         Object.defineProperty(this, 'target', {
             value: esTarget,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'processor', {
+            value: esProcessor,
             writable: false
         });
 
