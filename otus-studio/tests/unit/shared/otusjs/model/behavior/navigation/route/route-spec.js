@@ -66,56 +66,55 @@ describe('Route', function() {
 
     });
 
-    describe('toRouteFormat method with undefined route condition set', function() {
-        var routeFormatObject = null;
+    describe('toJson method with undefined route condition set', function() {
+        var json = null;
 
         beforeEach(function() {
-            routeFormatObject = route.toRouteFormat();
+            json = route.toJson();
         });
 
         it('should return and object with "name" property equal to Route.name', function() {
-            expect(routeFormatObject.name).toEqual(route.name);
+            expect(json.name).toEqual(route.name);
         });
 
         it('should return and object with "origin" property equal to Route.origin', function() {
-            expect(routeFormatObject.origin).toEqual(route.origin);
+            expect(json.origin).toEqual(route.origin);
         });
 
         it('should return and object with "destination" property equal to Route.destination', function() {
-            expect(routeFormatObject.destination).toEqual(route.destination);
+            expect(json.destination).toEqual(route.destination);
         });
 
         it('should return and object without "conditionSet" property', function() {
-            expect(routeFormatObject.conditionSet).toBeUndefined();
+            expect(json.conditionSet).toBeUndefined();
         });
 
     });
 
-    describe('toRouteFormat method with defined route condition set', function() {
-        var routeFormatObject = null;
+    describe('toJson method with defined route condition set', function() {
+        var json = null;
 
         beforeEach(function() {
             route.addCondition(Mock.FakeRouteCondition);
             route.addCondition(Mock.NoRealRouteCondition);
 
-            routeFormatObject = route.toRouteFormat();
+            json = route.toJson();
         });
 
         it('should return and object with "name" property equal to Route.name', function() {
-            expect(routeFormatObject.name).toEqual(route.name);
+            expect(json.name).toEqual(route.name);
         });
 
         it('should return and object with "origin" property equal to Route.origin', function() {
-            expect(routeFormatObject.origin).toEqual(route.origin);
+            expect(json.origin).toEqual(route.origin);
         });
 
         it('should return and object with "destination" property equal to Route.destination', function() {
-            expect(routeFormatObject.destination).toEqual(route.destination);
+            expect(json.destination).toEqual(route.destination);
         });
 
         it('should return and object with "conditionSet" equal to Route.conditionSet', function() {
-            expect(routeFormatObject.conditionSet).toEqual(route.conditionSet);
-            expect(routeFormatObject.conditionSet).toBeDefined();
+            expect(json.conditionSet).toBeDefined();
         });
 
     });

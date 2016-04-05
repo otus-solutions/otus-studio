@@ -2,33 +2,35 @@ describe('Rule', function() {
     var Mock = {};
 
     beforeEach(function() {
-        module('studio');
+        module('otusjs');
 
-        mockRuleConditions();
+        mockConditionName();
 
         inject(function(_$injector_) {
+            mockRules(_$injector_);
+
             factory = _$injector_.get('RouteConditionFactory');
         });
 
-        routeCondition = factory.create('RULE_NAME');
+        condition = factory.create(Mock.CONDITION_NAME);
     });
 
     describe('addRule method', function() {
 
         it('should put a condition in conditions map', function() {
-            routeCondition.addRule(Mock.ruleA);
+            condition.addRule(Mock.ruleA);
 
-            expect(routeCondition.rules.length).toBe(1);
+            expect(condition.rules.length).toBe(1);
         });
 
         it('should not put a condition twice', function() {
-            routeCondition.addRule(Mock.ruleA);
-            routeCondition.addRule(Mock.ruleA);
+            condition.addRule(Mock.ruleA);
+            condition.addRule(Mock.ruleA);
 
-            routeCondition.addRule(Mock.ruleB);
-            routeCondition.addRule(Mock.ruleB);
+            condition.addRule(Mock.ruleB);
+            condition.addRule(Mock.ruleB);
 
-            expect(routeCondition.rules.length).toBe(2);
+            expect(condition.rules.length).toBe(2);
         });
 
     });
@@ -36,35 +38,61 @@ describe('Rule', function() {
     describe('removeRule method', function() {
 
         beforeEach(function() {
-            routeCondition.addRule(Mock.ruleA);
-            routeCondition.addRule(Mock.ruleB);
+            condition.addRule(Mock.ruleA);
+            condition.addRule(Mock.ruleB);
         });
 
         it('should remove the condition from conditions map', function() {
-            routeCondition.removeRule(Mock.ruleA);
+            condition.removeRule(Mock.ruleA);
 
-            expect(routeCondition.rules.length).toBe(1);
+            expect(condition.rules.length).toBe(1);
         });
 
         it('should remove exactly the specified condition from conditions map', function() {
-            routeCondition.addRule(Mock.ruleB);
+            condition.removeRule(Mock.ruleB);
 
-            expect(routeCondition.rules[0].answer.equal).toBeDefined();
+            expect(condition.rules[0].answer.equal).toBeDefined();
         });
 
     });
 
-    function mockRuleConditions() {
-        Mock.ruleA = {
-            answer: {
-                equal: jasmine.any(Object)
-            }
-        };
-        Mock.ruleB = {
-            answer: {
-                within: jasmine.any(Object)
-            }
-        };
+    describe('toJson method', function() {
+        var json;
+
+        beforeEach(function() {
+            condition.addRule(Mock.ruleA);
+            condition.addRule(Mock.ruleB);
+            json = condition.toJson();
+        });
+
+        it('result a json version with name attribute', function() {
+            expect(json.name).toBeDefined();
+            expect(json.name).toEqual(Mock.CONDITION_NAME);
+        });
+
+        it('result a json version with rules attribute', function() {
+            expect(json.rules).toBeDefined();
+            expect(json.rules[0]).toEqual(Mock.ruleA.toJson());
+            expect(json.rules[1]).toEqual(Mock.ruleB.toJson());
+        });
+
+    });
+
+    function mockConditionName() {
+        Mock.CONDITION_NAME = 'CONDITION_NAME';
+    }
+
+    function mockRules($injector) {
+        Mock.QUESTION_ID = 'QUESTION_ID';
+        Mock.QUESTION_2ID = 'QUESTION_2ID';
+
+        ruleFactory = $injector.get('RuleFactory');
+
+        Mock.ruleA = ruleFactory.create(Mock.QUESTION_ID);
+        Mock.ruleA.equal(1, 10);
+
+        Mock.ruleB = ruleFactory.create(Mock.QUESTION_2ID);
+        Mock.ruleB.equal([10, 20]);
     }
 
 });

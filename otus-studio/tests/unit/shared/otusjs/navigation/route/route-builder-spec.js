@@ -226,12 +226,13 @@ describe('RouteBuilder', function() {
 
     });
 
-    describe('or operator', function() {
 
-        var route;
+    describe('json format of builded route', function() {
+
+        var json;
 
         beforeEach(function() {
-            route = builder.createRoute()
+            var route = builder.createRoute()
                 .from(ORIGIN)
                 .to(DESTINATION)
                 .underCondition(Mock.CONDITION_A)
@@ -239,20 +240,51 @@ describe('RouteBuilder', function() {
                 .or()
                 .underCondition(Mock.CONDITION_B)
                 .question(Mock.QUESTION_2ID).answer.isEqualTo(3)
+                .and()
+                .question(Mock.QUESTION_2ID).answer.contains(3)
                 .build();
+
+            json = route.toJson();
         });
 
-        it('should add another condition in condition set', function() {
-            expect(route.conditionSet[Mock.CONDITION_B]).toBeDefined();
-            expect(route.getConditionSetSize()).toEqual(2);
+        it('should have a name', function() {
+            expect(json.name).toEqual(ORIGIN + '-' + DESTINATION);
         });
 
-        it('should add a condition in condition set with key equal to condition name', function() {
-            expect(route.conditionSet[Mock.CONDITION_B].name).toEqual(Mock.CONDITION_B);
+        it('should have a origin', function() {
+            expect(json.origin).toEqual(ORIGIN);
         });
 
-        it('should add a rule in condition', function() {
-            expect(route.conditionSet[Mock.CONDITION_B].rules.length).toEqual(1);
+        it('should have a destination', function() {
+            expect(json.destination).toEqual(DESTINATION);
+        });
+
+        it('should have the CONDITION_A', function() {
+            expect(json.conditionSet.CONDITION_A).toBeDefined();
+        });
+
+        it('should have the CONDITION_A with when value equal to QID', function() {
+            expect(json.conditionSet.CONDITION_A[0].when).toEqual(Mock.QUESTION_ID);
+        });
+
+        it('should have the CONDITION_A with answer defined to equal 5', function() {
+            expect(json.conditionSet.CONDITION_A[0].answer.equal).toEqual(5);
+        });
+
+        it('should have the CONDITION_B', function() {
+            expect(json.conditionSet.CONDITION_B).toBeDefined();
+        });
+
+        it('should have the CONDITION_B with when value equal to Q2ID', function() {
+            expect(json.conditionSet.CONDITION_B[0].when).toEqual(Mock.QUESTION_2ID);
+        });
+
+        it('should have the CONDITION_B with answer defined to equal 5', function() {
+            expect(json.conditionSet.CONDITION_B[0].answer.equal).toEqual(3);
+        });
+
+        it('should have the CONDITION_B with answer defined to contains 3', function() {
+            expect(json.conditionSet.CONDITION_B[1].answer.contains).toEqual(3);
         });
 
     });
