@@ -7,10 +7,10 @@
 
     QuestionNavigationController.$inject = [
         'QuestionNavigationWidgetFactory',
-        'QuestionNavigationExpressionWidgetFactory'
+        'QuestionNavigationConditionWidgetFactory'
     ];
 
-    function QuestionNavigationController(QuestionNavigationWidgetFactory, QuestionNavigationExpressionWidgetFactory) {
+    function QuestionNavigationController(QuestionNavigationWidgetFactory, QuestionNavigationConditionWidgetFactory) {
         var self = this;
         var navigations = [];
 
@@ -21,13 +21,18 @@
         init();
 
         function init() {
-            var model = {name:'1', to:'ELEA1'};
-            var navigation = QuestionNavigationWidgetFactory.create(model);
+            var modelNavigation = {name:'1', origin:'ELEA1', destination:'ELEA2'};
+            var navigation = QuestionNavigationWidgetFactory.create(modelNavigation);
 
-            navigation.rules.push(QuestionNavigationExpressionWidgetFactory.create(model));
+            var modelCondition = {when:'Equal', answer:'1'};
+            var modelConditionTwo = {when:'Less', answer:'2'};
+            var modelConditionThree = {when:'Equal', answer:'YES'};
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelCondition));
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelConditionTwo));
+            navigation.conditionSet.push(QuestionNavigationConditionWidgetFactory.create(modelConditionThree));
+
             navigations.push(navigation);
         }
-
     }
 
 }());

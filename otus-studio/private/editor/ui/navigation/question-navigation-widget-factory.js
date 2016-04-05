@@ -20,22 +20,26 @@
 
     function QuestionNavigationWidget(model) {
         Object.defineProperty(this, 'model', {
-            value: model, // TODO Aplicar Modelo Real
+            value: model,
             writable: false
         });
 
         Object.defineProperty(this, 'name', {
-            value: model.name, // TODO Aplicar Modelo Real
+            value: model.name,
             writable: false
         });
 
-        Object.defineProperty(this, 'to', {
-            value: model.to, // TODO Aplicar Modelo Real
-
+        Object.defineProperty(this, 'origin', {
+            value: model.origin,
             writable: false
         });
 
-        Object.defineProperty(this, 'rules', {
+        Object.defineProperty(this, 'destination', {
+            value: model.destination,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'conditionSet', {
             value: [],
             writable: false,
             enumerable: true

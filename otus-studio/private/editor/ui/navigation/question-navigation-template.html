@@ -15,31 +15,31 @@
 
                     <md-input-container>
                         <label>Destino</label>
-                        <input ng-model="navigation.to" aria-label="Destino">
+                        <input ng-model="navigation.destination" aria-label="Destino">
                         </input>
                     </md-input-container>
                 </div>
 
                 <div layout="column" flex>
-                    <div id="rules" ng-repeat="rule in navigation.rules" layout="row" layout-align="center center"
+                    <div id="conditions" ng-repeat="condition in navigation.conditionSet" layout="row" layout-align="center center"
                     flex>
                         <md-input-container layout="row">
                             <label>Quando</label>
-                            <input aria-label="Expressão" ng-model="rule.expression">
+                            <input aria-label="Expressão" ng-model="condition.when">
                         </md-input-container>
 
                         <span></span>
 
                         <md-input-container layout="row">
                             <label>Resposta</label>
-                            <input aria-label="Valor" ng-model="rule.value">
+                            <input aria-label="Valor" ng-model="condition.answer">
                         </md-input-container>
 
                         <md-button>
                             <md-icon class="material-icons">close</md-icon>
                         </md-button>
                     </div>
-                    <div id="add-rules" layout="row" layout-align="center center" flex>
+                    <div id="add-conditions" layout="row" layout-align="center center" flex>
                         <md-input-container layout="row">
                             <label>Quanto</label>
                             <input aria-label="Expressão">

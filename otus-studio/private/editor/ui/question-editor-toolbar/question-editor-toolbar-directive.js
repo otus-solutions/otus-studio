@@ -14,7 +14,7 @@
             restrict: 'E',
             controller: 'QuestionEditorToolbarController',
             templateUrl: 'private/editor/ui/question-editor-toolbar/question-editor-toolbar-template.html',
-            link: function(scope, element, attrs, controller) {
+            link: function(scope, element) {
                 scope.widget = scope.$parent.$parent.widget;
             }
         };
