@@ -1,7 +1,9 @@
 describe('MetadataAnswerOptionContentService', function(){
 	var Mock = {};
-	var metadataAnswerOptions = {oid : "oid", questionOID : "questionOID"}
-
+	var metadataAnswerOptions = [{oid : "oid", questionOID : "questionOID"}];
+	var scope = {};
+	var metadataQuestion = {find : function(){}, last : function(){}, remove : function(){}};
+	
 	/*@BeforeScenario*/
 	beforeEach(function() {
 		module('editor.ui');
@@ -9,18 +11,43 @@ describe('MetadataAnswerOptionContentService', function(){
 		inject(function(_$injector_) {
 			service = _$injector_.get('MetadataAnswerOptionContentService', {
 				'WidgetService' : mockWidgetService(_$injector_),
-				'MetadataAnswerOptionWidgetFactory' : mockMetadataAnswerOptionWidgetFactory(_$injector_),
-				//'MetadataController' : mockMetadataController(_$injector_)
+				'MetadataAnswerOptionWidgetFactory' : mockMetadataAnswerOptionWidgetFactory(_$injector_)
 			});
 		});
 	});
 
-	describe('loadOption', function() {
-		it('should return a new load option', function() {
-			var widget = Mock.WidgetService.getMetadataAnswerOptionWidget(metadataAnswerOptions); 
+	describe('LoadOption', function() {
+		//renomear
+		it('should return a new loadOption', function() {
+			var widget = {value : ''};
+			spyOn(Mock.WidgetService, 'getMetadataAnswerOptionWidget').and.returnValue(widget);
+			spyOn(metadataAnswerOptions, 'push');
+			scope['metadataAnswerOptions'] = metadataAnswerOptions;
+			scope['lastOptionIndex'] = {};
+			spyOn(scope, 'lastOptionIndex');
 
-			//scope, vem de metadata-controller
+			service.loadOption(metadataAnswerOptions, scope);
+
+			expect(Mock.WidgetService.getMetadataAnswerOptionWidget).toHaveBeenCalled();
+			expect(metadataAnswerOptions.push).toHaveBeenCalledWith(widget);
+			expect(scope.lastOptionIndex).toEqual(0);
+
 		});
+
+		//renomear
+		it('should return a object unloadOption', function() {
+			spyOn(metadataQuestion, 'find').and.returnValue(metadataQuestion);
+			spyOn(metadataQuestion, 'last').and.returnValue(metadataQuestion);
+			spyOn(metadataQuestion, 'remove');
+			scope['metadataAnswerOptions'] = metadataAnswerOptions;
+			scope['lastOptionIndex'] = {};
+			spyOn(scope, 'lastOptionIndex');
+
+			service.unloadOption(metadataQuestion, scope);
+
+			expect(scope.lastOptionIndex).toEqual(-1);
+		});
+
 	});
 
 	function mockWidgetService($injector) {
@@ -31,11 +58,6 @@ describe('MetadataAnswerOptionContentService', function(){
 	function mockMetadataAnswerOptionWidgetFactory($injector) {
 		Mock.MetadataAnswerOptionWidgetFactory = $injector.get('MetadataAnswerOptionWidgetFactory');
 		return Mock.MetadataAnswerOptionWidgetFactory;
-	}
-
-	function mockMetadataController($injector) {
-		Mock.MetadataController = $injector.get('MetadataController');
-		return Mock.MetadataController;
 	}
 
 
