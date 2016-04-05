@@ -1,6 +1,6 @@
 <div flex ng-controller="QuestionEditorToolbarController as questionEditorTollbarController">
 
-    <div layout="row" style="background-color: rgba(236, 239, 241, 0.15); border-top : 1px solid #D8D6D6; border-bottom : 1px solid #D8D6D6"
+    <div layout="row" class="question-toolbar-area"
     layout-margin>
         <md-button class="md-icon-button" ng-click="questionEditorTollbarController.navigation(widget.questionId)">
             <md-icon aria-label="Navigation">directions_boat
@@ -10,7 +10,7 @@
         </md-button>
         <md-button class="md-icon-button" editing-source es-type="remove-button" es-id="survey-questions-remove-question"
         es-target="survey.question.{{widget.questionId}}">
-            <md-icon md-svg-icon="delete" aria-label="Navigation">
+            <md-icon aria-label="Navigation">delete
                 <md-tooltip md-direction="bottom">
                     Remover
                 </md-tooltip>

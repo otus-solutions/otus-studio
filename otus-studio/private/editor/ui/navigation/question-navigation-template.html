@@ -21,8 +21,8 @@
                 </div>
 
                 <div layout="column" flex>
-                    <div id="conditions" ng-repeat="condition in navigation.conditionSet" layout="row" layout-align="center center"
-                    flex>
+                    <div id="conditions" ng-repeat="condition in navigation.conditionSet" layout="row"
+                    layout-align="center center" flex>
                         <md-input-container layout="row">
                             <label>Quando</label>
                             <input aria-label="Expressão" ng-model="condition.when">
@@ -36,7 +36,11 @@
                         </md-input-container>
 
                         <md-button>
-                            <md-icon class="material-icons">close</md-icon>
+                            <md-icon aria-label="Remover Condição" class="material-icons">close
+                                <md-tooltip md-direction="bottom">
+                                    Remover
+                                </md-tooltip>
+                            </md-icon>
                         </md-button>
                     </div>
                     <div id="add-conditions" layout="row" layout-align="center center" flex>
@@ -53,7 +57,11 @@
                         </md-input-container>
 
                         <md-button>
-                            <md-icon class="material-icons">save</md-icon>
+                            <md-icon class="material-icons">save
+                                <md-tooltip md-direction="bottom">
+                                    Salvar
+                                </md-tooltip>
+                            </md-icon>
                         </md-button>
                     </div>
                 </div>
@@ -64,20 +72,25 @@
         <md-input-container layout="row">
             <label>Nome</label>
             <md-icon class="material-icons">low_priority</md-icon>
-            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text" es-id="survey-navigation-name" es-target="survey-navigation-name"
-            aria-label="Name">
+            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text"
+            es-id="survey-navigation-name" es-target="survey-navigation-name" aria-label="Name">
             </input>
         </md-input-container>
 
         <md-input-container layout="row">
             <label>Destino</label>
-            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text" es-id="survey-navigation-to" es-target="survey-navigation-to"
-            aria-label="Destino">
+            <input editing-source es-processor="survey-navigation-save" es-type="pre-input-text"
+            es-id="survey-navigation-to" es-target="survey-navigation-to" aria-label="Destino">
             </input>
         </md-input-container>
 
-        <md-button editing-source es-type="pre-add-button" es-id="survey-navigation-save" es-target="survey-navigation">
-            <md-icon class="material-icons">save</md-icon>
+        <md-button editing-source es-type="pre-add-button" es-id="survey-navigation-save"
+        es-target="survey-navigation">
+            <md-icon class="material-icons">save
+                <md-tooltip md-direction="bottom">
+                    Salvar
+                </md-tooltip>
+            </md-icon>
         </md-button>
     </div>
 </div>
