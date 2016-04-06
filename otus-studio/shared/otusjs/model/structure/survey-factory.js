@@ -90,6 +90,7 @@
         }
 
         function addNavigation(navigation) {
+            navigation.setIndex(navigations.length);
             navigations.push(navigation);
         }
 
@@ -102,7 +103,7 @@
 
         function fetchByOrigin(origin) {
             var filteredNavigation = navigations.filter(function(navigation) {
-                return navigation.origin === origin;
+                return navigation.getOrigin() === origin;
             });
 
             return filteredNavigation[0];

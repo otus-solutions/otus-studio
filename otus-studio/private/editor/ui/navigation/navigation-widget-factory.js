@@ -20,23 +20,14 @@
 
     function NavigationWidget(model) {
         console.log(model);
+
         Object.defineProperty(this, 'model', {
             value: model,
             writable: false
         });
 
-        Object.defineProperty(this, 'name', {
-            value: model.name,
-            writable: false
-        });
-
         Object.defineProperty(this, 'origin', {
-            value: model.origin,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'destination', {
-            value: model.destination,
+            value: model.getOrigin(),
             writable: false
         });
 
@@ -47,13 +38,13 @@
         });
 
         Object.defineProperty(this, 'newName', {
-            value: 'survey.navigations[' + 0 + '].routes[' + 0 + '].name',
+            value: 'survey.navigations[' + model.getIndex() + '].routes[' + model.listRoutes().length + '].name',
             writable: false,
             enumerable: true
         });
 
         Object.defineProperty(this, 'newDestination', {
-            value: 'survey.navigations[' + 0 + '].routes[' + 0 + '].to',
+            value: 'survey.navigations[' + model.getIndex() + '].routes[' + model.listRoutes().length + '].to',
             writable: false,
             enumerable: true
         });

@@ -12,6 +12,7 @@ describe('NavigationFactory', function() {
     });
 
     describe('create method', function() {
+
         var navigation;
 
         beforeEach(function() {
@@ -19,15 +20,15 @@ describe('NavigationFactory', function() {
         });
 
         it('should return an object that extends StudioObject', function() {
-            expect(navigation.extends).toEqual(Mock.STUDIO_OBJECT);
+            expect(navigation.getExtents()).toEqual(Mock.STUDIO_OBJECT);
         });
 
         it('should return an object of Navigation type', function() {
-            expect(navigation.objectType).toEqual(Mock.NAVIGATION);
+            expect(navigation.getObjectType()).toEqual(Mock.NAVIGATION);
         });
 
         it('should return an object with a valid origin defined', function() {
-            expect(navigation.origin).toBeDefined();
+            expect(navigation.getOrigin()).toBeDefined();
         });
 
         it('should return an object with an array of destinations', function() {

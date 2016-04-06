@@ -8,7 +8,7 @@ describe('QuestionBuilderService', function() {
             mockBuildWorkFactory(_$injector_);
             mockAddNavigationWork();
 
-            service = _$injector_.get('NavigationBuilderService');
+            service = _$injector_.get('RouteBuilderService');
         });
 
     });

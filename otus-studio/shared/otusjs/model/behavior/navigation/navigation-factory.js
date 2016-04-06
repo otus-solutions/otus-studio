@@ -17,35 +17,63 @@
         return self;
     }
 
-    function Navigation(origin) {
+    function Navigation(navigationOrigin) {
+
         var self = this;
-        var routes = [];
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+        var extents;
+        var objectType;
+        var index;
+        var origin;
+        var routes;
 
-        Object.defineProperty(self, 'objectType', {
-            value: 'Navigation',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'origin', {
-            value: origin,
-            writable: false,
-            enumerable: true
-        });
+        init();
 
         /* Public interface */
+        self.getExtents = getExtents;
+        self.getObjectType = getObjectType;
+        self.getIndex = getIndex;
+        self.setIndex = setIndex;
+        self.getOrigin = getOrigin;
         self.listRoutes = listRoutes;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
 
+        function init() {
+            extents = 'StudioObject';
+            objectType = 'Navigation';
+            origin = navigationOrigin;
+            routes = [];
+        }
+
+        function getExtents() {
+            return extents;
+        }
+
+        function getObjectType() {
+            return objectType;
+        }
+
+        function getIndex() {
+            return index;
+        }
+
+        function setIndex(value) {
+            index = value;
+        }
+
+        function getOrigin() {
+            return origin;
+        }
+
         function listRoutes() {
-            return routes;
+            var clone = [];
+
+            routes.forEach(function(route) {
+                clone.push(route);
+            });
+
+            return clone;
         }
 
         function addRoute(route) {

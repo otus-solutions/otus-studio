@@ -1,0 +1,57 @@
+{
+    "extends": "StudioObject",
+    "objectType": "Survey",
+    "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls2ZGE5YjIzMC1mYzI3LTExZTUtOWMzOS04MTEwMDRjOTgyZWNdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+    "identity": {
+        "extends": "StudioObject",
+        "objectType": "SurveyIdentity",
+        "name": "tr",
+        "acronym": "t",
+        "recommendedTo": "",
+        "description": "",
+        "keywords": []
+    },
+    "metainfo": {
+        "extends": "StudioObject",
+        "objectType": "SurveyMetaInfo",
+        "creationDatetime": "2016-04-06T18:43:22.735Z",
+        "otusStudioVersion": "${project.version}"
+    },
+    "question": {
+        "t0": {
+            "extends": "Question",
+            "objectType": "CalendarQuestion",
+            "oid": "t0",
+            "dataType": "LocalDate",
+            "label": {
+                "ptBR": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                },
+                "enUS": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                },
+                "esES": {
+                    "extends": "StudioObject",
+                    "objectType": "Label",
+                    "oid": "",
+                    "plainText": "",
+                    "formattedText": ""
+                }
+            },
+            "meta": {
+                "revision": 0,
+                "created": 1459968203548,
+                "version": 0
+            },
+            "$loki": 1
+        }
+    }
+}

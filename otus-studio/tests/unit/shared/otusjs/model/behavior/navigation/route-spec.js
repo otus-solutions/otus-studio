@@ -66,6 +66,26 @@ describe('Route', function() {
 
     });
 
+    describe('from new instance', function() {
+
+        describe('getConditionSet method', function() {
+
+            it('should return an object of conditions with size equal to 0', function() {
+                expect(Object.keys(route.getConditionSet()).length).toBe(1);
+            });
+
+            it('should return a clone of original object of conditions', function() {
+                var clone = route.getConditionSet();
+
+                clone.attribute = jasmine.any(Object);
+
+                expect(Object.keys(clone).length).not.toBe(Object.keys(route.getConditionSet()).length);
+            });
+
+        });
+
+    });
+
     describe('toJson method with undefined route condition set', function() {
         var json = null;
 

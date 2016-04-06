@@ -23,6 +23,7 @@
             var UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/;
             var ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
             var NAVIGATION_CONTAINER_REGEX = /^survey\.navigations$/;
+            var ROUTE_REGEX = /^survey\.navigations\[[\d|\w|\-]\]\.routes\[[\d|\w|\-]\]/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelBuilderService';
@@ -37,7 +38,9 @@
             } else if (ANSWER_OPTION_REGEX.test(target)) {
                 return 'AnswerOptionBuilderService';
             } else if (NAVIGATION_CONTAINER_REGEX.test(target)) {
-                return 'NavigationBuilderService';
+                return 'RouteBuilderService';
+            } else if (ROUTE_REGEX.test(target)) {
+                return 'RouteBuilderService';
             }
 
             return target;

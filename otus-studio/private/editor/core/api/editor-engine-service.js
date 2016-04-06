@@ -37,7 +37,7 @@
             work.type = editingEvent.type;
             work.id = editingEvent.id;
 
-            if (work.type.isPreAddData()) {
+            if (work.type.isPreAddData() || work.type.isPreUpdateData()) {
                 var lastSelectEvent = WorkspaceService.workspace.isdb.userEdits.fetchLastSelectEvent();
                 work.context = lastSelectEvent.target.split('.')[2];
             }

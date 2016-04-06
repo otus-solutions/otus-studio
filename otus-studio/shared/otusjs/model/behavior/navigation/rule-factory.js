@@ -99,7 +99,7 @@
                 answer: self.answer
             };
 
-            return result;
+            return JSON.stringify(result);
         }
     }
 

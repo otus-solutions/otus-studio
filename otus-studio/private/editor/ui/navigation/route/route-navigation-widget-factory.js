@@ -22,10 +22,10 @@
         var self = this;
 
         console.log(model);
-        self.name = model.name;
-        self.destination = model.destination;
-        self.nameTarget = 'survey.navigations[' + model.index + '].name';
-        self.destinationTarget = 'survey.navigations[' + model.index + '].to';
+        self.name = model.getName();
+        self.destination = model.getDestination();
+        self.nameTarget = 'survey.navigations[' + model.getIndex() + '].name';
+        self.destinationTarget = 'survey.navigations[' + model.getIndex() + '].to';
     }
 
 }());

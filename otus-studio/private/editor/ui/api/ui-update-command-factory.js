@@ -25,7 +25,7 @@
                         MainContainerContentService.showQuestionDataEditor
                     ]
                 },
-                'PRE_ADD_DATA': [NavigationEditorContentService.loadRoute]
+                'PRE_UPDATE_DATA': [NavigationEditorContentService.loadRoute]
             };
 
         /* Public interface */

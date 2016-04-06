@@ -9,10 +9,10 @@
         'AnswerOptionBuilderService',
         'LabelBuilderService',
         'QuestionBuilderService',
-        'NavigationBuilderService'
+        'RouteBuilderService'
     ];
 
-    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService, NavigationBuilderService) {
+    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService, RouteBuilderService) {
         var self = this;
 
         /* Public interface */
@@ -34,7 +34,7 @@
         }
 
         function plugToNavigationBuilder(observer) {
-            NavigationBuilderService.registerObserver(observer);
+            RouteBuilderService.registerObserver(observer);
         }
 
         // function unplugFromAnswerOptionBuilder(observer) {

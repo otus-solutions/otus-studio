@@ -37,6 +37,32 @@ describe('Navigation', function() {
 
     });
 
+    describe('from new instance', function() {
+
+        describe('listRoutes method', function() {
+
+            var navigation;
+
+            beforeEach(function() {
+                navigation = factory.create(Mock.ORIGIN);
+            });
+
+            it('should return an array of routes with size equal to 0', function() {
+                expect(navigation.listRoutes().length).toBe(0);
+            });
+
+            it('should return a clone of original array of routes', function() {
+                var clone = navigation.listRoutes();
+
+                clone.push(jasmine.any(Object));
+
+                expect(clone.length).not.toBe(navigation.listRoutes().length);
+            });
+
+        });
+
+    });
+
     function mockNavigationProperties() {
         Mock.STUDIO_OBJECT = 'StudioObject';
         Mock.ORIGIN = 'ORIGIN';

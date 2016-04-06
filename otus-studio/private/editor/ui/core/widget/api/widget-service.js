@@ -10,10 +10,11 @@
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory',
+        'NavigationWidgetFactory',
         'RouteNavigationWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, RouteNavigationWidgetFactory) {
+    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, NavigationWidgetFactory, RouteNavigationWidgetFactory) {
         var self = this;
 
         /* Public interface */

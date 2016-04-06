@@ -58,7 +58,8 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: [
-            'tests/unit/**/*-spec-sample.js'
+            'tests/unit/**/*-spec-sample.js',
+            'tests/unit/**/*-spec-ignore.js'
         ],
 
         // preprocess matching files before serving them to the browser

@@ -18,58 +18,93 @@
         return self;
     }
 
-    function Route(origin, destination, index) {
+    function Route(routeOrigin, routeDestination, routeIndex) {
+
         var self = this;
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+        var extents;
+        var objectType;
+        var name;
+        var origin;
+        var destination;
+        var index;
+        var conditionSet;
 
-        Object.defineProperty(self, 'objectType', {
-            value: 'Route',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'name', {
-            value: origin.concat('-').concat(destination),
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'origin', {
-            value: origin,
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'destination', {
-            value: destination,
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'index', {
-            value: index,
-            writable: false,
-            enumerable: true
-        });
+        init();
 
         /* Public interface */
-        self.getConditionSetSize = getConditionSetSize;
+        self.getExtents = getExtents;
+        self.getObjectType = getObjectType;
+        self.getName = getName;
+        self.setName = setName;
+        self.getIndex = getIndex;
+        self.setIndex = setIndex;
+        self.getOrigin = getOrigin;
+        self.getDestination = getDestination;
+        self.setDestination = setDestination;
+        self.getConditionSet = getConditionSet;
         self.addCondition = addCondition;
         self.removeCondition = removeCondition;
+        self.getConditionSetSize = getConditionSetSize;
         self.toJson = toJson;
 
-        function getConditionSetSize() {
-            if (self.conditionSet) {
-                return Object.keys(self.conditionSet).length;
-            } else {
-                return 0;
-            }
+        function init() {
+            extents = 'StudioObject';
+            objectType = 'Route';
+            origin = routeOrigin;
+            destination = routeDestination;
+            index = routeIndex;
+            conditionSet = {};
+
+            setName(getOrigin() + '-' + getDestination());
         }
+
+        function getExtents() {
+            return extents;
+        }
+
+        function getObjectType() {
+            return objectType;
+        }
+
+        function getName() {
+            return name;
+        }
+
+        function setName(value) {
+            name = value;
+        }
+
+        function getIndex() {
+            return index;
+        }
+
+        function setIndex(value) {
+            index = value;
+        }
+
+        function getOrigin() {
+            return origin;
+        }
+
+        function getDestination() {
+            return destination;
+        }
+
+        function setDestination(value) {
+            destination = value;
+        }
+
+        function getConditionSet() {
+            var clone = {};
+
+            for (var property in conditionSet) {
+                clone[property] = conditionSet[property];
+            }
+
+            return clone;
+        }
+
 
         function addCondition(condition) {
             self.conditionSet = self.conditionSet || {};
@@ -81,6 +116,14 @@
             delete self.conditionSet[conditionName];
 
             if (getConditionSetSize() === 0) delete self.conditionSet;
+        }
+
+        function getConditionSetSize() {
+            if (self.conditionSet) {
+                return Object.keys(self.conditionSet).length;
+            } else {
+                return 0;
+            }
         }
 
         function toJson() {

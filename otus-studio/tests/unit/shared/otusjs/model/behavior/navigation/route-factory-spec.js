@@ -25,27 +25,27 @@ describe('RouteFactory', function() {
         });
 
         it('should return a Route object with extends value equal to "StudioObject"', function() {
-            expect(route.extends).toBe('StudioObject');
+            expect(route.getExtents()).toBe('StudioObject');
         });
 
         it('should return a Route object with objectType value equal to "Route"', function() {
-            expect(route.objectType).toBe('Route');
+            expect(route.getObjectType()).toBe('Route');
         });
 
         it('should return a Route object with a valid origin value', function() {
-            expect(route.origin).toEqual(Mock.ORIGIN);
+            expect(route.getOrigin()).toEqual(Mock.ORIGIN);
         });
 
         it('should return a Route object with a valid destination value', function() {
-            expect(route.destination).toEqual(Mock.DESTINATION);
+            expect(route.getDestination()).toEqual(Mock.DESTINATION);
         });
 
         it('should return a Route object with a valid name value', function() {
-            expect(route.name).toEqual(Mock.ROUTE_NAME);
+            expect(route.getName()).toEqual(Mock.ROUTE_NAME);
         });
 
-        it('should return a Route object with an undefined condition set', function() {
-            expect(route.conditionSet).toBeUndefined();
+        it('should return a Route object with a defined condition set', function() {
+            expect(route.getConditionSet()).toBeDefined();
         });
 
     });

@@ -38,9 +38,9 @@
         }
 
         function getCurrentNavigation() {
-            var lastSelectEvent = WorkspaceService.workspace.isdb.userEdits.fetchLastAddEvent();
+            var lastAddedQuestion = WorkspaceService.workspace.isdb.dataPool.fetchLastAddedData();
             var currentSurvey = WorkspaceService.workspace.project.survey;
-            var currentQuestion = lastSelectEvent.target.split('.')[2];
+            var currentQuestion = lastAddedQuestion.oid;
 
             return currentSurvey.listNavigation(currentQuestion);
         }

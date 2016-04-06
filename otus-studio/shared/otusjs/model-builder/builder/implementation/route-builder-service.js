@@ -3,14 +3,16 @@
 
     angular
         .module('otusjs.modelBuilder')
-        .service('NavigationBuilderService', NavigationBuilderService);
+        .service('RouteBuilderService', RouteBuilderService);
 
-    NavigationBuilderService.$inject = ['RouteFactory'];
+    RouteBuilderService.$inject = ['RouteFactory'];
 
-    function NavigationBuilderService(RouteFactory) {
+    function RouteBuilderService(RouteFactory) {
         var self = this;
         var workResult = null;
         var observers = [];
+        var nameWasProccessed = false;
+        var destinationWasProccessed = false;
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -40,14 +42,16 @@
                 route = updateRoute(work);
             }
 
-            if (route.origin && route.destination) {
+            if (isDataProcessComplete()) {
+                nameWasProccessed = false;
+                destinationWasProccessed = false;
                 notifyObservers(route, work.type);
             }
         }
 
         function addRoute(work) {
             var navigation = work.survey.listNavigation(work.context);
-            var newRoute = RouteFactory.create(navigation.origin, null, work.survey.listNavigations().length - 1);
+            var newRoute = RouteFactory.create(navigation.getOrigin(), null, work.survey.listNavigations().length - 1);
 
             navigation.addRoute(newRoute);
 
@@ -55,8 +59,19 @@
         }
 
         function updateRoute(work) {
-            var route = work.survey.listNavigation(work.context).listRoutes()[index];
-            return route;
+            var index = work.target.match(/\d/g)[0];
+            var routes = work.survey.listNavigation(work.context).listRoutes();
+            var routeToUpdate = routes[index];
+
+            if (work.target.search('name') != -1) {
+                routeToUpdate.setName(work.data.value);
+                nameWasProccessed = true;
+            } else {
+                routeToUpdate.setDestination(work.data.value);
+                destinationWasProccessed = true;
+            }
+
+            return routeToUpdate;
         }
 
         function notifyObservers(route, work) {
@@ -75,6 +90,10 @@
 
             if (registered.length === 0)
                 observers.push(observer);
+        }
+
+        function isDataProcessComplete() {
+            return nameWasProccessed && destinationWasProccessed;
         }
     }
 

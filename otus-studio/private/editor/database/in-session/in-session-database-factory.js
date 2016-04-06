@@ -43,7 +43,7 @@
         self.store = store;
         self.fetchEventBy = fetchEventBy;
         self.fetchLastSelectEvent = fetchLastSelectEvent;
-        self.fetchLastAddEvent = fetchLastAddEvent;
+        self.fetchLastAddedData = fetchLastAddedData;
         self.storeUnique = storeUnique;
 
         init();
@@ -91,13 +91,8 @@
             return data[0];
         }
 
-        function fetchLastAddEvent() {
-            var data = self.collection.chain()
-                        .where(function(event) {
-                            return event.type.isAddData();
-                        })
-                        .simplesort('$loki', 'isdesc').data();
-
+        function fetchLastAddedData() {
+            var data = self.collection.chain().simplesort('$loki', 'isdesc').data();
             return data[0];
         }
 
