@@ -3,13 +3,14 @@
 
     angular
         .module('otusjs.modelBuilder')
-        .service('MetadataBuilderService', MetadataBuilderService);
+        .service('NavigationBuilderService', NavigationBuilderService);
 
-    // MetadataBuilderService.$inject = ['QuestionFactory', 'QuestionNavigationFactory'];
+    NavigationBuilderService.$inject = ['RouteFactory'];
 
-    function MetadataBuilderService() {
+    function NavigationBuilderService(RouteFactory) {
         var self = this;
         var workResult = null;
+        var observers = [];
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -17,7 +18,7 @@
         self.getWorkResult = getWorkResult;
 
         /* Observable interface */
-        // self.registerObserver = registerObserver;
+        self.registerObserver = registerObserver;
 
         // TODO: Implement validator to run here
         function runValidations(work) {
@@ -31,24 +32,49 @@
         }
 
         function execute(work) {
-            var navigation = null;
+            var route = null;
 
-            if (work.type.isAddData()) {
-                navigation = addQuestion(work);
-            } else if (work.type.isRemoveData()) {
-                navigation = removeQuestion(work);
-            } else if (work.type.isUpdateData()) {
-                updateQuestion(work);
+            if (work.type.isPreAddData()) {
+                route = addRoute(work);
+            } else if (work.type.isPreUpdateData()) {
+                route = updateRoute(work);
             }
 
-            notifyObservers(navigation, work.type);
+            if (route.origin && route.destination) {
+                notifyObservers(route, work.type);
+            }
         }
 
-        function addQuestion(work) {
-            var newQuestion = QuestionFactory.create(work.model, work.questionId);
-            work.survey.question[work.questionId] = newQuestion;
+        function addRoute(work) {
+            var navigation = work.survey.listNavigation(work.context);
+            var newRoute = RouteFactory.create(navigation.origin, null, work.survey.listNavigations().length - 1);
 
-            return newQuestion;
+            navigation.addRoute(newRoute);
+
+            return newRoute;
+        }
+
+        function updateRoute(work) {
+            var route = work.survey.listNavigation(work.context).listRoutes()[index];
+            return route;
+        }
+
+        function notifyObservers(route, work) {
+            work.data = route;
+            observers.forEach(function(observer) {
+                observer.update(work);
+            });
+        }
+
+        function registerObserver(observer) {
+            var registered = observers.filter(function(o) {
+                if (o.identifier === observer.identifier) {
+                    return o;
+                }
+            });
+
+            if (registered.length === 0)
+                observers.push(observer);
         }
     }
 

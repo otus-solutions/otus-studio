@@ -13,12 +13,12 @@ describe('Navigation', function() {
         navigation = factory.create(Mock.ORIGIN);
     });
 
-    describe('addDestination method', function() {
+    describe('addRoute method', function() {
 
-        it('should push a new destination in destination list', function() {
-            navigation.addDestination(jasmine.any(Object));
+        it('should push a new route in route list', function() {
+            navigation.addRoute(jasmine.any(Object));
 
-            expect(navigation.listDestinations().length).toBe(1);
+            expect(navigation.listRoutes().length).toBe(1);
         });
 
     });
@@ -26,13 +26,13 @@ describe('Navigation', function() {
     describe('removeDestination method', function() {
 
         beforeEach(function() {
-            navigation.addDestination(Mock.destination);
+            navigation.addRoute(Mock.route);
         });
 
-        it('should remove the destination from destination list by the "to" identifier', function() {
-            navigation.removeDestination(Mock.TO);
+        it('should remove the route from route list by the "to" identifier', function() {
+            navigation.removeRoute(Mock.TO);
 
-            expect(navigation.listDestinations().length).toBe(0);
+            expect(navigation.listRoutes().length).toBe(0);
         });
 
     });
@@ -42,7 +42,7 @@ describe('Navigation', function() {
         Mock.ORIGIN = 'ORIGIN';
         Mock.TO = 'TO';
 
-        Mock.destination = {
+        Mock.route = {
             to: Mock.TO
         };
     }

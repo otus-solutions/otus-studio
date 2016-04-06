@@ -3,22 +3,23 @@
 
     angular
         .module('editor.ui')
-        .factory('QuestionNavigationWidgetFactory', QuestionNavigationWidgetFactory);
+        .factory('NavigationWidgetFactory', NavigationWidgetFactory);
 
-    function QuestionNavigationWidgetFactory() {
+    function NavigationWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(model) {
-            return new QuestionNavigationWidget(model);
+            return new NavigationWidget(model);
         }
 
         return self;
     }
 
-    function QuestionNavigationWidget(model) {
+    function NavigationWidget(model) {
+        console.log(model);
         Object.defineProperty(this, 'model', {
             value: model,
             writable: false
@@ -41,6 +42,18 @@
 
         Object.defineProperty(this, 'conditionSet', {
             value: [],
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'newName', {
+            value: 'survey.navigations[' + 0 + '].routes[' + 0 + '].name',
+            writable: false,
+            enumerable: true
+        });
+
+        Object.defineProperty(this, 'newDestination', {
+            value: 'survey.navigations[' + 0 + '].routes[' + 0 + '].to',
             writable: false,
             enumerable: true
         });

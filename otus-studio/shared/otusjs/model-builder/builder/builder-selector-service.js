@@ -16,12 +16,13 @@
         }
 
         function filter(target) {
-            var IDENTITY_REGEX = /^survey\.identity/,
-                QUESTION_CONTAINER_REGEX = /^survey\.question$/,
-                SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/,
-                LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/,
-                UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/,
-                ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
+            var IDENTITY_REGEX = /^survey\.identity/;
+            var QUESTION_CONTAINER_REGEX = /^survey\.question$/;
+            var SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/;
+            var LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/;
+            var UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/;
+            var ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
+            var NAVIGATION_CONTAINER_REGEX = /^survey\.navigations$/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelBuilderService';
@@ -35,6 +36,8 @@
                 return 'SurveyIdentityBuilderService';
             } else if (ANSWER_OPTION_REGEX.test(target)) {
                 return 'AnswerOptionBuilderService';
+            } else if (NAVIGATION_CONTAINER_REGEX.test(target)) {
+                return 'NavigationBuilderService';
             }
 
             return target;

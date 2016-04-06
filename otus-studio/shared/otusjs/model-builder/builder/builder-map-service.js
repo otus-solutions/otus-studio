@@ -10,17 +10,19 @@
         'QuestionBuilderService',
         'LabelBuilderService',
         'UnitBuilderService',
-        'AnswerOptionBuilderService'
+        'AnswerOptionBuilderService',
+        'NavigationBuilderService'
     ];
 
-    function BuilderMapService(SurveyIdentityBuilderService, QuestionBuilderService, LabelBuilderService, UnitBuilderService, AnswerOptionBuilderService) {
+    function BuilderMapService(SurveyIdentityBuilderService, QuestionBuilderService, LabelBuilderService, UnitBuilderService, AnswerOptionBuilderService, NavigationBuilderService) {
         var self = this,
             builderMap = {
                 'SurveyIdentityBuilderService': SurveyIdentityBuilderService,
                 'QuestionBuilderService': QuestionBuilderService,
                 'LabelBuilderService': LabelBuilderService,
                 'UnitBuilderService': UnitBuilderService,
-                'AnswerOptionBuilderService': AnswerOptionBuilderService
+                'AnswerOptionBuilderService': AnswerOptionBuilderService,
+                'NavigationBuilderService': NavigationBuilderService
             };
 
         /* Public interface */

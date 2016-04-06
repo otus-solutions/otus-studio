@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(origin, destination) {
-            return new Route(origin, destination);
+        function create(origin, destination, index) {
+            return new Route(origin, destination, index);
         }
 
         return self;
     }
 
-    function Route(origin, destination) {
+    function Route(origin, destination, index) {
         var self = this;
 
         Object.defineProperty(self, 'extends', {
@@ -48,6 +48,12 @@
         Object.defineProperty(self, 'destination', {
             value: destination,
             writable: true,
+            enumerable: true
+        });
+
+        Object.defineProperty(self, 'index', {
+            value: index,
+            writable: false,
             enumerable: true
         });
 

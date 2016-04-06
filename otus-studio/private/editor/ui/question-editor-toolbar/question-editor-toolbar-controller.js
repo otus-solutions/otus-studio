@@ -17,12 +17,12 @@
 
         self.navigation = navigation;
 
-        function navigation(questionId){
-            var contentArea = $element.find('.toolbar-content-'+questionId);
+        function navigation(questionId) {
+            var contentArea = $element.find('.toolbar-content-' + questionId);
 
-            if(!contentArea.children().length){
+            if (!contentArea.children().length) {
                 QuestionEditorToolbarService.loadNavigation(contentArea, $scope);
-            }else{
+            } else {
                 QuestionEditorToolbarService.closeNavigation(contentArea);
             }
         }

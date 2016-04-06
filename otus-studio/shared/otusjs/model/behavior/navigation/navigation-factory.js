@@ -19,7 +19,7 @@
 
     function Navigation(origin) {
         var self = this;
-        var destinations = [];
+        var routes = [];
 
         Object.defineProperty(self, 'extends', {
             value: 'StudioObject',
@@ -40,25 +40,25 @@
         });
 
         /* Public interface */
-        self.listDestinations = listDestinations;
-        self.addDestination = addDestination;
-        self.removeDestination = removeDestination;
+        self.listRoutes = listRoutes;
+        self.addRoute = addRoute;
+        self.removeRoute = removeRoute;
 
-        function listDestinations() {
-            return destinations;
+        function listRoutes() {
+            return routes;
         }
 
-        function addDestination(destination) {
-            destinations.push(destination);
+        function addRoute(route) {
+            routes.push(route);
         }
 
-        function removeDestination(to) {
-            var destinationToRemove = destinations.filter(function(destination) {
-                return destination.to === to;
+        function removeRoute(to) {
+            var routeToRemove = routes.filter(function(route) {
+                return route.to === to;
             });
 
-            var indexToRemove = destinations.indexOf(destinationToRemove[0]);
-            if (indexToRemove > -1) destinations.splice(indexToRemove, 1);
+            var indexToRemove = routes.indexOf(routeToRemove[0]);
+            if (indexToRemove > -1) routes.splice(indexToRemove, 1);
         }
 
     }

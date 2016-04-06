@@ -72,6 +72,7 @@
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
+        self.listNavigation = listNavigation;
 
         function questionsCount() {
             var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
@@ -84,19 +85,28 @@
             return navigations;
         }
 
+        function listNavigation(origin) {
+            return fetchByOrigin(origin);
+        }
+
         function addNavigation(navigation) {
             navigations.push(navigation);
         }
 
         function removeNavigation(origin) {
-            var navigationToRemove = navigations.filter(function(navigation) {
-                return navigation.origin === origin;
-            });
+            var navigationToRemove = fetchByOrigin(origin);
 
-            var indexToRemove = navigations.indexOf(navigationToRemove[0]);
+            var indexToRemove = navigations.indexOf(navigationToRemove);
             if (indexToRemove > -1) navigations.splice(indexToRemove, 1);
         }
 
+        function fetchByOrigin(origin) {
+            var filteredNavigation = navigations.filter(function(navigation) {
+                return navigation.origin === origin;
+            });
+
+            return filteredNavigation[0];
+        }
     }
 
 }());

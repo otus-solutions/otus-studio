@@ -8,10 +8,11 @@
     UIUpdateCommandFactory.$inject = [
         'SurveyPageContentService',
         'QuestionDataEditorContentService',
-        'MainContainerContentService'
+        'MainContainerContentService',
+        'NavigationEditorContentService'
     ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService) {
+    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService, NavigationEditorContentService) {
         var self = this,
 
             updateCommandMap = {
@@ -23,7 +24,8 @@
                     'Question': [
                         MainContainerContentService.showQuestionDataEditor
                     ]
-                }
+                },
+                'PRE_ADD_DATA': [NavigationEditorContentService.loadRoute]
             };
 
         /* Public interface */
@@ -44,9 +46,9 @@
     }
 
     function UIUpdate(updateCommands, updateData) {
-        var self = this,
-            commands = updateCommands,
-            data = updateData;
+        var self = this;
+        var commands = updateCommands;
+        var data = updateData;
 
         /* Public interface */
         self.execute = execute;

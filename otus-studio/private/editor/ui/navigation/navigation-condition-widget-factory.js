@@ -3,22 +3,22 @@
 
     angular
         .module('editor.ui')
-        .factory('QuestionNavigationConditionWidgetFactory', QuestionNavigationConditionWidgetFactory);
+        .factory('NavigationConditionWidgetFactory', NavigationConditionWidgetFactory);
 
-    function QuestionNavigationConditionWidgetFactory() {
+    function NavigationConditionWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(model) {
-            return new QuestionNavigationConditionWidget(model);
+            return new NavigationConditionWidget(model);
         }
 
         return self;
     }
 
-    function QuestionNavigationConditionWidget(model) {
+    function NavigationConditionWidget(model) {
         Object.defineProperty(this, 'when', {
             value: model.when,
             writable: false

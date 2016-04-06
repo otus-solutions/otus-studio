@@ -9,16 +9,19 @@
         'WidgetTemplateService',
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
-        'QuestionAnswerOptionEditorWidgetFactory'
+        'QuestionAnswerOptionEditorWidgetFactory',
+        'RouteNavigationWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory) {
+    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory, RouteNavigationWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
         self.getQuestionEditorWidget = getQuestionEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
+        self.getRouteWidget = getRouteWidget;
+        self.getNavigationEditorWidget = getNavigationEditorWidget;
 
         function getWidgetForModel(model) {
             var widget = QuestionWidgetFactory.create(model);
@@ -32,6 +35,14 @@
 
         function getQuestionAnswerOptionWidget(model) {
             return QuestionAnswerOptionEditorWidgetFactory.create(model);
+        }
+
+        function getRouteWidget(model) {
+            return RouteNavigationWidgetFactory.create(model);
+        }
+
+        function getNavigationEditorWidget(model) {
+            return NavigationWidgetFactory.create(model);
         }
     }
 

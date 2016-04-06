@@ -5,12 +5,16 @@
         .module('otusjs.modelBuilder')
         .service('QuestionBuilderService', QuestionBuilderService);
 
-    QuestionBuilderService.$inject = ['QuestionFactory', 'QuestionNavigationFactory'];
+    QuestionBuilderService.$inject = [
+        'QuestionFactory',
+        'QuestionNavigationFactory',
+        'NavigationFactory'
+    ];
 
-    function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory) {
+    function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory, NavigationFactory) {
         var self = this,
             observers = [],
-            workResult = null;
+            workResult = {};
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -22,13 +26,11 @@
 
         // TODO: Implement validator to run here
         function runValidations(work) {
-            workResult = true;
+            workResult.status = true;
         }
 
         function getWorkResult() {
-            return {
-                result: workResult
-            };
+            return workResult;
         }
 
         function execute(work) {
@@ -42,12 +44,14 @@
                 updateQuestion(work);
             }
 
+            workResult.data = question;
             notifyObservers(question, work.type);
         }
 
         function addQuestion(work) {
             var newQuestion = QuestionFactory.create(work.model, work.questionId);
             work.survey.question[work.questionId] = newQuestion;
+            work.survey.addNavigation(NavigationFactory.create(work.questionId));
 
             return newQuestion;
         }

@@ -10,8 +10,8 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            controller: 'QuestionNavigationController',
-            templateUrl: 'private/editor/ui/core/widget/navigation/question-navigation-template.html',
+            controller: 'NavigationController',
+            templateUrl: 'private/editor/ui/navigation/navigation-template.html',
         };
 
         return ddo;

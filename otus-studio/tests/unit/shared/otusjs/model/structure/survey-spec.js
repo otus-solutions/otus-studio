@@ -26,6 +26,18 @@ describe('Survey', function() {
 
     });
 
+    describe('listNavigation method', function() {
+
+        beforeEach(function() {
+            survey.addNavigation(Mock.navigation);
+        });
+
+        it('should return a navigation by origin', function() {
+            expect(survey.listNavigation(Mock.ORIGIN)).toEqual(Mock.navigation);
+        });
+
+    });
+
     describe('addNavigation method', function() {
 
         it('should attach a new navigation in survey.navigation', function() {

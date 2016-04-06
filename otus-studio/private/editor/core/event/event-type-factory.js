@@ -47,8 +47,10 @@
 
         /* Public interface */
         self.isAddData = isAddData;
+        self.isPreAddData = isPreAddData;
         self.isRemoveData = isRemoveData;
         self.isUpdateData = isUpdateData;
+        self.isPreUpdateData = isPreUpdateData;
         self.isSelectData = isSelectData;
         self.isTouchData = isTouchData;
         self.isUntouchData = isUntouchData;
@@ -69,7 +71,7 @@
             return (self.type == 'UPDATE_DATA');
         }
 
-        function isUpdateData() {
+        function isPreUpdateData() {
             return (self.type == 'PRE_UPDATE_DATA');
         }
 

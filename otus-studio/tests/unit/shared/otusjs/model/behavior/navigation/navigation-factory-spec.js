@@ -31,7 +31,7 @@ describe('NavigationFactory', function() {
         });
 
         it('should return an object with an array of destinations', function() {
-            expect(navigation.listDestinations()).toBeDefined();
+            expect(navigation.listRoutes()).toBeDefined();
         });
 
     });

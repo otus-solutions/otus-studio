@@ -1,21 +1,27 @@
 <div flex ng-controller="QuestionEditorToolbarController as questionEditorTollbarController">
 
-    <div layout="row" class="question-toolbar-area"
-    layout-margin>
-        <md-button class="md-icon-button" ng-click="questionEditorTollbarController.navigation(widget.questionId)">
+    <div layout="row" class="question-toolbar-area" layout-margin>
+        <md-button class="md-icon-button">
             <md-icon aria-label="Navigation">directions_boat
                 <md-tooltip md-direction="bottom">
                     Navegação
                 </md-tooltip>
+            </md-icon>
         </md-button>
-        <md-button class="md-icon-button" editing-source es-type="remove-button" es-id="survey-questions-remove-question"
-        es-target="survey.question.{{widget.questionId}}">
+        <md-button class="md-icon-button"
+            editing-source
+            es-type="remove-button"
+            es-id="survey-questions-remove-question"
+            es-target="survey.question.{{widget.questionId}}">
             <md-icon aria-label="Navigation">delete
                 <md-tooltip md-direction="bottom">
                     Remover
                 </md-tooltip>
+            </md-icon>
         </md-button>
     </div>
-    <div class="toolbar-content-{{widget.questionId}}" layout-padding layout-margin></div>
+    <div layout-padding layout-margin>
+        <navigation-question></navigation-question>
+    </div>
 
 </div>

@@ -8,16 +8,18 @@
     ModelBuilderHubService.$inject = [
         'AnswerOptionBuilderService',
         'LabelBuilderService',
-        'QuestionBuilderService'
+        'QuestionBuilderService',
+        'NavigationBuilderService'
     ];
 
-    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService) {
+    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService, NavigationBuilderService) {
         var self = this;
 
         /* Public interface */
         self.plugToAnswerOptionBuilder = plugToAnswerOptionBuilder;
         self.plugToLabelBuilder = plugToLabelBuilder;
         self.plugToQuestionBuilder = plugToQuestionBuilder;
+        self.plugToNavigationBuilder = plugToNavigationBuilder;
 
         function plugToAnswerOptionBuilder(observer) {
             AnswerOptionBuilder.registerObserver(observer);
@@ -29,6 +31,10 @@
 
         function plugToQuestionBuilder(observer) {
             QuestionBuilderService.registerObserver(observer);
+        }
+
+        function plugToNavigationBuilder(observer) {
+            NavigationBuilderService.registerObserver(observer);
         }
 
         // function unplugFromAnswerOptionBuilder(observer) {
