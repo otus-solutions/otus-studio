@@ -20,9 +20,6 @@
         self.close = close;
         self.openHome = openHome;
         self.openSurveyForms = openSurveyForms;
-        self.openCreateRepository = openCreateRepository;
-        self.openConnectRepository = openConnectRepository;
-        self.openUserManagement = openUserManagement;
         self.logout = logout;
 
         function getSelectedSystemArea() {
@@ -44,21 +41,6 @@
 
         function openSurveyForms() {
             DashboardStateService.goToSurveyForms();
-            close();
-        }
-
-        function openCreateRepository() {
-            DashboardStateService.goToCreateRepository();
-            close();
-        }
-
-        function openConnectRepository() {
-            DashboardStateService.goToConnectRepository();
-            close();
-        }
-
-        function openUserManagement() {
-            DashboardStateService.goToUserManagement();
             close();
         }
 

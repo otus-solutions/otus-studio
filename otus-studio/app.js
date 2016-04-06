@@ -8,8 +8,6 @@
             'studio.dashboard',
             'editor',
             /* Otus platform modules */
-            'repository',
-            'user',
             'otusjs',
             'ui.components',
             'utils'
