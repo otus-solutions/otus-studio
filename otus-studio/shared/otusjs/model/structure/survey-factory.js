@@ -8,10 +8,11 @@
     SurveyFactory.$inject = [
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
-        'SurveyUUIDGenerator'
+        'SurveyUUIDGenerator',
+        'JsonClonerService'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, JsonClonerService) {
         var self = this;
 
         /* Public interdace */
@@ -107,6 +108,10 @@
             });
 
             return filteredNavigation[0];
+        }
+
+        function toJson() {
+            return JsonClonerService.clone(self);
         }
     }
 

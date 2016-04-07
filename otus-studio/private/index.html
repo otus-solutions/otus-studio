@@ -18,8 +18,8 @@
         <md-content layout="column" flex ng-cloak>
             <md-toolbar layout="row" id="system-toolbar" class="md-accent md-hue-1">
                 <a class="navbar-brand" rel="home" title="Otus" layout="row" layout-align="center center">
-	   				 <img ng-src="assets/img/coruja_construtora.png" class="image-otus-toolbar"/>
-	       		</a>
+                    <img ng-src="assets/img/coruja_construtora.png" class="image-otus-toolbar"/>
+                </a>
                 <md-button ng-click="dashboardMenu.open()">
                     <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
                     Otus Studio
@@ -29,11 +29,11 @@
                     <span>{{repositoryController.connected()}}</span>
                 </h3>
                 <span flex="5"></span>
-                 <md-whiteframe class="md-whiteframe-10dp image-component" layout="row" >
-	                <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
-	   					  <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div" />
-	                </a>
-                 </md-whiteframe>
+                <md-whiteframe class="md-whiteframe-10dp image-component" layout="row">
+                    <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
+                        <img ng-src="assets/img/prof_bruce_duncan.jpg" class="image-user-div"/>
+                    </a>
+                </md-whiteframe>
                 <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
                     <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
                 </md-button>
@@ -63,10 +63,8 @@
     <script src="shared/lokijs/lokijs.min.js"></script>
     <script src="shared/lokijs/loki-angular.js"></script>
 
-
     <!-- ************************************* IndexedDB ************************************* -->
     <script src="shared/angular-indexed-db/angular-indexed-db.min.js"></script>
-
 
     <!-- ************************************* Moment ************************************* -->
     <script src="shared/moment/moment.js"></script>
@@ -76,18 +74,16 @@
     <script src="shared/dracula-js/dracula_graffle.js"></script>
     <script src="shared/dracula-js/dracula_graph.js"></script>
 
-
     <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
     <script src="node_modules/node-uuid/uuid.js"></script>
     <script src="node_modules/js-base64/base64.min.js"></script>
     <script src="shared/st-utils/st-utils-module.js"></script>
-
+    <script src="shared/st-utils/json-cloner-service.js"></script>
 
     <!-- ************************************* UI Components ************************************* -->
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
-
 
     <!-- ************************************** Otus Domain ************************************** -->
     <!-- app.shared.otus-domain.survey-repository -->
@@ -98,7 +94,6 @@
     <!-- app.shared.otus-domain.user -->
     <script src="shared/otus-domain/user/user-module.js"></script>
     <script src="shared/otus-domain/user/management/user-controller.js"></script>
-
 
     <!-- ************************************** OtusJS ************************************** -->
     <!-- app.shared.otusjs -->
@@ -178,7 +173,6 @@
     <script src="config/state-configuration.js"></script>
     <script src="config/theme-configuration.js"></script>
 
-
     <!-- ************************************** Studio Dashboard ************************************** -->
     <script src="private/dashboard/dashboard-module.js"></script>
 
@@ -200,13 +194,11 @@
     <!-- SURVEY-FORM.DIALOG-NEW-SURVYE-FORM -->
     <script src="private/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
 
-
     <!-- ************************************** Studio Editor ************************************** -->
     <script src="private/editor/editor-module.js"></script>
 
     <!-- API -->
     <script src="private/editor/api/survey-editor-service.js"></script>
-
 
     <!-- ************************************** Studio Editor Core ************************************** -->
     <script src="private/editor/core/editor-core-module.js"></script>
@@ -265,7 +257,6 @@
     <!-- TRIGGER.QUESTION.IMPLEMENTATION -->
     <script src="private/editor/core/trigger/question/implementation/question-editor-trigger-service.js"></script>
 
-
     <!-- ************************************** Studio Editor Database ************************************** -->
     <script src="private/editor/database/editor-database-module.js"></script>
 
@@ -277,7 +268,6 @@
 
     <!-- IN-SESSION -->
     <script src="private/editor/database/in-session/in-session-database-factory.js"></script>
-
 
     <!-- ************************************** Studio Editor UI ************************************** -->
     <script src="private/editor/ui/editor-ui-module.js"></script>
@@ -366,7 +356,6 @@
     <!-- SURVEY-DATA-EDITOR -->
     <script src="private/editor/ui/survey-data-editor/survey-properties-controller.js"></script>
 
-
     <!-- ************************************** Studio Editor Workspace ************************************** -->
     <script src="private/editor/workspace/editor-workspace-module.js"></script>
 
@@ -375,7 +364,7 @@
     <script src="private/editor/workspace/api/workspace-factory.js"></script>
     <script src="private/editor/workspace/api/workspace-service.js"></script>
 
-	<!-- EXPORT -->
+    <!-- EXPORT -->
     <script src="private/editor/workspace/export/survey-template-export-directive.js"></script>
     <script src="private/editor/workspace/export/survey-template-export-service.js"></script>
 

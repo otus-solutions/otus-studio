@@ -59,7 +59,7 @@
         }
 
         function updateRoute(work) {
-            var index = work.target.match(/\d/g)[0];
+            var index = work.target.match(/\d/g)[1];
             var routes = work.survey.listNavigation(work.context).listRoutes();
             var routeToUpdate = routes[index];
 
