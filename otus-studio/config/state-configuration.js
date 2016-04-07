@@ -7,6 +7,7 @@
             'HOME': 'home',
             'SURVEY_FORMS': 'survey-forms',
             'EDITOR': 'editor',
+            'LOGIN': 'login',
             'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
@@ -15,13 +16,26 @@
         var dashboardMenu = 'private/dashboard/menu/dashboard-menu.html';
 
         $stateProvider
+            .state('login', {
+                url: '/login',
+                views: {
+                    'system-wrap' : {
+                        templateUrl: 'private/authenticator/login.html',
+                        controller: 'LoginController'
+                    }
+                }
+            })
             .state('home', {
                 url: '/home',
                 views: {
-                    'dashboard-menu': {
-                        templateUrl: dashboardMenu
+                    'system-wrap' : {
+                        templateUrl: 'private/dashboard/dashboard-content.html',
+                        controller: 'DashboardMenuController as dashboardMenu'
                     },
-                    'system-content': {
+                    'dashboard-menu@home': {
+                        templateUrl: dashboardMenu,
+                    },
+                    'system-content@home': {
                         templateUrl: 'private/dashboard/template/dashboard-content-template.html'
                     },
                     'section-info@home': {
@@ -38,10 +52,14 @@
             .state('survey-forms', {
                 url: '/survey-forms',
                 views: {
-                    'dashboard-menu': {
+                    'system-wrap' : {
+                        templateUrl: 'private/dashboard/dashboard-content.html',
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@survey-forms': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content': {
+                    'system-content@survey-forms': {
                         templateUrl: 'private/dashboard/template/dashboard-content-template.html',
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
@@ -59,10 +77,14 @@
             .state('editor', {
                 url: '/editor',
                 views: {
-                    'dashboard-menu': {
+                    'system-wrap' : {
+                        templateUrl: 'private/dashboard/dashboard-content.html',
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@editor': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content': {
+                    'system-content@editor': {
                         templateUrl: 'private/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer'
                     }
@@ -70,7 +92,7 @@
             });
 
         /* Default state (route) */
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/login');
 
     }
 

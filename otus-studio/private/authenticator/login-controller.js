@@ -1,18 +1,8 @@
 (function() {
     'use strict';
 
-    var loginModule = angular
-        .module('Login', [
-            'ngMaterial',
-            'ngMessages'
-        ]);
-
-    /**
-     *
-     * Login Controller
-     *
-     */
-    loginModule
+    angular
+        .module('studio.authenticator')
         .controller('LoginController', LoginController);
 
     LoginController.$inject = ['$scope', '$http', '$window'];
@@ -48,24 +38,5 @@
         };
 
     }
-
-    /**
-     *
-     * Theme Configuration
-     *
-     */
-    loginModule.config(['$mdThemingProvider', function($mdThemingProvider) {
-
-        $mdThemingProvider.theme('layoutTheme')
-            .primaryPalette('blue', {
-                'default': 'A200',
-                'hue-1': '200'
-            }).accentPalette('blue-grey', {
-                'default': '900'
-            }).warnPalette('red');
-
-
-        $mdThemingProvider.theme('layoutTheme');
-    }]);
 
 }());

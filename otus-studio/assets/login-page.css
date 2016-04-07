@@ -1,10 +1,4 @@
-* {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-}
-
-#center {
+#login-page #center {
 	width: 55%;
 	top: 60%;
 	margin: 0 auto;
@@ -13,19 +7,15 @@
 	border: 2px solid #E6E6E6;
 }
 
-#divtop{
+#login-page #divtop{
 	background-color: #448AFF;
 	height:35%;
 	z-index: 1;
+	position: absolute;
+	width: 100%;
 }
 
-#divDown{
-	background-color: white;
-	height: 60%;
-
-}
-
-.nameStudio{
+#login-page .nameStudio{
 	text-align: left;
 	color: white;
 	top: 58%;
@@ -33,18 +23,18 @@
     margin: 0 auto;
 }
 
-.nameStudio span {
+#login-page .nameStudio span {
 	margin-left: 23%;
 }
 
-h1 {
+#login-page h1 {
 	margin: 0 auto;
 	width: 110px;
 	/* height: 150px; */
 	display: block;
 }
 
-.logo {
+#login-page .logo {
     margin: 0 auto;
     height: 186px;
     display: block;
@@ -54,30 +44,16 @@ h1 {
     left: 38%;
 }
 
-footer {
-	background-color: #ECEFF1;
-	width: 100%;
-	height: 100px;
-	position: fixed;
-	bottom: 0px;
-	text-align: center;
-	border-top: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-footer p {
-	margin-top: 2%;
-}
-
-#logo_test {
+#login-page #logo_test {
 	content: url(../assets/img/ImageProjectStudio.png);
 }
 
-#content {
+#login-page #content {
 	margin-top: 11%;
 	padding: 10px;
 }
 
-.md-block {
+#login-page .md-block {
 	width: 60%;
 	left: 12%;
 	right: 12%

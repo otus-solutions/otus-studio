@@ -16,6 +16,7 @@
         var self = this;
 
         /* Public interface */
+        self.goToHome = goToLogin;
         self.goToHome = goToHome;
         self.goToSurveyForms = goToSurveyForms;
         self.goToEditor = goToEditor;
@@ -25,6 +26,11 @@
 
         function init() {
             self.currentState = 'Home';
+        }
+
+        function goToLogin() {
+            self.currentState = 'Login';
+            $location.url(APP_STATE.LOGIN);
         }
 
         function goToHome() {

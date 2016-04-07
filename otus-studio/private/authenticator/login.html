@@ -1,27 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="Login">
-
-<head>
-	<base href="../" />
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="initial-scale=1">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-	<link href="assets/img/coruja_construtora.png" rel="icon" />
-	<title>Otus Studio</title>
-
-	<link href="shared/angular-material/angular-material.min.css" rel="stylesheet" />
-	<link href="public/login.css" rel="stylesheet" />
-	<title>Tela de login</title>
-</head>
-
-<body md-theme="layoutTheme">
-
+<div id="login-page" layout="column" flex>
 	<div id="divtop">
 		<h2 class="nameStudio">
 			<span class="md-display-1">Otus Studio</span>
 		</h2>
 		<div id="center">
-			<div ng-controller="LoginController" layout="column">
+			<div layout="column">
 				<div class="logo" id="logo_test"></div>
 				<div>
 					<div id="content" flex>
@@ -60,25 +43,5 @@
 				</div>
 			</div>
 		</div>
-		<div id="divDown" />
-		<footer>
-			<div class="md-subhead">
-				<p>2015 ELSA Brasil. Corporation.</p>
-				<p>Versão : ${project.version}</p>
-			</div>
-		</footer>
 	</div>
-
-</body>
-
-<!-- Angular Material Dependencies -->
-<script src="node_modules/angular/angular.min.js"></script>
-<script src="node_modules/angular-animate/angular-animate.min.js"></script>
-<script src="node_modules/angular-aria/angular-aria.min.js"></script>
-<script src="shared/angular-material/angular-material.min.js"></script>
-<script src="node_modules/angular-messages/angular-messages.min.js"></script>
-
-<script src="app.js"></script>
-<script src="public/login.ctrl.js"></script>
-
-</html>
+</div>
