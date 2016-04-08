@@ -25,7 +25,6 @@
                 };
 
                 store.upsert(entry).then(function(e) {
-                    console.log('Survey armazenada localmente.');
                 });
             });
         }

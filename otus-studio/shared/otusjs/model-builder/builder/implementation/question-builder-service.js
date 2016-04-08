@@ -72,7 +72,7 @@
 
             }
             // var selectedQuestion = work.target.split('.')[2],
-            //     questionToUpdate = work.survey.question[selectedQuestion];
+            //     questionToUpdate = work.survey.getQuestionContainer()[selectedQuestion];
             //
             // questionsToUpdate.label.ptBR.text = work.data.value;
         }

@@ -37,7 +37,7 @@
         function updateLabelValue(work) {
             var targetPath = work.target.split('.'),
                 selectedQuestion = targetPath[2],
-                questionToUpdate = work.survey.question[selectedQuestion];
+                questionToUpdate = work.survey.getQuestionContainer()[selectedQuestion];
 
             questionToUpdate.label.ptBR.plainText = work.data.plainText || work.data.value;
             questionToUpdate.label.ptBR.formattedText = work.data.formattedText;

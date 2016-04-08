@@ -33,7 +33,7 @@ describe('CrossSessionDatabaseService', function() {
                 callback(Mock.store);
             });
 
-            service.saveSurveyTemplateRevision(jasmine.any(Object), jasmine.any(Object));
+            service.saveSurveyTemplateRevision(Mock.template, jasmine.any(Object));
 
             expect(Mock.store.upsert).toHaveBeenCalledWith(jasmine.any(Object));
         });
@@ -57,7 +57,9 @@ describe('CrossSessionDatabaseService', function() {
 
     function mockTemplate() {
         Mock.template = {
-            oid: 'template.oid'
+            getOID: function getOID() {
+                return 'template.oid';
+            }
         };
     }
 

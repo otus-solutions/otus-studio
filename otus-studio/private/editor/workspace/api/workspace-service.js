@@ -59,7 +59,6 @@
         }
 
         function exportWork() {
-            console.log(self.workspace.project.survey);
             return SurveyExportService.exportSurvey(self.workspace.project.survey);
         }
 

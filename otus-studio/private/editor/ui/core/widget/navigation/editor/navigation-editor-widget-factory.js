@@ -19,8 +19,6 @@
     }
 
     function NavigationWidget(model) {
-        console.log(model);
-
         Object.defineProperty(this, 'model', {
             value: model,
             writable: false

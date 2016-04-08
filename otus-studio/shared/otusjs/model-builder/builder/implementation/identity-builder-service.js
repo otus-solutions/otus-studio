@@ -34,24 +34,24 @@
         }
 
         function isKeywordsTargeted(target) {
-            return (target == 'survey.identity.keywords');
+            return (target == 'survey.getIdentity().keywords');
         }
 
         function updateKeywords(work) {
             var keywords = work.data.value.split(',');
-            work.survey.identity.keywords = [];
+            work.survey.getIdentity().keywords = [];
 
             keywords.forEach(function(keyword) {
                 keyword = keyword.trim();
                 if (keyword.length > 0) {
-                    work.survey.identity.keywords.push(keyword);
+                    work.survey.getIdentity().keywords.push(keyword);
                 }
             });
         }
 
         function updateIdentityValue(work) {
             var target = searchTarget(work.target);
-            work.survey.identity[target] = work.data.value;
+            work.survey.getIdentity()[target] = work.data.value;
         }
 
         function searchTarget(editingTarget) {

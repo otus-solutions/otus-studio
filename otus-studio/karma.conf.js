@@ -26,7 +26,6 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-            DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
             DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
             DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
@@ -42,8 +41,6 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */

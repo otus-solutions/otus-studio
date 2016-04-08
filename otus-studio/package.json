@@ -18,7 +18,7 @@
     "scripts": {
         "test": "karma start karma.conf.js",
         "gulp": "gulp",
-        "start": "concurrent \"npm run bsync\" ",
+        "start": "concurrent \"npm run gulp browser-sync\" ",
         "karma": "karma"
     },
     "dependencies": {

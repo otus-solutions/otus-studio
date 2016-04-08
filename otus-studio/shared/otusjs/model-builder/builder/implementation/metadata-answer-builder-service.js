@@ -47,28 +47,28 @@
         
         function addOption(work) {
             var selectedQuestion = extractQuestionReference(work.target);
-            var nextOID = Object.keys(work.survey.question[selectedQuestion].metadata.option).length;
+            var nextOID = Object.keys(work.survey.getQuestionContainer()[selectedQuestion].metadata.option).length;
 
             var newOption = MetadataAnswerFactory.create(nextOID, selectedQuestion);
-            work.survey.question[selectedQuestion].metadata.option[nextOID] = newOption;
+            work.survey.getQuestionContainer()[selectedQuestion].metadata.option[nextOID] = newOption;
 
             return newOption;
         } 
         
         function removeOption(work) {
         	var selectedQuestion = extractQuestionReference(work.target),
-                indexToRemove = Object.keys(work.survey.question[selectedQuestion].metadata.option).length - 1,
-                optionNameToRemove = Object.keys(work.survey.question[selectedQuestion].metadata.option)[indexToRemove],
-                optionToRemove = work.survey.question[selectedQuestion].metadata.option[optionNameToRemove];
+                indexToRemove = Object.keys(work.survey.getQuestionContainer()[selectedQuestion].metadata.option).length - 1,
+                optionNameToRemove = Object.keys(work.survey.getQuestionContainer()[selectedQuestion].metadata.option)[indexToRemove],
+                optionToRemove = work.survey.getQuestionContainer()[selectedQuestion].metadata.option[optionNameToRemove];
 
-            delete work.survey.question[selectedQuestion].metadata.option[optionNameToRemove];
+            delete work.survey.getQuestionContainer()[selectedQuestion].metadata.option[optionNameToRemove];
             return optionToRemove;
         }
         
         function updateOption(work) {
         	var selectedQuestion = extractQuestionReference(work.target),
                 selectedOption = work.target.split('.')[5],
-                optionToUpdate = work.survey.question[selectedQuestion].metadata.option[selectedOption];
+                optionToUpdate = work.survey.getQuestionContainer()[selectedQuestion].metadata.option[selectedOption];
 
             optionToUpdate.label.ptBR.plainText = work.data.plainText || work.data.value;
             optionToUpdate.label.ptBR.formattedText = work.data.formattedText;
