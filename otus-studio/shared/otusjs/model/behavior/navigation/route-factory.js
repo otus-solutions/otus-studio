@@ -107,20 +107,22 @@
 
 
         function addCondition(condition) {
-            self.conditionSet = self.conditionSet || {};
-            self.conditionSet[condition.name] = condition;
+            conditionSet = conditionSet || {};
+            conditionSet[condition.getName()] = condition;
         }
 
         function removeCondition(condition) {
-            var conditionName = condition.name || condition;
-            delete self.conditionSet[conditionName];
+            var conditionName = condition.getName() || condition;
+            delete conditionSet[conditionName];
 
-            if (getConditionSetSize() === 0) delete self.conditionSet;
+            if (getConditionSetSize() === 0) {
+                conditionSet = null;
+            }
         }
 
         function getConditionSetSize() {
-            if (self.conditionSet) {
-                return Object.keys(self.conditionSet).length;
+            if (conditionSet) {
+                return Object.keys(conditionSet).length;
             } else {
                 return 0;
             }
@@ -128,16 +130,16 @@
 
         function toJson() {
             var result = {
-                name: self.name,
-                origin: self.origin,
-                destination: self.destination
+                name: name,
+                origin: origin,
+                destination: destination
             };
 
-            if (self.conditionSet) {
+            if (conditionSet) {
                 result.conditionSet = {};
 
-                for (var conditionName in self.conditionSet) {
-                    result.conditionSet[conditionName] = self.conditionSet[conditionName].toJson().rules;
+                for (var conditionName in conditionSet) {
+                    result.conditionSet[conditionName] = conditionSet[conditionName].toJson().rules;
                 }
             }
 

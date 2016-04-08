@@ -1,5 +1,6 @@
 describe('RuleFactory', function() {
     var Mock = {};
+    var rule;
 
     beforeEach(function() {
         module('studio');
@@ -8,25 +9,25 @@ describe('RuleFactory', function() {
             factory = _$injector_.get('RuleFactory');
         });
 
-        ruleCondition = factory.create('QUESTION_ID');
+        rule = factory.create('QUESTION_ID');
     });
 
     describe('create method', function() {
 
         it('should return a defined object', function() {
-            expect(ruleCondition).toBeDefined();
+            expect(rule).toBeDefined();
         });
 
         it('should return a RuleCondition object with extends value equal to "StudioObject"', function() {
-            expect(ruleCondition.extends).toBe('StudioObject');
+            expect(rule.getExtents()).toBe('StudioObject');
         });
 
         it('should return a RuleCondition object with objectType value equal to "RuleCondition"', function() {
-            expect(ruleCondition.objectType).toBe('Rule');
+            expect(rule.getObjectType()).toBe('Rule');
         });
 
         it('should return a RuleCondition object with a valid when value', function() {
-            expect(ruleCondition.when).toBeDefined();
+            expect(rule.getWhen()).toBeDefined();
         });
 
     });

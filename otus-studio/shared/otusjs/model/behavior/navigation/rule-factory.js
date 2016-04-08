@@ -18,29 +18,22 @@
         return self;
     }
 
-    function Rule(when) {
+    function Rule(whenCase) {
+
         var self = this;
+        var extents;
+        var objectType;
+        var when;
+        var answer;
         var operator;
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'objectType', {
-            value: 'Rule',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'when', {
-            value: when,
-            writable: true,
-            enumerable: true
-        });
+        init();
 
         /* Public interface */
+        self.getExtents = getExtents;
+        self.getObjectType = getObjectType;
+        self.getWhen = getWhen;
+        self.getAnswer = getAnswer;
         self.within = within;
         self.equal = equal;
         self.greater = greater;
@@ -50,6 +43,29 @@
         self.between = between;
         self.contains = contains;
         self.toJson = toJson;
+
+        function init() {
+            extents = 'StudioObject';
+            objectType = 'Rule';
+            when = whenCase;
+            answer = answer;
+        }
+
+        function getExtents() {
+            return extents;
+        }
+
+        function getObjectType() {
+            return objectType;
+        }
+
+        function getWhen() {
+            return when;
+        }
+
+        function getAnswer() {
+            return answer;
+        }
 
         function within(arrayValues) {
             defineAnswer('within', arrayValues);
@@ -87,16 +103,15 @@
             defineAnswer('contains', value);
         }
 
-        function defineAnswer(ruleOperator, value) {
-            operator = ruleOperator;
-            self.answer = {};
-            self.answer[operator] = value;
+        function defineAnswer(operator, value) {
+            answer = {};
+            answer[operator] = value;
         }
 
         function toJson() {
             var result = {
-                when: self.when,
-                answer: self.answer
+                when: when,
+                answer: answer
             };
 
             return JSON.stringify(result);

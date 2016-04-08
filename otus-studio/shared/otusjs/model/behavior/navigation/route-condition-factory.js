@@ -18,55 +18,65 @@
         return self;
     }
 
-    function RouteCondition(name) {
+    function RouteCondition(conditionName) {
+
         var self = this;
+        var extents;
+        var objectType;
+        var name;
+        var rules;
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'objectType', {
-            value: 'RouteCondition',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'name', {
-            value: name,
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'rules', {
-            value: [],
-            writable: true,
-            enumerable: true
-        });
+        init();
 
         /* Public interface */
+        self.getExtents = getExtents;
+        self.getObjectType = getObjectType;
+        self.getName = getName;
+        self.listRules = listRules;
         self.addRule = addRule;
         self.removeRule = removeRule;
         self.toJson = toJson;
 
+        function init() {
+            extents = 'StudioObject';
+            objectType = 'RouteCondition';
+            name = conditionName;
+            rules = [];
+        }
+
+        function getExtents() {
+            return extents;
+        }
+
+        function getObjectType() {
+            return objectType;
+        }
+
+        function getName() {
+            return name;
+        }
+
+        function listRules() {
+            return rules;
+        }
+
         function addRule(rule) {
-            var ruleNotExist = (self.rules.indexOf(rule) === -1);
-            if (ruleNotExist) self.rules.push(rule);
+            var ruleNotExist = (rules.indexOf(rule) === -1);
+            if (ruleNotExist) rules.push(rule);
         }
 
         function removeRule(rule) {
-            var indexToRemove = self.rules.indexOf(rule);
-            self.rules.splice(indexToRemove, 1);
+            var indexToRemove = rules.indexOf(rule);
+            rules.splice(indexToRemove, 1);
         }
 
         function toJson() {
             var result = {
-                name: self.name,
+                name: name,
                 rules: []
             };
 
-            self.rules.forEach(function(rule) {
+            rules.forEach(function(rule) {
                 result.rules.push(rule.toJson());
             });
 

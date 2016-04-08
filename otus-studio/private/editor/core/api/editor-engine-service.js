@@ -27,6 +27,7 @@
             }
 
             console.log(workResult);
+            console.log(work.survey);            
         }
 
         function buildWork(editingEvent) {

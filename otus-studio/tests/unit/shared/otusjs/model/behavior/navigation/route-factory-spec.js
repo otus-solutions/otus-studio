@@ -1,5 +1,6 @@
 describe('RouteFactory', function() {
     var Mock = {};
+    var route;
 
     beforeEach(function() {
         module('otusjs');
@@ -12,13 +13,11 @@ describe('RouteFactory', function() {
         inject(function(_$injector_) {
             factory = _$injector_.get('RouteFactory');
         });
+
+        route = factory.create(Mock.ORIGIN, Mock.DESTINATION);
     });
 
     describe('create method', function() {
-
-        beforeEach(function() {
-            route = factory.create(Mock.ORIGIN, Mock.DESTINATION);
-        });
 
         it('should return a defined object', function() {
             expect(route).toBeDefined();

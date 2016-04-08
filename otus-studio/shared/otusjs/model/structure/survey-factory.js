@@ -28,52 +28,65 @@
         return self;
     }
 
-    function Survey(metainfo, identity, uuid) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid) {
+
         var self = this;
-        var navigations = [];
+        var extents;
+        var objectType;
+        var oid;
+        var identity;
+        var metainfo;
+        var questionContainer;
+        var navigationList = [];
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'objectType', {
-            value: 'Survey',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'oid', {
-            value: uuid,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'identity', {
-            value: identity,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'metainfo', {
-            value: metainfo,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'question', {
-            value: {},
-            writable: false,
-            enumerable: true
-        });
+        init();
 
         /*Public interface*/
+        self.getExtents = getExtents;
+        self.getObjectType = getObjectType;
+        self.getOID = getOID;
+        self.getIdentity = getIdentity;
+        self.getMetaInfo = getMetaInfo;
+        self.getQuestionContainer = getQuestionContainer;
         self.questionsCount = questionsCount;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
         self.listNavigation = listNavigation;
+
+        function init() {
+            extents = 'StudioObject';
+            objectType = 'Survey';
+            oid = uuid;
+            identity = surveyIdentity;
+            metainfo = surveyMetainfo;
+            questionContainer = {};
+            navigationList = [];
+        }
+
+        function getExtents() {
+            return extents;
+        }
+
+        function getObjectType() {
+            return objectType;
+        }
+
+        function getOID() {
+            return oid;
+        }
+
+        function getIdentity() {
+            return identity;
+        }
+
+        function getMetaInfo() {
+            return metainfo;
+        }
+
+        function getQuestionContainer() {
+            return questionContainer;
+        }
 
         function questionsCount() {
             var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
@@ -83,7 +96,7 @@
         }
 
         function listNavigations() {
-            return navigations;
+            return navigationList;
         }
 
         function listNavigation(origin) {
@@ -91,19 +104,19 @@
         }
 
         function addNavigation(navigation) {
-            navigation.setIndex(navigations.length);
-            navigations.push(navigation);
+            navigation.setIndex(navigationList.length);
+            navigationList.push(navigation);
         }
 
         function removeNavigation(origin) {
             var navigationToRemove = fetchByOrigin(origin);
 
-            var indexToRemove = navigations.indexOf(navigationToRemove);
-            if (indexToRemove > -1) navigations.splice(indexToRemove, 1);
+            var indexToRemove = navigationList.indexOf(navigationToRemove);
+            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
         }
 
         function fetchByOrigin(origin) {
-            var filteredNavigation = navigations.filter(function(navigation) {
+            var filteredNavigation = navigationList.filter(function(navigation) {
                 return navigation.getOrigin() === origin;
             });
 

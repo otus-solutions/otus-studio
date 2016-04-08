@@ -1,14 +1,12 @@
-describe('Survey suite:', function() {
+describe('SurveyFactory', function() {
     var Mock = {};
+    var survey;
 
-    /* @BeforeScenario */
     beforeEach(function() {
-        module('otusjs.model');
-        module('otusjs.modelBuilder');
+        module('otusjs');
         module('utils');
 
         inject(function(_$injector_) {
-            /* @InjectMocks */
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
@@ -21,35 +19,28 @@ describe('Survey suite:', function() {
 
     describe('SurveyFactory.create()', function() {
 
-        it('should return an Survey that extends from StudioObject', function() {
-            expect(survey.extends).toBe('StudioObject');
+        it('should return a Survey that extends from StudioObject', function() {
+            expect(survey.getExtents()).toBe('StudioObject');
         });
 
-        it('should return an Survey object type', function() {
-            expect(survey.objectType).toBe('Survey');
+        it('should return a Survey object type', function() {
+            expect(survey.getObjectType()).toBe('Survey');
         });
 
-        it('should return an Survey with a SurveyMetaInfo object type', function() {
-            expect(survey.metainfo.objectType).toBe('SurveyMetaInfo');
+        it('should return a Survey with a SurveyMetaInfo object type', function() {
+            expect(survey.getMetaInfo().objectType).toBe('SurveyMetaInfo');
         });
 
-        xit('should return an Unit with oid', function() {
+        it('should return a Survey with an OID', function() {
+            expect(survey.getOID()).toBeDefined();
         });
 
-        it('should return an Survey with a not null SurveyMetaInfo', function() {
-            expect(survey.metainfo).not.toBeNull();
+        it('should return a Survey with a SurveyIdentity object type', function() {
+            expect(survey.getIdentity().objectType).toBe('SurveyIdentity');
         });
 
-        it('should return an Survey with a not null SurveyIdentity', function() {
-            expect(survey.identity).not.toBeNull();
-        });
-
-        it('should return an Survey with a SurveyIdentity object type', function() {
-            expect(survey.identity.objectType).toBe('SurveyIdentity');
-        });
-
-        it('should return an Survey with a literal object in question property', function() {
-            expect(survey.question).toEqual({});
+        it('should return a Survey with a literal object in question property', function() {
+            expect(survey.getQuestionContainer()).toEqual({});
         });
 
         it('should call SurveyUUIDGenerator.generateSurveyUUID()', function() {

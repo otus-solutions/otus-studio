@@ -1,5 +1,6 @@
 describe('RuleFactory', function() {
     var Mock = {};
+    var routeCondition;
 
     beforeEach(function() {
         module('otusjs');
@@ -18,19 +19,19 @@ describe('RuleFactory', function() {
         });
 
         it('should return a RouteCondition object with extends value equal to "StudioObject"', function() {
-            expect(routeCondition.extends).toBe('StudioObject');
+            expect(routeCondition.getExtents()).toBe('StudioObject');
         });
 
         it('should return a RouteCondition object with objectType value equal to "RouteCondition"', function() {
-            expect(routeCondition.objectType).toBe('RouteCondition');
+            expect(routeCondition.getObjectType()).toBe('RouteCondition');
         });
 
         it('should return a RouteCondition object with a name value', function() {
-            expect(routeCondition.name).toEqual('RULE_NAME');
+            expect(routeCondition.getName()).toEqual('RULE_NAME');
         });
 
         it('should return a RouteCondition object with a valid conditions map', function() {
-            expect(routeCondition.rules).toBeDefined();
+            expect(routeCondition.listRules()).toBeDefined();
         });
 
     });

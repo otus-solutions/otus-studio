@@ -1,13 +1,15 @@
 describe('Survey', function() {
     var Mock = {};
+    var survey;
 
     beforeEach(function() {
         module('otusjs');
         module('utils');
 
-        mockNavigation();
 
         inject(function(_$injector_) {
+            mockNavigation(_$injector_);
+
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
@@ -19,6 +21,10 @@ describe('Survey', function() {
     });
 
     describe('listNavigations method', function() {
+
+        beforeEach(function() {
+            survey.addNavigation(Mock.navigation);
+        });
 
         it('should return an array of navigations', function() {
             expect(survey.listNavigations()).toEqual(jasmine.any(Array));
@@ -40,9 +46,11 @@ describe('Survey', function() {
 
     describe('addNavigation method', function() {
 
-        it('should attach a new navigation in survey.navigation', function() {
-            survey.addNavigation(jasmine.any(Object));
+        beforeEach(function() {
+            survey.addNavigation(Mock.navigation);
+        });
 
+        it('should attach a new navigation in survey.navigation', function() {
             expect(survey.listNavigations().length).toBe(1);
         });
 
@@ -75,12 +83,10 @@ describe('Survey', function() {
         return Mock.SurveyUUIDGenerator;
     }
 
-    function mockNavigation() {
+    function mockNavigation($injector) {
         Mock.ORIGIN = 'ORIGIN';
 
-        Mock.navigation = {
-            origin: Mock.ORIGIN
-        };
+        Mock.navigation = $injector.get('NavigationFactory').create(Mock.ORIGIN);
     }
 
 });

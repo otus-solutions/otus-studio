@@ -1,5 +1,6 @@
 describe('QuestionBuilderService', function() {
     var Mock = {};
+    var service;
 
     beforeEach(function() {
         module('otusjs');
