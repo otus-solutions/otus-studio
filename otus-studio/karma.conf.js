@@ -21,16 +21,16 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
-DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
-DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
-DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
+            DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
+            DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
+            DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
-DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
-DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
-DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
-DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
+            DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
+            DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
+            DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
+            DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
+            DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
 
@@ -67,7 +67,7 @@ DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
         reporters: ['progress', 'html'],
 
         htmlReporter: {
-            outputFile: 'tests/unit/unit-result.report.html',
+            outputFile: 'target/unit-result.report.html',
             //Optional
             pageTitle: 'Unit Tests'
         },

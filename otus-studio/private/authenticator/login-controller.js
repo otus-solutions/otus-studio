@@ -13,7 +13,7 @@
         var HTTP_GET_IS_LOGGED = window.location.origin + '/otus-domain-rest/session/rest/authentication/isLogged';
 
         var HTTP_URL_LOGIN_SUCCESS = window.location.origin + '/otus-studio/private/index.html';
-        var HTTP_URL_HOME_PAGE = (window.location.origin === 'http://localhost:3000') ? window.location.origin + '/private/index.html' : window.location.origin + '/otus-studio/private/index.html';
+        var HTTP_URL_HOME_PAGE = window.location.origin + '/otus-studio/private/index.html';
 
         $scope.authenticate = function(user) {
             $scope.invalidLogin = false;
