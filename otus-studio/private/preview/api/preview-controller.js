@@ -5,15 +5,13 @@
         .module('preview')
         .controller('PreviewController', PreviewController);
 
-    PreviewController.$inject = ['StudioEditingService'];
-
-    function PreviewController(StudioEditingService) {
+    function PreviewController() {
         var self = this;
 
         self.getSurvey = getSurvey;
 
         function getSurvey() {
-            return StudioEditingService.getCurrentSurvey();
+            return null;
         }
     }
 

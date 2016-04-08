@@ -24,6 +24,7 @@
             var ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/;
             var NAVIGATION_CONTAINER_REGEX = /^survey\.navigations$/;
             var ROUTE_REGEX = /^survey\.navigations\[[\d|\w|\-]\]\.routes\[[\d|\w|\-]\]/;
+	    var METADATA_REGEX = /survey\.question\.[\d|\w|\-]+\.metadata.option/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelBuilderService';
@@ -41,6 +42,8 @@
                 return 'RouteBuilderService';
             } else if (ROUTE_REGEX.test(target)) {
                 return 'RouteBuilderService';
+            } else if (METADATA_REGEX.test(target)) {
+            	return 'MetadataAnswerBuilderService';
             }
 
             return target;

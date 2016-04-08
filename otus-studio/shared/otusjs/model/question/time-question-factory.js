@@ -5,22 +5,22 @@
         .module('otusjs.model')
         .factory('TimeQuestionFactory', TimeQuestionFactory);
 
-    TimeQuestionFactory.$inject = ['UnitFactory'];
+    TimeQuestionFactory.$inject = ['UnitFactory', 'MetadataGroupFactory'];
 
-    function TimeQuestionFactory(UnitFactory) {
+    function TimeQuestionFactory(UnitFactory, MetadataGroupFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(oid, prototype) {
-            return new TimeQuestion(oid, prototype, UnitFactory);
+            return new TimeQuestion(oid, prototype, UnitFactory, MetadataGroupFactory);
         }
 
         return self;
     }
 
-    function TimeQuestion(oid, prototype, UnitFactory) {
+    function TimeQuestion(oid, prototype, UnitFactory, MetadataGroupFactory) {
         Object.defineProperty(this, 'extends', {
             value: prototype.objectType,
             writable: false,
@@ -59,6 +59,12 @@
             },
             writable: true,
             enumerable: true
+        });
+        
+        Object.defineProperty(this, 'metadata', {
+        	value: MetadataGroupFactory.create(),
+        	writable : true, 
+        	enumerable : true
         });
     }
 

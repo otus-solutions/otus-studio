@@ -9,8 +9,6 @@
             'editor',
             'preview',
             /* Otus platform modules */
-            'repository',
-            'user',
             'otusjs',
             'ui.components',
             'utils'

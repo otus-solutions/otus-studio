@@ -72,7 +72,7 @@ module.exports = function(config) {
         reporters: ['progress', 'html'],
 
         htmlReporter: {
-            outputFile: 'tests/unit/unit-result.report.html',
+            outputFile: 'target/unit-result.report.html',
             //Optional
             pageTitle: 'Unit Tests'
         },

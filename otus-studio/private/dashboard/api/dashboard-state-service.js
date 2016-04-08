@@ -19,9 +19,6 @@
         self.goToHome = goToHome;
         self.goToSurveyForms = goToSurveyForms;
         self.goToEditor = goToEditor;
-        self.goToCreateRepository = goToCreateRepository;
-        self.goToConnectRepository = goToConnectRepository;
-        self.goToUserManagement = goToUserManagement;
         self.logout = logout;
 
         init();
@@ -43,20 +40,6 @@
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
             $location.url(APP_STATE.EDITOR);
-        }
-
-        function goToCreateRepository() {
-            self.currentState = 'Criação de novo Repositório';
-            $location.url(APP_STATE.CREATE_REPOSITORY);
-        }
-
-        function goToConnectRepository() {
-            self.currentState = 'Adição de Repositório existente';
-            $location.url(APP_STATE.CONNECT_REPOSITORY);
-        }
-
-        function goToUserManagement() {
-            $location.url(APP_STATE.USER_MANAGEMENT);
         }
 
         function logout() {

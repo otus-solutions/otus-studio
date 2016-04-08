@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(questionWidget) {
-            return new QuestionEditorWidget(questionWidget);
+        function create(questionWidget, metadataWidget) {
+            return new QuestionEditorWidget(questionWidget, metadataWidget);
         }
 
         return self;
     }
 
-    function QuestionEditorWidget(questionWidget) {
+    function QuestionEditorWidget(questionWidget, metadataWidget) {
         Object.defineProperty(this, 'questionWidget', {
             value: questionWidget,
             writable: false
@@ -51,6 +51,11 @@
 
         Object.defineProperty(this, 'questionTemplate', {
             value: questionWidget.template,
+            writable: false
+        });        
+
+        Object.defineProperty(this, 'metadataTemplate', {
+            value: metadataWidget.template,
             writable: false
         });
     }

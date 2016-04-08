@@ -11,10 +11,11 @@
         'SingleSelectionQuestionFactory',
         'TextQuestionFactory',
         'TimeQuestionFactory',
-        'LabelFactory'
+        'LabelFactory',
+        'MetadataGroupFactory'
     ];
 
-    function QuestionFactory(CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory) {
+    function QuestionFactory(CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory) {
         var self = this,
 
             factoryMap = {
@@ -29,14 +30,14 @@
         self.create = create;
 
         function create(questionType, oid) {
-            var question = new Question(oid, LabelFactory);
+            var question = new Question(oid, LabelFactory, MetadataGroupFactory);
             return factoryMap[questionType].create(oid, question);
         }
 
         return self;
     }
 
-    function Question(oid, LabelFactory) {
+    function Question(oid, LabelFactory, MetadataGroupFactory) {
         Object.defineProperty(this, 'extends', {
             value: 'StudioObject',
             writable: false,
@@ -63,6 +64,12 @@
             },
             writable: true,
             enumerable: true
+        });
+        
+        Object.defineProperty(this, 'metadata', {
+        	value: MetadataGroupFactory.create(),
+        	writable : true, 
+        	enumerable : true
         });
     }
 

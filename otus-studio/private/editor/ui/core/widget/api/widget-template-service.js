@@ -14,6 +14,7 @@
                 'SingleSelectionQuestion': '<single-selection-question></single-selection-question>',
                 'TextQuestion': '<text-question></text-question>',
                 'TimeQuestion': '<time-question></time-question>',
+                'MetadataGroup' : '<metadata-question></metadata-question>'
             };
 
         /* Public interface */

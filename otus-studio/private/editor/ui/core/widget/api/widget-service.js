@@ -10,20 +10,24 @@
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory',
+        'MetadataQuestionWidgetFactory',
+        'MetadataAnswerOptionWidgetFactory',
         'NavigationWidgetFactory',
         'RouteNavigationWidgetFactory',
         'RouteCreatorWidgetFactory'
     ];
 
     function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
-        NavigationWidgetFactory, RouteNavigationWidgetFactory, RouteCreatorWidgetFactory) {
+        MetadataQuestionWidgetFactory, MetadataAnswerOptionWidgetFactory, NavigationWidgetFactory, RouteNavigationWidgetFactory, RouteCreatorWidgetFactory) {
 
         var self = this;
 
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
+        self.getMetadataWidget = getMetadataWidget;
         self.getQuestionEditorWidget = getQuestionEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
+        self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
         self.getNavigationEditorWidget = getNavigationEditorWidget;
         self.getRouteWidget = getRouteWidget;
         self.getRouteCreatorWidget = getRouteCreatorWidget;
@@ -34,12 +38,22 @@
             return widget;
         }
 
-        function getQuestionEditorWidget(model) {
-            return QuestionEditorWidgetFactory.create(model);
+        function getMetadataWidget(model) {
+            var widget = MetadataQuestionWidgetFactory.create(model);
+            widget.template = WidgetTemplateService.getDirectiveTemplate('MetadataGroup');
+            return widget;
+        }
+
+        function getQuestionEditorWidget(model, metadataWidget) {
+            return QuestionEditorWidgetFactory.create(model, metadataWidget);
         }
 
         function getQuestionAnswerOptionWidget(model) {
             return QuestionAnswerOptionEditorWidgetFactory.create(model);
+        }
+
+        function getMetadataAnswerOptionWidget(model) {
+            return MetadataAnswerOptionWidgetFactory.create(model);
         }
 
         function getNavigationEditorWidget(model) {

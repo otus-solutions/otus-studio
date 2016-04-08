@@ -67,7 +67,7 @@ describe('Studio Utils Test Suite', function() {
 
     function mockUUID(_$injector_) {
         Mock.UUID = $injector.get('UUID');
-        return Mock.$window;
+        return Mock.UUID;
     }
 
 });

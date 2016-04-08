@@ -35,7 +35,8 @@
 
         function loadQuestion(question) {
             var questionWidget = loadQuestionWidget(question);
-            var editorWidget = loadEditorWidget(questionWidget);
+            var metadataWidget = loadMetadataWidget(question);
+            var editorWidget = loadEditorWidget(questionWidget, metadataWidget);
 
             mergeScopeData(editorWidget);
             loadTemplate();
@@ -56,14 +57,19 @@
             return WidgetService.getWidgetForModel(question);
         }
 
-        function loadEditorWidget(questionWidget) {
-            return WidgetService.getQuestionEditorWidget(questionWidget);
+        function loadMetadataWidget(question) {
+            return WidgetService.getMetadataWidget(question);
+        }
+
+        function loadEditorWidget(questionWidget, metadataWidget) {
+            return WidgetService.getQuestionEditorWidget(questionWidget, metadataWidget);
         }
 
         function mergeScopeData(editorWidget) {
             scope.widgetTemplateList = scope.widgetTemplateList || {};
             scope.widget = editorWidget;
             scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
+            scope.widgetMetadata = editorWidget.metadataTemplate;
         }
 
         function loadTemplate() {

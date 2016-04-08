@@ -1,6 +1,8 @@
 (function() {
     'use strict';
 
-    angular.module('preview', ['preview.navigation']);
+    angular.module('preview', [
+        'preview.navigation'
+    ]);
 
 }());

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>otus-studio</artifactId>
     <packaging>war</packaging>
@@ -7,7 +8,7 @@
     <parent>
         <groupId>br.org.otus.studio</groupId>
         <artifactId>otus-studio-root</artifactId>
-        <version>1.19.28-SNAPSHOT</version>
+        <version>1.19.31-SNAPSHOT</version>
         <relativePath>../otus-studio-root/pom.xml</relativePath>
     </parent>
 
@@ -23,7 +24,42 @@
                     <webResources>
                         <resource>
                             <directory>${project.basedir}</directory>
-                            <filtering>true</filtering>
+                            <includes>
+                                <include>index.html</include>
+                                <include>app.js</include>
+                                <include>gulpfile.js</include>
+                                <include>karma.conf.js</include>
+                                <include>package.json</include>
+                                <include>print.css</include>
+                            </includes>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/node_modules</directory>
+                            <targetPath>node_modules</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/assets</directory>
+                            <targetPath>assets</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/config</directory>
+                            <targetPath>config</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/private</directory>
+                            <targetPath>private</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/public</directory>
+                            <targetPath>public</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/shared</directory>
+                            <targetPath>shared</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/tests</directory>
+                            <targetPath>tests</targetPath>
                         </resource>
                     </webResources>
                     <archive>
@@ -49,8 +85,6 @@
                     <password>${wildfly-password}</password>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 
@@ -108,6 +142,6 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
+
 </project>
