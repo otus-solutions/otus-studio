@@ -13,6 +13,7 @@
         var observers = [];
         var nameWasProccessed = false;
         var destinationWasProccessed = false;
+        var currentRouteIndex;
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -38,6 +39,7 @@
 
             if (work.type.isPreAddData()) {
                 route = addRoute(work);
+                currentRouteIndex = route.getIndex();
             } else if (work.type.isPreUpdateData()) {
                 route = updateRoute(work);
             }
@@ -45,13 +47,14 @@
             if (isDataProcessComplete()) {
                 nameWasProccessed = false;
                 destinationWasProccessed = false;
+                route.setIndex(currentRouteIndex);
                 notifyObservers(route, work.type);
             }
         }
 
         function addRoute(work) {
             var navigation = work.survey.listNavigation(work.context);
-            var newRoute = RouteFactory.create(navigation.getOrigin(), null, work.survey.listNavigations().length - 1);
+            var newRoute = RouteFactory.create(navigation.getOrigin(), null, navigation.listRoutes().length);
 
             navigation.addRoute(newRoute);
 

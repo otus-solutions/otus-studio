@@ -10,13 +10,15 @@
         'TemplateLoaderService',
         'WidgetService',
         'WorkspaceService',
-        'UIUtils'
+        'RouteCreatorContentService'
     ];
 
-    function NavigationEditorContentService(mpath, TemplateLoaderService, WidgetService, WorkspaceService, UIUtils) {
-        var self = this,
-            scope = null,
-            navigationEditor = null;
+    function NavigationEditorContentService(mpath, TemplateLoaderService, WidgetService, WorkspaceService, RouteCreatorContentService) {
+
+        var self = this;
+        var scope;
+        var navigationEditor;
+        var currentNavigation;
 
         /* Public interface */
         self.init = init;
@@ -25,16 +27,14 @@
         function init(scopeReference, navigationEditorReference) {
             scope = scopeReference;
             navigationEditor = navigationEditorReference;
-            scope.widget = WidgetService.getNavigationEditorWidget(getCurrentNavigation());
+            currentNavigation = getCurrentNavigation();
+            scope.widget = WidgetService.getNavigationEditorWidget(currentNavigation);
         }
 
         function loadRoute(route) {
-            var routeWidget = WidgetService.getRouteWidget(route);
-            mergeScopeData(routeWidget);
-        }
-
-        function mergeScopeData(routeWidget) {
+            var routeWidget = WidgetService.getRouteWidget(currentNavigation, route);
             scope.routes.push(routeWidget);
+            RouteCreatorContentService.reload();
         }
 
         function getCurrentNavigation() {
@@ -44,7 +44,6 @@
 
             return currentSurvey.listNavigation(currentQuestion);
         }
-
     }
 
 }());

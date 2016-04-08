@@ -10,7 +10,6 @@
     ];
 
     function QuestionEditorToolbarService(TemplateLoaderService) {
-        var NAVIGATION_TEMPLATE = "private/editor/ui/navigation/navigation-template.html";
         var self = this;
 
         self.loadNavigation = loadNavigation;

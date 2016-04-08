@@ -25,9 +25,6 @@
             if (workResult.status) {
                 WorkspaceService.workspace.isdb.dataPool.store(workResult.data);
             }
-
-            console.log(workResult);
-            console.log(work.survey);
         }
 
         function buildWork(editingEvent) {

@@ -34,8 +34,8 @@
         }
 
         function loadQuestion(question) {
-            var questionWidget = loadQuestionWidget(question),
-                editorWidget = loadEditorWidget(questionWidget);
+            var questionWidget = loadQuestionWidget(question);
+            var editorWidget = loadEditorWidget(questionWidget);
 
             mergeScopeData(editorWidget);
             loadTemplate();
@@ -46,8 +46,8 @@
         }
 
         function updateQuestion(question) {
-            var target = '[es-id="question-editor-' + question.oid + '-label"]',
-                label = UIUtils.jq(surveyPage.find(target)[0]);
+            var target = '[es-id="question-editor-' + question.oid + '-label"]';
+            var label = UIUtils.jq(surveyPage.find(target)[0]);
 
             label.text(question.label.ptBR.plainText);
         }

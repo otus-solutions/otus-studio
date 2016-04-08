@@ -3,15 +3,15 @@
 
     angular
         .module('editor.ui')
-        .directive('navigationQuestion', navigationQuestion);
+        .directive('navigationEditor', navigationEditor);
 
 
-    function navigationQuestion() {
+    function navigationEditor() {
         var ddo = {
             scope: {},
             restrict: 'E',
             controller: 'NavigationController',
-            templateUrl: 'private/editor/ui/navigation/navigation-template.html',
+            templateUrl: 'private/editor/ui/core/widget/navigation/editor/navigation-editor-template.html',
         };
 
         return ddo;

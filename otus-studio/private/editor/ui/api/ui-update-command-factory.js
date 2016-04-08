@@ -16,16 +16,26 @@
         var self = this,
 
             updateCommandMap = {
-                'NEW_PROJECT': [SurveyPageContentService.reset],
-                'ADD_DATA': [SurveyPageContentService.loadQuestion],
-                'REMOVE_DATA': [SurveyPageContentService.unloadQuestion],
-                'UPDATE_DATA': [SurveyPageContentService.updateQuestion],
+                'NEW_PROJECT': [
+                    SurveyPageContentService.reset
+                ],
+                'ADD_DATA': [
+                    SurveyPageContentService.loadQuestion
+                ],
+                'REMOVE_DATA': [
+                    SurveyPageContentService.unloadQuestion
+                ],
+                'UPDATE_DATA': [
+                    SurveyPageContentService.updateQuestion
+                ],
                 'SELECT_DATA': {
                     'Question': [
                         MainContainerContentService.showQuestionDataEditor
                     ]
                 },
-                'PRE_UPDATE_DATA': [NavigationEditorContentService.loadRoute]
+                'PRE_UPDATE_DATA': [
+                    NavigationEditorContentService.loadRoute
+                ]
             };
 
         /* Public interface */

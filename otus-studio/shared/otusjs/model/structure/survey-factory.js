@@ -19,8 +19,8 @@
         self.create = create;
 
         function create(name, acronym) {
-            var metainfo = SurveyMetaInfoFactory.create(),
-                identity = SurveyIdentityFactory.create(name, acronym);
+            var metainfo = SurveyMetaInfoFactory.create();
+            var identity = SurveyIdentityFactory.create(name, acronym);
 
             return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
         }
@@ -96,7 +96,13 @@
         }
 
         function listNavigations() {
-            return navigationList;
+            var clone = [];
+
+            navigationList.forEach(function(navigation) {
+                clone.push(navigation);
+            });
+
+            return clone;
         }
 
         function listNavigation(origin) {
