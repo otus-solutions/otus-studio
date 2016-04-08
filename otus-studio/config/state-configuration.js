@@ -7,9 +7,6 @@
             'HOME': 'home',
             'SURVEY_FORMS': 'survey-forms',
             'EDITOR': 'editor',
-            'USER_MANAGEMENT': 'user-management',
-            'CREATE_REPOSITORY': 'repository?actionType=NEW',
-            'CONNECT_REPOSITORY': 'repository?actionType=CONNECT',
             'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
@@ -68,28 +65,6 @@
                     'system-content': {
                         templateUrl: 'private/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer'
-                    }
-                }
-            })
-            .state('user-management', {
-                url: '/user-management',
-                views: {
-                    'dashboard-menu': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content': {
-                        templateUrl: 'shared/otus-domain/user/management/users.html'
-                    }
-                }
-            })
-            .state('repository', {
-                url: '/repository',
-                views: {
-                    'dashboard-menu': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content': {
-                        templateUrl: 'shared/otus-domain/survey-repository/repository.html'
                     }
                 }
             });

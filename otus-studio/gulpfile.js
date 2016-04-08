@@ -14,7 +14,8 @@
         browserSync.init({
             server: {
                 baseDir: "../"
-            }
+            },
+            startPath: "/otus-studio"
         });
 
         gulp.watch([

@@ -17,7 +17,6 @@
 	background-color: #448AFF;
 	height:35%;
 	z-index: 1;
-
 }
 
 #divDown{
@@ -47,13 +46,12 @@ h1 {
 
 .logo {
     margin: 0 auto;
-    height: 47%;
+    height: 186px;
     display: block;
     z-index: 3;
     position: absolute;
     bottom: 67%;
     left: 38%;
-    
 }
 
 footer {
@@ -70,17 +68,6 @@ footer p {
 	margin-top: 2%;
 }
 
-
-/** This style is to fix float label 'celular'! Do NOT remove**/
-label[for="phonenumber"] {
-	-webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
-}
-
-.error-message{
-    text-align: center;
-    /*color: rgb(244,67,54);*/
-}
-
 #logo_test {
 	content: url(../assets/img/ImageProjectStudio.png);
 }
@@ -88,12 +75,10 @@ label[for="phonenumber"] {
 #content {
 	margin-top: 11%;
 	padding: 10px;
-	
 }
 
 .md-block {
 	width: 60%;
 	left: 12%;
 	right: 12%
-	
 }

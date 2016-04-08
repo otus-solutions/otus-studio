@@ -25,9 +25,6 @@
                     Otus Studio
                 </md-button>
                 <span flex></span>
-                <h3 ng-controller="RepositoryController as repositoryController">
-                    <span>{{repositoryController.connected()}}</span>
-                </h3>
                 <span flex="5"></span>
                  <md-whiteframe class="md-whiteframe-10dp image-component" layout="row" >
 	                <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
@@ -52,7 +49,6 @@
     <script src="node_modules/angular-aria/angular-aria.min.js"></script>
     <script src="shared/angular-bind-html-compile/angular-bind-html-compile.js"></script>
     <script src="node_modules/angular-messages/angular-messages.min.js"></script>
-    <script src="shared/angular-ui-mask/angular-ui-mask.min.js"></script>
     <script src="shared/angular-ui-router/angular-ui-router.min.js"></script>
 
     <!-- ************************************* Angular Material ************************************* -->
@@ -81,17 +77,6 @@
     <!-- ************************************* UI Components ************************************* -->
     <script src="shared/ui-components/ui-components-module.js"></script>
     <script src="shared/ui-components/accordion/accordion-directive.js"></script>
-
-
-    <!-- ************************************** Otus Domain ************************************** -->
-    <!-- app.shared.otus-domain.survey-repository -->
-    <script src="shared/otus-domain/survey-repository/repository-module.js"></script>
-    <script src="shared/otus-domain/survey-repository/repository-controller.js"></script>
-    <script src="shared/otus-domain/survey-repository/repository-service.js"></script>
-
-    <!-- app.shared.otus-domain.user -->
-    <script src="shared/otus-domain/user/user-module.js"></script>
-    <script src="shared/otus-domain/user/management/user-controller.js"></script>
 
 
     <!-- ************************************** OtusJS ************************************** -->
