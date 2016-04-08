@@ -19,7 +19,7 @@
         function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore('survey_template', function(store) {
                 var entry = {
-                    'template_oid': template.oid,
+                    'template_oid': template.getOID(),
                     'contributor': session.owner,
                     template: InsertHelperService.cloneObject(template)
                 };

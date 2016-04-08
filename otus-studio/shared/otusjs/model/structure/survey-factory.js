@@ -89,7 +89,7 @@
         }
 
         function questionsCount() {
-            var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
+            var propertyList = Object.keys(questionContainer).filter(function filterOnlyFields(property) {
                 return ((typeof property) != 'function');
             });
             return propertyList.length;

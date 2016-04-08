@@ -11,12 +11,12 @@
         var self = this;
 
         self.survey = {};
-        self.survey.name = WorkspaceService.workspace.project.survey.identity.name;
-        self.survey.acronym = WorkspaceService.workspace.project.survey.identity.acronym;
-        self.survey.version = WorkspaceService.workspace.project.survey.identity.version;
-        self.survey.recommendedTo = WorkspaceService.workspace.project.survey.identity.recommendedTo;
-        self.survey.description = WorkspaceService.workspace.project.survey.identity.description;
-        self.survey.keywords = WorkspaceService.workspace.project.survey.identity.keywords;
+        self.survey.name = WorkspaceService.workspace.project.survey.getIdentity().name;
+        self.survey.acronym = WorkspaceService.workspace.project.survey.getIdentity().acronym;
+        self.survey.version = WorkspaceService.workspace.project.survey.getIdentity().version;
+        self.survey.recommendedTo = WorkspaceService.workspace.project.survey.getIdentity().recommendedTo;
+        self.survey.description = WorkspaceService.workspace.project.survey.getIdentity().description;
+        self.survey.keywords = WorkspaceService.workspace.project.survey.getIdentity().keywords;
     }
 
 }());
