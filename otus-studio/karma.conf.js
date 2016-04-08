@@ -2,14 +2,14 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
 module.exports = function(config) {
-    var APP_PRIVATE_ROOT_PATH = 'private/';
+    var APP_PRIVATE_ROOT_PATH = 'app/';
     var APP_PUBLIC_ROOT_PATH = 'public/';
-    var DEPENDENCIES_ROOT_PATH = 'shared/';
+    var DEPENDENCIES_ROOT_PATH = 'app/shared/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: './',
+        basePath: '',
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -26,7 +26,6 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-            DEPENDENCIES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
             DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
             DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
@@ -38,13 +37,11 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */
-            'app.js',
-            'config/**/*-configuration.js',
+            APP_PRIVATE_ROOT_PATH + 'app.js',
+            APP_PRIVATE_ROOT_PATH + 'config/**/*-configuration.js',
             APP_PRIVATE_ROOT_PATH + '**/*-module.js',
             APP_PRIVATE_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',
