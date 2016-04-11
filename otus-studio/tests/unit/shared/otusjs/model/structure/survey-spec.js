@@ -70,6 +70,17 @@ describe('Survey', function() {
 
     });
 
+    describe('SurveyFactory.toJson()', function() {
+
+        it('should return a json complete survey state', function() {
+            var json = survey.toJson();
+
+            console.log(json);
+            // expect(survey.listNavigations().length).toBe(0);
+        });
+
+    });
+
     function mockSurveyIdentityFactory($injector) {
         return $injector.get('SurveyIdentityFactory');
     }

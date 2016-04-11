@@ -95,7 +95,7 @@ describe('MetadataBuilderService', function(){
 		});
 
 		it('the data should be updated', function() {
-			var label = Mock.survey.question.A0.metadata.option.fake.label;
+			var label = Mock.survey.getQuestionContainer().A0.metadata.option.fake.label;
 			mockUpdateOption();
 
 			service.execute(Mock.BuildWork);
@@ -190,7 +190,10 @@ describe('MetadataBuilderService', function(){
 	    				}
 	    			}
     			}
-    		}
+    		},
+			getQuestionContainer: function () {
+				return this.question;
+			}
     	};
     }
 
@@ -200,11 +203,14 @@ describe('MetadataBuilderService', function(){
     			A0: {
     				metadata: {
 	    				option: {
-	    					
+
 	    				}
 	    			}
     			}
-    		}
+    		},
+			getQuestionContainer: function () {
+				return this.question;
+			}
     	};
     }
 

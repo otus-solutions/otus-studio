@@ -22,13 +22,13 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), JsonClonerService);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid, JsonClonerService) {
 
         var self = this;
         var extents;
@@ -53,6 +53,7 @@
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
         self.listNavigation = listNavigation;
+        self.toJson = toJson;
 
         function init() {
             extents = 'StudioObject';
@@ -130,6 +131,7 @@
         }
 
         function toJson() {
+            // console.log(self);
             return JsonClonerService.clone(self);
         }
     }

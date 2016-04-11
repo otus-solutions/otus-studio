@@ -15,19 +15,32 @@
 
         function clone(original) {
             var clone = {};
-            var propertyNames = filterOnlyProperties(original);
+            var propertyNames = Object.getOwnPropertyNames(original);
 
-            propertyNames.forEach(function(property) {
-                clone[property] = original[property];
+            propertyNames.forEach(function(propertyName) {
+                var property = original[propertyName];
+                if (property instanceof Function) {
+                    var formattedName = '';
+                    if (/^get/.test(propertyName)) {
+                        var fl = propertyName.substring(3, 4).toLowerCase();
+                        formattedName = fl + propertyName.substring(4);
+                    }
+
+                    var value = property();
+                    if (value instanceof Object) {
+                        var subObj = self.clone(value);
+                        clone[formattedName] = subObj;
+                    } else {
+                        clone[formattedName] = value;
+                    }
+                } else {
+                    clone[propertyName] = original[propertyName];
+                }
             });
+
+            console.log(clone);
 
             return JSON.stringify(clone);
-        }
-
-        function filterOnlyProperties(obj) {
-            return Object.getOwnPropertyNames(obj).filter(function(p) {
-                return !(obj[p] instanceof Function);
-            });
         }
     }
 
