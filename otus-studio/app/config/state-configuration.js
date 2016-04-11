@@ -2,7 +2,7 @@
 
     angular
         .module('studio')
-        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
+        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
             'SURVEY_FORMS': 'survey-forms',
@@ -11,7 +11,7 @@
             'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider) {
+    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
 
         var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
 
@@ -92,8 +92,8 @@
             });
 
         /* Default state (route) */
-        $urlRouterProvider.otherwise('/login');
-
+        //$urlRouterProvider.otherwise('/login');
+        $locationProvider.html5Mode(true);
     }
 
 }());

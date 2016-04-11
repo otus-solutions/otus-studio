@@ -8,15 +8,14 @@
     DashboardStateService.$inject = [
         '$location',
         '$http',
-        '$window',
         'APP_STATE'
     ];
 
-    function DashboardStateService($location, $http, $window, APP_STATE) {
+    function DashboardStateService($location, $http, APP_STATE) {
         var self = this;
 
         /* Public interface */
-        self.goToHome = goToLogin;
+        self.goToLogin = goToLogin;
         self.goToHome = goToHome;
         self.goToSurveyForms = goToSurveyForms;
         self.goToEditor = goToEditor;
@@ -51,7 +50,7 @@
         function logout() {
             $http.post(APP_STATE.LOGOUT).then(function(response) {
                 if (response.data.data) {
-                    $window.location.href = window.location.origin + '/otus-studio/';
+                    goToLogin();
                 }
             });
         }

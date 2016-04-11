@@ -2,6 +2,8 @@
 
     var gulp = require('gulp');
     var browserSync = require('browser-sync').create();
+    var browserSyncSpa = require('browser-sync-middleware-spa');
+    var baseDir = __dirname + '/app/index.html';
 
     /* Task registry */
     gulp.task('default', defaultTask);
@@ -13,9 +15,12 @@
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: {
-                baseDir: "../"
+                baseDir: "../",
+                middleware: [
+                    browserSyncSpa(/^[^\.]+$/, baseDir),
+                ]
             },
-            startPath: "/otus-studio"
+            startPath: 'otus-studio/login'
         });
 
         gulp.watch([

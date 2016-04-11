@@ -12,9 +12,6 @@
             'otusjs',
             'ui.components',
             'utils'
-        ])
-        .run(function(DashboardStateService, $browser) {
-            DashboardStateService.goToHome();
-        });
+        ]);
 
 }());

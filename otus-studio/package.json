@@ -1,50 +1,51 @@
 {
-    "name": "otus-studio",
-    "version": "0.0.1",
-    "description": "The tool to build survey forms to be used in Otus Studio.",
-    "keywords": [
-        "otus",
-        "otus-studio",
-        "survey-form",
-        "application",
-        "app"
-    ],
-    "url": "https://github.com/ccem-dev/studio/issues",
-    "email": "ccem.projects@gmail.com",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ccem-dev/studio"
-    },
-    "scripts": {
-        "test": "karma start karma.conf.js",
-        "gulp": "gulp",
-        "start": "npm run gulp browser-sync",
-        "karma": "karma"
-    },
-    "dependencies": {
-        "angular": "^1.4.7",
-        "angular-animate": "^1.4.7",
-        "angular-aria": "^1.4.7",
-        "angular-material-icons": "0.6.0",
-        "angular-messages": "^1.5.0",
-        "js-base64": "^2.1.9",
-        "node-uuid": "^1.4.7"
-    },
-    "devDependencies": {
-        "browser-sync": "2.x",
-        "angular-mocks": "^1.4.9",
-        "concurrently": "^1.0.0",
-        "gulp": "^3.9.1",
-        "gulp-rename": "^1.2.2",
-        "gulp-uglify": "^1.5.1",
-        "gulp-useref": "^3.0.4",
-        "jasmine-core": "^2.4.1",
-        "karma": "^0.13.19",
-        "karma-chrome-launcher": "^0.2.2",
-        "karma-htmlfile-reporter": "^0.2.2",
-        "karma-jasmine": "^0.3.6",
-        "karma-phantomjs-launcher": "^0.2.3",
-        "phantomjs": ">=1.9",
-        "phantomjs-prebuilt": "^2.1.2"
-    }
+  "name": "otus-studio",
+  "version": "0.0.1",
+  "description": "The tool to build survey forms to be used in Otus Studio.",
+  "keywords": [
+    "otus",
+    "otus-studio",
+    "survey-form",
+    "application",
+    "app"
+  ],
+  "url": "https://github.com/ccem-dev/studio/issues",
+  "email": "ccem.projects@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccem-dev/studio"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "gulp": "gulp",
+    "start": "npm run gulp browser-sync",
+    "karma": "karma"
+  },
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-aria": "^1.4.7",
+    "angular-material-icons": "0.6.0",
+    "angular-messages": "^1.5.0",
+    "js-base64": "^2.1.9",
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "browser-sync": "2.x",
+    "browser-sync-middleware-spa": "^1.0.0",
+    "concurrently": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1",
+    "gulp-useref": "^3.0.4",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-htmlfile-reporter": "^0.2.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": ">=1.9",
+    "phantomjs-prebuilt": "^2.1.2"
+  }
 }
