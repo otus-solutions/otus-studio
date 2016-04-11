@@ -1,27 +1,24 @@
 describe('SurveyMetaInfoFactory', function() {
-    var Mock = {},
-        factory;
+    var Mock = {};
+    var surveyMetaInfo;
 
-    /* @BeforeScenario */
     beforeEach(function() {
-        module('otusjs.model');
-        module('otusjs.modelBuilder');
+        module('otusjs');
+
+        mockDate();
 
         inject(function(_$injector_) {
-            /* @InjectMocks */
             factory = _$injector_.get('SurveyMetaInfoFactory', {
                 OIDHashGenerator: mockOIDHashGenerator(_$injector_)
             });
         });
+
+        surveyMetaInfo = factory.create();
     });
 
     describe('Dependencies uses', function() {
 
         it('Date.now() should be called in create() method', function() {
-            spyOn(Date, 'now');
-
-            factory.create();
-
             expect(Date.now).toHaveBeenCalled();
         });
 
@@ -30,23 +27,14 @@ describe('SurveyMetaInfoFactory', function() {
     describe('SurveyMetaInfoFactory.create()', function() {
 
         it('should return an SurveyMetaInfo with creation date time equal to now date', function() {
-            var now = new Date(Date.now());
-            jasmine.clock().mockDate(now);
-
-            var surveyMetaInfo = factory.create();
-
-            expect(surveyMetaInfo.creationDatetime).toEqual(now);
+            expect(surveyMetaInfo.creationDatetime).toEqual(Mock.now);
         });
 
         it('should return an SurveyMetaInfo that extends from StudioObject', function() {
-            var surveyMetaInfo = factory.create();
-
-            expect(surveyMetaInfo.extends).toBe('StudioObject');
+            expect(surveyMetaInfo.extents).toBe('StudioObject');
         });
 
         it('should return an SurveyMetaInfo object type', function() {
-            var surveyMetaInfo = factory.create();
-
             expect(surveyMetaInfo.objectType).toBe('SurveyMetaInfo');
         });
 
@@ -61,6 +49,11 @@ describe('SurveyMetaInfoFactory', function() {
         };
 
         return Mock.OIDHashGenerator;
+    }
+
+    function mockDate() {
+        Mock.now = Date.now();
+        spyOn(Date, 'now').and.returnValue(Mock.now);
     }
 
 });

@@ -6,6 +6,8 @@ describe('Survey', function() {
         module('otusjs');
         module('utils');
 
+        mockDatetime();
+        mockIdentityData();
 
         inject(function(_$injector_) {
             mockNavigation(_$injector_);
@@ -16,7 +18,9 @@ describe('Survey', function() {
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_)
             });
 
-            survey = factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+            mockJson();
+
+            survey = factory.create(Mock.NAME, Mock.ACRONYM);
         });
     });
 
@@ -70,19 +74,18 @@ describe('Survey', function() {
 
     });
 
-    describe('SurveyFactory.toJson()', function() {
+    describe('toJson method', function() {
 
-        it('should return a json complete survey state', function() {
-            var json = survey.toJson();
-
-            console.log(json);
-            // expect(survey.listNavigations().length).toBe(0);
+        it('should return a well formatted json based on Survey', function() {
+            expect(survey.toJson()).toEqual(Mock.json);
         });
 
     });
 
     function mockSurveyIdentityFactory($injector) {
-        return $injector.get('SurveyIdentityFactory');
+        Mock.SurveyIdentityFactory = $injector.get('SurveyIdentityFactory');
+        Mock.identity = Mock.SurveyIdentityFactory.create();
+        return Mock.SurveyIdentityFactory;
     }
 
     function mockSurveyMetaInfoFactory($injector) {
@@ -91,13 +94,50 @@ describe('Survey', function() {
 
     function mockSurveyUUIDGenerator($injector) {
         Mock.SurveyUUIDGenerator = $injector.get('SurveyUUIDGenerator');
+        spyOn(Mock.SurveyUUIDGenerator, 'generateSurveyUUID').and.returnValue('0');
         return Mock.SurveyUUIDGenerator;
+    }
+
+    function mockIdentityData() {
+        Mock.NAME = 'NAME';
+        Mock.ACRONYM = 'ACRONYM';
+        Mock.VERSION = 'VERSION';
     }
 
     function mockNavigation($injector) {
         Mock.ORIGIN = 'ORIGIN';
-
         Mock.navigation = $injector.get('NavigationFactory').create(Mock.ORIGIN);
+    }
+
+    function mockDatetime() {
+        Mock.now = Date.now();
+        spyOn(Date, 'now').and.returnValue(Mock.now);
+    }
+
+    function mockJson() {
+        Mock.json = JSON.stringify({
+            extents: 'StudioObject',
+            objectType: 'Survey',
+            oid: '0',
+            identity: {
+                extents: 'StudioObject',
+                objectType: 'SurveyIdentity',
+                name: Mock.NAME,
+                acronym: Mock.ACRONYM,
+                // version: Mock.VERSION,
+                recommendedTo: '',
+                description: '',
+                keywords: []
+            },
+            metainfo: {
+                extents: 'StudioObject',
+                objectType: 'SurveyMetaInfo',
+                creationDatetime: Mock.now,
+                otusStudioVersion: '${project.version}'
+            },
+            questionContainer: {},
+            navigationList: []
+        });
     }
 
 });

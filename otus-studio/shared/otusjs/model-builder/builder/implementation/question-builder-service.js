@@ -50,7 +50,7 @@
 
         function addQuestion(work) {
             var newQuestion = QuestionFactory.create(work.model, work.questionId);
-            work.survey.getQuestionContainer()[work.questionId] = newQuestion;
+            work.survey.questionContainer[work.questionId] = newQuestion;
             work.survey.addNavigation(NavigationFactory.create(work.questionId));
 
             return newQuestion;
@@ -58,16 +58,16 @@
 
         function removeQuestion(work) {
             var selectedQuestion = work.target.split('.')[2],
-                questionToRemove = work.survey.getQuestionContainer()[selectedQuestion];
+                questionToRemove = work.survey.questionContainer[selectedQuestion];
 
-            delete work.survey.getQuestionContainer()[selectedQuestion];
+            delete work.survey.questionContainer[selectedQuestion];
             return questionToRemove;
         }
 
         function updateQuestion(work) {
             if (work.id == 'survey-questions-move-back-question') {
                 var targetQuestion = work.target;
-                var indexToMove = work.survey.getQuestionContainer()[getQuestionOID(targetQuestion)];
+                var indexToMove = work.survey.questionContainer[getQuestionOID(targetQuestion)];
             } else if (work.id == 'survey-questions-move-forward-question') {
 
             }

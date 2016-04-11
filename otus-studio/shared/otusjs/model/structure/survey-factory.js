@@ -8,11 +8,10 @@
     SurveyFactory.$inject = [
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
-        'SurveyUUIDGenerator',
-        'JsonClonerService'
+        'SurveyUUIDGenerator'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, JsonClonerService) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator) {
         var self = this;
 
         /* Public interdace */
@@ -22,32 +21,24 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), JsonClonerService);
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, JsonClonerService) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid) {
 
         var self = this;
-        var extents;
-        var objectType;
-        var oid;
-        var identity;
-        var metainfo;
-        var questionContainer;
-        var navigationList = [];
 
-        init();
+        self.extents = 'StudioObject';
+        self.objectType = 'Survey';
+        self.oid = uuid;
+        self.identity = surveyIdentity;
+        self.metainfo = surveyMetainfo;
+        self.questionContainer = {};
+        self.navigationList = [];
 
-        /*Public interface*/
-        self.getExtents = getExtents;
-        self.getObjectType = getObjectType;
-        self.getOID = getOID;
-        self.getIdentity = getIdentity;
-        self.getMetaInfo = getMetaInfo;
-        self.getQuestionContainer = getQuestionContainer;
         self.questionsCount = questionsCount;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
@@ -55,42 +46,8 @@
         self.listNavigation = listNavigation;
         self.toJson = toJson;
 
-        function init() {
-            extents = 'StudioObject';
-            objectType = 'Survey';
-            oid = uuid;
-            identity = surveyIdentity;
-            metainfo = surveyMetainfo;
-            questionContainer = {};
-            navigationList = [];
-        }
-
-        function getExtents() {
-            return extents;
-        }
-
-        function getObjectType() {
-            return objectType;
-        }
-
-        function getOID() {
-            return oid;
-        }
-
-        function getIdentity() {
-            return identity;
-        }
-
-        function getMetaInfo() {
-            return metainfo;
-        }
-
-        function getQuestionContainer() {
-            return questionContainer;
-        }
-
         function questionsCount() {
-            var propertyList = Object.keys(questionContainer).filter(function filterOnlyFields(property) {
+            var propertyList = Object.keys(self.questionContainer).filter(function filterOnlyFields(property) {
                 return ((typeof property) != 'function');
             });
             return propertyList.length;
@@ -99,7 +56,7 @@
         function listNavigations() {
             var clone = [];
 
-            navigationList.forEach(function(navigation) {
+            self.navigationList.forEach(function(navigation) {
                 clone.push(navigation);
             });
 
@@ -111,19 +68,19 @@
         }
 
         function addNavigation(navigation) {
-            navigation.setIndex(navigationList.length);
-            navigationList.push(navigation);
+            navigation.setIndex(self.navigationList.length);
+            self.navigationList.push(navigation);
         }
 
         function removeNavigation(origin) {
             var navigationToRemove = fetchByOrigin(origin);
 
-            var indexToRemove = navigationList.indexOf(navigationToRemove);
-            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
+            var indexToRemove = self.navigationList.indexOf(navigationToRemove);
+            if (indexToRemove > -1) self.navigationList.splice(indexToRemove, 1);
         }
 
         function fetchByOrigin(origin) {
-            var filteredNavigation = navigationList.filter(function(navigation) {
+            var filteredNavigation = self.navigationList.filter(function(navigation) {
                 return navigation.getOrigin() === origin;
             });
 
@@ -131,8 +88,23 @@
         }
 
         function toJson() {
-            // console.log(self);
-            return JsonClonerService.clone(self);
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.oid = self.oid;
+            json.identity = self.identity.toJson();
+            json.metainfo = self.metainfo.toJson();
+            json.questionContainer = {};
+            for (var question in self.questionContainer) {
+                json.questionContainer[question] = self.questionContainer[question].toJson();
+            }
+            json.navigationList = [];
+            self.navigationList.forEach(function(navigation) {
+                json.navigationList.push(navigation.toJson());
+            });
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

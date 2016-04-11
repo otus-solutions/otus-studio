@@ -20,27 +20,31 @@ describe('SurveyFactory', function() {
     describe('SurveyFactory.create()', function() {
 
         it('should return a Survey that extends from StudioObject', function() {
-            expect(survey.getExtents()).toBe('StudioObject');
+            expect(survey.extents).toBe('StudioObject');
         });
 
         it('should return a Survey object type', function() {
-            expect(survey.getObjectType()).toBe('Survey');
+            expect(survey.objectType).toBe('Survey');
         });
 
         it('should return a Survey with a SurveyMetaInfo object type', function() {
-            expect(survey.getMetaInfo().objectType).toBe('SurveyMetaInfo');
+            expect(survey.metainfo.objectType).toBe('SurveyMetaInfo');
         });
 
         it('should return a Survey with an OID', function() {
-            expect(survey.getOID()).toBeDefined();
+            expect(survey.oid).toBeDefined();
         });
 
         it('should return a Survey with a SurveyIdentity object type', function() {
-            expect(survey.getIdentity().objectType).toBe('SurveyIdentity');
+            expect(survey.identity.objectType).toBe('SurveyIdentity');
         });
 
         it('should return a Survey with a literal object in question property', function() {
-            expect(survey.getQuestionContainer()).toEqual({});
+            expect(survey.questionContainer instanceof Object).toEqual(true);
+        });
+
+        it('should return a Survey with a navigation list', function() {
+            expect(Array.isArray(survey.navigationList)).toEqual(true);
         });
 
         it('should call SurveyUUIDGenerator.generateSurveyUUID()', function() {

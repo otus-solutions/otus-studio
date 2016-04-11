@@ -46,7 +46,7 @@
 
             if (editingEvent.source.model) {
                 work.model = editingEvent.source.model;
-                work.questionId = work.survey.getIdentity().acronym + WorkspaceService.getQuestionId();
+                work.questionId = work.survey.identity.acronym + WorkspaceService.getQuestionId();
             }
 
             return work;

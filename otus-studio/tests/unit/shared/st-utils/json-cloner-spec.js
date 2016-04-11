@@ -36,31 +36,58 @@ describe('JsonCloner', function() {
             expect(jsonClone.search(6846)).not.toBe(-1);
         });
 
-        it('should return a json with integerProperty value from Mock.original', function() {
+        xit('should return a json with integerProperty value from Mock.original', function() {
             expect(jsonClone).toBe(Mock.originalJson);
-        });
-
-        fit('̣?', function() {
-            console.log('clone ' + service.clone(Mock.original));
-            console.log('original ' + Mock.originalJson);
         });
 
     });
 
     function mockObjectToClone() {
         Mock.original = new Obj();
-        Mock.originalJson = JSON.stringify(Mock.original);
+        Mock.originalJson = JSON.stringify({
+            stringProperty: 'stringProperty value',
+            integerProperty: 6846,
+            arrayProperty: [{
+                name: 'name value',
+                tSub: {
+                    subName: 'tsub name value'
+                }
+            }, {
+                name: 'name value',
+                tSub: {
+                    subName: 'tsub name value'
+                }
+            }, {
+                name: 'name value',
+                tSub: {
+                    subName: 'tsub name value'
+                }
+            }, {
+                name: 'name value',
+                tSub: {
+                    subName: 'tsub name value'
+                }
+            }],
+            subObj: {
+                name: 'name value',
+                tSub: {
+                    subName: 'tsub name value'
+                }
+            }
+        });
     }
 
     function Obj() {
         var self = this;
         var stringProperty = 'stringProperty value';
         var integerProperty = 6846;
+        var arrayProperty = [new SubObj(), new SubObj(), new SubObj(), new SubObj()];
         var subObj = new SubObj();
 
         self.getStringProperty = getStringProperty;
         self.getIntegerProperty = getIntegerProperty;
         self.getSubObj = getSubObj;
+        self.getArrayProperty = getArrayProperty;
 
         function getStringProperty() {
             return stringProperty;
@@ -72,6 +99,10 @@ describe('JsonCloner', function() {
 
         function getSubObj() {
             return subObj;
+        }
+
+        function getArrayProperty() {
+            return arrayProperty;
         }
     }
 

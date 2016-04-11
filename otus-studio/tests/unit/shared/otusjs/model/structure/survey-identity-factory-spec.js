@@ -1,4 +1,4 @@
-describe('SurveyIdentity suite:', function() {
+describe('SurveyIdentity', function() {
     var Mock = {},
         factory;
 
@@ -6,9 +6,8 @@ describe('SurveyIdentity suite:', function() {
         ACRONYM = 'ACRONYM',
         VERSION = 'A';
 
-    /* @BeforeScenario */
     beforeEach(function() {
-        module('otusjs.model');
+        module('otusjs');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('SurveyIdentityFactory');
@@ -20,14 +19,11 @@ describe('SurveyIdentity suite:', function() {
     describe('SurveyIdentityFactory.create()', function() {
 
         it('should return an SurveyIdentity that extends from StudioObject', function() {
-            expect(surveyIdentity.extends).toBe('StudioObject');
+            expect(surveyIdentity.extents).toBe('StudioObject');
         });
 
         it('should return an SurveyIdentity object type', function() {
             expect(surveyIdentity.objectType).toBe('SurveyIdentity');
-        });
-
-        xit('should return an Unit with oid', function() {
         });
 
         it('should return an SurveyIdentity with name', function() {
@@ -47,7 +43,7 @@ describe('SurveyIdentity suite:', function() {
         });
 
         it('should return an SurveyIdentity an empty array of keywords', function() {
-            expect(surveyIdentity.keywords.length).toBe(0);
+            expect(Array.isArray(surveyIdentity.keywords)).toBe(true);
         });
 
     });

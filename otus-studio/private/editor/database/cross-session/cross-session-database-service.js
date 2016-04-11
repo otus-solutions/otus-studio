@@ -19,12 +19,13 @@
         function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore('survey_template', function(store) {
                 var entry = {
-                    'template_oid': template.getOID(),
+                    'template_oid': template.oid,
                     'contributor': session.owner,
                     template: InsertHelperService.cloneObject(template)
                 };
 
                 store.upsert(entry).then(function(e) {
+                    console.log(e);
                 });
             });
         }
