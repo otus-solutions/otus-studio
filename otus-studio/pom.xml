@@ -33,6 +33,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <targetPath>node_modules</targetPath>
                         </resource>
                         <resource>
+                            <directory>${project.basedir}/WEB-INF</directory>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
+                        <resource>
                             <directory>${project.basedir}/app</directory>
                             <targetPath>app</targetPath>
                         </resource>

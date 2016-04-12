@@ -86,13 +86,23 @@
                     },
                     'system-content@editor': {
                         templateUrl: 'app/editor/ui/main/main-container.html',
-                        controller: 'MainContainerController as mainContainer'
+                        controller: 'MainContainerController as mainContainer',
+                        resolve: {
+                            executor: function instantiateInDevEnvironment(SurveyEditorService) {
+                                /**
+                                 *
+                                 * DO NOT REMOVE this comment. So use it at your own risk.
+                                 *
+                                 */
+                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                            }
+                        }
                     }
                 }
             });
 
         /* Default state (route) */
-        //$urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/login');
         $locationProvider.html5Mode(true);
     }
 
