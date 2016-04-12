@@ -9,8 +9,8 @@
 
     function LoginController($scope, $http, $window, DashboardStateService) {
 
-        var HTTP_POST_URL = window.location.origin + '/otus-domain-rest/session/rest/authentication/login';
-        var HTTP_GET_IS_LOGGED = window.location.origin + '/otus-domain-rest/session/rest/authentication/isLogged';
+        var HTTP_POST_URL = 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/login';
+        var HTTP_GET_IS_LOGGED = 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/isLogged';
 
         $scope.authenticate = function(user) {
             $scope.invalidLogin = false;

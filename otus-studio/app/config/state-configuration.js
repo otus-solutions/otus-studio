@@ -8,7 +8,7 @@
             'SURVEY_FORMS': 'survey-forms',
             'EDITOR': 'editor',
             'LOGIN': 'login',
-            'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
+            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
