@@ -2,8 +2,7 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
 module.exports = function(config) {
-    var APP_PRIVATE_ROOT_PATH = 'app/';
-    var APP_PUBLIC_ROOT_PATH = 'public/';
+    var APP_ROOT_PATH = 'app/';
     var DEPENDENCIES_ROOT_PATH = 'app/shared/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
@@ -18,6 +17,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             /* External dependencies */
+            NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
@@ -32,10 +32,9 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
-            DEPENDENCIES_ROOT_PATH + 'jquery/jquery-2.2.0.min.js',
-            DEPENDENCIES_ROOT_PATH + 'dracula-js/raphael-min.js',
-            DEPENDENCIES_ROOT_PATH + 'dracula-js/dracula_graffle.js',
-            DEPENDENCIES_ROOT_PATH + 'dracula-js/dracula_graph.js',
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/raphael-min.js',
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graffle.js',
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',
             /* Otus platform */
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
@@ -44,10 +43,10 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */
-            APP_PRIVATE_ROOT_PATH + 'app.js',
-            APP_PRIVATE_ROOT_PATH + 'config/**/*-configuration.js',
-            APP_PRIVATE_ROOT_PATH + '**/*-module.js',
-            APP_PRIVATE_ROOT_PATH + '**/*.js', {
+            APP_ROOT_PATH + 'app.js',
+            APP_ROOT_PATH + 'config/**/*-configuration.js',
+            APP_ROOT_PATH + '**/*-module.js',
+            APP_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',
                 included: true
             }
