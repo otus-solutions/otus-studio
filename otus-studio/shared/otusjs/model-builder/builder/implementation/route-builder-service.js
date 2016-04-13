@@ -40,14 +40,26 @@
             if (work.type.isPreAddData()) {
                 route = addRoute(work);
                 currentRouteIndex = route.getIndex();
+
+                if (isDataProcessComplete()) {
+                    nameWasProccessed = false;
+                    destinationWasProccessed = false;
+                    route.setIndex(currentRouteIndex);
+                    notifyObservers(route, work.type);
+                }
             } else if (work.type.isPreUpdateData()) {
                 route = updateRoute(work);
-            }
 
-            if (isDataProcessComplete()) {
-                nameWasProccessed = false;
-                destinationWasProccessed = false;
-                route.setIndex(currentRouteIndex);
+                if (isDataProcessComplete()) {
+                    nameWasProccessed = false;
+                    destinationWasProccessed = false;
+                    route.setIndex(currentRouteIndex);
+                    notifyObservers(route, work.type);
+                }
+            } else if (work.type.isUpdateData()) {
+                console.log('update data');
+            } else if (work.type.isRemoveData()) {
+                route = removeRoute(work);
                 notifyObservers(route, work.type);
             }
         }
@@ -75,6 +87,14 @@
             }
 
             return routeToUpdate;
+        }
+
+        function removeRoute(work) {
+            var navigation = work.target.match(/\d/g)[0];
+            var routeName = work.target.split('.')[3];
+            var routeToRemove = work.survey.navigationList[navigation].removeRoute(routeName);
+            work.type.dataModel = 'Route';
+            return routeToRemove;
         }
 
         function notifyObservers(route, work) {

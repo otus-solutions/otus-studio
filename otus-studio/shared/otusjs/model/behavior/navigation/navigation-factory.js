@@ -80,13 +80,14 @@
             routes.push(route);
         }
 
-        function removeRoute(to) {
+        function removeRoute(name) {
             var routeToRemove = routes.filter(function(route) {
-                return route.to === to;
+                return route.getName() === name;
             });
 
             var indexToRemove = routes.indexOf(routeToRemove[0]);
             if (indexToRemove > -1) routes.splice(indexToRemove, 1);
+            return routeToRemove[0];
         }
 
     }

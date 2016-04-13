@@ -23,6 +23,7 @@
         /* Public interface */
         self.init = init;
         self.loadRoute = loadRoute;
+        self.unloadRoute = unloadRoute;
 
         function init(scopeReference, navigationEditorReference) {
             scope = scopeReference;
@@ -35,6 +36,17 @@
             var routeWidget = WidgetService.getRouteWidget(currentNavigation, route);
             scope.routes.push(routeWidget);
             RouteCreatorContentService.reload();
+        }
+
+        function unloadRoute(route) {
+            var indexToRemove;
+            scope.routes.forEach(function(routeWidget, index) {
+                if (routeWidget.index === route.getIndex()) {
+                    indexToRemove = index;
+                    return;
+                }
+            });
+            scope.routes.splice(indexToRemove, 1);
         }
 
         function getCurrentNavigation() {

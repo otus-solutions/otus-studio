@@ -22,9 +22,10 @@
                 'ADD_DATA': [
                     SurveyPageContentService.loadQuestion
                 ],
-                'REMOVE_DATA': [
-                    SurveyPageContentService.unloadQuestion
-                ],
+                'REMOVE_DATA': {
+                    'Question': [SurveyPageContentService.unloadQuestion],
+                    'Route': [NavigationEditorContentService.unloadRoute]
+                },
                 'UPDATE_DATA': [
                     SurveyPageContentService.updateQuestion
                 ],

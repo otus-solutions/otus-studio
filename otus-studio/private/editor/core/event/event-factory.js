@@ -37,8 +37,8 @@
         self.create = create;
 
         function create(editingSource, newState, listener) {
-            var eventType = EventTypeFactory.create(editingSource.type, listener),
-                eventPrototype = new Event(editingSource, newState, eventType);
+            var eventType = EventTypeFactory.create(editingSource.type, listener);
+            var eventPrototype = new Event(editingSource, newState, eventType);
 
             return factories[eventType.type].create(eventPrototype);
         }

@@ -61,6 +61,7 @@
                 questionToRemove = work.survey.questionContainer[selectedQuestion];
 
             delete work.survey.questionContainer[selectedQuestion];
+            work.type.dataModel = 'Question';
             return questionToRemove;
         }
 

@@ -21,7 +21,7 @@
                 var entry = {
                     'template_oid': template.oid,
                     'contributor': session.owner,
-                    template: InsertHelperService.cloneObject(template)
+                    template: template.toJson()
                 };
 
                 store.upsert(entry).then(function(e) {
