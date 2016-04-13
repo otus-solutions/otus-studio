@@ -2,14 +2,14 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
 module.exports = function(config) {
-    var APP_PRIVATE_ROOT_PATH = 'private/';
+    var APP_PRIVATE_ROOT_PATH = 'app/';
     var APP_PUBLIC_ROOT_PATH = 'public/';
-    var DEPENDENCIES_ROOT_PATH = 'shared/';
+    var DEPENDENCIES_ROOT_PATH = 'app/shared/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: './',
+        basePath: '',
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -21,15 +21,15 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
-            DEPENDENCIES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
-            DEPENDENCIES_ROOT_PATH + 'angular-material/angular-material.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
+            NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-            DEPENDENCIES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
-            DEPENDENCIES_ROOT_PATH + 'lokijs/lokijs.min.js',
-            DEPENDENCIES_ROOT_PATH + 'lokijs/loki-angular.js',
-            DEPENDENCIES_ROOT_PATH + 'moment/moment.js',
+            NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
+            NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
+            NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
+            NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
             DEPENDENCIES_ROOT_PATH + 'jquery/jquery-2.2.0.min.js',
@@ -44,8 +44,8 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */
-            'app.js',
-            'config/**/*-configuration.js',
+            APP_PRIVATE_ROOT_PATH + 'app.js',
+            APP_PRIVATE_ROOT_PATH + 'config/**/*-configuration.js',
             APP_PRIVATE_ROOT_PATH + '**/*-module.js',
             APP_PRIVATE_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',

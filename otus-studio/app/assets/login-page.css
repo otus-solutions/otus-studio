@@ -1,0 +1,60 @@
+#login-page #center {
+	width: 55%;
+	top: 60%;
+	margin: 0 auto;
+	background-color: white;
+	position: relative;
+	border: 2px solid #E6E6E6;
+}
+
+#login-page #divtop{
+	background-color: #448AFF;
+	height:35%;
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+}
+
+#login-page .nameStudio{
+	text-align: left;
+	color: white;
+	top: 58%;
+    position: relative;
+    margin: 0 auto;
+}
+
+#login-page .nameStudio span {
+	margin-left: 23%;
+}
+
+#login-page h1 {
+	margin: 0 auto;
+	width: 110px;
+	/* height: 150px; */
+	display: block;
+}
+
+#login-page .logo {
+    margin: 0 auto;
+    height: 186px;
+    display: block;
+    z-index: 3;
+    position: absolute;
+    bottom: 67%;
+    left: 38%;
+}
+
+#login-page #logo_test {
+	content: url(../assets/img/ImageProjectStudio.png);
+}
+
+#login-page #content {
+	margin-top: 11%;
+	padding: 10px;
+}
+
+#login-page .md-block {
+	width: 60%;
+	left: 12%;
+	right: 12%
+}

@@ -8,7 +8,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>br.org.otus.studio</groupId>
         <artifactId>otus-studio-root</artifactId>
-        <version>1.19.31-SNAPSHOT</version>
+        <version>1.19.32-SNAPSHOT</version>
         <relativePath>../otus-studio-root/pom.xml</relativePath>
     </parent>
 
@@ -26,11 +26,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <directory>${project.basedir}</directory>
                             <includes>
                                 <include>index.html</include>
-                                <include>app.js</include>
-                                <include>gulpfile.js</include>
-                                <include>karma.conf.js</include>
-                                <include>package.json</include>
-                                <include>print.css</include>
                             </includes>
                         </resource>
                         <resource>
@@ -38,28 +33,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <targetPath>node_modules</targetPath>
                         </resource>
                         <resource>
-                            <directory>${project.basedir}/assets</directory>
-                            <targetPath>assets</targetPath>
+                            <directory>${project.basedir}/WEB-INF</directory>
+                            <targetPath>WEB-INF</targetPath>
                         </resource>
                         <resource>
-                            <directory>${project.basedir}/config</directory>
-                            <targetPath>config</targetPath>
-                        </resource>
-                        <resource>
-                            <directory>${project.basedir}/private</directory>
-                            <targetPath>private</targetPath>
-                        </resource>
-                        <resource>
-                            <directory>${project.basedir}/public</directory>
-                            <targetPath>public</targetPath>
-                        </resource>
-                        <resource>
-                            <directory>${project.basedir}/shared</directory>
-                            <targetPath>shared</targetPath>
-                        </resource>
-                        <resource>
-                            <directory>${project.basedir}/tests</directory>
-                            <targetPath>tests</targetPath>
+                            <directory>${project.basedir}/app</directory>
+                            <targetPath>app</targetPath>
                         </resource>
                     </webResources>
                     <archive>
