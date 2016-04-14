@@ -18,58 +18,23 @@
     }
 
     function Navigation(navigationOrigin) {
-
         var self = this;
 
-        var extents;
-        var objectType;
-        var index;
-        var origin;
-        var routes;
+        self.extents = 'StudioObject';
+        self.objectType = 'Navigation';
+        self.index = null;
+        self.origin = navigationOrigin;
+        self.routes = [];
 
-        init();
-
-        /* Public interface */
-        self.getExtents = getExtents;
-        self.getObjectType = getObjectType;
-        self.getIndex = getIndex;
-        self.setIndex = setIndex;
-        self.getOrigin = getOrigin;
         self.listRoutes = listRoutes;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
-
-        function init() {
-            extents = 'StudioObject';
-            objectType = 'Navigation';
-            origin = navigationOrigin;
-            routes = [];
-        }
-
-        function getExtents() {
-            return extents;
-        }
-
-        function getObjectType() {
-            return objectType;
-        }
-
-        function getIndex() {
-            return index;
-        }
-
-        function setIndex(value) {
-            index = value;
-        }
-
-        function getOrigin() {
-            return origin;
-        }
+        self.toJson = toJson;
 
         function listRoutes() {
             var clone = [];
 
-            routes.forEach(function(route) {
+            self.routes.forEach(function(route) {
                 clone.push(route);
             });
 
@@ -77,17 +42,32 @@
         }
 
         function addRoute(route) {
-            routes.push(route);
+            self.routes.push(route);
         }
 
         function removeRoute(name) {
-            var routeToRemove = routes.filter(function(route) {
-                return route.getName() === name;
+            var routeToRemove = self.routes.filter(function(route) {
+                return route.name === name;
             });
 
-            var indexToRemove = routes.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) routes.splice(indexToRemove, 1);
+            var indexToRemove = self.routes.indexOf(routeToRemove[0]);
+            if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
             return routeToRemove[0];
+        }
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.index = self.index;
+            json.origin = self.origin;
+            json.routes = [];
+            self.routes.forEach(function(route) {
+                json.routes.push(route.toJson());
+            });
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
 
     }

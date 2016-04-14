@@ -20,15 +20,15 @@ describe('NavigationFactory', function() {
         });
 
         it('should return an object that extends StudioObject', function() {
-            expect(navigation.getExtents()).toEqual(Mock.STUDIO_OBJECT);
+            expect(navigation.extents).toEqual(Mock.STUDIO_OBJECT);
         });
 
         it('should return an object of Navigation type', function() {
-            expect(navigation.getObjectType()).toEqual(Mock.NAVIGATION);
+            expect(navigation.objectType).toEqual(Mock.NAVIGATION);
         });
 
         it('should return an object with a valid origin defined', function() {
-            expect(navigation.getOrigin()).toBeDefined();
+            expect(navigation.origin).toBeDefined();
         });
 
         it('should return an object with an array of destinations', function() {

@@ -71,10 +71,10 @@ describe('QuestionFactory', function() {
             expect(question.extends).toBe('QuestionFactory');
         });
 
-        it('returned object should have a not null oid', function() {
+        it('returned object should have a not null templateID', function() {
             var question = factory.create('calendar-question', OID);
 
-            expect(question.oid).toBe(OID);
+            expect(question.templateID).toBe(OID);
         });
 
         it('returned object should have a label object for ptBR locale', function() {

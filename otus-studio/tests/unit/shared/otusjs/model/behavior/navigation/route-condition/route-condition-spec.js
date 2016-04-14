@@ -1,4 +1,4 @@
-describe('Rule', function() {
+describe('RouteCondition', function() {
     var Mock = {};
     var condition;
 
@@ -12,6 +12,8 @@ describe('Rule', function() {
 
             factory = _$injector_.get('RouteConditionFactory');
         });
+
+        mockJson();
 
         condition = factory.create(Mock.CONDITION_NAME);
     });
@@ -58,23 +60,13 @@ describe('Rule', function() {
     });
 
     describe('toJson method', function() {
-        var json;
 
         beforeEach(function() {
             condition.addRule(Mock.ruleA);
-            condition.addRule(Mock.ruleB);
-            json = condition.toJson();
         });
 
-        xit('result a json version with name attribute', function() {
-            expect(json.name).toBeDefined();
-            expect(json.name).toEqual(Mock.CONDITION_NAME);
-        });
-
-        xit('result a json version with rules attribute', function() {
-            expect(json.rules).toBeDefined();
-            expect(json.rules[0]).toEqual(Mock.ruleA.toJson());
-            expect(json.rules[1]).toEqual(Mock.ruleB.toJson());
+        it('should return a well formatted json based on RouteCondition', function() {
+            expect(condition.toJson()).toEqual(Mock.json);
         });
 
     });
@@ -94,6 +86,15 @@ describe('Rule', function() {
 
         Mock.ruleB = ruleFactory.create(Mock.QUESTION_2ID);
         Mock.ruleB.equal([10, 20]);
+    }
+
+    function mockJson() {
+        Mock.json = JSON.stringify({
+            extents: 'StudioObject',
+            objectType: 'RouteCondition',
+            name: Mock.CONDITION_NAME,
+            rules: [Mock.ruleA.toJson()]
+        }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
 });

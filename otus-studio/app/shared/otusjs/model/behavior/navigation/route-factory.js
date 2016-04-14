@@ -19,87 +19,28 @@
     }
 
     function Route(routeOrigin, routeDestination, routeIndex) {
-
         var self = this;
 
-        var extents;
-        var objectType;
-        var name;
-        var origin;
-        var destination;
-        var index;
-        var conditionSet;
-
-        init();
+        self.extents = 'StudioObject';
+        self.objectType = 'Route';
+        self.name = routeOrigin + '-' + routeDestination + '-' + routeIndex;
+        self.origin = routeOrigin;
+        self.destination = routeDestination;
+        self.index = routeIndex;
+        self.conditionSet = {};
 
         /* Public interface */
-        self.getExtents = getExtents;
-        self.getObjectType = getObjectType;
-        self.getName = getName;
-        self.setName = setName;
-        self.getIndex = getIndex;
-        self.setIndex = setIndex;
-        self.getOrigin = getOrigin;
-        self.getDestination = getDestination;
-        self.setDestination = setDestination;
         self.getConditionSet = getConditionSet;
         self.addCondition = addCondition;
         self.removeCondition = removeCondition;
         self.getConditionSetSize = getConditionSetSize;
         self.toJson = toJson;
 
-        function init() {
-            extents = 'StudioObject';
-            objectType = 'Route';
-            origin = routeOrigin;
-            destination = routeDestination;
-            index = routeIndex;
-            conditionSet = {};
-
-            setName(getOrigin() + '-' + getDestination());
-        }
-
-        function getExtents() {
-            return extents;
-        }
-
-        function getObjectType() {
-            return objectType;
-        }
-
-        function getName() {
-            return name;
-        }
-
-        function setName(value) {
-            name = value;
-        }
-
-        function getIndex() {
-            return index;
-        }
-
-        function setIndex(value) {
-            index = value;
-        }
-
-        function getOrigin() {
-            return origin;
-        }
-
-        function getDestination() {
-            return destination;
-        }
-
-        function setDestination(value) {
-            destination = value;
-        }
-
         function getConditionSet() {
             var clone = {};
 
-            for (var property in conditionSet) {
-                clone[property] = conditionSet[property];
+            for (var property in self.conditionSet) {
+                clone[property] = self.conditionSet[property];
             }
 
             return clone;
@@ -107,43 +48,46 @@
 
 
         function addCondition(condition) {
-            conditionSet = conditionSet || {};
-            conditionSet[condition.getName()] = condition;
+            self.conditionSet = self.conditionSet || {};
+            self.conditionSet[condition.name] = condition;
         }
 
         function removeCondition(condition) {
-            var conditionName = condition.getName() || condition;
-            delete conditionSet[conditionName];
+            var conditionName = condition.name || condition;
+            delete self.conditionSet[conditionName];
 
             if (getConditionSetSize() === 0) {
-                conditionSet = null;
+                self.conditionSet = null;
             }
         }
 
         function getConditionSetSize() {
-            if (conditionSet) {
-                return Object.keys(conditionSet).length;
+            if (self.conditionSet) {
+                return Object.keys(self.conditionSet).length;
             } else {
                 return 0;
             }
         }
 
         function toJson() {
-            var result = {
-                name: name,
-                origin: origin,
-                destination: destination
+            var json = {
+                extents: self.extents,
+                objectType: self.objectType,
+                name: self.name,
+                origin: self.origin,
+                destination: self.destination,
+                index: self.index
             };
 
-            if (conditionSet) {
-                result.conditionSet = {};
+            if (self.conditionSet) {
+                json.conditionSet = {};
 
-                for (var conditionName in conditionSet) {
-                    result.conditionSet[conditionName] = conditionSet[conditionName].toJson().rules;
+                for (var conditionName in self.conditionSet) {
+                    json.conditionSet[conditionName] = self.conditionSet[conditionName].toJson();
                 }
             }
 
-            return result;
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

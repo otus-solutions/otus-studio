@@ -14,7 +14,7 @@ describe('RouteFactory', function() {
             factory = _$injector_.get('RouteFactory');
         });
 
-        route = factory.create(Mock.ORIGIN, Mock.DESTINATION);
+        route = factory.create(Mock.ORIGIN, Mock.DESTINATION, 0);
     });
 
     describe('create method', function() {
@@ -24,23 +24,23 @@ describe('RouteFactory', function() {
         });
 
         it('should return a Route object with extends value equal to "StudioObject"', function() {
-            expect(route.getExtents()).toBe('StudioObject');
+            expect(route.extents).toBe('StudioObject');
         });
 
         it('should return a Route object with objectType value equal to "Route"', function() {
-            expect(route.getObjectType()).toBe('Route');
+            expect(route.objectType).toBe('Route');
         });
 
         it('should return a Route object with a valid origin value', function() {
-            expect(route.getOrigin()).toEqual(Mock.ORIGIN);
+            expect(route.origin).toEqual(Mock.ORIGIN);
         });
 
         it('should return a Route object with a valid destination value', function() {
-            expect(route.getDestination()).toEqual(Mock.DESTINATION);
+            expect(route.destination).toEqual(Mock.DESTINATION);
         });
 
         it('should return a Route object with a valid name value', function() {
-            expect(route.getName()).toEqual(Mock.ROUTE_NAME);
+            expect(route.name).toEqual(Mock.ROUTE_NAME);
         });
 
         it('should return a Route object with a defined condition set', function() {
@@ -58,7 +58,7 @@ describe('RouteFactory', function() {
     }
 
     function mockRoutName() {
-        Mock.ROUTE_NAME = Mock.ORIGIN + '-' + Mock.DESTINATION;
+        Mock.ROUTE_NAME = Mock.ORIGIN + '-' + Mock.DESTINATION + '-' + 0;
     }
 
 });

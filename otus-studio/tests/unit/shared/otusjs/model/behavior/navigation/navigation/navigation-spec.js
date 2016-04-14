@@ -1,5 +1,6 @@
 describe('Navigation', function() {
     var Mock = {};
+    var navigation;
 
     beforeEach(function() {
         module('otusjs');
@@ -7,8 +8,12 @@ describe('Navigation', function() {
         mockNavigationProperties();
 
         inject(function(_$injector_) {
+            mockRoute(_$injector_);
+
             factory = _$injector_.get('NavigationFactory');
         });
+
+        mockJson();
 
         navigation = factory.create(Mock.ORIGIN);
     });
@@ -30,7 +35,7 @@ describe('Navigation', function() {
         });
 
         it('should remove the route from route list by the "to" identifier', function() {
-            navigation.removeRoute(Mock.TO);
+            navigation.removeRoute(Mock.ROUTE_NAME);
 
             expect(navigation.listRoutes().length).toBe(0);
         });
@@ -63,14 +68,38 @@ describe('Navigation', function() {
 
     });
 
+    describe('toJson method', function() {
+
+        beforeEach(function() {
+            navigation.addRoute(Mock.route);
+        });
+
+        it('should return a well formatted json based on TimeQuestion', function() {
+            expect(navigation.toJson()).toEqual(Mock.json);
+        });
+
+    });
+
+
     function mockNavigationProperties() {
         Mock.STUDIO_OBJECT = 'StudioObject';
         Mock.ORIGIN = 'ORIGIN';
         Mock.TO = 'TO';
+        Mock.ROUTE_NAME = Mock.ORIGIN + '-' + Mock.TO + '-' + 0;
+    }
 
-        Mock.route = {
-            to: Mock.TO
-        };
+    function mockRoute($injector) {
+        Mock.route = $injector.get('RouteFactory').create(Mock.ORIGIN, Mock.TO, 0);
+    }
+
+    function mockJson() {
+        Mock.json = JSON.stringify({
+            extents: 'StudioObject',
+            objectType: 'Navigation',
+            index: null,
+            origin: Mock.ORIGIN,
+            routes: [Mock.route.toJson()]
+        }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
 });

@@ -4,14 +4,12 @@ describe('CrossSessionDatabaseService', function() {
     beforeEach(function() {
         module('studio');
 
-        /* Creates mocks 'like' @Mock */
         mockTemplate();
         mockSession();
         mockStoreEntry();
         mockStore();
 
         inject(function(_$injector_) {
-            /* Injects mocks 'like' @InjectMocks */
             service = _$injector_.get('CrossSessionDatabaseService', {
                 '$indexedDB': mockIndexedDB(_$injector_)
             });
@@ -57,8 +55,9 @@ describe('CrossSessionDatabaseService', function() {
 
     function mockTemplate() {
         Mock.template = {
-            getOID: function getOID() {
-                return 'template.oid';
+            oid: 'template.oid',
+            toJson: function() {
+                return JSON.stringify({});
             }
         };
     }
@@ -85,7 +84,7 @@ describe('CrossSessionDatabaseService', function() {
         Mock.storeEntry = {
             template_oid: 'template.oid',
             contributor: 'session.owner',
-            template: Mock.template
+            template: Mock.template.toJson()
         };
     }
 

@@ -5,67 +5,51 @@
         .module('otusjs.model')
         .factory('NumericQuestionFactory', NumericQuestionFactory);
 
-    NumericQuestionFactory.$inject = ['UnitFactory', 'MetadataGroupFactory'];
+    NumericQuestionFactory.$inject = ['UnitFactory'];
 
-    function NumericQuestionFactory(UnitFactory, MetadataGroupFactory) {
+    function NumericQuestionFactory(UnitFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid, prototype) {
-            return new NumericQuestion(oid, prototype, UnitFactory, MetadataGroupFactory);
+        function create(templateID, prototype) {
+            return new NumericQuestion(templateID, prototype, UnitFactory);
         }
 
         return self;
     }
 
-    function NumericQuestion(oid, prototype, UnitFactory, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: prototype.objectType,
-            writable: false,
-            enumerable: true
-        });
+    function NumericQuestion(templateID, prototype, UnitFactory) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'NumericQuestion',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = prototype.objectType;
+        self.objectType = 'NumericQuestion';
+        self.templateID = templateID;
+        self.dataType = 'Integer';
+        self.label = prototype.label;
+        self.metadata = prototype.metadata;
+        self.unit = {
+            ptBR: UnitFactory.create(),
+            enUS: UnitFactory.create(),
+            esES: UnitFactory.create()
+        };
 
-        Object.defineProperty(this, 'oid', {
-            value: prototype.oid,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'Integer',
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'label', {
-            value: prototype.label,
-            writable: true,
-            enumerable: true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.label = self.label;
+            json.metadata = self.metadata;
+            json.unit = self.unit;
 
-        Object.defineProperty(this, 'unit', {
-            value: {
-                'ptBR': UnitFactory.create(),
-                'enUS': UnitFactory.create(),
-                'esES': UnitFactory.create()
-            },
-            writable: true,
-            enumerable: true
-        });
-        
-        Object.defineProperty(this, 'metadata', {
-        	value: MetadataGroupFactory.create(),
-        	writable : true, 
-        	enumerable : true
-        });
+            return JSON.stringify(json);
+        }
     }
 
 }());

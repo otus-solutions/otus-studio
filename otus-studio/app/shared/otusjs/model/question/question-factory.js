@@ -29,48 +29,26 @@
         /* Public interface */
         self.create = create;
 
-        function create(questionType, oid) {
-            var question = new Question(oid, LabelFactory, MetadataGroupFactory);
-            return factoryMap[questionType].create(oid, question);
+        function create(questionType, templateID) {
+            var question = new Question(templateID, LabelFactory, MetadataGroupFactory);
+            return factoryMap[questionType].create(templateID, question);
         }
 
         return self;
     }
 
-    function Question(oid, LabelFactory, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function Question(templateID, LabelFactory, MetadataGroupFactory) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'Question',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'oid', {
-            value: oid,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'label', {
-            value: {
-                'ptBR': LabelFactory.create(),
-                'enUS': LabelFactory.create(),
-                'esES': LabelFactory.create()
-            },
-            writable: true,
-            enumerable: true
-        });
-        
-        Object.defineProperty(this, 'metadata', {
-        	value: MetadataGroupFactory.create(),
-        	writable : true, 
-        	enumerable : true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'Question';
+        self.templateID = templateID;
+        self.label = {
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
+        };
+        self.metadata = MetadataGroupFactory.create();
     }
 
 }());

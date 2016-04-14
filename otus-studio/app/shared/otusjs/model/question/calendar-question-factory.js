@@ -4,58 +4,44 @@
     angular
         .module('otusjs.model')
         .factory('CalendarQuestionFactory', CalendarQuestionFactory);
-    
-    CalendarQuestionFactory.$inject = ['MetadataGroupFactory'];
 
-    function CalendarQuestionFactory(MetadataGroupFactory) {
+    function CalendarQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid, prototype) {
-            return new CalendarQuestion(oid, prototype, MetadataGroupFactory);
+        function create(templateID, prototype) {
+            return new CalendarQuestion(templateID, prototype);
         }
 
         return self;
     }
 
-    function CalendarQuestion(oid, prototype, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: prototype.objectType,
-            writable: false,
-            enumerable: true
-        });
+    function CalendarQuestion(templateID, prototype) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'CalendarQuestion',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = prototype.objectType;
+        self.objectType = 'CalendarQuestion';
+        self.templateID = templateID;
+        self.dataType = 'LocalDate';
+        self.label = prototype.label;
+        self.metadata = prototype.metadata;
 
-        Object.defineProperty(this, 'oid', {
-            value: prototype.oid,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'LocalDate',
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'label', {
-            value: prototype.label,
-            writable: true,
-            enumerable: true
-        });
-        
-        Object.defineProperty(this, 'metadata', {
-        	value: MetadataGroupFactory.create(),
-        	writable : true, 
-        	enumerable : true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.label = self.label;
+            json.metadata = self.metadata;
+
+            return JSON.stringify(json);
+        }
     }
 
 }());

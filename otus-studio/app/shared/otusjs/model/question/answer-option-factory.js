@@ -13,53 +13,42 @@
         /* Public interface */
         self.create = create;
 
-        function create(oid, questionOID) {
-            return new QuestionAnswerOption(oid, questionOID, LabelFactory);
+        function create(value, questionOID) {
+            return new QuestionAnswerOption(value, questionOID, LabelFactory);
         }
 
         return self;
     }
 
-    function QuestionAnswerOption(oid, questionOID, LabelFactory, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+    function QuestionAnswerOption(value, questionOID, LabelFactory) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'QuestionAnswerOption',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'AnswerOption';
+        self.value = value;
+        self.dataType = 'Integer';
+        self.label = {
+            ptBR: LabelFactory.create(),
+            enUS: LabelFactory.create(),
+            esES: LabelFactory.create()
+        };
+        self.parentQuestionID = questionOID;
 
-        Object.defineProperty(this, 'oid', {
-            value: oid,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'Integer',
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'parentQuestion', {
-            value: questionOID,
-            writable: false,
-            enumerable: true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.value = self.value;
+            json.dataType = self.dataType;
+            json.label = self.label;
+            json.metadata = self.metadata;
+            json.parentQuestionID = self.parentQuestionID;
 
-        Object.defineProperty(this, 'label', {
-            value: {
-                'ptBR': LabelFactory.create(),
-                'enUS': LabelFactory.create(),
-                'esES': LabelFactory.create()
-            },
-            writable: true,
-            enumerable: true
-        });
+            return JSON.stringify(json);
+        }
     }
 
 }());

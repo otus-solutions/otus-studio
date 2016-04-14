@@ -109,12 +109,12 @@
         }
 
         function toJson() {
-            var result = {
+            var json = {
                 when: when,
                 answer: answer
             };
 
-            return JSON.stringify(result);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

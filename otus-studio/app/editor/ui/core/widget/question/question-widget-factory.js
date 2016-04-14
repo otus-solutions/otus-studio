@@ -42,7 +42,7 @@
         });
 
         Object.defineProperty(this, 'questionId', {
-            value: model.oid
+            value: model.templateID
         });
 
         Object.defineProperty(this, 'type', {

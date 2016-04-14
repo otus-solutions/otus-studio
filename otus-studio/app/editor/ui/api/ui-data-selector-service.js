@@ -17,7 +17,7 @@
             var targetList = target.split('.');
             var selectedData = WorkspaceService.workspace.project.survey.questionContainer[targetList[2]];
 
-            var update = { type: 'SELECT_DATA', dataModel: selectedData.extends, data: selectedData };
+            var update = { type: 'SELECT_DATA', dataModel: selectedData.extents, data: selectedData };
             var uiUpdateCommand = UIUpdateCommandFactory.create(update);
             uiUpdateCommand.execute();
         }

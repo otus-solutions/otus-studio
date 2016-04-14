@@ -68,7 +68,7 @@
         }
 
         function addNavigation(navigation) {
-            navigation.setIndex(self.navigationList.length);
+            navigation.index = self.navigationList.length;
             self.navigationList.push(navigation);
         }
 
@@ -81,7 +81,7 @@
 
         function fetchByOrigin(origin) {
             var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.getOrigin() === origin;
+                return navigation.origin === origin;
             });
 
             return filteredNavigation[0];

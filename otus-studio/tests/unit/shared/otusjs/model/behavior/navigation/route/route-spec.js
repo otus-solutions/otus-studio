@@ -14,7 +14,8 @@ describe('Route', function() {
             factory = _$injector_.get('RouteFactory');
         });
 
-        route = factory.create(Mock.ORIGIN, Mock.DESTINATION);
+        mockJson();
+        route = factory.create(Mock.ORIGIN, Mock.DESTINATION, 0);
     });
 
     describe('addCondition method', function() {
@@ -41,11 +42,11 @@ describe('Route', function() {
             expect(route.getConditionSetSize()).toBe(1);
         });
 
-        xit('should delete conditionSet attribute from route if the size of these set is zero', function() {
+        it('should delete conditionSet attribute from route if the size of these set is zero', function() {
             route.removeCondition(Mock.FakeRouteCondition);
             route.removeCondition(Mock.NoRealRouteCondition);
 
-            expect(route.getConditionSet()).toBe(null);
+            expect(route.getConditionSet()).toEqual({});
         });
 
     });
@@ -85,55 +86,14 @@ describe('Route', function() {
 
     });
 
-    describe('toJson method with undefined route condition set', function() {
-        var json = null;
-
-        beforeEach(function() {
-            json = route.toJson();
-        });
-
-        xit('should return and object with "name" property equal to Route.name', function() {
-            expect(json.name).toEqual(route.name);
-        });
-
-        xit('should return and object with "origin" property equal to Route.origin', function() {
-            expect(json.origin).toEqual(route.origin);
-        });
-
-        xit('should return and object with "destination" property equal to Route.destination', function() {
-            expect(json.destination).toEqual(route.destination);
-        });
-
-        xit('should return and object without "conditionSet" property', function() {
-            expect(json.conditionSet).toBeUndefined();
-        });
-
-    });
-
-    describe('toJson method with defined route condition set', function() {
-        var json = null;
+    describe('toJson method', function() {
 
         beforeEach(function() {
             route.addCondition(Mock.FakeRouteCondition);
-            route.addCondition(Mock.NoRealRouteCondition);
-
-            json = route.toJson();
         });
 
-        xit('should return and object with "name" property equal to Route.name', function() {
-            expect(json.name).toEqual(route.name);
-        });
-
-        xit('should return and object with "origin" property equal to Route.origin', function() {
-            expect(json.origin).toEqual(route.origin);
-        });
-
-        xit('should return and object with "destination" property equal to Route.destination', function() {
-            expect(json.destination).toEqual(route.destination);
-        });
-
-        xit('should return and object with "conditionSet" equal to Route.conditionSet', function() {
-            expect(json.conditionSet).toBeDefined();
+        it('should return a well formatted json based on Route', function() {
+            expect(route.toJson()).toEqual(Mock.json);
         });
 
     });
@@ -150,6 +110,20 @@ describe('Route', function() {
         var conditionFactory = $injector.get('RouteConditionFactory');
         Mock.FakeRouteCondition = conditionFactory.create('Fake Condition');
         Mock.NoRealRouteCondition = conditionFactory.create('No Real Condition');
+    }
+
+    function mockJson() {
+        Mock.json = JSON.stringify({
+            extents: 'StudioObject',
+            objectType: 'Route',
+            name: Mock.ORIGIN + '-' + Mock.DESTINATION + '-' + 0,
+            origin: Mock.ORIGIN,
+            destination: Mock.DESTINATION,
+            index: 0,
+            conditionSet: {
+                'Fake_Condition': Mock.FakeRouteCondition.toJson()
+            }
+        }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
     }
 
 });
