@@ -21,7 +21,7 @@
                 var entry = {
                     'template_oid': template.oid,
                     'contributor': session.owner,
-                    template: template.toJson()
+                    template: JSON.parse(template.toJson())
                 };
 
                 store.upsert(entry).then(function(e) {
