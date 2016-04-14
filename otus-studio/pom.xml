@@ -90,6 +90,22 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>exec-npm-version</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>--value=${project.parent.version}</argument>
+                                        <argument>run</argument>
+                                        <argument>gulp</argument>
+                                        <argument>upgrade-version</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>npm run test</id>
                                 <phase>test</phase>
                                 <goals>
