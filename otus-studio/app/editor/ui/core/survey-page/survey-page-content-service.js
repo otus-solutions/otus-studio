@@ -43,11 +43,11 @@
         }
 
         function unloadQuestion(question) {
-            surveyPage.find('[question-target="' + question.oid + '"]').remove();
+            surveyPage.find('[question-target="' + question.templateID + '"]').remove();
         }
 
         function updateQuestion(question) {
-            var target = '[es-id="question-editor-' + question.oid + '-label"]';
+            var target = '[es-id="question-editor-' + question.templateID + '-label"]';
             var label = UIUtils.jq(surveyPage.find(target)[0]);
 
             label.text(question.label.ptBR.plainText);

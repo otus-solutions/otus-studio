@@ -11,7 +11,7 @@
             scope: {},
             restrict: 'E',
             controller: 'NavigationController',
-            templateUrl: 'private/editor/ui/core/widget/navigation/editor/navigation-editor-template.html',
+            templateUrl: 'app/editor/ui/core/widget/navigation/editor/navigation-editor-template.html',
         };
 
         return ddo;

@@ -31,11 +31,11 @@
             var routeNameField = angular.element(routeCreator.children().children().children().children()[2]);
             var routeDestinationField = angular.element(routeCreator.children().children().children().children()[5]);
 
-            routeNameField.attr('es-target', 'survey.navigations[' + currentNavigation.getIndex() + '].routes[' + currentNavigation.listRoutes().length + '].name');
+            routeNameField.attr('es-target', 'survey.navigations[' + currentNavigation.index + '].routes[' + currentNavigation.listRoutes().length + '].name');
             routeNameField.val('');
             routeNameField.blur();
 
-            routeDestinationField.attr('es-target', 'survey.navigations[' + currentNavigation.getIndex() + '].routes[' + currentNavigation.listRoutes().length + '].to');
+            routeDestinationField.attr('es-target', 'survey.navigations[' + currentNavigation.index + '].routes[' + currentNavigation.listRoutes().length + '].to');
             routeDestinationField.val('');
             routeDestinationField.blur();
 
@@ -45,7 +45,7 @@
         function getCurrentNavigation() {
             var lastAddedQuestion = WorkspaceService.workspace.isdb.dataPool.fetchLastAddedData();
             var currentSurvey = WorkspaceService.workspace.project.survey;
-            var currentQuestion = lastAddedQuestion.oid;
+            var currentQuestion = lastAddedQuestion.templateID;
 
             return currentSurvey.listNavigation(currentQuestion);
         }

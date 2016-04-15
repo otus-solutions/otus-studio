@@ -30,22 +30,22 @@
         });
 
         Object.defineProperty(this, 'esId', {
-            value: 'metadata-' + model.parentQuestion + '-option-' + model.oid,
+            value: 'metadata-' + model.parentQuestionID + '-option-' + model.value,
             writable: false
         });
 
         Object.defineProperty(this, 'esTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.metadata.option.' + model.oid,
+            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.' + model.value,
             writable: false
         });
 
         Object.defineProperty(this, 'addButtonTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.metadata.option.',
+            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.',
             writable: false
         });
 
         Object.defineProperty(this, 'removeButtonTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.metadata.option.' + model.oid,
+            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.' + model.value,
             writable: false
         });
     }

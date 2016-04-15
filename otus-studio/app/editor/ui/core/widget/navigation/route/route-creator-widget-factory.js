@@ -25,8 +25,8 @@
         init();
 
         function init() {
-            self.newName = 'survey.navigations[' + navigation.getIndex() + '].routes[' + navigation.listRoutes().length + '].name';
-            self.newDestination = 'survey.navigations[' + navigation.getIndex() + '].routes[' + navigation.listRoutes().length + '].to';
+            self.newName = 'survey.navigations[' + navigation.index + '].routes[' + navigation.listRoutes().length + '].name';
+            self.newDestination = 'survey.navigations[' + navigation.index + '].routes[' + navigation.listRoutes().length + '].to';
         }
     }
 

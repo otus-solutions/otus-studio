@@ -44,7 +44,7 @@
         }
 
         function removeAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId) {
+            if (answerOption.parentQuestionID == $scope.widget.questionId) {
                 AnswerOptionContentService.unloadOption($element, $scope);
             }
         }

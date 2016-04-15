@@ -22,7 +22,7 @@
             var work = buildWork(editingEvent);
             var workResult = ModelBuilderService.build(work);
 
-            if (workResult.status) {
+            if (work.type.isAddData() && workResult.status) {
                 WorkspaceService.workspace.isdb.dataPool.store(workResult.data);
             }
         }

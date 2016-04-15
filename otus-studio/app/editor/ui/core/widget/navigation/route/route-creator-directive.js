@@ -10,7 +10,7 @@
             scope: {},
             restrict: 'E',
             controller: 'RouteCreatorController',
-            templateUrl: 'private/editor/ui/core/widget/navigation/route/route-creator-template.html'
+            templateUrl: 'app/editor/ui/core/widget/navigation/route/route-creator-template.html'
         };
 
         return ddo;

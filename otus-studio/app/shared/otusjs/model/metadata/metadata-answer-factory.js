@@ -1,71 +1,38 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('otusjs.model')
-		.factory('MetadataAnswerFactory', MetadataAnswerFactory);
+    angular
+        .module('otusjs.model')
+        .factory('MetadataAnswerFactory', MetadataAnswerFactory);
 
-	MetadataAnswerFactory.$inject = ['LabelFactory'];
+    MetadataAnswerFactory.$inject = ['LabelFactory'];
 
-	function MetadataAnswerFactory(LabelFactory) {
-		var self = this;
+    function MetadataAnswerFactory(LabelFactory) {
+        var self = this;
 
-		/* Public interface */
-		self.create = create;
+        /* Public interface */
+        self.create = create;
 
-		function create(oid, questionOID) {
-			return new MetadataAnswer(oid, questionOID, LabelFactory);
-		}
+        function create(value, parentQuestionID) {
+            return new MetadataAnswer(value, parentQuestionID, LabelFactory);
+        }
 
-		return self;
-	}
+        return self;
+    }
 
-	function MetadataAnswer(oid, questionOID, LabelFactory) {
-		Object.defineProperty(this, 'extends', {
-			value : 'StudioObject',
-			writable : false,
-			enumerable : true
-		});
+    function MetadataAnswer(value, parentQuestionID, LabelFactory) {
+        var self = this;
 
-		Object.defineProperty(this, 'objectType', {
-			value : 'MetadataAnswer',
-			writable : false,
-			enumerable : true
-		});
-
-		Object.defineProperty(this, 'oid', {
-			value : oid,
-			writable : false,
-			enumerable : true
-		});
-
-		Object.defineProperty(this, 'dataType', {
-			value : 'Integer',
-			writable : false,
-			enumerable : true
-		});
-
-		Object.defineProperty(this, 'parentQuestion', {
-			value : questionOID,
-			writable : false,
-			enumerable : true
-		});
-
-		Object.defineProperty(this, 'label', {
-			value : {
-				'ptBR' : LabelFactory.create(),
-				'enUS' : LabelFactory.create(),
-				'esES' : LabelFactory.create()
-			},
-			writable : true,
-			enumerable : true
-		});
-		
-		Object.defineProperty(this, 'value', {
-			value : null,
-			writable : true,
-			enumerable : true
-		});
-	}
+        self.extends = 'StudioObject';
+        self.objectType = 'MetadataAnswer';
+        self.value = value;
+        self.parentQuestionID = parentQuestionID;
+        self.dataType = 'Integer';
+        self.label = {
+            'ptBR': LabelFactory.create(),
+            'enUS': LabelFactory.create(),
+            'esES': LabelFactory.create()
+        };
+    }
 
 }());

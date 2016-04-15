@@ -1,5 +1,4 @@
-<div flex ng-controller="QuestionEditorToolbarController as questionEditorTollbarController">
-
+<div flex>
     <div layout="row" class="question-toolbar-area" layout-margin>
         <md-button class="md-icon-button">
             <md-icon aria-label="Navigation">directions_boat
@@ -12,7 +11,7 @@
             editing-source
             es-type="remove-button"
             es-id="survey-questions-remove-question"
-            es-target="survey.question.{{widget.questionId}}">
+            es-target="survey.questionContainer.{{widget.questionId}}">
             <md-icon aria-label="Navigation">delete
                 <md-tooltip md-direction="bottom">
                     Remover
@@ -23,5 +22,4 @@
     <div layout-padding layout-margin>
         <navigation-editor></navigation-editor>
     </div>
-
 </div>

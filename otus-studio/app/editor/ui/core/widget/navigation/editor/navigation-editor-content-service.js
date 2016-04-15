@@ -52,7 +52,7 @@
         function getCurrentNavigation() {
             var lastAddedQuestion = WorkspaceService.workspace.isdb.dataPool.fetchLastAddedData();
             var currentSurvey = WorkspaceService.workspace.project.survey;
-            var currentQuestion = lastAddedQuestion.oid;
+            var currentQuestion = lastAddedQuestion.templateID;
 
             return currentSurvey.listNavigation(currentQuestion);
         }

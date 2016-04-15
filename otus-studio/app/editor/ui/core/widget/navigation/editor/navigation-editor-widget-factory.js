@@ -25,7 +25,7 @@
         });
 
         Object.defineProperty(this, 'origin', {
-            value: model.getOrigin(),
+            value: model.origin,
             writable: false
         });
 
@@ -36,13 +36,13 @@
         });
 
         Object.defineProperty(this, 'newName', {
-            value: 'survey.navigations[' + model.getIndex() + '].routes[' + model.listRoutes().length + '].name',
+            value: 'survey.navigations[' + model.index + '].routes[' + model.listRoutes().length + '].name',
             writable: false,
             enumerable: true
         });
 
         Object.defineProperty(this, 'newDestination', {
-            value: 'survey.navigations[' + model.getIndex() + '].routes[' + model.listRoutes().length + '].to',
+            value: 'survey.navigations[' + model.index + '].routes[' + model.listRoutes().length + '].to',
             writable: false,
             enumerable: true
         });
