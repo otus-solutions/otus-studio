@@ -24,9 +24,9 @@
         self.model = model;
         self.value = model.value;
         self.esId = 'single-selection-' + model.parentQuestionID + '-option-' + model.value;
-        self.esTarget = 'survey.question.' + model.parentQuestionID + '.option.' + model.value;
-        self.addButtonTarget = 'survey.question.' + model.parentQuestionID + '.option.';
-        self.removeButtonTarget = 'survey.question.' + model.parentQuestionID + '.option.' + model.value;
+        self.esTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.' + model.value;
+        self.addButtonTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.';
+        self.removeButtonTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.' + model.value;
     }
 
 }());

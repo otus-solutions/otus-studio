@@ -5,12 +5,14 @@
         .module('editor.ui')
         .directive('routeCreator', routeCreator);
 
-    function routeCreator() {
+    function routeCreator(WidgetService) {
         var ddo = {
             scope: {},
             restrict: 'E',
             controller: 'RouteCreatorController',
-            templateUrl: 'app/editor/ui/core/widget/navigation/route/route-creator-template.html'
+            templateUrl: 'app/editor/ui/core/widget/navigation/route/creator/route-creator-template.html',
+            link: function link(scope, element, attr, controller) {
+            }
         };
 
         return ddo;

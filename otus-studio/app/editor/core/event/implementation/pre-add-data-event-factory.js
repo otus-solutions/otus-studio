@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-    .module('editor.core')
-    .factory('PreAddDataEventFactory', PreAddDataEventFactory);
+        .module('editor.core')
+        .factory('PreAddDataEventFactory', PreAddDataEventFactory);
 
     PreAddDataEventFactory.$inject = ['EditorEngineService', 'WorkspaceService'];
 
@@ -30,11 +30,13 @@
             var relatedEvents = WorkspaceService.workspace.isdb.userEdits.fetchEventBy('source.processor', prototype.id);
             editor.edit(prototype);
 
-            relatedEvents.forEach(function(event){
+            relatedEvents.forEach(function(event) {
                 editor.edit(event);
             });
 
             WorkspaceService.workspace.isdb.userEdits.storeUnique(prototype);
+            WorkspaceService.saveWork();
         }
     }
+
 }());

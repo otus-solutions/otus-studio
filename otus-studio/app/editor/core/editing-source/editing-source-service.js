@@ -5,9 +5,9 @@
         .module('editor.core')
         .service('EditingSourceService', EditingSourceService);
 
-    EditingSourceService.$inject = ['EditingSourceFactory', 'TriggerFactory'];
+    EditingSourceService.$inject = ['EditingSourceFactory', 'TriggerFactory', 'WidgetService'];
 
-    function EditingSourceService(EditingSourceFactory, TriggerFactory) {
+    function EditingSourceService(EditingSourceFactory, TriggerFactory, WidgetService) {
 
         var self = this;
 
@@ -15,8 +15,14 @@
         self.createEditingSource = createEditingSource;
         self.appendTriggersTo = appendTriggersTo;
 
-        function createEditingSource(domComponent, attrs) {
-            return EditingSourceFactory.produceEditingSource(domComponent, attrs.esType, attrs.esId, attrs.esModel, attrs.esTarget, attrs.esProcessor);
+        function createEditingSource(component, attrs) {
+            var editingSource;
+            if (attrs)
+                editingSource = EditingSourceFactory.produceEditingSource(component, attrs);
+            else
+                editingSource = EditingSourceFactory.create(component);
+
+            return editingSource;
         }
 
         function appendTriggersTo(editingSource) {

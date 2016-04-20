@@ -24,13 +24,13 @@
         init();
 
         function init() {
-            self.index = route.getIndex();
-            self.name = route.getName();
-            self.destination = route.getDestination();
+            self.index = route.index;
+            self.name = route.name;
+            self.destination = route.destination;
 
-            self.nameTarget = 'survey.navigations[' + navigation.getIndex() + '].routes[' + route.getIndex() + '].name';
-            self.destinationTarget = 'survey.navigations[' + navigation.getIndex() + '].routes[' + route.getIndex() + '].to';
-            self.routeToRemoveTarget = 'survey.navigations[' + navigation.getIndex() + '].routeToRemove.' + route.getName();
+            self.nameTarget = 'survey.navigations[' + navigation.index + '].routes[' + route.index + '].name';
+            self.destinationTarget = 'survey.navigations[' + navigation.index + '].routes[' + route.index + '].to';
+            self.routeToRemoveTarget = 'survey.navigations[' + navigation.index + '].routeToRemove.' + route.index;
         }
     }
 

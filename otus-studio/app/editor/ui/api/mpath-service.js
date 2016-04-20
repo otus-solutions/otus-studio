@@ -6,11 +6,11 @@
         .service('editor.ui.mpath', mpath);
 
     function mpath() {
+        var self = this;
+
         var MODULE = 'app/editor/ui/';
         var QUESTION_EDITOR_TEMPLATE = 'app/editor/ui/core/widget/question-editor/question-editor-template.html';
         var METADATA_TEMPLATE = 'app/editor/ui/core/widget/metadata/metadata-question-template.html';
-
-        var self = this;
 
         /* Public interface */
         self.getWidgetPath = getWidgetPath;

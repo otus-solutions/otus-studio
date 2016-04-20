@@ -35,17 +35,17 @@
         });
 
         Object.defineProperty(this, 'esTarget', {
-            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.' + model.value,
+            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.' + model.value,
             writable: false
         });
 
         Object.defineProperty(this, 'addButtonTarget', {
-            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.',
+            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.',
             writable: false
         });
 
         Object.defineProperty(this, 'removeButtonTarget', {
-            value: 'survey.question.' + model.parentQuestionID + '.metadata.option.' + model.value,
+            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.' + model.value,
             writable: false
         });
     }

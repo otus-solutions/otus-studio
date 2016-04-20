@@ -15,7 +15,6 @@
 
     function NavigationController($scope, $element, ModelBuilderHubService, NavigationEditorContentService, UIUpdateCommandFactory) {
         var self = this;
-        var navigations = [];
 
         /* Public interface */
         self.update = update;

@@ -12,8 +12,8 @@
     ];
 
     function EditorEngineService(ModelBuilderService, BuildWorkFactory, WorkspaceService) {
-        var self = this,
-            survey = null;
+        var self = this;
+        var survey = null;
 
         /* Public interface */
         self.edit = edit;
@@ -35,10 +35,8 @@
             work.type = editingEvent.type;
             work.id = editingEvent.id;
 
-            if (work.type.isPreAddData() || work.type.isPreUpdateData()) {
-                var lastSelectEvent = WorkspaceService.workspace.isdb.userEdits.fetchLastSelectEvent();
-                work.context = lastSelectEvent.target.split('.')[2];
-            }
+            var lastSelectEvent = WorkspaceService.workspace.isdb.userEdits.fetchLastSelectEvent();
+            if (lastSelectEvent) work.context = lastSelectEvent.target.split('.')[2];
 
             if (editingEvent.state.domData) {
                 work.data = editingEvent.state.domData;

@@ -41,7 +41,7 @@
         function unloadRoute(route) {
             var indexToRemove;
             scope.routes.forEach(function(routeWidget, index) {
-                if (routeWidget.index === route.getIndex()) {
+                if (routeWidget.index === route.index) {
                     indexToRemove = index;
                     return;
                 }

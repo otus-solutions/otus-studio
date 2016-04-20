@@ -19,12 +19,10 @@
     <!-- ************************************* jQuery ************************************* -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
-
     <!-- ************************************* Graphdracula ************************************* -->
     <script src="node_modules/graphdracula/js/raphael-min.js"></script>
     <script src="node_modules/graphdracula/js/dracula_graffle.js"></script>
     <script src="node_modules/graphdracula/js/dracula_graph.js"></script>
-
 
     <!-- ************************************* Angular ************************************* -->
     <script src="node_modules/angular/angular.min.js"></script>
@@ -34,24 +32,23 @@
     <script src="node_modules/angular-messages/angular-messages.min.js"></script>
     <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-
     <!-- ************************************* Angular Material ************************************* -->
     <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
     <script src="node_modules/angular-material/angular-material.min.js"></script>
-
 
     <!-- ************************************* Lokijs ************************************* -->
     <script src="node_modules/lokijs/build/lokijs.min.js"></script>
     <script src="node_modules/lokijs/src/loki-angular.js"></script>
 
-
     <!-- ************************************* IndexedDB ************************************* -->
     <script src="app/shared/angular-indexed-db/angular-indexed-db.min.js"></script>
-
 
     <!-- ************************************* Moment ************************************* -->
     <script src="node_modules/moment/min/moment.min.js"></script>
 
+    <!-- ************************************* ImmutableJS ************************************* -->
+    <script src="node_modules/immutable/dist/immutable.min.js"></script>
+    <script src="node_modules/angular-immutable/dist/immutable.min.js"></script>
 
     <!-- ***************************************** Utils ***************************************** -->
     <!-- Utils -->
@@ -59,11 +56,9 @@
     <script src="node_modules/js-base64/base64.min.js"></script>
     <script src="app/shared/st-utils/st-utils-module.js"></script>
 
-
     <!-- ************************************* UI Components ************************************* -->
     <script src="app/shared/ui-components/ui-components-module.js"></script>
     <script src="app/shared/ui-components/accordion/accordion-directive.js"></script>
-
 
     <!-- ************************************** OtusJS ************************************** -->
     <script src="app/shared/otusjs/otusjs-module.js"></script>
@@ -138,7 +133,6 @@
     <script src="app/config/state-configuration.js"></script>
     <script src="app/config/theme-configuration.js"></script>
 
-
     <!-- ************************************** Studio Dashboard ************************************** -->
     <script src="app/dashboard/dashboard-module.js"></script>
 
@@ -160,13 +154,11 @@
     <!-- SURVEY-FORM.DIALOG-NEW-SURVYE-FORM -->
     <script src="app/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
 
-
     <!-- ************************************** Studio Editor ************************************** -->
     <script src="app/editor/editor-module.js"></script>
 
     <!-- API -->
     <script src="app/editor/api/survey-editor-service.js"></script>
-
 
     <!-- ************************************** Studio Editor Core ************************************** -->
     <script src="app/editor/core/editor-core-module.js"></script>
@@ -225,7 +217,6 @@
     <!-- TRIGGER.QUESTION.IMPLEMENTATION -->
     <script src="app/editor/core/trigger/question/implementation/question-editor-trigger-service.js"></script>
 
-
     <!-- ************************************** Studio Editor Database ************************************** -->
     <script src="app/editor/database/editor-database-module.js"></script>
 
@@ -237,7 +228,6 @@
 
     <!-- IN-SESSION -->
     <script src="app/editor/database/in-session/in-session-database-factory.js"></script>
-
 
     <!-- ************************************** Studio Editor UI ************************************** -->
     <script src="app/editor/ui/editor-ui-module.js"></script>
@@ -260,6 +250,11 @@
     <script src="app/editor/ui/core/widget/api/widget-service.js"></script>
     <script src="app/editor/ui/core/widget/api/widget-template-service.js"></script>
 
+    <!-- WIDGET.BASE.INPUT-TEXT -->
+    <script src="app/editor/ui/core/widget/base/input-text/input-text-controller.js"></script>
+    <script src="app/editor/ui/core/widget/base/input-text/input-text-directive.js"></script>
+    <script src="app/editor/ui/core/widget/base/input-text/input-text-widget-factory.js"></script>
+
     <!-- WIDGET.METADATA -->
     <script src="app/editor/ui/core/widget/metadata/metadata-answer-option-content-service.js"></script>
     <script src="app/editor/ui/core/widget/metadata/metadata-answer-option-widget-factory.js"></script>
@@ -274,10 +269,10 @@
     <script src="app/editor/ui/core/widget/navigation/editor/navigation-editor-widget-factory.js"></script>
 
     <!-- WIDGET.NAVIGATION.ROUTE -->
-    <script src="app/editor/ui/core/widget/navigation/route/route-creator-content-service.js"></script>
-    <script src="app/editor/ui/core/widget/navigation/route/route-creator-controller.js"></script>
-    <script src="app/editor/ui/core/widget/navigation/route/route-creator-directive.js"></script>
-    <script src="app/editor/ui/core/widget/navigation/route/route-creator-widget-factory.js"></script>
+    <script src="app/editor/ui/core/widget/navigation/route/creator/route-creator-content-service.js"></script>
+    <script src="app/editor/ui/core/widget/navigation/route/creator/route-creator-controller.js"></script>
+    <script src="app/editor/ui/core/widget/navigation/route/creator/route-creator-directive.js"></script>
+    <script src="app/editor/ui/core/widget/navigation/route/creator/route-creator-widget-factory.js"></script>
     <script src="app/editor/ui/core/widget/navigation/route/route-widget-factory.js"></script>
 
     <!-- WIDGET.NAVIGATION.RULE -->
@@ -338,7 +333,6 @@
     <!-- SURVEY-DATA-EDITOR -->
     <script src="app/editor/ui/survey-data-editor/survey-properties-controller.js"></script>
 
-
     <!-- ************************************** Studio Editor Workspace ************************************** -->
     <script src="app/editor/workspace/editor-workspace-module.js"></script>
 
@@ -347,13 +341,12 @@
     <script src="app/editor/workspace/api/workspace-factory.js"></script>
     <script src="app/editor/workspace/api/workspace-service.js"></script>
 
-	<!-- EXPORT -->
+    <!-- EXPORT -->
     <script src="app/editor/workspace/export/survey-template-export-directive.js"></script>
     <script src="app/editor/workspace/export/survey-template-export-service.js"></script>
 
     <!-- PROJECT -->
     <script src="app/editor/workspace/project/survey-project-factory.js"></script>
-
 
     <!-- ************************************** Studio Preview ************************************** -->
     <script src="app/preview/preview-module.js"></script>
@@ -367,11 +360,9 @@
     <script src="app/preview/survey-navigation/graph-factory.js"></script>
     <script src="app/preview/survey-navigation/survey-navigation-preview-directive.js"></script>
 
-
     <!-- ************************************** Studio Login ************************************** -->
     <!-- app.login -->
     <script src="app/authenticator/authenticator-module.js"></script>
     <script src="app/authenticator/login-controller.js"></script>
-
 
 </html>

@@ -7,12 +7,14 @@
 
     RouteCreatorContentService.$inject = [
         'WidgetService',
-        'WorkspaceService'
+        'WorkspaceService',
+        'UUID'
     ];
 
-    function RouteCreatorContentService(WidgetService, WorkspaceService) {
+    function RouteCreatorContentService(WidgetService, WorkspaceService, UUID) {
 
         var self = this;
+        var directiveScope;
         var scope;
         var routeCreator;
         var currentNavigation;
@@ -22,24 +24,13 @@
 
         function init(scopeReference, routeCreatorReference) {
             scope = scopeReference;
+            directiveScope = scopeReference.$parent;
             routeCreator = routeCreatorReference;
         }
 
         function reload() {
             currentNavigation = getCurrentNavigation();
-            scope.widget = WidgetService.getRouteCreatorWidget(currentNavigation);
-            var routeNameField = angular.element(routeCreator.children().children().children().children()[2]);
-            var routeDestinationField = angular.element(routeCreator.children().children().children().children()[5]);
-
-            routeNameField.attr('es-target', 'survey.navigations[' + currentNavigation.index + '].routes[' + currentNavigation.listRoutes().length + '].name');
-            routeNameField.val('');
-            routeNameField.blur();
-
-            routeDestinationField.attr('es-target', 'survey.navigations[' + currentNavigation.index + '].routes[' + currentNavigation.listRoutes().length + '].to');
-            routeDestinationField.val('');
-            routeDestinationField.blur();
-
-            routeNameField.focus();
+            scope.widget = WidgetService.getRouteCreatorWidget(currentNavigation, routeCreator);
         }
 
         function getCurrentNavigation() {

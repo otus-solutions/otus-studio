@@ -44,6 +44,7 @@
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
         self.listNavigation = listNavigation;
+        self.listNavigationByIndex = listNavigationByIndex;
         self.toJson = toJson;
 
         function questionsCount() {
@@ -63,8 +64,12 @@
             return clone;
         }
 
-        function listNavigation(origin) {
-            return fetchByOrigin(origin);
+        function listNavigation(criteria) {
+            return fetchByOrigin(criteria);
+        }
+
+        function listNavigationByIndex(index) {
+            return fetchByIndex(index);
         }
 
         function addNavigation(navigation) {
@@ -82,6 +87,14 @@
         function fetchByOrigin(origin) {
             var filteredNavigation = self.navigationList.filter(function(navigation) {
                 return navigation.origin === origin;
+            });
+
+            return filteredNavigation[0];
+        }
+
+        function fetchByIndex(index) {
+            var filteredNavigation = self.navigationList.filter(function(navigation) {
+                return navigation.index === index;
             });
 
             return filteredNavigation[0];

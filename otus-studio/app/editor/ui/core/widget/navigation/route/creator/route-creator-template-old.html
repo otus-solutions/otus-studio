@@ -1,0 +1,40 @@
+<md-content flex>
+    <div layout="row" layout-margin flex>
+        <md-input-container layout="row">
+            <label>Nome</label>
+            <md-icon class="material-icons">low_priority</md-icon>
+            <input editing-source
+                es-widget="{{widget.type}}"
+                es-guid="{{widget.name.guid}}"
+                es-type="{{widget.name.type}}"
+                es-target="{{widget.name.target}}"
+                es-processor="{{widget.name.processorGuid}}"
+                ng-model="widget.name.value"
+                aria-label="Nome"/>
+        </md-input-container>
+
+        <md-input-container layout="row">
+            <label>Destino</label>
+            <input editing-source
+                es-widget="{{widget.type}}"
+                es-guid="{{widget.destination.guid}}"
+                es-type="{{widget.destination.type}}"
+                es-target="{{widget.destination.target}}"
+                es-processor="{{widget.destination.processorGuid}}"
+                ng-model="widget.destination.value"
+                aria-label="Destino"/>
+        </md-input-container>
+
+        <otus:input-text label="Otus Input Text" aria-label="Otus Input Text"></otus:input-text>
+
+        <md-button editing-source
+            es-widget="{{widget.type}}"
+            es-guid="{{widget.processor.guid}}"
+            es-type="{{widget.processor.type}}"
+            es-target="{{widget.processor.target}}">
+            <md-icon class="material-icons">save
+                <md-tooltip md-direction="bottom">Salvar</md-tooltip>
+            </md-icon>
+        </md-button>
+    </div>
+</md-content>

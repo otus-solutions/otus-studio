@@ -39,25 +39,23 @@
 
             if (work.type.isPreAddData()) {
                 route = addRoute(work);
-                currentRouteIndex = route.getIndex();
 
                 if (isDataProcessComplete()) {
                     nameWasProccessed = false;
                     destinationWasProccessed = false;
-                    route.setIndex(currentRouteIndex);
                     notifyObservers(route, work.type);
                 }
             } else if (work.type.isPreUpdateData()) {
-                route = updateRoute(work);
+                route = preUpdateRoute(work);
 
                 if (isDataProcessComplete()) {
                     nameWasProccessed = false;
                     destinationWasProccessed = false;
-                    route.setIndex(currentRouteIndex);
                     notifyObservers(route, work.type);
                 }
             } else if (work.type.isUpdateData()) {
-                console.log('update data');
+                route = updateRoute(work);
+                notifyObservers(route, work.type);
             } else if (work.type.isRemoveData()) {
                 route = removeRoute(work);
                 notifyObservers(route, work.type);
@@ -66,33 +64,50 @@
 
         function addRoute(work) {
             var navigation = work.survey.listNavigation(work.context);
-            var newRoute = RouteFactory.create(navigation.getOrigin(), null, navigation.listRoutes().length);
+            var newRoute = RouteFactory.create(navigation.origin, null, navigation.listRoutes().length);
 
             navigation.addRoute(newRoute);
 
             return newRoute;
         }
 
-        function updateRoute(work) {
-            var index = work.target.match(/\d/g)[1];
-            var routes = work.survey.listNavigation(work.context).listRoutes();
-            var routeToUpdate = routes[index];
+        function preUpdateRoute(work) {
+            var routes = getCurrentRoutes(work);
+            var routeToUpdate = routes[routes.length - 1];
 
+            return applyUpdate(work, routeToUpdate);
+        }
+
+        function updateRoute(work) {
+            var routes = getCurrentRoutes(work);
+            var routeToUpdate = routes[parseInt(work.target.match(/\d/g)[1])];
+
+            return applyUpdate(work, routeToUpdate);
+        }
+
+        function getCurrentRoutes(work) {
+            return work.survey.listNavigationByIndex(parseInt(work.target.match(/\d/g)[0])).listRoutes();
+        }
+
+        function applyUpdate(work, routeToUpdate) {
             if (work.target.search('name') != -1) {
-                routeToUpdate.setName(work.data.value);
+                routeToUpdate.name = work.data.value;
                 nameWasProccessed = true;
             } else {
-                routeToUpdate.setDestination(work.data.value);
+                routeToUpdate.destination = work.data.value;
                 destinationWasProccessed = true;
             }
+
+            var navigation = work.survey.listNavigation(work.context);
+            navigation.updateRoute(routeToUpdate);
 
             return routeToUpdate;
         }
 
         function removeRoute(work) {
             var navigation = work.target.match(/\d/g)[0];
-            var routeName = work.target.split('.')[3];
-            var routeToRemove = work.survey.navigationList[navigation].removeRoute(routeName);
+            var routeIndex = work.target.split('.')[3];
+            var routeToRemove = work.survey.navigationList[navigation].removeRoute(routeIndex);
             work.type.dataModel = 'Route';
             return routeToRemove;
         }

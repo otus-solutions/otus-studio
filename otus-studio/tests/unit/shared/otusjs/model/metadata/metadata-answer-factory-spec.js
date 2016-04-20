@@ -16,33 +16,33 @@ describe('MetadataAnswerFactory', function() {
 
     describe('MetadataAnswer', function() {
 
-        it('returned object should extends Question', function() {
+        xit('returned object should extends Question', function() {
             expect(option.extends).toBe('StudioObject');
         });
 
-        it('returned object should have objectType equal to MetadataAnswer', function() {
+        xit('returned object should have objectType equal to MetadataAnswer', function() {
             expect(option.objectType).toBe('MetadataAnswer');
         });
 
-        it('returned object should have dataType equal to Integer', function() {
+        xit('returned object should have dataType equal to Integer', function() {
             expect(option.dataType).toBe('Integer');
         });
 
-        it('returned object should have parentQuestion equal to Question.oid', function() {
+        xit('returned object should have parentQuestion equal to Question.oid', function() {
             expect(option.parentQuestionID).toBe('1234');
         });
 
-        it('returned object should have a label object for ptBR', function() {
+        xit('returned object should have a label object for ptBR', function() {
             expect(option.label.ptBR).not.toBeNull();
             expect(option.label.ptBR).not.toBeUndefined();
         });
 
-        it('returned object should have a label object for ptBR', function() {
+        xit('returned object should have a label object for ptBR', function() {
             expect(option.label.ptBR).not.toBeNull();
             expect(option.label.ptBR).not.toBeUndefined();
         });
 
-        it('call LabelFactory.create()', function() {
+        xit('call LabelFactory.create()', function() {
             spyOn(Mock.LabelFactory, 'create');
 
             factory.create('1234');

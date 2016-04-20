@@ -20,7 +20,7 @@ describe('MetadataBuilderService', function() {
 
     describe('getWorkResult', function() {
 
-        fit('should return true', function() {
+        xit('should return true', function() {
             service.runValidations();
 
             var work = service.getWorkResult();
@@ -32,7 +32,7 @@ describe('MetadataBuilderService', function() {
 
     describe('When an add option work is executed', function() {
 
-        fit('should return newOption', function() {
+        xit('should return newOption', function() {
             mockAddDataWork();
 
             service.execute(Mock.BuildWork);
@@ -41,7 +41,7 @@ describe('MetadataBuilderService', function() {
             expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
         });
 
-        fit('the option should be added', function() {
+        xit('the option should be added', function() {
             mockAddDataWork();
 
             service.execute(Mock.BuildWork);
@@ -50,7 +50,7 @@ describe('MetadataBuilderService', function() {
             expect(count).toEqual(1);
         });
 
-        fit('should calls the MetadataAnswerFactory.create method', function() {
+        xit('should calls the MetadataAnswerFactory.create method', function() {
             mockAddDataWork();
             spyOn(Mock.MetadataAnswerFactory, 'create');
 
@@ -63,7 +63,7 @@ describe('MetadataBuilderService', function() {
 
     describe('When an remove option work is executed', function() {
 
-        fit('Should return optionToRemove', function() {
+        xit('Should return optionToRemove', function() {
             mockRemoveData();
 
             service.execute(Mock.BuildWork);
@@ -72,7 +72,7 @@ describe('MetadataBuilderService', function() {
             expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
         });
 
-        fit('the option should be removed from options', function() {
+        xit('the option should be removed from options', function() {
             mockRemoveData();
 
             service.execute(Mock.BuildWork);
@@ -85,7 +85,7 @@ describe('MetadataBuilderService', function() {
 
     describe('When an update option work is executed', function() {
 
-        fit('Should return optionToUpdate', function() {
+        xit('Should return optionToUpdate', function() {
             mockUpdateOption();
 
             service.execute(Mock.BuildWork);
@@ -93,7 +93,7 @@ describe('MetadataBuilderService', function() {
             expect(Mock.BuildWork.type.data.objectType).toEqual('MetadataAnswer');
         });
 
-        fit('the data should be updated', function() {
+        xit('the data should be updated', function() {
             var label = Mock.survey.questionContainerContainer.A0.metadata.option.fake.label;
             mockUpdateOption();
 

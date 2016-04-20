@@ -29,6 +29,7 @@
         self.listRoutes = listRoutes;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
+        self.updateRoute = updateRoute;
         self.toJson = toJson;
 
         function listRoutes() {
@@ -53,6 +54,14 @@
             var indexToRemove = self.routes.indexOf(routeToRemove[0]);
             if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
             return routeToRemove[0];
+        }
+
+        function updateRoute(route) {
+            self.routes.forEach(function(currentRoute) {
+                if (currentRoute.index === route.index) {
+                    self.routes[currentRoute.index] = route;
+                }
+            });
         }
 
         function toJson() {

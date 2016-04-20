@@ -23,10 +23,12 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
             NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-immutable/dist/immutable.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
+            NODE_MODULES_ROOT_PATH + 'immutable/dist/immutable.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
@@ -47,7 +49,8 @@ module.exports = function(config) {
             APP_ROOT_PATH + 'config/**/*-configuration.js',
             APP_ROOT_PATH + '**/*-module.js',
             APP_ROOT_PATH + '**/*.js', {
-                pattern: 'tests/unit/**/*-spec.js',
+                /*pattern: 'tests/unit//*-spec.js',*/
+                pattern: 'tests/unit/app/editor/ui/core/vm/*-spec.js',
                 included: true
             }
         ],

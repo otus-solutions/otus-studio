@@ -35,7 +35,7 @@ describe('Navigation', function() {
         });
 
         it('should remove the route from route list by the "to" identifier', function() {
-            navigation.removeRoute(Mock.ROUTE_NAME);
+            navigation.removeRoute(0);
 
             expect(navigation.listRoutes().length).toBe(0);
         });

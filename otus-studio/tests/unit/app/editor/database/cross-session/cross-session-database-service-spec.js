@@ -84,7 +84,7 @@ describe('CrossSessionDatabaseService', function() {
         Mock.storeEntry = {
             template_oid: 'template.oid',
             contributor: 'session.owner',
-            template: Mock.template.toJson()
+            template: JSON.parse(Mock.template.toJson())
         };
     }
 

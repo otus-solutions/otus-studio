@@ -22,6 +22,8 @@
 
         var self = this;
 
+        self.widgetMap = {};
+
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
         self.getMetadataWidget = getMetadataWidget;
@@ -64,8 +66,14 @@
             return RouteNavigationWidgetFactory.create(navigation, model);
         }
 
-        function getRouteCreatorWidget(model) {
-            return RouteCreatorWidgetFactory.create(model);
+        function getRouteCreatorWidget(model, element) {
+            var widget = RouteCreatorWidgetFactory.create(model, element);
+
+            self.widgetMap[widget.type] = self.widgetMap[widget.type] || {};
+            self.widgetMap[widget.type][widget.name.guid] = widget.name;
+            self.widgetMap[widget.type][widget.destination.guid] = widget.destination;
+            self.widgetMap[widget.type][widget.processor.guid] = widget.processor;
+            return widget;
         }
     }
 

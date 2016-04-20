@@ -28,6 +28,7 @@
 
         function forward() {
             WorkspaceService.workspace.isdb.userEdits.storeUnique(prototype);
+            WorkspaceService.saveWork();
         }
     }
 
