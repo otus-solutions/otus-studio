@@ -16,7 +16,7 @@
 
             Object.keys(object).forEach(function filterProperties(key) {
                 var property = object[key];
-                if ((typeof property) != 'function') {
+                if (property instanceof Function) {
                     clone[key] = property;
                 }
             });

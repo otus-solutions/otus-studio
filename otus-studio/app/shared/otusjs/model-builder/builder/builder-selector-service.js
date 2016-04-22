@@ -16,13 +16,16 @@
         }
 
         function filter(target) {
-            var IDENTITY_REGEX = /^survey\.identity/,
-                QUESTION_CONTAINER_REGEX = /^survey\.question$/,
-                SELECTED_QUESTION_REGEX = /^survey\.question.[\d|\w|\-]+$/,
-                LABEL_REGEX = /survey\.question\.[\d|\w|\-]+\.label/,
-                UNIT_REGEX = /survey\.question\.[\d|\w|\-]+\.unit/,
-                ANSWER_OPTION_REGEX = /survey\.question\.[\d|\w|\-]+\.option/,
-                METADATA_REGEX = /survey\.question\.[\d|\w|\-]+\.metadata.option/;
+            var IDENTITY_REGEX = /^survey\.identity/;
+            var QUESTION_CONTAINER_REGEX = /^survey\.questionContainer$/;
+            var SELECTED_QUESTION_REGEX = /^survey\.questionContainer.[\d|\w|\-]+$/;
+            var LABEL_REGEX = /survey\.questionContainer\.[\d|\w|\-]+\.label/;
+            var UNIT_REGEX = /survey\.questionContainer\.[\d|\w|\-]+\.unit/;
+            var ANSWER_OPTION_REGEX = /survey\.questionContainer\.[\d|\w|\-]+\.option/;
+            var NAVIGATION_CONTAINER_REGEX = /^survey\.navigations$/;
+            var ROUTE_REGEX = /^survey\.navigations\[[\d|\w|\-]\]\.routes\[[\d|\w|\-]\]/;
+            var ROUTE_TO_REMOVE_REGEX = /^survey\.navigations\[[\d|\w|\-]\]\.routeToRemove/;
+            var METADATA_REGEX = /survey\.questionContainer\.[\d|\w|\-]+\.metadata.option/;
 
             if (LABEL_REGEX.test(target)) {
                 return 'LabelBuilderService';
@@ -36,8 +39,14 @@
                 return 'SurveyIdentityBuilderService';
             } else if (ANSWER_OPTION_REGEX.test(target)) {
                 return 'AnswerOptionBuilderService';
-            } else if (METADATA_REGEX.test(target)) {
-            	return 'MetadataAnswerBuilderService';
+            } else if (NAVIGATION_CONTAINER_REGEX.test(target)) {
+                return 'RouteBuilderService';
+            } else if (ROUTE_TO_REMOVE_REGEX.test(target)) {
+                return 'RouteBuilderService';
+            } else if (ROUTE_REGEX.test(target)) {
+                return 'RouteBuilderService';
+            }else if (METADATA_REGEX.test(target)) {
+                return 'MetadataAnswerBuilderService';
             }
 
             return target;

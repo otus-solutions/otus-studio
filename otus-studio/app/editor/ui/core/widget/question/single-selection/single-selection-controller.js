@@ -28,7 +28,7 @@
         }
 
         function update(update) {
-            if (update.data.objectType == 'QuestionAnswerOption') {
+            if (update.data.objectType === 'AnswerOption') {
                 if (update.isAddData())
                     addAnswerOption(update.data);
                 else if (update.isRemoveData())
@@ -39,12 +39,12 @@
         }
 
         function addAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId)
+            if (answerOption.parentQuestionID == $scope.widget.questionId)
                 AnswerOptionContentService.loadOption(answerOption, $scope);
         }
 
         function removeAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId) {
+            if (answerOption.parentQuestionID == $scope.widget.questionId) {
                 AnswerOptionContentService.unloadOption($element, $scope);
             }
         }

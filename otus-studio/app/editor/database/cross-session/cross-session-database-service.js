@@ -21,11 +21,10 @@
                 var entry = {
                     'template_oid': template.oid,
                     'contributor': session.owner,
-                    template: InsertHelperService.cloneObject(template)
+                    template: JSON.parse(template.toJson())
                 };
 
                 store.upsert(entry).then(function(e) {
-                    console.log('Survey armazenada localmente.');
                 });
             });
         }

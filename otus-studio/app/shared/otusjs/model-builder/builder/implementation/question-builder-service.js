@@ -5,12 +5,16 @@
         .module('otusjs.modelBuilder')
         .service('QuestionBuilderService', QuestionBuilderService);
 
-    QuestionBuilderService.$inject = ['QuestionFactory', 'QuestionNavigationFactory'];
+    QuestionBuilderService.$inject = [
+        'QuestionFactory',
+        'QuestionNavigationFactory',
+        'NavigationFactory'
+    ];
 
-    function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory) {
+    function QuestionBuilderService(QuestionFactory, QuestionNavigationFactory, NavigationFactory) {
         var self = this,
             observers = [],
-            workResult = null;
+            workResult = {};
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -22,13 +26,11 @@
 
         // TODO: Implement validator to run here
         function runValidations(work) {
-            workResult = true;
+            workResult.status = true;
         }
 
         function getWorkResult() {
-            return {
-                result: workResult
-            };
+            return workResult;
         }
 
         function execute(work) {
@@ -42,33 +44,36 @@
                 updateQuestion(work);
             }
 
+            workResult.data = question;
             notifyObservers(question, work.type);
         }
 
         function addQuestion(work) {
             var newQuestion = QuestionFactory.create(work.model, work.questionId);
-            work.survey.question[work.questionId] = newQuestion;
+            work.survey.questionContainer[work.questionId] = newQuestion;
+            work.survey.addNavigation(NavigationFactory.create(work.questionId));
 
             return newQuestion;
         }
 
         function removeQuestion(work) {
             var selectedQuestion = work.target.split('.')[2],
-                questionToRemove = work.survey.question[selectedQuestion];
+                questionToRemove = work.survey.questionContainer[selectedQuestion];
 
-            delete work.survey.question[selectedQuestion];
+            delete work.survey.questionContainer[selectedQuestion];
+            work.type.dataModel = 'Question';
             return questionToRemove;
         }
 
         function updateQuestion(work) {
             if (work.id == 'survey-questions-move-back-question') {
                 var targetQuestion = work.target;
-                var indexToMove = work.survey.question[getQuestionOID(targetQuestion)];
+                var indexToMove = work.survey.questionContainer[getQuestionOID(targetQuestion)];
             } else if (work.id == 'survey-questions-move-forward-question') {
 
             }
             // var selectedQuestion = work.target.split('.')[2],
-            //     questionToUpdate = work.survey.question[selectedQuestion];
+            //     questionToUpdate = work.survey.getQuestionContainer()[selectedQuestion];
             //
             // questionsToUpdate.label.ptBR.text = work.data.value;
         }

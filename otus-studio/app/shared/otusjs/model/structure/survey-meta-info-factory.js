@@ -12,8 +12,8 @@
         self.create = create;
 
         function create() {
-            var otusStudioVersion = "${project.version}";
-            var now = new Date(Date.now());
+            var otusStudioVersion = '${project.version}';
+            var now = Date.now();
             return new SurveyMetaInfo(now, otusStudioVersion);
         }
 
@@ -21,29 +21,25 @@
     }
 
     function SurveyMetaInfo(creationDatetime, otusStudioVersion) {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'SurveyMetaInfo',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'SurveyMetaInfo';
+        self.creationDatetime = creationDatetime;
+        self.otusStudioVersion = otusStudioVersion;
 
-        Object.defineProperty(this, 'creationDatetime', {
-            value: creationDatetime,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'otusStudioVersion', {
-            value: otusStudioVersion,
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.creationDatetime = self.creationDatetime;
+            json.otusStudioVersion = self.otusStudioVersion;
+
+            return JSON.stringify(json);
+        }
     }
 
 }());

@@ -11,10 +11,11 @@
         'LabelBuilderService',
         'UnitBuilderService',
         'AnswerOptionBuilderService',
-        'MetadataAnswerBuilderService'
+        'MetadataAnswerBuilderService',
+        'RouteBuilderService'
     ];
 
-    function BuilderMapService(SurveyIdentityBuilderService, QuestionBuilderService, LabelBuilderService, UnitBuilderService, AnswerOptionBuilderService, MetadataAnswerBuilderService) {
+    function BuilderMapService(SurveyIdentityBuilderService, QuestionBuilderService, LabelBuilderService, UnitBuilderService, AnswerOptionBuilderService, MetadataAnswerBuilderService, RouteBuilderService) {
         var self = this,
             builderMap = {
                 'SurveyIdentityBuilderService': SurveyIdentityBuilderService,
@@ -22,7 +23,8 @@
                 'LabelBuilderService': LabelBuilderService,
                 'UnitBuilderService': UnitBuilderService,
                 'AnswerOptionBuilderService': AnswerOptionBuilderService,
-                'MetadataAnswerBuilderService': MetadataAnswerBuilderService
+                'MetadataAnswerBuilderService': MetadataAnswerBuilderService,
+                'RouteBuilderService': RouteBuilderService
             };
 
         /* Public interface */

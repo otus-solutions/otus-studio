@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    var module = angular.module('otusjs.modelBuilder', []);
+    angular.module('otusjs.modelBuilder', []);
 
 }());

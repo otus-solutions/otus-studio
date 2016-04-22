@@ -35,24 +35,24 @@
         });
 
         Object.defineProperty(this, 'labelTarget', {
-            value: 'survey.question.' + questionWidget.questionId + '.label',
+            value: 'survey.questionContainer.' + questionWidget.questionId + '.label',
             writable: false
         });
 
         Object.defineProperty(this, 'unitTarget', {
-            value: 'survey.question.' + questionWidget.questionId + '.unit',
+            value: 'survey.questionContainer.' + questionWidget.questionId + '.unit',
             writable: false
         });
 
         Object.defineProperty(this, 'questionTarget', {
-            value: 'survey.question.' + questionWidget.questionId,
+            value: 'survey.questionContainer.' + questionWidget.questionId,
             writable: false
         });
 
         Object.defineProperty(this, 'questionTemplate', {
             value: questionWidget.template,
             writable: false
-        });        
+        });
 
         Object.defineProperty(this, 'metadataTemplate', {
             value: metadataWidget.template,

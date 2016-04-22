@@ -8,9 +8,9 @@
     AnswerOptionBuilderService.$inject = ['AnswerOptionFactory'];
 
     function AnswerOptionBuilderService(AnswerOptionFactory) {
-        var self = this,
-            observers = [],
-            workResult = null;
+        var self = this;
+        var observers = [];
+        var workResult = null;
 
         /* Public interface */
         self.runValidations = runValidations;
@@ -47,27 +47,27 @@
 
         function addOption(work) {
             var selectedQuestion = extractQuestionReference(work.target);
-            var nextOID = Object.keys(work.survey.question[selectedQuestion].option).length;
+            var nextOID = Object.keys(work.survey.questionContainer[selectedQuestion].option).length;
 
             var newOption = AnswerOptionFactory.create(nextOID, selectedQuestion);
-            work.survey.question[selectedQuestion].option[nextOID] = newOption;
+            work.survey.questionContainer[selectedQuestion].option[nextOID] = newOption;
 
             return newOption;
         }
 
         function removeOption(work) {
             var selectedQuestion = work.target.split('.')[2],
-                indexToRemove = Object.keys(work.survey.question[selectedQuestion].option).length - 1,
-                questionToRemove = work.survey.question[selectedQuestion].option[indexToRemove];
+                indexToRemove = Object.keys(work.survey.questionContainer[selectedQuestion].option).length - 1,
+                questionToRemove = work.survey.questionContainer[selectedQuestion].option[indexToRemove];
 
-            delete work.survey.question[selectedQuestion].option[indexToRemove];
+            delete work.survey.questionContainer[selectedQuestion].option[indexToRemove];
             return questionToRemove;
         }
 
         function updateOption(work) {
             var selectedQuestion = work.target.split('.')[2],
                 selectedOption = work.target.split('.')[4],
-                optionToUpdate = work.survey.question[selectedQuestion].option[selectedOption];
+                optionToUpdate = work.survey.questionContainer[selectedQuestion].option[selectedOption];
 
             optionToUpdate.label.ptBR.plainText = work.data.plainText || work.data.value;
             optionToUpdate.label.ptBR.formattedText = work.data.formattedText;

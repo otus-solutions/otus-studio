@@ -19,35 +19,14 @@
     }
 
     function QuestionAnswerOptionEditorWidget(model) {
-        Object.defineProperty(this, 'model', {
-            value: model,
-            writable: false
-        });
+        var self = this;
 
-        Object.defineProperty(this, 'id', {
-            value: model.oid,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'esId', {
-            value: 'single-selection-' + model.parentQuestion + '-option-' + model.oid,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'esTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.option.' + model.oid,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'addButtonTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.option.',
-            writable: false
-        });
-
-        Object.defineProperty(this, 'removeButtonTarget', {
-            value: 'survey.question.' + model.parentQuestion + '.option.' + model.oid,
-            writable: false
-        });
+        self.model = model;
+        self.value = model.value;
+        self.esId = 'single-selection-' + model.parentQuestionID + '-option-' + model.value;
+        self.esTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.' + model.value;
+        self.addButtonTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.';
+        self.removeButtonTarget = 'survey.questionContainer.' + model.parentQuestionID + '.option.' + model.value;
     }
 
 }());

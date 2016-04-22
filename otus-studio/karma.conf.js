@@ -2,8 +2,7 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
 module.exports = function(config) {
-    var APP_PRIVATE_ROOT_PATH = 'app/';
-    var APP_PUBLIC_ROOT_PATH = 'public/';
+    var APP_ROOT_PATH = 'app/';
     var DEPENDENCIES_ROOT_PATH = 'app/shared/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
@@ -18,40 +17,48 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             /* External dependencies */
+            NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
             NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-immutable/dist/immutable.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
+            NODE_MODULES_ROOT_PATH + 'immutable/dist/immutable.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
-
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/raphael-min.js',
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graffle.js',
+            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',
             /* Otus platform */
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */
-            APP_PRIVATE_ROOT_PATH + 'app.js',
-            APP_PRIVATE_ROOT_PATH + 'config/**/*-configuration.js',
-            APP_PRIVATE_ROOT_PATH + '**/*-module.js',
-            APP_PRIVATE_ROOT_PATH + '**/*.js', {
-                pattern: 'tests/unit/**/*-spec.js',
+            APP_ROOT_PATH + 'app.js',
+            APP_ROOT_PATH + 'config/**/*-configuration.js',
+            APP_ROOT_PATH + '**/*-module.js',
+            APP_ROOT_PATH + '**/*.js', {
+                /*pattern: 'tests/unit//*-spec.js',*/
+                pattern: 'tests/unit/app/editor/ui/core/vm/*-spec.js',
                 included: true
             }
         ],
 
         // list of files to exclude
         exclude: [
-            'tests/unit/**/*-spec-sample.js'
+            'tests/unit/**/*-spec-sample.js',
+            'tests/unit/**/*-spec-ignore.js'
         ],
 
         // preprocess matching files before serving them to the browser

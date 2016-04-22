@@ -2,25 +2,25 @@
 	<md-radio-group class="radio-group">
 		<div radio-container ng-repeat="metadataOption in metadataAnswerOptions track by $index" layout="row" style="margin: 10px">
 			<md-radio-button aria-label="{{metadataOption.id}}" ng-value="$index" flex style="margin: 0"></md-radio-button>
-			<div flex="95" contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da opção de metadado" 
-				editing-source 
-				es-type="div-editable" 
-				es-id="{{metadataOption.esId}}" 
+			<div flex="95" contenteditable="true" edit-mode edit-placeholder="Clique para inserir o texto da opção de metadado"
+				editing-source
+				es-type="div-editable"
+				es-id="{{metadataOption.esId}}"
 				es-target="{{metadataOption.esTarget}}"></div>
 		</div>
 	</md-radio-group>
-	
+
 	<div>
 		<md-button class="md-raised" type="button"
 			editing-source
 			es-type="add-button"
 			es-id="metadata-{{::$parent.$parent.wiget.questionId}}-add-option"
-			es-target="survey.question.{{::$parent.$parent.widget.questionId}}.metadata.option">Adicionar</md-button>
+			es-target="survey.questionContainer.{{::$parent.$parent.widget.questionId}}.metadata.option">Adicionar</md-button>
 
 		<md-button class="md-raised" type="button"
 			editing-source
 			es-type="remove-button"
 			es-id="metadata-{{::$parent.$parent.wiget.questionId}}-remove-option"
-			es-target="survey.question.{{::$parent.$parent.widget.questionId}}.metadata.option.{{lastOptionIndex}}">Remover</md-button>
+			es-target="survey.questionContainer.{{::$parent.$parent.widget.questionId}}.metadata.option.{{lastOptionIndex}}">Remover</md-button>
 	</div>
 </md-content>

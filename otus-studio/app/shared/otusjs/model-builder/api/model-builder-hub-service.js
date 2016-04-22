@@ -9,10 +9,11 @@
         'AnswerOptionBuilderService',
         'LabelBuilderService',
         'QuestionBuilderService',
-        'MetadataAnswerBuilderService'
+        'MetadataAnswerBuilderService',
+	'RouteBuilderService'
     ];
 
-    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService, MetadataAnswerBuilderService) {
+    function ModelBuilderHubService(AnswerOptionBuilder, LabelBuilderService, QuestionBuilderService, MetadataAnswerBuilderService, RouteBuilderService) {
         var self = this;
 
         /* Public interface */
@@ -20,6 +21,7 @@
         self.plugToLabelBuilder = plugToLabelBuilder;
         self.plugToQuestionBuilder = plugToQuestionBuilder;
         self.plugToMetadataAnswerBuilder = plugToMetadataAnswerBuilder;
+self.plugToNavigationBuilder = plugToNavigationBuilder;
 
         function plugToAnswerOptionBuilder(observer) {
             AnswerOptionBuilder.registerObserver(observer);
@@ -35,6 +37,10 @@
 
         function plugToMetadataAnswerBuilder(observer) {
         	MetadataAnswerBuilderService.registerObserver(observer);
+        }
+
+	function plugToNavigationBuilder(observer) {
+            RouteBuilderService.registerObserver(observer);
         }
 
         // function unplugFromAnswerOptionBuilder(observer) {

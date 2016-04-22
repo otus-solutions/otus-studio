@@ -8,8 +8,9 @@
             'studio.dashboard',
             'studio.authenticator',
             'editor',
-            /* Otus platform modules */
             'otusjs',
+            'preview',
+            /* Otus platform modules */
             'ui.components',
             'utils'
         ]);

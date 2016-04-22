@@ -18,7 +18,6 @@
                 owner: 'user'
             });
             WorkspaceService.startNewWork(initializationData);
-            console.log(WorkspaceService.workspace);
         }
     }
 

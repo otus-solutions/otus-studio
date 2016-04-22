@@ -17,8 +17,8 @@
         self.create = create;
 
         function create(editingTarget) {
-            var builderName = BuilderSelectorService.getBuilderName(editingTarget),
-                builder = BuilderMapService.getBuilder(builderName);
+            var builderName = BuilderSelectorService.getBuilderName(editingTarget);
+            var builder = BuilderMapService.getBuilder(builderName);
 
             return builder;
         }

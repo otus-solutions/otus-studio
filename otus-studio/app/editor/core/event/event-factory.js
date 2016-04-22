@@ -8,23 +8,27 @@
     EventFactory.$inject = [
         'EventTypeFactory',
         'AddDataEventFactory',
+        'PreAddDataEventFactory',
         'RemoveDataEventFactory',
         'SelectDataEventFactory',
         'UpdateDataEventFactory',
+        'PreUpdateDataEventFactory',
         'TouchDataEventFactory',
         'UntouchDataEventFactory'
     ];
 
-    function EventFactory(EventTypeFactory, AddDataEventFactory, RemoveDataEventFactory, SelectDataEventFactory, UpdateDataEventFactory, TouchDataEventFactory,
+    function EventFactory(EventTypeFactory, AddDataEventFactory, PreAddDataEventFactory, RemoveDataEventFactory, SelectDataEventFactory, UpdateDataEventFactory, PreUpdateDataEventFactory, TouchDataEventFactory,
         UntouchDataEventFactory) {
 
         var self = this,
 
             factories = {
                 'ADD_DATA': AddDataEventFactory,
+                'PRE_ADD_DATA': PreAddDataEventFactory,
                 'REMOVE_DATA': RemoveDataEventFactory,
                 'SELECT_DATA': SelectDataEventFactory,
                 'UPDATE_DATA': UpdateDataEventFactory,
+                'PRE_UPDATE_DATA': PreUpdateDataEventFactory,
                 'TOUCH_DATA': TouchDataEventFactory,
                 'UNTOUCH_DATA': UntouchDataEventFactory
             };
@@ -33,8 +37,8 @@
         self.create = create;
 
         function create(editingSource, newState, listener) {
-            var eventType = EventTypeFactory.create(editingSource.type, listener),
-                eventPrototype = new Event(editingSource, newState, eventType);
+            var eventType = EventTypeFactory.create(editingSource.type, listener);
+            var eventPrototype = new Event(editingSource, newState, eventType);
 
             return factories[eventType.type].create(eventPrototype);
         }

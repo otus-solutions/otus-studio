@@ -12,6 +12,7 @@
 
         var parserMap = {
             'input-text': InputTextParser,
+            'pre-input-text': InputTextParser,
             'div-editable': DivEditableParser
         };
 

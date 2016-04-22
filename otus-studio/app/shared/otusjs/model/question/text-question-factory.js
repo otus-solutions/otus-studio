@@ -4,58 +4,44 @@
     angular
         .module('otusjs.model')
         .factory('TextQuestionFactory', TextQuestionFactory);
-    
-    TextQuestionFactory.$inject = ['MetadataGroupFactory'];
 
-    function TextQuestionFactory(MetadataGroupFactory) {
+    function TextQuestionFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid, prototype) {
-            return new TextQuestion(oid, prototype, MetadataGroupFactory);
+        function create(templateID, prototype) {
+            return new TextQuestion(templateID, prototype);
         }
 
         return self;
     }
 
-    function TextQuestion(oid, prototype, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: prototype.objectType,
-            writable: false,
-            enumerable: true
-        });
+    function TextQuestion(templateID, prototype) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'TextQuestion',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = prototype.objectType;
+        self.objectType = 'TextQuestion';
+        self.templateID = templateID;
+        self.dataType = 'String';
+        self.label = prototype.label;
+        self.metadata = prototype.metadata;
 
-        Object.defineProperty(this, 'oid', {
-            value: prototype.oid,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'String',
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'label', {
-            value: prototype.label,
-            writable: true,
-            enumerable: true
-        });
-        
-        Object.defineProperty(this, 'metadata', {
-        	value: MetadataGroupFactory.create(),
-        	writable : true, 
-        	enumerable : true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.label = self.label;
+            json.metadata = self.metadata;
+
+            return JSON.stringify(json);
+        }
     }
 
 }());

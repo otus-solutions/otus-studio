@@ -10,8 +10,10 @@
 
         var eventTypeMap = {
             'input-text': new EventType('UPDATE_DATA'),
+            'pre-input-text': new EventType('PRE_UPDATE_DATA'),
             'div-editable': new EventType('UPDATE_DATA'),
             'add-button': new EventType('ADD_DATA'),
+            'pre-add-button': new EventType('PRE_ADD_DATA'),
             'remove-button': new EventType('REMOVE_DATA'),
             'update-button': new EventType('UPDATE_DATA'),
             'question-editor': {
@@ -45,8 +47,10 @@
 
         /* Public interface */
         self.isAddData = isAddData;
+        self.isPreAddData = isPreAddData;
         self.isRemoveData = isRemoveData;
         self.isUpdateData = isUpdateData;
+        self.isPreUpdateData = isPreUpdateData;
         self.isSelectData = isSelectData;
         self.isTouchData = isTouchData;
         self.isUntouchData = isUntouchData;
@@ -55,12 +59,20 @@
             return (self.type == 'ADD_DATA');
         }
 
+        function isPreAddData() {
+            return (self.type == 'PRE_ADD_DATA');
+        }
+
         function isRemoveData() {
             return (self.type == 'REMOVE_DATA');
         }
 
         function isUpdateData() {
             return (self.type == 'UPDATE_DATA');
+        }
+
+        function isPreUpdateData() {
+            return (self.type == 'PRE_UPDATE_DATA');
         }
 
         function isSelectData() {

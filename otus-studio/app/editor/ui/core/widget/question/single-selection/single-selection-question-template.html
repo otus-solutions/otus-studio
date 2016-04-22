@@ -15,12 +15,13 @@
             editing-source
             es-type="add-button"
             es-id="single-selection-{{::$parent.$parent.widget.questionId}}-add-option"
-            es-target="survey.question.{{::$parent.$parent.widget.questionId}}.option">Adicionar</md-button>
+            es-model="answer-option"
+            es-target="survey.questionContainer.{{::$parent.$parent.widget.questionId}}.option">Adicionar</md-button>
 
         <md-button class="md-raised" type="button"
             editing-source
             es-type="remove-button"
             es-id="single-selection-{{::$parent.$parent.widget.questionId}}-remove-option"
-            es-target="survey.question.{{::$parent.$parent.widget.questionId}}.option.{{lastOptionIndex}}">Remover</md-button>
+            es-target="survey.questionContainer.{{::$parent.$parent.widget.questionId}}.option.{{lastOptionIndex}}">Remover</md-button>
     </div>
 </md-content>

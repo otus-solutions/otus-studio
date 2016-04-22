@@ -54,6 +54,12 @@
             writable: true,
             enumerable: true
         });
+
+        Object.defineProperty(this, 'context', {
+            value: null,
+            writable: true,
+            enumerable: true
+        });
     }
 
 }());

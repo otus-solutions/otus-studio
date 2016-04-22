@@ -8,22 +8,35 @@
     UIUpdateCommandFactory.$inject = [
         'SurveyPageContentService',
         'QuestionDataEditorContentService',
-        'MainContainerContentService'
+        'MainContainerContentService',
+        'NavigationEditorContentService'
     ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService) {
+    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService, NavigationEditorContentService) {
         var self = this,
 
             updateCommandMap = {
-                'NEW_PROJECT': [SurveyPageContentService.reset],
-                'ADD_DATA': [SurveyPageContentService.loadQuestion],
-                'REMOVE_DATA': [SurveyPageContentService.unloadQuestion],
-                'UPDATE_DATA': [SurveyPageContentService.updateQuestion],
+                'NEW_PROJECT': [
+                    SurveyPageContentService.reset
+                ],
+                'ADD_DATA': [
+                    SurveyPageContentService.loadQuestion
+                ],
+                'REMOVE_DATA': {
+                    'Question': [SurveyPageContentService.unloadQuestion],
+                    'Route': [NavigationEditorContentService.unloadRoute]
+                },
+                'UPDATE_DATA': [
+                    SurveyPageContentService.updateQuestion
+                ],
                 'SELECT_DATA': {
                     'Question': [
                         MainContainerContentService.showQuestionDataEditor
                     ]
-                }
+                },
+                'PRE_UPDATE_DATA': [
+                    NavigationEditorContentService.loadRoute
+                ]
             };
 
         /* Public interface */
@@ -44,9 +57,9 @@
     }
 
     function UIUpdate(updateCommands, updateData) {
-        var self = this,
-            commands = updateCommands,
-            data = updateData;
+        var self = this;
+        var commands = updateCommands;
+        var data = updateData;
 
         /* Public interface */
         self.execute = execute;

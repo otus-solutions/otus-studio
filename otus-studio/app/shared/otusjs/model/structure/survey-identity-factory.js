@@ -11,55 +11,41 @@
         /* Public interface */
         self.create = create;
 
-        function create(name, acronym) {
-            return new SurveyIdentity(name, acronym);
+        function create(name, acronym, version) {
+            return new SurveyIdentity(name, acronym, version);
         }
 
         return self;
     }
 
     function SurveyIdentity(name, acronym, version) {
-        Object.defineProperty(this, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'SurveyIdentity',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'SurveyIdentity';
+        self.name = name;
+        self.acronym = acronym;
+        // self.version = version;
+        self.recommendedTo = '';
+        self.description = '';
+        self.keywords = [];
 
-        Object.defineProperty(this, 'name', {
-            value: name,
-            writable: true,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'acronym', {
-            value: acronym,
-            writable: true,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'recommendedTo', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.name = self.name;
+            json.acronym = self.acronym;
+            // json.version = self.version;
+            json.recommendedTo = self.recommendedTo;
+            json.description = self.description;
+            json.keywords = self.keywords;
 
-        Object.defineProperty(this, 'description', {
-            value: '',
-            writable: true,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'keywords', {
-            value: [],
-            writable: true,
-            enumerable: true
-        });
+            return JSON.stringify(json);
+        }
     }
 
 }());

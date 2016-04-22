@@ -8,7 +8,8 @@
         /* 3rd-party modules */
         'ui.router',
         'lokijs',
-        'indexedDB'
+        'indexedDB',
+        'immutable'
     ]);
 
 }());

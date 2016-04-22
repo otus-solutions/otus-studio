@@ -13,8 +13,8 @@
     ];
 
     function EditingSourceController($scope, $element, $attrs, EditingSourceService) {
-        var self = this,
-            editingSource = null;
+        var self = this;
+        var editingSource = null;
 
         /* Public interface */
         self.catchEditingSourceComponent = catchEditingSourceComponent;

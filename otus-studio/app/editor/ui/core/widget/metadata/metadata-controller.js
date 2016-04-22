@@ -28,7 +28,7 @@
         }
 
         function update(update) {
-            if (!!update.data && update.data.objectType == 'MetadataAnswer') {
+            if (!!update.data && update.data.objectType === 'MetadataAnswer') {
                 if (update.isAddData())
                     addAnswerOption(update.data);
                 else if (update.isRemoveData())
@@ -39,12 +39,12 @@
         }
 
         function addAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId)
+            if (answerOption.parentQuestionID == $scope.widget.questionId)
                 MetadataAnswerOptionContentService.loadOption(answerOption, $scope);
         }
 
         function removeAnswerOption(answerOption) {
-            if (answerOption.parentQuestion == $scope.widget.questionId) {
+            if (answerOption.parentQuestionID == $scope.widget.questionId) {
                 MetadataAnswerOptionContentService.unloadOption($element, $scope);
             }
         }

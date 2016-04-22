@@ -5,63 +5,47 @@
         .module('otusjs.model')
         .factory('SingleSelectionQuestionFactory', SingleSelectionQuestionFactory);
 
-    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory', 'MetadataGroupFactory'];
+    SingleSelectionQuestionFactory.$inject = ['AnswerOptionFactory'];
 
-    function SingleSelectionQuestionFactory(AnswerOptionFactory, MetadataGroupFactory) {
+    function SingleSelectionQuestionFactory(AnswerOptionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(oid, prototype) {
-            return new SingleSelectionQuestion(oid, prototype, AnswerOptionFactory, MetadataGroupFactory);
+        function create(templateID, prototype) {
+            return new SingleSelectionQuestion(templateID, prototype, AnswerOptionFactory);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestion(oid, prototype, AnswerOptionFactory, MetadataGroupFactory) {
-        Object.defineProperty(this, 'extends', {
-            value: prototype.objectType,
-            writable: false,
-            enumerable: true
-        });
+    function SingleSelectionQuestion(templateID, prototype, AnswerOptionFactory) {
+        var self = this;
 
-        Object.defineProperty(this, 'objectType', {
-            value: 'SingleSelectionQuestion',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = prototype.objectType;
+        self.objectType = 'SingleSelectionQuestion';
+        self.templateID = templateID;
+        self.dataType = 'Integer';
+        self.label = prototype.label;
+        self.option = {};
+        self.metadata = prototype.metadata;
 
-        Object.defineProperty(this, 'oid', {
-            value: prototype.oid,
-            writable: false,
-            enumerable: true
-        });
+        self.toJson = toJson;
 
-        Object.defineProperty(this, 'dataType', {
-            value: 'Integer',
-            writable: false,
-            enumerable: true
-        });
+        function toJson() {
+            var json = {};
 
-        Object.defineProperty(this, 'label', {
-            value: prototype.label,
-            writable: true,
-            enumerable: true
-        });
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.templateID = self.templateID;
+            json.dataType = self.dataType;
+            json.label = self.label;
+            json.option = self.option;
+            json.metadata = self.metadata;
 
-        Object.defineProperty(this, 'option', {
-            value: {},
-            writable: true,
-            enumerable: true
-        });
-        
-        Object.defineProperty(this, 'metadata', {
-        	value: MetadataGroupFactory.create(),
-        	writable : true, 
-        	enumerable : true
-        });
+            return JSON.stringify(json);
+        }
     }
 
 }());

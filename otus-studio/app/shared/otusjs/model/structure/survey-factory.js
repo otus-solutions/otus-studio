@@ -18,8 +18,8 @@
         self.create = create;
 
         function create(name, acronym) {
-            var metainfo = SurveyMetaInfoFactory.create(),
-                identity = SurveyIdentityFactory.create(name, acronym);
+            var metainfo = SurveyMetaInfoFactory.create();
+            var identity = SurveyIdentityFactory.create(name, acronym);
 
             return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
         }
@@ -27,53 +27,97 @@
         return self;
     }
 
-    function Survey(metainfo, identity, uuid) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid) {
+
         var self = this;
 
-        Object.defineProperty(self, 'extends', {
-            value: 'StudioObject',
-            writable: false,
-            enumerable: true
-        });
+        self.extents = 'StudioObject';
+        self.objectType = 'Survey';
+        self.oid = uuid;
+        self.identity = surveyIdentity;
+        self.metainfo = surveyMetainfo;
+        self.questionContainer = {};
+        self.navigationList = [];
 
-        Object.defineProperty(self, 'objectType', {
-            value: 'Survey',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'oid', {
-            value: uuid,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'identity', {
-            value: identity,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'metainfo', {
-            value: metainfo,
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(self, 'question', {
-            value: {},
-            writable: false,
-            enumerable: true
-        });
-
-        /*Public interface*/
         self.questionsCount = questionsCount;
+        self.addNavigation = addNavigation;
+        self.removeNavigation = removeNavigation;
+        self.listNavigations = listNavigations;
+        self.listNavigation = listNavigation;
+        self.listNavigationByIndex = listNavigationByIndex;
+        self.toJson = toJson;
 
         function questionsCount() {
-            var propertyList = Object.keys(self.question).filter(function filterOnlyFields(property) {
+            var propertyList = Object.keys(self.questionContainer).filter(function filterOnlyFields(property) {
                 return ((typeof property) != 'function');
             });
             return propertyList.length;
+        }
+
+        function listNavigations() {
+            var clone = [];
+
+            self.navigationList.forEach(function(navigation) {
+                clone.push(navigation);
+            });
+
+            return clone;
+        }
+
+        function listNavigation(criteria) {
+            return fetchByOrigin(criteria);
+        }
+
+        function listNavigationByIndex(index) {
+            return fetchByIndex(index);
+        }
+
+        function addNavigation(navigation) {
+            navigation.index = self.navigationList.length;
+            self.navigationList.push(navigation);
+        }
+
+        function removeNavigation(origin) {
+            var navigationToRemove = fetchByOrigin(origin);
+
+            var indexToRemove = self.navigationList.indexOf(navigationToRemove);
+            if (indexToRemove > -1) self.navigationList.splice(indexToRemove, 1);
+        }
+
+        function fetchByOrigin(origin) {
+            var filteredNavigation = self.navigationList.filter(function(navigation) {
+                return navigation.origin === origin;
+            });
+
+            return filteredNavigation[0];
+        }
+
+        function fetchByIndex(index) {
+            var filteredNavigation = self.navigationList.filter(function(navigation) {
+                return navigation.index === index;
+            });
+
+            return filteredNavigation[0];
+        }
+
+        function toJson() {
+            var json = {};
+
+            json.extents = self.extents;
+            json.objectType = self.objectType;
+            json.oid = self.oid;
+            json.identity = self.identity.toJson();
+            json.metainfo = self.metainfo.toJson();
+            json.questionContainer = {};
+            for (var question in self.questionContainer) {
+                json.questionContainer[question] = self.questionContainer[question].toJson();
+            }
+            json.navigationList = [];
+            self.navigationList.forEach(function(navigation) {
+                json.navigationList.push(navigation.toJson());
+            });
+
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 
