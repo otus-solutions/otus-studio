@@ -9,6 +9,7 @@
 
     function numericQuestion(mpath) {
         var ddo = {
+            scope: {},
             templateUrl: mpath.getWidgetPath('numeric'),
             retrict: 'E'
         };

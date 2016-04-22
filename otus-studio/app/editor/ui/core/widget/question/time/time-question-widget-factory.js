@@ -11,28 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(prototype) {
-            return new TimeQuestionWidget(prototype);
+        function create(widget) {
+            return new TimeQuestionWidget(widget);
         }
 
         return self;
     }
 
-    function TimeQuestionWidget(prototype) {
-        Object.defineProperty(this, 'model', {
-            value: prototype.model,
-            writable: false
-        });
+    function TimeQuestionWidget(widget) {
+        var self = this;
 
-        Object.defineProperty(this, 'questionId', {
-            value: prototype.questionId,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'type', {
-            value: prototype.type,
-            writable: false
-        });
+        self.widget = widget;
+        self.widget.template = '<time-question></time-question>';
+        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());

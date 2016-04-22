@@ -9,6 +9,7 @@
 
     function textQuestion(mpath) {
         var ddo = {
+            scope: {},
             templateUrl: mpath.getWidgetPath('text'),
             retrict: 'E'
         };

@@ -11,28 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(prototype) {
-            return new NumericQuestionWidget(prototype);
+        function create(widget) {
+            return new NumericQuestionWidget(widget);
         }
 
         return self;
     }
 
-    function NumericQuestionWidget(prototype) {
-        Object.defineProperty(this, 'model', {
-            value: prototype.model,
-            writable: false
-        });
+    function NumericQuestionWidget(widget) {
+        var self = this;
 
-        Object.defineProperty(this, 'questionId', {
-            value: prototype.questionId,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'type', {
-            value: prototype.type,
-            writable: false
-        });
+        self.widget = widget;
+        self.widget.template = '<numeric-question></numeric-question>';
+        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());

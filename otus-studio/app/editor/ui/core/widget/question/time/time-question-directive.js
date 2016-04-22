@@ -9,6 +9,7 @@
 
     function timeQuestion(mpath) {
         var ddo = {
+            scope: {},
             templateUrl: mpath.getWidgetPath('time'),
             retrict: 'E'
         };

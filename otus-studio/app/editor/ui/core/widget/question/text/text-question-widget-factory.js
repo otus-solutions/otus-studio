@@ -11,28 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(prototype) {
-            return new TextQuestionWidget(prototype);
+        function create(widget) {
+            return new TextQuestionWidget(widget);
         }
 
         return self;
     }
 
-    function TextQuestionWidget(prototype) {
-        Object.defineProperty(this, 'model', {
-            value: prototype.model,
-            writable: false
-        });
+    function TextQuestionWidget(widget) {
+        var self = this;
 
-        Object.defineProperty(this, 'questionId', {
-            value: prototype.questionId,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'type', {
-            value: prototype.type,
-            writable: false
-        });
+        self.widget = widget;
+        self.widget.template = '<text-question></text-question>';
+        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());
