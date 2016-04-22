@@ -27,33 +27,18 @@
         /* Public interface */
         self.create = create;
 
-        function create(model) {
-            var widget = new QuestionWidget(model);
-            return widgetFactories[model.objectType].create(widget);
+        function create(bind) {
+            bind.scope.$parent.$parent.widget.header = bind.scope.question.templateID;
+            var widget = new QuestionWidget(bind.scope.question);
+            return widgetFactories[bind.scope.question.objectType].create(widget);
         }
 
         return self;
     }
 
-    function QuestionWidget(model) {
-        Object.defineProperty(this, 'model', {
-            value: model,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'questionId', {
-            value: model.templateID
-        });
-
-        Object.defineProperty(this, 'type', {
-            value: model.objectType,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'label', {
-            value: model.label.ptBR.plainText
-        });
-
+    function QuestionWidget(question) {
+        var self = this;
+        self.question = question;
     }
 
 }());

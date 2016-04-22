@@ -3,18 +3,20 @@
 
     angular
         .module('editor.ui')
-        .directive('otusInputText', otusInputText);
+        .directive('otusAddButton', otusAddButton);
 
-    function otusInputText() {
+    function otusAddButton() {
         var ddo = {
             scope: {
+                class: '@',
                 label: '@',
                 ariaLabel: '@',
-                leftIcon: '@'
+                leftIcon: '@',
+                ngModel: '@'
             },
             transclude: true,
-            templateUrl: 'app/editor/ui/core/widget/base/input-text/input-text.html',
-            controller: 'OtusInputTextController',
+            templateUrl: 'app/editor/ui/core/widget/base/add-button/add-button.html',
+            controller: 'OtusAddButtonController',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs, controller, transclude) {
                 scope.$emit('otusWidgetBinding', controller.component);

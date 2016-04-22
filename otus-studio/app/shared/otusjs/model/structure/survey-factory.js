@@ -40,6 +40,8 @@
         self.navigationList = [];
 
         self.questionsCount = questionsCount;
+        self.addQuestion = addQuestion;
+        self.updateQuestion = updateQuestion;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
@@ -52,6 +54,15 @@
                 return ((typeof property) != 'function');
             });
             return propertyList.length;
+        }
+
+        function addQuestion(question) {
+            self.questionContainer[question.templateID] = question;
+            // self.addNavigation(NavigationFactory.create(work.questionId));
+        }
+
+        function updateQuestion(question) {
+            self.navigationList[question.templateID] = question;
         }
 
         function listNavigations() {

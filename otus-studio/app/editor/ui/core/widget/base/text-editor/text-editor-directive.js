@@ -3,21 +3,22 @@
 
     angular
         .module('editor.ui')
-        .directive('otusInputText', otusInputText);
+        .directive('otusTextEditor', otusTextEditor);
 
-    function otusInputText() {
+    function otusTextEditor() {
         var ddo = {
             scope: {
+                placeholder: '@',
                 label: '@',
                 ariaLabel: '@',
-                leftIcon: '@'
+                leftIcon: '@',
+                ngModel: '='
             },
             transclude: true,
-            templateUrl: 'app/editor/ui/core/widget/base/input-text/input-text.html',
-            controller: 'OtusInputTextController',
+            templateUrl: 'app/editor/ui/core/widget/base/text-editor/text-editor.html',
+            controller: 'OtusTextEditorController',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs, controller, transclude) {
-                scope.$emit('otusWidgetBinding', controller.component);
             }
         };
 

@@ -5,7 +5,11 @@
         .module('editor.core')
         .service('EditingSourceService', EditingSourceService);
 
-    EditingSourceService.$inject = ['EditingSourceFactory', 'TriggerFactory', 'WidgetService'];
+    EditingSourceService.$inject = [
+        'EditingSourceFactory',
+        'TriggerFactory',
+        'WidgetService'
+    ];
 
     function EditingSourceService(EditingSourceFactory, TriggerFactory, WidgetService) {
 
@@ -28,7 +32,6 @@
         function appendTriggersTo(editingSource) {
             editingSource.activeTrigger = TriggerFactory.produceTrigger(editingSource);
         }
-
     }
 
 }());

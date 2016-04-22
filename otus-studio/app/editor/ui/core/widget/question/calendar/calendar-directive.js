@@ -9,6 +9,7 @@
 
     function calendarQuestion(mpath) {
         var ddo = {
+            scope: {},
             templateUrl: mpath.getWidgetPath('calendar'),
             retrict: 'E'
         };

@@ -39,18 +39,6 @@
         self.label = bind.scope.label;
         self.ariaLabel = bind.scope.ariaLabel;
         self.leftIcon = bind.scope.leftIcon;
-
-        /* Editor engine interface */
-        self.esWidget = self.name;
-        self.esGuid = self.guid;
-        self.esType = 'input-text';
-        self.esTarget = '';
-        self.editingSource = EditingSourceService.createEditingSource(self);
-
-        bind.element.on('change', function() {
-            console.log(self.ngModel);
-            EventService.performEvent(self.editingSource);
-        });
     }
 
 }());

@@ -3,18 +3,20 @@
 
     angular
         .module('editor.ui')
-        .directive('otusInputText', otusInputText);
+        .directive('otusRemoveButton', otusRemoveButton);
 
-    function otusInputText() {
+    function otusRemoveButton() {
         var ddo = {
             scope: {
+                class: '@',
                 label: '@',
                 ariaLabel: '@',
-                leftIcon: '@'
+                icon: '@',
+                ngModel: '@'
             },
             transclude: true,
-            templateUrl: 'app/editor/ui/core/widget/base/input-text/input-text.html',
-            controller: 'OtusInputTextController',
+            templateUrl: 'app/editor/ui/core/widget/base/remove-button/remove-button.html',
+            controller: 'OtusRemoveButtonController',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs, controller, transclude) {
                 scope.$emit('otusWidgetBinding', controller.component);

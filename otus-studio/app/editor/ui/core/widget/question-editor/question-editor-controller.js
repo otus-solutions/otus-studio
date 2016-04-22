@@ -3,16 +3,16 @@
 
     angular
         .module('editor.ui')
-        .controller('OtusInputTextController', OtusInputTextController);
+        .controller('OtusQuestionEditorController', OtusQuestionEditorController);
 
-    OtusInputTextController.$inject = [
+    OtusQuestionEditorController.$inject = [
         '$scope',
         '$element',
         'OtusInputTextWidgetFactory',
         'WorkspaceService'
     ];
 
-    function OtusInputTextController($scope, $element, OtusInputTextWidgetFactory, WorkspaceService) {
+    function OtusQuestionEditorController($scope, $element, OtusInputTextWidgetFactory, WorkspaceService) {
         var self = this;
 
         $scope.$emit('otusWidgetPreLoad');

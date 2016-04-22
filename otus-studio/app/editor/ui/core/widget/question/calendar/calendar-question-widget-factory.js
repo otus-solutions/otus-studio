@@ -11,28 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(prototype) {
-            return new CalendarQuestionWidget(prototype);
+        function create(widget) {
+            return new CalendarQuestionWidget(widget);
         }
 
         return self;
     }
 
-    function CalendarQuestionWidget(prototype) {
-        Object.defineProperty(this, 'model', {
-            value: prototype.model,
-            writable: false
-        });
+    function CalendarQuestionWidget(widget) {
+        var self = this;
 
-        Object.defineProperty(this, 'questionId', {
-            value: prototype.questionId,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'type', {
-            value: prototype.type,
-            writable: false
-        });
+        self.widget = widget;
+        self.widget.template = '<calendar-question></calendar-question>';
+        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());

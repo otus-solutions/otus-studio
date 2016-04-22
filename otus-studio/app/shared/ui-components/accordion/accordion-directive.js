@@ -16,7 +16,7 @@
                     transclude: true,
                     templateUrl: 'app/shared/ui-components/accordion/accordion-template.html',
                     scope: {
-                        title: '@',
+                        header: '@',
                         widget: '='
                     },
                     link: function(scope, element, attrs, controller, transclude) {

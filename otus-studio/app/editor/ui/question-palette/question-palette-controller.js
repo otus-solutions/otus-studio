@@ -3,19 +3,18 @@
 
     angular
         .module('editor.ui')
-        .controller('QuestionPaletteController', QuestionPaletteController);
+        .controller('OtusQuestionPaletteController', OtusQuestionPaletteController);
 
-    function QuestionPaletteController() {
+    OtusQuestionPaletteController.$inject = [
+        '$scope',
+        '$element',
+        'WorkspaceService'
+    ];
+
+    function OtusQuestionPaletteController($scope, $element, WorkspaceService) {
         var self = this;
-        self.isOpened = false;
 
-        /* Public interface */
-        self.changeState = changeState;
-
-        /* Public interface implemenation */
-        function changeState() {
-            self.isOpened = !self.isOpened;
-        }
+        $scope.$emit('otusWidgetPreLoad');
     }
 
-}());
+})();

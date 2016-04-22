@@ -13,9 +13,9 @@
     ];
 
     function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService, UIUtils) {
-        var self = this,
-            scope = null,
-            surveyPage = null;
+        var self = this;
+        var scope = null;
+        var surveyPage = null;
 
         /* Public interface */
         self.init = init;
@@ -34,12 +34,12 @@
         }
 
         function loadQuestion(question) {
-            var questionWidget = loadQuestionWidget(question);
+            self.lastLoadedQuestion = question;
+            // var questionWidget = loadQuestionWidget(question);
             var metadataWidget = loadMetadataWidget(question);
-            var editorWidget = loadEditorWidget(questionWidget, metadataWidget);
-
-            mergeScopeData(editorWidget);
-            loadTemplate();
+            scope.widget = loadEditorWidget({}, metadataWidget);
+            var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
+            surveyPage.append(content);
         }
 
         function unloadQuestion(question) {
@@ -70,13 +70,6 @@
             scope.widget = editorWidget;
             scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
             scope.widgetMetadata = editorWidget.metadataTemplate;
-        }
-
-        function loadTemplate() {
-            TemplateLoaderService.load(mpath.getQuestionEditorWidgetPath(), scope, function(template) {
-                scope.widget.template = template;
-                surveyPage.append(scope.widget.template);
-            });
         }
     }
 

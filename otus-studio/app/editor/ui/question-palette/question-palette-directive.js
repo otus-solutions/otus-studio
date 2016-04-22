@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusInputText', otusInputText);
+        .directive('otusQuestionPalette', otusInputText);
 
     function otusInputText() {
         var ddo = {
@@ -13,7 +13,7 @@
                 leftIcon: '@'
             },
             transclude: true,
-            templateUrl: 'app/editor/ui/core/widget/base/input-text/input-text.html',
+            templateUrl: 'app/editor/ui/question-palette/question-palette.html',
             controller: 'OtusInputTextController',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs, controller, transclude) {

@@ -7,12 +7,11 @@
 
     UIUpdateCommandFactory.$inject = [
         'SurveyPageContentService',
-        'QuestionDataEditorContentService',
         'MainContainerContentService',
         'NavigationEditorContentService'
     ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService, QuestionDataEditorContentService, MainContainerContentService, NavigationEditorContentService) {
+    function UIUpdateCommandFactory(SurveyPageContentService, MainContainerContentService, NavigationEditorContentService) {
         var self = this,
 
             updateCommandMap = {

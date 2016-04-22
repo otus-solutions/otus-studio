@@ -16,11 +16,8 @@
 	        </div>
 		</md-toolbar>
 	<md-content layout flex="20">
-	    <md-sidenav ng-include="'app/editor/ui/question-palette/question-palette-template.html'"
-	                class="palette"
-	                md-is-locked-open="true"
-	                layout="column"
-	                flex="20">
+	    <md-sidenav class="palette" md-is-locked-open="true" layout="column" flex="20">
+			<otus:question-palette />
 	    </md-sidenav>
 	    <md-content layout="column" layout-padding flex class="stage">
 	        <md-tabs id="stage-mode-selector" flex>

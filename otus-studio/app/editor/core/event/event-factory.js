@@ -43,6 +43,13 @@
             return factories[eventType.type].create(eventPrototype);
         }
 
+        function createAddData(editingSourceType) {
+            var eventType = EventTypeFactory.create(editingSourceType);
+            var eventPrototype = new Event(editingSource, newState, eventType);
+
+            return factories[eventType.type].create(eventPrototype);
+        }
+
         return this;
     }
 

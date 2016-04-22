@@ -24,10 +24,14 @@
         var self = this;
 
         /* Public interface */
-        self.forward = forward;
+        self.execute = execute;
 
-        function forward() {
-            editor.edit(prototype);
+        function execute(data) {
+            if (data)
+                editor.executeEdit(data);
+            else
+                editor.edit(prototype);
+
             WorkspaceService.workspace.isdb.userEdits.store(prototype);
             WorkspaceService.saveWork();
         }

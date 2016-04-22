@@ -5,14 +5,24 @@
         .module('otusjs.modelBuilder')
         .service('BuildWorkFactory', BuildWorkFactory);
 
-    function BuildWorkFactory() {
+    BuildWorkFactory.$inject = [
+        'WorkspaceService',
+        'QuestionFactory'
+    ];
+
+    function BuildWorkFactory(WorkspaceService, QuestionFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
+        self.createAddQuestionWork = createAddQuestionWork;
 
         function create() {
             return new BuildWork();
+        }
+
+        function createAddQuestionWork() {
+            return new AddQuestionWork(WorkspaceService.workspace.project.survey, QuestionFactory);
         }
 
         return self;
@@ -60,6 +70,22 @@
             writable: true,
             enumerable: true
         });
+    }
+
+    function AddQuestionWork(survey, QuestionFactory) {
+        var self = this;
+
+        self.survey = survey;
+        self.questionType = null;
+        self.questionID = null;
+
+        self.execute = execute;
+
+        function execute(data) {
+            var newQuestion = QuestionFactory.create(data.ngModel, survey.identity.acronym + survey.questionsCount());
+            self.survey.addQuestion(newQuestion);
+            return newQuestion;
+        }
     }
 
 }());

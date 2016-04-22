@@ -9,7 +9,7 @@
         var self = this;
 
         var MODULE = 'app/editor/ui/';
-        var QUESTION_EDITOR_TEMPLATE = 'app/editor/ui/core/widget/question-editor/question-editor-template.html';
+        var QUESTION_EDITOR_TEMPLATE = 'app/editor/ui/core/widget/question-editor/question-editor.html';
         var METADATA_TEMPLATE = 'app/editor/ui/core/widget/metadata/metadata-question-template.html';
 
         /* Public interface */

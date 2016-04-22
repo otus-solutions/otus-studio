@@ -21,7 +21,7 @@
             var state = StateFactory.create(editingSource);
             var event = EventFactory.create(editingSource, state, listener);
 
-            event.forward();
+            event.execute();
         }
     }
 
