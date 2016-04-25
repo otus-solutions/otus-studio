@@ -28,6 +28,7 @@
         "angular-immutable": "0.1.2",
         "angular-material-icons": "0.6.0",
         "angular-messages": "^1.5.0",
+        "ng-mask": "3.0.12",
         "js-base64": "^2.1.9",
         "node-uuid": "^1.4.7",
         "angular-bind-html-compile-ci-dev": "1.1.1",
