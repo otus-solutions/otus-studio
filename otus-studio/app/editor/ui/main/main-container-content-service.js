@@ -5,9 +5,7 @@
         .module('editor.ui')
         .service('MainContainerContentService', MainContainerContentService);
 
-    MainContainerContentService.$inject = ['DataToolContentService'];
-
-    function MainContainerContentService(DataToolContentService) {
+    function MainContainerContentService() {
         var self = this,
             controllerReference = null;
 
@@ -20,7 +18,6 @@
         }
 
         function showQuestionDataEditor(data) {
-            DataToolContentService.loadQuestionDataEditor(data);
         }
     }
 
