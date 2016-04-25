@@ -7,24 +7,25 @@
 
     OtusRemoveButtonWidgetFactory.$inject = [
         'UUID',
-        'RemoveMetadataOptionEventFactory'
+        'RemoveMetadataOptionEventFactory',
+        'RemoveAnswerOptionEventFactory'
     ];
 
-    function OtusRemoveButtonWidgetFactory(UUID, RemoveMetadataOptionEventFactory) {
+    function OtusRemoveButtonWidgetFactory(UUID, RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData) {
-            templateData.scope.widget = new OtusRemoveButtonWidget(templateData, UUID.generateUUID(), RemoveMetadataOptionEventFactory);
+            templateData.scope.widget = new OtusRemoveButtonWidget(templateData, UUID.generateUUID(), RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory);
             return templateData.scope.widget;
         }
 
         return self;
     }
 
-    function OtusRemoveButtonWidget(templateData, guid, RemoveMetadataOptionEventFactory) {
+    function OtusRemoveButtonWidget(templateData, guid, RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory) {
         var self = this;
 
         /* Type definitions */
@@ -47,6 +48,8 @@
         templateData.element.on('click', function() {
             if (self.ngModel.includes('MetadataOption')) {
                 RemoveMetadataOptionEventFactory.create().execute(self);
+            } else if (self.ngModel.includes('AnswerOption')) {
+                RemoveAnswerOptionEventFactory.create().execute(self);
             }
         });
     }

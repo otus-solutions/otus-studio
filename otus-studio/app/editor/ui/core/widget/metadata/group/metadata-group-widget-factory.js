@@ -22,7 +22,6 @@
 		var self = this;
 
 		self.name = 'MetadataGroup';
-
 		self.parentQuestion = question;
 	}
 

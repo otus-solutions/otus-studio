@@ -6,17 +6,17 @@
         .directive('singleSelectionQuestion', singleSelectionQuestion);
 
     singleSelectionQuestion.$inject = [
-        'editor.ui.mpath'
+        'SingleSelectionQuestionWidgetFactory'
     ];
 
-    function singleSelectionQuestion(mpath) {
+    function singleSelectionQuestion(SingleSelectionQuestionWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             controller: 'SingleSelectionController',
-            templateUrl: mpath.getWidgetPath('single-selection'),
+            templateUrl: 'app/editor/ui/core/widget/question/single-selection/group/single-selection.html',
             link: function(scope, element, attrs, controller) {
-                scope.widget = scope.$parent.$parent.widget;
+                // scope.widget = SingleSelectionQuestionWidgetFactory.create(scope.$parent.question);
             }
         };
 

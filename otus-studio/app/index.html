@@ -107,8 +107,10 @@
     <script src="app/shared/otusjs/model-builder/api/oid-hash-generator-service.js"></script>
 
     <!-- MODEL-BUILDER.API.WORK -->
+    <script src="app/shared/otusjs/model-builder/api/work/add-answer-option-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/add-metadata-answer-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/add-question-work-service.js"></script>
+    <script src="app/shared/otusjs/model-builder/api/work/remove-answer-option-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/remove-metadata-option-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/update-question-work-service.js"></script>
 
@@ -188,11 +190,13 @@
     <script src="app/editor/core/event/event-service.js"></script>
     <script src="app/editor/core/event/event-type-factory.js"></script>
     <!-- EVENT.IMPLEMENTATION -->
+    <script src="app/editor/core/event/implementation/add-answer-option-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/add-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/add-metadata-answer-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/add-question-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/pre-add-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/pre-update-data-event-factory.js"></script>
+    <script src="app/editor/core/event/implementation/remove-answer-option-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/remove-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/remove-metadata-option-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/select-data-event-factory.js"></script>
@@ -319,12 +323,14 @@
     <script src="app/editor/ui/core/widget/question/numeric/numeric-directive.js"></script>
     <script src="app/editor/ui/core/widget/question/numeric/numeric-question-widget-factory.js"></script>
 
-    <!-- WIDGET.QUESTION.SINGLE-SELECTION -->
-    <script src="app/editor/ui/core/widget/question/single-selection/answer-option-widget-factory.js"></script>
-    <script src="app/editor/ui/core/widget/question/single-selection/answer-option-content-service.js"></script>
-    <script src="app/editor/ui/core/widget/question/single-selection/single-selection-controller.js"></script>
-    <script src="app/editor/ui/core/widget/question/single-selection/single-selection-directive.js"></script>
-    <script src="app/editor/ui/core/widget/question/single-selection/single-selection-question-widget-factory.js"></script>
+    <!-- WIDGET.QUESTION.SINGLE-SELECTION.GROUP -->
+    <script src="app/editor/ui/core/widget/question/single-selection/group/single-selection-content-service.js"></script>
+    <script src="app/editor/ui/core/widget/question/single-selection/group/single-selection-controller.js"></script>
+    <script src="app/editor/ui/core/widget/question/single-selection/group/single-selection-directive.js"></script>
+    <script src="app/editor/ui/core/widget/question/single-selection/group/single-selection-question-widget-factory.js"></script>
+
+    <!-- WIDGET.QUESTION.SINGLE-SELECTION.OPTION -->
+    <script src="app/editor/ui/core/widget/question/single-selection/option/answer-option-widget-factory.js"></script>
 
     <!--WIDGET.QUESTION.TEXT -->
     <script src="app/editor/ui/core/widget/question/text/text-directive.js"></script>

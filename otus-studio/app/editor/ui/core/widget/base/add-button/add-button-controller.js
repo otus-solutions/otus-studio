@@ -23,6 +23,8 @@
         function getContext() {
             if ($scope.$parent.widget)
                 return $scope.$parent.widget.parentQuestion || {};
+            if ($scope.$parent.$parent)
+                return $scope.$parent.$parent.question || {};
             else
                 return {};
         }

@@ -8,23 +8,24 @@
     OtusAddButtonWidgetFactory.$inject = [
         'UUID',
         'AddQuestionEventFactory',
-        'AddMetadataAnswerEventFactory'
+        'AddMetadataAnswerEventFactory',
+        'AddAnswerOptionEventFactory'
     ];
 
-    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
+    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData) {
-            return new OtusAddButtonWidget(templateData, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory);
+            return new OtusAddButtonWidget(templateData, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory);
         }
 
         return self;
     }
 
-    function OtusAddButtonWidget(templateData, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
+    function OtusAddButtonWidget(templateData, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory) {
         var self = this;
 
         /* Type definitions */
@@ -48,6 +49,8 @@
                 AddQuestionEventFactory.create().execute(self);
             } else if (self.ngModel.includes('MetadataOption')) {
                 AddMetadataAnswerEventFactory.create().execute(self);
+            } else if (self.ngModel.includes('AnswerOption')) {
+                AddAnswerOptionEventFactory.create().execute(self);
             }
         });
     }

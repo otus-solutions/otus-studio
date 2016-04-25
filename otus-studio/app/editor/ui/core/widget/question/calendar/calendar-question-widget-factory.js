@@ -22,7 +22,7 @@
         var self = this;
 
         self.widget = widget;
-        self.widget.template = '<calendar-question></calendar-question>';
+        self.template = '<calendar-question></calendar-question>';
     }
 
 }());

@@ -3,16 +3,16 @@
 
     angular
         .module('otusjs.modelBuilder')
-        .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
+        .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
 
-    function RemoveMetadataOptionService() {
+    function RemoveAnswerOptionService() {
         var self = this;
 
         self.execute = execute;
 
         function execute(data) {
             var parentQuestion = data.context;
-            parentQuestion.metadata.removeLastOption();
+            parentQuestion.removeLastOption();
         }
     }
 

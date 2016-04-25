@@ -22,7 +22,7 @@
         var self = this;
 
         self.widget = widget;
-        self.widget.template = '<numeric-question></numeric-question>';
+        self.template = '<numeric-question></numeric-question>';
     }
 
 }());

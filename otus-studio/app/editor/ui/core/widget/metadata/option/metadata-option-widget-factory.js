@@ -22,7 +22,6 @@
         var self = this;
 
         self.name = 'MetadataAnswerOption';
-
         self.option = option;
     }
 

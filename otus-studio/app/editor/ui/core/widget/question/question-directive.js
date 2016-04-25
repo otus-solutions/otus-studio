@@ -13,9 +13,7 @@
             transclude: true,
             templateUrl: 'app/editor/ui/core/widget/question/question.html',
             controller: 'OtusQuestionController',
-            retrict: 'E',
-            link: function linkFunc(scope, element, attrs, controller, transclude) {
-            }
+            retrict: 'E'
         };
 
         return ddo;

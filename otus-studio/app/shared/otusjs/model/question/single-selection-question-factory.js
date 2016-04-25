@@ -28,10 +28,20 @@
         self.templateID = templateID;
         self.dataType = 'Integer';
         self.label = prototype.label;
-        self.option = {};
+        self.option = [];
         self.metadata = prototype.metadata;
 
+        self.addOption = addOption;
+        self.removeLastOption = removeLastOption;
         self.toJson = toJson;
+
+        function addOption(option) {
+            self.option.push(option);
+        }
+
+        function removeLastOption(option) {
+            self.option.splice(-1);
+        }
 
         function toJson() {
             var json = {};

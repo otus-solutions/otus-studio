@@ -14,7 +14,6 @@
         var scope;
         var metadataGroup;
 
-        /* Public interface */
         self.init = init;
         self.loadOption = loadOption;
         self.unloadOption = unloadOption;
@@ -27,7 +26,6 @@
         function loadOption(option) {
             var widget = WidgetService.getMetadataAnswerOptionWidget(option);
             scope.metadataAnswerOptions.push(widget);
-            scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
 
         function unloadOption() {
