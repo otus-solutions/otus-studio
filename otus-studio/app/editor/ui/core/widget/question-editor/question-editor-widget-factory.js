@@ -11,17 +11,18 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new QuestionEditorWidget();
+        function create(question) {
+            return new QuestionEditorWidget(question);
         }
 
         return self;
     }
 
-    function QuestionEditorWidget() {
+    function QuestionEditorWidget(question) {
         var self = this;
 
-        self.header = '';
+        self.question = question;
+        self.header = question.templateID;
     }
 
 }());

@@ -9,15 +9,13 @@
         '$scope',
         '$element',
         'QuestionWidgetFactory',
-        'SurveyPageContentService'
+        'SheetContentService'
     ];
 
-    function OtusQuestionController($scope, $element, QuestionWidgetFactory, SurveyPageContentService) {
+    function OtusQuestionController($scope, $element, QuestionWidgetFactory, SheetContentService) {
         var self = this;
 
-        $scope.$emit('otusWidgetPreLoad');
-        $scope.question = SurveyPageContentService.lastLoadedQuestion;
-
+        $scope.question = SheetContentService.lastLoadedQuestion;
         $scope.component = QuestionWidgetFactory.create({
             scope: $scope,
             element: $element

@@ -23,7 +23,6 @@
 
         self.widget = widget;
         self.widget.template = '<calendar-question></calendar-question>';
-        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());

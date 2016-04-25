@@ -23,7 +23,6 @@
 
         self.widget = widget;
         self.widget.template = '<time-question></time-question>';
-        self.widget.metadata = '<metadata-question></metadata-question>';
     }
 
 }());

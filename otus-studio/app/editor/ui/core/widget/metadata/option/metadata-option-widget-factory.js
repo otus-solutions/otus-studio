@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .factory('MetadataAnswerOptionWidgetFactory', MetadataAnswerOptionWidgetFactory);
+        .factory('MetadataOptionWidgetFactory', MetadataOptionWidgetFactory);
 
-    function MetadataAnswerOptionWidgetFactory() {
+    function MetadataOptionWidgetFactory() {
         var self = this;
 
         /* Public interface */
@@ -20,6 +20,8 @@
 
     function MetadataAnswerOptionWidget(option) {
         var self = this;
+
+        self.name = 'MetadataAnswerOption';
 
         self.option = option;
     }

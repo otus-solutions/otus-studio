@@ -3,12 +3,12 @@
 
     angular
         .module('editor.ui')
-        .directive('surveyPage', surveyPage);
+        .directive('otusStage', otusStage);
 
-    function surveyPage() {
+    function otusStage() {
         var ddo = {
             restrict: 'E',
-            controller: 'SurveyPageController'
+            templateUrl: 'app/editor/ui/stage/stage.html'
         };
 
         return ddo;

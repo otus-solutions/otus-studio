@@ -7,46 +7,47 @@
 
     OtusRemoveButtonWidgetFactory.$inject = [
         'UUID',
-        'AddQuestionEventFactory'
+        'RemoveMetadataOptionEventFactory'
     ];
 
-    function OtusRemoveButtonWidgetFactory(UUID) {
+    function OtusRemoveButtonWidgetFactory(UUID, RemoveMetadataOptionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(bind) {
-            bind.scope.widget = new OtusRemoveButtonWidget(bind, UUID.generateUUID());
-            return bind.scope.widget;
+        function create(templateData) {
+            templateData.scope.widget = new OtusRemoveButtonWidget(templateData, UUID.generateUUID(), RemoveMetadataOptionEventFactory);
+            return templateData.scope.widget;
         }
 
         return self;
     }
 
-    function OtusRemoveButtonWidget(bind, guid) {
+    function OtusRemoveButtonWidget(templateData, guid, RemoveMetadataOptionEventFactory) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'OtusAddButton';
+        self.name = 'OtusRemoveButton';
 
         /* Instance definitions */
         self.guid = guid;
-        self.ngModel = bind.scope.ngModel;
+        self.ngModel = templateData.scope.ngModel;
+        self.context = templateData.context;
 
         /* User definitions */
-        self.label = bind.scope.label;
-        self.ariaLabel = bind.scope.ariaLabel || self.label;
-        self.icon = bind.scope.icon;
+        self.label = templateData.scope.label;
+        self.ariaLabel = templateData.scope.ariaLabel || self.label;
+        self.icon = templateData.scope.icon;
 
         /* CSS definitions */
         self.css = {};
-        self.css.class = bind.scope.class;
+        self.css.class = templateData.scope.class;
 
-        bind.element.on('click', function() {
-            console.log(ngModel);
-            if (self.ngModel.includes('Question'))
-                AddQuestionEventFactory.create().execute(self);
+        templateData.element.on('click', function() {
+            if (self.ngModel.includes('MetadataOption')) {
+                RemoveMetadataOptionEventFactory.create().execute(self);
+            }
         });
     }
 

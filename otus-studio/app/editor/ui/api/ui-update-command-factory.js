@@ -6,27 +6,27 @@
         .factory('UIUpdateCommandFactory', UIUpdateCommandFactory);
 
     UIUpdateCommandFactory.$inject = [
-        'SurveyPageContentService',
+        'SheetContentService',
         'MainContainerContentService',
         'NavigationEditorContentService'
     ];
 
-    function UIUpdateCommandFactory(SurveyPageContentService, MainContainerContentService, NavigationEditorContentService) {
+    function UIUpdateCommandFactory(SheetContentService, MainContainerContentService, NavigationEditorContentService) {
         var self = this,
 
             updateCommandMap = {
                 'NEW_PROJECT': [
-                    SurveyPageContentService.reset
+                    SheetContentService.reset
                 ],
                 'ADD_DATA': [
-                    SurveyPageContentService.loadQuestion
+                    SheetContentService.loadQuestion
                 ],
                 'REMOVE_DATA': {
-                    'Question': [SurveyPageContentService.unloadQuestion],
+                    'Question': [SheetContentService.unloadQuestion],
                     'Route': [NavigationEditorContentService.unloadRoute]
                 },
                 'UPDATE_DATA': [
-                    SurveyPageContentService.updateQuestion
+                    SheetContentService.updateQuestion
                 ],
                 'SELECT_DATA': {
                     'Question': [

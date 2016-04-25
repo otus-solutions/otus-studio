@@ -109,6 +109,7 @@
     <!-- MODEL-BUILDER.API.WORK -->
     <script src="app/shared/otusjs/model-builder/api/work/add-metadata-answer-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/add-question-work-service.js"></script>
+    <script src="app/shared/otusjs/model-builder/api/work/remove-metadata-option-work-service.js"></script>
     <script src="app/shared/otusjs/model-builder/api/work/update-question-work-service.js"></script>
 
     <!-- MODEL-BUILDER.BUILDER -->
@@ -193,6 +194,7 @@
     <script src="app/editor/core/event/implementation/pre-add-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/pre-update-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/remove-data-event-factory.js"></script>
+    <script src="app/editor/core/event/implementation/remove-metadata-option-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/select-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/touch-data-event-factory.js"></script>
     <script src="app/editor/core/event/implementation/untouch-data-event-factory.js"></script>
@@ -247,10 +249,10 @@
     <script src="app/editor/ui/api/ui-update-command-factory.js"></script>
     <script src="app/editor/ui/api/ui-utils-service.js"></script>
 
-    <!-- CORE.SURVEY-PAGE -->
-    <script src="app/editor/ui/core/survey-page/survey-page-content-service.js"></script>
-    <script src="app/editor/ui/core/survey-page/survey-page-controller.js"></script>
-    <script src="app/editor/ui/core/survey-page/survey-page-directive.js"></script>
+    <!-- CORE.SHEET -->
+    <script src="app/editor/ui/core/sheet/sheet-content-service.js"></script>
+    <script src="app/editor/ui/core/sheet/sheet-controller.js"></script>
+    <script src="app/editor/ui/core/sheet/sheet-directive.js"></script>
 
     <!-- CORE.TEMPLATE -->
     <script src="app/editor/ui/core/template/template-loader-service.js"></script>
@@ -279,12 +281,14 @@
     <script src="app/editor/ui/core/widget/base/text-editor/text-editor-directive.js"></script>
     <script src="app/editor/ui/core/widget/base/text-editor/text-editor-widget-factory.js"></script>
 
-    <!-- WIDGET.METADATA -->
-    <script src="app/editor/ui/core/widget/metadata/metadata-answer-option-content-service.js"></script>
-    <script src="app/editor/ui/core/widget/metadata/metadata-answer-option-widget-factory.js"></script>
-    <script src="app/editor/ui/core/widget/metadata/metadata-controller.js"></script>
-    <script src="app/editor/ui/core/widget/metadata/metadata-question-directive.js"></script>
-    <script src="app/editor/ui/core/widget/metadata/metadata-question-widget-factory.js"></script>
+    <!-- WIDGET.METADATA.GROUP -->
+    <script src="app/editor/ui/core/widget/metadata/group/metadata-group-content-service.js"></script>
+    <script src="app/editor/ui/core/widget/metadata/group/metadata-group-controller.js"></script>
+    <script src="app/editor/ui/core/widget/metadata/group/metadata-group-directive.js"></script>
+    <script src="app/editor/ui/core/widget/metadata/group/metadata-group-widget-factory.js"></script>
+
+    <!-- WIDGET.METADATA.OPTION -->
+    <script src="app/editor/ui/core/widget/metadata/option/metadata-option-widget-factory.js"></script>
 
     <!-- WIDGET.NAVIGATION.EDITOR -->
     <script src="app/editor/ui/core/widget/navigation/editor/navigation-editor-content-service.js"></script>
@@ -345,13 +349,15 @@
     <script src="app/editor/ui/main/main-container-content-service.js"></script>
     <script src="app/editor/ui/main/main-container-controller.js"></script>
 
+    <!-- STAGE -->
+    <script src="app/editor/ui/stage/stage-directive.js"></script>
+
     <!-- WIDGET.QUESTION-EDITOR-TOOLBAR -->
     <script src="app/editor/ui/question-editor-toolbar/question-editor-toolbar-controller.js"></script>
     <script src="app/editor/ui/question-editor-toolbar/question-editor-toolbar-directive.js"></script>
     <script src="app/editor/ui/question-editor-toolbar/question-editor-toolbar-service.js"></script>
 
     <!-- QUESTION-PALETTE -->
-    <script src="app/editor/ui/question-palette/question-palette-controller.js"></script>
     <script src="app/editor/ui/question-palette/question-palette-directive.js"></script>
     <script src="app/editor/ui/question-palette/question-palette-widget-factory.js"></script>
 

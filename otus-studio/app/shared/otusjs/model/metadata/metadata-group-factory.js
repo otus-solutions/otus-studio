@@ -30,9 +30,26 @@
         self.option = [];
 
         self.addOption = addOption;
+        self.removeOption = removeOption;
+        self.removeLastOption = removeLastOption;
 
         function addOption(option) {
             self.option.push(option);
+        }
+
+        function removeOption(option) {
+            var indexToRemove = 0;
+
+            self.option.forEach(function(o) {
+                if (o.value === option.value) return;
+                else ++indexToRemove;
+            });
+
+            self.option.splice(indexToRemove, 1);
+        }
+
+        function removeLastOption() {
+            self.option.splice(-1, 1);
         }
     }
 

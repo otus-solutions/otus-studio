@@ -3,53 +3,44 @@
 
     angular
         .module('editor.ui')
-        .service('SurveyPageContentService', SurveyPageContentService);
+        .service('SheetContentService', SheetContentService);
 
-    SurveyPageContentService.$inject = [
+    SheetContentService.$inject = [
         'editor.ui.mpath',
         'TemplateLoaderService',
         'WidgetService'
     ];
 
-    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService) {
+    function SheetContentService(mpath, TemplateLoaderService, WidgetService) {
         var self = this;
         var scope = null;
-        var surveyPage = null;
+        var sheet = null;
 
         /* Public interface */
         self.init = init;
         self.loadQuestion = loadQuestion;
         self.unloadQuestion = unloadQuestion;
         self.updateQuestion = updateQuestion;
-        self.reset = reset;
 
-        function init(scopeReference, surveyPageReference) {
+        function init(scopeReference, sheetReference) {
             scope = scopeReference;
-            surveyPage = surveyPageReference;
-        }
-
-        function reset() {
-            surveyPage.find('[question-target]').remove();
+            sheet = sheetReference;
         }
 
         function loadQuestion(question) {
             self.lastLoadedQuestion = question;
-            scope.widget = loadEditorWidget();
+            scope.widget = WidgetService.getQuestionEditorWidget(question);
             var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
-            surveyPage.append(content);
-        }
-
-        function loadEditorWidget(questionWidget, metadataWidget) {
-            return WidgetService.getQuestionEditorWidget(questionWidget, metadataWidget);
+            sheet.find('#sheet').append(content);
         }
 
         function unloadQuestion(question) {
-            surveyPage.find('[question-target="' + question.templateID + '"]').remove();
+            sheet.find('[question-target="' + question.templateID + '"]').remove();
         }
 
         function updateQuestion(question) {
             var target = '[es-id="question-editor-' + question.templateID + '-label"]';
-            var label = UIUtils.jq(surveyPage.find(target)[0]);
+            var label = UIUtils.jq(sheet.find(target)[0]);
 
             label.text(question.label.ptBR.plainText);
         }

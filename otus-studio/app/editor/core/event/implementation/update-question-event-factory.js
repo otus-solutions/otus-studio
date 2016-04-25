@@ -7,24 +7,24 @@
 
     UpdateQuestionEventFactory.$inject = [
         'UpdateQuestionService',
-        'SurveyPageContentService',
+        'SheetContentService',
         'WorkspaceService'
     ];
 
-    function UpdateQuestionEventFactory(UpdateQuestionService, SurveyPageContentService, WorkspaceService) {
+    function UpdateQuestionEventFactory(UpdateQuestionService, SheetContentService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpdateQuestionEvent(UpdateQuestionService, SurveyPageContentService, WorkspaceService);
+            return new UpdateQuestionEvent(UpdateQuestionService, SheetContentService, WorkspaceService);
         }
 
         return self;
     }
 
-    function UpdateQuestionEvent(UpdateQuestionService, SurveyPageContentService, WorkspaceService) {
+    function UpdateQuestionEvent(UpdateQuestionService, SheetContentService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;

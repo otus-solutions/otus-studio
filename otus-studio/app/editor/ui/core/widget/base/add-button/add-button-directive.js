@@ -12,15 +12,13 @@
                 label: '@',
                 ariaLabel: '@',
                 leftIcon: '@',
-                ngModel: '@'
+                ngModel: '@',
+                context: '='
             },
             transclude: true,
             templateUrl: 'app/editor/ui/core/widget/base/add-button/add-button.html',
             controller: 'OtusAddButtonController',
-            retrict: 'E',
-            link: function linkFunc(scope, element, attrs, controller, transclude) {
-                scope.$emit('otusWidgetBinding', controller.component);
-            }
+            retrict: 'E'
         };
 
         return ddo;

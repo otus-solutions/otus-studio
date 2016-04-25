@@ -7,31 +7,31 @@
 
     AddQuestionEventFactory.$inject = [
         'AddQuestionService',
-        'SurveyPageContentService',
+        'SheetContentService',
         'WorkspaceService'
     ];
 
-    function AddQuestionEventFactory(AddQuestionService, SurveyPageContentService, WorkspaceService) {
+    function AddQuestionEventFactory(AddQuestionService, SheetContentService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddQuestionEvent(AddQuestionService, SurveyPageContentService, WorkspaceService);
+            return new AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddQuestionEvent(AddQuestionService, SurveyPageContentService, WorkspaceService) {
+    function AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
         function execute(data) {
             var question = AddQuestionService.execute(data);
-            SurveyPageContentService.loadQuestion(question);
+            SheetContentService.loadQuestion(question);
 
             WorkspaceService.workspace.currentQuestion = question;
             WorkspaceService.workspace.isdb.userEdits.store(self);

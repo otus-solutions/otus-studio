@@ -10,15 +10,15 @@
         'QuestionWidgetFactory',
         'QuestionEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory',
-        'MetadataQuestionWidgetFactory',
-        'MetadataAnswerOptionWidgetFactory',
+        'MetadataGroupWidgetFactory',
+        'MetadataOptionWidgetFactory',
         'NavigationWidgetFactory',
         'RouteNavigationWidgetFactory',
         'RouteCreatorWidgetFactory'
     ];
 
     function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
-        MetadataQuestionWidgetFactory, MetadataAnswerOptionWidgetFactory, NavigationWidgetFactory, RouteNavigationWidgetFactory, RouteCreatorWidgetFactory) {
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteNavigationWidgetFactory, RouteCreatorWidgetFactory) {
 
         var self = this;
 
@@ -41,13 +41,13 @@
         }
 
         function getMetadataWidget(model) {
-            var widget = MetadataQuestionWidgetFactory.create(model);
+            var widget = MetadataGroupWidgetFactory.create(model);
             widget.template = WidgetTemplateService.getDirectiveTemplate('MetadataGroup');
             return widget;
         }
 
-        function getQuestionEditorWidget() {
-            return QuestionEditorWidgetFactory.create();
+        function getQuestionEditorWidget(question) {
+            return QuestionEditorWidgetFactory.create(question);
         }
 
         function getQuestionAnswerOptionWidget(model) {
@@ -55,7 +55,7 @@
         }
 
         function getMetadataAnswerOptionWidget(model) {
-            return MetadataAnswerOptionWidgetFactory.create(model);
+            return MetadataOptionWidgetFactory.create(model);
         }
 
         function getNavigationEditorWidget(model) {

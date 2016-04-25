@@ -7,31 +7,31 @@
 
     AddMetadataAnswerEventFactory.$inject = [
         'AddMetadataAnswerService',
-        'MetadataAnswerOptionContentService',
+        'MetadataGroupContentService',
         'WorkspaceService'
     ];
 
-    function AddMetadataAnswerEventFactory(AddMetadataAnswerService, MetadataAnswerOptionContentService, WorkspaceService) {
+    function AddMetadataAnswerEventFactory(AddMetadataAnswerService, MetadataGroupContentService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddMetadataAnswerEvent(AddMetadataAnswerService, MetadataAnswerOptionContentService, WorkspaceService);
+            return new AddMetadataAnswerEvent(AddMetadataAnswerService, MetadataGroupContentService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddMetadataAnswerEvent(AddMetadataAnswerService, MetadataAnswerOptionContentService, WorkspaceService) {
+    function AddMetadataAnswerEvent(AddMetadataAnswerService, MetadataGroupContentService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
         function execute(data) {
             var metadata = AddMetadataAnswerService.execute(data);
-            MetadataAnswerOptionContentService.loadOption(metadata);
+            MetadataGroupContentService.loadOption(metadata);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

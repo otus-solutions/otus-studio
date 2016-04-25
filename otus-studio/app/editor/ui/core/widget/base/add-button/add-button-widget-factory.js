@@ -17,38 +17,36 @@
         /* Public interface */
         self.create = create;
 
-        function create(bind) {
-            bind.scope.widget = new OtusAddButtonWidget(bind, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory);
-            return bind.scope.widget;
+        function create(templateData) {
+            return new OtusAddButtonWidget(templateData, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory);
         }
 
         return self;
     }
 
-    function OtusAddButtonWidget(bind, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
+    function OtusAddButtonWidget(templateData, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
         var self = this;
-        var _bind = bind;
 
         /* Type definitions */
         self.name = 'OtusAddButton';
 
         /* Instance definitions */
         self.guid = guid;
-        self.ngModel = bind.scope.ngModel;
+        self.ngModel = templateData.scope.ngModel;
+        self.context = templateData.context;
 
         /* User definitions */
-        self.label = bind.scope.label;
-        self.ariaLabel = bind.scope.ariaLabel || self.label;
+        self.label = templateData.scope.label;
+        self.ariaLabel = templateData.scope.ariaLabel || self.label;
 
         /* CSS definitions */
         self.css = {};
-        self.css.class = bind.scope.class;
+        self.css.class = templateData.scope.class;
 
-        bind.element.on('click', function() {
+        templateData.element.on('click', function() {
             if (self.ngModel.includes('Question')) {
                 AddQuestionEventFactory.create().execute(self);
-            } else if (self.ngModel.includes('MetadataAnswer')) {
-                self.currentQuestion = _bind.workspace.currentQuestion;
+            } else if (self.ngModel.includes('MetadataOption')) {
                 AddMetadataAnswerEventFactory.create().execute(self);
             }
         });

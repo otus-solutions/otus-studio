@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .service('MetadataAnswerOptionContentService', MetadataAnswerOptionContentService);
+        .service('MetadataGroupContentService', MetadataGroupContentService);
 
-    MetadataAnswerOptionContentService.$inject = [
+    MetadataGroupContentService.$inject = [
         'WidgetService'
     ];
 
-    function MetadataAnswerOptionContentService(WidgetService) {
+    function MetadataGroupContentService(WidgetService) {
         var self = this;
         var scope;
         var metadataGroup;
@@ -30,10 +30,8 @@
             scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
 
-        function unloadOption(metadataQuestion, scope) {
-            metadataQuestion.find('[radio-container]').last().remove();
+        function unloadOption() {
             scope.metadataAnswerOptions.splice(-1);
-            scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
     }
 

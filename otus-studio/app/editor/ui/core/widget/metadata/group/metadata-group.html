@@ -7,14 +7,7 @@
     </md-radio-group>
 
     <div>
-        <otus:add-button class="md-raised md-layoutTheme-theme md-ink-ripple" label="Adicionar" ng-model="MetadataAnswer"></otus:add-button>
-
-        <md-button
-            class="md-raised"
-            type="button"
-            editing-source
-            es-type="remove-button"
-            es-id="metadata-{{::$parent.$parent.wiget.questionId}}-remove-option"
-            es-target="survey.questionContainer.{{::$parent.$parent.widget.questionId}}.metadata.option.{{lastOptionIndex}}">Remover</md-button>
+        <otus:add-button class="md-raised md-layoutTheme-theme md-ink-ripple" label="Adicionar" ng-model="MetadataOption"></otus:add-button>
+        <otus:remove-button class="md-raised md-layoutTheme-theme md-ink-ripple" label="Remover" ng-model="MetadataOption"></otus:add-button>
     </div>
 </md-content>
