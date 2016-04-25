@@ -1,7 +1,7 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
+    angular
         .module('editor.ui')
         .service('MetadataAnswerOptionContentService', MetadataAnswerOptionContentService);
 
@@ -11,14 +11,21 @@
 
     function MetadataAnswerOptionContentService(WidgetService) {
         var self = this;
+        var scope;
+        var metadataGroup;
 
         /* Public interface */
+        self.init = init;
         self.loadOption = loadOption;
         self.unloadOption = unloadOption;
-        // self.updateOption = updateOption;
 
-        function loadOption(metadataAnswerOptions, scope) {
-            var widget = WidgetService.getMetadataAnswerOptionWidget(metadataAnswerOptions);
+        function init(scopeReference, metadataGroupReference) {
+            scope = scopeReference;
+            metadataGroup = metadataGroupReference;
+        }
+
+        function loadOption(option) {
+            var widget = WidgetService.getMetadataAnswerOptionWidget(option);
             scope.metadataAnswerOptions.push(widget);
             scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
@@ -28,11 +35,6 @@
             scope.metadataAnswerOptions.splice(-1);
             scope.lastOptionIndex = scope.metadataAnswerOptions.length - 1;
         }
-
-        // function updateOption(singleSelection, answerOption) {
-        //     var target = '[es-target="survey.question.' + answerOption.parentQuestion + '.option.' + answerOption.oid + '"]';
-        //     singleSelection.find(target).text(answerOption.label.ptBR.plainText);
-        // }
     }
 
 }());

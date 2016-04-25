@@ -1,55 +1,39 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('otusjs.model')
-		.factory('MetadataGroupFactory', MetadataGroupFactory);
+    angular
+        .module('otusjs.model')
+        .factory('MetadataGroupFactory', MetadataGroupFactory);
 
-	MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
+    MetadataGroupFactory.$inject = ['MetadataAnswerFactory'];
 
-	function MetadataGroupFactory(MetadataAnswerFactory) {
-		var self = this;
+    function MetadataGroupFactory(MetadataAnswerFactory) {
+        var self = this;
 
-		/* Public interface */
-		self.create = create;
+        /* Public interface */
+        self.create = create;
 
-		function create(name, questionOID) {
-			return new MetadataGroup(name, questionOID);
-		}
+        function create(name, questionOID) {
+            return new MetadataGroup(name, questionOID);
+        }
 
-		return self;
-	}
+        return self;
+    }
 
-	function MetadataGroup(name, questionOID) {
-		Object.defineProperty(this, 'extends', {
-			value : 'StudioObject',
-			writable : false,
-			enumerable : true
-		});
+    function MetadataGroup(name, questionOID) {
+        var self = this;
 
-		Object.defineProperty(this, 'objectType', {
-			value : 'MetadataGroup',
-			writable : false,
-			enumerable : true
-		});
+        self.extents = 'StudioObject';
+        self.objectType = 'MetadataGroup';
+        self.name = name;
+        self.parentQuestion = questionOID;
+        self.option = [];
 
-		Object.defineProperty(this, 'name', {
-			value : name,
-			writable : false,
-			enumerable : true
-		});
+        self.addOption = addOption;
 
-		Object.defineProperty(this, 'parentQuestion', {
-			value : questionOID,
-			writable : false,
-			enumerable : true
-		});
-		
-		Object.defineProperty(this, 'option', {
-			value: {},
-			writable : true, 
-			enumerable : true
-		});
-	}
+        function addOption(option) {
+            self.option.push(option);
+        }
+    }
 
 }());

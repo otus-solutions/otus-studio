@@ -46,8 +46,8 @@
             return widget;
         }
 
-        function getQuestionEditorWidget(model, metadataWidget) {
-            return QuestionEditorWidgetFactory.create(model, metadataWidget);
+        function getQuestionEditorWidget() {
+            return QuestionEditorWidgetFactory.create();
         }
 
         function getQuestionAnswerOptionWidget(model) {

@@ -8,11 +8,10 @@
     SurveyPageContentService.$inject = [
         'editor.ui.mpath',
         'TemplateLoaderService',
-        'WidgetService',
-        'UIUtils'
+        'WidgetService'
     ];
 
-    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService, UIUtils) {
+    function SurveyPageContentService(mpath, TemplateLoaderService, WidgetService) {
         var self = this;
         var scope = null;
         var surveyPage = null;
@@ -35,11 +34,13 @@
 
         function loadQuestion(question) {
             self.lastLoadedQuestion = question;
-            // var questionWidget = loadQuestionWidget(question);
-            var metadataWidget = loadMetadataWidget(question);
-            scope.widget = loadEditorWidget({}, metadataWidget);
+            scope.widget = loadEditorWidget();
             var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
             surveyPage.append(content);
+        }
+
+        function loadEditorWidget(questionWidget, metadataWidget) {
+            return WidgetService.getQuestionEditorWidget(questionWidget, metadataWidget);
         }
 
         function unloadQuestion(question) {
@@ -51,25 +52,6 @@
             var label = UIUtils.jq(surveyPage.find(target)[0]);
 
             label.text(question.label.ptBR.plainText);
-        }
-
-        function loadQuestionWidget(question) {
-            return WidgetService.getWidgetForModel(question);
-        }
-
-        function loadMetadataWidget(question) {
-            return WidgetService.getMetadataWidget(question);
-        }
-
-        function loadEditorWidget(questionWidget, metadataWidget) {
-            return WidgetService.getQuestionEditorWidget(questionWidget, metadataWidget);
-        }
-
-        function mergeScopeData(editorWidget) {
-            scope.widgetTemplateList = scope.widgetTemplateList || {};
-            scope.widget = editorWidget;
-            scope.widgetTemplateList[editorWidget.questionId] = editorWidget.questionTemplate;
-            scope.widgetMetadata = editorWidget.metadataTemplate;
         }
     }
 

@@ -7,25 +7,27 @@
 
     OtusAddButtonWidgetFactory.$inject = [
         'UUID',
-        'AddQuestionEventFactory'
+        'AddQuestionEventFactory',
+        'AddMetadataAnswerEventFactory'
     ];
 
-    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory) {
+    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(bind) {
-            bind.scope.widget = new OtusAddButtonWidget(bind, UUID.generateUUID(), AddQuestionEventFactory);
+            bind.scope.widget = new OtusAddButtonWidget(bind, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory);
             return bind.scope.widget;
         }
 
         return self;
     }
 
-    function OtusAddButtonWidget(bind, guid, AddQuestionEventFactory) {
+    function OtusAddButtonWidget(bind, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory) {
         var self = this;
+        var _bind = bind;
 
         /* Type definitions */
         self.name = 'OtusAddButton';
@@ -43,8 +45,12 @@
         self.css.class = bind.scope.class;
 
         bind.element.on('click', function() {
-            if (self.ngModel.includes('Question'))
+            if (self.ngModel.includes('Question')) {
                 AddQuestionEventFactory.create().execute(self);
+            } else if (self.ngModel.includes('MetadataAnswer')) {
+                self.currentQuestion = _bind.workspace.currentQuestion;
+                AddMetadataAnswerEventFactory.create().execute(self);
+            }
         });
     }
 

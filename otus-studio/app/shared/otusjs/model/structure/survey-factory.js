@@ -42,6 +42,7 @@
         self.questionsCount = questionsCount;
         self.addQuestion = addQuestion;
         self.updateQuestion = updateQuestion;
+        self.fetchQuestionById = fetchQuestionById;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
@@ -63,6 +64,10 @@
 
         function updateQuestion(question) {
             self.navigationList[question.templateID] = question;
+        }
+
+        function fetchQuestionById(templateID) {
+            return self.questionContainer[templateID];
         }
 
         function listNavigations() {

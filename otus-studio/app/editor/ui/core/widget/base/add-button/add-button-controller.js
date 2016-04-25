@@ -15,11 +15,10 @@
     function OtusAddButtonController($scope, $element, OtusAddButtonWidgetFactory, WorkspaceService) {
         var self = this;
 
-        $scope.$emit('otusWidgetPreLoad');
-
         self.component = OtusAddButtonWidgetFactory.create({
             scope: $scope,
-            element: $element
+            element: $element,
+            workspace: WorkspaceService.workspace
         });
     }
 

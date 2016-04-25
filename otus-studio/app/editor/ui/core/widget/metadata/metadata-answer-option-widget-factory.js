@@ -11,43 +11,17 @@
         /* Public interface */
         self.create = create;
 
-        function create(model) {
-            return new MetadataAnswerOptionWidget(model);
+        function create(option) {
+            return new MetadataAnswerOptionWidget(option);
         }
 
         return self;
     }
 
-    function MetadataAnswerOptionWidget(model) {
-        Object.defineProperty(this, 'model', {
-            value: model,
-            writable: false
-        });
+    function MetadataAnswerOptionWidget(option) {
+        var self = this;
 
-        Object.defineProperty(this, 'id', {
-            value: model.oid,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'esId', {
-            value: 'metadata-' + model.parentQuestionID + '-option-' + model.value,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'esTarget', {
-            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.' + model.value,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'addButtonTarget', {
-            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.',
-            writable: false
-        });
-
-        Object.defineProperty(this, 'removeButtonTarget', {
-            value: 'survey.questionContainer.' + model.parentQuestionID + '.metadata.option.' + model.value,
-            writable: false
-        });
+        self.option = option;
     }
 
 }());

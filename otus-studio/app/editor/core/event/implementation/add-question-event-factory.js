@@ -32,6 +32,8 @@
         function execute(data) {
             var question = AddQuestionService.execute(data);
             SurveyPageContentService.loadQuestion(question);
+
+            WorkspaceService.workspace.currentQuestion = question;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

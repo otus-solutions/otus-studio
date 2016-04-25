@@ -3,33 +3,31 @@
 
     angular
         .module('editor.ui')
-        .factory('OtusInputTextWidgetFactory', OtusInputTextWidgetFactory);
+        .factory('OtusQuestionPaletteWidgetFactory', OtusQuestionPaletteWidgetFactory);
 
-    OtusInputTextWidgetFactory.$inject = [
-        'UUID',
-        'EventService',
-        'EditingSourceService'
+    OtusQuestionPaletteWidgetFactory.$inject = [
+        'UUID'
     ];
 
-    function OtusInputTextWidgetFactory(UUID, EventService, EditingSourceService) {
+    function OtusQuestionPaletteWidgetFactory(UUID) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(bind) {
-            bind.scope.widget = new OtusInputTextWidget(bind, UUID.generateUUID(), EventService, EditingSourceService);
+            bind.scope.widget = new OtusQuestionPaletteWidget(bind, UUID.generateUUID());
             return bind.scope.widget;
         }
 
         return self;
     }
 
-    function OtusInputTextWidget(bind, guid, EventService, EditingSourceService) {
+    function OtusQuestionPaletteWidget(bind, guid) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'OtusInputText';
+        self.name = 'OtusQuestionPalette';
 
         /* Instance definitions */
         self.guid = guid;
