@@ -5,15 +5,19 @@
         .module('editor.ui')
         .directive('otusQuestion', otusQuestion);
 
-    function otusQuestion() {
+    otusQuestion.$inject = [
+        'QuestionWidgetFactory',
+        'SheetContentService'
+    ];
+
+    function otusQuestion(QuestionWidgetFactory, SheetContentService) {
         var ddo = {
-            scope: {
-                widget: '='
-            },
-            transclude: true,
+            scope: {},
             templateUrl: 'app/editor/ui/question/question.html',
-            controller: 'OtusQuestionController',
-            retrict: 'E'
+            retrict: 'E',
+            link: function linkFunc(scope) {
+                scope.widget = QuestionWidgetFactory.create(SheetContentService.lastLoadedQuestion);
+            }
         };
 
         return ddo;

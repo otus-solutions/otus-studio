@@ -11,20 +11,27 @@
         /* Public interface */
         self.create = create;
 
-        function create(question) {
-            return new SingleSelectionQuestionWidget(question);
+        function create(parentWidget) {
+            return new SingleSelectionQuestionWidget(parentWidget);
         }
 
         return self;
     }
 
-    function SingleSelectionQuestionWidget(question) {
+    function SingleSelectionQuestionWidget(parentWidget) {
         var self = this;
 
         self.name = 'SingleSelectionQuestion';
-
-        self.question = question;
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
+        self.options = [];
         self.template = '<single-selection-question></single-selection-question>';
+
+        self.removeLastOption = removeLastOption;
+
+        function removeLastOption() {
+            self.options.splice(-1);
+        }
     }
 
 }());

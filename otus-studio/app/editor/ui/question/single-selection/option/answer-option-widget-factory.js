@@ -11,17 +11,18 @@
         /* Public interface */
         self.create = create;
 
-        function create(option) {
-            return new QuestionAnswerOptionEditorWidget(option);
+        function create(option, parentWidget) {
+            return new QuestionAnswerOptionEditorWidget(option, parentWidget);
         }
 
         return self;
     }
 
-    function QuestionAnswerOptionEditorWidget(option) {
+    function QuestionAnswerOptionEditorWidget(option, parentWidget) {
         var self = this;
 
         self.name = 'AnswerOption';
+        self.parentWidget = parentWidget;
         self.option = option;
     }
 

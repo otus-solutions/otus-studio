@@ -1,10 +1,10 @@
 <md-content layout="column" flex>
     <div layout="row" class="label-container" layout-align="left center">
-        <otus:text-editor ng-model="label" placeholder="Clique aqui para editar a label" flex></otus:text-editor>
+        <otus:text-editor ng-model="widget.question.label" placeholder="Clique aqui para editar a label" flex></otus:text-editor>
     </div>
     <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
         <md-tab label="Resposta">
-            <md-content class="md-padding" bind-html-compile="template"></md-content>
+            <md-content class="md-padding" bind-html-compile="widget.template"></md-content>
         </md-tab>
         <md-tab label="Metadado">
             <md-content class="md-padding">

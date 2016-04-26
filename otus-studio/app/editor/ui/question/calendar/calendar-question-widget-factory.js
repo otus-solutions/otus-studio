@@ -11,17 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(widget) {
-            return new CalendarQuestionWidget(widget);
+        function create(parentWidget) {
+            return new CalendarQuestionWidget(parentWidget);
         }
 
         return self;
     }
 
-    function CalendarQuestionWidget(widget) {
+    function CalendarQuestionWidget(parentWidget) {
         var self = this;
 
-        self.widget = widget;
+        self.name = 'CalendarQuestion';
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
         self.template = '<calendar-question></calendar-question>';
     }
 

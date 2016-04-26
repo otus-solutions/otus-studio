@@ -8,22 +8,21 @@
     function NumericQuestionWidgetFactory() {
         var self = this;
 
-        /* Public interface */
         self.create = create;
 
-        function create(widget) {
-            return new NumericQuestionWidget(widget);
+        function create(parentWidget) {
+            return new NumericQuestionWidget(parentWidget);
         }
 
         return self;
     }
 
-    function NumericQuestionWidget(widget) {
+    function NumericQuestionWidget(parentWidget) {
         var self = this;
 
-        console.log(widget);
-
-        self.widget = widget;
+        self.name = 'NumericQuestion';
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
         self.template = '<numeric-question></numeric-question>';
     }
 

@@ -30,11 +30,13 @@
 
         /* Type definitions */
         self.name = 'OtusAddButton';
+        self.scope = templateData.scope;
+        self.parentWidget = templateData.parentWidget;
 
         /* Instance definitions */
         self.guid = guid;
         self.ngModel = templateData.scope.ngModel;
-        self.context = templateData.context;
+        self.context = templateData.parentWidget.question;
 
         /* User definitions */
         self.label = templateData.scope.label;

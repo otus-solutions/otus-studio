@@ -11,17 +11,18 @@
         /* Public interface */
         self.create = create;
 
-        function create(option) {
-            return new MetadataAnswerOptionWidget(option);
+        function create(option, parentGroup) {
+            return new MetadataAnswerOptionWidget(option, parentGroup);
         }
 
         return self;
     }
 
-    function MetadataAnswerOptionWidget(option) {
+    function MetadataAnswerOptionWidget(option, parentGroup) {
         var self = this;
 
         self.name = 'MetadataAnswerOption';
+        self.parentGroup = parentGroup;
         self.option = option;
     }
 

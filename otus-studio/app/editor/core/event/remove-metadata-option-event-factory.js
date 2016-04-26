@@ -7,31 +7,31 @@
 
     RemoveMetadataOptionEventFactory.$inject = [
         'RemoveMetadataOptionService',
-        'MetadataGroupContentService',
         'WorkspaceService'
     ];
 
-    function RemoveMetadataOptionEventFactory(RemoveMetadataOptionService, MetadataGroupContentService, WorkspaceService) {
+    function RemoveMetadataOptionEventFactory(RemoveMetadataOptionService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new RemoveMetadataOptionEvent(RemoveMetadataOptionService, MetadataGroupContentService, WorkspaceService);
+            return new RemoveMetadataOptionEvent(RemoveMetadataOptionService, WorkspaceService);
         }
 
         return self;
     }
 
-    function RemoveMetadataOptionEvent(RemoveMetadataOptionService, MetadataGroupContentService, WorkspaceService) {
+    function RemoveMetadataOptionEvent(RemoveMetadataOptionService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(data) {
-            var metadata = RemoveMetadataOptionService.execute(data);
-            MetadataGroupContentService.unloadOption();
+        function execute(eventSource) {
+            var groupWidget = eventSource.parentWidget;
+            RemoveMetadataOptionService.execute(eventSource.context);
+            groupWidget.removeLastOption();
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

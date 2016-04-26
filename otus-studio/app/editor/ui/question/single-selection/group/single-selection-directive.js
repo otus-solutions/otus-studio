@@ -13,7 +13,6 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            controller: 'SingleSelectionController',
             templateUrl: 'app/editor/ui/question/single-selection/group/single-selection-question.html'
         };
 

@@ -10,9 +10,8 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var parentQuestion = data.context;
-            parentQuestion.metadata.removeLastOption();
+        function execute(question) {
+            question.metadata.removeLastOption();
         }
     }
 

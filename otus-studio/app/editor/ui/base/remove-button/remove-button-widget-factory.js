@@ -30,11 +30,13 @@
 
         /* Type definitions */
         self.name = 'OtusRemoveButton';
+        self.scope = templateData.scope;
+        self.parentWidget = self.scope.$parent.widget || self.scope.$parent.$parent.widget;
+        self.context = self.parentWidget.question;
 
         /* Instance definitions */
         self.guid = guid;
         self.ngModel = templateData.scope.ngModel;
-        self.context = templateData.context;
 
         /* User definitions */
         self.label = templateData.scope.label;

@@ -13,10 +13,10 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            controller: 'MetadataGroupController',
             templateUrl: 'app/editor/ui/metadata/group/metadata-group.html',
             link: function(scope, element, attrs, controller) {
-                scope.widget = MetadataGroupWidgetFactory.create(scope.$parent.$parent.widget.question);
+                console.log(scope);
+                scope.widget = MetadataGroupWidgetFactory.create(scope.$parent.widget);
             }
         };
 

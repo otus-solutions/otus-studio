@@ -21,7 +21,9 @@
     function TimeQuestionWidget(widget) {
         var self = this;
 
-        self.widget = widget;
+        self.name = 'TimeQuestion';
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
         self.template = '<time-question></time-question>';
     }
 

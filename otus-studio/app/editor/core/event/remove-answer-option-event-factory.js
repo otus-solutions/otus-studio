@@ -29,9 +29,10 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var metadata = RemoveAnswerOptionService.execute(data);
-            SingleSelectionContentService.unloadOption();
+        function execute(eventSource) {
+            var questionWidget = eventSource.parentWidget;
+            RemoveAnswerOptionService.execute(eventSource.context);
+            questionWidget.removeLastOption();
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

@@ -27,9 +27,9 @@
         /* Public interface */
         self.create = create;
 
-        function create(bind) {
-            var widget = new QuestionWidget(bind.scope.question);
-            return widgetFactories[bind.scope.question.objectType].create(widget);
+        function create(question) {
+            var widget = new QuestionWidget(question);
+            return widgetFactories[question.objectType].create(widget);
         }
 
         return self;
@@ -37,6 +37,8 @@
 
     function QuestionWidget(question) {
         var self = this;
+
+        self.name = 'Question';
         self.question = question;
     }
 

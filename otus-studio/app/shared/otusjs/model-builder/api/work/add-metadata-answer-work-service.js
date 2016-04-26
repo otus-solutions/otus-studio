@@ -16,10 +16,10 @@
         self.execute = execute;
 
         function execute(data) {
-            var parentQuestion = data.context;
+            var question = data.context;
             var survey = WorkspaceService.getSurvey();
-            var newMetadataOption = MetadataAnswerFactory.create(parentQuestion.metadata.option.length, parentQuestion.templateID);
-            parentQuestion.metadata.addOption(newMetadataOption);
+            var newMetadataOption = MetadataAnswerFactory.create(question.metadata.option.length, question.templateID);
+            question.metadata.addOption(newMetadataOption);
             return newMetadataOption;
         }
     }

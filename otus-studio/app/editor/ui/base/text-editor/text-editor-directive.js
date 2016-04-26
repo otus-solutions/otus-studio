@@ -14,7 +14,6 @@
                 leftIcon: '@',
                 ngModel: '='
             },
-            transclude: true,
             templateUrl: 'app/editor/ui/base/text-editor/text-editor.html',
             controller: 'OtusTextEditorController',
             retrict: 'E'

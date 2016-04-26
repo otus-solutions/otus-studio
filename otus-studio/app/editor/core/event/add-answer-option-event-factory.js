@@ -7,31 +7,33 @@
 
     AddAnswerOptionEventFactory.$inject = [
         'AddAnswerOptionService',
-        'SingleSelectionContentService',
-        'WorkspaceService'
+        'WorkspaceService',
+        'QuestionAnswerOptionEditorWidgetFactory'
     ];
 
-    function AddAnswerOptionEventFactory(AddAnswerOptionService, SingleSelectionContentService, WorkspaceService) {
+    function AddAnswerOptionEventFactory(AddAnswerOptionService, WorkspaceService, QuestionAnswerOptionEditorWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddAnswerOptionEvent(AddAnswerOptionService, SingleSelectionContentService, WorkspaceService);
+            return new AddAnswerOptionEvent(AddAnswerOptionService, WorkspaceService, QuestionAnswerOptionEditorWidgetFactory);
         }
 
         return self;
     }
 
-    function AddAnswerOptionEvent(AddAnswerOptionService, SingleSelectionContentService, WorkspaceService) {
+    function AddAnswerOptionEvent(AddAnswerOptionService, WorkspaceService, QuestionAnswerOptionEditorWidgetFactory) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(data) {
-            var metadata = AddAnswerOptionService.execute(data);
-            SingleSelectionContentService.loadOption(metadata);
+        function execute(eventSource) {
+            var questionWidget = eventSource.parentWidget;
+            var option = AddAnswerOptionService.execute(eventSource);
+            var optionWidget = QuestionAnswerOptionEditorWidgetFactory.create(option, questionWidget);
+            questionWidget.options.push(optionWidget);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

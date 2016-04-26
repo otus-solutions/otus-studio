@@ -20,20 +20,11 @@
             loadWidget();
         }
 
-        function getContext() {
-            if ($scope.$parent.widget)
-                return $scope.$parent.widget.parentQuestion || {};
-            if ($scope.$parent.$parent)
-                return $scope.$parent.$parent.question || {};
-            else
-                return {};
-        }
-
         function loadWidget() {
             var templateData = {
                 scope: $scope,
                 element: $element,
-                context: getContext()
+                parentWidget: $scope.$parent.widget || $scope.$parent.$parent.widget || {}
             };
 
             $scope.widget = OtusAddButtonWidgetFactory.create(templateData);

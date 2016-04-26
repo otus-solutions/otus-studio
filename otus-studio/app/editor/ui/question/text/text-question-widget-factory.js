@@ -11,17 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(widget) {
-            return new TextQuestionWidget(widget);
+        function create(parentWidget) {
+            return new TextQuestionWidget(parentWidget);
         }
 
         return self;
     }
 
-    function TextQuestionWidget(widget) {
+    function TextQuestionWidget(parentWidget) {
         var self = this;
 
-        self.widget = widget;
+        self.name = 'TextQuestion';
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
         self.template = '<text-question></text-question>';
     }
 

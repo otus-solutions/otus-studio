@@ -39,7 +39,7 @@
             self.option.push(option);
         }
 
-        function removeLastOption(option) {
+        function removeLastOption() {
             self.option.splice(-1);
         }
 
