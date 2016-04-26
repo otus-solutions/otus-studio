@@ -7,24 +7,23 @@
 
     RemoveAnswerOptionEventFactory.$inject = [
         'RemoveAnswerOptionService',
-        'SingleSelectionContentService',
         'WorkspaceService'
     ];
 
-    function RemoveAnswerOptionEventFactory(RemoveAnswerOptionService, SingleSelectionContentService, WorkspaceService) {
+    function RemoveAnswerOptionEventFactory(RemoveAnswerOptionService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new RemoveAnswerOptionEvent(RemoveAnswerOptionService, SingleSelectionContentService, WorkspaceService);
+            return new RemoveAnswerOptionEvent(RemoveAnswerOptionService, WorkspaceService);
         }
 
         return self;
     }
 
-    function RemoveAnswerOptionEvent(RemoveAnswerOptionService, SingleSelectionContentService, WorkspaceService) {
+    function RemoveAnswerOptionEvent(RemoveAnswerOptionService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;

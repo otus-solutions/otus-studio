@@ -15,7 +15,6 @@
             restrict: 'E',
             templateUrl: 'app/editor/ui/metadata/group/metadata-group.html',
             link: function(scope, element, attrs, controller) {
-                console.log(scope);
                 scope.widget = MetadataGroupWidgetFactory.create(scope.$parent.widget);
             }
         };

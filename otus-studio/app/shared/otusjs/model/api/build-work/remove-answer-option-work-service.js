@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.modelBuilder')
+        .module('otusjs.model')
         .service('RemoveAnswerOptionService', RemoveAnswerOptionService);
 
     function RemoveAnswerOptionService() {

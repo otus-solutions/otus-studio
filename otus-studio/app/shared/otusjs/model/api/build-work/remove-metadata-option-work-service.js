@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.modelBuilder')
+        .module('otusjs.model')
         .service('RemoveMetadataOptionService', RemoveMetadataOptionService);
 
     function RemoveMetadataOptionService() {

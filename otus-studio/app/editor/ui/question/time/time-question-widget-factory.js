@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(widget) {
-            return new TimeQuestionWidget(widget);
+        function create(parentWidget) {
+            return new TimeQuestionWidget(parentWidget);
         }
 
         return self;
     }
 
-    function TimeQuestionWidget(widget) {
+    function TimeQuestionWidget(parentWidget) {
         var self = this;
 
         self.name = 'TimeQuestion';

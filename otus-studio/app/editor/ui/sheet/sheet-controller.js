@@ -8,14 +8,12 @@
     SheetController.$inject = [
         '$scope',
         '$element',
-        'SheetContentService',
-        'WorkspaceService'
+        'SheetContentService'
     ];
 
-    function SheetController($scope, $element, SheetContentService, WorkspaceService) {
+    function SheetController($scope, $element, SheetContentService) {
         var self = this;
         SheetContentService.init($scope, $element);
-        WorkspaceService.registerObserver(self);
     }
 
 }());
