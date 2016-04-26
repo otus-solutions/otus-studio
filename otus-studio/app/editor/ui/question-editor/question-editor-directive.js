@@ -13,9 +13,7 @@
                 ariaLabel: '@',
                 leftIcon: '@'
             },
-            transclude: true,
             templateUrl: 'app/editor/ui/question-editor/question-editor.html',
-            controller: 'OtusQuestionEditorController',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs, controller, transclude) {
                 scope.widget = scope.$parent.widget;

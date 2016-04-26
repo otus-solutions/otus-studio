@@ -3,15 +3,17 @@
 
     angular
         .module('editor.ui')
-        .directive('routeCreator', routeCreator);
+        .directive('otusRouteCreator', otusRouteCreator);
 
-    function routeCreator(WidgetService) {
+    otusRouteCreator.$inject = ['RouteCreatorWidgetFactory'];
+
+    function otusRouteCreator(RouteCreatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
-            controller: 'RouteCreatorController',
-            templateUrl: 'app/editor/ui/navigation/route/creator/route-creator-template.html',
+            templateUrl: 'app/editor/ui/navigation/route/creator/route-creator.html',
             link: function link(scope, element, attr, controller) {
+                scope.widget = RouteCreatorWidgetFactory.create(scope.$parent.widget);
             }
         };
 

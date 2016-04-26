@@ -9,23 +9,24 @@
         'UUID',
         'AddQuestionEventFactory',
         'AddMetadataAnswerEventFactory',
-        'AddAnswerOptionEventFactory'
+        'AddAnswerOptionEventFactory',
+        'AddRouteEventFactory'
     ];
 
-    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory) {
+    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData) {
-            return new OtusAddButtonWidget(templateData, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory);
+            return new OtusAddButtonWidget(templateData, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory);
         }
 
         return self;
     }
 
-    function OtusAddButtonWidget(templateData, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory) {
+    function OtusAddButtonWidget(templateData, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory) {
         var self = this;
 
         /* Type definitions */
@@ -53,6 +54,8 @@
                 AddMetadataAnswerEventFactory.create().execute(self);
             } else if (self.ngModel.includes('AnswerOption')) {
                 AddAnswerOptionEventFactory.create().execute(self);
+            } else if (self.ngModel.includes('Route')) {
+                AddRouteEventFactory.create().execute(self);
             }
         });
     }

@@ -11,41 +11,21 @@
         /* Public interface */
         self.create = create;
 
-        function create(model) {
-            return new NavigationWidget(model);
+        function create(parentWidget, navigation) {
+            return new NavigationWidget(parentWidget, navigation);
         }
 
         return self;
     }
 
-    function NavigationWidget(model) {
-        Object.defineProperty(this, 'model', {
-            value: model,
-            writable: false
-        });
+    function NavigationWidget(parentWidget, navigation) {
+        var self = this;
 
-        Object.defineProperty(this, 'origin', {
-            value: model.origin,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'conditionSet', {
-            value: [],
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'newName', {
-            value: 'survey.navigations[' + model.index + '].routes[' + model.listRoutes().length + '].name',
-            writable: false,
-            enumerable: true
-        });
-
-        Object.defineProperty(this, 'newDestination', {
-            value: 'survey.navigations[' + model.index + '].routes[' + model.listRoutes().length + '].to',
-            writable: false,
-            enumerable: true
-        });
+        self.name = 'Navigation';
+        self.parentWidget = parentWidget;
+        self.question = parentWidget.question;
+        self.navigation = navigation;
+        self.routes = [];
     }
 
 }());

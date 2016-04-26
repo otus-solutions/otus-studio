@@ -3,15 +3,22 @@
 
     angular
         .module('editor.ui')
-        .directive('navigationEditor', navigationEditor);
+        .directive('otusNavigationEditor', otusNavigationEditor);
 
+    otusNavigationEditor.$inject = [
+        'NavigationWidgetFactory',
+        'WorkspaceService'
+    ];
 
-    function navigationEditor() {
+    function otusNavigationEditor(NavigationWidgetFactory, WorkspaceService) {
         var ddo = {
             scope: {},
             restrict: 'E',
-            controller: 'NavigationController',
-            templateUrl: 'app/editor/ui/navigation/editor/navigation-editor-template.html',
+            templateUrl: 'app/editor/ui/navigation/editor/navigation-editor.html',
+            link: function linkFunc(scope) {
+                var navigation = WorkspaceService.getSurvey().fetchNavigationByOrigin(scope.$parent.widget.question.templateID);
+                scope.widget = NavigationWidgetFactory.create(scope.$parent.widget, navigation);
+            }
         };
 
         return ddo;

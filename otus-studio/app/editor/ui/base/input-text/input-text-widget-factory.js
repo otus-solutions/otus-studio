@@ -12,34 +12,35 @@
     function OtusInputTextWidgetFactory(UUID) {
         var self = this;
 
-        /* Public interface */
         self.create = create;
 
-        function create(bind) {
-            bind.scope.widget = new OtusInputTextWidget(bind, UUID.generateUUID());
-            return bind.scope.widget;
+        function create(scope, element, parentWidget) {
+            return new OtusInputTextWidget(scope, element, parentWidget, UUID.generateUUID());
         }
 
         return self;
     }
 
-    function OtusInputTextWidget(bind, guid) {
+    function OtusInputTextWidget(scope, element, parentWidget, guid) {
         var self = this;
 
         /* Type definitions */
         self.name = 'OtusInputText';
 
         /* Instance definitions */
+        self.parentWidget = parentWidget;
         self.guid = guid;
         self.ngModel = '';
 
         /* User definitions */
-        self.label = bind.scope.label;
-        self.ariaLabel = bind.scope.ariaLabel;
-        self.leftIcon = bind.scope.leftIcon;
+        self.user = {};
+        self.label = scope.label;
+        self.ariaLabel = scope.ariaLabel;
+        self.leftIcon = scope.leftIcon;
+        self.model = scope.model;
 
-        bind.element.on('change', function() {
-            console.log(self.ngModel);
+        element.on('change', function() {
+            self.parentWidget[self.model] = self.ngModel;
         });
     }
 

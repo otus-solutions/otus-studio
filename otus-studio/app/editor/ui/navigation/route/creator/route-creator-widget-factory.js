@@ -13,59 +13,23 @@
         /* Public interface */
         self.create = create;
 
-        function create(navigation, element) {
-            return new RouteCreatorWidget(navigation, element, UUID);
+        function create(parentWidget) {
+            return new RouteCreatorWidget(parentWidget, UUID);
         }
 
         return self;
     }
 
-    function RouteCreatorWidget(navigation, element, UUID) {
-        var values = {
-            '$1': navigation.index,
-            '$2': navigation.routes.length
-        };
-
-        var processorGuid = UUID.generateUUID();
-        var ES_TYPE = 'pre-input-text';
-        var ES_PROCESSOR_TYPE = 'pre-add-button';
-        var NAME_TARGET = 'survey.navigations[$1].routes[$2].name';
-        var DESTINATION_TARGET = 'survey.navigations[$1].routes[$2].to';
-        var NAVIGATIONS_TARGET = 'survey.navigations';
-
+    function RouteCreatorWidget(parentWidget, UUID) {
         var self = this;
 
-        self.type = 'RouteCreator';
+        self.name = 'RouteCreator';
+        self.parentWidget = parentWidget;
+        self.navigation = parentWidget.navigation;
+        self.question = parentWidget.question;
 
-        self.name = {
-            type: ES_TYPE,
-            guid: UUID.generateUUID(),
-            processorGuid: processorGuid,
-            target: applyValues(NAME_TARGET, values),
-            value: ''
-        };
-
-        self.destination = {
-            type: ES_TYPE,
-            guid: UUID.generateUUID(),
-            processorGuid: processorGuid,
-            target: applyValues(DESTINATION_TARGET, values),
-            value: ''
-        };
-
-        self.processor = {
-            type: ES_PROCESSOR_TYPE,
-            guid: processorGuid,
-            target: NAVIGATIONS_TARGET
-        };
-
-        function applyValues(string, values) {
-            Object.keys(values).forEach(function(key) {
-                string = string.replace(key, values[key]);
-            });
-
-            return string;
-        }
+        self.routeName = '';
+        self.routeDestination = '';
     }
 
 }());

@@ -5,19 +5,20 @@
         .module('editor.ui')
         .directive('otusInputText', otusInputText);
 
-    function otusInputText() {
+    otusInputText.$inject = ['OtusInputTextWidgetFactory'];
+
+    function otusInputText(OtusInputTextWidgetFactory) {
         var ddo = {
             scope: {
                 label: '@',
                 ariaLabel: '@',
-                leftIcon: '@'
+                leftIcon: '@',
+                model: '@'
             },
-            transclude: true,
             templateUrl: 'app/editor/ui/base/input-text/input-text.html',
-            controller: 'OtusInputTextController',
             retrict: 'E',
-            link: function linkFunc(scope, element, attrs, controller, transclude) {
-                scope.$emit('otusWidgetBinding', controller.component);
+            link: function linkFunc(scope, element) {
+                scope.widget = OtusInputTextWidgetFactory.create(scope, element, scope.$parent.widget);
             }
         };
 
