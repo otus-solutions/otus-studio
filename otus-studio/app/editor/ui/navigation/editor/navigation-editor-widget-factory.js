@@ -26,6 +26,18 @@
         self.question = parentWidget.question;
         self.navigation = navigation;
         self.routes = [];
+
+        self.removeRoute = removeRoute;
+
+        function removeRoute(name) {
+            var routeToRemove = self.routes.filter(function(route) {
+                return route.name === name;
+            });
+
+            var indexToRemove = self.routes.indexOf(routeToRemove[0]);
+            if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
+            return routeToRemove[0];
+        }
     }
 
 }());

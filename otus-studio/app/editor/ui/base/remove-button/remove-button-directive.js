@@ -14,7 +14,8 @@
                 icon: '@',
                 leftIcon: '@',
                 ngModel: '@',
-                context: '='
+                context: '=',
+                model: '='
             },
             transclude: true,
             templateUrl: 'app/editor/ui/base/remove-button/remove-button.html',
