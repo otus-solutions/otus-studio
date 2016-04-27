@@ -4,7 +4,7 @@ describe('ModelFacadeService', function() {
     /* @BeforeScenario */
     beforeEach(function() {
         module('otusjs.model');
-        module('otusjs.modelBuilder');
+        module('otusjs.model');
         module('utils');
 
         inject(function(_$injector_) {

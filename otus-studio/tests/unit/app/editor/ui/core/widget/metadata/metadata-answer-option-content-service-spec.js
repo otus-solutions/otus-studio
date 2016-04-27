@@ -1,17 +1,17 @@
-describe('MetadataAnswerOptionContentService', function(){
+describe('MetadataGroupContentService', function(){
 	var Mock = {};
 	var metadataAnswerOptions = [{oid : "oid", questionOID : "questionOID"}];
 	var scope = {};
-	var metadataQuestion = {find : function(){}, last : function(){}, remove : function(){}};
+	var metadataGroup = {find : function(){}, last : function(){}, remove : function(){}};
 	
 	/*@BeforeScenario*/
 	beforeEach(function() {
 		module('editor.ui');
 
 		inject(function(_$injector_) {
-			service = _$injector_.get('MetadataAnswerOptionContentService', {
+			service = _$injector_.get('MetadataGroupContentService', {
 				'WidgetService' : mockWidgetService(_$injector_),
-				'MetadataAnswerOptionWidgetFactory' : mockMetadataAnswerOptionWidgetFactory(_$injector_)
+				'MetadataOptionWidgetFactory' : mockMetadataOptionWidgetFactory(_$injector_)
 			});
 		});
 	});
@@ -36,14 +36,14 @@ describe('MetadataAnswerOptionContentService', function(){
 
 		//renomear
 		it('should return a object unloadOption', function() {
-			spyOn(metadataQuestion, 'find').and.returnValue(metadataQuestion);
-			spyOn(metadataQuestion, 'last').and.returnValue(metadataQuestion);
-			spyOn(metadataQuestion, 'remove');
+			spyOn(metadataGroup, 'find').and.returnValue(metadataGroup);
+			spyOn(metadataGroup, 'last').and.returnValue(metadataGroup);
+			spyOn(metadataGroup, 'remove');
 			scope['metadataAnswerOptions'] = metadataAnswerOptions;
 			scope['lastOptionIndex'] = {};
 			spyOn(scope, 'lastOptionIndex');
 
-			service.unloadOption(metadataQuestion, scope);
+			service.unloadOption(metadataGroup, scope);
 
 			expect(scope.lastOptionIndex).toEqual(-1);
 		});
@@ -55,9 +55,9 @@ describe('MetadataAnswerOptionContentService', function(){
 		return Mock.WidgetService;
 	}
 
-	function mockMetadataAnswerOptionWidgetFactory($injector) {
-		Mock.MetadataAnswerOptionWidgetFactory = $injector.get('MetadataAnswerOptionWidgetFactory');
-		return Mock.MetadataAnswerOptionWidgetFactory;
+	function mockMetadataOptionWidgetFactory($injector) {
+		Mock.MetadataOptionWidgetFactory = $injector.get('MetadataOptionWidgetFactory');
+		return Mock.MetadataOptionWidgetFactory;
 	}
 
 

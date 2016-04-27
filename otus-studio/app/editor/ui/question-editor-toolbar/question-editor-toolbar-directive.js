@@ -3,13 +3,11 @@
 
     angular
         .module('editor.ui')
-        .directive('questionEditorToolbar', questionEditorToolbar);
+        .directive('otusQuestionEditorToolbar', otusQuestionEditorToolbar);
 
-    function questionEditorToolbar() {
+    function otusQuestionEditorToolbar() {
         var ddo = {
-            scope: {
-                widget: '='
-            },
+            scope: {},
             restrict: 'E',
             controller: 'QuestionEditorToolbarController',
             templateUrl: 'app/editor/ui/question-editor-toolbar/question-editor-toolbar-template.html',

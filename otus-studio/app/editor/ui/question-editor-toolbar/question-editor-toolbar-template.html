@@ -7,19 +7,9 @@
                 </md-tooltip>
             </md-icon>
         </md-button>
-        <md-button class="md-icon-button"
-            editing-source
-            es-type="remove-button"
-            es-id="survey-questions-remove-question"
-            es-target="survey.questionContainer.{{widget.questionId}}">
-            <md-icon aria-label="Navigation">delete
-                <md-tooltip md-direction="bottom">
-                    Remover
-                </md-tooltip>
-            </md-icon>
-        </md-button>
+        <!--<otus:remove-button class="md-icon-button" label="Remover" icon="delete" ng-model="widget"></otus:remove-button>-->
     </div>
     <div layout-padding layout-margin>
-        <navigation-editor></navigation-editor>
+        <otus:navigation-editor></otus:navigation-editor>
     </div>
 </div>

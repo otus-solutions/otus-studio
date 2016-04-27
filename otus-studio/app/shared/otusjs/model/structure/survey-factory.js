@@ -8,10 +8,11 @@
     SurveyFactory.$inject = [
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
-        'SurveyUUIDGenerator'
+        'SurveyUUIDGenerator',
+        'NavigationFactory'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationFactory) {
         var self = this;
 
         /* Public interdace */
@@ -21,13 +22,13 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID());
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationFactory);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationFactory) {
 
         var self = this;
 
@@ -40,11 +41,15 @@
         self.navigationList = [];
 
         self.questionsCount = questionsCount;
+        self.addQuestion = addQuestion;
+        self.updateQuestion = updateQuestion;
+        self.fetchQuestionById = fetchQuestionById;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
         self.listNavigations = listNavigations;
         self.listNavigation = listNavigation;
         self.listNavigationByIndex = listNavigationByIndex;
+        self.fetchNavigationByOrigin = fetchNavigationByOrigin;
         self.toJson = toJson;
 
         function questionsCount() {
@@ -52,6 +57,19 @@
                 return ((typeof property) != 'function');
             });
             return propertyList.length;
+        }
+
+        function addQuestion(question) {
+            self.questionContainer[question.templateID] = question;
+            self.addNavigation(NavigationFactory.create(question.templateID));
+        }
+
+        function updateQuestion(question) {
+            self.navigationList[question.templateID] = question;
+        }
+
+        function fetchQuestionById(templateID) {
+            return self.questionContainer[templateID];
         }
 
         function listNavigations() {
@@ -70,6 +88,14 @@
 
         function listNavigationByIndex(index) {
             return fetchByIndex(index);
+        }
+
+        function fetchNavigationByOrigin(origin) {
+            var filteredNavigation = self.navigationList.filter(function(navigation) {
+                return navigation.origin === origin;
+            });
+
+            return filteredNavigation[0];
         }
 
         function addNavigation(navigation) {

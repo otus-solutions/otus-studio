@@ -1,4 +1,4 @@
-describe('MetadataQuestionWidgetFactory', function() {
+describe('MetadataGroupWidgetFactory', function() {
 	var Mock = {};
 	var question = {questionId: 'id', type: 'type'};
 
@@ -7,13 +7,13 @@ describe('MetadataQuestionWidgetFactory', function() {
 		module('otusjs')
 
 		inject(function(_$injector_) {
-			factory = _$injector_.get('MetadataQuestionWidgetFactory', {
+			factory = _$injector_.get('MetadataGroupWidgetFactory', {
 				MetadataAnswerFactory : mockMetadataAnswerFactory(_$injector_)
 			});
 		});
 	});
 
-	describe('MetadataQuestionWidgetFactory', function() {
+	describe('MetadataGroupWidgetFactory', function() {
 		it('returned object should model', function() {
 			var option = factory.create(question);
 

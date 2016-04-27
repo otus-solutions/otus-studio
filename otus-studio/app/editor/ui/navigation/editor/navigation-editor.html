@@ -1,0 +1,18 @@
+<md-content flex>
+    <md-content layout="row" ng-repeat="route in widget.routes">
+        <md-input-container>
+            <label>Nome</label>
+            <md-icon class="material-icons">low_priority</md-icon>
+            <input ng-model="route.name" aria-label="Name"/>
+        </md-input-container>
+
+        <md-input-container layout="row">
+            <label>Destino</label>
+            <input ng-model="route.destination" aria-label="Destino"/>
+        </md-input-container>
+
+        <otus:remove-button class="md-primary md-layoutTheme-theme md-ink-ripple" tooltip="Remover rota" icon="delete" model="route" ng-model="Route"></otus:add-button>
+    </md-content>
+
+    <otus:route-creator></otus:route-creator>
+</md-content>

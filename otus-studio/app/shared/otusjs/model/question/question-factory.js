@@ -19,11 +19,11 @@
         var self = this,
 
             factoryMap = {
-                'calendar-question': CalendarQuestionFactory,
-                'integer-question': IntegerQuestionFactory,
-                'single-selection-question': SingleSelectionQuestionFactory,
-                'text-question': TextQuestionFactory,
-                'time-question': TimeQuestionFactory
+                'CalendarQuestion': CalendarQuestionFactory,
+                'IntegerQuestion': IntegerQuestionFactory,
+                'SingleSelectionQuestion': SingleSelectionQuestionFactory,
+                'TextQuestion': TextQuestionFactory,
+                'TimeQuestion': TimeQuestionFactory
             };
 
         /* Public interface */
