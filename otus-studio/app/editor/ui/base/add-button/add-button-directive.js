@@ -10,12 +10,13 @@
             scope: {
                 class: '@',
                 label: '@',
+                tooltip: '@',
                 ariaLabel: '@',
                 leftIcon: '@',
+                icon: '@',
                 ngModel: '@',
                 context: '='
             },
-            transclude: true,
             templateUrl: 'app/editor/ui/base/add-button/add-button.html',
             controller: 'OtusAddButtonController',
             retrict: 'E'

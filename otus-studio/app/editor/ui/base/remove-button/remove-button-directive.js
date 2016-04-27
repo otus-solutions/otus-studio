@@ -10,14 +10,14 @@
             scope: {
                 class: '@',
                 label: '@',
+                tooltip: '@',
                 ariaLabel: '@',
-                icon: '@',
                 leftIcon: '@',
+                icon: '@',
                 ngModel: '@',
                 context: '=',
                 model: '='
             },
-            transclude: true,
             templateUrl: 'app/editor/ui/base/remove-button/remove-button.html',
             controller: 'OtusRemoveButtonController',
             retrict: 'E'

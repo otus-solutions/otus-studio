@@ -41,6 +41,7 @@
 
         /* User definitions */
         self.label = templateData.scope.label;
+        self.tooltip = templateData.scope.tooltip || self.label;
         self.ariaLabel = templateData.scope.ariaLabel || self.label;
         self.icon = templateData.scope.icon;
         self.model = templateData.scope.model;
