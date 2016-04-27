@@ -27,7 +27,12 @@
         self.navigation = navigation;
         self.routes = [];
 
+        self.addRoute = addRoute;
         self.removeRoute = removeRoute;
+
+        function addRoute(route) {
+            self.routes.push(route);
+        }
 
         function removeRoute(name) {
             var routeToRemove = self.routes.filter(function(route) {

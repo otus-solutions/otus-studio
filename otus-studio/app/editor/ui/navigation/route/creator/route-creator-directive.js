@@ -9,11 +9,13 @@
 
     function otusRouteCreator(RouteCreatorWidgetFactory) {
         var ddo = {
-            scope: {},
+            scope: {
+                leftIcon: '@'
+            },
             restrict: 'E',
             templateUrl: 'app/editor/ui/navigation/route/creator/route-creator.html',
             link: function link(scope, element, attr, controller) {
-                scope.widget = RouteCreatorWidgetFactory.create(scope.$parent.widget);
+                scope.widget = RouteCreatorWidgetFactory.create(scope, scope.$parent.widget);
             }
         };
 

@@ -13,11 +13,11 @@
                 label: '@',
                 ariaLabel: '@',
                 leftIcon: '@',
-                model: '@'
+                model: '='
             },
             templateUrl: 'app/editor/ui/base/input-text/input-text.html',
             retrict: 'E',
-            link: function linkFunc(scope, element) {
+            link: function linkFunc(scope, element, attrs) {
                 scope.widget = OtusInputTextWidgetFactory.create(scope, element, scope.$parent.widget);
             }
         };

@@ -17,10 +17,10 @@
 
         function execute(eventSource) {
             var navigation = eventSource.navigation;
-            var routeDestination = eventSource.routeDestination;
+            var routeDestination = eventSource.routeDestination();
             var routeIndex = navigation.listRoutes().length;
             var route = RouteFactory.create(navigation.origin, routeDestination, routeIndex);
-            route.name = eventSource.routeName;
+            route.name = eventSource.routeName();
             navigation.addRoute(route);
             return route;
         }

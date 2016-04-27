@@ -30,17 +30,23 @@
         /* Instance definitions */
         self.parentWidget = parentWidget;
         self.guid = guid;
-        self.ngModel = '';
 
         /* User definitions */
-        self.user = {};
         self.label = scope.label;
-        self.ariaLabel = scope.ariaLabel;
+        self.ariaLabel = scope.ariaLabel || self.label;
         self.leftIcon = scope.leftIcon;
-        self.model = scope.model;
+        self.modelRef = scope.model;
+
+        if (scope.model instanceof Function)
+            self.model = scope.model();
+        else
+            self.model = scope.model;
 
         element.on('change', function() {
-            self.parentWidget[self.model] = self.ngModel;
+            if (self.modelRef instanceof Function)
+                self.modelRef(self.model);
+            else
+                self.modelRef = self.model;
         });
     }
 

@@ -13,23 +13,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(parentWidget) {
-            return new RouteCreatorWidget(parentWidget, UUID);
+        function create(scope, parentWidget) {
+            return new RouteCreatorWidget(scope, parentWidget, UUID);
         }
 
         return self;
     }
 
-    function RouteCreatorWidget(parentWidget, UUID) {
+    function RouteCreatorWidget(scope, parentWidget, UUID) {
         var self = this;
 
+        /* Type definitions */
         self.name = 'RouteCreator';
+
+        /* Instance definitions */
+        self.newRoute = {};
         self.parentWidget = parentWidget;
         self.navigation = parentWidget.navigation;
         self.question = parentWidget.question;
 
-        self.routeName = '';
-        self.routeDestination = '';
+        /* User definitions */
+        self.icon = 'low_priority';
+
+        /* Public interface */
+        self.routeName = routeName;
+        self.routeDestination = routeDestination;
+
+        /* View data interface */
+        function routeName(value) {
+            if (value !== undefined)
+                self.newRoute.name = value;
+
+            return self.newRoute.name;
+        }
+
+        function routeDestination(value) {
+            if (value !== undefined)
+                self.newRoute.destination = value;
+
+            return self.newRoute.destination;
+        }
+
     }
 
 }());
