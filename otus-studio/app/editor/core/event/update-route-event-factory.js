@@ -6,24 +6,23 @@
         .factory('UpdateRouteEventFactory', UpdateRouteEventFactory);
 
     UpdateRouteEventFactory.$inject = [
-        'UpdateRouteService',
         'WorkspaceService'
     ];
 
-    function UpdateRouteEventFactory(UpdateRouteService, WorkspaceService) {
+    function UpdateRouteEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpdateRouteEvent(UpdateRouteService, WorkspaceService);
+            return new UpdateRouteEvent(WorkspaceService);
         }
 
         return self;
     }
 
-    function UpdateRouteEvent(UpdateRouteService, WorkspaceService) {
+    function UpdateRouteEvent(WorkspaceService) {
         var self = this;
 
         self.execute = execute;
