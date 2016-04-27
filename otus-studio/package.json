@@ -1,6 +1,6 @@
 {
     "name": "otus-studio",
-    "version": "0.0.1",
+    "version": "1.19.32-SNAPSHOT",
     "description": "The tool to build survey forms to be used in Otus Studio.",
     "keywords": [
         "otus",
@@ -55,6 +55,7 @@
         "karma-jasmine": "^0.3.6",
         "karma-phantomjs-launcher": "^0.2.3",
         "phantomjs": ">=1.9",
-        "phantomjs-prebuilt": "^2.1.2"
+        "phantomjs-prebuilt": "^2.1.2",
+        "gulp-bump": "2.1.0"
     }
 }
