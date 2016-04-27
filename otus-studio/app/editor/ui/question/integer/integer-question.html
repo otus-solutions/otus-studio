@@ -3,7 +3,7 @@
 <md-content class="integerQuestion">
     <div layout="row" layout-align="space-between center">
         <md-input-container class="md-block" flex-gt-sm="45">
-            <input required type="number" name="number" min="0" ng-pattern="/[0-9]+/" mask="123?4?" restrict="reject" limit="false"/>
+            <input type="number" name="number" min="0" required/>
         </md-input-container>
         <div flex>
             <otus:text-editor ng-model="widget.question.label" placeholder="Insira a unidade" flex></otus:text-editor>

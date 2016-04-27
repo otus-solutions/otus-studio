@@ -14,8 +14,6 @@
             templateUrl: 'app/editor/ui/question/integer/integer-question.html',
             retrict: 'E'
         };
-
         return ddo;
     }
-
 }());
