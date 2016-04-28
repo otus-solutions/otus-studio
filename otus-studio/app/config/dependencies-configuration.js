@@ -9,8 +9,7 @@
         'ui.router',
         'lokijs',
         'indexedDB',
-        'immutable',
-        'ui.mask'
+        'immutable'
     ]);
 
 }());
