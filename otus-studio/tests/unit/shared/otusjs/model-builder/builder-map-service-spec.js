@@ -3,7 +3,7 @@ describe('BuilderMapService', function() {
 
     beforeEach(function() {
         module('otusjs.model');
-        module('otusjs.modelBuilder');
+        module('otusjs.model');
 
         inject(function(_$injector_) {
             service = _$injector_.get('BuilderMapService', {

@@ -1,7 +1,7 @@
 describe('BuilderSelectorService', function() {
 
     beforeEach(function() {
-        module('otusjs.modelBuilder');
+        module('otusjs.model');
 
         inject(function(_$injector_) {
             service = _$injector_.get('BuilderSelectorService');

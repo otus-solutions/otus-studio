@@ -13,14 +13,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(value, questionOID) {
-            return new QuestionAnswerOption(value, questionOID, LabelFactory);
+        function create(value, parentQuestionID) {
+            return new QuestionAnswerOption(value, parentQuestionID, LabelFactory);
         }
 
         return self;
     }
 
-    function QuestionAnswerOption(value, questionOID, LabelFactory) {
+    function QuestionAnswerOption(value, parentQuestionID, LabelFactory) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -32,7 +32,7 @@
             enUS: LabelFactory.create(),
             esES: LabelFactory.create()
         };
-        self.parentQuestionID = questionOID;
+        self.parentQuestionID = parentQuestionID;
 
         self.toJson = toJson;
 

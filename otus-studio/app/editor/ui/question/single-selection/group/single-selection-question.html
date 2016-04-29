@@ -1,0 +1,13 @@
+<md-content>
+    <md-radio-group class="radio-group">
+        <div radio-container ng-repeat="optionWidget in $parent.widget.options track by $index" layout="row" style="margin: 10px">
+            <md-radio-button aria-label="{{optionWidget.id}}" ng-value="$index" flex style="margin: 0"></md-radio-button>
+            <otus:text-editor flex="95" ng-model="optionWidget.option.label" placeholder="Clique para inserir o texto da opção de metadado"></otus:text-editor>
+        </div>
+    </md-radio-group>
+
+    <div>
+        <otus:add-button class="md-raised md-layoutTheme-theme md-ink-ripple" label="Adicionar" ng-model="AnswerOption"></otus:add-button>
+        <otus:remove-button class="md-raised md-layoutTheme-theme md-ink-ripple" label="Remover" ng-model="AnswerOption"></otus:add-button>
+    </div>
+</md-content>

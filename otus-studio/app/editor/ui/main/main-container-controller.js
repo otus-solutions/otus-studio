@@ -4,9 +4,14 @@
         .module('editor.ui')
         .controller('MainContainerController', MainContainerController);
 
-    MainContainerController.$inject = ['MainContainerContentService', 'WorkspaceService'];
+    MainContainerController.$inject = [
+        '$scope',
+        'MainContainerContentService',
+        'WorkspaceService',
+        'UiBindingService'
+    ];
 
-    function MainContainerController(MainContainerContentService, WorkspaceService) {
+    function MainContainerController($scope, MainContainerContentService, WorkspaceService, UiBindingService) {
         var self = this;
 
         init();
@@ -15,6 +20,8 @@
             self.showQuestionProperties = false;
             MainContainerContentService.init(self);
         }
+
+        UiBindingService.setScope($scope);
     }
 
 }());

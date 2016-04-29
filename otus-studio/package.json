@@ -1,6 +1,6 @@
 {
     "name": "otus-studio",
-    "version": "1.19.32-SNAPSHOT",
+    "version": "1.19.33-SNAPSHOT",
     "description": "The tool to build survey forms to be used in Otus Studio.",
     "keywords": [
         "otus",
@@ -19,9 +19,12 @@
         "test": "karma start karma.conf.js",
         "gulp": "gulp",
         "start": "npm run gulp browser-sync",
-        "karma": "karma"
+        "karma": "karma",
+        "build": "gulp compress"
     },
     "dependencies": {
+        "gulp-concat": "2.6.0",
+        "gulp-minify": "0.0.11",
         "angular": "^1.4.7",
         "angular-animate": "^1.4.7",
         "angular-aria": "^1.4.7",
