@@ -1,6 +1,6 @@
 {
     "name": "otus-studio",
-    "version": "1.19.33-SNAPSHOT",
+    "version": "1.19.34-SNAPSHOT",
     "description": "The tool to build survey forms to be used in Otus Studio.",
     "keywords": [
         "otus",
