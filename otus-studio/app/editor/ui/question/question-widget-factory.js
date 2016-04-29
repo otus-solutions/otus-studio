@@ -11,9 +11,10 @@
         'SingleSelectionQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
         'TimeQuestionWidgetFactory',
+        'PhoneQuestionWidgetFactory',
     ];
 
-    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
+    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, PhoneQuestionWidgetFactory) {
         var self = this,
 
             widgetFactories = {
@@ -22,6 +23,7 @@
                 'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
                 'TextQuestion': TextQuestionWidgetFactory,
                 'TimeQuestion': TimeQuestionWidgetFactory,
+                'PhoneQuestion': PhoneQuestionWidgetFactory,
             };
 
         /* Public interface */
