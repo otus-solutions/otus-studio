@@ -13,11 +13,11 @@
 
         function setScope(scope) {
             scope.$on('otusWidgetPreLoad', function(event) {
-                // console.log(event);
+                //TODO
             });
 
             scope.$on('otusWidgetBinding', function(event) {
-                // console.log(event.targetScope.widget.name);
+                //TODO
             });
         }
     }
