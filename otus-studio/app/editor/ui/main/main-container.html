@@ -1,20 +1,25 @@
 <div layout="column" flex>
-		<md-toolbar layout="column" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
-			<div layout="row" layout-align="center center">
-				<md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
-	                    <md-icon md-svg-icon="content-save"></md-icon>
-	                    <md-tooltip md-direction="down">
-          					Salvar
-        				</md-tooltip>
-	            </md-button>
-	             <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()" aria-label="Exportar" class="editor-icon">
-	            	<md-icon md-svg-icon="file-export"></md-icon>
-	            	<md-tooltip md-direction="down">
-          					Exportar
-        			</md-tooltip>
-	            </md-button>
-	        </div>
-		</md-toolbar>
+    <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar"
+    ng-controller="EditorToolbarController as editorToolbarController">
+        <div layout="row" flex="15">
+            <md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
+                <md-icon md-svg-icon="content-save"></md-icon>
+                <md-tooltip md-direction="down">
+                    Salvar
+                </md-tooltip>
+            </md-button>
+            <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()"
+            aria-label="Exportar" class="editor-icon">
+                <md-icon md-svg-icon="file-export"></md-icon>
+                <md-tooltip md-direction="down">
+                    Exportar
+                </md-tooltip>
+            </md-button>
+        </div>
+
+        <text-edition-menu></text-edition-menu>
+
+    </md-toolbar>
 	<md-content layout flex="20">
 	    <md-sidenav class="palette" md-is-locked-open="true" layout="column" flex="20">
 			<otus:question-palette></otus:question-palette>

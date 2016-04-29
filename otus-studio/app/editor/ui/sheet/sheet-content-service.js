@@ -19,6 +19,7 @@
         /* Public interface */
         self.init = init;
         self.loadQuestion = loadQuestion;
+        self.loadItem = loadItem;
         self.unloadQuestion = unloadQuestion;
         self.updateQuestion = updateQuestion;
 
@@ -31,6 +32,13 @@
             self.lastLoadedQuestion = question;
             scope.widget = WidgetService.getQuestionEditorWidget(question);
             var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
+            sheet.find('#sheet').append(content);
+        }
+
+        function loadItem(item) {
+            self.lastLoadedQuestion = item;
+            scope.widget = WidgetService.getPageItemEditorWidget(item);
+            var content = TemplateLoaderService.loadDirective('<otus:page-item-editor></otus:page-item-editor>', scope);
             sheet.find('#sheet').append(content);
         }
 

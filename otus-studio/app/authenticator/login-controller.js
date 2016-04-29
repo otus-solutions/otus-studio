@@ -24,14 +24,13 @@
                 }
 
             }, function(response) {
-                console.log(response);
+                //TODO
             });
         };
 
         $scope.visitAccess = function() {
             DashboardStateService.goToHome();
         };
-
     }
 
 }());
