@@ -8,17 +8,19 @@
     QuestionWidgetFactory.$inject = [
         'CalendarQuestionWidgetFactory',
         'IntegerQuestionWidgetFactory',
+        'DecimalQuestionWidgetFactory',
         'SingleSelectionQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
         'TimeQuestionWidgetFactory',
     ];
 
-    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
+    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory) {
         var self = this,
 
             widgetFactories = {
                 'CalendarQuestion': CalendarQuestionWidgetFactory,
                 'IntegerQuestion': IntegerQuestionWidgetFactory,
+                'DecimalQuestion': DecimalQuestionWidgetFactory,
                 'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
                 'TextQuestion': TextQuestionWidgetFactory,
                 'TimeQuestion': TimeQuestionWidgetFactory,

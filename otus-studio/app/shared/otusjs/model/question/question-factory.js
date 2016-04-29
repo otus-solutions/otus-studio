@@ -8,6 +8,7 @@
     QuestionFactory.$inject = [
         'CalendarQuestionFactory',
         'IntegerQuestionFactory',
+        'DecimalQuestionFactory',
         'SingleSelectionQuestionFactory',
         'TextQuestionFactory',
         'TimeQuestionFactory',
@@ -15,12 +16,13 @@
         'MetadataGroupFactory'
     ];
 
-    function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory) {
+    function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory) {
         var self = this,
 
             factoryMap = {
                 'CalendarQuestion': CalendarQuestionFactory,
                 'IntegerQuestion': IntegerQuestionFactory,
+                'DecimalQuestion' : DecimalQuestionFactory,
                 'SingleSelectionQuestion': SingleSelectionQuestionFactory,
                 'TextQuestion': TextQuestionFactory,
                 'TimeQuestion': TimeQuestionFactory

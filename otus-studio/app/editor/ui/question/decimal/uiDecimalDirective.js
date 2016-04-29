@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module("editor.ui").directive("uiInteger", function() {
+    angular.module("editor.ui").directive("uiDecimal", function() {
         return {
             link: function($scope, element, attrs, ngModelCtrl) {
                 var lastValidValue;
@@ -36,6 +36,8 @@
 
                 function isValidKey(keycode) {
                     var minusKey = (keycode === 109);
+                    var commaKey = (keycode === 188);
+                    var dotKey = (keycode === 190);
                     var shiftKey = (keycode === 16);
                     var backspaceKey = (keycode === 8);
                     var homeKey = (keycode === 36);
@@ -47,10 +49,9 @@
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
-                    return (minusKey || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
+                    return (minusKey || commaKey || dotKey || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
                 }
             }
         };
     });
-
 }());
