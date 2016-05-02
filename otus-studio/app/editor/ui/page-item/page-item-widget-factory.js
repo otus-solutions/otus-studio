@@ -6,14 +6,16 @@
         .factory('PageItemWidgetFactory', PageItemWidgetFactory);
 
     PageItemWidgetFactory.$inject = [
-        'TextItemWidgetFactory'
+        'TextItemWidgetFactory',
+        'ImageItemWidgetFactory'
     ];
 
-    function PageItemWidgetFactory(TextItemWidgetFactory) {
+    function PageItemWidgetFactory(TextItemWidgetFactory, ImageItemWidgetFactory) {
         var self = this,
 
             widgetFactories = {
                 'TextItem': TextItemWidgetFactory,
+                'ImageItem': ImageItemWidgetFactory,
             };
 
         /* Public interface */

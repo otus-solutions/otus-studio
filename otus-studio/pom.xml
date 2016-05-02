@@ -8,7 +8,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>br.org.otus.studio</groupId>
         <artifactId>otus-studio-root</artifactId>
-        <version>1.19.34-SNAPSHOT</version>
+        <version>1.19.35-SNAPSHOT</version>
         <relativePath>../otus-studio-root/pom.xml</relativePath>
     </parent>
 
