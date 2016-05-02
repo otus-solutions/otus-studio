@@ -1,9 +1,34 @@
-<md-content flex>
-    <div layout="row" layout-margin flex>
-        <otus:input-text model="widget.name" label="Nome" left-icon="low_priority"></otus:input-text>
-        <otus:input-text model="widget.destination" label="Destino"></otus:input-text>
-        <otus:remove-button model="route" ng-model="Route" tooltip="Remover rota" icon="delete" class="md-primary md-layoutTheme-theme md-ink-ripple"></otus:add-button>
-    </div>
-
-    <otus:rule-creator></otus:rule-creator>
-</md-content>
+<md-container layout="column" flex>
+    <md-container layout="row" flex="10">
+        <otus:input-text model="widget.name" label="Nome da Rota" left-icon="low_priority" style="margin-bottom: 2px" flex="45"></otus:input-text>
+        <otus:input-text model="widget.destination" label="Destino" style="margin-bottom: 2px" flex="45"></otus:input-text>
+        <otus:remove-button model="widget.route" ng-model="Route" tooltip="Remover rota" icon="delete" icon-button flex="5"></otus:remove-button>
+        <md-button class="md-icon-button" ng-click="widget.editRouteButton()" flex="5">
+            <md-icon aria-label="Editar rota">explore
+                <md-tooltip md-direction="bottom">
+                    Editar rota
+                </md-tooltip>
+            </md-icon>
+        </md-button>
+    </md-container>
+    <md-container layout="row" flex ng-class="{'short-opened': widget.ngClass.open, 'closed': !widget.ngClass.open}">
+        <md-container flex>
+            <md-tabs md-no-pagination md-dynamic-height style="min-height: 130px">
+                <md-tab ng-repeat="ruleSet in widget.ruleSet" label="Conjunto de Regras">
+                    <md-content>
+                        <md-list>
+                            <md-list-item class="md-1-line" ng-repeat="rule in ruleSet">
+                                <otus:rule-editor></otus:rule-editor>
+                            </md-list-item>
+                        </md-list>
+                        <otus:rule-creator layout="row"></otus:rule-creator>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+            <md-content>
+                <otus:add-button ng-model="RuleSet" left-icon="plus" label="Novo conjunto de regras"></otus:add-button>
+            </md-content>
+        </md-container>
+    </md-container>
+    <md-divider></md-divider>
+</md-container>

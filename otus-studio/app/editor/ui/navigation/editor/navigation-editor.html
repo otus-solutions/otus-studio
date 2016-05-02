@@ -1,7 +1,4 @@
-<md-content flex>
-    <md-content layout="row" ng-repeat="route in widget.routes">
-        <otus:route-editor></otus:route-editor>
-    </md-content>
-
-    <otus:route-creator></otus:route-creator>
-</md-content>
+<md-container layout="column" flex>
+    <otus:route-editor ng-repeat="route in widget.routes" widget="route" layout="row" style="padding-top: 5px"></otus:route-editor>
+    <otus:route-creator layout="row"></otus:route-creator>
+</md-container>

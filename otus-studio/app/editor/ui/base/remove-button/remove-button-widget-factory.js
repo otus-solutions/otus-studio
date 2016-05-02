@@ -18,39 +18,38 @@
         /* Public interface */
         self.create = create;
 
-        function create(templateData) {
-            templateData.scope.widget = new OtusRemoveButtonWidget(templateData, UUID.generateUUID(), RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory, RemoveRouteEventFactory);
-            return templateData.scope.widget;
+        function create(templateData, element, model, parentWidget) {
+            return new OtusRemoveButtonWidget(templateData, element, model, parentWidget, UUID.generateUUID(), RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory, RemoveRouteEventFactory);
         }
 
         return self;
     }
 
-    function OtusRemoveButtonWidget(templateData, guid, RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory, RemoveRouteEventFactory) {
+    function OtusRemoveButtonWidget(templateData, element, model, parentWidget, guid, RemoveMetadataOptionEventFactory, RemoveAnswerOptionEventFactory, RemoveRouteEventFactory) {
         var self = this;
 
         /* Type definitions */
         self.name = 'OtusRemoveButton';
-        self.scope = templateData.scope;
-        self.parentWidget = self.scope.$parent.widget || self.scope.$parent.$parent.widget;
-        self.context = self.parentWidget.question;
+        self.parentWidget = parentWidget;
 
         /* Instance definitions */
         self.guid = guid;
-        self.ngModel = templateData.scope.ngModel;
+        self.ngModel = templateData.ngModel;
+        self.context = parentWidget.question;
 
         /* User definitions */
-        self.label = templateData.scope.label;
-        self.tooltip = templateData.scope.tooltip || self.label;
-        self.ariaLabel = templateData.scope.ariaLabel || self.label;
-        self.icon = templateData.scope.icon;
-        self.model = templateData.scope.model;
+        self.iconButton = (templateData.iconButton !== undefined) ? 'md-icon-button' : '';
+        self.icon = templateData.icon;
+        self.label = templateData.label;
+        self.tooltip = templateData.tooltip || self.label;
+        self.ariaLabel = templateData.ariaLabel || self.label;
+        self.model = model;
 
         /* CSS definitions */
         self.css = {};
-        self.css.class = templateData.scope.class;
+        self.css.class = templateData.class;
 
-        templateData.element.on('click', function() {
+        element.on('click', function() {
             if (self.ngModel.includes('MetadataOption')) {
                 RemoveMetadataOptionEventFactory.create().execute(self);
             } else if (self.ngModel.includes('AnswerOption')) {

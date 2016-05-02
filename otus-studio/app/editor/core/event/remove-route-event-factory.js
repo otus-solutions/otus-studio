@@ -29,7 +29,7 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            var navigationWidget = eventSource.parentWidget;
+            var navigationWidget = eventSource.parentWidget.parentWidget;
             RemoveRouteService.execute(navigationWidget.navigation, eventSource.model);
 
             navigationWidget.removeRoute(eventSource.model.name);

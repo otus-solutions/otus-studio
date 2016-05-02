@@ -5,7 +5,9 @@
         .module('editor.ui')
         .directive('otusAddButton', otusAddButton);
 
-    function otusAddButton() {
+    otusAddButton.$inject = ['OtusAddButtonWidgetFactory'];
+
+    function otusAddButton(OtusAddButtonWidgetFactory) {
         var ddo = {
             scope: {
                 class: '@',
@@ -15,11 +17,14 @@
                 leftIcon: '@',
                 icon: '@',
                 ngModel: '@',
-                context: '='
+                context: '=',
+                model: '='
             },
             templateUrl: 'app/editor/ui/base/add-button/add-button.html',
-            controller: 'OtusAddButtonController',
-            retrict: 'E'
+            retrict: 'E',
+            link: function linkFunc(scope, element, attrs) {
+                scope.widget = OtusAddButtonWidgetFactory.create(attrs, element, scope.model, scope.$parent.widget);
+            }
         };
 
         return ddo;

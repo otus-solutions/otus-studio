@@ -35,6 +35,33 @@
         self.route = route;
         self.name = name;
         self.destination = destination;
+        self.ruleSet = [[]];
+
+        self.ngClass = {
+            open: false
+        };
+
+        self.addRule = addRule;
+        self.removeRule = removeRule;
+        self.editRouteButton = editRouteButton;
+
+        function editRouteButton() {
+            self.ngClass.open = !self.ngClass.open;
+        }
+
+        function addRule(rule) {
+            self.ruleSet[0].push(rule);
+        }
+
+        function removeRule(name) {
+            var ruleToRemove = self.ruleSet[0].filter(function(ruleEditor) {
+                return ruleEditor.rule.name === name;
+            });
+
+            var indexToRemove = self.ruleSet[0].indexOf(ruleToRemove[0]);
+            if (indexToRemove > -1) self.ruleSet[0].splice(indexToRemove, 1);
+            return ruleToRemove[0];
+        }
 
         /* View data interface */
         function name(value) {

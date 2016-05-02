@@ -13,14 +13,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, parentWidget) {
-            return new RouteCreatorWidget(scope, parentWidget, UUID);
+        function create(templateData, element, parentWidget) {
+            return new RouteCreatorWidget(templateData, element, parentWidget, UUID);
         }
 
         return self;
     }
 
-    function RouteCreatorWidget(scope, parentWidget, UUID) {
+    function RouteCreatorWidget(templateData, element, parentWidget, UUID) {
         var self = this;
 
         /* Type definitions */
@@ -33,7 +33,15 @@
         self.question = parentWidget.question;
 
         /* User definitions */
+        self.flex = templateData.flex;
+        self.layout = templateData.layout;
         self.icon = 'low_priority';
+        self.css = {};
+        self.css.class = templateData.class;
+
+        self.ngClass = {
+            open: false
+        };
 
         /* Public interface */
         self.routeName = routeName;
@@ -53,7 +61,6 @@
 
             return self.newRoute.destination;
         }
-
     }
 
 }());

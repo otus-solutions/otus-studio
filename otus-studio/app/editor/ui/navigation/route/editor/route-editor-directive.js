@@ -10,13 +10,11 @@
     function otusRouteEditor(RouteEditorWidgetFactory) {
         var ddo = {
             scope: {
-                leftIcon: '@'
+                leftIcon: '@',
+                widget: '='
             },
             restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/route/editor/route-editor.html',
-            link: function linkFunc(scope) {
-                scope.widget = scope.$parent.route;
-            }
+            templateUrl: 'app/editor/ui/navigation/route/editor/route-editor.html'
         };
 
         return ddo;

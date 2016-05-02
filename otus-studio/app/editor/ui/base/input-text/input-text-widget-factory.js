@@ -14,14 +14,14 @@
 
         self.create = create;
 
-        function create(scope, element, parentWidget) {
-            return new OtusInputTextWidget(scope, element, parentWidget, UUID.generateUUID());
+        function create(templateData, element, model, parentWidget) {
+            return new OtusInputTextWidget(templateData, element, model, parentWidget, UUID.generateUUID());
         }
 
         return self;
     }
 
-    function OtusInputTextWidget(scope, element, parentWidget, guid) {
+    function OtusInputTextWidget(templateData, element, model, parentWidget, guid) {
         var self = this;
 
         /* Type definitions */
@@ -32,15 +32,17 @@
         self.guid = guid;
 
         /* User definitions */
-        self.label = scope.label;
-        self.ariaLabel = scope.ariaLabel || self.label;
-        self.leftIcon = scope.leftIcon;
-        self.modelRef = scope.model;
+        self.style = templateData.style;
+        self.flex = templateData.flex;
+        self.label = templateData.label;
+        self.ariaLabel = templateData.ariaLabel || self.label;
+        self.leftIcon = templateData.leftIcon;
+        self.modelRef = model;
 
-        if (scope.model instanceof Function)
-            self.model = scope.model();
+        if (model instanceof Function)
+            self.model = model();
         else
-            self.model = scope.model;
+            self.model = model;
 
         element.on('change', function() {
             if (self.modelRef instanceof Function)
