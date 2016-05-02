@@ -8,6 +8,7 @@
     function PhoneQuestionWidgetFactory() {
         var self = this;
 
+        /* Public interface */
         self.create = create;
 
         function create(parentWidget) {

@@ -11,10 +11,10 @@
                 ngModel: '=',
                 ariaLabel: '@'
             },
-            templateUrl: 'app/editor/ui/question/numeric/phone-question.html',
+            templateUrl: 'app/editor/ui/question/phone/phone-question.html',
             retrict: 'E'
         };
-
+        
         return ddo;
     }
 
