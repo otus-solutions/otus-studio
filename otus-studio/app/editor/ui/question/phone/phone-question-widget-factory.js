@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-
+    
     angular
         .module('editor.ui')
         .factory('PhoneQuestionWidgetFactory', PhoneQuestionWidgetFactory);

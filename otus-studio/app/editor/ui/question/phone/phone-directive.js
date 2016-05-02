@@ -14,7 +14,7 @@
             templateUrl: 'app/editor/ui/question/phone/phone-question.html',
             retrict: 'E'
         };
-        
+
         return ddo;
     }
 

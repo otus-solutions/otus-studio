@@ -1,64 +1,65 @@
 {
-    "name": "otus-studio",
-    "version": "1.19.34-SNAPSHOT",
-    "description": "The tool to build survey forms to be used in Otus Studio.",
-    "keywords": [
-        "otus",
-        "otus-studio",
-        "survey-form",
-        "application",
-        "app"
-    ],
-    "url": "https://github.com/ccem-dev/studio/issues",
-    "email": "ccem.projects@gmail.com",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ccem-dev/studio"
-    },
-    "scripts": {
-        "test": "karma start karma.conf.js",
-        "gulp": "gulp",
-        "start": "npm run gulp browser-sync",
-        "karma": "karma",
-        "build": "gulp compress"
-    },
-    "dependencies": {
-        "gulp-concat": "2.6.0",
-        "gulp-minify": "0.0.11",
-        "angular": "^1.4.7",
-        "angular-animate": "^1.4.7",
-        "angular-aria": "^1.4.7",
-        "angular-immutable": "0.1.2",
-        "angular-material-icons": "0.6.0",
-        "angular-messages": "^1.5.0",
-        "js-base64": "^2.1.9",
-        "node-uuid": "^1.4.7",
-        "angular-bind-html-compile-ci-dev": "1.1.1",
-        "angular-ui-router": "0.2.14",
-        "angular-material": "1.0.5",
-        "graphdracula": "0.0.3-alpha5-19-g6301dfc",
-        "immutable-js": "0.3.1-6",
-        "jquery": "2.2.0",
-        "lokijs": "1.3.16",
-        "moment": "2.12.0"
-    },
-    "devDependencies": {
-        "angular-mocks": "^1.4.9",
-        "browser-sync": "2.11.2",
-        "browser-sync-middleware-spa": "^1.0.0",
-        "concurrently": "^1.0.0",
-        "gulp": "^3.9.1",
-        "gulp-rename": "^1.2.2",
-        "gulp-uglify": "^1.5.1",
-        "gulp-useref": "^3.0.4",
-        "jasmine-core": "^2.4.1",
-        "karma": "^0.13.19",
-        "karma-chrome-launcher": "^0.2.2",
-        "karma-htmlfile-reporter": "^0.2.2",
-        "karma-jasmine": "^0.3.6",
-        "karma-phantomjs-launcher": "^0.2.3",
-        "phantomjs": ">=1.9",
-        "phantomjs-prebuilt": "^2.1.2",
-        "gulp-bump": "2.1.0"
-    }
+  "name": "otus-studio",
+  "version": "1.19.34-SNAPSHOT",
+  "description": "The tool to build survey forms to be used in Otus Studio.",
+  "keywords": [
+    "otus",
+    "otus-studio",
+    "survey-form",
+    "application",
+    "app"
+  ],
+  "url": "https://github.com/ccem-dev/studio/issues",
+  "email": "ccem.projects@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccem-dev/studio"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "gulp": "gulp",
+    "start": "npm run gulp browser-sync",
+    "karma": "karma",
+    "build": "gulp compress"
+  },
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-aria": "^1.4.7",
+    "angular-bind-html-compile-ci-dev": "1.1.1",
+    "angular-immutable": "0.1.2",
+    "angular-input-masks": "^2.3.0",
+    "angular-material": "1.0.5",
+    "angular-material-icons": "0.6.0",
+    "angular-messages": "^1.5.0",
+    "angular-ui-router": "0.2.14",
+    "graphdracula": "0.0.3-alpha5-19-g6301dfc",
+    "gulp-concat": "2.6.0",
+    "gulp-minify": "0.0.11",
+    "immutable-js": "0.3.1-6",
+    "jquery": "2.2.0",
+    "js-base64": "^2.1.9",
+    "lokijs": "1.3.16",
+    "moment": "2.12.0",
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.9",
+    "browser-sync": "2.11.2",
+    "browser-sync-middleware-spa": "^1.0.0",
+    "concurrently": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1",
+    "gulp-useref": "^3.0.4",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-htmlfile-reporter": "^0.2.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": ">=1.9",
+    "phantomjs-prebuilt": "^2.1.2",
+    "gulp-bump": "2.1.0"
+  }
 }
