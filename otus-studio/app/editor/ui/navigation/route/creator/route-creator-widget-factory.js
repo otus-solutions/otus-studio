@@ -5,61 +5,65 @@
         .module('editor.ui')
         .factory('RouteCreatorWidgetFactory', RouteCreatorWidgetFactory);
 
-    RouteCreatorWidgetFactory.$inject = ['UUID'];
+    RouteCreatorWidgetFactory.$inject = ['AddRouteEventFactory'];
 
-    function RouteCreatorWidgetFactory(UUID) {
+    function RouteCreatorWidgetFactory(AddRouteEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData, element, parentWidget) {
-            return new RouteCreatorWidget(templateData, element, parentWidget, UUID);
+            return new RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory);
         }
 
         return self;
     }
 
-    function RouteCreatorWidget(templateData, element, parentWidget, UUID) {
+    function RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'RouteCreator';
+        self.className = self.constructor.name;
+        self.template = {};
+        self.css = {};
+        self.css.ngClass = {};
 
         /* Instance definitions */
-        self.newRoute = {};
-        self.parentWidget = parentWidget;
-        self.navigation = parentWidget.navigation;
-        self.question = parentWidget.question;
+        self.parent = parentWidget;
+        self.routeData = {};
+        self.routeData.parentNavigation = parentWidget.navigation;
 
-        /* User definitions */
-        self.flex = templateData.flex;
-        self.layout = templateData.layout;
-        self.icon = 'low_priority';
-        self.css = {};
+        /* Template definitions */
+        self.template.flex = templateData.flex;
+        self.template.icon = 'low_priority';
+        self.template.layout = templateData.layout;
+
+        /* CSS definitions */
         self.css.class = templateData.class;
+        self.css.ngClass.open = false;
 
-        self.ngClass = {
-            open: false
-        };
-
-        /* Public interface */
+        /* Public methods */
         self.routeName = routeName;
         self.routeDestination = routeDestination;
+        self.createRoute = createRoute;
 
-        /* View data interface */
         function routeName(value) {
             if (value !== undefined)
-                self.newRoute.name = value;
+                self.routeData.name = value;
 
-            return self.newRoute.name;
+            return self.routeData.name;
         }
 
         function routeDestination(value) {
             if (value !== undefined)
-                self.newRoute.destination = value;
+                self.routeData.destination = value;
 
-            return self.newRoute.destination;
+            return self.routeData.destination;
+        }
+
+        function createRoute() {
+            AddRouteEventFactory.create().execute(self);
         }
     }
 

@@ -29,11 +29,10 @@
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            var routeCreatorWidget = eventSource.parentWidget;
-            var route = AddRouteService.execute(routeCreatorWidget);
+        function execute(routeCreatorWidget) {
+            var route = AddRouteService.execute(routeCreatorWidget.routeData);
 
-            var navigationEditorWidget = routeCreatorWidget.parentWidget;
+            var navigationEditorWidget = routeCreatorWidget.parent;
             var routeWidget = RouteEditorWidgetFactory.create(route, navigationEditorWidget);
             navigationEditorWidget.addRoute(routeWidget);
 

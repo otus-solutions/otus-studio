@@ -6,7 +6,6 @@
         .factory('OtusAddButtonWidgetFactory', OtusAddButtonWidgetFactory);
 
     OtusAddButtonWidgetFactory.$inject = [
-        'UUID',
         'AddQuestionEventFactory',
         'AddMetadataAnswerEventFactory',
         'AddAnswerOptionEventFactory',
@@ -14,20 +13,20 @@
         'AddRuleEventFactory'
     ];
 
-    function OtusAddButtonWidgetFactory(UUID, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory) {
+    function OtusAddButtonWidgetFactory(AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData, element, model, parentWidget) {
-            return new OtusAddButtonWidget(templateData, element, model, parentWidget, UUID.generateUUID(), AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory);
+            return new OtusAddButtonWidget(templateData, element, model, parentWidget, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory);
         }
 
         return self;
     }
 
-    function OtusAddButtonWidget(templateData, element, model, parentWidget, guid, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory) {
+    function OtusAddButtonWidget(templateData, element, model, parentWidget, AddQuestionEventFactory, AddMetadataAnswerEventFactory, AddAnswerOptionEventFactory, AddRouteEventFactory, AddRuleEventFactory) {
         var self = this;
 
         /* Type definitions */
@@ -35,7 +34,6 @@
         self.parentWidget = parentWidget;
 
         /* Instance definitions */
-        self.guid = guid;
         self.ngModel = templateData.ngModel;
         if (parentWidget) {
             self.context = parentWidget.question;
@@ -60,8 +58,6 @@
                 AddMetadataAnswerEventFactory.create().execute(self);
             } else if (self.ngModel.includes('AnswerOption')) {
                 AddAnswerOptionEventFactory.create().execute(self);
-            } else if (self.ngModel.includes('Route')) {
-                AddRouteEventFactory.create().execute(self);
             } else if (self.ngModel.includes('Rule')) {
                 AddRuleEventFactory.create().execute(self);
             }

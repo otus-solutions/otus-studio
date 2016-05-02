@@ -15,13 +15,9 @@
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            var navigation = eventSource.navigation;
-            var routeDestination = eventSource.routeDestination();
-            var routeIndex = navigation.listRoutes().length;
-            var route = RouteFactory.create(navigation.origin, routeDestination, routeIndex);
-            route.name = eventSource.routeName();
-            navigation.addRoute(route);
+        function execute(routeData) {
+            var route = RouteFactory.create(routeData.name, routeData.parentNavigation.origin, routeData.destination);
+            routeData.parentNavigation.addRoute(route);
             return route;
         }
     }

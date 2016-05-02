@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(origin, destination) {
-            return new Route(origin, destination);
+        function create(name, origin, destination) {
+            return new Route(name, origin, destination);
         }
 
         return self;
     }
 
-    function Route(routeOrigin, routeDestination) {
+    function Route(routeName, routeOrigin, routeDestination) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -26,7 +26,7 @@
         self.origin = routeOrigin;
         self.destination = routeDestination;
         self.conditionSet = [];
-        self.name = routeOrigin + '-' + routeDestination + '-' + self.conditionSet.length;
+        self.name = routeName;
 
         /* Public interface */
         self.getConditionSet = getConditionSet;
