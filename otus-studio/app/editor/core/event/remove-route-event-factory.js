@@ -29,10 +29,10 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            var navigationWidget = eventSource.parentWidget.parentWidget;
-            RemoveRouteService.execute(navigationWidget.navigation, eventSource.model);
+            var navigationWidget = eventSource.parent;
+            RemoveRouteService.execute(eventSource.routeData);
 
-            navigationWidget.removeRoute(eventSource.model.name);
+            navigationWidget.removeRoute(eventSource.routeData.name);
 
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();

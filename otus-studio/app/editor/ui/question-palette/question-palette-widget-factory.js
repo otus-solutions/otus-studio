@@ -6,37 +6,58 @@
         .factory('OtusQuestionPaletteWidgetFactory', OtusQuestionPaletteWidgetFactory);
 
     OtusQuestionPaletteWidgetFactory.$inject = [
-        'UUID'
+        'AddQuestionEventFactory'
     ];
 
-    function OtusQuestionPaletteWidgetFactory(UUID) {
+    function OtusQuestionPaletteWidgetFactory(AddQuestionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(bind) {
-            bind.scope.widget = new OtusQuestionPaletteWidget(bind, UUID.generateUUID());
-            return bind.scope.widget;
+        function create(parentWidget) {
+            return new OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory);
         }
 
         return self;
     }
 
-    function OtusQuestionPaletteWidget(bind, guid) {
+    function OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'OtusQuestionPalette';
+        self.className = self.constructor.name;
 
         /* Instance definitions */
-        self.guid = guid;
-        self.ngModel = '';
+        self.parent = parentWidget;
 
-        /* User definitions */
-        self.label = bind.scope.label;
-        self.ariaLabel = bind.scope.ariaLabel;
-        self.leftIcon = bind.scope.leftIcon;
+        /* Public methods */
+        self.addCalendarQuestion = addCalendarQuestion;
+        self.addNumericQuestion = addNumericQuestion;
+        self.addSingleSelectionQuestion = addSingleSelectionQuestion;
+        self.addTextQuestion = addTextQuestion;
+        self.addTimeQuestion = addTimeQuestion;
+
+        /* Actions */
+        function addCalendarQuestion() {
+            AddQuestionEventFactory.create().execute('CalendarQuestion');
+        }
+
+        function addNumericQuestion() {
+            AddQuestionEventFactory.create().execute('NumericQuestion');
+        }
+
+        function addSingleSelectionQuestion() {
+            AddQuestionEventFactory.create().execute('SingleSelectionQuestion');
+        }
+
+        function addTextQuestion() {
+            AddQuestionEventFactory.create().execute('TextQuestion');
+        }
+
+        function addTimeQuestion() {
+            AddQuestionEventFactory.create().execute('TimeQuestion');
+        }
     }
 
 }());

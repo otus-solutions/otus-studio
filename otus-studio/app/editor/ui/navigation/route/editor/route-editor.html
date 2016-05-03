@@ -1,15 +1,9 @@
 <md-container layout="column" flex>
     <md-container layout="row" flex="10">
-        <otus:input-text model="widget.name" label="Nome da Rota" left-icon="low_priority" style="margin-bottom: 2px" flex="45"></otus:input-text>
-        <otus:input-text model="widget.destination" label="Destino" style="margin-bottom: 2px" flex="45"></otus:input-text>
-        <otus:remove-button model="widget.route" ng-model="Route" tooltip="Remover rota" icon="delete" icon-button flex="5"></otus:remove-button>
-        <md-button class="md-icon-button" ng-click="widget.editRouteButton()" flex="5">
-            <md-icon aria-label="Editar rota">explore
-                <md-tooltip md-direction="bottom">
-                    Editar rota
-                </md-tooltip>
-            </md-icon>
-        </md-button>
+        <otus:input-text model="widget.name" label="Nome da Rota" left-icon="low_priority" style="margin-bottom: 2px" flex="40"></otus:input-text>
+        <otus:input-text model="widget.destination" label="Destino" style="margin-bottom: 2px" flex="40"></otus:input-text>
+        <otus:button click="widget.removeRoute" tooltip="Remover rota" icon="delete" icon-button="true" flex="10" />
+        <otus:button click="widget.editRoute" tooltip="Editar rota" icon="explore" icon-button="true" flex="10" />
     </md-container>
     <md-container layout="row" flex ng-class="{'short-opened': widget.ngClass.open, 'closed': !widget.ngClass.open}">
         <md-container flex>

@@ -18,31 +18,26 @@
         return self;
     }
 
-    function OtusButtonWidget(templateData, element, parentWidget) {
+    function OtusButtonWidget(templateData, templateConfig, element, parentWidget) {
         var self = this;
 
         /* Type definitions */
         self.className = self.constructor.name;
-        self.template = {};
         self.css = {};
 
         /* Template definitions */
-        self.template.ariaLabel = templateData.ariaLabel || templateData.label;
-        self.template.iconButton = (templateData.iconButton !== undefined) ? 'md-icon-button' : '';
-        self.template.icon = templateData.icon;
-        self.template.label = templateData.label;
-        self.template.tooltip = templateData.tooltip || self.label;
+        self.template = templateConfig;
+        self.template.iconButton = (templateConfig.iconButton !== undefined && templateConfig.iconButton === "true") ? 'md-icon-button' : '';
+        self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
+        self.template.tooltip = templateConfig.tooltip || self.label;
+        self.template.hasIcon = (templateConfig.icon !== undefined || templateConfig.leftIcon !== undefined || templateConfig.rightIcon !== undefined);
 
         /* CSS definitions */
-        self.css.class = templateData.class;
+        self.css.class = templateConfig.class;
 
         /* Instance definitions */
         self.parent = parentWidget;
         self.click = templateData.click;
-
-        element.on('click', function onClick() {
-            self.click();
-        });
     }
 
 }());

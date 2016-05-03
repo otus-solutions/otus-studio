@@ -40,7 +40,7 @@
 
         function removeRoute(name) {
             var routeToRemove = self.routes.filter(function(routeEditor) {
-                return routeEditor.route.name === name;
+                return routeEditor.name() === name;
             });
 
             var indexToRemove = self.routes.indexOf(routeToRemove[0]);

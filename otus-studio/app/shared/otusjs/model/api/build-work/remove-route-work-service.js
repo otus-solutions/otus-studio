@@ -10,8 +10,8 @@
 
         self.execute = execute;
 
-        function execute(navigation, route) {
-            navigation.removeRoute(route.name);
+        function execute(routeData) {
+            routeData.parentNavigation.removeRoute(routeData.name);
         }
     }
 

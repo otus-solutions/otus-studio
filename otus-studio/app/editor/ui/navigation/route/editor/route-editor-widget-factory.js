@@ -6,81 +6,76 @@
         .factory('RouteEditorWidgetFactory', RouteEditorWidgetFactory);
 
     RouteEditorWidgetFactory.$inject = [
-        'UpdateRouteEventFactory'
+        'RemoveRouteEventFactory',
+        'UpdateRouteEventFactory',
+        'RouteEditorWindow'
     ];
 
-    function RouteEditorWidgetFactory(UpdateRouteEventFactory) {
+    function RouteEditorWidgetFactory(RemoveRouteEventFactory, UpdateRouteEventFactory, RouteEditorWindow) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(route, parentWidget) {
-            return new RouteEditorWidget(route, parentWidget, UpdateRouteEventFactory);
+            return new RouteEditorWidget(route, parentWidget, RemoveRouteEventFactory, UpdateRouteEventFactory, RouteEditorWindow);
         }
 
         return self;
     }
 
-    function RouteEditorWidget(route, parentWidget, UpdateRouteEventFactory) {
+    function RouteEditorWidget(route, parentWidget, RemoveRouteEventFactory, UpdateRouteEventFactory, RouteEditorWindow) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'Route';
+        self.className = self.constructor.name;
+        self.css = {};
+        self.css.ngClass = {};
+
+        /* Template definitions */
+
+        /* CSS definitions */
+        self.css.ngClass.open = false;
 
         /* Instance definitions */
-        self.parentWidget = parentWidget;
+        self.parent = parentWidget;
+        self.routeData = route;
+        self.routeData.parentNavigation = parentWidget.navigation;
 
-        /* View data */
-        self.route = route;
+        /* Public methods */
+        self.editRoute = editRoute;
+        self.removeRoute = removeRoute;
         self.name = name;
         self.destination = destination;
-        self.ruleSet = [[]];
 
-        self.ngClass = {
-            open: false
-        };
-
-        self.addRule = addRule;
-        self.removeRule = removeRule;
-        self.editRouteButton = editRouteButton;
-
-        function editRouteButton() {
-            self.ngClass.open = !self.ngClass.open;
+        /* Actions */
+        function editRoute() {
+            RouteEditorWindow.show();
         }
 
-        function addRule(rule) {
-            self.ruleSet[0].push(rule);
+        function removeRoute() {
+            RemoveRouteEventFactory.create().execute(self);
         }
 
-        function removeRule(name) {
-            var ruleToRemove = self.ruleSet[0].filter(function(ruleEditor) {
-                return ruleEditor.rule.name === name;
-            });
-
-            var indexToRemove = self.ruleSet[0].indexOf(ruleToRemove[0]);
-            if (indexToRemove > -1) self.ruleSet[0].splice(indexToRemove, 1);
-            return ruleToRemove[0];
-        }
-
-        /* View data interface */
+        /* Getters and setters */
         function name(value) {
             if (value !== undefined) {
-                self.route.name = value;
+                self.routeData.name = value;
                 UpdateRouteEventFactory.create().execute(self);
             }
 
-            return self.route.name;
+            return self.routeData.name;
         }
 
         function destination(value) {
             if (value !== undefined) {
-                self.route.destination = value;
+                self.routeData.destination = value;
                 UpdateRouteEventFactory.create().execute(self);
             }
 
-            return self.route.destination;
+            return self.routeData.destination;
         }
+
     }
 
 }());

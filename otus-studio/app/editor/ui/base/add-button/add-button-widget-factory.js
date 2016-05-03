@@ -52,9 +52,7 @@
         self.css.class = templateData.class;
 
         element.on('click', function() {
-            if (self.ngModel.includes('Question')) {
-                AddQuestionEventFactory.create().execute(self);
-            } else if (self.ngModel.includes('MetadataOption')) {
+            if (self.ngModel.includes('MetadataOption')) {
                 AddMetadataAnswerEventFactory.create().execute(self);
             } else if (self.ngModel.includes('AnswerOption')) {
                 AddAnswerOptionEventFactory.create().execute(self);

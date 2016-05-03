@@ -10,21 +10,14 @@
     function directive(OtusButtonWidgetFactory) {
         var ddo = {
             scope: {
-                ariaLabel: '@',
                 context: '=',
-                class: '@',
                 click: '=',
-                icon: '@',
-                label: '@',
-                leftIcon: '@',
-                model: '=',
-                ngModel: '@',
-                tooltip: '@'
+                model: '='
             },
             templateUrl: 'app/editor/ui/base/button/button.html',
             retrict: 'E',
-            link: function linkFunc(scope, element) {
-                scope.widget = OtusButtonWidgetFactory.create(scope, element, scope.$parent.widget);
+            link: function linkFunc(scope, element, attrs) {
+                scope.widget = OtusButtonWidgetFactory.create(scope, attrs, element, scope.$parent.widget);
             }
         };
 

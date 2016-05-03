@@ -1,7 +1,12 @@
-<md-content flex>
-    <div layout="row" layout-margin flex>
-        <otus:input-text model="widget.name" md-no-float label="Nome" left-icon="low_priority"></otus:input-text>
-        <otus:input-text model="widget.destination" md-no-float label="Destino"></otus:input-text>
-        <otus:remove-button model="route" ng-model="Route" tooltip="Remover rota" icon="delete" class="md-primary md-layoutTheme-theme md-ink-ripple"></otus:add-button>
-    </div>
-</md-content>
+<md-dialog ng-cloak>
+    <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5">
+        <span>Editor de Rota</span>
+    </md-toolbar>
+    <md-content flex>
+        <div layout="row" layout-margin flex>
+            <otus:input-text model="widget.name" md-no-float label="Nome" left-icon="low_priority"></otus:input-text>
+            <otus:input-text model="widget.destination" md-no-float label="Destino"></otus:input-text>
+            <otus:remove-button model="route" ng-model="Route" tooltip="Remover rota" icon="delete" class="md-primary md-layoutTheme-theme md-ink-ripple"></otus:add-button>
+        </div>
+    </md-content>
+</md-dialog>
