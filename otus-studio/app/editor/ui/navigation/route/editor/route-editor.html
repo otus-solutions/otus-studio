@@ -5,24 +5,5 @@
         <otus:button click="widget.removeRoute" tooltip="Remover rota" icon="delete" icon-button="true" flex="10" />
         <otus:button click="widget.editRoute" tooltip="Editar rota" icon="explore" icon-button="true" flex="10" />
     </md-container>
-    <md-container layout="row" flex ng-class="{'short-opened': widget.ngClass.open, 'closed': !widget.ngClass.open}">
-        <md-container flex>
-            <md-tabs md-no-pagination md-dynamic-height style="min-height: 130px">
-                <md-tab ng-repeat="ruleSet in widget.ruleSet" label="Conjunto de Regras">
-                    <md-content>
-                        <md-list>
-                            <md-list-item class="md-1-line" ng-repeat="rule in ruleSet">
-                                <otus:rule-editor></otus:rule-editor>
-                            </md-list-item>
-                        </md-list>
-                        <otus:rule-creator layout="row"></otus:rule-creator>
-                    </md-content>
-                </md-tab>
-            </md-tabs>
-            <md-content>
-                <otus:add-button ng-model="RuleSet" left-icon="plus" label="Novo conjunto de regras"></otus:add-button>
-            </md-content>
-        </md-container>
-    </md-container>
     <md-divider></md-divider>
 </md-container>

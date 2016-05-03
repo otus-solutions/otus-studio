@@ -29,9 +29,7 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            var groupWidget = eventSource.parentWidget;
-            RemoveMetadataOptionService.execute(eventSource.context);
-            groupWidget.removeLastOption();
+            RemoveMetadataOptionService.execute(eventSource.question);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

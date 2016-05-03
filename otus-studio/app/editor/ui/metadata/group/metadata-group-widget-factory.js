@@ -5,30 +5,53 @@
         .module('editor.ui')
         .factory('MetadataGroupWidgetFactory', MetadataGroupWidgetFactory);
 
-    function MetadataGroupWidgetFactory() {
+    MetadataGroupWidgetFactory.$inject = [
+        'MetadataOptionWidgetFactory',
+        'AddMetadataAnswerEventFactory',
+        'RemoveMetadataOptionEventFactory'
+    ];
+
+    function MetadataGroupWidgetFactory(MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(parentWidget) {
-            return new MetadataGroupWidget(parentWidget);
+            return new MetadataGroupWidget(parentWidget, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory);
         }
 
         return self;
     }
 
-    function MetadataGroupWidget(parentWidget) {
+    function MetadataGroupWidget(parentWidget, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
 
-        self.name = 'MetadataGroup';
-        self.parentWidget = parentWidget;
+        /* Type definitions */
+        self.className = self.constructor.name;
+        self.css = {};
+
+        /* Template definitions */
+
+        /* Template definitions */
+
+        /* Instance definitions */
+        self.parent = parentWidget;
         self.question = parentWidget.question;
         self.options = [];
 
+        /* Public methods */
+        self.addOption = addOption;
         self.removeLastOption = removeLastOption;
 
+        function addOption() {
+            var newOption = AddMetadataAnswerEventFactory.create().execute(self);
+            var optionWidget = MetadataOptionWidgetFactory.create(newOption, self);
+            self.options.push(optionWidget);
+        }
+
         function removeLastOption() {
+            RemoveMetadataOptionEventFactory.create().execute(self);
             self.options.splice(-1);
         }
     }
