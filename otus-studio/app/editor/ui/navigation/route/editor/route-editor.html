@@ -1,9 +1,8 @@
-<md-container layout="column" flex>
-    <md-container layout="row" flex="10">
+<md-card layout="column" style="padding-top: 10px; margin-top: 0" flex>
+    <md-container layout="row">
         <otus:input-text model="widget.name" label="Nome da Rota" left-icon="low_priority" style="margin-bottom: 2px" flex="40"></otus:input-text>
         <otus:input-text model="widget.destination" label="Destino" style="margin-bottom: 2px" flex="40"></otus:input-text>
-        <otus:button click="widget.removeRoute" tooltip="Remover rota" icon="delete" icon-button="true" flex="10" />
-        <otus:button click="widget.editRoute" tooltip="Editar rota" icon="explore" icon-button="true" flex="10" />
+        <otus:button click="widget.removeRoute" tooltip="Remover rota" icon="delete" icon-button="true" flex="10" layout="column" layout-align="center center"/>
+        <otus:button click="widget.editRoute" tooltip="Editar rota" icon="explore" icon-button="true" flex="10" layout="column" layout-align="center center"/>
     </md-container>
-    <md-divider></md-divider>
-</md-container>
+</md-card>
