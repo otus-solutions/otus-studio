@@ -44,7 +44,7 @@
             json.description = self.description;
             json.keywords = self.keywords;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

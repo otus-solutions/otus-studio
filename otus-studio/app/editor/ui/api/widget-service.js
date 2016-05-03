@@ -14,11 +14,13 @@
         'MetadataOptionWidgetFactory',
         'NavigationWidgetFactory',
         'RouteEditorWidgetFactory',
-        'RouteCreatorWidgetFactory'
+        'RouteCreatorWidgetFactory',
+	'PageItemWidgetFactory',
+        'PageItemEditorWidgetFactory'
     ];
 
     function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
-        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory) {
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory, PageItemWidgetFactory, PageItemEditorWidgetFactory) {
 
         var self = this;
 
@@ -33,6 +35,8 @@
         self.getNavigationEditorWidget = getNavigationEditorWidget;
         self.getRouteWidget = getRouteWidget;
         self.getRouteCreatorWidget = getRouteCreatorWidget;
+        self.getPageItemWidget = getPageItemWidget;
+        self.getPageItemEditorWidget = getPageItemEditorWidget;
 
         function getWidgetForModel(model) {
             var widget = QuestionWidgetFactory.create(model);
@@ -74,6 +78,14 @@
             self.widgetMap[widget.type][widget.destination.guid] = widget.destination;
             self.widgetMap[widget.type][widget.processor.guid] = widget.processor;
             return widget;
+        }
+
+        function getPageItemWidget(item){
+            return PageItemWidgetFactory.create(item);
+        }
+
+        function getPageItemEditorWidget(item) {
+            return PageItemEditorWidgetFactory.create(item);
         }
     }
 

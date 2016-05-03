@@ -6,23 +6,24 @@
         .factory('OtusQuestionPaletteWidgetFactory', OtusQuestionPaletteWidgetFactory);
 
     OtusQuestionPaletteWidgetFactory.$inject = [
-        'AddQuestionEventFactory'
+        'AddQuestionEventFactory',
+        'AddPageItemEventFactory'
     ];
 
-    function OtusQuestionPaletteWidgetFactory(AddQuestionEventFactory) {
+    function OtusQuestionPaletteWidgetFactory(AddQuestionEventFactory, AddPageItemEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(parentWidget) {
-            return new OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory);
+            return new OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory, AddPageItemEventFactory);
         }
 
         return self;
     }
 
-    function OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory) {
+    function OtusQuestionPaletteWidget(parentWidget, AddQuestionEventFactory, AddPageItemEventFactory) {
         var self = this;
 
         /* Type definitions */
@@ -37,6 +38,8 @@
         self.addSingleSelectionQuestion = addSingleSelectionQuestion;
         self.addTextQuestion = addTextQuestion;
         self.addTimeQuestion = addTimeQuestion;
+        self.addTextItem = addTextItem;
+        self.addImageItem = addImageItem;
 
         /* Actions */
         function addCalendarQuestion() {
@@ -57,6 +60,14 @@
 
         function addTimeQuestion() {
             AddQuestionEventFactory.create().execute('TimeQuestion');
+        }
+
+        function addTextItem() {
+            AddPageItemEventFactory.create().execute('TextItem');
+        }
+
+        function addImageItem() {
+            AddPageItemEventFactory.create().execute('ImageItem');
         }
     }
 

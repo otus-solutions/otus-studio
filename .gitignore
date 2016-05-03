@@ -10,3 +10,5 @@
 npm-debug.log
 /otus-studio/**/unit-result.report.html
 **/node_modules/
+/**/*.orig
+/**/env.properties

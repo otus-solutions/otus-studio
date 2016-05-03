@@ -12,21 +12,20 @@
         self.create = create;
 
         function create() {
-            var otusStudioVersion = '${project.version}';
             var now = Date.now();
-            return new SurveyMetaInfo(now, otusStudioVersion);
+            return new SurveyMetaInfo(now);
         }
 
         return self;
     }
 
-    function SurveyMetaInfo(creationDatetime, otusStudioVersion) {
+    function SurveyMetaInfo(creationDatetime) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'SurveyMetaInfo';
         self.creationDatetime = creationDatetime;
-        self.otusStudioVersion = otusStudioVersion;
+        self.otusStudioVersion = '';
 
         self.toJson = toJson;
 
@@ -38,7 +37,7 @@
             json.creationDatetime = self.creationDatetime;
             json.otusStudioVersion = self.otusStudioVersion;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

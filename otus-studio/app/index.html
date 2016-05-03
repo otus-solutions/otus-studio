@@ -88,6 +88,11 @@
     <script src="app/shared/otusjs/model/question/text-question-factory.js"></script>
     <script src="app/shared/otusjs/model/question/time-question-factory.js"></script>
 
+    <!-- MODEL.ITEM -->
+    <script src="app/shared/otusjs/model/page-item/page-item-factory.js"></script>
+    <script src="app/shared/otusjs/model/page-item/text-item-factory.js"></script>
+    <script src="app/shared/otusjs/model/page-item/image-item-factory.js"></script>
+
     <!-- MODEL.SETTER -->
     <script src="app/shared/otusjs/model/setter/label-factory.js"></script>
     <script src="app/shared/otusjs/model/setter/unit-factory.js"></script>
@@ -108,6 +113,9 @@
     <script src="app/shared/otusjs/model/api/build-work/remove-route-work-service.js"></script>
     <script src="app/shared/otusjs/model/api/build-work/update-question-work-service.js"></script>
 
+    <!-- MODEL.ITEM.BUILD.WORK -->
+    <script src="app/shared/otusjs/model/api/build-work/add-page-item-work-service.js"></script>
+
     <script src="app/app.js"></script>
 
     <!-- assets -->
@@ -125,6 +133,9 @@
 
     <!-- API -->
     <script src="app/dashboard/api/dashboard-state-service.js"></script>
+
+    <!-- TEXT EDITION MENU -->
+    <script src="app/shared/text-edition-menu/text-edition-menu-directive.js"></script>
 
     <!-- DIALOG -->
     <script src="app/dashboard/dialog/logout/logout-dialog-service.js"></script>
@@ -154,6 +165,7 @@
     <script src="app/editor/core/event/add-answer-option-event-factory.js"></script>
     <script src="app/editor/core/event/add-metadata-answer-event-factory.js"></script>
     <script src="app/editor/core/event/add-question-event-factory.js"></script>
+    <script src="app/editor/core/event/add-page-item-event-factory.js"></script>
     <script src="app/editor/core/event/add-route-event-factory.js"></script>
     <script src="app/editor/core/event/add-rule-event-factory.js"></script>
     <script src="app/editor/core/event/remove-answer-option-event-factory.js"></script>
@@ -237,6 +249,10 @@
     <script src="app/editor/ui/question/question-directive.js"></script>
     <script src="app/editor/ui/question/question-widget-factory.js"></script>
 
+    <!-- WIDGET.ITEM -->
+    <script src="app/editor/ui/page-item/page-item-directive.js"></script>
+    <script src="app/editor/ui/page-item/page-item-widget-factory.js"></script>
+
     <!-- WIDGET.QUESTION.CALENDAR -->
     <script src="app/editor/ui/question/calendar/calendar-directive.js"></script>
     <script src="app/editor/ui/question/calendar/calendar-question-widget-factory.js"></script>
@@ -269,6 +285,18 @@
     <script src="app/editor/ui/question-editor/question-settings/question-settings-controller.js"></script>
     <script src="app/editor/ui/question-editor/question-settings/question-settings-directive.js"></script>
     <script src="app/editor/ui/question-editor/question-settings/question-settings-widget-factory.js"></script>
+
+    <!-- WIDGET.PAGE-ITEM-EDITOR -->
+    <script src="app/editor/ui/page-item-editor/page-item-editor-directive.js"></script>
+    <script src="app/editor/ui/page-item-editor/page-item-editor-widget-factory.js"></script>
+
+    <!-- WIDGET.ITEM.TEXT -->
+    <script src="app/editor/ui/page-item/text/text-item-directive.js"></script>
+    <script src="app/editor/ui/page-item/text/text-item-widget-factory.js"></script>
+
+    <!-- WIDGET.ITEM.IMAGE -->
+    <script src="app/editor/ui/page-item/image/image-item-directive.js"></script>
+    <script src="app/editor/ui/page-item/image/image-item-widget-factory.js"></script>
 
     <!-- MAIN -->
     <script src="app/editor/ui/main/editor-toolbar-controller.js"></script>
