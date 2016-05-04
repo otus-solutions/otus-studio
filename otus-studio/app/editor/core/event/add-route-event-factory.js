@@ -7,37 +7,32 @@
 
     AddRouteEventFactory.$inject = [
         'AddRouteService',
-        'WorkspaceService',
-        'RouteEditorWidgetFactory'
+        'WorkspaceService'
     ];
 
-    function AddRouteEventFactory(AddRouteService, WorkspaceService, RouteEditorWidgetFactory) {
+    function AddRouteEventFactory(AddRouteService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddRouteEvent(AddRouteService, WorkspaceService, RouteEditorWidgetFactory);
+            return new AddRouteEvent(AddRouteService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddRouteEvent(AddRouteService, WorkspaceService, RouteEditorWidgetFactory) {
+    function AddRouteEvent(AddRouteService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(routeCreatorWidget) {
-            var route = AddRouteService.execute(routeCreatorWidget.routeData);
-
-            var navigationEditorWidget = routeCreatorWidget.parent;
-            var routeWidget = RouteEditorWidgetFactory.create(route, navigationEditorWidget);
-            navigationEditorWidget.addRoute(routeWidget);
-
+        function execute(routeData) {
+            var route = AddRouteService.execute(routeData);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
+            return route;
         }
     }
 

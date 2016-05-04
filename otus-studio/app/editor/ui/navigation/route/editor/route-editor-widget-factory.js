@@ -54,7 +54,8 @@
         }
 
         function removeRoute() {
-            RemoveRouteEventFactory.create().execute(self);
+            RemoveRouteEventFactory.create().execute(self.routeData);
+            self.parent.removeRoute(self.routeData.name);
         }
 
         /* Getters and setters */
