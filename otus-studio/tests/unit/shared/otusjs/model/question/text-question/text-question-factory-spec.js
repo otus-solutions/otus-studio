@@ -5,7 +5,6 @@ describe('TextQuestionFactory', function() {
         module('otusjs.model');
 
         inject(function(_$injector_) {
-            /* @Mock */
             mockQuestion(_$injector_);
 
             factory = _$injector_.get('TextQuestionFactory');
@@ -63,7 +62,7 @@ describe('TextQuestionFactory', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('text-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('TextQuestion', Mock.TEMPLATE_ID);
     }
 
 });

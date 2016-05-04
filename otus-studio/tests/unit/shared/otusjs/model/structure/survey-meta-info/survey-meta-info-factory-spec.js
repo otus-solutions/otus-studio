@@ -8,9 +8,7 @@ describe('SurveyMetaInfoFactory', function() {
         mockDate();
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('SurveyMetaInfoFactory', {
-                OIDHashGenerator: mockOIDHashGenerator(_$injector_)
-            });
+            factory = _$injector_.get('SurveyMetaInfoFactory');
         });
 
         surveyMetaInfo = factory.create();

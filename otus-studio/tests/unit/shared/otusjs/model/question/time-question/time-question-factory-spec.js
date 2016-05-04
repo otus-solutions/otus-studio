@@ -62,7 +62,7 @@ describe('TimeQuestionFactory', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('time-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('TimeQuestion', Mock.TEMPLATE_ID);
     }
 
 });

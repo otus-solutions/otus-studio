@@ -2,7 +2,7 @@ describe('NavigationPreviewService', function() {
     var Mock = {};
     var mockedGraph;
 
-    var navigationObject=[{origin:"LAPA1",destinations:[{to:"LAPA2"},{to:"LAPA4"}]},{origin:"LAPA2",destinations:[{to:"LAPA3"}]},{origin:"LAPA3",destinations:[{to:"LAPA4"}]},{origin:"LAPA4",destinations:[{to:"LAPA5"}]},{origin:"LAPA5",destinations:[{to:"LAPA6"}]},{origin:"LAPA6",destinations:[{to:"LAPA7"}]},{origin:"LAPA7"}];
+    var navigationObject=[{origin:"LAPA1",routes:[{destination:"LAPA2"},{destination:"LAPA4"}]},{origin:"LAPA2",routes:[{destination:"LAPA3"}]},{origin:"LAPA3",routes:[{destination:"LAPA4"}]},{origin:"LAPA4",routes:[{destination:"LAPA5"}]},{origin:"LAPA5",routes:[{destination:"LAPA6"}]},{origin:"LAPA6",routes:[{destination:"LAPA7"}]},{origin:"LAPA7"}];
 
     /* @BeforeScenario */
     beforeEach(function() {

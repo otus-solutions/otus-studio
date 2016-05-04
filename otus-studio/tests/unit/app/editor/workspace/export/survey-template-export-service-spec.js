@@ -24,12 +24,12 @@ describe('SurveyExportService', function() {
             expect(returnedJSON).toEqual(Mock.SURVEY_TEMPLATE_RESULT);
         });
 
-        it('should call JSON.stringify', function functionName() {
-            spyOn(JSON, 'stringify');
+        it('should call survey.toJson()', function functionName() {
+            spyOn(Mock.survey, 'toJson');
 
             service.exportSurvey(Mock.WorkspaceService.getSurvey());
 
-            expect(JSON.stringify).toHaveBeenCalledWith(Mock.survey);
+            expect(Mock.survey.toJson).toHaveBeenCalled();
         });
 
         it('should call encodeURIComponent', function functionName() {
@@ -46,11 +46,14 @@ describe('SurveyExportService', function() {
         Mock.survey = {
             oid: 'survey.oid',
             name: 'survey.name',
-            version: 'survey.version'
+            version: 'survey.version',
+            toJson: function() {
+                return '{}';
+            }
         };
 
         Mock.SURVEY_TEMPLATE_RESULT = 'data:text/json;charset=utf-8,';
-        Mock.SURVEY_TEMPLATE_RESULT += encodeURIComponent(JSON.stringify(Mock.survey));
+        Mock.SURVEY_TEMPLATE_RESULT += encodeURIComponent(Mock.survey.toJson());
     }
 
     function mockWorkspaceService($injector) {

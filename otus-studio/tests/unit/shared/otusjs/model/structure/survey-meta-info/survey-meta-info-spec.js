@@ -27,7 +27,7 @@ describe('SurveyMetaInfo', function() {
             extents: 'StudioObject',
             objectType: 'SurveyMetaInfo',
             creationDatetime: Mock.now,
-            otusStudioVersion: '${project.version}'
+            otusStudioVersion: ''
         });
     }
 

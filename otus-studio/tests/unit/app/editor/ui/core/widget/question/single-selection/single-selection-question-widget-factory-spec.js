@@ -3,13 +3,13 @@ describe('SingleSelectionQuestionWidgetFactory', function() {
 	var prototype = {model : 'model', questionId: 'id', type: 'type'};
 
 	beforeEach(function() {
-		module('editor.ui');
-		module('otusjs')
+		module('studio');
+		module('otusjs');
 
 		inject(function(_$injector_) {
 			factory = _$injector_.get('SingleSelectionQuestionWidgetFactory', {
 				AnswerOptionFactory : mockAnswerOptionFactory(_$injector_)
-			});	
+			});
 		});
 	});
 
@@ -28,7 +28,7 @@ describe('SingleSelectionQuestionWidgetFactory', function() {
 
 		it('returned object should type', function() {
 			var option = factory.create(prototype);
-			
+
 			expect(option.type).toBe(prototype.type);
 		});
 	})

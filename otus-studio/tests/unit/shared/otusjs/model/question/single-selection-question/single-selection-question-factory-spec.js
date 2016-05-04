@@ -51,7 +51,7 @@ describe('SingleSelectionQuestionFactory', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('single-selection-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('SingleSelectionQuestion', Mock.TEMPLATE_ID);
     }
 
 });

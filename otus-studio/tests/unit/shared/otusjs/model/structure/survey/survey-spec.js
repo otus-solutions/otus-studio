@@ -133,7 +133,7 @@ describe('Survey', function() {
                 extents: 'StudioObject',
                 objectType: 'SurveyMetaInfo',
                 creationDatetime: Mock.now,
-                otusStudioVersion: '${project.version}'
+                otusStudioVersion: ''
             },
             questionContainer: {},
             navigationList: []
