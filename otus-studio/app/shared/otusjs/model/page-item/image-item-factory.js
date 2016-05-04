@@ -44,7 +44,7 @@
             json.templateID = self.templateID;
             json.dataType = self.dataType;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

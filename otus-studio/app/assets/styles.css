@@ -230,7 +230,29 @@ md-backdrop {
  * Toolbar Edit and Preview Navegação
  *
 **/
+
 md-tabs-canvas {
     background-color: #F9F9F9;
     z-index: 10;
+}
+
+/*
+ * Animations
+ */
+
+.opened {
+    height: 500px !important;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.closed {
+    height: 0px !important;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.short-opened {
+    height: 200px !important;
+    transition: all 0.5s ease-in-out;
 }

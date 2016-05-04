@@ -15,9 +15,9 @@
 
         self.execute = execute;
 
-        function execute(data) {
+        function execute(itemType) {
             var survey = WorkspaceService.getSurvey();
-            var newItem = PageItemFactory.create(data.ngModel, survey.identity.acronym + survey.questionsCount());
+            var newItem = PageItemFactory.create(itemType, survey.identity.acronym + survey.questionsCount());
             survey.addQuestion(newItem);
             return newItem;
         }

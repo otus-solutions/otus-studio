@@ -48,7 +48,7 @@
             json.metadata = self.metadata;
             json.unit = self.unit;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

@@ -143,7 +143,7 @@
                 json.navigationList.push(navigation.toJson());
             });
 
-            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '').replace(/ ":/g, '":');
         }
     }
 

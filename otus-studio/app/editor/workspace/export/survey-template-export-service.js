@@ -13,7 +13,7 @@
         self.exportSurvey = exportSurvey;
 
         function exportSurvey(template) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(template));
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(template.toJson());
         }
     }
 

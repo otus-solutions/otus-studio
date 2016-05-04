@@ -44,9 +44,9 @@
         }
 
         function drawEdges(navigationRule) {
-            if (navigationRule.hasOwnProperty('destinations')) {
-                for (var i = 0; i < navigationRule.destinations.length; i++) {
-                    navigationGraph.addEdge(navigationRule.origin, navigationRule.destinations[i].to, {
+            if (navigationRule.hasOwnProperty('routes')) {
+                for (var i = 0; i < navigationRule.routes.length; i++) {
+                    navigationGraph.addEdge(navigationRule.origin, navigationRule.routes[i].destination, {
                         directed: true
                     });
                 }

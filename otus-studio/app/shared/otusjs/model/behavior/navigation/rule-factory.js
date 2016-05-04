@@ -11,29 +11,22 @@
         /* Public interface */
         self.create = create;
 
-        function create(when) {
-            return new Rule(when);
+        function create(when, operator, answer) {
+            return new Rule(when, operator, answer);
         }
 
         return self;
     }
 
-    function Rule(whenCase) {
-
+    function Rule(when, operator, answer) {
         var self = this;
-        var extents;
-        var objectType;
-        var when;
-        var answer;
-        var operator;
 
-        init();
+        self.extents = 'StudioObject';
+        self.objectType = 'Rule';
+        self.when = when;
+        self.answer = answer;
+        self.operator = operator;
 
-        /* Public interface */
-        self.getExtents = getExtents;
-        self.getObjectType = getObjectType;
-        self.getWhen = getWhen;
-        self.getAnswer = getAnswer;
         self.within = within;
         self.equal = equal;
         self.greater = greater;
@@ -43,29 +36,6 @@
         self.between = between;
         self.contains = contains;
         self.toJson = toJson;
-
-        function init() {
-            extents = 'StudioObject';
-            objectType = 'Rule';
-            when = whenCase;
-            answer = answer;
-        }
-
-        function getExtents() {
-            return extents;
-        }
-
-        function getObjectType() {
-            return objectType;
-        }
-
-        function getWhen() {
-            return when;
-        }
-
-        function getAnswer() {
-            return answer;
-        }
 
         function within(arrayValues) {
             defineAnswer('within', arrayValues);

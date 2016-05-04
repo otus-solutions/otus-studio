@@ -54,7 +54,7 @@
             json.option = self.option;
             json.metadata = self.metadata;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

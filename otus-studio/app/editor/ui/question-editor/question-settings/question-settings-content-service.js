@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .service('QuestionEditorToolbarService', QuestionEditorToolbarService);
+        .service('QuestionSettingsContentService', QuestionSettingsContentService);
 
-    QuestionEditorToolbarService.$inject = [
+    QuestionSettingsContentService.$inject = [
         'TemplateLoaderService',
     ];
 
-    function QuestionEditorToolbarService(TemplateLoaderService) {
+    function QuestionSettingsContentService(TemplateLoaderService) {
         var self = this;
 
         self.loadNavigation = loadNavigation;

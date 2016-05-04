@@ -30,12 +30,10 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            var groupWidget = eventSource.parentWidget;
-            var option = AddMetadataAnswerService.execute(eventSource);
-            var optionWidget = MetadataOptionWidgetFactory.create(option, groupWidget);
-            groupWidget.options.push(optionWidget);
+            var option = AddMetadataAnswerService.execute(eventSource.question);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
+            return option;
         }
     }
 

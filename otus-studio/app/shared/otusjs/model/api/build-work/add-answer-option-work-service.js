@@ -15,10 +15,9 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var parentQuestion = data.context;
-            var answerOption = AnswerOptionFactory.create(parentQuestion.option.length, parentQuestion.templateID);
-            parentQuestion.addOption(answerOption);
+        function execute(question) {
+            var answerOption = AnswerOptionFactory.create(question.option.length, question.templateID);
+            question.addOption(answerOption);
             return answerOption;
         }
     }

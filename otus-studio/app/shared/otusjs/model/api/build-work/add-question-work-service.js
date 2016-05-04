@@ -15,9 +15,9 @@
 
         self.execute = execute;
 
-        function execute(data) {
+        function execute(questionType) {
             var survey = WorkspaceService.getSurvey();
-            var newQuestion = QuestionFactory.create(data.ngModel, survey.identity.acronym + survey.questionsCount());
+            var newQuestion = QuestionFactory.create(questionType, survey.identity.acronym + survey.questionsCount());
             survey.addQuestion(newQuestion);
             return newQuestion;
         }
