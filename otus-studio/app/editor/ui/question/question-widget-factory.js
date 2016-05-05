@@ -40,7 +40,7 @@
     function QuestionWidget(question) {
         var self = this;
 
-        self.name = 'Question';
+        self.className = self.constructor.name;
         self.question = question;
     }
 
