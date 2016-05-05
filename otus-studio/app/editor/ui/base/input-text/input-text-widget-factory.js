@@ -23,11 +23,17 @@
         /* Type definitions */
         self.className = self.constructor.name;
         self.css = {};
+        self.template = {};
+        self.event = {};
 
         /* Template definitions */
-        self.template = templateConfig;
-        self.template.ariaLabel = templateData.ariaLabel || templateData.label;
-        self.template.hasIcon = (templateConfig.icon !== undefined || templateConfig.leftIcon !== undefined || templateConfig.rightIcon !== undefined);
+        self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
+        self.template.label = templateConfig.label;
+        self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
+        self.template.rightIcon = templateConfig.rightIcon;
+
+        self.template.hasLeftIcon = self.template.leftIcon !== undefined;
+        self.template.hasRightIcon = (templateConfig.iconButton === undefined && self.template.rightIcon !== undefined);
 
         /* Instance definitions */
         self.parent = parentWidget;
