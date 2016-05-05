@@ -1,9 +1,15 @@
-<md-button class="{{widget.css.class}} {{widget.template.iconButton}}" ng-click="widget.click()">
-    <md-icon class="material-icons" aria-label="{{widget.template.ariaLabel}}" ng-show="widget.template.hasIcon">
-        {{widget.template.icon}}
-        <md-tooltip md-direction="bottom">
-            {{widget.template.tooltip}}
-        </md-tooltip>
+<md-button ng-click="widget.click()" aria-label="{{widget.template.ariaLabel}}" class="{{widget.css.class}} {{widget.css.iconButton}}">
+    <md-icon class="material-icons" ng-show="widget.template.hasLeftIcon">
+        {{widget.template.leftIcon}}
     </md-icon>
+
     {{widget.template.label}}
+
+    <md-icon class="material-icons" ng-show="widget.template.hasRightIcon">
+        {{widget.template.rightIcon}}
+    </md-icon>
+
+    <md-tooltip md-direction="{{widget.template.tooltipDirection}}">
+        {{widget.template.tooltip}}
+    </md-tooltip>
 </md-button>

@@ -10,9 +10,7 @@
     function directive(OtusButtonWidgetFactory) {
         var ddo = {
             scope: {
-                context: '=',
-                click: '=',
-                model: '='
+                click: '='
             },
             templateUrl: 'app/editor/ui/base/button/button.html',
             retrict: 'E',

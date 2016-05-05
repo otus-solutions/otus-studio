@@ -11,33 +11,44 @@
         /* Public interface */
         self.create = create;
 
-        function create(templateData, element, parentWidget) {
-            return new OtusButtonWidget(templateData, element, parentWidget);
+        function create(templateData, templateConfig, parentWidget) {
+            return new OtusButtonWidget(templateData, templateConfig, parentWidget);
         }
 
         return self;
     }
 
-    function OtusButtonWidget(templateData, templateConfig, element, parentWidget) {
+    function OtusButtonWidget(templateData, templateConfig, parentWidget) {
         var self = this;
+
+        /* Valid values */
+        var validTooltipDirections = ['top', 'bottom', 'left', 'right'];
 
         /* Type definitions */
         self.className = self.constructor.name;
         self.css = {};
+        self.template = {};
+        self.event = {};
 
         /* Template definitions */
-        self.template = templateConfig;
-        self.template.iconButton = (templateConfig.iconButton !== undefined && templateConfig.iconButton === "true") ? 'md-icon-button' : '';
         self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
-        self.template.tooltip = templateConfig.tooltip || self.label;
-        self.template.hasIcon = (templateConfig.icon !== undefined || templateConfig.leftIcon !== undefined || templateConfig.rightIcon !== undefined);
+        self.template.label = templateConfig.label;
+        self.template.tooltip = templateConfig.tooltip || templateConfig.label;
+        self.template.tooltipDirection = (templateConfig.mdTooltipDirection !== undefined && (validTooltipDirections.indexOf(templateConfig.mdTooltipDirection) !== -1)) ? templateConfig.mdTooltipDirection : 'top';
+        self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
+        self.template.rightIcon = templateConfig.rightIcon;
+
+        self.template.hasLeftIcon = self.template.leftIcon !== undefined;
+        self.template.hasRightIcon = (templateConfig.iconButton === undefined && self.template.rightIcon !== undefined);
 
         /* CSS definitions */
-        self.css.class = templateConfig.class;
+        self.css.iconButton = (templateConfig.iconButton !== undefined) ? 'md-icon-button' : '';
 
         /* Instance definitions */
         self.parent = parentWidget;
-        self.click = templateData.click;
+
+        /* Event definitions */
+        self.event.click = templateData.click;
     }
 
 }());
