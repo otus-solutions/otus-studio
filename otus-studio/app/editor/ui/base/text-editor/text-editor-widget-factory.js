@@ -6,31 +6,29 @@
         .factory('OtusTextEditorWidgetFactory', OtusTextEditorWidgetFactory);
 
     OtusTextEditorWidgetFactory.$inject = [
-        'UUID',
         'UpdateQuestionEventFactory'
     ];
 
-    function OtusTextEditorWidgetFactory(UUID, UpdateQuestionEventFactory) {
+    function OtusTextEditorWidgetFactory(UpdateQuestionEventFactory) {
         var self = this;
 
         self.create = create;
 
         function create(bind) {
-            bind.scope.widget = new OtusTextEditorWidget(bind, UUID.generateUUID(), UpdateQuestionEventFactory);
+            bind.scope.widget = new OtusTextEditorWidget(bind, UpdateQuestionEventFactory);
             return bind.scope.widget;
         }
 
         return self;
     }
 
-    function OtusTextEditorWidget(bind, guid, UpdateQuestionEventFactory) {
+    function OtusTextEditorWidget(bind, UpdateQuestionEventFactory) {
         var self = this;
 
         /* Type definitions */
         self.name = 'OtusTextEditor';
 
         /* Instance definitions */
-        self.guid = guid;
         self.ngModel = bind.scope.ngModel;
 
         /* User definitions */

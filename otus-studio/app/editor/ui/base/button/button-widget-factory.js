@@ -34,7 +34,7 @@
         self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
         self.template.label = templateConfig.label;
         self.template.tooltip = templateConfig.tooltip || templateConfig.label;
-        self.template.tooltipDirection = (templateConfig.mdTooltipDirection !== undefined && (validTooltipDirections.indexOf(templateConfig.mdTooltipDirection) !== -1)) ? templateConfig.mdTooltipDirection : 'top';
+        self.template.tooltipDirection = (templateConfig.tooltipDirection !== undefined && (validTooltipDirections.indexOf(templateConfig.tooltipDirection) !== -1)) ? templateConfig.tooltipDirection : 'top';
         self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
         self.template.rightIcon = templateConfig.rightIcon;
 

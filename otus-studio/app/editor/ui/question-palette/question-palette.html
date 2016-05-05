@@ -1,15 +1,12 @@
-<div id="survey-questions" layout="column">
+<div layout="column">
     <md-button class="md-raised md-primary">Questões</md-button>
-    <div ng-show="true" layout="column">
-        <otus:button click="widget.addCalendarQuestion" label="Calendário" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addNumericQuestion" label="Numérica" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addSingleSelectionQuestion" label="Seleção Simples" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addTextQuestion" label="Texto" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addTimeQuestion" label="Relógio" layout-align="center center" layout-padding layout="row" />
-    </div>
+    <otus:button click="widget.addCalendarQuestion" label="Calendário" left-icon="date_range"/>
+    <otus:button click="widget.addNumericQuestion" label="Numérica" left-icon="exposure_zero"/>
+    <otus:button click="widget.addSingleSelectionQuestion" label="Seleção Simples" left-icon="radio_button_checked"/>
+    <otus:button click="widget.addTextQuestion" label="Texto" left-icon="text_format"/>
+    <otus:button click="widget.addTimeQuestion" label="Relógio" left-icon="access_time"/>
+
     <md-button class="md-raised md-primary">Itens</md-button>
-    <div ng-show="true" layout="column">
-        <otus:button click="widget.addTextItem" label="Mensagem" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addImageItem" label="Imagem" layout-align="center center" layout-padding layout="row" />
-    </div>
+    <otus:button click="widget.addTextItem" label="Mensagem" left-icon="message"/>
+    <otus:button click="widget.addImageItem" label="Imagem" left-icon="insert_photo"/>
 </div>
