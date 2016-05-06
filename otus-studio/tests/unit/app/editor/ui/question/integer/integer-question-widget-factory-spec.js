@@ -34,7 +34,7 @@ describe('IntegerQuestionWidgetFactory', function() {
         });
 
         //Scenario question
-        it('should return a object question equal to parentWidget.question', function() {
+        fit('should return a object question equal to parentWidget.question', function() {
             expect(integerQuestionWidget.question).toEqual(Mock.question);
         });
 

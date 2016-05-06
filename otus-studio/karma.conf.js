@@ -37,6 +37,8 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/raphael-min.js',
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graffle.js',
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',
+            NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks-dependencies.js',
+            NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks.js',
             /* Otus platform */
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',

@@ -13,7 +13,6 @@ describe('PhoneQuestionWidgetFactory', function() {
     });
 
     describe('DecimalQuestionWidgetFactory', function() {
-        //testa se o create está sendo chamado
         it('should returned an object defined', function() {
             expect(decimalQuestionWidget).toBeDefined();
         });
@@ -21,7 +20,7 @@ describe('PhoneQuestionWidgetFactory', function() {
 
     function mockQuestion() {
         Mock.question = {
-            objectType: 'DecimalQu estion'
+            name: 'PhoneQuestion'
         };
     }
 

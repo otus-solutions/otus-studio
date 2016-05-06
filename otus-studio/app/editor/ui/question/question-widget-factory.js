@@ -12,7 +12,7 @@
         'SingleSelectionQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
         'TimeQuestionWidgetFactory',
-        'PhoneQuestionWidgetFactory',
+        'PhoneQuestionWidgetFactory'
     ];
 
     function QuestionWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, PhoneQuestionWidgetFactory) {
@@ -25,7 +25,7 @@
                 'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
                 'TextQuestion': TextQuestionWidgetFactory,
                 'TimeQuestion': TimeQuestionWidgetFactory,
-                'PhoneQuestion': PhoneQuestionWidgetFactory,
+                'PhoneQuestion': PhoneQuestionWidgetFactory
             };
 
         /* Public interface */
