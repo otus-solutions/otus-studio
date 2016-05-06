@@ -8,23 +8,24 @@
     AddQuestionEventFactory.$inject = [
         'AddQuestionService',
         'SheetContentService',
-        'WorkspaceService'
+        'WorkspaceService',
+        'WidgetService'
     ];
 
-    function AddQuestionEventFactory(AddQuestionService, SheetContentService, WorkspaceService) {
+    function AddQuestionEventFactory(AddQuestionService, SheetContentService, WorkspaceService, WidgetService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService);
+            return new AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService, WidgetService);
         }
 
         return self;
     }
 
-    function AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService) {
+    function AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService, WidgetService) {
         var self = this;
 
         self.execute = execute;

@@ -14,7 +14,7 @@
             controller: 'QuestionSettingsController',
             templateUrl: 'app/editor/ui/question-editor/question-settings/question-settings.html',
             link: function(scope, element, attrs) {
-                scope.widget = QuestionSettingsWidgetFactory.create(attrs, element, scope.$parent.$parent.$parent.$parent.widget);
+                scope.widget = QuestionSettingsWidgetFactory.create(attrs, element, scope.$parent.$parent.$parent.widget);
             }
         };
 

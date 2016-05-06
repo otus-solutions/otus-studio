@@ -15,8 +15,8 @@
             scope: {},
             templateUrl: 'app/editor/ui/page-item/page-item.html',
             retrict: 'E',
-            link: function linkFunc(scope) {
-                scope.widget = PageItemWidgetFactory.create(SheetContentService.lastLoadedQuestion);
+            link: function linkFunc(scope, element, attrs) {
+                scope.widget = PageItemWidgetFactory.create(SheetContentService.lastLoadedQuestion, element);
             }
         };
 
