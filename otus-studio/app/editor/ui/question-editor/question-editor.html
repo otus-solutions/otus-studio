@@ -1,8 +1,22 @@
-<md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
-    <ui-accordion header="{{widget.header}}" widget="widget" flex>
-        <ui-accordion-content layout="column" flex>
+<md-whiteframe class="md-whiteframe-1dp" layout="column">
+    <otus:accordion flex>
+        <otus:accordion-header>
+            <md-content layout-align="start center" style="padding: 0" flex>
+                <md-content layout="row">
+                    <md-card class="item-id-frame" style="margin: 5px" layout-padding layout="column">
+                        {{widget.question.templateID}}
+                    </md-card>
+                    <md-content layout-padding layout-align="start center" flex>
+                        <label>{{widget.question.label.ptBR.plainText}}</label>
+                    </md-content>
+                </md-content>
+            </md-content>
+            <otus:button tooltip="Excluir questão" icon-button="delete"/>
+        </otus:accordion-header>
+        <otus:accordion-content>
             <otus:question></otus:question>
             <otus:question-settings></otus:question-settings>
-        </ui-accordion-content>
-    </ui-accordion>
+        </otus:accordion-content>
+    </otus:accordion>
 </md-whiteframe>
+<br />

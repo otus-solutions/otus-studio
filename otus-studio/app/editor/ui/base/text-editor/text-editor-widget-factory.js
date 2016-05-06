@@ -27,6 +27,7 @@
 
         /* Type definitions */
         self.name = 'OtusTextEditor';
+        self.input = angular.element(bind.element.children()[0]);
 
         /* Instance definitions */
         self.ngModel = bind.scope.ngModel;
@@ -34,10 +35,13 @@
         /* User definitions */
         self.placeholder = bind.scope.placeholder;
 
-        bind.element.on('focusout', function(event) {
+        bind.element.on('keyup', function(event) {
             self.ngModel.ptBR.formattedText = event.target.innerHTML;
             self.ngModel.ptBR.plainText = event.target.innerText;
             UpdateQuestionEventFactory.create().execute(self);
+        });
+
+        self.input.on('focus', function(event) {
         });
     }
 

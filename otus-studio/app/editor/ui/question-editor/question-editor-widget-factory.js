@@ -22,7 +22,6 @@
         var self = this;
 
         self.question = question;
-        self.header = question.templateID;
     }
 
 }());
