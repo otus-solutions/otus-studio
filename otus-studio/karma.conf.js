@@ -28,7 +28,6 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
-            NODE_MODULES_ROOT_PATH + 'immutable/dist/immutable.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
