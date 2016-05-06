@@ -21,8 +21,16 @@
     function QuestionAnswerOptionEditorWidget(option, parentWidget) {
         var self = this;
 
-        self.name = 'AnswerOption';
-        self.parentWidget = parentWidget;
+        /* Type definitions */
+        self.className = self.constructor.name;
+        self.css = {};
+
+        /* Template definitions */
+
+        /* Template definitions */
+
+        /* Instance definitions */
+        self.parent = parentWidget;
         self.option = option;
     }
 

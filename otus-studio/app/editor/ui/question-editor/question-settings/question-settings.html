@@ -1,0 +1,24 @@
+<md-toolbar layout="row" class="md-accent md-hue-1">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="widget.navigationButton()">
+            <md-icon aria-label="Navegação">directions_boat
+                <md-tooltip md-direction="bottom">
+                    Navegação
+                </md-tooltip>
+            </md-icon>
+        </md-button>
+        <md-button class="md-icon-button">
+            <md-icon aria-label="Remover questão">delete
+                <md-tooltip md-direction="bottom">
+                    Remover questão
+                </md-tooltip>
+            </md-icon>
+        </md-button>
+    </div>
+    <!--<otus:remove-button class="md-icon-button" label="Remover" icon="delete" ng-model="widget"></otus:remove-button>-->
+</md-toolbar>
+<otus:navigation-editor layout="row" flex ng-show="widget.showNavigationEditor"></otus:navigation-editor>
+<!--
+<md-content layout="row" ng-class="{'opened': widget.ngClass.open, 'closed': !widget.ngClass.open}">
+</md-content>
+-->

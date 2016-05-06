@@ -1,5 +1,5 @@
-<md-input-container>
+<md-input-container layout="row">
     <label>{{widget.label}}</label>
     <md-icon class="material-icons" ng-show="{{widget.leftIcon ? true:false}}">{{widget.leftIcon}}</md-icon>
-    <input ng-model="widget.ngModel" type="text" aria-label="{{widget.ariaLabel}}"/>
+    <input ng-model="widget.model" type="text" aria-label="{{widget.ariaLabel}}"/>
 </md-input-container>

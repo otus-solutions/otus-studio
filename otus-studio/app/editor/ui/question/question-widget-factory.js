@@ -7,19 +7,21 @@
 
     QuestionWidgetFactory.$inject = [
         'CalendarQuestionWidgetFactory',
-        'NumericQuestionWidgetFactory',
+        'IntegerQuestionWidgetFactory',
+        'DecimalQuestionWidgetFactory',
         'SingleSelectionQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
         'TimeQuestionWidgetFactory',
         'PhoneQuestionWidgetFactory',
     ];
 
-    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, NumericQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, PhoneQuestionWidgetFactory) {
+    function QuestionWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, PhoneQuestionWidgetFactory) {
         var self = this,
 
             widgetFactories = {
                 'CalendarQuestion': CalendarQuestionWidgetFactory,
-                'NumericQuestion': NumericQuestionWidgetFactory,
+                'IntegerQuestion': IntegerQuestionWidgetFactory,
+                'DecimalQuestion': DecimalQuestionWidgetFactory,
                 'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
                 'TextQuestion': TextQuestionWidgetFactory,
                 'TimeQuestion': TimeQuestionWidgetFactory,
@@ -40,7 +42,7 @@
     function QuestionWidget(question) {
         var self = this;
 
-        self.name = 'Question';
+        self.className = self.constructor.name;
         self.question = question;
     }
 

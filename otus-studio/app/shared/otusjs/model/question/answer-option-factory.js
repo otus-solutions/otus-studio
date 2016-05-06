@@ -47,7 +47,7 @@
             json.metadata = self.metadata;
             json.parentQuestionID = self.parentQuestionID;
 
-            return JSON.stringify(json);
+            return JSON.stringify(json).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');
         }
     }
 

@@ -1,7 +1,6 @@
-<md-content flex>
-    <div layout="row" layout-margin flex>
-        <otus:input-text model="routeName" label="Nome" aria-label="Nome" left-icon="low_priority"></otus:input-text>
-        <otus:input-text model="routeDestination" label="Destino" aria-label="Destino"></otus:input-text>
-        <otus:add-button class="md-primary md-layoutTheme-theme md-ink-ripple" ng-model="Route" icon="save" label="Salvar" tooltip="Tooltip personalizado"></otus:add-button>
-    </div>
+<md-content layout-align="center center" layout="column" flex="15" layout-padding class="md-accent md-hue-1">
+    <label style="color: #555555">Nova Rota</label>
 </md-content>
+<otus:input-text model="widget.routeName" label="Nome" layout-align="center center" layout="column" flex="35" style="margin-top: 20px"></otus:input-text>
+<otus:input-text model="widget.routeDestination" label="Destino" layout-align="center center" layout="column" flex="35" style="margin-top: 20px"></otus:input-text>
+<otus:button click="widget.createRoute" tooltip="Salvar nova rota" icon="save" icon-button="true" layout-align="center center" layout-padding layout="column" flex />

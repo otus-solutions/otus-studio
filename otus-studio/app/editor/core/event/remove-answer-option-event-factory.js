@@ -29,9 +29,7 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            var questionWidget = eventSource.parentWidget;
-            RemoveAnswerOptionService.execute(eventSource.context);
-            questionWidget.removeLastOption();
+            RemoveAnswerOptionService.execute(eventSource.question);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

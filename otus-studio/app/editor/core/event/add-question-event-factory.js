@@ -29,8 +29,8 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var question = AddQuestionService.execute(data);
+        function execute(questionType) {
+            var question = AddQuestionService.execute(questionType);
             SheetContentService.loadQuestion(question);
 
             WorkspaceService.workspace.currentQuestion = question;

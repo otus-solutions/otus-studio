@@ -29,11 +29,11 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var item = AddPageItemService.execute(data);
+        function execute(itemType) {
+            var item = AddPageItemService.execute(itemType);
             SheetContentService.loadItem(item);
 
-            WorkspaceService.workspace.currentQuestion = data;
+            WorkspaceService.workspace.currentQuestion = itemType;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

@@ -18,14 +18,11 @@
 
         function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore('survey_template', function(store) {
-                var entry = {
-                    'template_oid': template.oid,
-                    'contributor': session.owner,
-                    template: JSON.parse(template.toJson())
-                };
-
-                store.upsert(entry).then(function(e) {
-                });
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = JSON.parse(template.toJson());
+                store.upsert(entry).then(function(e) {});
             });
         }
     }

@@ -11,23 +11,22 @@
         /* Public interface */
         self.create = create;
 
-        function create(origin, destination, index) {
-            return new Route(origin, destination, index);
+        function create(name, origin, destination) {
+            return new Route(name, origin, destination);
         }
 
         return self;
     }
 
-    function Route(routeOrigin, routeDestination, routeIndex) {
+    function Route(routeName, routeOrigin, routeDestination) {
         var self = this;
 
         self.extents = 'StudioObject';
         self.objectType = 'Route';
-        self.name = routeOrigin + '-' + routeDestination + '-' + routeIndex;
         self.origin = routeOrigin;
         self.destination = routeDestination;
-        self.index = routeIndex;
-        self.conditionSet = {};
+        self.conditionSet = [];
+        self.name = routeName;
 
         /* Public interface */
         self.getConditionSet = getConditionSet;
@@ -37,36 +36,31 @@
         self.toJson = toJson;
 
         function getConditionSet() {
-            var clone = {};
+            var clone = [];
 
-            for (var property in self.conditionSet) {
-                clone[property] = self.conditionSet[property];
-            }
+            self.conditionSet.forEach(function(condition) {
+                clone.push(condition);
+            });
 
             return clone;
         }
 
+        function getConditionSetSize() {
+            return getConditionSet().length;
+        }
 
         function addCondition(condition) {
-            self.conditionSet = self.conditionSet || {};
-            self.conditionSet[condition.name] = condition;
+            self.conditionSet.push(condition);
         }
 
         function removeCondition(condition) {
-            var conditionName = condition.name || condition;
-            delete self.conditionSet[conditionName];
+            var conditionToRemove = self.conditionSet.filter(function(condition) {
+                return condition.name === name;
+            });
 
-            if (getConditionSetSize() === 0) {
-                self.conditionSet = null;
-            }
-        }
-
-        function getConditionSetSize() {
-            if (self.conditionSet) {
-                return Object.keys(self.conditionSet).length;
-            } else {
-                return 0;
-            }
+            var indexToRemove = self.conditionSet.indexOf(conditionToRemove[0]);
+            if (indexToRemove > -1) self.conditionSet.splice(indexToRemove, 1);
+            return conditionToRemove[0];
         }
 
         function toJson() {

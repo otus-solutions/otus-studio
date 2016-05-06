@@ -15,12 +15,10 @@
 
         self.execute = execute;
 
-        function execute(data) {
-            var question = data.context;
-            var survey = WorkspaceService.getSurvey();
-            var newMetadataOption = MetadataAnswerFactory.create(question.metadata.option.length, question.templateID);
-            question.metadata.addOption(newMetadataOption);
-            return newMetadataOption;
+        function execute(question) {
+            var metadataOption = MetadataAnswerFactory.create(question.metadata.option.length, question.templateID);
+            question.metadata.addOption(metadataOption);
+            return metadataOption;
         }
     }
 

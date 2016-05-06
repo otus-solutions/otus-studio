@@ -13,14 +13,14 @@
         'MetadataGroupWidgetFactory',
         'MetadataOptionWidgetFactory',
         'NavigationWidgetFactory',
-        'RouteNavigationWidgetFactory',
+        'RouteEditorWidgetFactory',
         'RouteCreatorWidgetFactory',
         'PageItemWidgetFactory',
         'PageItemEditorWidgetFactory'
     ];
 
     function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
-        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteNavigationWidgetFactory, RouteCreatorWidgetFactory, PageItemWidgetFactory, PageItemEditorWidgetFactory) {
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory, PageItemWidgetFactory, PageItemEditorWidgetFactory) {
 
         var self = this;
 
@@ -67,7 +67,7 @@
         }
 
         function getRouteWidget(navigation, model) {
-            return RouteNavigationWidgetFactory.create(navigation, model);
+            return RouteEditorWidgetFactory.create(navigation, model);
         }
 
         function getRouteCreatorWidget(model, element) {

@@ -3,9 +3,11 @@
 
     angular
         .module('editor.ui')
-        .directive('otusQuestionPalette', otusInputText);
+        .directive('otusQuestionPalette', directive);
 
-    function otusInputText() {
+    directive.$inject = ['OtusQuestionPaletteWidgetFactory'];
+
+    function directive(OtusQuestionPaletteWidgetFactory) {
         var ddo = {
             scope: {
                 label: '@',
@@ -14,7 +16,10 @@
             },
             transclude: true,
             templateUrl: 'app/editor/ui/question-palette/question-palette.html',
-            retrict: 'E'
+            retrict: 'E',
+            link: function linkFunc(scope) {
+                scope.widget = OtusQuestionPaletteWidgetFactory.create(scope.$parent.widget);
+            }
         };
 
         return ddo;

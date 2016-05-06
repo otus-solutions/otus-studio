@@ -7,25 +7,27 @@
 
     QuestionFactory.$inject = [
         'CalendarQuestionFactory',
-        'NumericQuestionFactory',
+        'IntegerQuestionFactory',
+        'DecimalQuestionFactory',
         'SingleSelectionQuestionFactory',
         'TextQuestionFactory',
         'TimeQuestionFactory',
         'LabelFactory',
         'MetadataGroupFactory',
-        'PhoneQuestionFactory'
+		'PhoneQuestionFactory'
     ];
 
-    function QuestionFactory(CalendarQuestionFactory, NumericQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory, PhoneQuestionFactory) {
+    function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory, PhoneQuestionFactory) {
         var self = this,
 
             factoryMap = {
                 'CalendarQuestion': CalendarQuestionFactory,
-                'NumericQuestion': NumericQuestionFactory,
+                'IntegerQuestion': IntegerQuestionFactory,
+                'DecimalQuestion' : DecimalQuestionFactory,
                 'SingleSelectionQuestion': SingleSelectionQuestionFactory,
                 'TextQuestion': TextQuestionFactory,
                 'TimeQuestion': TimeQuestionFactory,
-                'PhoneQuestion': PhoneQuestionFactory
+				'PhoneQuestion': PhoneQuestionFactory
             };
 
         /* Public interface */
