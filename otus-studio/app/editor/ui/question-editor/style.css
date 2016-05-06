@@ -1,0 +1,8 @@
+.custom-whiteframe {
+    border: solid 1px #E8E8E8;
+    border-left : solid 3px #E8E8E8; !imports
+}
+
+.custom-whiteframe:hover {
+    border-left : solid 3px #448AFF; !imports
+}
