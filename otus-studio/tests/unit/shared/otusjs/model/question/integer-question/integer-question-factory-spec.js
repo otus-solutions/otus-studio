@@ -1,4 +1,4 @@
-describe('NumericQuestionFactory', function() {
+describe('IntegerQuestionFactory', function() {
     var Mock = {};
     var question;
 
@@ -8,20 +8,20 @@ describe('NumericQuestionFactory', function() {
         inject(function(_$injector_) {
             mockQuestion(_$injector_);
 
-            factory = _$injector_.get('NumericQuestionFactory');
+            factory = _$injector_.get('IntegerQuestionFactory');
         });
 
         question = factory.create(Mock.TEMPLATE_ID, Mock.Question);
     });
 
-    describe('NumericQuestion', function() {
+    describe('IntegerQuestion', function() {
 
         xit('returned object should extends Question', function() {
             expect(question.extends).toBe('Question');
         });
 
-        it('returned object should have objectType equal to NumericQuestion', function() {
-            expect(question.objectType).toBe('NumericQuestion');
+        it('returned object should have objectType equal to IntegerQuestion', function() {
+            expect(question.objectType).toBe('IntegerQuestion');
         });
 
         it('returned object should have a not null templateID', function() {
@@ -51,7 +51,7 @@ describe('NumericQuestionFactory', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('NumericQuestion', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('IntegerQuestion', Mock.TEMPLATE_ID);
     }
 
 });

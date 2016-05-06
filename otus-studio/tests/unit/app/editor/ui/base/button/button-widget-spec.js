@@ -118,7 +118,7 @@ describe('OtusButtonWidget', function() {
 
                 it('widget should not correct value fo tooltipDirection if is equal to top', function() {
                     Mock.templateConfig = {
-                        mdTooltipDirection: 'top'
+                        tooltipDirection: 'top'
                     };
                     widget = factory.create({}, Mock.templateConfig, {});
 
@@ -127,7 +127,7 @@ describe('OtusButtonWidget', function() {
 
                 it('widget should not correct value fo tooltipDirection if is equal to bottom', function() {
                     Mock.templateConfig = {
-                        mdTooltipDirection: 'bottom'
+                        tooltipDirection: 'bottom'
                     };
                     widget = factory.create({}, Mock.templateConfig, {});
 
@@ -136,7 +136,7 @@ describe('OtusButtonWidget', function() {
 
                 it('widget should not correct value fo tooltipDirection if is equal to left', function() {
                     Mock.templateConfig = {
-                        mdTooltipDirection: 'left'
+                        tooltipDirection: 'left'
                     };
                     widget = factory.create({}, Mock.templateConfig, {});
 
@@ -145,7 +145,7 @@ describe('OtusButtonWidget', function() {
 
                 it('widget should not correct value fo tooltipDirection if is equal to right', function() {
                     Mock.templateConfig = {
-                        mdTooltipDirection: 'right'
+                        tooltipDirection: 'right'
                     };
                     widget = factory.create({}, Mock.templateConfig, {});
 
@@ -296,7 +296,7 @@ describe('OtusButtonWidget', function() {
             ariaLabel: 'Text for arial label.',
             label: 'Text for label.',
             tooltip: 'Text for tooltip.',
-            mdTooltipDirection: 'bottom',
+            tooltipDirection: 'bottom',
             leftIcon: 'leftIconName',
             rightIcon: 'rightIconName'
         };
@@ -311,7 +311,7 @@ describe('OtusButtonWidget', function() {
 
     function mockInvalidTemplateConfig() {
         Mock.templateConfig = {
-            mdTooltipDirection: 'angular',
+            tooltipDirection: 'angular',
         };
     }
 

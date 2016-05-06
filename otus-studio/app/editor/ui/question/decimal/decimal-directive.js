@@ -3,18 +3,17 @@
 
     angular
         .module('editor.ui')
-        .directive('numericQuestion', numericQuestion);
+        .directive('decimalQuestion', decimalQuestion);
 
-    function numericQuestion() {
+    function decimalQuestion() {
         var ddo = {
             scope: {
                 ngModel: '=',
                 ariaLabel: '@'
             },
-            templateUrl: 'app/editor/ui/question/numeric/numeric-question.html',
-            retrict: 'E'
+            templateUrl: 'app/editor/ui/question/decimal/decimal-question.html',
+            restrict: 'E'
         };
-
         return ddo;
     }
 

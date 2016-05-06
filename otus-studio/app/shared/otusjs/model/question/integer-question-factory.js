@@ -3,28 +3,28 @@
 
     angular
         .module('otusjs.model')
-        .factory('NumericQuestionFactory', NumericQuestionFactory);
+        .factory('IntegerQuestionFactory', IntegerQuestionFactory);
 
-    NumericQuestionFactory.$inject = ['UnitFactory'];
+    IntegerQuestionFactory.$inject = ['UnitFactory'];
 
-    function NumericQuestionFactory(UnitFactory) {
+    function IntegerQuestionFactory(UnitFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateID, prototype) {
-            return new NumericQuestion(templateID, prototype, UnitFactory);
+            return new IntegerQuestion(templateID, prototype, UnitFactory);
         }
 
         return self;
     }
 
-    function NumericQuestion(templateID, prototype, UnitFactory) {
+    function IntegerQuestion(templateID, prototype, UnitFactory) {
         var self = this;
 
         self.extents = prototype.objectType;
-        self.objectType = 'NumericQuestion';
+        self.objectType = 'IntegerQuestion';
         self.templateID = templateID;
         self.dataType = 'Integer';
         self.label = prototype.label;

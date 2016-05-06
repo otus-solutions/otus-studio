@@ -8,7 +8,7 @@ describe('QuestionFactory', function() {
         inject(function(_$injector_) {
             factory = _$injector_.get('QuestionFactory', {
                 CalendarQuestionFactory: mockCalendarQuestionFactory(_$injector_),
-                NumericQuestionFactory: mockNumericQuestionFactory(_$injector_),
+                IntegerQuestionFactory: mockIntegerQuestionFactory(_$injector_),
                 SingleSelectionQuestionFactory: mockSingleSelectionQuestionFactory(_$injector_),
                 TextQuestionFactory: mockTextQuestionFactory(_$injector_),
                 TimeQuestionFactory: mockTimeQuestionFactory(_$injector_)
@@ -26,12 +26,12 @@ describe('QuestionFactory', function() {
             expect(Mock.CalendarQuestionFactory.create).toHaveBeenCalled();
         });
 
-        it('NumericQuestionFactory.create should be called when parameter is NumericQuestion', function() {
-            spyOn(Mock.NumericQuestionFactory, 'create');
+        it('IntegerQuestionFactory.create should be called when parameter is integer-question', function() {
+            spyOn(Mock.IntegerQuestionFactory, 'create');
 
-            factory.create('NumericQuestion', jasmine.any(String));
+            factory.create('IntegerQuestion', jasmine.any(String));
 
-            expect(Mock.NumericQuestionFactory.create).toHaveBeenCalled();
+            expect(Mock.IntegerQuestionFactory.create).toHaveBeenCalled();
         });
 
         it('SingleSelectionQuestionFactory.create should be called when parameter is SingleSelectionQuestion', function() {
@@ -102,9 +102,9 @@ describe('QuestionFactory', function() {
         return Mock.CalendarQuestionFactory;
     }
 
-    function mockNumericQuestionFactory($injector) {
-        Mock.NumericQuestionFactory = $injector.get('NumericQuestionFactory');
-        return Mock.NumericQuestionFactory;
+    function mockIntegerQuestionFactory($injector) {
+        Mock.IntegerQuestionFactory = $injector.get('IntegerQuestionFactory');
+        return Mock.IntegerQuestionFactory;
     }
 
     function mockSingleSelectionQuestionFactory($injector) {

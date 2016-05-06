@@ -34,7 +34,8 @@
 
         /* Public methods */
         self.addCalendarQuestion = addCalendarQuestion;
-        self.addNumericQuestion = addNumericQuestion;
+        self.addIntegerQuestion = addIntegerQuestion;
+        self.addDecimalQuestion = addDecimalQuestion;
         self.addSingleSelectionQuestion = addSingleSelectionQuestion;
         self.addTextQuestion = addTextQuestion;
         self.addTimeQuestion = addTimeQuestion;
@@ -46,8 +47,12 @@
             AddQuestionEventFactory.create().execute('CalendarQuestion');
         }
 
-        function addNumericQuestion() {
-            AddQuestionEventFactory.create().execute('NumericQuestion');
+        function addIntegerQuestion() {
+            AddQuestionEventFactory.create().execute('IntegerQuestion');
+        }
+
+        function addDecimalQuestion() {
+            AddQuestionEventFactory.create().execute('DecimalQuestion');
         }
 
         function addSingleSelectionQuestion() {

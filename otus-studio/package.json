@@ -1,6 +1,6 @@
 {
     "name": "otus-studio",
-    "version": "1.19.35-SNAPSHOT",
+    "version": "1.19.36-SNAPSHOT",
     "description": "The tool to build survey forms to be used in Otus Studio.",
     "keywords": [
         "otus",
@@ -33,6 +33,7 @@
         "angular-messages": "^1.5.0",
         "js-base64": "^2.1.9",
         "node-uuid": "^1.4.7",
+        "angular-ui-mask": "^1.8.3",
         "angular-bind-html-compile-ci-dev": "1.1.1",
         "angular-ui-router": "0.2.14",
         "angular-material": "1.0.5",

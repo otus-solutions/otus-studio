@@ -10,7 +10,7 @@
 
             directiveTemplates = {
                 'CalendarQuestion': '<calendar-question></calendar-question>',
-                'NumericQuestion': '<numeric-question></numeric-question>',
+                'IntegerQuestion': '<integer-question></integer-question>',
                 'SingleSelectionQuestion': '<single-selection-question></single-selection-question>',
                 'TextQuestion': '<text-question></text-question>',
                 'TimeQuestion': '<time-question></time-question>',
