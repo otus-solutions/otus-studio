@@ -9,18 +9,28 @@ describe('PhoneQuestionWidgetFactory', function() {
             factory = _$injector_.get('QuestionWidgetFactory');
         });
 
-        decimalQuestionWidget = factory.create(Mock.question);
+        phoneQuestion = factory.create(Mock.question);
     });
 
-    describe('DecimalQuestionWidgetFactory', function() {
+    describe('IntegerQuestionWidgetFactory', function() {
         it('should returned an object defined', function() {
-            expect(decimalQuestionWidget).toBeDefined();
+            expect(phoneQuestion).toBeDefined();
         });
+
+        it('should construct object correct', function functionName() {
+            expect(phoneQuestion.name).toEqual('PhoneQuestion');
+            expect(phoneQuestion.template).toEqual('<phone-question></phone-question>');
+        });
+
+        xit('should call method create', function functionName() {
+            expect(phoneQuestion.create()).toHaveBeenCalled();
+        });
+
     });
 
     function mockQuestion() {
         Mock.question = {
-            name: 'PhoneQuestion'
+            objectType: 'PhoneQuestion'
         };
     }
 
