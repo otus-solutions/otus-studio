@@ -5,18 +5,18 @@
         .module('editor.ui')
         .directive('otusQuestionEditor', otusQuestionEditor);
 
-    function otusQuestionEditor() {
+    otusQuestionEditor.$inject = [
+        'QuestionEditorWidgetFactory',
+        'SheetContentService'
+    ];
+
+    function otusQuestionEditor(QuestionEditorWidgetFactory, SheetContentService) {
         var ddo = {
-            scope: {
-                widget: '@',
-                label: '@',
-                ariaLabel: '@',
-                leftIcon: '@'
-            },
+            scope: {},
             templateUrl: 'app/editor/ui/question-editor/question-editor.html',
             retrict: 'E',
-            link: function linkFunc(scope, element, attrs, controller, transclude) {
-                scope.widget = scope.$parent.widget;
+            link: function linkFunc(scope, element, attrs) {
+                scope.widget = QuestionEditorWidgetFactory.create(SheetContentService.lastLoadedQuestion, element);
             }
         };
 

@@ -51,7 +51,7 @@ describe('IntegerQuestionFactory', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('integer-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('IntegerQuestion', Mock.TEMPLATE_ID);
     }
 
 });

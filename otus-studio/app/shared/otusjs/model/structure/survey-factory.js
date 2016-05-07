@@ -42,6 +42,7 @@
 
         self.questionsCount = questionsCount;
         self.addQuestion = addQuestion;
+        self.removeQuestion = removeQuestion;
         self.updateQuestion = updateQuestion;
         self.fetchQuestionById = fetchQuestionById;
         self.addNavigation = addNavigation;
@@ -62,6 +63,11 @@
         function addQuestion(question) {
             self.questionContainer[question.templateID] = question;
             self.addNavigation(NavigationFactory.create(question.templateID));
+        }
+
+        function removeQuestion(question) {
+            delete self.questionContainer[question.templateID];
+            self.removeNavigation(question.templateID);
         }
 
         function updateQuestion(question) {

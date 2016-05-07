@@ -5,22 +5,25 @@
         .module('editor.ui')
         .factory('RouteCreatorWidgetFactory', RouteCreatorWidgetFactory);
 
-    RouteCreatorWidgetFactory.$inject = ['AddRouteEventFactory'];
+    RouteCreatorWidgetFactory.$inject = [
+        'AddRouteEventFactory',
+        'RouteEditorWidgetFactory'
+    ];
 
-    function RouteCreatorWidgetFactory(AddRouteEventFactory) {
+    function RouteCreatorWidgetFactory(AddRouteEventFactory, RouteEditorWidgetFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(templateData, element, parentWidget) {
-            return new RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory);
+            return new RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory, RouteEditorWidgetFactory);
         }
 
         return self;
     }
 
-    function RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory) {
+    function RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory, RouteEditorWidgetFactory) {
         var self = this;
 
         /* Type definitions */
@@ -63,7 +66,9 @@
         }
 
         function createRoute() {
-            AddRouteEventFactory.create().execute(self);
+            var route = AddRouteEventFactory.create().execute(self.routeData);
+            var routeWidget = RouteEditorWidgetFactory.create(route, self.parent);
+            self.parent.addRoute(routeWidget);
         }
     }
 

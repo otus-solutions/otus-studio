@@ -15,7 +15,7 @@ describe('SingleSelectionQuestion', function() {
     describe('toJson method', function() {
 
         it('should return a well formatted json based on SingleSelectionQuestion', function() {
-            var question = factory.create('single-selection-question', Mock.TEMPLATE_ID);
+            var question = factory.create('SingleSelectionQuestion', Mock.TEMPLATE_ID);
 
             expect(question.toJson()).toEqual(Mock.json);
         });
@@ -24,7 +24,7 @@ describe('SingleSelectionQuestion', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('single-selection-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('SingleSelectionQuestion', Mock.TEMPLATE_ID);
     }
 
     function mockJson($injector) {
@@ -38,7 +38,7 @@ describe('SingleSelectionQuestion', function() {
                 enUS: $injector.get('LabelFactory').create(),
                 esES: $injector.get('LabelFactory').create()
             },
-            option: {},
+            option: [],
             metadata: $injector.get('MetadataGroupFactory').create()
         });
     }

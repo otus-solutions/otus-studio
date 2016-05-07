@@ -1,7 +1,23 @@
-<md-whiteframe class="md-whiteframe-1dp question-whiteframe" layout="row" layout-align="left center">
-    <ui-accordion header="{{widget.header}}" widget="widget" flex>
-        <ui-accordion-content layout="column" layout-padding flex>
+<link rel="stylesheet" href="app/editor/ui/page-item-editor/style.css">
+
+<md-whiteframe class="custom-whiteframe" layout="column">
+    <otus:accordion flex>
+        <otus:accordion-header>
+            <md-content layout-align="start center" style="padding: 0" flex>
+                <md-content layout="row">
+                    <md-card class="item-id-frame" style="margin: 5px" layout-padding layout="column">
+                        {{widget.item.templateID}}
+                    </md-card>
+                    <md-content layout-padding layout-align="start center" flex>
+                        <label>{{widget.item.label.ptBR.plainText}}</label>
+                    </md-content>
+                </md-content>
+            </md-content>
+            <otus:button click="widget.deleteItem" tooltip="Excluir item" icon-button="delete"/>
+        </otus:accordion-header>
+        <otus:accordion-content>
             <otus:page-item></otus:page-item>
-        </ui-accordion-content>
-    </ui-accordion>
+        </otus:accordion-content>
+    </otus:accordion>
 </md-whiteframe>
+<br/>

@@ -1,39 +1,34 @@
 describe('surveyNavigationPreviewGenerator', function functionName() {
-    var element, scope, compiledDirective, NavigationPreviewService;
+    var element, scope, directive;
     var Mock = {};
 
-    /* @BeforeScenario */
     beforeEach(function() {
         module('studio');
 
         inject(function(_$injector_) {
-            /* @InjectMocks */
-            $rootScope = _$injector_.get('$rootScope');
-            $compile = _$injector_.get('$compile');
-            NavigationPreviewService = _$injector_.get('NavigationPreviewService');
+            mockNavigationPreviewService(_$injector_);
+            mockWorkspaceService(_$injector_);
 
-            compiledDirective = getCompiledDirective($rootScope, $compile);
+            $compile = _$injector_.get('$compile');
+
+            directive = getCompiledDirective($rootScope, $compile);
         });
     });
 
     describe('test of directive survey-navigation-preview-generator:', function functionName() {
+
         it('should has compiled with sucess', function() {
-            expect(compiledDirective).toBeDefined();
+            expect(directive).toBeDefined();
         });
 
         it('should call function createGraph and renderGraph', function() {
-            spyOn(NavigationPreviewService, 'createGraph').and.returnValue(true);
-            spyOn(NavigationPreviewService, 'renderGraph').and.returnValue(true);
-            compiledDirective.triggerHandler('click');
-            expect(NavigationPreviewService.createGraph).toHaveBeenCalled();
-            expect(NavigationPreviewService.renderGraph).toHaveBeenCalled();
-        });
+            spyOn(Mock.NavigationPreviewService, 'createGraph').and.returnValue(true);
+            spyOn(Mock.NavigationPreviewService, 'renderGraph').and.returnValue(true);
 
-        xit('should be removed element graph', function() {
-            //* quando compiled directive chamar o método find e retornar true, deve verificar se jquery chamou remove
-            spyOn(compiledDirective, 'find').and.returnValue(true);
-            compiledDirective.triggerHandler('click');
-            expect('find').toHaveBeenCalled();
+            directive.triggerHandler('click');
+
+            expect(Mock.NavigationPreviewService.createGraph).toHaveBeenCalled();
+            expect(Mock.NavigationPreviewService.renderGraph).toHaveBeenCalled();
         });
 
     });
@@ -44,7 +39,15 @@ describe('surveyNavigationPreviewGenerator', function functionName() {
         element = $compile(element)(scope);
         scope.$digest();
         return element;
+    }
 
+    function mockWorkspaceService($injector) {
+        Mock.WorkspaceService = $injector.get('WorkspaceService');
+        spyOn(Mock.WorkspaceService, 'getSurvey').and.returnValue([]);
+    }
+
+    function mockNavigationPreviewService($injector) {
+        Mock.NavigationPreviewService = $injector.get('NavigationPreviewService');
     }
 
 });

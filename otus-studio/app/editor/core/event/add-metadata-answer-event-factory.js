@@ -7,24 +7,23 @@
 
     AddMetadataAnswerEventFactory.$inject = [
         'AddMetadataAnswerService',
-        'WorkspaceService',
-        'MetadataOptionWidgetFactory'
+        'WorkspaceService'
     ];
 
-    function AddMetadataAnswerEventFactory(AddMetadataAnswerService, WorkspaceService, MetadataOptionWidgetFactory) {
+    function AddMetadataAnswerEventFactory(AddMetadataAnswerService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddMetadataAnswerEvent(AddMetadataAnswerService, WorkspaceService, MetadataOptionWidgetFactory);
+            return new AddMetadataAnswerEvent(AddMetadataAnswerService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddMetadataAnswerEvent(AddMetadataAnswerService, WorkspaceService, MetadataOptionWidgetFactory) {
+    function AddMetadataAnswerEvent(AddMetadataAnswerService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;

@@ -14,7 +14,7 @@ describe('RouteFactory', function() {
             factory = _$injector_.get('RouteFactory');
         });
 
-        route = factory.create(Mock.ORIGIN, Mock.DESTINATION, 0);
+        route = factory.create(Mock.ROUTE_NAME, Mock.ORIGIN, Mock.DESTINATION);
     });
 
     describe('create method', function() {
@@ -58,7 +58,7 @@ describe('RouteFactory', function() {
     }
 
     function mockRoutName() {
-        Mock.ROUTE_NAME = Mock.ORIGIN + '-' + Mock.DESTINATION + '-' + 0;
+        Mock.ROUTE_NAME = 'ROUTE_NAME';
     }
 
 });
