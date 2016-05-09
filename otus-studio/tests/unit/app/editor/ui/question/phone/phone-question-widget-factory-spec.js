@@ -20,10 +20,11 @@ describe('PhoneQuestionWidgetFactory', function() {
         it('should construct object correct', function functionName() {
             expect(phoneQuestion.name).toEqual('PhoneQuestion');
             expect(phoneQuestion.template).toEqual('<phone-question></phone-question>');
+            expect(phoneQuestion.parentWidget.className).toBe('QuestionWidget');
         });
 
         xit('should call method create', function functionName() {
-            expect(phoneQuestion.create()).toHaveBeenCalled();
+            expect(factory.create()).toHaveBeenCalled();
         });
 
     });
