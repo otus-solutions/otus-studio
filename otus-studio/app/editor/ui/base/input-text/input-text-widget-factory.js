@@ -5,50 +5,53 @@
         .module('editor.ui')
         .factory('OtusInputTextWidgetFactory', OtusInputTextWidgetFactory);
 
-    OtusInputTextWidgetFactory.$inject = [
-        'UUID'
-    ];
-
-    function OtusInputTextWidgetFactory(UUID) {
+    function OtusInputTextWidgetFactory() {
         var self = this;
 
         self.create = create;
 
-        function create(templateData, element, model, parentWidget) {
-            return new OtusInputTextWidget(templateData, element, model, parentWidget, UUID.generateUUID());
+        function create(templateData, templateConfig, element, parentWidget) {
+            return new OtusInputTextWidget(templateData, templateConfig, element, parentWidget);
         }
 
         return self;
     }
 
-    function OtusInputTextWidget(templateData, element, model, parentWidget, guid) {
+    function OtusInputTextWidget(templateData, templateConfig, element, parentWidget) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'OtusInputText';
+        self.className = self.constructor.name;
+        self.css = {};
+        self.template = {};
+        self.event = {};
+
+        /* Template definitions */
+        self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
+        self.template.label = templateConfig.label;
+        self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
+        self.template.rightIcon = templateConfig.rightIcon;
+
+        self.template.hasLeftIcon = self.template.leftIcon !== undefined;
+        self.template.hasRightIcon = (templateConfig.iconButton === undefined && self.template.rightIcon !== undefined);
 
         /* Instance definitions */
-        self.parentWidget = parentWidget;
-        self.guid = guid;
+        self.parent = parentWidget;
+        self.modelReference = templateData.model;
 
-        /* User definitions */
+        /* CSS definitions */
         self.style = templateData.style;
-        self.flex = templateData.flex;
-        self.label = templateData.label;
-        self.ariaLabel = templateData.ariaLabel || self.label;
-        self.leftIcon = templateData.leftIcon;
-        self.modelRef = model;
 
-        if (model instanceof Function)
-            self.model = model();
+        if (templateData.model instanceof Function)
+            self.model = templateData.model();
         else
-            self.model = model;
+            self.model = templateData.model;
 
         element.on('change', function() {
-            if (self.modelRef instanceof Function)
-                self.modelRef(self.model);
+            if (self.modelReference instanceof Function)
+                self.modelReference(self.model);
             else
-                self.modelRef = self.model;
+                self.modelReference = self.model;
         });
     }
 

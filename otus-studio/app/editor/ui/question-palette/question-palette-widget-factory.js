@@ -39,6 +39,7 @@
         self.addSingleSelectionQuestion = addSingleSelectionQuestion;
         self.addTextQuestion = addTextQuestion;
         self.addTimeQuestion = addTimeQuestion;
+        self.addEmailQuestion = addEmailQuestion;
         self.addTextItem = addTextItem;
         self.addImageItem = addImageItem;
         self.addPhoneQuestion = addPhoneQuestion;
@@ -67,6 +68,10 @@
 
         function addTimeQuestion() {
             AddQuestionEventFactory.create().execute('TimeQuestion');
+        }
+
+        function addEmailQuestion() {
+            AddQuestionEventFactory.create().execute('EmailQuestion');
         }
 
         function addTextItem() {

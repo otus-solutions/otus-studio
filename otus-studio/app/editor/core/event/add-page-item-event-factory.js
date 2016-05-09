@@ -8,23 +8,24 @@
     AddPageItemEventFactory.$inject = [
         'AddPageItemService',
         'SheetContentService',
-        'WorkspaceService'
+        'WorkspaceService',
+        'WidgetService'
     ];
 
-    function AddPageItemEventFactory(AddPageItemService, SheetContentService, WorkspaceService) {
+    function AddPageItemEventFactory(AddPageItemService, SheetContentService, WorkspaceService, WidgetService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddPageItemEvent(AddPageItemService, SheetContentService, WorkspaceService);
+            return new AddPageItemEvent(AddPageItemService, SheetContentService, WorkspaceService, WidgetService);
         }
 
         return self;
     }
 
-    function AddPageItemEvent(AddPageItemService, SheetContentService, WorkspaceService) {
+    function AddPageItemEvent(AddPageItemService, SheetContentService, WorkspaceService, WidgetService) {
         var self = this;
 
         self.execute = execute;

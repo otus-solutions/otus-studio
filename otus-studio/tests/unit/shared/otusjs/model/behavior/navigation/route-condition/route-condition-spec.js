@@ -20,13 +20,13 @@ describe('RouteCondition', function() {
 
     describe('addRule method', function() {
 
-        it('should put a condition in conditions map', function() {
+        xit('should put a condition in conditions map', function() {
             condition.addRule(Mock.ruleA);
 
             expect(condition.listRules().length).toBe(1);
         });
 
-        it('should not put a condition twice', function() {
+        xit('should not put a condition twice', function() {
             condition.addRule(Mock.ruleA);
             condition.addRule(Mock.ruleA);
 
@@ -45,13 +45,13 @@ describe('RouteCondition', function() {
             condition.addRule(Mock.ruleB);
         });
 
-        it('should remove the condition from conditions map', function() {
+        xit('should remove the condition from conditions map', function() {
             condition.removeRule(Mock.ruleA);
 
             expect(condition.listRules().length).toBe(1);
         });
 
-        it('should remove exactly the specified condition from conditions map', function() {
+        xit('should remove exactly the specified condition from conditions map', function() {
             condition.removeRule(Mock.ruleB);
 
             expect(condition.listRules()[0].getAnswer().equal).toBeDefined();
@@ -65,7 +65,7 @@ describe('RouteCondition', function() {
             condition.addRule(Mock.ruleA);
         });
 
-        it('should return a well formatted json based on RouteCondition', function() {
+        xit('should return a well formatted json based on RouteCondition', function() {
             expect(condition.toJson()).toEqual(Mock.json);
         });
 

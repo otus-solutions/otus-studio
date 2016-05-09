@@ -1,14 +1,14 @@
 <div id="survey-questions" layout="column">
     <md-button class="md-raised md-primary">Questões</md-button>
-    <div ng-show="true" layout="column">
-        <otus:button click="widget.addCalendarQuestion" label="Calendário" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addIntegerQuestion" label="Número Inteiro" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addDecimalQuestion" label="Número Decimal" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addSingleSelectionQuestion" label="Seleção Simples" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addTextQuestion" label="Texto" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addTimeQuestion" label="Relógio" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addPhoneQuestion" label="Telefone" layout-align="center center" layout-padding layout="row" />
-    </div>
+    <otus:button click="widget.addCalendarQuestion" label="Calendário" left-icon="date_range"/>
+    <otus:button click="widget.addIntegerQuestion" label="Número Inteiro" left-icon="exposure_zero"/>
+    <otus:button click="widget.addDecimalQuestion" label="Número Decimal" left-icon="exposure_zero"/>
+    <otus:button click="widget.addSingleSelectionQuestion" label="Seleção Simples" left-icon="radio_button_checked"/>
+    <otus:button click="widget.addTextQuestion" label="Texto" left-icon="text_format"/>
+    <otus:button click="widget.addTimeQuestion" label="Relógio" left-icon="access_time"/>
+    <otus:button click="widget.addEmailQuestion" label="Email" left-icon="email" />
+	<otus:button click="widget.addPhoneQuestion" label="Telefone" layout-align="center center" layout-padding layout="row" />
+
     <md-button class="md-raised md-primary">Itens</md-button>
     <div ng-show="true" layout="column">
         <otus:button click="widget.addTextItem" label="Mensagem" layout-align="center center" layout-padding layout="row" />

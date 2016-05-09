@@ -15,7 +15,7 @@ describe('TimeQuestion', function() {
     describe('toJson method', function() {
 
         it('should return a well formatted json based on TimeQuestion', function() {
-            var question = factory.create('time-question', Mock.TEMPLATE_ID);
+            var question = factory.create('TimeQuestion', Mock.TEMPLATE_ID);
 
             expect(question.toJson()).toEqual(Mock.json);
         });
@@ -24,7 +24,7 @@ describe('TimeQuestion', function() {
 
     function mockQuestion($injector) {
         Mock.TEMPLATE_ID = 'TPL_ID';
-        Mock.Question = $injector.get('QuestionFactory').create('time-question', Mock.TEMPLATE_ID);
+        Mock.Question = $injector.get('QuestionFactory').create('TimeQuestion', Mock.TEMPLATE_ID);
     }
 
     function mockJson($injector) {

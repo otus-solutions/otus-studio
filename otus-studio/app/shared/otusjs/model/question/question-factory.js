@@ -12,12 +12,13 @@
         'SingleSelectionQuestionFactory',
         'TextQuestionFactory',
         'TimeQuestionFactory',
+        'EmailQuestionFactory',
         'LabelFactory',
         'MetadataGroupFactory',
 		'PhoneQuestionFactory'
     ];
 
-    function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, LabelFactory, MetadataGroupFactory, PhoneQuestionFactory) {
+    function QuestionFactory(CalendarQuestionFactory, IntegerQuestionFactory, DecimalQuestionFactory, SingleSelectionQuestionFactory, TextQuestionFactory, TimeQuestionFactory, EmailQuestionFactory, LabelFactory, MetadataGroupFactory, PhoneQuestionFactory) {
         var self = this,
 
             factoryMap = {
@@ -27,6 +28,7 @@
                 'SingleSelectionQuestion': SingleSelectionQuestionFactory,
                 'TextQuestion': TextQuestionFactory,
                 'TimeQuestion': TimeQuestionFactory,
+                'EmailQuestion': EmailQuestionFactory,
 				'PhoneQuestion': PhoneQuestionFactory
             };
 

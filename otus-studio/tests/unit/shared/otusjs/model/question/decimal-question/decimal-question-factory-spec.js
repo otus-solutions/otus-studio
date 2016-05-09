@@ -19,7 +19,6 @@ describe('DecimalQuestionFactory', function() {
     describe('DecimalQuestion', function() {
         it('should returned an object defined', function() {
             expect(question).toBeDefined();
-            console.log(question);
         });
 
         xit('returned object should have extends equal to objectType', function() {

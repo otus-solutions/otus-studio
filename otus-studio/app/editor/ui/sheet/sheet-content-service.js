@@ -7,8 +7,7 @@
 
     SheetContentService.$inject = [
         'editor.ui.mpath',
-        'TemplateLoaderService',
-        'WidgetService'
+        'TemplateLoaderService'
     ];
 
     function SheetContentService(mpath, TemplateLoaderService, WidgetService) {
@@ -30,14 +29,12 @@
 
         function loadQuestion(question) {
             self.lastLoadedQuestion = question;
-            scope.widget = WidgetService.getQuestionEditorWidget(question);
             var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
             sheet.find('#sheet').append(content);
         }
 
         function loadItem(item) {
             self.lastLoadedQuestion = item;
-            scope.widget = WidgetService.getPageItemEditorWidget(item);
             var content = TemplateLoaderService.loadDirective('<otus:page-item-editor></otus:page-item-editor>', scope);
             sheet.find('#sheet').append(content);
         }

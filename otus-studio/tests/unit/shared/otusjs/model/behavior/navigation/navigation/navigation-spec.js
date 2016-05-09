@@ -35,7 +35,7 @@ describe('Navigation', function() {
         });
 
         it('should remove the route from route list by the "to" identifier', function() {
-            navigation.removeRoute(0);
+            navigation.removeRoute(Mock.route.name);
 
             expect(navigation.listRoutes().length).toBe(0);
         });
@@ -89,7 +89,7 @@ describe('Navigation', function() {
     }
 
     function mockRoute($injector) {
-        Mock.route = $injector.get('RouteFactory').create(Mock.ORIGIN, Mock.TO, 0);
+        Mock.route = $injector.get('RouteFactory').create(Mock.ORIGIN, Mock.ORIGIN, Mock.TO);
     }
 
     function mockJson() {

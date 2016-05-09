@@ -5,24 +5,36 @@
         .module('editor.ui')
         .factory('QuestionEditorWidgetFactory', QuestionEditorWidgetFactory);
 
-    function QuestionEditorWidgetFactory() {
+    QuestionEditorWidgetFactory.$inject = [
+        'RemoveQuestionEventFactory'
+    ];
+
+    function QuestionEditorWidgetFactory(RemoveQuestionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(question) {
-            return new QuestionEditorWidget(question);
+        function create(question, element) {
+            return new QuestionEditorWidget(question, element, RemoveQuestionEventFactory);
         }
 
         return self;
     }
 
-    function QuestionEditorWidget(question) {
+    function QuestionEditorWidget(question, element, RemoveQuestionEventFactory) {
         var self = this;
 
         self.question = question;
-        self.header = question.templateID;
+        self.element = element;
+
+        /* Public methods */
+        self.deleteQuestion = deleteQuestion;
+
+        function deleteQuestion() {
+            RemoveQuestionEventFactory.create().execute(self.question);
+            element.remove();
+        }
     }
 
 }());

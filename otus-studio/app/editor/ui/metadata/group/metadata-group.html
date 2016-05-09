@@ -1,7 +1,7 @@
 <md-content>
     <md-radio-group layout-margin>
         <md-content ng-repeat="optionWidget in widget.options" layout="row" style="margin: 10px">
-            <md-radio-button aria-label="{{optionWidget.id}}" flex style="margin: 0"></md-radio-button>
+            <md-radio-button value="{{optionWidget.option.value}}" aria-label="{{optionWidget.id}}" flex></md-radio-button>
             <otus:text-editor flex="95" ng-model="optionWidget.option.label" placeholder="Clique para inserir o texto da opção de metadado"></otus:text-editor>
         </div>
     </md-radio-group>

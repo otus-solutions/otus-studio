@@ -11,6 +11,7 @@
                 'default': 'A200',
                 'hue-1': '200',
                 'hue-2': '50',
+                'hue-3': '700'
             }).accentPalette('blue-grey', {
                 'default': '900',
                 'hue-1': '50'
