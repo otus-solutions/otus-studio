@@ -53,7 +53,6 @@ md-input-container.md-input-invalid>md-icon {
     color: gray;
     border-bottom: 1px solid #C7C7C7;
 }
-
 /**
  *
  * Container.css
@@ -88,7 +87,6 @@ md-input-container.md-input-invalid>md-icon {
     box-sizing: border-box;
     height: 100%;
 }
-
 /**
  *
  * Sheet.css
@@ -121,7 +119,6 @@ md-input-container.md-input-invalid>md-icon {
     background-color: #FAFAFA;
     color: #1976D2
 }
-
 /*
 ui-accordion-header {
     min-height: 75px;
@@ -155,7 +152,6 @@ ui-accordion-content.visible {
 .label-container {
     padding: 8px;
 }
-
 /**
  *
  * Properties.css
@@ -172,7 +168,6 @@ ui-accordion-content.visible {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
 }
-
 /**
  *
  * Repository.css
@@ -185,7 +180,6 @@ ui-accordion-content.visible {
 .center {
     margin: 0 auto;
 }
-
 /**
  *
  * question-editor.css
@@ -195,8 +189,7 @@ ui-accordion-content.visible {
 #editor-container {
     background: none;
 }
-.filling-mode-selector {}
-.editable {
+.filling-mode-selector {} .editable {
     border-bottom: 1px dotted gray;
     color: gray;
     font-style: italic;
@@ -229,7 +222,6 @@ ui-accordion-content.visible {
 md-backdrop {
     z-index: 65 !important
 }
-
 /**
  *
  * Toolbar Edit and Preview Navegação
@@ -240,7 +232,6 @@ md-tabs-canvas {
     background-color: #F9F9F9;
     z-index: 10;
 }
-
 /*
  * Animations
  */
@@ -261,4 +252,10 @@ md-tabs-canvas {
 }
 pre {
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.custom-whiteframe {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
+}
+.custom-whiteframe:hover {
+    box-shadow: 0 1px 20px 0 rgba(24, 42, 72, 0.65), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
