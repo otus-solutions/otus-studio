@@ -39,12 +39,11 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks-dependencies.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks.js',
             /* Otus platform */
-            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*.js',
+            NODE_MODULES_ROOT_PATH + 'otus-model-js/app/shared/st-utils/**/*-module.js',
+            NODE_MODULES_ROOT_PATH + 'otus-model-js/app/shared/st-utils/**/*.js',
+            NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils-min.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
-            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
             /* Application files */
             APP_ROOT_PATH + 'app.js',
             APP_ROOT_PATH + 'config/**/*-configuration.js',
