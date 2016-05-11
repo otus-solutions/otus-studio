@@ -7,11 +7,9 @@
     <otus:button click="widget.addTextQuestion" label="Texto" left-icon="text_format"/>
     <otus:button click="widget.addTimeQuestion" label="Relógio" left-icon="access_time"/>
     <otus:button click="widget.addEmailQuestion" label="Email" left-icon="email" />
-	<otus:button click="widget.addPhoneQuestion" label="Telefone" left-icon="phone" />
+    <otus:button click="widget.addPhoneQuestion" label="Telefone" left-icon="phone" />
 
     <md-button class="md-raised md-primary">Itens</md-button>
-    <div ng-show="true" layout="column">
-        <otus:button click="widget.addTextItem" label="Mensagem" layout-align="center center" layout-padding layout="row" />
-        <otus:button click="widget.addImageItem" label="Imagem" layout-align="center center" layout-padding layout="row" />
-    </div>
+    <otus:button click="widget.addTextItem" left-icon="message" label="Mensagem" />
+    <otus:button click="widget.addImageItem" left-icon="image" label="Imagem" />
 </div>
