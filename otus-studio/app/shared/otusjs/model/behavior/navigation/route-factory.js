@@ -50,6 +50,7 @@
         }
 
         function addCondition(condition) {
+            condition.name += getConditionSetSize() + 1;
             self.conditionSet.push(condition);
         }
 

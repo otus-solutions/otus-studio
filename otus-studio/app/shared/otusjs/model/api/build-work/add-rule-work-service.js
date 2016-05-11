@@ -7,25 +7,18 @@
 
     AddRuleService.$inject = [
         'WorkspaceService',
-        'RuleFactory',
-        'RouteConditionFactory'
+        'RuleFactory'
     ];
 
-    function AddRuleService(WorkspaceService, RuleFactory, RouteConditionFactory) {
+    function AddRuleService(WorkspaceService, RuleFactory) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            var rule = RuleFactory.create(eventSource.when(), eventSource.operator(), eventSource.answer());
-
-            if (eventSource.route.getConditionSetSize() === 0) {
-                var newCondition = RouteConditionFactory.create('Condição');
-                eventSource.route.addCondition(newCondition);
-            }
-            eventSource.route.getConditionSet()[0].addRule(rule);
-
-            return rule;
+        function execute(ruleData, route) {
+            var newRule = RuleFactory.create(ruleData.when, ruleData.operator, ruleData.answer);
+            route.conditionSet[0].addRule(newRule);
+            return newRule;
         }
     }
 

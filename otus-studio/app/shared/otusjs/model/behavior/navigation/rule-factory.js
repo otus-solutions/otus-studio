@@ -81,6 +81,7 @@
         function toJson() {
             var json = {
                 when: when,
+                operator: operator,
                 answer: answer
             };
 

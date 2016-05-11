@@ -12,7 +12,7 @@
         self.create = create;
 
         function create(name) {
-            return new RouteCondition(name.replace(' ', '_'));
+            return new RouteCondition(name);
         }
 
         return self;

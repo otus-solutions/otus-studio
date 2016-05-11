@@ -33,8 +33,6 @@
 
         /* Template definitions */
 
-        /* Template definitions */
-
         /* Instance definitions */
         self.parent = parentWidget;
         self.question = parentWidget.question;

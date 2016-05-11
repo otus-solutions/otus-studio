@@ -5,18 +5,14 @@
         .module('editor.ui')
         .directive('otusRuleEditor', otusRuleEditor);
 
-    otusRuleEditor.$inject = ['RuleEditorWidgetFactory'];
-
-    function otusRuleEditor(RuleEditorWidgetFactory) {
+    function otusRuleEditor() {
         var ddo = {
             scope: {
-                leftIcon: '@'
+                leftIcon: '@',
+                widget: '='
             },
             restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/rule/editor/rule-editor.html',
-            link: function linkFunc(scope) {
-                scope.widget = scope.$parent.rule;
-            }
+            templateUrl: 'app/editor/ui/navigation/rule/editor/rule-editor.html'
         };
 
         return ddo;
