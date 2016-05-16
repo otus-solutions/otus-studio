@@ -3,24 +3,13 @@
 
     angular
         .module('otusjs.navigation')
-        .factory('NavigationManagerFactory', NavigationManagerFactory);
+        .service('NavigationContainerService', NavigationContainerService);
 
-    function NavigationManagerFactory() {
+    NavigationContainerService.$inject = ['NavigationFactory'];
+
+    function NavigationContainerService(NavigationFactory) {
         var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new NavigationManager();
-        }
-
-        return self;
-    }
-
-    function NavigationManager() {
-        var self = this;
-        var navigationList = [];
+        var navigation = []; // TODO: To implement Immutable collection
 
         /* Public methods */
         self.getNavigationByOrigin = getNavigationByOrigin;
@@ -32,16 +21,20 @@
         self.removeNavigationByIndex = removeNavigationByIndex;
         self.removeLastNavigation = removeLastNavigation;
 
+        function manageNavigation(navigationToManage) {
+            navigation = navigationToManage;
+        }
+
         function getNavigationList() {
-            return navigationList;
+            return navigation;
         }
 
         function getNavigationListSize() {
-            return navigationList.length;
+            return navigation.length;
         }
 
         function getNavigationByOrigin(origin) {
-            var filter = navigationList.filter(function(navigation) {
+            var filter = navigation.filter(function(navigation) {
                 return findByOrigin(navigation, origin);
             });
 
@@ -53,33 +46,32 @@
         }
 
         function createNavigationTo(questionID) {
-            navigationList.push(NavigationFactory.create(questionID));
+            navigation.push(NavigationFactory.create(questionID));
         }
 
         function removeNavigationOf(questionID) {
-            var navigationToRemove = navigationList.filter(function(navigation) {
+            var navigationToRemove = navigation.filter(function(navigation) {
                 return findByOrigin(navigation, questionID);
             });
 
-            var indexToRemove = navigationList.indexOf(navigationToRemove[0]);
-            if (indexToRemove > -1) navigationList.splice(indexToRemove, 1);
+            var indexToRemove = navigation.indexOf(navigationToRemove[0]);
+            if (indexToRemove > -1) navigation.splice(indexToRemove, 1);
 
             return indexToRemove;
         }
 
         function removeNavigationByIndex(indexToRemove) {
-            navigationList.splice(indexToRemove, 1);
+            navigation.splice(indexToRemove, 1);
         }
 
         function removeLastNavigation(indexToRemove) {
-            navigationList.splice(-1, 1);
+            navigation.splice(-1, 1);
         }
 
         /* Private methods */
         function findByOrigin(navigation, questionID) {
             return navigation.origin === questionID;
         }
-
     }
 
 }());

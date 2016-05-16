@@ -1,142 +1,73 @@
-describe('NavigationManager', function() {
+describe('NavigationManagerService', function() {
     var Mock = {};
-    var factory;
-    var manager;
+    var service;
 
     beforeEach(function() {
-        module('studio');
+        module('utils');
+        module('otusjs');
 
         inject(function(_$injector_) {
-            mockSurvey(_$injector_);
+            // mockSurvey(_$injector_);
             mockQuestions(_$injector_);
-            mockNavigationFactory(_$injector_);
-            mockAddUpdate(_$injector_);
 
-            factory = _$injector_.get('NavigationManagerFactory');
+            service = _$injector_.get('NavigationManagerService', {
+                NavigationAddFactory: mockNavigationAddFactory(_$injector_),
+                NavigationRemoveFactory: mockNavigationRemoevFactory(_$injector_)
+            });
         });
-
-        manager = factory.create();
     });
 
-    describe('updateNavigation method', function() {
+    describe('addNavigation method', function() {
 
-        var manager;
+        it('should call NavigationAddFactory.create method', function() {
+            service.addNavigation();
 
-        beforeEach(function() {
-            manager = factory.create();
+            expect(Mock.NavigationAddFactory.create).toHaveBeenCalled();
         });
 
-    });
+        it('should call NavigationAdd.execute method', function() {
+            service.addNavigation();
 
-    describe('createNavigationTo method', function() {
-
-        beforeEach(function() {
-            spyOn(Mock.navigationFactory, 'create').and.callThrough();
-            manager.createNavigationTo(Mock.questionOne.templateID);
-        });
-
-        it('should call NavigationFactory.create', function() {
-            expect(Mock.navigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID);
-        });
-
-        it('should add a new Navigation in the navigationList', function() {
-            expect(manager.getNavigationListSize()).toBeGreaterThan(0);
+            expect(Mock.NavigationAdd.execute).toHaveBeenCalled();
         });
 
     });
 
-    describe('removeNavigationOf method', function() {
+    describe('removeNavigation method', function() {
 
-        beforeEach(function() {
-            manager.createNavigationTo(Mock.questionOne.templateID);
-            manager.createNavigationTo(Mock.questionTwo.templateID);
+        it('should call NavigationRemoveFactory.create method', function() {
+            service.removeNavigation();
+
+            expect(Mock.NavigationRemoveFactory.create).toHaveBeenCalled();
         });
 
-        it('should remove a navigation of navigationList', function() {
-            manager.removeNavigationOf(Mock.questionOne.templateID);
+        it('should call NavigationRemove.execute method', function() {
+            service.removeNavigation(Mock.questionOne);
 
-            expect(manager.getNavigationListSize()).toBe(1);
-        });
-
-        it('should remove the correct navigation of navigationList', function() {
-            manager.removeNavigationOf(Mock.questionOne.templateID);
-
-            expect(manager.getNavigationListSize()).toBe(1);
-            expect(manager.existsNavigationTo(Mock.questionTwo.templateID)).toBe(true);
-        });
-
-        it('should return the index of removed navigation', function() {
-            var removedIndex = manager.removeNavigationOf(Mock.questionOne.templateID);
-
-            expect(removedIndex).toBeDefined();
+            expect(Mock.NavigationRemove.execute).toHaveBeenCalled();
         });
 
     });
 
-    describe('removeNavigationByIndex method', function() {
+    function mockNavigationAddFactory($injector) {
+        Mock.NavigationAddFactory = $injector.get('NavigationAddFactory');
+        Mock.NavigationAdd = $injector.get('NavigationAddFactory').create([]);
 
-        beforeEach(function() {
-            manager.createNavigationTo(Mock.questionOne.templateID);
-            manager.createNavigationTo(Mock.questionTwo.templateID);
-        });
+        spyOn(Mock.NavigationAddFactory, 'create').and.returnValue(Mock.NavigationAdd);
+        spyOn(Mock.NavigationAdd, 'execute');
 
-        it('should remove a navigation of index', function() {
-            manager.removeNavigationByIndex(0);
+        return Mock.NavigationAddFactory;
+    }
 
-            expect(manager.getNavigationListSize()).toBe(1);
-            expect(manager.existsNavigationTo(Mock.questionOne.templateID)).toBe(false);
-            expect(manager.existsNavigationTo(Mock.questionTwo.templateID)).toBe(true);
-        });
+    function mockNavigationRemoevFactory($injector) {
+        Mock.NavigationRemoveFactory = $injector.get('NavigationRemoveFactory');
+        Mock.NavigationRemove = $injector.get('NavigationRemoveFactory').create([]);
 
-    });
+        spyOn(Mock.NavigationRemoveFactory, 'create').and.returnValue(Mock.NavigationRemove);
+        spyOn(Mock.NavigationRemove, 'execute');
 
-    describe('removeLastNavigation method', function() {
-
-        beforeEach(function() {
-            manager.createNavigationTo(Mock.questionOne.templateID);
-            manager.createNavigationTo(Mock.questionTwo.templateID);
-        });
-
-        it('should remove the last navigation present in navigation list', function() {
-            manager.removeLastNavigation();
-
-            expect(manager.getNavigationListSize()).toBe(1);
-            expect(manager.existsNavigationTo(Mock.questionOne.templateID)).toBe(true);
-            expect(manager.existsNavigationTo(Mock.questionTwo.templateID)).toBe(false);
-        });
-
-    });
-
-    describe('existsNavigationTo method', function() {
-
-        it('should return true when navigation exists', function() {
-            manager.createNavigationTo(Mock.questionOne);
-
-            expect(manager.existsNavigationTo(Mock.questionOne)).toBe(true);
-        });
-
-        it('should return false when navigation not exists', function() {
-            manager.createNavigationTo(Mock.questionOne);
-
-            expect(manager.existsNavigationTo(Mock.questionTwo)).toBe(false);
-        });
-
-    });
-
-    describe('getNavigationByOrigin method', function() {
-
-        beforeEach(function() {
-            manager.createNavigationTo(Mock.questionOne.templateID);
-            manager.createNavigationTo(Mock.questionTwo.templateID);
-        });
-
-        it('should return the navigation when exists', function() {
-            var returnedNavigation = manager.getNavigationByOrigin(Mock.questionOne.templateID);
-
-            expect(returnedNavigation.origin).toEqual(Mock.questionOne.templateID);
-        });
-
-    });
+        return Mock.NavigationRemoveFactory;
+    }
 
     function mockSurvey($injector) {
         Mock.survey = $injector.get('SurveyFactory').create('Survey Test', 'ST');
@@ -147,15 +78,6 @@ describe('NavigationManager', function() {
         Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
         Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
         Mock.questionFour = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q4');
-    }
-
-    function mockNavigationFactory($injector) {
-        Mock.navigationFactory = $injector.get('NavigationFactory');
-    }
-
-    function mockAddUpdate($injector) {
-        Mock.NavigationAddFactory = $injector.get('NavigationAddFactory');
-        Mock.addUpdate = Mock.NavigationAddFactory.create(Mock.survey.questionContainer);
     }
 
 });

@@ -1,76 +1,38 @@
 describe('NavigationAdd', function() {
     var Mock = {};
-
-    var ORIGIN_1 = 'ORIGIN_1';
+    var updateObject;
 
     beforeEach(function() {
-        module('studio');
+        module('otusjs');
 
         inject(function(_$injector_) {
-            mockSurvey(_$injector_);
-            mockQuestions(_$injector_);
-            mockNavigationManagerFactory(_$injector_);
-            mockNavigationFactory(_$injector_);
+            // mockSurvey(_$injector_);
+            // mockQuestions(_$injector_);
 
-            factory = _$injector_.get('NavigationAddFactory');
+            factory = _$injector_.get('NavigationAddFactory', {
+                NavigationContainerService: mockNavigationContainerService(_$injector_)
+            });
+
+            updateObject = factory.create([]);
         });
-    });
-
-    describe('setManager method', function() {
-
-        it('should set a reference to NavigationManager', function() {
-            var updateObject = factory.create();
-
-            updateObject.setManager(Mock.navigationManager);
-
-            expect(updateObject.manager).toBeDefined();
-        });
-
     });
 
     describe('execute method', function() {
 
-        it('should not create a navigation to first question', function() {
-            Mock.survey.addQuestion(Mock.questionOne);
-            var updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
-
+        fit('should not create a navigation to first question', function() {
             updateObject.execute();
 
-            expect(updateObject.manager.existsNavigationTo(Mock.questionOne.templateID)).toBe(false);
+            expect(Mock.NavigationContainerService.createNavigationTo).not.toHaveBeenCalled();
         });
 
-        it('should create a navigation when survey has at least one question', function() {
-            Mock.survey.addQuestion(Mock.questionOne);
-            var updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
+        fit('should create a navigation when survey has at least one question', function() {
             updateObject.execute();
 
-            Mock.survey.addQuestion(Mock.questionTwo);
-            updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
-            updateObject.execute();
-
-            expect(updateObject.manager.existsNavigationTo(Mock.questionOne.templateID)).toBe(true);
+            expect(Mock.NavigationContainerService.createNavigationTo).toHaveBeenCalled();
         });
 
         it('should not create a navigation to the last question', function() {
-            Mock.survey.addQuestion(Mock.questionOne);
-            var updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
-            updateObject.execute();
-
-            Mock.survey.addQuestion(Mock.questionTwo);
-            updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
-            updateObject.execute();
-
-            Mock.survey.addQuestion(Mock.questionThree);
-            updateObject = factory.create(Mock.survey.questionContainer);
-            updateObject.setManager(Mock.navigationManager);
-            updateObject.execute();
-
-            expect(updateObject.manager.existsNavigationTo(Mock.questionThree.templateID)).toBe(false);
+            expect(Mock.NavigationContainerService.existsNavigationTo(Mock.questionThree.templateID)).toBe(false);
         });
 
     });
@@ -85,12 +47,12 @@ describe('NavigationAdd', function() {
         Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
     }
 
-    function mockNavigationManagerFactory($injector) {
-        Mock.navigationManager = $injector.get('NavigationManagerFactory').create();
-    }
+    function mockNavigationContainerService($injector) {
+        Mock.NavigationContainerService = $injector.get('NavigationContainerService');
 
-    function mockNavigationFactory($injector) {
-        Mock.navigationFactory = $injector.get('NavigationFactory');
+        spyOn(Mock.NavigationContainerService, 'createNavigationTo');
+
+        return Mock.NavigationContainerService;
     }
 
 });

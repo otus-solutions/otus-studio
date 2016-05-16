@@ -9,12 +9,10 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationManagerFactory',
-        'NavigationAddFactory',
-        'NavigationRemoveFactory'
+        'NavigationManagerFactory'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory) {
         var self = this;
 
         /* Public interdace */
@@ -24,7 +22,7 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory);
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerFactory);
         }
 
         return self;

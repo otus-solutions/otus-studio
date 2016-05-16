@@ -5,40 +5,34 @@
         .module('otusjs.navigation')
         .factory('NavigationRemoveFactory', NavigationRemoveFactory);
 
-    function NavigationRemoveFactory() {
+    NavigationRemoveFactory.$inject = ['NavigationContainerService'];
+
+    function NavigationRemoveFactory(NavigationContainerService) {
         var self = this;
 
         /* Public interdace */
         self.create = create;
 
         function create(question) {
-            return new NavigationRemove('REMOVE', question);
+            return new NavigationRemove(question, NavigationContainerService);
         }
 
         return self;
     }
 
-    function NavigationRemove(type, question) {
+    function NavigationRemove(question, NavigationContainerService) {
         var self = this;
 
-        self.type = type;
         self.question = question;
-        self.manager = null;
 
-        self.setManager = setManager;
+        /* Public methods */
         self.execute = execute;
 
-        function setManager(manager) {
-            self.manager = manager;
-        }
-
         function execute() {
-            var removedIndex = self.manager.removeNavigationOf(question.templateID);
+            var removedIndex = NavigationContainerService.removeNavigationOf(question.templateID);
 
             if (removedIndex === -1)
-                self.manager.removeLastNavigation();
-            // else
-            //     self.manager.removeNavigationByIndex(removedIndex);
+                NavigationContainerService.removeLastNavigation();
         }
     }
 
