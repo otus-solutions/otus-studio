@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.navigation')
+        .module('otusjs.navigation')
         .factory('NavigationManagerFactory', NavigationManagerFactory);
 
     NavigationManagerFactory.$inject = [
@@ -50,6 +50,14 @@
             return navigationList.length;
         }
 
+        function getNavigationByOrigin(origin) {
+            var filter = navigationList.filter(function(navigation) {
+                return findByOrigin(navigation, origin);
+            });
+
+            return filter[0];
+        }
+
         function createNavigationTo(questionID) {
             navigationList.push(NavigationFactory.create(questionID));
         }
@@ -71,14 +79,6 @@
 
         function removeLastNavigation(indexToRemove) {
             navigationList.splice(-1, 1);
-        }
-
-        function getNavigationByOrigin(origin) {
-            var filter = navigationList.filter(function(navigation) {
-                return findByOrigin(navigation, origin);
-            });
-
-            return filter[0];
         }
 
         function existsNavigationTo(origin) {

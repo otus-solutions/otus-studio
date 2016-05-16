@@ -100,7 +100,7 @@
                 json.questionContainer.push(self.questionContainer[question].toJson());
             }
             json.navigationList = [];
-            self.navigationList.forEach(function(navigation) {
+            self.navigationManager.getNavigationList().forEach(function(navigation) {
                 json.navigationList.push(navigation.toJson());
             });
 

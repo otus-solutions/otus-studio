@@ -2,7 +2,8 @@
     'use strict';
 
     var module = angular.module('otusjs', [
-        'otusjs.model'
+        'otusjs.model',
+        'otusjs.navigation'
     ]);
 
 }());

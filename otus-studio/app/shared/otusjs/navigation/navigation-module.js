@@ -2,6 +2,6 @@
     'use strict';
 
     angular
-        .module('editor.navigation', []);
+        .module('otusjs.navigation', []);
 
 }());

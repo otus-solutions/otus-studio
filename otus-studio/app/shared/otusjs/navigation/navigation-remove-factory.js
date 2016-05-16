@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.model')
+        .module('otusjs.navigation')
         .factory('NavigationRemoveFactory', NavigationRemoveFactory);
 
     function NavigationRemoveFactory() {
@@ -37,8 +37,8 @@
 
             if (removedIndex === -1)
                 self.manager.removeLastNavigation();
-            else
-                self.manager.removeNavigationByIndex(removedIndex);
+            // else
+            //     self.manager.removeNavigationByIndex(removedIndex);
         }
     }
 

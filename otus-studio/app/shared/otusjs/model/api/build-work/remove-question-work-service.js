@@ -11,7 +11,7 @@
         self.execute = execute;
 
         function execute(question, survey) {
-            survey.removeQuestion(question);
+            survey.removeQuestion(question.templateID);
         }
     }
 

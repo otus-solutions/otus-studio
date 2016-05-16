@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusjs.model')
+        .module('otusjs.navigation')
         .factory('NavigationAddFactory', NavigationAddFactory);
 
     function NavigationAddFactory() {
