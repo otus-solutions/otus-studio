@@ -31,7 +31,7 @@ describe('NavigationFactory', function() {
             expect(navigation.origin).toBeDefined();
         });
 
-        it('should return an object with an array of destinations', function() {
+        it('should return an object with an array of routes', function() {
             expect(navigation.listRoutes()).toBeDefined();
         });
 

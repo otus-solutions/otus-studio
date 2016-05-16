@@ -2,6 +2,8 @@
     'use strict';
 
     angular
-        .module('editor.core', []);
+        .module('editor.core', [
+            'editor.navigation'
+        ]);
 
 }());

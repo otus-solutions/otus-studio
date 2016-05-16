@@ -3,9 +3,7 @@ describe('ModelFacadeService', function() {
 
     /* @BeforeScenario */
     beforeEach(function() {
-        module('otusjs.model');
-        module('otusjs.model');
-        module('utils');
+        module('studio');
 
         inject(function(_$injector_) {
             /* @InjectMocks */

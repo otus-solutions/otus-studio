@@ -74,12 +74,11 @@ describe('Navigation', function() {
             navigation.addRoute(Mock.route);
         });
 
-        it('should return a well formatted json based on TimeQuestion', function() {
+        it('should return a well formatted json based on Navigation', function() {
             expect(navigation.toJson()).toEqual(Mock.json);
         });
 
     });
-
 
     function mockNavigationProperties() {
         Mock.STUDIO_OBJECT = 'StudioObject';
@@ -96,7 +95,6 @@ describe('Navigation', function() {
         Mock.json = JSON.stringify({
             extents: 'StudioObject',
             objectType: 'Navigation',
-            index: null,
             origin: Mock.ORIGIN,
             routes: [Mock.route.toJson()]
         }).replace(/"{/g, '{').replace(/\}"/g, '}').replace(/\\/g, '');

@@ -9,10 +9,12 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationFactory'
+        'NavigationManagerFactory',
+        'NavigationAddFactory',
+        'NavigationRemoveFactory'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationFactory) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory) {
         var self = this;
 
         /* Public interdace */
@@ -22,13 +24,13 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationFactory);
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationFactory) {
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory) {
 
         var self = this;
 
@@ -37,22 +39,17 @@
         self.oid = uuid;
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
-        self.questionContainer = {};
-        self.navigationList = [];
+        self.questionContainer = [];
+        self.navigationManager = NavigationManagerFactory.create(self);
 
-        self.questionsCount = questionsCount;
         self.addQuestion = addQuestion;
+        self.questionsCount = questionsCount;
         self.removeQuestion = removeQuestion;
         self.updateQuestion = updateQuestion;
         self.fetchQuestionById = fetchQuestionById;
-        self.addNavigation = addNavigation;
-        self.removeNavigation = removeNavigation;
-        self.listNavigations = listNavigations;
-        self.listNavigation = listNavigation;
-        self.listNavigationByIndex = listNavigationByIndex;
-        self.fetchNavigationByOrigin = fetchNavigationByOrigin;
         self.toJson = toJson;
 
+        /* Question container methods */
         function questionsCount() {
             var propertyList = Object.keys(self.questionContainer).filter(function filterOnlyFields(property) {
                 return ((typeof property) != 'function');
@@ -61,13 +58,21 @@
         }
 
         function addQuestion(question) {
-            self.questionContainer[question.templateID] = question;
-            self.addNavigation(NavigationFactory.create(question.templateID));
+            self.questionContainer.push(question);
+            var update = NavigationAddFactory.create(self.questionContainer);
+            self.navigationManager.updateNavigation(update);
         }
 
-        function removeQuestion(question) {
-            delete self.questionContainer[question.templateID];
-            self.removeNavigation(question.templateID);
+        function removeQuestion(templateID) {
+            var questionToRemove = self.questionContainer.filter(function(question) {
+                return question.templateID === templateID;
+            });
+
+            var indexToRemove = self.questionContainer.indexOf(questionToRemove[0]);
+            if (indexToRemove > -1) self.questionContainer.splice(indexToRemove, 1);
+
+            var update = NavigationRemoveFactory.create(questionToRemove[0]);
+            self.navigationManager.updateNavigation(update);
         }
 
         function updateQuestion(question) {
@@ -75,61 +80,11 @@
         }
 
         function fetchQuestionById(templateID) {
-            return self.questionContainer[templateID];
-        }
-
-        function listNavigations() {
-            var clone = [];
-
-            self.navigationList.forEach(function(navigation) {
-                clone.push(navigation);
+            var fetch = self.questionContainer.filter(function(question) {
+                return question.templateID === templateID;
             });
 
-            return clone;
-        }
-
-        function listNavigation(criteria) {
-            return fetchByOrigin(criteria);
-        }
-
-        function listNavigationByIndex(index) {
-            return fetchByIndex(index);
-        }
-
-        function fetchNavigationByOrigin(origin) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.origin === origin;
-            });
-
-            return filteredNavigation[0];
-        }
-
-        function addNavigation(navigation) {
-            navigation.index = self.navigationList.length;
-            self.navigationList.push(navigation);
-        }
-
-        function removeNavigation(origin) {
-            var navigationToRemove = fetchByOrigin(origin);
-
-            var indexToRemove = self.navigationList.indexOf(navigationToRemove);
-            if (indexToRemove > -1) self.navigationList.splice(indexToRemove, 1);
-        }
-
-        function fetchByOrigin(origin) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.origin === origin;
-            });
-
-            return filteredNavigation[0];
-        }
-
-        function fetchByIndex(index) {
-            var filteredNavigation = self.navigationList.filter(function(navigation) {
-                return navigation.index === index;
-            });
-
-            return filteredNavigation[0];
+            return fetch[0];
         }
 
         function toJson() {
@@ -140,9 +95,9 @@
             json.oid = self.oid;
             json.identity = self.identity.toJson();
             json.metainfo = self.metainfo.toJson();
-            json.questionContainer = {};
+            json.questionContainer = [];
             for (var question in self.questionContainer) {
-                json.questionContainer[question] = self.questionContainer[question].toJson();
+                json.questionContainer.push(self.questionContainer[question].toJson());
             }
             json.navigationList = [];
             self.navigationList.forEach(function(navigation) {

@@ -31,6 +31,7 @@
         self.template = {};
         self.css = {};
         self.css.ngClass = {};
+        self.element = element;
 
         /* Instance definitions */
         self.parent = parentWidget;
@@ -47,16 +48,8 @@
         self.css.ngClass.open = false;
 
         /* Public methods */
-        self.routeName = routeName;
         self.routeDestination = routeDestination;
         self.createRoute = createRoute;
-
-        function routeName(value) {
-            if (value !== undefined)
-                self.routeData.name = value;
-
-            return self.routeData.name;
-        }
 
         function routeDestination(value) {
             if (value !== undefined)
@@ -66,9 +59,13 @@
         }
 
         function createRoute() {
+            self.routeData.name = self.parent.getRouteName();
             var route = AddRouteEventFactory.create().execute(self.routeData);
             var routeWidget = RouteEditorWidgetFactory.create(route, self.parent);
             self.parent.addRoute(routeWidget);
+
+            self.element.find('input').val('');
+            self.element.find('input').blur();
         }
     }
 

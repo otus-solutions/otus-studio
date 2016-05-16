@@ -3,17 +3,17 @@ describe('SurveyFactory', function() {
     var survey;
 
     beforeEach(function() {
-        module('otusjs');
-        module('utils');
+        module('studio');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('SurveyFactory', {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
-                'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_)
+                'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
+                'NavigationManagerFactory': mockNavigationManagerFactory(_$injector_)
             });
 
-            survey = factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+            survey = factory.create(jasmine.any(String), jasmine.any(String));
         });
     });
 
@@ -43,16 +43,24 @@ describe('SurveyFactory', function() {
             expect(survey.questionContainer instanceof Object).toEqual(true);
         });
 
-        it('should return a Survey with a navigation list', function() {
-            expect(Array.isArray(survey.navigationList)).toEqual(true);
+        it('should return a Survey with a navigation manager', function() {
+            expect(survey.navigationManager).toBeDefined();
         });
 
         it('should call SurveyUUIDGenerator.generateSurveyUUID()', function() {
             spyOn(Mock.SurveyUUIDGenerator, 'generateSurveyUUID');
 
-            factory.create(jasmine.any(String), jasmine.any(String), jasmine.any(String));
+            factory.create(jasmine.any(String), jasmine.any(String));
 
             expect(Mock.SurveyUUIDGenerator.generateSurveyUUID).toHaveBeenCalled();
+        });
+
+        it('should call NavigationManagerFactory.create()', function() {
+            spyOn(Mock.NavigationManagerFactory, 'create');
+
+            factory.create(jasmine.any(String), jasmine.any(String));
+
+            expect(Mock.NavigationManagerFactory.create).toHaveBeenCalled();
         });
 
     });
@@ -68,6 +76,11 @@ describe('SurveyFactory', function() {
     function mockSurveyUUIDGenerator($injector) {
         Mock.SurveyUUIDGenerator = $injector.get('SurveyUUIDGenerator');
         return Mock.SurveyUUIDGenerator;
+    }
+
+    function mockNavigationManagerFactory($injector) {
+        Mock.NavigationManagerFactory = $injector.get('NavigationManagerFactory');
+        return Mock.NavigationManagerFactory;
     }
 
 });

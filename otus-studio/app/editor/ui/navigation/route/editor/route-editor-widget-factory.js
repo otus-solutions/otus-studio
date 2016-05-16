@@ -35,7 +35,7 @@
         /* Template definitions */
 
         /* CSS definitions */
-        self.css.ngClass.open = false;
+        self.css.ngClass.isSimpleRoute = route.isSimple || true;
 
         /* Instance definitions */
         self.parent = parentWidget;

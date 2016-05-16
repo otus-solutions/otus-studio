@@ -17,15 +17,16 @@
         return self;
     }
 
-    function Navigation(navigationOrigin) {
+    function Navigation(origin) {
         var self = this;
 
+        /* Object properties */
         self.extents = 'StudioObject';
         self.objectType = 'Navigation';
-        self.index = null;
-        self.origin = navigationOrigin;
+        self.origin = origin;
         self.routes = [];
 
+        /* Public methods */
         self.listRoutes = listRoutes;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
@@ -69,7 +70,6 @@
 
             json.extents = self.extents;
             json.objectType = self.objectType;
-            json.index = self.index;
             json.origin = self.origin;
             json.routes = [];
             self.routes.forEach(function(route) {

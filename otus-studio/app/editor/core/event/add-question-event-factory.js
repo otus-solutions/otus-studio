@@ -32,6 +32,11 @@
 
         function execute(questionType) {
             var question = AddQuestionService.execute(questionType);
+
+            // if (WorkspaceService.getSurvey().questionsCount() > 1) {
+            //     NavigationManagerService.createNavigation(question);
+            // }
+
             SheetContentService.loadQuestion(question);
 
             WorkspaceService.workspace.currentQuestion = question;

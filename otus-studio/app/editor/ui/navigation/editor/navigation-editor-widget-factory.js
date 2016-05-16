@@ -20,6 +20,7 @@
 
     function NavigationWidget(templateData, parentWidget, navigation) {
         var self = this;
+        var ROUTE_NAME_PREFIX = 'Rota ';
 
         self.name = 'Navigation';
         self.parentWidget = parentWidget;
@@ -33,6 +34,7 @@
 
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
+        self.getRouteName = getRouteName;
 
         function addRoute(route) {
             self.routes.push(route);
@@ -46,6 +48,10 @@
             var indexToRemove = self.routes.indexOf(routeToRemove[0]);
             if (indexToRemove > -1) self.routes.splice(indexToRemove, 1);
             return routeToRemove[0];
+        }
+
+        function getRouteName() {
+            return ROUTE_NAME_PREFIX + (self.routes.length + 1);
         }
     }
 
