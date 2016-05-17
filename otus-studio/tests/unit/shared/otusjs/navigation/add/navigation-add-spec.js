@@ -38,7 +38,7 @@ describe('NavigationAdd', function() {
 
             updateObject.execute();
 
-            expect(Mock.NavigationContainerService.createNavigationTo).toHaveBeenCalledWith(Mock.questionOne.templateID);
+            expect(Mock.NavigationContainerService.createNavigationTo).toHaveBeenCalledWith(Mock.questionOne.templateID, Mock.questionTwo.templateID);
         });
 
         it('should not create a navigation to the last question', function() {

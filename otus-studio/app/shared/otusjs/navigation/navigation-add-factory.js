@@ -30,9 +30,12 @@
 
         function execute() {
             var questionCount = self.questionContainer.length;
+
             if (questionCount > 1) {
                 var question = self.questionContainer[questionCount - 2];
-                NavigationContainerService.createNavigationTo(question.templateID);
+                var questionDestination = self.questionContainer[questionCount - 1];
+
+                NavigationContainerService.createNavigationTo(question.templateID, questionDestination.templateID);
             }
         }
     }

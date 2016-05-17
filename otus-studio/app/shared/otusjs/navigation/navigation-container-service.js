@@ -51,8 +51,8 @@
             return (getNavigationByOrigin(origin)) ? true : false;
         }
 
-        function createNavigationTo(questionID) {
-            navigationList.push(NavigationFactory.create(questionID));
+        function createNavigationTo(origin, destination) {
+            navigationList.push(NavigationFactory.create(origin, destination));
         }
 
         function removeNavigationOf(questionID) {

@@ -5,13 +5,22 @@
         .module('otusjs.model')
         .factory('NavigationFactory', NavigationFactory);
 
-    function NavigationFactory() {
+    NavigationFactory.$inject = ['RouteFactory'];
+
+    function NavigationFactory(RouteFactory) {
         var self = this;
 
         self.create = create;
 
-        function create(origin) {
-            return new Navigation(origin);
+        function create(origin, destination) {
+            var navigation = new Navigation(origin);
+
+            if (destination) {
+                var defaultRoute = RouteFactory.create('1', navigation.origin, destination);
+                navigation.addRoute(defaultRoute);
+            }
+
+            return navigation;
         }
 
         return self;

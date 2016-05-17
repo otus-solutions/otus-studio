@@ -46,9 +46,9 @@ describe('NavigationContainerService', function() {
         });
 
         it('should return the number of added navigations', function() {
-            service.createNavigationTo(Mock.questionOne.templateID);
-            service.createNavigationTo(Mock.questionTwo.templateID);
-            service.createNavigationTo(Mock.questionThree.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
+            service.createNavigationTo(Mock.questionThree.templateID, Mock.questionFour.templateID);
             service.createNavigationTo(Mock.questionFour.templateID);
             expect(service.getNavigationListSize()).toBe(4);
 
@@ -61,8 +61,8 @@ describe('NavigationContainerService', function() {
     describe('getNavigationByOrigin method', function() {
 
         beforeEach(function() {
-            service.createNavigationTo(Mock.questionOne.templateID);
-            service.createNavigationTo(Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
         });
 
         it('should return the navigation when exists', function() {
@@ -100,11 +100,11 @@ describe('NavigationContainerService', function() {
         beforeEach(function() {
             spyOn(Mock.NavigationFactory, 'create').and.callThrough();
 
-            service.createNavigationTo(Mock.questionOne.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
         });
 
         it('should call NavigationFactory.create', function() {
-            expect(Mock.NavigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID);
+            expect(Mock.NavigationFactory.create).toHaveBeenCalledWith(Mock.questionOne.templateID, Mock.questionTwo.templateID);
         });
 
         it('should add a new Navigation in the navigationList', function() {
@@ -116,8 +116,8 @@ describe('NavigationContainerService', function() {
     describe('removeNavigationOf method', function() {
 
         beforeEach(function() {
-            service.createNavigationTo(Mock.questionOne.templateID);
-            service.createNavigationTo(Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
         });
 
         it('should remove a navigation of navigationList', function() {
@@ -138,8 +138,8 @@ describe('NavigationContainerService', function() {
     describe('removeNavigationByIndex method', function() {
 
         beforeEach(function() {
-            service.createNavigationTo(Mock.questionOne.templateID);
-            service.createNavigationTo(Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
         });
 
         it('should remove a navigation of index', function() {
@@ -155,8 +155,8 @@ describe('NavigationContainerService', function() {
     describe('removeCurrentLastNavigation method', function() {
 
         beforeEach(function() {
-            service.createNavigationTo(Mock.questionOne.templateID);
-            service.createNavigationTo(Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionOne.templateID, Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID, Mock.questionThree.templateID);
         });
 
         it('should remove the last navigation present in navigation list', function() {
