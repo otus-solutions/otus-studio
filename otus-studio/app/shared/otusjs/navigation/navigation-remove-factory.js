@@ -13,26 +13,25 @@
         /* Public interdace */
         self.create = create;
 
-        function create(question) {
-            return new NavigationRemove(question, NavigationContainerService);
+        function create(templateID) {
+            return new NavigationRemove(templateID, NavigationContainerService);
         }
 
         return self;
     }
 
-    function NavigationRemove(question, NavigationContainerService) {
+    function NavigationRemove(templateID, NavigationContainerService) {
         var self = this;
-
-        self.question = question;
 
         /* Public methods */
         self.execute = execute;
 
         function execute() {
-            var removedIndex = NavigationContainerService.removeNavigationOf(question.templateID);
-
-            if (removedIndex === -1)
-                NavigationContainerService.removeLastNavigation();
+            if (NavigationContainerService.existsNavigationTo(templateID)) {
+                NavigationContainerService.removeNavigationOf(templateID);
+            } else {
+                NavigationContainerService.removeCurrentLastNavigation();
+            }
         }
     }
 

@@ -9,10 +9,10 @@
         'SurveyIdentityFactory',
         'SurveyMetaInfoFactory',
         'SurveyUUIDGenerator',
-        'NavigationManagerFactory'
+        'NavigationManagerService'
     ];
 
-    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerFactory) {
+    function SurveyFactory(SurveyIdentityFactory, SurveyMetaInfoFactory, SurveyUUIDGenerator, NavigationManagerService) {
         var self = this;
 
         /* Public interdace */
@@ -22,14 +22,13 @@
             var metainfo = SurveyMetaInfoFactory.create();
             var identity = SurveyIdentityFactory.create(name, acronym);
 
-            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerFactory);
+            return new Survey(metainfo, identity, SurveyUUIDGenerator.generateSurveyUUID(), NavigationManagerService);
         }
 
         return self;
     }
 
-    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerFactory, NavigationAddFactory, NavigationRemoveFactory) {
-
+    function Survey(surveyMetainfo, surveyIdentity, uuid, NavigationManagerService) {
         var self = this;
 
         self.extents = 'StudioObject';
@@ -38,8 +37,10 @@
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
         self.questionContainer = [];
-        self.navigationManager = NavigationManagerFactory.create(self);
 
+        NavigationManagerService.init();
+
+        /* Public methods */
         self.addQuestion = addQuestion;
         self.questionsCount = questionsCount;
         self.removeQuestion = removeQuestion;
@@ -57,8 +58,7 @@
 
         function addQuestion(question) {
             self.questionContainer.push(question);
-            var update = NavigationAddFactory.create(self.questionContainer);
-            self.navigationManager.updateNavigation(update);
+            NavigationManagerService.addNavigation(self.questionContainer);
         }
 
         function removeQuestion(templateID) {
@@ -69,8 +69,7 @@
             var indexToRemove = self.questionContainer.indexOf(questionToRemove[0]);
             if (indexToRemove > -1) self.questionContainer.splice(indexToRemove, 1);
 
-            var update = NavigationRemoveFactory.create(questionToRemove[0]);
-            self.navigationManager.updateNavigation(update);
+            NavigationManagerService.removeNavigation(questionToRemove[0].templateID);
         }
 
         function updateQuestion(question) {
@@ -98,7 +97,7 @@
                 json.questionContainer.push(self.questionContainer[question].toJson());
             }
             json.navigationList = [];
-            self.navigationManager.getNavigationList().forEach(function(navigation) {
+            NavigationManagerService.getNavigationList().forEach(function(navigation) {
                 json.navigationList.push(navigation.toJson());
             });
 

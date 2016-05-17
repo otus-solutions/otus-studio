@@ -17,9 +17,7 @@ describe('Survey', function() {
                 'SurveyIdentityFactory': mockSurveyIdentityFactory(_$injector_),
                 'SurveyMetaInfoFactory': mockSurveyMetaInfoFactory(_$injector_),
                 'SurveyUUIDGenerator': mockSurveyUUIDGenerator(_$injector_),
-                'NavigationManagerFactory': mockNavigationManagerFactory(_$injector_),
-                'NavigationAddFactory': mockNavigationAddFactory(_$injector_),
-                'NavigationRemoveFactory': mockNavigationRemoveFactory(_$injector_)
+                'NavigationManagerService': mockNavigationManagerService(_$injector_)
             });
 
             mockJson();
@@ -38,16 +36,10 @@ describe('Survey', function() {
                 expect(survey.questionsCount()).toBeGreaterThan(0);
             });
 
-            it('should call NavigationAddFactory.create with question container', function() {
+            it('should call NavigationManagerService.addNavigation with new question ID', function() {
                 survey.addQuestion(Mock.question);
 
-                expect(Mock.NavigationAddFactory.create).toHaveBeenCalledWith(survey.questionContainer);
-            });
-
-            it('should call NavigationManager.updateNavigation with new question ID', function() {
-                survey.addQuestion(Mock.question);
-
-                expect(Mock.NavigationManager.updateNavigation).toHaveBeenCalled();
+                expect(Mock.NavigationManagerService.addNavigation).toHaveBeenCalled();
             });
 
         });
@@ -56,23 +48,17 @@ describe('Survey', function() {
 
             beforeEach(function() {
                 survey.addQuestion(Mock.question);
-                survey.removeQuestion(Mock.question.templateID);
             });
 
             it('should remove a question on survey', function() {
+                survey.removeQuestion(Mock.question.templateID);
                 expect(survey.questionsCount()).toBe(0);
             });
 
-            it('should call NavigationRemoveFactory.create with question', function() {
-                survey.removeQuestion(Mock.question);
+            it('should call NavigationManagerService.removeNavigation with new question ID', function() {
+                survey.removeQuestion(Mock.question.templateID);
 
-                expect(Mock.NavigationRemoveFactory.create).toHaveBeenCalledWith(Mock.question);
-            });
-
-            it('should call NavigationManager.updateNavigation with new question ID', function() {
-                survey.removeQuestion(Mock.question);
-
-                expect(Mock.NavigationManager.updateNavigation).toHaveBeenCalled();
+                expect(Mock.NavigationManagerService.removeNavigation).toHaveBeenCalledWith(Mock.question.templateID);
             });
 
         });
@@ -129,14 +115,13 @@ describe('Survey', function() {
         return Mock.NavigationRemoveFactory;
     }
 
-    function mockNavigationManagerFactory($injector) {
-        Mock.NavigationManagerFactory = $injector.get('NavigationManagerFactory');
-        Mock.NavigationManager = Mock.NavigationManagerFactory.create(survey);
+    function mockNavigationManagerService($injector) {
+        Mock.NavigationManagerService = $injector.get('NavigationManagerService');
 
-        spyOn(Mock.NavigationManagerFactory, 'create').and.returnValue(Mock.NavigationManager);
-        spyOn(Mock.NavigationManager, 'updateNavigation');
+        spyOn(Mock.NavigationManagerService, 'addNavigation');
+        spyOn(Mock.NavigationManagerService, 'removeNavigation');
 
-        return Mock.NavigationManagerFactory;
+        return Mock.NavigationManagerService;
     }
 
     function mockIdentityData() {

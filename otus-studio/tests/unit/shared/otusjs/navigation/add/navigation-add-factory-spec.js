@@ -4,9 +4,10 @@ describe('NavigationAddFactory', function() {
 
     beforeEach(function() {
         module('otusjs');
+        module('utils');
 
         inject(function(_$injector_) {
-            Mock.survey = _$injector_.get('SurveyFactory').create('Survey Test', 'ST');
+             mockSurvey(_$injector_);
 
             factory = _$injector_.get('NavigationAddFactory');
         });

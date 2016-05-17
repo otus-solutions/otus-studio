@@ -11,13 +11,14 @@ describe('NavigationRemoveFactory', function() {
             factory = _$injector_.get('NavigationRemoveFactory');
         });
 
-        updateObject = factory.create(Mock.question);
+        updateObject = factory.create(Mock.question.templateID);
     });
 
     describe('create method', function() {
 
-        it('should return an object with question property defined', function() {
-            expect(updateObject.question).toBeDefined();
+        it('should return an object with execute method defined', function() {
+            expect(updateObject.execute).toBeDefined();
+            expect(updateObject.execute).toEqual(jasmine.any(Function));
         });
 
     });

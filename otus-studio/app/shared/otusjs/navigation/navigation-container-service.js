@@ -12,6 +12,8 @@
         var navigation = []; // TODO: To implement Immutable collection
 
         /* Public methods */
+        self.init = init;
+        self.manageNavigation = manageNavigation;
         self.getNavigationByOrigin = getNavigationByOrigin;
         self.getNavigationList = getNavigationList;
         self.getNavigationListSize = getNavigationListSize;
@@ -19,7 +21,11 @@
         self.createNavigationTo = createNavigationTo;
         self.removeNavigationOf = removeNavigationOf;
         self.removeNavigationByIndex = removeNavigationByIndex;
-        self.removeLastNavigation = removeLastNavigation;
+        self.removeCurrentLastNavigation = removeCurrentLastNavigation;
+
+        function init() {
+            navigation = [];
+        }
 
         function manageNavigation(navigationToManage) {
             navigation = navigationToManage;
@@ -56,15 +62,13 @@
 
             var indexToRemove = navigation.indexOf(navigationToRemove[0]);
             if (indexToRemove > -1) navigation.splice(indexToRemove, 1);
-
-            return indexToRemove;
         }
 
         function removeNavigationByIndex(indexToRemove) {
             navigation.splice(indexToRemove, 1);
         }
 
-        function removeLastNavigation(indexToRemove) {
+        function removeCurrentLastNavigation(indexToRemove) {
             navigation.splice(-1, 1);
         }
 
