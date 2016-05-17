@@ -43,6 +43,38 @@ describe('NavigationManagerService', function() {
             expect(Mock.NavigationContainerService.getNavigationList).toHaveBeenCalled();
         });
 
+        it('should return an array', function() {
+            var returnedValue = service.getNavigationList();
+
+            expect(returnedValue).toEqual(jasmine.any(Array));
+        });
+
+    });
+
+    describe('getNavigationByOrigin method', function() {
+
+        it('should be defined in service', function() {
+            expect(service.getNavigationByOrigin).toBeDefined();
+        });
+
+        it('should call NavigationContainerService.getNavigationByOrigin method with origin', function() {
+            service.getNavigationByOrigin(Mock.questionOne.templateID);
+
+            expect(Mock.NavigationContainerService.getNavigationByOrigin).toHaveBeenCalledWith(Mock.questionOne.templateID);
+        });
+
+        xit('should return a navigation when exists', function() {
+            var returnedValue = service.getNavigationByOrigin(Mock.questionOne.templateID);
+
+            expect(returnedValue).toBeDefined();
+        });
+
+        it('should return undefined when navigation not exists', function() {
+            var returnedValue = service.getNavigationByOrigin('Q5');
+
+            expect(returnedValue).toBeUndefined();
+        });
+
     });
 
     describe('addNavigation method', function() {
@@ -77,10 +109,18 @@ describe('NavigationManagerService', function() {
 
     });
 
+    function mockQuestions($injector) {
+        Mock.questionOne = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
+        Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
+        Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
+    }
+
     function mockNavigationContainerService($injector) {
         Mock.NavigationContainerService = $injector.get('NavigationContainerService');
+        Mock.NavigationContainerService.manageNavigation([Mock.questionOne, Mock.questionTwo, Mock.questionThree]);
 
-        spyOn(Mock.NavigationContainerService, 'getNavigationList');
+        spyOn(Mock.NavigationContainerService, 'getNavigationList').and.callThrough();
+        spyOn(Mock.NavigationContainerService, 'getNavigationByOrigin').and.callThrough();
         spyOn(Mock.NavigationContainerService, 'init');
 
         return Mock.NavigationContainerService;
@@ -104,13 +144,6 @@ describe('NavigationManagerService', function() {
         spyOn(Mock.NavigationRemove, 'execute');
 
         return Mock.NavigationRemoveFactory;
-    }
-
-    function mockQuestions($injector) {
-        Mock.questionOne = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
-        Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
-        Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
-        Mock.questionFour = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q4');
     }
 
 });

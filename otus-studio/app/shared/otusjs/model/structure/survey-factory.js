@@ -37,8 +37,9 @@
         self.identity = surveyIdentity;
         self.metainfo = surveyMetainfo;
         self.questionContainer = [];
+        self.NavigationManager = NavigationManagerService;
 
-        NavigationManagerService.init();
+        self.NavigationManager.init();
 
         /* Public methods */
         self.addQuestion = addQuestion;
@@ -58,7 +59,7 @@
 
         function addQuestion(question) {
             self.questionContainer.push(question);
-            NavigationManagerService.addNavigation(self.questionContainer);
+            self.NavigationManager.addNavigation(self.questionContainer);
         }
 
         function removeQuestion(templateID) {
@@ -69,7 +70,7 @@
             var indexToRemove = self.questionContainer.indexOf(questionToRemove[0]);
             if (indexToRemove > -1) self.questionContainer.splice(indexToRemove, 1);
 
-            NavigationManagerService.removeNavigation(questionToRemove[0].templateID);
+            self.NavigationManager.removeNavigation(questionToRemove[0].templateID);
         }
 
         function updateQuestion(question) {

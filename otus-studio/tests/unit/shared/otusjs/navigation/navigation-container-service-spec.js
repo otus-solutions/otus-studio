@@ -21,8 +21,8 @@ describe('NavigationContainerService', function() {
             service.createNavigationTo(Mock.questionTwo.templateID);
             service.createNavigationTo(Mock.questionThree.templateID);
             service.createNavigationTo(Mock.questionFour.templateID);
-            expect(service.getNavigationListSize()).toBe(4);
 
+            expect(service.getNavigationListSize()).toBe(4);
             service.init();
             expect(service.getNavigationListSize()).toBe(0);
         });
@@ -69,6 +69,12 @@ describe('NavigationContainerService', function() {
             var returnedNavigation = service.getNavigationByOrigin(Mock.questionOne.templateID);
 
             expect(returnedNavigation.origin).toEqual(Mock.questionOne.templateID);
+        });
+
+        it('should return undefined when navigation not exists', function() {
+            var returnedNavigation = service.getNavigationByOrigin('Q4');
+
+            expect(returnedNavigation).toBeUndefined();
         });
 
     });

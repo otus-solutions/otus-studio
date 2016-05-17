@@ -17,15 +17,20 @@
         /* Public interface */
         self.init = init;
         self.getNavigationList = getNavigationList;
+        self.getNavigationByOrigin = getNavigationByOrigin;
         self.addNavigation = addNavigation;
         self.removeNavigation = removeNavigation;
 
         function init() {
-            NavigationContainerService.getNavigationList();
+            NavigationContainerService.init();
         }
 
         function getNavigationList() {
-            NavigationContainerService.getNavigationList();
+            return NavigationContainerService.getNavigationList();
+        }
+
+        function getNavigationByOrigin(origin) {
+            return NavigationContainerService.getNavigationByOrigin(origin);
         }
 
         function addNavigation(questionContainer) {
