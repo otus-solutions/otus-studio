@@ -4,47 +4,55 @@ describe('NavigationAdd', function() {
 
     beforeEach(function() {
         module('otusjs');
+        module('utils');
 
         inject(function(_$injector_) {
-            // mockSurvey(_$injector_);
-            // mockQuestions(_$injector_);
+            mockQuestionContainer(_$injector_);
 
             factory = _$injector_.get('NavigationAddFactory', {
                 NavigationContainerService: mockNavigationContainerService(_$injector_)
             });
-
-            updateObject = factory.create([]);
         });
     });
 
     describe('execute method', function() {
 
-        fit('should not create a navigation to first question', function() {
+        it('should not create a navigation when survey has not question', function() {
+            updateObject = factory.create(Mock.questionContainerWithOneQuestion);
+
             updateObject.execute();
 
             expect(Mock.NavigationContainerService.createNavigationTo).not.toHaveBeenCalled();
         });
 
-        fit('should create a navigation when survey has at least one question', function() {
+        it('should create a navigation when survey has at least one question', function() {
+            updateObject = factory.create(Mock.questionContainerWithTwoQuestions);
+
             updateObject.execute();
 
             expect(Mock.NavigationContainerService.createNavigationTo).toHaveBeenCalled();
         });
 
+        it('should create a navigation to last added question', function() {
+            updateObject = factory.create(Mock.questionContainerWithTwoQuestions);
+
+            updateObject.execute();
+
+            expect(Mock.NavigationContainerService.createNavigationTo).toHaveBeenCalledWith(Mock.questionOne.templateID);
+        });
+
         it('should not create a navigation to the last question', function() {
-            expect(Mock.NavigationContainerService.existsNavigationTo(Mock.questionThree.templateID)).toBe(false);
+            expect(Mock.NavigationContainerService.existsNavigationTo(Mock.questionTwo.templateID)).toBe(false);
         });
 
     });
 
-    function mockSurvey($injector) {
-        Mock.survey = $injector.get('SurveyFactory').create('Survey Test', 'ST');
-    }
-
-    function mockQuestions($injector) {
+    function mockQuestionContainer($injector) {
         Mock.questionOne = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
         Mock.questionTwo = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q2');
-        Mock.questionThree = $injector.get('QuestionFactory').create('CalendarQuestion', 'Q3');
+
+        Mock.questionContainerWithOneQuestion = [Mock.questionOne];
+        Mock.questionContainerWithTwoQuestions = [Mock.questionOne, Mock.questionTwo];
     }
 
     function mockNavigationContainerService($injector) {

@@ -14,6 +14,21 @@ describe('NavigationContainerService', function() {
         });
     });
 
+    describe('init method', function() {
+
+        it('should clear the array of navigations', function() {
+            service.createNavigationTo(Mock.questionOne.templateID);
+            service.createNavigationTo(Mock.questionTwo.templateID);
+            service.createNavigationTo(Mock.questionThree.templateID);
+            service.createNavigationTo(Mock.questionFour.templateID);
+            expect(service.getNavigationListSize()).toBe(4);
+
+            service.init();
+            expect(service.getNavigationListSize()).toBe(0);
+        });
+
+    });
+
     describe('getNavigationList method', function() {
 
         it('should return an array', function() {
@@ -112,12 +127,6 @@ describe('NavigationContainerService', function() {
             expect(service.existsNavigationTo(Mock.questionTwo.templateID)).toBe(true);
         });
 
-        it('should return the index of removed navigation', function() {
-            var removedIndex = service.removeNavigationOf(Mock.questionOne.templateID);
-
-            expect(removedIndex).toBeDefined();
-        });
-
     });
 
     describe('removeNavigationByIndex method', function() {
@@ -137,7 +146,7 @@ describe('NavigationContainerService', function() {
 
     });
 
-    describe('removeLastNavigation method', function() {
+    describe('removeCurrentLastNavigation method', function() {
 
         beforeEach(function() {
             service.createNavigationTo(Mock.questionOne.templateID);
@@ -145,7 +154,7 @@ describe('NavigationContainerService', function() {
         });
 
         it('should remove the last navigation present in navigation list', function() {
-            service.removeLastNavigation();
+            service.removeCurrentLastNavigation();
 
             expect(service.getNavigationListSize()).toBe(1);
             expect(service.existsNavigationTo(Mock.questionOne.templateID)).toBe(true);

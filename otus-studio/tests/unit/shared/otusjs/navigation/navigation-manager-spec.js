@@ -7,14 +7,42 @@ describe('NavigationManagerService', function() {
         module('otusjs');
 
         inject(function(_$injector_) {
-            // mockSurvey(_$injector_);
             mockQuestions(_$injector_);
 
             service = _$injector_.get('NavigationManagerService', {
+                NavigationContainerService: mockNavigationContainerService(_$injector_),
                 NavigationAddFactory: mockNavigationAddFactory(_$injector_),
-                NavigationRemoveFactory: mockNavigationRemoevFactory(_$injector_)
+                NavigationRemoveFactory: mockNavigationRemoveFactory(_$injector_)
             });
         });
+    });
+
+    describe('init method', function() {
+
+        it('should be defined in service', function() {
+            expect(service.init).toBeDefined();
+        });
+
+        it('should call NavigationContainerService.init method', function() {
+            service.init();
+
+            expect(Mock.NavigationContainerService.init).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('getNavigationList method', function() {
+
+        it('should be defined in service', function() {
+            expect(service.getNavigationList).toBeDefined();
+        });
+
+        it('should call NavigationContainerService.getNavigationList method', function() {
+            service.getNavigationList();
+
+            expect(Mock.NavigationContainerService.getNavigationList).toHaveBeenCalled();
+        });
+
     });
 
     describe('addNavigation method', function() {
@@ -49,6 +77,15 @@ describe('NavigationManagerService', function() {
 
     });
 
+    function mockNavigationContainerService($injector) {
+        Mock.NavigationContainerService = $injector.get('NavigationContainerService');
+
+        spyOn(Mock.NavigationContainerService, 'getNavigationList');
+        spyOn(Mock.NavigationContainerService, 'init');
+
+        return Mock.NavigationContainerService;
+    }
+
     function mockNavigationAddFactory($injector) {
         Mock.NavigationAddFactory = $injector.get('NavigationAddFactory');
         Mock.NavigationAdd = $injector.get('NavigationAddFactory').create([]);
@@ -59,7 +96,7 @@ describe('NavigationManagerService', function() {
         return Mock.NavigationAddFactory;
     }
 
-    function mockNavigationRemoevFactory($injector) {
+    function mockNavigationRemoveFactory($injector) {
         Mock.NavigationRemoveFactory = $injector.get('NavigationRemoveFactory');
         Mock.NavigationRemove = $injector.get('NavigationRemoveFactory').create([]);
 
@@ -67,10 +104,6 @@ describe('NavigationManagerService', function() {
         spyOn(Mock.NavigationRemove, 'execute');
 
         return Mock.NavigationRemoveFactory;
-    }
-
-    function mockSurvey($injector) {
-        Mock.survey = $injector.get('SurveyFactory').create('Survey Test', 'ST');
     }
 
     function mockQuestions($injector) {
