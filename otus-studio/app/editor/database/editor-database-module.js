@@ -4,7 +4,7 @@
     angular
         .module('editor.database', [])
         .config(function($indexedDBProvider) {
-            window.indexedDB.deleteDatabase('otus-studio');
+            //window.indexedDB.deleteDatabase('otus-studio');
             $indexedDBProvider
                 .connection('otus-studio')
                 .upgradeDatabase(1, function(event, db, tx) {
