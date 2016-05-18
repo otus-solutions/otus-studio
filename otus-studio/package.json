@@ -16,7 +16,8 @@
         "url": "https://github.com/ccem-dev/studio"
     },
     "scripts": {
-        "test": "karma start karma.conf.js",
+        "test": "karma start karma.conf.js --single-run",
+        "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
         "gulp": "gulp",
         "start": "npm run gulp browser-sync",
         "karma": "karma",
