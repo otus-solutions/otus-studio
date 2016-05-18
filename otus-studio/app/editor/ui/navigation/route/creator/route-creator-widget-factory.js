@@ -51,6 +51,8 @@
         self.routeDestination = routeDestination;
         self.createRoute = createRoute;
 
+        self.parent.routeCreatorWidget = self;
+
         function routeDestination(value) {
             if (value !== undefined)
                 self.routeData.destination = value;
@@ -61,8 +63,7 @@
         function createRoute() {
             self.routeData.name = self.parent.getRouteName();
             var route = AddRouteEventFactory.create().execute(self.routeData);
-            var routeWidget = RouteEditorWidgetFactory.create(route, self.parent);
-            self.parent.addRoute(routeWidget);
+            self.parent.addRoute(route);
 
             self.element.find('input').val('');
             self.element.find('input').blur();
