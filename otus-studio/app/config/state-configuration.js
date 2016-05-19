@@ -63,9 +63,6 @@
                         templateUrl: 'app/dashboard/template/dashboard-content-template.html',
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-info@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-info-section.html'
-                    },
                     'section-view@survey-forms': {
                         templateUrl: 'app/dashboard/survey-form/survey-form-view-section.html'
                     },

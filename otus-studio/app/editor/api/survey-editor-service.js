@@ -15,7 +15,7 @@
 
         function startEditor(initializationData) {
             WorkspaceService.initializeWorkspace({
-                owner: 'user'
+                owner: 'fagner'
             });
             WorkspaceService.startNewWork(initializationData);
         }

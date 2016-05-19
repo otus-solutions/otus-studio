@@ -1,0 +1,35 @@
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools" flex>
+        <h2>
+            <span>Lista de Templates</span>
+        </h2>
+    </div>
+    <div ng-show="controller.SurveyTemplateManager.hasSelectedTemplate()">
+        <md-button aria-label="abrir">
+            <md-icon md-svg-icon="table-edit" aria-label="abrir"></md-icon>
+        </md-button>
+        <md-menu md-position-mode="target-right target" md-offset="0 52">
+            <md-button aria-label="opções" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon md-menu-origin md-svg-icon="dots-vertical"></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button aria-label="excluir" ng-click="controller.SurveyTemplateManager.removeSelectedTemplate()">
+                        <div layout="row">
+                            <p flex>Excluir</p>
+                            <md-icon md-svg-icon="delete" aria-label="excluir" style="margin: auto 3px auto 0;"></md-icon>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button aria-label="exportar">
+                        <div layout="row">
+                            <p flex>Exportar</p>
+                            <md-icon md-svg-icon="file-export" aria-label="export" style="margin: auto 3px auto 0;"></md-icon>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>

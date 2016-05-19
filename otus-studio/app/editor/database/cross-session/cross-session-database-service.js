@@ -6,11 +6,12 @@
         .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
 
     CrossSessionDatabaseService.$inject = [
+        '$q',
         '$indexedDB',
         'InsertHelperService'
     ];
 
-    function CrossSessionDatabaseService($indexedDB, InsertHelperService) {
+    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
         var self = this;
 
         /* Public interface */
@@ -31,27 +32,50 @@
         function getAllTemplatesRevision() {
             $indexedDB.openStore('survey_template', function(store) {
                 store.getAll().then(function(templates) {
-                    //console.log(templates);
+                    console.log(templates);
                 });
             });
         }
 
         function getAllTemplatesRevisionByAuthor() {
+            var defer = $q.defer();
             $indexedDB.openStore('survey_template', function(store) {
+
                 var criteria = store.query();
-                criteria = criteria.$eq('user');
+                criteria = criteria.$eq('fagner');
                 criteria = criteria.$index('contributor_idx');
 
-                store.eachWhere(criteria).then(function (e) {
-                    console.log(e);
+                store.eachWhere(criteria).then(function(e) {
+
+                    defer.resolve(e);
+                    //console.log(e);
+                    //console.log(e[0].template.identity.acronym);
                     //https://github.com/bramski/angular-indexedDB
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         *
+         * Returns a User + UUID Template + Repository in Base64
+         *
+         */
+        function getAllKeys() {
+            $indexedDB.openStore('survey_template', function(store) {
+                store.getAllKeys().then(function(e) {
+                    console.log(e);
                 });
             });
         }
 
         init();
+
         function init() {
-            self.getAllTemplatesRevisionByAuthor();
+            var promise = getAllTemplatesRevisionByAuthor();
+            promise.then(function(value){
+                console.log(value);
+            });
         }
 
 
