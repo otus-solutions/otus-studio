@@ -40,8 +40,7 @@
     gulp.task('compress', function() {
         gulp.src('app/**/*.js')
             .pipe(concat('otus-studio.js'))
-            .pipe(uglify())
-            .pipe(minify())
+            .pipe(minify({'mangle' : false}))
             .pipe(gulp.dest('dist'));
     });
 

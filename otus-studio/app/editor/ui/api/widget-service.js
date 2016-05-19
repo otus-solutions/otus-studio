@@ -15,7 +15,7 @@
         'NavigationWidgetFactory',
         'RouteEditorWidgetFactory',
         'RouteCreatorWidgetFactory',
-	'PageItemWidgetFactory',
+        'PageItemWidgetFactory',
         'PageItemEditorWidgetFactory'
     ];
 

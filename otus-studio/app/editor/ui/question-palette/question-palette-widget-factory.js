@@ -42,6 +42,7 @@
         self.addEmailQuestion = addEmailQuestion;
         self.addTextItem = addTextItem;
         self.addImageItem = addImageItem;
+        self.addPhoneQuestion = addPhoneQuestion;
 
         /* Actions */
         function addCalendarQuestion() {
@@ -78,6 +79,10 @@
 
         function addImageItem() {
             AddPageItemEventFactory.create().execute('ImageItem');
+        }
+
+        function addPhoneQuestion() {
+            AddQuestionEventFactory.create().execute('PhoneQuestion');
         }
     }
 

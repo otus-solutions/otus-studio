@@ -43,8 +43,8 @@
         }
 
         function removeRoute(name) {
-            var routeToRemove = self.routeWidgets.filter(function(routeEditor) {
-                return routeEditor.name() === name;
+            var routeToRemove = self.routeWidgets.filter(function(routeEditorWidget) {
+                return routeEditorWidget.name() === name;
             });
 
             var indexToRemove = self.routeWidgets.indexOf(routeToRemove[0]);

@@ -1,6 +1,6 @@
 {
     "name": "otus-studio",
-    "version": "1.19.37-SNAPSHOT",
+    "version": "1.19.38-SNAPSHOT",
     "description": "The tool to build survey forms to be used in Otus Studio.",
     "keywords": [
         "otus",
@@ -23,12 +23,15 @@
         "build": "gulp compress"
     },
     "dependencies": {
+        "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
+        "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
         "gulp-concat": "2.6.0",
         "gulp-minify": "0.0.11",
         "angular": "^1.4.7",
         "angular-animate": "^1.4.7",
         "angular-aria": "^1.4.7",
         "angular-immutable": "0.1.2",
+        "angular-input-masks": "^2.3.0",
         "angular-material-icons": "0.6.0",
         "angular-messages": "^1.5.0",
         "js-base64": "^2.1.9",
