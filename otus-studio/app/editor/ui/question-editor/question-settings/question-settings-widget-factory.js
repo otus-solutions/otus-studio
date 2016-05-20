@@ -21,24 +21,35 @@
     function QuestionSettingsWidget(scope, element) {
         var self = this;
 
-        /* Type definitions */
         self.className = 'QuestionSettingsWidget';
+
         self.ngClass = {};
-
-        /* Instance defintions */
-        self.scope = scope;
-        self.element = element;
-        self.uuid = scope.uuid;
-        self.parent = scope.$parent.$parent.$parent.widget;
-        self.question = self.parent.question;
-        self.listeners = {};
-
         /* Template definitions */
         self.ngClass.open = false;
         self.showNavigationEditor = false;
 
         /* Public methods */
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getQuestion = getQuestion;
         self.navigationButton = navigationButton;
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.$parent.$parent.widget;
+        }
+
+        function getQuestion() {
+            return getParent().getQuestion();
+        }
 
         function navigationButton() {
             self.ngClass.open = !self.ngClass.open;

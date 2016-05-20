@@ -6,10 +6,9 @@ describe('NavigationWidgetFactory', function() {
         module('studio');
 
         inject(function(_$injector_) {
-            mockQuestion(_$injector_);
-            mockNavigation(_$injector_);
+            mockElement();
             mockWidgetScope(_$injector_);
-            mockParentWidget(_$injector_);
+            mockNavigation(_$injector_);
             mockNavigationManagerService(_$injector_);
             mockRouteEditorWidgetFactory(_$injector_);
 
@@ -22,37 +21,46 @@ describe('NavigationWidgetFactory', function() {
         var widget;
 
         beforeEach(function() {
-            widget = factory.create(Mock.scope, Mock.parentWidget, Mock.NavigationManagerService, Mock.RouteEditorWidgetFactory);
+            widget = factory.create(Mock.scope, Mock.element, Mock.NavigationManagerService, Mock.RouteEditorWidgetFactory);
         });
 
-        describe('Property definition', function() {
+        describe('Type properties definition', function() {
 
             it('should create an object with className equal to NavigationWidget', function() {
-                expect(widget.className).toBe('NavigationWidget');
-            });
-
-            it('should create an object with parentWidget defined', function() {
-                expect(widget.parentWidget).toBeDefined();
-            });
-
-            it('should create an object with question defined', function() {
-                expect(widget.question).toBeDefined();
-            });
-
-            it('should create an object with navigation defined', function() {
-                expect(widget.navigation).toBeDefined();
-            });
-
-            it('should create an object with routeWidgets defined', function() {
-                expect(widget.routeWidgets).toBeDefined();
-            });
-
-            it('should create an object with routeCreatorWidget equal to null', function() {
-                expect(widget.routeCreatorWidget).toBe(null);
+                expect(widget.className).toBe('NavigationEditorWidget');
             });
 
             it('should create an object with css defined', function() {
                 expect(widget.css).toBeDefined();
+            });
+
+        });
+
+        describe('Interface definition', function() {
+
+            it('should create an object with getUUID method defined', function() {
+                expect(widget.getUUID()).toEqual(Mock.scope.uuid);
+                expect(widget.getUUID).toBeDefined();
+            });
+
+            it('should create an object with getElement method defined', function() {
+                expect(widget.getElement()).toEqual(Mock.element);
+                expect(widget.getElement).toBeDefined();
+            });
+
+            it('should create an object with getNavigation method defined', function() {
+                expect(widget.getParent()).toEqual(Mock.parentWidget);
+                expect(widget.getParent).toBeDefined();
+            });
+
+            it('should create an object with getNavigation method defined', function() {
+                expect(widget.getNavigation()).toEqual(Mock.navigation);
+                expect(widget.getNavigation).toBeDefined();
+            });
+
+            it('should create an object with getQuestion() method defined', function() {
+                expect(widget.getQuestion()).toEqual(Mock.question);
+                expect(widget.getQuestion).toBeDefined();
             });
 
             it('should create an object with addRoute method defined', function() {
@@ -63,8 +71,8 @@ describe('NavigationWidgetFactory', function() {
                 expect(widget.removeRoute).toBeDefined();
             });
 
-            it('should create an object with getRouteName method defined', function() {
-                expect(widget.getRouteName).toBeDefined();
+            it('should create an object with listRoutes method defined', function() {
+                expect(widget.listRouteWidgets).toBeDefined();
             });
 
         });
@@ -75,9 +83,44 @@ describe('NavigationWidgetFactory', function() {
                 expect(Mock.scope.$on).toHaveBeenCalledWith('questionPallete.question.add', jasmine.any(Function));
             });
 
+            it('should create a listener to event "questionPallete.question.delete"', function() {
+                expect(Mock.scope.$on).toHaveBeenCalled();
+            });
+
         });
 
     });
+
+    function mockElement() {
+        Mock.element = {};
+    }
+
+    function mockWidgetScope($injector) {
+        Mock.scope = {
+            class: '',
+            uuid: 'uuid',
+            $parent: {
+                widget: mockParentWidget($injector)
+            },
+            $on: function() {}
+        };
+
+        spyOn(Mock.scope, '$on');
+
+        return Mock.scope;
+    }
+
+    function mockParentWidget($injector) {
+        mockQuestion($injector);
+
+        Mock.parentWidget = {
+            getQuestion: function() {
+                return Mock.question;
+            }
+        };
+
+        return Mock.parentWidget;
+    }
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
@@ -87,27 +130,6 @@ describe('NavigationWidgetFactory', function() {
     function mockNavigation($injector) {
         Mock.navigation = $injector.get('NavigationFactory').create(Mock.question.objectType, Mock.question.templateID);
         return Mock.navigation;
-    }
-
-    function mockWidgetScope($injector) {
-        Mock.scope = {
-            class: '',
-            $on: function() {
-
-            }
-        };
-
-        spyOn(Mock.scope, '$on');
-
-        return Mock.scope;
-    }
-
-    function mockParentWidget($injector) {
-        Mock.parentWidget = {
-            question: Mock.question
-        };
-
-        return Mock.parentWidget;
     }
 
     function mockNavigationManagerService($injector) {

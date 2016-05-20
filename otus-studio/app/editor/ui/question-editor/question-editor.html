@@ -4,10 +4,10 @@
             <md-content layout-align="start center" style="padding: 0" flex>
                 <md-content layout="row">
                     <md-card class="item-id-frame" style="margin: 5px" layout-padding layout="column">
-                        {{widget.question.templateID}}
+                        {{widget.getQuestion().templateID}}
                     </md-card>
                     <md-content layout-padding layout-align="start center" flex>
-                        <label>{{widget.question.label.ptBR.plainText}}</label>
+                        <label>{{widget.getQuestion().label.ptBR.plainText}}</label>
                     </md-content>
                 </md-content>
             </md-content>

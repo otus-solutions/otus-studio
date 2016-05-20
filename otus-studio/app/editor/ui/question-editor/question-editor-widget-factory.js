@@ -25,18 +25,35 @@
     function QuestionEditorWidget(scope, element, question, RemoveQuestionEventFactory) {
         var self = this;
 
-        /* Instance definitions */
-        self.element = element;
-        self.uuid = scope.uuid;
-        self.question = question;
+        self.className = 'QuestionEditorWidget';
 
         /* Public methods */
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getQuestion = getQuestion;
         self.deleteQuestion = deleteQuestion;
 
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getQuestion() {
+            return question;
+        }
+
         function deleteQuestion() {
-            RemoveQuestionEventFactory.create().execute(self.question);
+            RemoveQuestionEventFactory.create().execute(question);
             element.remove();
-            scope.$root.$broadcast('questionEditorWidget.delete.' + self.question.templateID);
+            scope.$root.$broadcast('questionEditorWidget.delete.' + question.templateID);
         }
     }
 

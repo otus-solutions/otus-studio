@@ -14,9 +14,7 @@
 
     function otusNavigationEditor(RouteEditorWidgetFactory, NavigationWidgetFactory, WorkspaceService, UUIDService) {
         var ddo = {
-            scope: {
-                class: '@'
-            },
+            scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/navigation/editor/navigation-editor.html',
             link: function linkFunc(scope, element, attrs) {

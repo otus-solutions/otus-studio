@@ -9,15 +9,15 @@ describe('NavigationWidgetFactory', function() {
 
         inject(function(_$injector_) {
             mockQuestion(_$injector_);
-            mockNavigation(_$injector_);
-            mockRoute(_$injector_);
-            mockWidgetScope(_$injector_);
             mockParentWidget(_$injector_);
+            mockWidgetScope(_$injector_);
+            mockElement();
+            mockNavigation(_$injector_);
             mockNavigationManagerService(_$injector_);
             mockRouteEditorWidgetFactory(_$injector_);
 
             var factory = _$injector_.get('NavigationWidgetFactory');
-            widget = factory.create(Mock.scope, Mock.parentWidget, Mock.NavigationManagerService, Mock.RouteEditorWidgetFactory);
+            widget = factory.create(Mock.scope, Mock.element, Mock.NavigationManagerService, Mock.RouteEditorWidgetFactory);
         });
     });
 
@@ -32,7 +32,7 @@ describe('NavigationWidgetFactory', function() {
         });
 
         it('should add the route widget in the array', function() {
-            expect(widget.routeWidgets.length).toBeGreaterThan(0);
+            expect(widget.listRouteWidgets().length).toBeGreaterThan(0);
         });
 
     });
@@ -43,25 +43,39 @@ describe('NavigationWidgetFactory', function() {
 
         beforeEach(function() {
             widget.addRoute(Mock.route);
-            removedRoute = widget.removeRoute('Q1');
-        });
-
-        it('should call RouteEditorWidgetFactory.create with a route and navigation', function() {
-            expect(Mock.RouteEditorWidgetFactory.create).toHaveBeenCalledWith(Mock.route, Mock.navigation);
+            removedRoute = widget.removeRoute(ROUTE_NAME);
         });
 
         it('should remove the route widget from array', function() {
-            expect(widget.routeWidgets.length).toBe(0);
+            expect(widget.listRouteWidgets().length).toBe(0);
         });
 
         it('should return the removed route widget', function() {
-            expect(removedRoute.name()).toBe('Q1');
+            expect(removedRoute.name()).toBe(ROUTE_NAME);
         });
 
     });
 
+    describe('listRouteWidgets method', function() {
+
+        it('should the route widget array', function() {
+            expect(widget.listRouteWidgets()).toEqual(jasmine.any(Array));
+        });
+
+        it('should return the route widget array with size 1', function() {
+            expect(widget.listRouteWidgets().length).toBe(0);
+            widget.addRoute(Mock.route);
+            expect(widget.listRouteWidgets().length).toBe(1);
+        });
+
+    });
+
+    function mockElement() {
+        Mock.element = {};
+    }
+
     function mockQuestion($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
+        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', ROUTE_NAME);
         return Mock.question;
     }
 
@@ -78,9 +92,11 @@ describe('NavigationWidgetFactory', function() {
     function mockWidgetScope($injector) {
         Mock.scope = {
             class: '',
-            $on: function() {
-
-            }
+            uuid: 'uuid',
+            $parent: {
+                widget: Mock.parentWidget
+            },
+            $on: function() {}
         };
 
         spyOn(Mock.scope, '$on');
@@ -89,9 +105,15 @@ describe('NavigationWidgetFactory', function() {
     }
 
     function mockParentWidget($injector) {
+        mockQuestion($injector);
+
         Mock.parentWidget = {
-            question: Mock.question
+            getQuestion: function() {
+                return Mock.question;
+            }
         };
+
+        spyOn(Mock.parentWidget, 'getQuestion').and.returnValue(Mock.question);
 
         return Mock.parentWidget;
     }

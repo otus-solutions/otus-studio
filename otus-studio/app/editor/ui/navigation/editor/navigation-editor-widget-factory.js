@@ -20,75 +20,107 @@
 
     function NavigationWidget(scope, element, NavigationManagerService, RouteEditorWidgetFactory) {
         var self = this;
-        var ROUTE_NAME_PREFIX = 'Rota ';
 
-        /* Type definitions */
         self.className = 'NavigationEditorWidget';
-
-        /* Instance definitions */
-        self.element = element;
-        self.uuid = scope.uuid;
-        self.parent = scope.$parent.widget;
-        self.question = self.parent.question;
-        self.navigation = NavigationManagerService.getNavigationByOrigin(self.question.templateID);
-        self.routeWidgets = [];
-        self.routeCreatorWidget = null;
-
-        /* Scope event listeners */
-        var questionAddEvent;
-        var questionRemoveEvent;
-
-        enableQuestionAddEventListener();
-        enableQuestionRemoveEventListener(self.question);
-
-        /* User definitions */
         self.css = {};
-        self.css.class = scope.class;
+
+        var navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+        var routeEditorWidgets = [];
+        var routeCreatorWidget = null
 
         /* Public methods */
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getNavigation = getNavigation;
+        self.getQuestion = getQuestion;
+        self.listRouteWidgets = listRouteWidgets;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
-        self.getRouteName = getRouteName;
 
-        function getRouteName() {
-            return ROUTE_NAME_PREFIX + (self.routeWidgets.length + 1);
+        setupScopeEvents();
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getQuestion() {
+            return getParent().getQuestion();
+        }
+
+        function getNavigation() {
+            return navigation;
+        }
+
+        function listRouteWidgets() {
+            return routeEditorWidgets;
         }
 
         function addRoute(route) {
-            var routeWidget = RouteEditorWidgetFactory.create(route, self.navigation);
-            self.routeWidgets.push(routeWidget);
+            var routeWidget = RouteEditorWidgetFactory.create(route, navigation);
+            routeEditorWidgets.push(routeWidget);
         }
 
         function removeRoute(name) {
-            var routeToRemove = self.routeWidgets.filter(function(routeEditorWidget) {
+            var routeToRemove = routeEditorWidgets.filter(function(routeEditorWidget) {
                 return routeEditorWidget.name() === name;
             });
 
-            var indexToRemove = self.routeWidgets.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) self.routeWidgets.splice(indexToRemove, 1);
+            var indexToRemove = routeEditorWidgets.indexOf(routeToRemove[0]);
+            if (indexToRemove > -1) routeEditorWidgets.splice(indexToRemove, 1);
 
             return routeToRemove[0];
         }
 
-        /* Scope event listeners */
+        //---------------------------------------------------------------------
+        // Scope event definitions
+        //---------------------------------------------------------------------
+        var disableQuestionAddEventListener;
+        var disableQuestionRemoveEventListener;
+
+        function setupScopeEvents() {
+            enableQuestionAddEventListener(disableQuestionRemoveEventListener);
+            enableQuestionRemoveEventListener(getQuestion(), disableQuestionAddEventListener);
+        }
+
         function enableQuestionAddEventListener() {
-            questionAddEvent = scope.$on('questionPallete.question.add', function(event, addedQuestion) {
-                self.navigation = NavigationManagerService.getNavigationByOrigin(self.question.templateID);
-                if (self.navigation) {
-                    self.routeCreatorWidget.routeData.parentNavigation = self.navigation;
-                    addRoute(self.navigation.listRoutes()[0]);
-                    questionAddEvent();
-                    enableQuestionRemoveEventListener(addedQuestion);
-                }
-            });
+            disableQuestionAddEventListener = scope.$on('questionPallete.question.add', addQuestionListener);
         }
 
         function enableQuestionRemoveEventListener(question) {
-            questionRemoveEvent = scope.$on('questionEditorWidget.delete.' + question.templateID, function() {
-                self.routeWidgets = [];
-                questionRemoveEvent();
+            disableQuestionRemoveEventListener = scope.$on('questionEditorWidget.delete.' + question.templateID, removeQuestionListener);
+        }
+
+        function addQuestionListener(event, addedQuestion) {
+            navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+            if (navigation) {
+                // routeCreatorWidget.routeData.parentNavigation = navigation;
+                addRoute(navigation.listRoutes()[0]);
+                enableQuestionRemoveEventListener(addedQuestion);
+                disableQuestionAddEventListener();
+            }
+        }
+
+        function removeQuestionListener() {
+            routeEditorWidgets = [];
+            navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+
+            if (navigation) {
+                navigation.routes.forEach(function(route) {
+                    addRoute(route);
+                });
+            } else {
                 enableQuestionAddEventListener();
-            });
+                disableQuestionRemoveEventListener();
+            }
         }
     }
 
