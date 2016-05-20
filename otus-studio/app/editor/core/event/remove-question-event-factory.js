@@ -6,30 +6,32 @@
         .factory('RemoveQuestionEventFactory', RemoveQuestionEventFactory);
 
     RemoveQuestionEventFactory.$inject = [
+        '$rootScope',
+        'WorkspaceService',
         'RemoveQuestionService',
-        'WorkspaceService'
     ];
 
-    function RemoveQuestionEventFactory(RemoveQuestionService, WorkspaceService) {
+    function RemoveQuestionEventFactory($rootScope, WorkspaceService, RemoveQuestionService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new RemoveQuestionEvent(RemoveQuestionService, WorkspaceService);
+            return new RemoveQuestionEvent($rootScope, WorkspaceService, RemoveQuestionService);
         }
 
         return self;
     }
 
-    function RemoveQuestionEvent(RemoveQuestionService, WorkspaceService) {
+    function RemoveQuestionEvent($rootScope, WorkspaceService, RemoveQuestionService) {
         var self = this;
 
         self.execute = execute;
 
         function execute(question) {
             RemoveQuestionService.execute(question, WorkspaceService.getSurvey());
+            $rootScope.$broadcast('questionPallete.question.remove', question);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

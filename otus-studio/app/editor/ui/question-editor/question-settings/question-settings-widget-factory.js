@@ -11,24 +11,33 @@
         /* Public interface */
         self.create = create;
 
-        function create(templateData, element, parentWidget) {
-            return new QuestionSettingsWidget(templateData, element, parentWidget);
+        function create(scope, element) {
+            return new QuestionSettingsWidget(scope, element);
         }
 
         return self;
     }
 
-    function QuestionSettingsWidget(templateData, element, parentWidget) {
+    function QuestionSettingsWidget(scope, element) {
         var self = this;
 
-        self.question = parentWidget.question;
+        /* Type definitions */
+        self.className = 'QuestionSettingsWidget';
+        self.ngClass = {};
 
-        self.ngClass = {
-            open: false
-        };
+        /* Instance defintions */
+        self.scope = scope;
+        self.element = element;
+        self.uuid = scope.uuid;
+        self.parent = scope.$parent.$parent.$parent.widget;
+        self.question = self.parent.question;
+        self.listeners = {};
 
+        /* Template definitions */
+        self.ngClass.open = false;
         self.showNavigationEditor = false;
 
+        /* Public methods */
         self.navigationButton = navigationButton;
 
         function navigationButton() {

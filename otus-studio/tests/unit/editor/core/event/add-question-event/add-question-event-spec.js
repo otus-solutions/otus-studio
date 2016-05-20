@@ -1,9 +1,11 @@
 describe('AddQuestionEvent', function() {
     var Mock = {};
-    var factory, event;
+    var event;
 
     beforeEach(function() {
         module('studio');
+
+        var factory;
 
         inject(function(_$injector_) {
             factory = _$injector_.get('AddQuestionEventFactory', {

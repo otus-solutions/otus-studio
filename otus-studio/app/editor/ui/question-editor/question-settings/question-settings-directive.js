@@ -5,16 +5,20 @@
         .module('editor.ui')
         .directive('otusQuestionSettings', otusQuestionSettings);
 
-    otusQuestionSettings.$inject = ['QuestionSettingsWidgetFactory'];
+    otusQuestionSettings.$inject = [
+        'QuestionSettingsWidgetFactory',
+        'UUIDService'
+    ];
 
-    function otusQuestionSettings(QuestionSettingsWidgetFactory) {
+    function otusQuestionSettings(QuestionSettingsWidgetFactory, UUIDService) {
         var ddo = {
             scope: {},
             restrict: 'E',
             controller: 'QuestionSettingsController',
             templateUrl: 'app/editor/ui/question-editor/question-settings/question-settings.html',
             link: function(scope, element, attrs) {
-                scope.widget = QuestionSettingsWidgetFactory.create(attrs, element, scope.$parent.$parent.$parent.widget);
+                scope.uuid = UUIDService.generateUUID();
+                scope.widget = QuestionSettingsWidgetFactory.create(scope, element);
             }
         };
 

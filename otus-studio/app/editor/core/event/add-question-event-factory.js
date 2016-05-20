@@ -6,38 +6,35 @@
         .factory('AddQuestionEventFactory', AddQuestionEventFactory);
 
     AddQuestionEventFactory.$inject = [
-        'AddQuestionService',
-        'SheetContentService',
+        '$rootScope',
         'WorkspaceService',
         'WidgetService',
-        '$rootScope'
+        'SheetContentService',
+        'AddQuestionService'
     ];
 
-    function AddQuestionEventFactory(AddQuestionService, SheetContentService, WorkspaceService, WidgetService, $rootScope) {
+    function AddQuestionEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddQuestionService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService, WidgetService, $rootScope);
+            return new AddQuestionEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddQuestionService);
         }
 
         return self;
     }
 
-    function AddQuestionEvent(AddQuestionService, SheetContentService, WorkspaceService, WidgetService, $rootScope) {
+    function AddQuestionEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddQuestionService) {
         var self = this;
 
         self.execute = execute;
 
         function execute(questionType) {
             var question = AddQuestionService.execute(questionType);
-
             SheetContentService.loadQuestion(question);
-
             $rootScope.$broadcast('questionPallete.question.add', question);
-
             WorkspaceService.workspace.currentQuestion = question;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();

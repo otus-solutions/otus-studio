@@ -39,9 +39,11 @@ describe('NavigationWidgetFactory', function() {
 
     describe('removeRoute method', function() {
 
+        var removedRoute;
+
         beforeEach(function() {
             widget.addRoute(Mock.route);
-            widget.removeRoute('Q1');
+            removedRoute = widget.removeRoute('Q1');
         });
 
         it('should call RouteEditorWidgetFactory.create with a route and navigation', function() {
@@ -50,6 +52,10 @@ describe('NavigationWidgetFactory', function() {
 
         it('should remove the route widget from array', function() {
             expect(widget.routeWidgets.length).toBe(0);
+        });
+
+        it('should return the removed route widget', function() {
+            expect(removedRoute.name()).toBe('Q1');
         });
 
     });

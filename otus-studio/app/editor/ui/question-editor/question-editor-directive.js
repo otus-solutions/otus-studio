@@ -7,16 +7,18 @@
 
     otusQuestionEditor.$inject = [
         'QuestionEditorWidgetFactory',
-        'SheetContentService'
+        'SheetContentService',
+        'UUIDService'
     ];
 
-    function otusQuestionEditor(QuestionEditorWidgetFactory, SheetContentService) {
+    function otusQuestionEditor(QuestionEditorWidgetFactory, SheetContentService, UUIDService) {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/question-editor/question-editor.html',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs) {
-                scope.widget = QuestionEditorWidgetFactory.create(SheetContentService.lastLoadedQuestion, element);
+                scope.uuid = UUIDService.generateUUID();
+                scope.widget = QuestionEditorWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
             }
         };
 

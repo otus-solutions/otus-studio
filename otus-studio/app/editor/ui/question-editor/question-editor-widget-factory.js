@@ -15,18 +15,20 @@
         /* Public interface */
         self.create = create;
 
-        function create(question, element) {
-            return new QuestionEditorWidget(question, element, RemoveQuestionEventFactory);
+        function create(scope, element, question) {
+            return new QuestionEditorWidget(scope, element, question, RemoveQuestionEventFactory);
         }
 
         return self;
     }
 
-    function QuestionEditorWidget(question, element, RemoveQuestionEventFactory) {
+    function QuestionEditorWidget(scope, element, question, RemoveQuestionEventFactory) {
         var self = this;
 
-        self.question = question;
+        /* Instance definitions */
         self.element = element;
+        self.uuid = scope.uuid;
+        self.question = question;
 
         /* Public methods */
         self.deleteQuestion = deleteQuestion;
@@ -34,6 +36,7 @@
         function deleteQuestion() {
             RemoveQuestionEventFactory.create().execute(self.question);
             element.remove();
+            scope.$root.$broadcast('questionEditorWidget.delete.' + self.question.templateID);
         }
     }
 
