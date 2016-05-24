@@ -43,7 +43,7 @@ describe('QuestionService', function() {
     });
 
     function mockAddQuestionService($injector) {
-        Mock.question = $injector.get('QuestionFactory').create(QUESTION_TYPE, 'SSQ');
+        Mock.question = $injector.get('SurveyItemFactory').create(QUESTION_TYPE, 'SSQ');
         Mock.AddQuestionService = $injector.get('AddQuestionService');
         spyOn(Mock.AddQuestionService, 'execute');
         return Mock.AddQuestionService;

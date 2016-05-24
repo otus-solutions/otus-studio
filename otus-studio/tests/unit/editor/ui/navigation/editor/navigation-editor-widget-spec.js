@@ -75,7 +75,7 @@ describe('NavigationWidgetFactory', function() {
     }
 
     function mockQuestion($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', ROUTE_NAME);
+        Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', ROUTE_NAME);
         return Mock.question;
     }
 

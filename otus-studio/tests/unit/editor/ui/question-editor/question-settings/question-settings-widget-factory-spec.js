@@ -94,7 +94,7 @@ describe('QuestionSettingsWidgetFactory', function() {
     }
 
     function mockQuestion($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('IntegerQuestion', 'Q1');
+        Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
         return Mock.question;
     }
 

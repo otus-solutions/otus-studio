@@ -41,7 +41,7 @@ describe('AddQuestionEvent', function() {
     });
 
     function mockAddQuestionService($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('SingleSelectionQuestion', 'SSQ');
+        Mock.question = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', 'SSQ');
         Mock.AddQuestionService = $injector.get('AddQuestionService');
         spyOn(Mock.AddQuestionService, 'execute');
         return Mock.AddQuestionService;

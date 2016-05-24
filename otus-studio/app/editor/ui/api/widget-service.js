@@ -7,20 +7,18 @@
 
     WidgetService.$inject = [
         'WidgetTemplateService',
-        'QuestionWidgetFactory',
-        'QuestionEditorWidgetFactory',
+        'SurveyItemWidgetFactory',
+        'SurveyItemEditorWidgetFactory',
         'QuestionAnswerOptionEditorWidgetFactory',
         'MetadataGroupWidgetFactory',
         'MetadataOptionWidgetFactory',
         'NavigationWidgetFactory',
         'RouteEditorWidgetFactory',
-        'RouteCreatorWidgetFactory',
-        'PageItemWidgetFactory',
-        'PageItemEditorWidgetFactory'
+        'RouteCreatorWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, QuestionWidgetFactory, QuestionEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
-        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory, PageItemWidgetFactory, PageItemEditorWidgetFactory) {
+    function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory) {
 
         var self = this;
 
@@ -29,17 +27,15 @@
         /* Public interface */
         self.getWidgetForModel = getWidgetForModel;
         self.getMetadataWidget = getMetadataWidget;
-        self.getQuestionEditorWidget = getQuestionEditorWidget;
+        self.getSurveyItemEditorWidget = getSurveyItemEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
         self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
         self.getNavigationEditorWidget = getNavigationEditorWidget;
         self.getRouteWidget = getRouteWidget;
         self.getRouteCreatorWidget = getRouteCreatorWidget;
-        self.getPageItemWidget = getPageItemWidget;
-        self.getPageItemEditorWidget = getPageItemEditorWidget;
 
         function getWidgetForModel(model) {
-            var widget = QuestionWidgetFactory.create(model);
+            var widget = SurveyItemWidgetFactory.create(model);
             widget.template = WidgetTemplateService.getDirectiveTemplate(model.objectType);
             return widget;
         }
@@ -50,8 +46,8 @@
             return widget;
         }
 
-        function getQuestionEditorWidget(question) {
-            return QuestionEditorWidgetFactory.create(question);
+        function getSurveyItemEditorWidget(question) {
+            return SurveyItemEditorWidgetFactory.create(question);
         }
 
         function getQuestionAnswerOptionWidget(model) {
@@ -78,14 +74,6 @@
             self.widgetMap[widget.type][widget.destination.guid] = widget.destination;
             self.widgetMap[widget.type][widget.processor.guid] = widget.processor;
             return widget;
-        }
-
-        function getPageItemWidget(item){
-            return PageItemWidgetFactory.create(item);
-        }
-
-        function getPageItemEditorWidget(item) {
-            return PageItemEditorWidgetFactory.create(item);
         }
     }
 

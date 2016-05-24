@@ -40,7 +40,7 @@ describe('RemoveAnswerOptionEventFactory', function() {
     });
 
     function mockSingleSelectionQuestionWidget($injector) {
-        Mock.question = $injector.get('QuestionFactory').create('SingleSelectionQuestion', 'SSQ');
+        Mock.question = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', 'SSQ');
         Mock.questionWidget = $injector.get('QuestionWidgetFactory').create(Mock.question);
     }
 

@@ -24,7 +24,7 @@
         self.className = 'NavigationEditorWidget';
         self.css = {};
 
-        var navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+        var navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
         var routeEditorWidgets = [];
         var routeCreatorWidget = null
 
@@ -33,7 +33,7 @@
         self.getElement = getElement;
         self.getParent = getParent;
         self.getNavigation = getNavigation;
-        self.getQuestion = getQuestion;
+        self.getItem = getItem;
         self.listRouteWidgets = listRouteWidgets;
         self.addRoute = addRoute;
         self.removeRoute = removeRoute;
@@ -52,8 +52,8 @@
             return scope.$parent.widget;
         }
 
-        function getQuestion() {
-            return getParent().getQuestion();
+        function getItem() {
+            return getParent().getItem();
         }
 
         function getNavigation() {
@@ -88,19 +88,19 @@
 
         function setupScopeEvents() {
             enableQuestionAddEventListener(disableQuestionRemoveEventListener);
-            enableQuestionRemoveEventListener(getQuestion().templateID, disableQuestionAddEventListener);
+            enableQuestionRemoveEventListener(getItem().templateID, disableQuestionAddEventListener);
         }
 
         function enableQuestionAddEventListener() {
-            disableQuestionAddEventListener = scope.$on('question.add', addQuestionListener);
+            disableQuestionAddEventListener = scope.$on('item.add', addQuestionListener);
         }
 
         function enableQuestionRemoveEventListener(templateID) {
-            disableQuestionRemoveEventListener = scope.$on('question.remove.' + templateID, removeQuestionListener);
+            disableQuestionRemoveEventListener = scope.$on('item.remove.' + templateID, removeQuestionListener);
         }
 
         function addQuestionListener(event, addedQuestion) {
-            navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+            navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
             if (navigation) {
                 // routeCreatorWidget.routeData.parentNavigation = navigation;
                 addRoute(navigation.listRoutes()[0]);
@@ -111,7 +111,7 @@
 
         function removeQuestionListener(event, removedQuestion) {
             routeEditorWidgets = [];
-            navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
+            navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
 
             if (navigation) {
                 navigation.routes.forEach(function(route) {
