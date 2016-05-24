@@ -3,25 +3,25 @@
 
     angular
         .module('editor.ui')
-        .factory('QuestionSettingsWidgetFactory', QuestionSettingsWidgetFactory);
+        .factory('SurveyItemSettingsWidgetFactory', SurveyItemSettingsWidgetFactory);
 
-    function QuestionSettingsWidgetFactory() {
+    function SurveyItemSettingsWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new QuestionSettingsWidget(scope, element);
+            return new SurveyItemSettingsWidget(scope, element);
         }
 
         return self;
     }
 
-    function QuestionSettingsWidget(scope, element) {
+    function SurveyItemSettingsWidget(scope, element) {
         var self = this;
 
-        self.className = 'QuestionSettingsWidget';
+        self.className = 'SurveyItemSettingsWidget';
 
         self.ngClass = {};
         /* Template definitions */

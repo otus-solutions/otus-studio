@@ -1,4 +1,4 @@
-describe('AddQuestionEvent', function() {
+describe('AddSurveyItemEvent', function() {
     var Mock = {};
     var event;
 
@@ -8,8 +8,8 @@ describe('AddQuestionEvent', function() {
         var factory;
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('AddQuestionEventFactory', {
-                AddQuestionService: mockAddQuestionService(_$injector_),
+            factory = _$injector_.get('AddSurveyItemEventFactory', {
+                AddSurveyItemService: mockAddSurveyItemService(_$injector_),
                 SheetContentService: mockSheetContentService(_$injector_),
                 WorkspaceService: mockWorkspaceService(_$injector_)
             });
@@ -20,31 +20,31 @@ describe('AddQuestionEvent', function() {
 
     describe('execute method', function() {
 
-        it('should call AddQuestionService.execute with questionType parameter', function() {
-            event.execute(Mock.question.objectType);
+        it('should call AddSurveyItemService.execute with questionType parameter', function() {
+            event.execute(Mock.item.objectType);
 
-            expect(Mock.AddQuestionService.execute).toHaveBeenCalledWith(Mock.question.objectType);
+            expect(Mock.AddSurveyItemService.execute).toHaveBeenCalledWith(Mock.item.objectType, Mock.WorkspaceService.getSurvey());
         });
 
         it('should store yourself in userEdits', function() {
-            event.execute(Mock.question.objectType);
+            event.execute(Mock.item.objectType);
 
             expect(Mock.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledWith(event);
         });
 
         it('should call Workspace.saveWork()', function() {
-            event.execute(Mock.question.objectType);
+            event.execute(Mock.item.objectType);
 
             expect(Mock.WorkspaceService.saveWork).toHaveBeenCalledWith();
         });
 
     });
 
-    function mockAddQuestionService($injector) {
-        Mock.question = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', 'SSQ');
-        Mock.AddQuestionService = $injector.get('AddQuestionService');
-        spyOn(Mock.AddQuestionService, 'execute');
-        return Mock.AddQuestionService;
+    function mockAddSurveyItemService($injector) {
+        Mock.item = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', 'SSQ');
+        Mock.AddSurveyItemService = $injector.get('AddSurveyItemService');
+        spyOn(Mock.AddSurveyItemService, 'execute');
+        return Mock.AddSurveyItemService;
     }
 
     function mockSheetContentService($injector) {
@@ -63,6 +63,7 @@ describe('AddQuestionEvent', function() {
             }
         };
 
+        spyOn(Mock.WorkspaceService, 'getSurvey');
         spyOn(Mock.WorkspaceService, 'saveWork');
         spyOn(Mock.WorkspaceService.workspace.isdb.userEdits, 'store');
 

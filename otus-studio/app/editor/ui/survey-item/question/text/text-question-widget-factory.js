@@ -11,20 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(parentWidget) {
-            return new TextQuestionWidget(parentWidget);
+        function create(scope, element) {
+            return new TextQuestionWidget(scope, element);
         }
 
         return self;
     }
 
-    function TextQuestionWidget(parentWidget) {
+    function TextQuestionWidget(scope, element) {
         var self = this;
 
-        self.name = 'TextQuestion';
-        self.parentWidget = parentWidget;
-        self.question = parentWidget.question;
-        self.template = '<text-question></text-question>';
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+        function getClassName() {
+            return 'TextQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<otus-text-question></otus-text-question>';
+        }
     }
 
 }());

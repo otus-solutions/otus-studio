@@ -1,4 +1,4 @@
-describe('QuestionSettingsWidgetFactory', function() {
+describe('SurveyItemSettingsWidgetFactory', function() {
     var Mock = {};
     var widget;
 
@@ -8,9 +8,9 @@ describe('QuestionSettingsWidgetFactory', function() {
         inject(function(_$injector_) {
             mockElement();
             mockWidgetScope(_$injector_);
-            mockRemoveQuestionEventFactory(_$injector_);
+            mockRemoveSurveyItemEventFactory(_$injector_);
 
-            var factory = _$injector_.get('QuestionSettingsWidgetFactory');
+            var factory = _$injector_.get('SurveyItemSettingsWidgetFactory');
             widget = factory.create(Mock.scope, Mock.element);
         });
     });
@@ -53,22 +53,22 @@ describe('QuestionSettingsWidgetFactory', function() {
 
     function mockParentWidget($injector) {
         Mock.parentWidget = {
-            getQuestion: function() {
-                return mockQuestion($injector);
+            getSurveyItem: function() {
+                return mockSurveyItem($injector);
             }
         };
 
         return Mock.parentWidget;
     }
 
-    function mockQuestion($injector) {
-        Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+    function mockSurveyItem($injector) {
+        Mock.question = $injector.get('SurveyItemFactory').create('IntegerSurveyItem', 'Q1');
         return Mock.question;
     }
 
-    function mockRemoveQuestionEventFactory($injector) {
-        Mock.RemoveQuestionEventFactory = $injector.get('RemoveQuestionEventFactory');
-        return Mock.RemoveQuestionEventFactory;
+    function mockRemoveSurveyItemEventFactory($injector) {
+        Mock.RemoveSurveyItemEventFactory = $injector.get('RemoveSurveyItemEventFactory');
+        return Mock.RemoveSurveyItemEventFactory;
     }
 
 });

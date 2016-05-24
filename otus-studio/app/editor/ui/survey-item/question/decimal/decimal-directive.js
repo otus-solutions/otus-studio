@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('decimalQuestion', decimalQuestion);
+        .directive('otusDecimalQuestion', directive);
 
-    function decimalQuestion() {
+    function directive() {
         var ddo = {
             scope: {
                 ngModel: '=',

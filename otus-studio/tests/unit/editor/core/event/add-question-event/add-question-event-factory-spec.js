@@ -1,11 +1,11 @@
-describe('AddQuestionEventFactory', function() {
+describe('AddSurveyItemEventFactory', function() {
     var factory, event;
 
     beforeEach(function() {
         module('studio');
 
         inject(function(_$injector_) {
-            factory = _$injector_.get('AddQuestionEventFactory');
+            factory = _$injector_.get('AddSurveyItemEventFactory');
         });
 
         event = factory.create();
@@ -13,8 +13,8 @@ describe('AddQuestionEventFactory', function() {
 
     describe('create method', function() {
 
-        it('should return an instance of AddQuestionEvent', function() {
-            expect(event.constructor.name).toBe('AddQuestionEvent');
+        it('should return an instance of AddSurveyItemEvent', function() {
+            expect(event.constructor.name).toBe('AddSurveyItemEvent');
         });
 
         it('should return an object with execute method', function() {

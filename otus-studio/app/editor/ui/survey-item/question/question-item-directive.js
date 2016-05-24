@@ -15,8 +15,8 @@
             scope: {},
             templateUrl: 'app/editor/ui/survey-item/question/question.html',
             retrict: 'E',
-            link: function linkFunc(scope) {
-                scope.widget = SurveyItemWidgetFactory.create(SheetContentService.lastLoadedQuestion);
+            link: function linkFunc(scope, element) {
+                scope.widget = SurveyItemWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
             }
         };
 

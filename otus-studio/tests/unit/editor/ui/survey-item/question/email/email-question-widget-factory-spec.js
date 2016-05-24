@@ -1,16 +1,15 @@
-describe('QuestionSettingsWidgetFactory', function() {
+describe('EmailQuestionWidgetFactory', function() {
     var Mock = {};
     var factory;
 
     beforeEach(function() {
         module('studio');
 
-        inject(function(_$injector_) {
-            mockElement();
-            mockWidgetScope(_$injector_);
-            mockRemoveQuestionEventFactory(_$injector_);
+        mockElement();
 
-            factory = _$injector_.get('QuestionSettingsWidgetFactory');
+        inject(function(_$injector_) {
+            mockWidgetScope(_$injector_);
+            factory = _$injector_.get('EmailQuestionWidgetFactory');
         });
     });
 
@@ -20,17 +19,14 @@ describe('QuestionSettingsWidgetFactory', function() {
 
         beforeEach(function() {
             widget = factory.create(Mock.scope, Mock.element);
-        })
-
-        describe('Type properties definition', function() {
-
-            it('should create an object with className equal to QuestionSettingsWidget', function() {
-                expect(widget.className).toBe('QuestionSettingsWidget');
-            });
-
         });
 
         describe('Interface definition', function() {
+
+            it('should create an object with getClassName method defined', function() {
+                expect(widget.getClassName()).toEqual('EmailQuestionWidget');
+                expect(widget.getClassName).toBeDefined();
+            });
 
             it('should create an object with getUUID method defined', function() {
                 expect(widget.getUUID()).toEqual(Mock.scope.uuid);
@@ -42,18 +38,19 @@ describe('QuestionSettingsWidgetFactory', function() {
                 expect(widget.getElement).toBeDefined();
             });
 
-            it('should create an object with getParent method defined', function() {
+            it('should create an object with getNavigation method defined', function() {
                 expect(widget.getParent()).toEqual(Mock.parentWidget);
                 expect(widget.getParent).toBeDefined();
             });
 
-            it('should create an object with getQuestion method defined', function() {
-                expect(widget.getQuestion()).toEqual(Mock.question);
-                expect(widget.getQuestion).toBeDefined();
+            it('should create an object with getItem() method defined', function() {
+                expect(widget.getItem()).toEqual(Mock.question);
+                expect(widget.getItem).toBeDefined();
             });
 
-            it('should create an object with navigationButton method defined', function() {
-                expect(widget.navigationButton).toBeDefined();
+            it('should create an object with getTemplate() method defined', function() {
+                expect(widget.getTemplate()).toEqual('<otus-email-question></otus-email-question>');
+                expect(widget.getTemplate).toBeDefined();
             });
 
         });
@@ -69,11 +66,7 @@ describe('QuestionSettingsWidgetFactory', function() {
             class: '',
             uuid: 'uuid',
             $parent: {
-                $parent: {
-                    $parent: {
-                        widget: mockParentWidget($injector)
-                    }
-                }
+                widget: mockParentWidget($injector)
             },
             $on: function() {}
         };
@@ -84,9 +77,11 @@ describe('QuestionSettingsWidgetFactory', function() {
     }
 
     function mockParentWidget($injector) {
+        mockQuestion($injector);
+
         Mock.parentWidget = {
-            getQuestion: function() {
-                return mockQuestion($injector);
+            getItem: function() {
+                return Mock.question;
             }
         };
 
@@ -94,13 +89,8 @@ describe('QuestionSettingsWidgetFactory', function() {
     }
 
     function mockQuestion($injector) {
-        Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+        Mock.question = $injector.get('SurveyItemFactory').create('EmailQuestion', 'Q1');
         return Mock.question;
-    }
-
-    function mockRemoveQuestionEventFactory($injector) {
-        Mock.RemoveQuestionEventFactory = $injector.get('RemoveQuestionEventFactory');
-        return Mock.RemoveQuestionEventFactory;
     }
 
 });

@@ -108,12 +108,12 @@ describe('NavigationWidgetFactory', function() {
         mockQuestion($injector);
 
         Mock.parentWidget = {
-            getQuestion: function() {
+            getItem: function() {
                 return Mock.question;
             }
         };
 
-        spyOn(Mock.parentWidget, 'getQuestion').and.returnValue(Mock.question);
+        spyOn(Mock.parentWidget, 'getItem').and.returnValue(Mock.question);
 
         return Mock.parentWidget;
     }

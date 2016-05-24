@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('timeQuestion', timeQuestion);
+        .directive('otusTimeQuestion', directive);
 
-    function timeQuestion() {
+    function directive() {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/survey-item/question/time/time-question.html',

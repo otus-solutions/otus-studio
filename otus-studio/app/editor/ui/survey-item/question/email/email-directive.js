@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('emailQuestion', textQuestion);
+        .directive('otusEmailQuestion', directive);
 
-    function textQuestion() {
+    function directive() {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/survey-item/question/email/email-question.html',

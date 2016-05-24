@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('textQuestion', textQuestion);
+        .directive('otusTextQuestion', directive);
 
-    function textQuestion() {
+    function directive() {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/survey-item/question/text/text-question.html',

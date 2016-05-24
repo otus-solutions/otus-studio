@@ -39,19 +39,11 @@
         /* Public interface */
         self.create = create;
 
-        function create(item) {
-            var widget = new SurveyItemWidget(item);
-            return widgetFactories[item.objectType].create(widget);
+        function create(scope, element, item) {
+            return widgetFactories[item.objectType].create(scope, element, item);
         }
 
         return self;
-    }
-
-    function SurveyItemWidget(item) {
-        var self = this;
-
-        self.className = self.constructor.name;
-        self.item = item;
     }
 
 }());

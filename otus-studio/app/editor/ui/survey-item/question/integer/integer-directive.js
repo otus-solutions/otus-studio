@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('integerQuestion', integerQuestion);
+        .directive('otusIntegerQuestion', directive);
 
-    function integerQuestion() {
+    function directive() {
         var ddo = {
             scope: {
                 ngModel: '=',

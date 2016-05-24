@@ -9,7 +9,7 @@
         'WidgetTemplateService',
         'SurveyItemWidgetFactory',
         'SurveyItemEditorWidgetFactory',
-        'QuestionAnswerOptionEditorWidgetFactory',
+        'AnswerOptionWidgetFactory',
         'MetadataGroupWidgetFactory',
         'MetadataOptionWidgetFactory',
         'NavigationWidgetFactory',
@@ -17,7 +17,7 @@
         'RouteCreatorWidgetFactory'
     ];
 
-    function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, QuestionAnswerOptionEditorWidgetFactory,
+    function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, AnswerOptionWidgetFactory,
         MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory) {
 
         var self = this;
@@ -51,7 +51,7 @@
         }
 
         function getQuestionAnswerOptionWidget(model) {
-            return QuestionAnswerOptionEditorWidgetFactory.create(model);
+            return AnswerOptionWidgetFactory.create(model);
         }
 
         function getMetadataAnswerOptionWidget(model) {

@@ -16,16 +16,16 @@
         self.create = create;
 
         function create(scope, element, item) {
-            return new QuestionEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
+            return new SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
         }
 
         return self;
     }
 
-    function QuestionEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
+    function SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
         var self = this;
 
-        self.className = 'QuestionEditorWidget';
+        self.className = 'SurveyItemEditorWidget';
 
         /* Public methods */
         self.getUUID = getUUID;
@@ -33,7 +33,7 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.getContainer = getContainer;
-        self.deleteQuestion = deleteQuestion;
+        self.deleteSurveyItem = deleteSurveyItem;
 
         function getUUID() {
             return scope.uuid;
@@ -59,7 +59,7 @@
             }
         }
 
-        function deleteQuestion() {
+        function deleteSurveyItem() {
             RemoveSurveyItemEventFactory.create().execute(item);
             element.remove();
         }

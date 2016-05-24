@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('phoneQuestion', phoneQuestion);
+        .directive('otusPhoneQuestion', directive);
 
-    function phoneQuestion() {
+    function directive() {
         var ddo = {
             scope: {
                 ngModel: '=',

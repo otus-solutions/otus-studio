@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .service('QuestionSettingsContentService', QuestionSettingsContentService);
+        .service('SurveyItemSettingsContentService', SurveyItemSettingsContentService);
 
-    QuestionSettingsContentService.$inject = [
+    SurveyItemSettingsContentService.$inject = [
         'TemplateLoaderService',
     ];
 
-    function QuestionSettingsContentService(TemplateLoaderService) {
+    function SurveyItemSettingsContentService(TemplateLoaderService) {
         var self = this;
 
         self.loadNavigation = loadNavigation;

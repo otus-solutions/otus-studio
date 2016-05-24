@@ -32,7 +32,7 @@
         self.execute = execute;
 
         function execute(itemType) {
-            var item = AddSurveyItemService.execute(itemType);
+            var item = AddSurveyItemService.execute(itemType, WorkspaceService.getSurvey());
             SheetContentService.loadQuestion(item);
             $rootScope.$broadcast('item.add', item);
             WorkspaceService.workspace.currentItem = item;

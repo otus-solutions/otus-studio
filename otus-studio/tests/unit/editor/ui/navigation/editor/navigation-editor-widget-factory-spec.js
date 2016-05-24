@@ -58,9 +58,9 @@ describe('NavigationWidgetFactory', function() {
                 expect(widget.getNavigation).toBeDefined();
             });
 
-            it('should create an object with getQuestion() method defined', function() {
-                expect(widget.getQuestion()).toEqual(Mock.question);
-                expect(widget.getQuestion).toBeDefined();
+            it('should create an object with getItem() method defined', function() {
+                expect(widget.getItem()).toEqual(Mock.question);
+                expect(widget.getItem).toBeDefined();
             });
 
             it('should create an object with addRoute method defined', function() {
@@ -79,11 +79,11 @@ describe('NavigationWidgetFactory', function() {
 
         describe('Scope events', function() {
 
-            it('should create a listener to event "questionPallete.question.add"', function() {
-                expect(Mock.scope.$on).toHaveBeenCalledWith('questionPallete.question.add', jasmine.any(Function));
+            it('should create a listener to event "question.add"', function() {
+                expect(Mock.scope.$on).toHaveBeenCalledWith('item.add', jasmine.any(Function));
             });
 
-            it('should create a listener to event "questionPallete.question.delete"', function() {
+            it('should create a listener to event "item.delete"', function() {
                 expect(Mock.scope.$on).toHaveBeenCalled();
             });
 
@@ -114,7 +114,7 @@ describe('NavigationWidgetFactory', function() {
         mockQuestion($injector);
 
         Mock.parentWidget = {
-            getQuestion: function() {
+            getItem: function() {
                 return Mock.question;
             }
         };

@@ -11,20 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(parentWidget) {
-            return new TimeQuestionWidget(parentWidget);
+        function create(scope, element) {
+            return new TimeQuestionWidget(scope, element);
         }
 
         return self;
     }
 
-    function TimeQuestionWidget(parentWidget) {
+    function TimeQuestionWidget(scope, element) {
         var self = this;
 
-        self.name = 'TimeQuestion';
-        self.parentWidget = parentWidget;
-        self.question = parentWidget.question;
-        self.template = '<time-question></time-question>';
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+        function getClassName() {
+            return 'TimeQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<otus-time-question></otus-time-question>';
+        }
     }
 
 }());

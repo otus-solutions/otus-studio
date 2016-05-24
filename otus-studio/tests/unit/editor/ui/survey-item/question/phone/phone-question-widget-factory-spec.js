@@ -1,16 +1,15 @@
-describe('QuestionEditorWidgetFactory', function() {
+describe('PhoneQuestionWidgetFactory', function() {
     var Mock = {};
     var factory;
 
     beforeEach(function() {
         module('studio');
 
-        inject(function(_$injector_) {
-            mockElement();
-            mockWidgetScope(_$injector_);
-            mockRemoveQuestionEventFactory(_$injector_);
+        mockElement();
 
-            factory = _$injector_.get('QuestionEditorWidgetFactory');
+        inject(function(_$injector_) {
+            mockWidgetScope(_$injector_);
+            factory = _$injector_.get('PhoneQuestionWidgetFactory');
         });
     });
 
@@ -19,18 +18,15 @@ describe('QuestionEditorWidgetFactory', function() {
         var widget;
 
         beforeEach(function() {
-            widget = factory.create(Mock.scope, Mock.element, Mock.question);
-        })
-
-        describe('Type properties definition', function() {
-
-            it('should create an object with className equal to NavigationWidget', function() {
-                expect(widget.className).toBe('QuestionEditorWidget');
-            });
-
+            widget = factory.create(Mock.scope, Mock.element);
         });
 
         describe('Interface definition', function() {
+
+            it('should create an object with getClassName method defined', function() {
+                expect(widget.getClassName()).toEqual('PhoneQuestionWidget');
+                expect(widget.getClassName).toBeDefined();
+            });
 
             it('should create an object with getUUID method defined', function() {
                 expect(widget.getUUID()).toEqual(Mock.scope.uuid);
@@ -47,13 +43,14 @@ describe('QuestionEditorWidgetFactory', function() {
                 expect(widget.getParent).toBeDefined();
             });
 
-            it('should create an object with getQuestion() method defined', function() {
-                expect(widget.getQuestion()).toEqual(Mock.question);
-                expect(widget.getQuestion).toBeDefined();
+            it('should create an object with getItem() method defined', function() {
+                expect(widget.getItem()).toEqual(Mock.question);
+                expect(widget.getItem).toBeDefined();
             });
 
-            it('should create an object with deleteQuestion() method defined', function() {
-                expect(widget.deleteQuestion).toBeDefined();
+            it('should create an object with getTemplate() method defined', function() {
+                expect(widget.getTemplate()).toEqual('<otus-phone-question></otus-phone-question>');
+                expect(widget.getTemplate).toBeDefined();
             });
 
         });
@@ -80,21 +77,20 @@ describe('QuestionEditorWidgetFactory', function() {
     }
 
     function mockParentWidget($injector) {
+        mockQuestion($injector);
+
         Mock.parentWidget = {
-            question: mockQuestion($injector)
+            getItem: function() {
+                return Mock.question;
+            }
         };
 
         return Mock.parentWidget;
     }
 
     function mockQuestion($injector) {
-        Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
+        Mock.question = $injector.get('SurveyItemFactory').create('PhoneQuestion', 'Q1');
         return Mock.question;
-    }
-
-    function mockRemoveQuestionEventFactory($injector) {
-        Mock.RemoveQuestionEventFactory = $injector.get('RemoveQuestionEventFactory');
-        return Mock.RemoveQuestionEventFactory;
     }
 
 });

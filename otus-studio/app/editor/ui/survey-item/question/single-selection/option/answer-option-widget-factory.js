@@ -3,35 +3,50 @@
 
     angular
         .module('editor.ui')
-        .factory('QuestionAnswerOptionEditorWidgetFactory', QuestionAnswerOptionEditorWidgetFactory);
+        .factory('AnswerOptionWidgetFactory', AnswerOptionWidgetFactory);
 
-    function QuestionAnswerOptionEditorWidgetFactory() {
+    function AnswerOptionWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(option, parentWidget) {
-            return new QuestionAnswerOptionEditorWidget(option, parentWidget);
+        function create(scope, element, option) {
+            return new AnswerOptionWidget(scope, element, option);
         }
 
         return self;
     }
 
-    function QuestionAnswerOptionEditorWidget(option, parentWidget) {
+    function AnswerOptionWidget(scope, element, option) {
         var self = this;
 
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.css = {};
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
 
-        /* Template definitions */
+        function getClassName() {
+            return 'AnswerOptionWidget';
+        }
 
-        /* Template definitions */
+        function getUUID() {
+            return scope.uuid;
+        }
 
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.option = option;
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return option;
+        }
     }
 
 }());

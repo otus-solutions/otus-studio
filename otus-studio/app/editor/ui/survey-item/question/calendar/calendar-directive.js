@@ -3,9 +3,9 @@
 
     angular
         .module('editor.ui')
-        .directive('calendarQuestion', calendarQuestion);
+        .directive('otusCalendarQuestion', directive);
 
-    function calendarQuestion() {
+    function directive() {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question.html',

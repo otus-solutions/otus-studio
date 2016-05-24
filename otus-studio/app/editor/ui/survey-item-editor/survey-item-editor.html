@@ -11,11 +11,11 @@
                     </md-content>
                 </md-content>
             </md-content>
-            <otus:button click="widget.deleteQuestion" tooltip="Excluir questão" icon-button="delete"/>
+            <otus:button click="widget.deleteSurveyItem" tooltip="Excluir item" icon-button="delete"/>
         </otus:accordion-header>
         <otus:accordion-content>
             <md-content bind-html-compile="widget.getContainer()"></md-content>
-            <otus:question-settings></otus:question-settings>
+            <otus:survey-item-settings></otus:survey-item-settings>
         </ui-accordion-content>
     </ui-accordion>
 </md-whiteframe>

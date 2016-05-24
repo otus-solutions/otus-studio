@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .directive('singleSelectionQuestion', singleSelectionQuestion);
+        .directive('otusSingleSelectionQuestion', directive);
 
-    singleSelectionQuestion.$inject = [
+    directive.$inject = [
         'SingleSelectionQuestionWidgetFactory'
     ];
 
-    function singleSelectionQuestion(SingleSelectionQuestionWidgetFactory) {
+    function directive(SingleSelectionQuestionWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',

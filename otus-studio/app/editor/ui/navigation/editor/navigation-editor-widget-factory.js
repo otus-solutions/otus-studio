@@ -26,7 +26,7 @@
 
         var navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
         var routeEditorWidgets = [];
-        var routeCreatorWidget = null
+        var routeCreatorWidget = null;
 
         /* Public methods */
         self.getUUID = getUUID;
