@@ -5,9 +5,7 @@
         .module('editor.ui')
         .directive('otusRouteEditor', otusRouteEditor);
 
-    otusRouteEditor.$inject = ['RouteEditorWidgetFactory'];
-
-    function otusRouteEditor(RouteEditorWidgetFactory) {
+    function otusRouteEditor() {
         var ddo = {
             scope: {
                 leftIcon: '@',

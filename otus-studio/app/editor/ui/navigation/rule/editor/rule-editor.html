@@ -1,12 +1,4 @@
-<md-dialog ng-cloak>
-    <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5">
-        <span>Editor de Rota</span>
-    </md-toolbar>
-    <md-content flex>
-        <div layout="row" layout-margin flex>
-            <otus:input-text model="widget.name" md-no-float label="Nome" left-icon="low_priority"></otus:input-text>
-            <otus:input-text model="widget.destination" md-no-float label="Destino"></otus:input-text>
-            <otus:remove-button model="route" ng-model="Route" tooltip="Remover rota" icon="delete" class="md-primary md-layoutTheme-theme md-ink-ripple"></otus:add-button>
-        </div>
-    </md-content>
-</md-dialog>
+<otus:input-text model="widget.when" label="Questão" layout-align="center center" layout="column" flex="30"/>
+<otus:input-text model="widget.operator" label="Condição" layout-align="center center" layout="column" flex="30"/>
+<otus:input-text model="widget.answer" label="Resposta" layout-align="center center" layout="column" flex="30"/>
+<otus:button click="widget.removeRule" tooltip="Remover regra" icon-button="delete" layout-align="center center" flex/>

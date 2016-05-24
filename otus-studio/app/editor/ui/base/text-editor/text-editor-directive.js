@@ -3,9 +3,11 @@
 
     angular
         .module('editor.ui')
-        .directive('otusTextEditor', otusTextEditor);
+        .directive('otusTextEditor', directive);
 
-    function otusTextEditor() {
+    directive.$inject = ['OtusTextEditorWidgetFactory'];
+
+    function directive(OtusTextEditorWidgetFactory) {
         var ddo = {
             scope: {
                 placeholder: '@',
@@ -15,8 +17,10 @@
                 ngModel: '='
             },
             templateUrl: 'app/editor/ui/base/text-editor/text-editor.html',
-            controller: 'OtusTextEditorController',
-            retrict: 'E'
+            retrict: 'E',
+            link: function linkFunc(scope, element) {
+                scope.widget = OtusTextEditorWidgetFactory.create(scope, element);
+            }
         };
 
         return ddo;

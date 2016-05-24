@@ -6,20 +6,21 @@
         .directive('otusNavigationEditor', otusNavigationEditor);
 
     otusNavigationEditor.$inject = [
+        'RouteEditorWidgetFactory',
         'NavigationWidgetFactory',
-        'WorkspaceService'
+        'WorkspaceService',
+        'UUIDService'
     ];
 
-    function otusNavigationEditor(NavigationWidgetFactory, WorkspaceService) {
+    function otusNavigationEditor(RouteEditorWidgetFactory, NavigationWidgetFactory, WorkspaceService, UUIDService) {
         var ddo = {
-            scope: {
-                class: '@'
-            },
+            scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/navigation/editor/navigation-editor.html',
             link: function linkFunc(scope, element, attrs) {
-                var navigation = WorkspaceService.getSurvey().fetchNavigationByOrigin(scope.$parent.widget.question.templateID);
-                scope.widget = NavigationWidgetFactory.create(attrs, scope.$parent.widget, navigation);
+                scope.uuid = UUIDService.generateUUID();
+                var NavigationManager = WorkspaceService.getSurvey().NavigationManager;
+                scope.widget = NavigationWidgetFactory.create(scope, element, NavigationManager, RouteEditorWidgetFactory);
             }
         };
 

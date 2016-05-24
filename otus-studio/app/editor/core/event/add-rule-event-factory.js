@@ -7,38 +7,34 @@
 
     AddRuleEventFactory.$inject = [
         'AddRuleService',
-        'WorkspaceService',
-        'RuleEditorWidgetFactory'
+        'WorkspaceService'
     ];
 
-    function AddRuleEventFactory(AddRuleService, WorkspaceService, RuleEditorWidgetFactory) {
+    function AddRuleEventFactory(AddRuleService, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddRuleEvent(AddRuleService, WorkspaceService, RuleEditorWidgetFactory);
+            return new AddRuleEvent(AddRuleService, WorkspaceService);
         }
 
         return self;
     }
 
-    function AddRuleEvent(AddRuleService, WorkspaceService, RuleEditorWidgetFactory) {
+    function AddRuleEvent(AddRuleService, WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            var ruleCreatorWidget = eventSource.parentWidget;
-            var rule = AddRuleService.execute(ruleCreatorWidget);
-
-            var routeEditorWidget = ruleCreatorWidget.parentWidget;
-            var ruleWidget = RuleEditorWidgetFactory.create(rule, routeEditorWidget);
-            routeEditorWidget.addRule(ruleWidget);
+        function execute(ruleData, route) {
+            var rule = AddRuleService.execute(ruleData, route);
 
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
+
+            return rule;
         }
     }
 

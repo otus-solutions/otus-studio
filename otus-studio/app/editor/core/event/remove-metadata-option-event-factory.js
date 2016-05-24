@@ -29,7 +29,7 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            RemoveMetadataOptionService.execute(eventSource.question);
+            RemoveMetadataOptionService.execute(eventSource.getItem());
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

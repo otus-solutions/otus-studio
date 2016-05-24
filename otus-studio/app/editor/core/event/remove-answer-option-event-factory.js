@@ -29,7 +29,7 @@
         self.execute = execute;
 
         function execute(eventSource) {
-            RemoveAnswerOptionService.execute(eventSource.question);
+            RemoveAnswerOptionService.execute(eventSource.getItem());
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

@@ -6,42 +6,46 @@
         .factory('RuleEditorWidgetFactory', RuleEditorWidgetFactory);
 
     RuleEditorWidgetFactory.$inject = [
-        'UpdateRuleEventFactory'
+        'RemoveRuleEventFactory',
+        'UUID'
     ];
 
-    function RuleEditorWidgetFactory(UpdateRuleEventFactory) {
+    function RuleEditorWidgetFactory(RemoveRuleEventFactory, UUID) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(rule, parentWidget) {
-            return new RuleEditorWidget(rule, parentWidget, UpdateRuleEventFactory);
+            return new RuleEditorWidget(rule, parentWidget, RemoveRuleEventFactory, UUID);
         }
 
         return self;
     }
 
-    function RuleEditorWidget(rule, parentWidget, UpdateRuleEventFactory) {
+    function RuleEditorWidget(rule, parentWidget, RemoveRuleEventFactory, UUID) {
         var self = this;
 
         /* Type definitions */
-        self.name = 'Rule';
+        self.className = self.constructor.name;
 
         /* Instance definitions */
-        self.parentWidget = parentWidget;
-
-        /* View data */
+        self.uuid = UUID.generateUUID();
+        self.parent = parentWidget;
+        self.route = parentWidget.route;
         self.rule = rule;
+        self.newRuleGroup = {};
+        self.ruleGroups = [];
+
+        /* Public methods */
         self.when = when;
         self.operator = operator;
         self.answer = answer;
+        self.removeRule = removeRule;
 
-        /* View data interface */
         function when(value) {
             if (value !== undefined) {
                 self.rule.when = value;
-                UpdateRuleEventFactory.create().execute(self);
             }
 
             return self.rule.when;
@@ -50,7 +54,6 @@
         function operator(value) {
             if (value !== undefined) {
                 self.rule.operator = value;
-                UpdateRuleEventFactory.create().execute(self);
             }
 
             return self.rule.operator;
@@ -59,10 +62,15 @@
         function answer(value) {
             if (value !== undefined) {
                 self.rule.answer = value;
-                UpdateRuleEventFactory.create().execute(self);
             }
 
             return self.rule.answer;
+        }
+
+        function removeRule() {
+            RemoveRuleEventFactory.create().execute(self.rule, self.route);
+            // self.route.conditionSet[0].removeRule(self.rule);
+            self.parent.updateRuleList(self);
         }
     }
 
