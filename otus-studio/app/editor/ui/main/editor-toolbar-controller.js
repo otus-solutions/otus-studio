@@ -20,7 +20,7 @@
         }
 
         function isSurveyEmpty() {
-            return WorkspaceService.getSurvey().questionsCount() === 0 ? true : false;
+            return WorkspaceService.getSurvey().SurveyItemManager.getItemListSize() === 0 ? true : false;
         }
     }
 

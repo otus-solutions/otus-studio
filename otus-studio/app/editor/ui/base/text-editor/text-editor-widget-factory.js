@@ -14,34 +14,51 @@
 
         self.create = create;
 
-        function create(bind) {
-            bind.scope.widget = new OtusTextEditorWidget(bind, UpdateQuestionEventFactory);
-            return bind.scope.widget;
+        function create(scope, element) {
+            return new OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory);
         }
 
         return self;
     }
 
-    function OtusTextEditorWidget(bind, UpdateQuestionEventFactory) {
+    function OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory) {
         var self = this;
 
-        /* Type definitions */
-        self.name = 'OtusTextEditor';
-        self.input = angular.element(bind.element.children()[0]);
+        self.input = angular.element(element.children()[0]);
+        self.ngModel = scope.ngModel;
+        self.placeholder = scope.placeholder;
 
-        /* Instance definitions */
-        self.ngModel = bind.scope.ngModel;
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
 
-        /* User definitions */
-        self.placeholder = bind.scope.placeholder;
+        function getClassName() {
+            return 'OtusTextEditorWidget';
+        }
 
-        bind.element.on('keyup', function(event) {
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        element.on('keyup', function(event) {
             self.ngModel.ptBR.formattedText = event.target.innerHTML;
             self.ngModel.ptBR.plainText = event.target.innerText;
             UpdateQuestionEventFactory.create().execute(self);
-        });
-
-        self.input.on('focus', function(event) {
         });
     }
 

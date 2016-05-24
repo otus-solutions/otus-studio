@@ -17,32 +17,46 @@
         /*Public interface*/
         self.create = create;
 
-        function create(parentWidget) {
-            return new MetadataGroupWidget(parentWidget, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory);
+        function create(scope, element) {
+            return new MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory);
         }
 
         return self;
     }
 
-    function MetadataGroupWidget(parentWidget, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
+    function MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
 
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.css = {};
-
-        /* Template definitions */
-
-        /* Template definitions */
-
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.question = parentWidget.question;
         self.options = [];
 
         /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
+
+        function getClassName() {
+            return 'MetadataGroupWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
 
         function addOption() {
             var newOption = AddMetadataAnswerEventFactory.create().execute(self);

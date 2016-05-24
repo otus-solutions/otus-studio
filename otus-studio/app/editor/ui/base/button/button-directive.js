@@ -15,7 +15,7 @@
             templateUrl: 'app/editor/ui/base/button/button.html',
             retrict: 'E',
             link: function linkFunc(scope, element, attrs) {
-                scope.widget = OtusButtonWidgetFactory.create(scope, attrs, element, scope.$parent.widget);
+                scope.widget = OtusButtonWidgetFactory.create(scope, attrs, scope.$parent.widget);
             }
         };
 

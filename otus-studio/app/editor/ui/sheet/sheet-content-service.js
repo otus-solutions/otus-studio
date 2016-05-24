@@ -27,9 +27,9 @@
             sheet = sheetReference;
         }
 
-        function loadQuestion(question) {
-            self.lastLoadedQuestion = question;
-            var content = TemplateLoaderService.loadDirective('<otus:question-editor></otus:question-editor>', scope);
+        function loadQuestion(item) {
+            self.lastLoadedQuestion = item;
+            var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
             sheet.find('#sheet').append(content);
         }
 
