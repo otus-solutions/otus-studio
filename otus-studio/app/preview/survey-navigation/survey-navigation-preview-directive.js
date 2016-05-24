@@ -19,7 +19,7 @@
                 if(element.find(DOM_LOCATION_NAVEGATION_GRAPH)){
                     $(DOM_LOCATION_NAVEGATION_GRAPH).remove();
                 }
-                var navigationObject = WorkspaceService.getSurvey().navigationList;
+                var navigationObject = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
                 var createdGraph = NavigationPreviewService.createGraph(navigationObject);
                 NavigationPreviewService.renderGraph(createdGraph);
             });
