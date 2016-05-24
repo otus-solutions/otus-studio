@@ -34,7 +34,7 @@
         function execute(questionType) {
             var question = AddQuestionService.execute(questionType);
             SheetContentService.loadQuestion(question);
-            $rootScope.$broadcast('questionPallete.question.add', question);
+            $rootScope.$broadcast('question.add', question);
             WorkspaceService.workspace.currentQuestion = question;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();

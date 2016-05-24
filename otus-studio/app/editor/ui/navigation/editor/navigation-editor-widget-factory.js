@@ -88,15 +88,15 @@
 
         function setupScopeEvents() {
             enableQuestionAddEventListener(disableQuestionRemoveEventListener);
-            enableQuestionRemoveEventListener(getQuestion(), disableQuestionAddEventListener);
+            enableQuestionRemoveEventListener(getQuestion().templateID, disableQuestionAddEventListener);
         }
 
         function enableQuestionAddEventListener() {
-            disableQuestionAddEventListener = scope.$on('questionPallete.question.add', addQuestionListener);
+            disableQuestionAddEventListener = scope.$on('question.add', addQuestionListener);
         }
 
-        function enableQuestionRemoveEventListener(question) {
-            disableQuestionRemoveEventListener = scope.$on('questionEditorWidget.delete.' + question.templateID, removeQuestionListener);
+        function enableQuestionRemoveEventListener(templateID) {
+            disableQuestionRemoveEventListener = scope.$on('question.remove.' + templateID, removeQuestionListener);
         }
 
         function addQuestionListener(event, addedQuestion) {
@@ -104,18 +104,19 @@
             if (navigation) {
                 // routeCreatorWidget.routeData.parentNavigation = navigation;
                 addRoute(navigation.listRoutes()[0]);
-                enableQuestionRemoveEventListener(addedQuestion);
+                enableQuestionRemoveEventListener(addedQuestion.templateID);
                 disableQuestionAddEventListener();
             }
         }
 
-        function removeQuestionListener() {
+        function removeQuestionListener(event, removedQuestion) {
             routeEditorWidgets = [];
             navigation = NavigationManagerService.getNavigationByOrigin(getQuestion().templateID);
 
             if (navigation) {
                 navigation.routes.forEach(function(route) {
                     addRoute(route);
+                    enableQuestionRemoveEventListener(route.destination);
                 });
             } else {
                 enableQuestionAddEventListener();

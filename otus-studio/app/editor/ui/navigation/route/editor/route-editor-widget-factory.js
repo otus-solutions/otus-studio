@@ -31,8 +31,10 @@
         self.className = self.constructor.name;
         self.css = {};
         self.css.ngClass = {};
+        self.template = {};
 
         /* Template definitions */
+        
 
         /* CSS definitions */
         self.css.ngClass.isSimpleRoute = route.isSimple || true;

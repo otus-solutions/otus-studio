@@ -10,7 +10,8 @@
     function otusInputText(OtusInputTextWidgetFactory) {
         var ddo = {
             scope: {
-                model: '='
+                model: '=',
+                disabled: '@'
             },
             templateUrl: 'app/editor/ui/base/input-text/input-text.html',
             retrict: 'E',

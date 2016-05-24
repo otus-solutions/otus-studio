@@ -53,7 +53,6 @@
         function deleteQuestion() {
             RemoveQuestionEventFactory.create().execute(question);
             element.remove();
-            scope.$root.$broadcast('questionEditorWidget.delete.' + question.templateID);
         }
     }
 

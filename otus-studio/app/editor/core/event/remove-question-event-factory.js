@@ -31,7 +31,7 @@
 
         function execute(question) {
             RemoveQuestionService.execute(question, WorkspaceService.getSurvey());
-            $rootScope.$broadcast('questionPallete.question.remove', question);
+            $rootScope.$broadcast('question.remove.' + question.templateID, question);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }
