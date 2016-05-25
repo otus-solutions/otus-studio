@@ -1,1 +1,5 @@
-<survey-template ng-repeat="template in controller.listTemplates()" ng-click="controller.onDelete({template: template})" survey-template="template"></survey-template>
+<md-input-container layout-align="center" flex=100>
+    <input aria-label="search" ng-model="search" placeholder="Busca" type="text"></input>
+</md-input-container>
+
+<survey-template ng-repeat="template in filteredTemplate = ($ctrl.listTemplates() | filter:search)" survey-template="template"></survey-template>

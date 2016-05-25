@@ -266,6 +266,15 @@ pre {
  * Survey Templates
  *
  */
+survey-template md-card {
+    cursor: pointer;
+}
+
+survey-template md-card:focus {
+    outline: none;
+    border: 0;
+ }
+
 .selected-template {
     background-color: bisque !important;
 }

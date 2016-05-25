@@ -9,21 +9,26 @@
 
     function SurveyTemplateManager(CrossSessionDatabaseService) {
         var self = this;
+
         self.templatesList = [];
         self.selectedTemplate = {};
 
-
         self.getAllTemplates = getAllTemplates;
-        self.removeSelectedTemplate = removeSelectedTemplate;
-        self.hasSelectedTemplate = hasSelectedTemplate;
         self.selectTemplate = selectTemplate;
 
+        self.removeSelectedTemplate = removeSelectedTemplate;
+        self.hasSelectedTemplate = hasSelectedTemplate;
+
         function selectTemplate(template) {
-            self.selectedTemplate = template.template;
+            if (self.selectedTemplate.$$hashKey === template.template.$$hashKey) {
+                self.selectedTemplate = {};
+            } else {
+                self.selectedTemplate = template.template;
+            }
         }
 
         function hasSelectedTemplate() {
-            return true;
+            return Object.keys(self.selectedTemplate).length !== 0;
         }
 
         function getAllTemplates() {
@@ -38,7 +43,19 @@
             if (idx >= 0) {
                 self.templatesList.splice(idx, 1);
             }
+            cleanSelectedTemplate();
         }
+
+        /**
+         *
+         * Private Functions
+         *
+         */
+
+        function cleanSelectedTemplate() {
+            self.selectedTemplate = {};
+        }
+
 
     }
 

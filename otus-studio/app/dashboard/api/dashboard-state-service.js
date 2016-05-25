@@ -17,7 +17,7 @@
         /* Public interface */
         self.goToLogin = goToLogin;
         self.goToHome = goToHome;
-        self.goToSurveyForms = goToSurveyForms;
+        self.goToFormTemplates = goToFormTemplates;
         self.goToEditor = goToEditor;
         self.logout = logout;
 
@@ -37,9 +37,9 @@
             $location.url(APP_STATE.HOME);
         }
 
-        function goToSurveyForms() {
-            self.currentState = 'SurveyForms';
-            $location.url(APP_STATE.SURVEY_FORMS);
+        function goToFormTemplates() {
+            self.currentState = 'FormTemplates';
+            $location.url(APP_STATE.FORM_TEMPLATES);
         }
 
         function goToEditor() {

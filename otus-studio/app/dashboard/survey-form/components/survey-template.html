@@ -1,6 +1,6 @@
-<md-card>
+<md-card ng-click="$ctrl.selectTemplate()">
     <md-card-content>
-        <h2>{{controller.surveyTemplate.template.identity.name}}</h2>
-        <p>{{controller.surveyTemplate.template.identity.acronym}}</p>
+        <h2>{{$ctrl.surveyTemplate.template.identity.name}}</h2>
+        <p>{{$ctrl.surveyTemplate.template.identity.acronym}}</p>
     </md-card-content>
 </md-card>

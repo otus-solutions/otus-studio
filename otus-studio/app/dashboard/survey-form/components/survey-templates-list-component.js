@@ -6,7 +6,6 @@
         .component('surveyTemplatesList', {
             templateUrl: 'app/dashboard/survey-form/components/survey-templates-list.html',
             controller: SurveyTemplateControllerList,
-            controllerAs: 'controller'
         });
 
     SurveyTemplateControllerList.$inject = ['SurveyTemplateManager'];
@@ -24,10 +23,6 @@
         self.$onInit = function() {
             SurveyTemplateManager.getAllTemplates();
         };
-
-        function selectFormTemplate(template) {
-            self.selectedFormTemplate = template;
-        }
 
     }
 

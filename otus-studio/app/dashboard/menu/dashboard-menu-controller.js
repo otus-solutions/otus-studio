@@ -19,7 +19,7 @@
         self.open = open;
         self.close = close;
         self.openHome = openHome;
-        self.openSurveyForms = openSurveyForms;
+        self.openFormTemplates = openFormTemplates;
         self.logout = logout;
 
         function getSelectedSystemArea() {
@@ -39,8 +39,8 @@
             close();
         }
 
-        function openSurveyForms() {
-            DashboardStateService.goToSurveyForms();
+        function openFormTemplates() {
+            DashboardStateService.goToFormTemplates();
             close();
         }
 

@@ -30,11 +30,13 @@
         }
 
         function getAllTemplatesRevision() {
+            var defer = $q.defer();
             $indexedDB.openStore('survey_template', function(store) {
                 store.getAll().then(function(templates) {
-                    console.log(templates);
+                    defer.resolve(templates);
                 });
             });
+            return defer.promise;
         }
 
         function getAllTemplatesRevisionByAuthor() {
@@ -46,9 +48,7 @@
                 criteria = criteria.$index('contributor_idx');
 
                 store.eachWhere(criteria).then(function(e) {
-
                     defer.resolve(e);
-                    //console.log(e);
                     //console.log(e[0].template.identity.acronym);
                     //https://github.com/bramski/angular-indexedDB
                 });
@@ -62,18 +62,20 @@
          *
          */
         function getAllKeys() {
+            var defer = $q.defer();
             $indexedDB.openStore('survey_template', function(store) {
                 store.getAllKeys().then(function(e) {
-                    console.log(e);
+                    defer.resolve(e);
                 });
             });
+            return defer.promise;
         }
 
-        init();
+        //init();
 
         function init() {
-            var promise = getAllTemplatesRevisionByAuthor();
-            promise.then(function(value){
+            var promise = getAllTemplatesRevision();
+            promise.then(function(value) {
                 console.log(value);
             });
         }

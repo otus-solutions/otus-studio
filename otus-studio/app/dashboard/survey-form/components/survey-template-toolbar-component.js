@@ -6,7 +6,6 @@
         .component('surveyTemplateToolbar', {
             templateUrl: 'app/dashboard/survey-form/components/survey-template-toolbar-template.html',
             controller: SurveyTemplateToolbarController,
-            controllerAs: 'controller'
         });
 
     SurveyTemplateToolbarController.$inject = ['SurveyTemplateManager'];

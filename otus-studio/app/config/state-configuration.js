@@ -5,7 +5,7 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
-            'SURVEY_FORMS': 'survey-forms',
+            'FORM_TEMPLATES': 'form-templates',
             'EDITOR': 'editor',
             'LOGIN': 'login',
             'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
@@ -49,24 +49,24 @@
                     }
                 }
             })
-            .state('survey-forms', {
-                url: '/survey-forms',
+            .state('form-templates', {
+                url: '/form-templates',
                 views: {
                     'system-wrap' : {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
-                    'dashboard-menu@survey-forms': {
+                    'dashboard-menu@form-templates': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content@survey-forms': {
+                    'system-content@form-templates': {
                         templateUrl: 'app/dashboard/template/dashboard-content-template.html',
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-view@survey-forms': {
+                    'section-view@form-templates': {
                         templateUrl: 'app/dashboard/survey-form/survey-form-view-section.html'
                     },
-                    'section-commands@survey-forms': {
+                    'section-commands@form-templates': {
                         templateUrl: 'app/dashboard/survey-form/survey-form-commands-section.html'
                     }
                 }
