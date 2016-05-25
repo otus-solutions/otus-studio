@@ -1,0 +1,39 @@
+<!--=============================================>>>>>
+= Inside System =
+===============================================>>>>-->
+
+<!-- HiddenLeftMenu -->
+<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
+    <md-content ui-view="dashboard-menu"></md-content>
+</md-sidenav>
+
+<md-content layout="column" flex ng-cloak>
+    <!-- MenuBar -->
+    <md-toolbar layout="row" id="system-toolbar" class="md-accent md-hue-1">
+        <a class="navbar-brand" rel="home" title="Otus" layout="row" layout-align="center center">
+            <img ng-src="app/assets/img/coruja_construtora.png" class="image-otus-toolbar"/>
+        </a>
+        <md-button ng-click="dashboardMenu.open()">
+            <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+            Otus Studio
+        </md-button>
+        <span flex></span>
+        <span flex="5"></span>
+        <md-whiteframe class="md-whiteframe-3dp image-component" layout="row" >
+            <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
+                <img ng-src="app/assets/img/user.png" class="image-user-div" />
+            </a>
+        </md-whiteframe>
+        <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
+            <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+        </md-button>
+    </md-toolbar>
+    <!-- End Menubar -->
+
+    <!-- MainContent -->
+    <md-content ui-view="system-content" layout="row" flex></md-content>
+
+</md-content>
+
+<!--= End of Inside System =*/-->
+<!--=============================================<<<<<-->

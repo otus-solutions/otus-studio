@@ -1,0 +1,16 @@
+<md-dialog md-theme="layoutTheme" aria-label="Sair">
+    <md-dialog-content>
+        <md-toolbar class="md-toolbar-tools">
+            <h3 class="md-title">
+                <span>Sair</span>
+            </h3>
+        </md-toolbar>
+        <md-content class="autoScroll" layout-padding>
+            Você tem certeza que deseja sair do sistema?
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="controller.cancel({ action: 'cancel' })" class="md-raised">Cancelar</md-button>
+        <md-button ng-click="controller.confirm({ action: 'confirm' })" class="md-raised md-primary">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>

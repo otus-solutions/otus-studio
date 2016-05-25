@@ -1,0 +1,18 @@
+<md-content layout="column" flex>
+    <div layout="row" class="label-container" layout-align="left center">
+        <otus:text-editor ng-model="widget.getItem().label" placeholder="Clique aqui para editar a label" flex></otus:text-editor>
+    </div>
+    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+        <md-tab label="Resposta">
+            <md-content bind-html-compile="widget.getTemplate()"></md-content>
+        </md-tab>
+        <md-tab label="Metadado">
+            <md-content>
+                <otus:metadata-group></otus:metadata-group>
+            </md-content>
+        </md-tab>
+        <md-tab label="Comentário">
+            <md-content></md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>

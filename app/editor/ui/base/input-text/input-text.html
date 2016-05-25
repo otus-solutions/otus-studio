@@ -1,0 +1,13 @@
+<md-input-container layout="row">
+    <label>{{widget.template.label}}</label>
+
+    <md-icon class="material-icons" aria-label="{{widget.template.ariaLabel}}" ng-show="widget.template.hasLeftIcon">
+        {{widget.template.leftIcon}}
+    </md-icon>
+
+    <input ng-model="widget.model" type="text" aria-label="{{widget.template.ariaLabel}}" />
+
+    <md-icon class="material-icons" aria-label="{{widget.template.ariaLabel}}" ng-show="widget.template.hasRightIcon">
+        {{widget.template.rightIcon}}
+    </md-icon>
+</md-input-container>

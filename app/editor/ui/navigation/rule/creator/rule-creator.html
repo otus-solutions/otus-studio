@@ -1,0 +1,12 @@
+<!--
+<md-select placeholder="Questão" ng-model="widget.when" md-on-open="widget.avaiableQuestions()" style="min-width: 200px;">
+<md-option ng-value="question" ng-repeat="question in widget.avaiableQuestions">{{question}}</md-option>
+</md-select>
+-->
+<md-content layout-align="center center" layout="column" flex="15" layout-padding class="md-accent md-hue-1">
+    <label style="color: #555555">Nova Regra</label>
+</md-content>
+<otus:input-text model="widget.when" label="Questão" layout-align="center center" layout="column" flex="25"/>
+<otus:input-text model="widget.operator" label="Condição" layout-align="center center" layout="column" flex="25"/>
+<otus:input-text model="widget.answer" label="Resposta" layout-align="center center" layout="column" flex="25"/>
+<otus:button click="widget.saveRule" tooltip="Salvar regra" icon-button="save" layout-align="center center" flex/>
