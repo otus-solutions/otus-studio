@@ -60,8 +60,8 @@
                     username: process.env.npm_config_sonarDatabaseUsername,
                     password: process.env.npm_config_sonarDatabasePassword
                 },
-                projectKey: 'sonar:otus-studio-js',
-                projectName: 'otus-studio-js',
+                projectKey: 'sonar:'+packageJson.name,
+                projectName: packageJson.name,
                 projectVersion: packageJson.version,
                 // comma-delimited string of source directories
                 sources: 'app',
@@ -89,7 +89,6 @@
             }))
             .pipe(zip('otus-studio.war'))
             .pipe(gulp.dest("./dist"));
-
     });
 
 }());
