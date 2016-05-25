@@ -1,0 +1,10 @@
+<otus:button click="widget.addRouteCondition" label="Criar conjunto de condições" left-icon="add" layout-align="center center" flex/>
+<md-divider></md-divider>
+<md-tabs md-border-bottom md-autoselect>
+    <md-tab ng-repeat="routeCondition in widget.routeConditions" label="{{routeCondition.name}}">
+        <md-content>
+            <otus:rule-editor layout="row" ng-repeat="rule in routeCondition.rules" widget="rule" flex="80"></otus:rule-editor>
+            <otus:rule-creator layout="row"></otus:rule-creator>
+        </md-content>
+    </md-tab>
+</md-tabs>
