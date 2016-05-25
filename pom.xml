@@ -151,7 +151,7 @@
                                 <configuration>
                                     <executable>npm</executable>
                                     <arguments>
-                                        <argument>--value=${project.parent.version}</argument>
+                                        <argument>--value=${project.version}</argument>
                                         <argument>run</argument>
                                         <argument>gulp</argument>
                                         <argument>upgrade-version</argument>
