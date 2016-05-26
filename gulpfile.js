@@ -22,7 +22,7 @@
                     browserSyncSpa(/^[^\.]+$/, baseDir)
                 ]
             },
-            startPath: 'studio/login'
+            startPath: 'otus-studio/login'
         });
 
         gulp.watch([
