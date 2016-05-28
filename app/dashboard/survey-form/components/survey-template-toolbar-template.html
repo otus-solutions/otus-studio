@@ -4,13 +4,13 @@
             <span>Lista de Templates</span>
         </h2>
     </div>
-    <md-button aria-label="abrir" ng-show="$ctrl.SurveyTemplateManager.hasSelectedTemplate()">
+    <md-button aria-label="abrir" ng-show="$ctrl.SurveyTemplateManagerService.hasSelectedSurveyTemplate()">
         <md-tooltip md-direction="down">
             abrir editor
         </md-tooltip>
         <md-icon md-svg-icon="table-edit" aria-label="abrir"></md-icon>
     </md-button>
-    <md-menu md-position-mode="target-right target" md-offset="0 52" ng-show="$ctrl.SurveyTemplateManager.hasSelectedTemplate()">
+    <md-menu md-position-mode="target-right target" md-offset="0 52" ng-show="$ctrl.SurveyTemplateManagerService.hasSelectedSurveyTemplate()">
         <md-button aria-label="opções" class="md-icon-button" ng-click="$mdOpenMenu($event)">
             <md-tooltip md-direction="down">
                 opções
@@ -19,7 +19,7 @@
         </md-button>
         <md-menu-content width="4">
             <md-menu-item>
-                <md-button aria-label="excluir" ng-click="$ctrl.SurveyTemplateManager.removeSelectedTemplate()">
+                <md-button aria-label="excluir" ng-click="$ctrl.SurveyTemplateManagerService.deleteSelectedSurveyTemplate()">
                     <div layout="row">
                         <p flex>Excluir</p>
                         <md-icon md-svg-icon="delete" aria-label="excluir" style="margin: auto 3px auto 0;"></md-icon>

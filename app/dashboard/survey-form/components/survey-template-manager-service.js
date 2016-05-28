@@ -3,60 +3,54 @@
 
     angular
         .module('surveyTemplates')
-        .service('SurveyTemplateManager', SurveyTemplateManager);
+        .service('SurveyTemplateManagerService', SurveyTemplateManagerService);
 
-    SurveyTemplateManager.$inject = ['CrossSessionDatabaseService'];
+    SurveyTemplateManagerService.$inject = ['CrossSessionDatabaseService', '$mdToast'];
 
-    function SurveyTemplateManager(CrossSessionDatabaseService) {
+    function SurveyTemplateManagerService(CrossSessionDatabaseService, $mdToast) {
         var self = this;
 
-        self.templatesList = [];
-        self.selectedTemplate = {};
+        self.surveyTemplatesList = [];
+        self.selectedSurveyTemplate = {};
 
-        self.getAllTemplates = getAllTemplates;
-        self.selectTemplate = selectTemplate;
+        self.initializeSurveyTemplateList = initializeSurveyTemplateList;
+        self.selectSurveyTemplate = selectSurveyTemplate;
+        self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
+        self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
 
-        self.removeSelectedTemplate = removeSelectedTemplate;
-        self.hasSelectedTemplate = hasSelectedTemplate;
-
-        function selectTemplate(template) {
-            if (self.selectedTemplate.$$hashKey === template.template.$$hashKey) {
-                self.selectedTemplate = {};
-            } else {
-                self.selectedTemplate = template.template;
-            }
-        }
-
-        function hasSelectedTemplate() {
-            return Object.keys(self.selectedTemplate).length !== 0;
-        }
-
-        function getAllTemplates() {
-            var promise = CrossSessionDatabaseService.getAllTemplatesRevisionByAuthor();
+        function initializeSurveyTemplateList() {
+            var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
             promise.then(function(value) {
-                self.templatesList = value;
+                self.surveyTemplatesList = value;
             });
         }
 
-        function removeSelectedTemplate() {
-            var idx = self.templatesList.indexOf(self.selectedTemplate);
-            if (idx >= 0) {
-                self.templatesList.splice(idx, 1);
+        function selectSurveyTemplate(template) {
+            if (self.selectedSurveyTemplate.$$hashKey === template.$$hashKey) {
+                cleanselectedSurveyTemplate();
+            } else {
+                self.selectedSurveyTemplate = template;
             }
-            cleanSelectedTemplate();
         }
 
-        /**
-         *
-         * Private Functions
-         *
-         */
-
-        function cleanSelectedTemplate() {
-            self.selectedTemplate = {};
+        function hasSelectedSurveyTemplate() {
+            return Object.keys(self.selectedSurveyTemplate).length !== 0;
         }
 
+        function deleteSelectedSurveyTemplate() {
+            var idx = self.surveyTemplatesList.indexOf(self.selectedSurveyTemplate);
+            if (idx >= 0) {
+                self.surveyTemplatesList.splice(idx, 1);
+                CrossSessionDatabaseService.deleteSurveyTemplate(self.selectedSurveyTemplate.template_oid);
+            }
+            cleanselectedSurveyTemplate();
+            $mdToast.show($mdToast.simple().textContent('Template removido com sucesso!'));
+        }
 
+        /* Private methods */
+        function cleanselectedSurveyTemplate() {
+            self.selectedSurveyTemplate = {};
+        }
     }
 
 })();

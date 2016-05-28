@@ -8,17 +8,16 @@
             controller: SurveyTemplateToolbarController,
         });
 
-    SurveyTemplateToolbarController.$inject = ['SurveyTemplateManager'];
+    SurveyTemplateToolbarController.$inject = ['SurveyTemplateManagerService'];
 
-    function SurveyTemplateToolbarController(SurveyTemplateManager) {
+    function SurveyTemplateToolbarController(SurveyTemplateManagerService) {
         var self = this;
-        self.SurveyTemplateManager = SurveyTemplateManager;
-        self.removeSelectedTemplate = removeSelectedTemplate;
+        self.SurveyTemplateManagerService = SurveyTemplateManagerService;
+        self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
 
-        function removeSelectedTemplate() {
-            SurveyTemplateManager.removeTemplate();
+        function deleteSelectedSurveyTemplate() {
+            SurveyTemplateManagerService.deleteSelectedSurveyTemplate();
         }
-
     }
 
 })();

@@ -8,22 +8,20 @@
             controller: SurveyTemplateControllerList,
         });
 
-    SurveyTemplateControllerList.$inject = ['SurveyTemplateManager'];
+    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
 
-    function SurveyTemplateControllerList(SurveyTemplateManager) {
+    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
         var self = this;
 
-        self.SurveyTemplateManager = SurveyTemplateManager;
-        self.listTemplates = listTemplates;
+        self.getSurveyTemplatesList = getSurveyTemplatesList;
 
-        function listTemplates() {
-            return SurveyTemplateManager.templatesList;
+        function getSurveyTemplatesList() {
+            return SurveyTemplateManagerService.surveyTemplatesList;
         }
 
         self.$onInit = function() {
-            SurveyTemplateManager.getAllTemplates();
+            SurveyTemplateManagerService.initializeSurveyTemplateList();
         };
-
     }
 
 })();

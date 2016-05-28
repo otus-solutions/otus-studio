@@ -45,6 +45,7 @@
         }
 
         function logout() {
+            close();
             LogoutDialogService.showDialog()
                 .onConfirm(DashboardStateService.logout);
         }

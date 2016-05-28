@@ -13,14 +13,16 @@
 
     function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
         var self = this;
+        var STORE_NAME = 'survey_template';
 
         /* Public interface */
         self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
         self.getAllTemplatesRevision = getAllTemplatesRevision;
-        self.getAllTemplatesRevisionByAuthor = getAllTemplatesRevisionByAuthor;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
 
         function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore('survey_template', function(store) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
                 var entry = {};
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
@@ -31,7 +33,7 @@
 
         function getAllTemplatesRevision() {
             var defer = $q.defer();
-            $indexedDB.openStore('survey_template', function(store) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
                 store.getAll().then(function(templates) {
                     defer.resolve(templates);
                 });
@@ -39,9 +41,9 @@
             return defer.promise;
         }
 
-        function getAllTemplatesRevisionByAuthor() {
+        function getAllSurveyTemplatesByContributor() {
             var defer = $q.defer();
-            $indexedDB.openStore('survey_template', function(store) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
 
                 var criteria = store.query();
                 criteria = criteria.$eq('fagner');
@@ -56,6 +58,16 @@
             return defer.promise;
         }
 
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.delete(templateOID).then(function() {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
         /**
          *
          * Returns a User + UUID Template + Repository in Base64
@@ -63,23 +75,13 @@
          */
         function getAllKeys() {
             var defer = $q.defer();
-            $indexedDB.openStore('survey_template', function(store) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
                 store.getAllKeys().then(function(e) {
                     defer.resolve(e);
                 });
             });
             return defer.promise;
         }
-
-        //init();
-
-        function init() {
-            var promise = getAllTemplatesRevision();
-            promise.then(function(value) {
-                console.log(value);
-            });
-        }
-
 
     }
 

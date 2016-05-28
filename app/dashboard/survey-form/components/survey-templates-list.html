@@ -2,4 +2,4 @@
     <input aria-label="search" ng-model="search" placeholder="Busca" type="text"></input>
 </md-input-container>
 
-<survey-template ng-repeat="template in filteredTemplate = ($ctrl.listTemplates() | filter:search)" survey-template="template"></survey-template>
+<survey-template ng-repeat="template in filteredTemplate = ($ctrl.getSurveyTemplatesList() | filter:search)" survey-template="template"></survey-template>
