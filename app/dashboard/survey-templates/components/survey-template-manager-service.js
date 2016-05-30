@@ -5,9 +5,9 @@
         .module('surveyTemplates')
         .service('SurveyTemplateManagerService', SurveyTemplateManagerService);
 
-    SurveyTemplateManagerService.$inject = ['CrossSessionDatabaseService', '$mdToast'];
+    SurveyTemplateManagerService.$inject = ['CrossSessionDatabaseService', '$mdToast', 'SurveyExportService'];
 
-    function SurveyTemplateManagerService(CrossSessionDatabaseService, $mdToast) {
+    function SurveyTemplateManagerService(CrossSessionDatabaseService, $mdToast, SurveyExportService) {
         var self = this;
 
         self.surveyTemplatesList = [];
@@ -17,6 +17,7 @@
         self.selectSurveyTemplate = selectSurveyTemplate;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
         self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
+        self.exportSelectedSurveyTemplate = exportSelectedSurveyTemplate;
 
         function initializeSurveyTemplateList() {
             var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
@@ -45,6 +46,10 @@
             }
             cleanselectedSurveyTemplate();
             $mdToast.show($mdToast.simple().textContent('Template removido com sucesso!'));
+        }
+
+        function exportSelectedSurveyTemplate() {
+            return SurveyExportService.exportSurvey(JSON.stringify(self.selectedSurveyTemplate.template));
         }
 
         /* Private methods */

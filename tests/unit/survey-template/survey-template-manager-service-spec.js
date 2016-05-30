@@ -92,14 +92,14 @@ describe("SurveyTemplateManagerService", function() {
 
     function mockSurveyTemplate() {
         Mock.surveyTemplate = {
-            $$hashKey: 001,
+            $$hashKey: 1,
             template_oid: 'survey.oid',
             name: 'survey.name',
             version: 'survey.version',
             toJson: function() {
                 return '{}';
             }
-        }
+        };
     }
 
 });

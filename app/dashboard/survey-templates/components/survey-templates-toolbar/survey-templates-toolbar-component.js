@@ -14,9 +14,14 @@
         var self = this;
         self.SurveyTemplateManagerService = SurveyTemplateManagerService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
+        self.exportSelectedSurveyTemplate = exportSelectedSurveyTemplate;
 
         function deleteSelectedSurveyTemplate() {
             SurveyTemplateManagerService.deleteSelectedSurveyTemplate();
+        }
+
+        function exportSelectedSurveyTemplate() {
+            SurveyTemplateManagerService.exportSelectedSurveyTemplate();
         }
     }
 
