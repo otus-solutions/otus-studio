@@ -3,14 +3,14 @@
 
     angular
         .module('surveyTemplates')
-        .component('surveyTemplateToolbar', {
-            templateUrl: 'app/dashboard/survey-form/components/survey-template-toolbar-template.html',
-            controller: SurveyTemplateToolbarController,
+        .component('surveyTemplatesToolbar', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-template.html',
+            controller: SurveyTemplatesToolbarController,
         });
 
-    SurveyTemplateToolbarController.$inject = ['SurveyTemplateManagerService'];
+    SurveyTemplatesToolbarController.$inject = ['SurveyTemplateManagerService'];
 
-    function SurveyTemplateToolbarController(SurveyTemplateManagerService) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService) {
         var self = this;
         self.SurveyTemplateManagerService = SurveyTemplateManagerService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;

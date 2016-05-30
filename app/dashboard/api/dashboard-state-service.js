@@ -38,8 +38,8 @@
         }
 
         function goToFormTemplates() {
-            self.currentState = 'FormTemplates';
-            $location.url(APP_STATE.FORM_TEMPLATES);
+            self.currentState = 'SurveyTemplates';
+            $location.url(APP_STATE.SURVEY_TEMPLATES);
         }
 
         function goToEditor() {

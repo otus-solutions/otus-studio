@@ -4,7 +4,7 @@
     angular
         .module('surveyTemplates')
         .component('surveyTemplate', {
-            templateUrl: 'app/dashboard/survey-form/components/survey-template.html',
+            templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
             controller: SurveyTemplateController,
             require: {
                 parent: '^surveyTemplatesList'

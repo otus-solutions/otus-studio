@@ -4,7 +4,7 @@
     angular
         .module('surveyTemplates')
         .component('surveyTemplatesList', {
-            templateUrl: 'app/dashboard/survey-form/components/survey-templates-list.html',
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
             controller: SurveyTemplateControllerList,
         });
 
