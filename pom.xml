@@ -10,7 +10,6 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <owail.sender.version>0.0.2-SNAPSHOT</owail.sender.version>
 
         <wildfly-hostname>localhost</wildfly-hostname>
         <wildfly-port>9990</wildfly-port>
@@ -19,8 +18,8 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git@github.com:ccem-dev/studio.git</connection>
-        <developerConnection>scm:git:git@github.com:ccem-dev/studio.git</developerConnection>
+        <connection>scm:git:git@github.com:ccem-dev/otus-studio.git</connection>
+        <developerConnection>scm:git:git@github.com:ccem-dev/otus-studio.git</developerConnection>
     </scm>
 
     <repositories>
