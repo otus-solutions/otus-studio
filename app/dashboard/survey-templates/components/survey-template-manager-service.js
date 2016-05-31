@@ -11,13 +11,15 @@
         var self = this;
 
         self.surveyTemplatesList = [];
-        self.selectedSurveyTemplate = {};
+        self.selectedSurveyTemplatesList = [];
 
         self.initializeSurveyTemplateList = initializeSurveyTemplateList;
         self.selectSurveyTemplate = selectSurveyTemplate;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
         self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
         self.exportSelectedSurveyTemplate = exportSelectedSurveyTemplate;
+        self.removeOfSelectedSurveyTemplatesList = removeOfSelectedSurveyTemplatesList;
+        self.hasOnlyOneSelectedSurveyTemplate = hasOnlyOneSelectedSurveyTemplate;
 
         function initializeSurveyTemplateList() {
             var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
@@ -27,35 +29,60 @@
         }
 
         function selectSurveyTemplate(template) {
-            if (self.selectedSurveyTemplate.$$hashKey === template.$$hashKey) {
-                cleanselectedSurveyTemplate();
+            if (self.hasSelectedSurveyTemplate()) {
+                if (isOnTheList(template)) {
+                    self.removeOfSelectedSurveyTemplatesList(template);
+                } else {
+                    self.selectedSurveyTemplatesList.push(template);
+                }
             } else {
-                self.selectedSurveyTemplate = template;
+                self.selectedSurveyTemplatesList.push(template);
             }
         }
 
         function hasSelectedSurveyTemplate() {
-            return Object.keys(self.selectedSurveyTemplate).length !== 0;
+            return self.selectedSurveyTemplatesList.length !== 0;
+        }
+
+        function hasOnlyOneSelectedSurveyTemplate() {
+            return self.selectedSurveyTemplatesList.length === 1;
         }
 
         function deleteSelectedSurveyTemplate() {
-            var idx = self.surveyTemplatesList.indexOf(self.selectedSurveyTemplate);
-            if (idx >= 0) {
-                self.surveyTemplatesList.splice(idx, 1);
-                CrossSessionDatabaseService.deleteSurveyTemplate(self.selectedSurveyTemplate.template_oid);
-            }
-            cleanselectedSurveyTemplate();
-            $mdToast.show($mdToast.simple().textContent('Template removido com sucesso!'));
+            self.selectedSurveyTemplatesList.forEach(function(template) {
+                CrossSessionDatabaseService.deleteSurveyTemplate(template.template_oid);
+                removeOfSurveyTemplatesList(template);
+            });
+
+            $mdToast.show($mdToast.simple().textContent('Template(s) removido com sucesso!'));
         }
 
-        function exportSelectedSurveyTemplate() {
-            return SurveyExportService.exportSurvey(JSON.stringify(self.selectedSurveyTemplate.template));
+        function exportSelectedSurveyTemplate(template) {
+            return SurveyExportService.exportSurvey(JSON.stringify(template.template));
         }
 
-        /* Private methods */
-        function cleanselectedSurveyTemplate() {
-            self.selectedSurveyTemplate = {};
+        function removeOfSelectedSurveyTemplatesList(template) {
+            self.selectedSurveyTemplatesList.splice(getSelectedTemplateIndex(template), 1);
         }
+
+        function removeOfSurveyTemplatesList(template) {
+            self.surveyTemplatesList.splice(getTemplateIndex(template), 1);
+        }
+
+        /* Private methods TEMPLATES LIST*/
+        function getTemplateIndex(template) {
+            return self.surveyTemplatesList.indexOf(template);
+        }
+
+        /* Private methods SELECTED LIST*/
+        function getSelectedTemplateIndex(template) {
+            return self.selectedSurveyTemplatesList.indexOf(template);
+        }
+
+        function isOnTheList(template) {
+            return getSelectedTemplateIndex(template) >= 0 ? true : false;
+        }
+
     }
 
 })();

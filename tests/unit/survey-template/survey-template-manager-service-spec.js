@@ -7,7 +7,7 @@ describe("SurveyTemplateManagerService", function() {
 
     beforeEach(function() {
         module('studio');
-        mockSurveyTemplate();
+        mockSurveyTemplates();
 
         inject(function(_$injector_, $q, _$rootScope_) {
             $rootScope = _$rootScope_;
@@ -33,7 +33,7 @@ describe("SurveyTemplateManagerService", function() {
         });
 
         it("should populate a surveyTemplatesList", function() {
-            deferred.resolve(Mock.surveyTemplate);
+            deferred.resolve(Mock.surveyTemplate_ONE);
 
             spyOn(Mock.CrossSessionDatabaseService, "getAllSurveyTemplatesByContributor").and.returnValue(deferred.promise);
 
@@ -41,22 +41,22 @@ describe("SurveyTemplateManagerService", function() {
 
             $rootScope.$digest();
 
-            expect(service.surveyTemplatesList).toBe(Mock.surveyTemplate);
+            expect(service.surveyTemplatesList).toBe(Mock.surveyTemplate_ONE);
         });
     });
 
     describe("selectSurveyTemplate method", function() {
         beforeEach(function() {
-            service.selectSurveyTemplate(Mock.surveyTemplate);
+            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
         });
 
-        it("should put a selected survey template in selectedSurveyTemplate attribute", function() {
-            expect(service.selectedSurveyTemplate).toBe(Mock.surveyTemplate);
+        it("should put a selected survey template in selectedSurveyTemplatesList", function() {
+            expect(service.selectedSurveyTemplatesList).toContain(Mock.surveyTemplate_ONE);
         });
 
-        it("should remove a selected survey template if it goes selected again", function() {
-            service.selectSurveyTemplate(Mock.surveyTemplate);
-            expect(service.selectedSurveyTemplate).toEqual({});
+        it("should remove a selected survey template of the selectedSurveyTemplatesList if it goes selected again", function() {
+            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
+            expect(service.selectedSurveyTemplatesList.length).toBe(0);
         });
 
     });
@@ -64,9 +64,9 @@ describe("SurveyTemplateManagerService", function() {
     describe("deleteSelectedSurveyTemplate method", function() {
         beforeEach(function() {
             /* populate the surveyTemplatesList */
-            service.surveyTemplatesList.push(Mock.surveyTemplate);
+            service.surveyTemplatesList.push(Mock.surveyTemplate_ONE);
             /* selecting a template */
-            service.selectSurveyTemplate(Mock.surveyTemplate);
+            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
         });
 
         it("should call CrossSessionDatabaseService.deleteSurveyTemplate method", function() {
@@ -74,13 +74,26 @@ describe("SurveyTemplateManagerService", function() {
 
             service.deleteSelectedSurveyTemplate();
 
-            expect(Mock.CrossSessionDatabaseService.deleteSurveyTemplate).toHaveBeenCalledWith(Mock.surveyTemplate.template_oid);
+            expect(Mock.CrossSessionDatabaseService.deleteSurveyTemplate).toHaveBeenCalledWith(Mock.surveyTemplate_ONE.template_oid);
         });
 
-        it("should remove a recently removed surveyTemplate of selectedSurveyTemplate", function() {
+        it("should remove a recently removed surveyTemplate of surveyTemplateList", function() {
             service.deleteSelectedSurveyTemplate();
 
-            expect(service.selectedSurveyTemplate).toEqual({});
+            expect(service.surveyTemplatesList.length).toBe(0);
+        });
+
+    });
+
+    describe("hasSelectedSurveyTemplate method", function () {
+
+        it("should return TRUE when the selectedSurveyTemplatesList is NOT empty", function () {
+            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
+            expect(service.hasSelectedSurveyTemplate()).toBe(true);
+        });
+
+        it("should return FALSE when the selectedSurveyTemplatesList is empty", function () {
+            expect(service.hasSelectedSurveyTemplate()).toBe(false);
         });
 
     });
@@ -90,8 +103,8 @@ describe("SurveyTemplateManagerService", function() {
         return Mock.CrossSessionDatabaseService;
     }
 
-    function mockSurveyTemplate() {
-        Mock.surveyTemplate = {
+    function mockSurveyTemplates() {
+        Mock.surveyTemplate_ONE = {
             $$hashKey: 1,
             template_oid: 'survey.oid',
             name: 'survey.name',

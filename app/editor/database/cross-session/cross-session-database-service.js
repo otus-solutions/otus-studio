@@ -12,12 +12,13 @@
     ];
 
     function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
-        var self = this;
-        var STORE_NAME = 'survey_template';
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
 
         /* Public interface */
         self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllTemplatesRevision = getAllTemplatesRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
         self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
 
@@ -31,7 +32,7 @@
             });
         }
 
-        function getAllTemplatesRevision() {
+        function getAllSurveyTemplates() {
             var defer = $q.defer();
             $indexedDB.openStore(STORE_NAME, function(store) {
                 store.getAll().then(function(templates) {
@@ -46,13 +47,11 @@
             $indexedDB.openStore(STORE_NAME, function(store) {
 
                 var criteria = store.query();
-                criteria = criteria.$eq('fagner');
-                criteria = criteria.$index('contributor_idx');
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
 
-                store.eachWhere(criteria).then(function(e) {
-                    defer.resolve(e);
-                    //console.log(e[0].template.identity.acronym);
-                    //https://github.com/bramski/angular-indexedDB
+                store.eachWhere(criteria).then(function(templates) {
+                    defer.resolve(templates);
                 });
             });
             return defer.promise;
@@ -69,9 +68,7 @@
         }
 
         /**
-         *
          * Returns a User + UUID Template + Repository in Base64
-         *
          */
         function getAllKeys() {
             var defer = $q.defer();
@@ -82,7 +79,6 @@
             });
             return defer.promise;
         }
-
     }
 
 }());

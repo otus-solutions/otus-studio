@@ -19,23 +19,15 @@ describe('SurveyExportService', function() {
     describe('service.exportSurvey method', function functionName() {
 
         it('should return correct string for download', function functionName() {
-            var returnedJSON = service.exportSurvey(Mock.WorkspaceService.getSurvey());
+            var returnedJSON = service.exportSurvey(Mock.WorkspaceService.getSurvey().toJson());
 
             expect(returnedJSON).toEqual(Mock.SURVEY_TEMPLATE_RESULT);
-        });
-
-        it('should call survey.toJson()', function functionName() {
-            spyOn(Mock.survey, 'toJson');
-
-            service.exportSurvey(Mock.WorkspaceService.getSurvey());
-
-            expect(Mock.survey.toJson).toHaveBeenCalled();
         });
 
         it('should call encodeURIComponent', function functionName() {
             spyOn(window, 'encodeURIComponent');
 
-            service.exportSurvey(Mock.WorkspaceService.getSurvey());
+            service.exportSurvey(Mock.WorkspaceService.getSurvey().toJson());
 
             expect(window.encodeURIComponent).toHaveBeenCalledWith(jasmine.any(String));
         });

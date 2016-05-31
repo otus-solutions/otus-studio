@@ -25,6 +25,10 @@
             SurveyTemplateManagerService.selectSurveyTemplate(self.surveyTemplate);
         }
 
+        self.$onDestroy = function() {
+            SurveyTemplateManagerService.removeOfSelectedSurveyTemplatesList(self.surveyTemplate);
+        };
+
         // DOM Manipulation
         $element.on('click', function() {
             var mdCard = $element.children();

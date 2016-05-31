@@ -15,6 +15,7 @@
         self.SurveyTemplateManagerService = SurveyTemplateManagerService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
         self.exportSelectedSurveyTemplate = exportSelectedSurveyTemplate;
+        self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
 
         function deleteSelectedSurveyTemplate() {
             SurveyTemplateManagerService.deleteSelectedSurveyTemplate();
@@ -22,6 +23,10 @@
 
         function exportSelectedSurveyTemplate() {
             SurveyTemplateManagerService.exportSelectedSurveyTemplate();
+        }
+
+        function openEditorForSelectedSurveyTemplate() {
+            alert('Não implementado!');
         }
     }
 

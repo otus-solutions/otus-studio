@@ -1,5 +1,6 @@
-<md-input-container layout-align="center" flex=100>
-    <input aria-label="search" ng-model="search" placeholder="Busca" type="text"></input>
-</md-input-container>
-
+<md-content layout="row" layout-align="center center" flex=100>
+    <md-input-container  flex=50>
+        <input aria-label="search" ng-model="search" placeholder="Busca" type="text"></input>
+    </md-input-container>
+</md-content>
 <survey-template ng-repeat="template in filteredTemplate = ($ctrl.getSurveyTemplatesList() | filter:search)" survey-template="template"></survey-template>

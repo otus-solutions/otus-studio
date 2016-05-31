@@ -5,7 +5,7 @@
         .module('editor')
         .service('SurveyEditorService', SurveyEditorService);
 
-    SurveyEditorService.$inject = ['WorkspaceService'];
+    SurveyEditorService.$inject = ['WorkspaceService', '$window'];
 
     function SurveyEditorService(WorkspaceService) {
         var self = this;
@@ -15,7 +15,7 @@
 
         function startEditor(initializationData) {
             WorkspaceService.initializeWorkspace({
-                owner: 'fagner'
+                owner: 'visitor'
             });
             WorkspaceService.startNewWork(initializationData);
         }
