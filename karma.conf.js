@@ -27,6 +27,7 @@ module.exports = function(config) {
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
+            NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
             NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
@@ -38,6 +39,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks-dependencies.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks.js',
+            NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
             /* Otus platform */
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model-min.js',

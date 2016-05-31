@@ -5,26 +5,24 @@
         .module('studio.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$http', '$window', 'DashboardStateService'];
+    LoginController.$inject = ['$scope', '$http', '$window', 'DashboardStateService', 'RestResourceService', '$mdToast'];
 
-    function LoginController($scope, $http, $window, DashboardStateService) {
-
-        var HTTP_POST_URL = 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/login';
+    function LoginController($scope, $http, $window, DashboardStateService, RestResourceService, $mdToast) {
 
         $scope.authenticate = function(user) {
-            $scope.invalidLogin = false;
+            RestResourceService.setHostname(user.domain);
 
-            $http.post(HTTP_POST_URL, user).then(function(response) {
-                if (!response.data.hasErrors) {
-                    $window.sessionStorage.userUUID = response.data.data;
-                    $scope.invalidLogin = false;
+            var authenticatorResource = RestResourceService.getAuthenticatorResource();
+
+            authenticatorResource.authenticate(user, function(response) {
+                if (response.data) {
                     DashboardStateService.goToHome();
                 } else {
-                    $scope.invalidLogin = true;
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Login Invalido!')
+                    );
                 }
-
-            }, function(response) {
-                //TODO
             });
         };
 
