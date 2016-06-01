@@ -10,7 +10,8 @@
         'lokijs',
         'indexedDB',
         'immutable',
-        'ui.utils.masks'
+        'ui.utils.masks',
+        'otusDomainClient'
     ]);
 
 }());

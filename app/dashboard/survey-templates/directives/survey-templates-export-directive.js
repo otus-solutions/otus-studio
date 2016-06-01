@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('editor.workspace')
+        .module('surveyTemplates')
         .directive('surveyTemplatesExport', surveyTemplatesExport);
 
     surveyTemplatesExport.$inject = ['SurveyTemplateManagerService','$mdToast', '$timeout'];
