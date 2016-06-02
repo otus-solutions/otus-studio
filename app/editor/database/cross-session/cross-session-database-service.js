@@ -21,6 +21,7 @@
         self.getAllSurveyTemplates = getAllSurveyTemplates;
         self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
 
         function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore(STORE_NAME, function(store) {
@@ -30,6 +31,23 @@
                 entry.template = JSON.parse(template.toJson());
                 store.upsert(entry).then(function(e) {});
             });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function(success) {
+                    defer.resolve(success);
+                }, function(error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
         }
 
         function getAllSurveyTemplates() {

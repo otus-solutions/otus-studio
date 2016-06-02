@@ -27,7 +27,7 @@
 
         function deleteSurveyTemplate(template) {
             CrossSessionDatabaseService.deleteSurveyTemplate(template.template_oid);
-            removeOfSurveyTemplatesList(template);
+            _removeOfSurveyTemplatesList(template);
         }
 
         function exportSurveyTemplate(template) {
@@ -35,12 +35,12 @@
         }
 
         /* Private methods */
-        function getTemplateIndex(template) {
+        function _getTemplateIndex(template) {
             return self.surveyTemplates.indexOf(template);
         }
 
-        function removeOfSurveyTemplatesList(template) {
-            self.surveyTemplates.splice(getTemplateIndex(template), 1);
+        function _removeOfSurveyTemplatesList(template) {
+            self.surveyTemplates.splice(_getTemplateIndex(template), 1);
         }
     }
 

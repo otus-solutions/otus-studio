@@ -278,3 +278,15 @@ survey-template md-card:focus {
 .selected-template {
     background-color: bisque !important;
 }
+
+.template-animate.ng-enter, .template.animate.ng-leave {
+    transition: 500ms linear all;
+}
+
+.template-animate.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.template-animate.ng-enter.ng-enter-active {
+    opacity: 1;
+}

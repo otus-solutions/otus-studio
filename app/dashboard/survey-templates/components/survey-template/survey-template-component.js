@@ -23,7 +23,9 @@
         self.isSelected = false;
 
         self.$onDestroy = function() {
-            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+            if (self.isSelected) {
+                SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+            }
         };
 
         $element.on('click', function() {

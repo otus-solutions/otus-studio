@@ -19,7 +19,7 @@
         }
 
         function removeSurveyTemplate(template) {
-            self.selectedSurveyTemplates.splice(getSelectedTemplateIndex(template), 1);
+            self.selectedSurveyTemplates.splice(_getSelectedTemplateIndex(template), 1);
         }
 
         function hasSelectedSurveyTemplate() {
@@ -31,7 +31,7 @@
         }
 
         /* Private methods */
-        function getSelectedTemplateIndex(template) {
+        function _getSelectedTemplateIndex(template) {
             return self.selectedSurveyTemplates.indexOf(template);
         }
     }
