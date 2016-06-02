@@ -31,4 +31,18 @@ describe("component: surveyTemplateList", function() {
         });
     });
 
+    describe("getSurveyTemplatesList method", function() {
+        beforeEach(function() {
+            ctrl = $componentController('surveyTemplatesList',
+                null, {
+                    SurveyTemplateManagerService: Mock.SurveyTemplateManagerService
+                }
+            );
+        });
+
+        it("should return a list of surveyTemplates", function() {
+            expect(ctrl.getSurveyTemplatesList()).toEqual([]);
+        });
+    });
+
 });

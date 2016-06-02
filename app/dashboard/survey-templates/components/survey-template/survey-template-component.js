@@ -6,38 +6,56 @@
         .component('surveyTemplate', {
             templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
             controller: SurveyTemplateController,
-            require: {
-                parent: '^surveyTemplatesList'
-            },
             bindings: {
                 surveyTemplate: '<'
             }
         });
 
-    SurveyTemplateController.$inject = ['SurveyTemplateManagerService', '$element'];
+    SurveyTemplateController.$inject = [
+        '$element',
+        '$scope',
+        'SelectedSurveyTemplatesManagementService'
+    ];
 
-    function SurveyTemplateController(SurveyTemplateManagerService, $element) {
+    function SurveyTemplateController($element, $scope, SelectedSurveyTemplatesManagementService) {
+        var mdCard;
         var self = this;
-
-        self.selectSurveyTemplate = selectSurveyTemplate;
-
-        function selectSurveyTemplate() {
-            SurveyTemplateManagerService.selectSurveyTemplate(self.surveyTemplate);
-        }
+        self.isSelected = false;
 
         self.$onDestroy = function() {
-            SurveyTemplateManagerService.removeOfSelectedSurveyTemplatesList(self.surveyTemplate);
+            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
         };
 
-        // DOM Manipulation
         $element.on('click', function() {
-            var mdCard = $element.children();
-            if (mdCard.hasClass('selected-template')) {
-                mdCard.removeClass('selected-template');
+            mdCard = $element.children();
+            if (!self.isSelected) {
+                _select();
             } else {
-                mdCard.addClass('selected-template');
+                _remove();
             }
+
+            _scopeApply();
         });
+
+        function _select() {
+            self.isSelected = true;
+            mdCard.addClass('selected-template');
+            SelectedSurveyTemplatesManagementService.selectSurveyTemplate(self.surveyTemplate);
+        }
+
+        function _remove() {
+            self.isSelected = false;
+            mdCard.removeClass('selected-template');
+            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+        }
+
+        /**
+         * This method calls the AngularJS Digest Cycle
+         * It updates all watchers
+         */
+        function _scopeApply() {
+            $scope.$apply();
+        }
     }
 
 })();

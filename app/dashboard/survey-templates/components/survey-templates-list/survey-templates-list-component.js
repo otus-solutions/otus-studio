@@ -16,7 +16,7 @@
         self.getSurveyTemplatesList = getSurveyTemplatesList;
 
         function getSurveyTemplatesList() {
-            return SurveyTemplateManagerService.surveyTemplatesList;
+            return SurveyTemplateManagerService.surveyTemplates;
         }
 
         self.$onInit = function() {

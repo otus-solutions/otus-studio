@@ -8,21 +8,23 @@
             controller: SurveyTemplatesToolbarController,
         });
 
-    SurveyTemplatesToolbarController.$inject = ['SurveyTemplateManagerService'];
+    SurveyTemplatesToolbarController.$inject = [
+        'SurveyTemplateManagerService',
+        'SelectedSurveyTemplatesManagementService',
+        '$mdToast'
+    ];
 
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast) {
         var self = this;
-        self.SurveyTemplateManagerService = SurveyTemplateManagerService;
+        self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
-        self.exportSelectedSurveyTemplate = exportSelectedSurveyTemplate;
         self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
 
         function deleteSelectedSurveyTemplate() {
-            SurveyTemplateManagerService.deleteSelectedSurveyTemplate();
-        }
-
-        function exportSelectedSurveyTemplate() {
-            SurveyTemplateManagerService.exportSelectedSurveyTemplate();
+            SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
+                SurveyTemplateManagerService.deleteSurveyTemplate(template);
+            });
+            $mdToast.show($mdToast.simple().textContent('Template(s) removido(s) com sucesso!'));
         }
 
         function openEditorForSelectedSurveyTemplate() {

@@ -13,7 +13,8 @@ describe("SurveyTemplateManagerService", function() {
             $rootScope = _$rootScope_;
             deferred = $q.defer();
             service = _$injector_.get('SurveyTemplateManagerService', {
-                CrossSessionDatabaseService: mockCrossSessionDatabaseService(_$injector_)
+                CrossSessionDatabaseService: mockCrossSessionDatabaseService(_$injector_),
+                SurveyExportService: mockSurveyExportService(_$injector_)
             });
         });
     });
@@ -32,7 +33,7 @@ describe("SurveyTemplateManagerService", function() {
             expect(Mock.CrossSessionDatabaseService.getAllSurveyTemplatesByContributor).toHaveBeenCalled();
         });
 
-        it("should populate a surveyTemplatesList", function() {
+        it("should populate a surveyTemplates", function() {
             deferred.resolve(Mock.surveyTemplate_ONE);
 
             spyOn(Mock.CrossSessionDatabaseService, "getAllSurveyTemplatesByContributor").and.returnValue(deferred.promise);
@@ -41,59 +42,40 @@ describe("SurveyTemplateManagerService", function() {
 
             $rootScope.$digest();
 
-            expect(service.surveyTemplatesList).toBe(Mock.surveyTemplate_ONE);
+            expect(service.surveyTemplates).toBe(Mock.surveyTemplate_ONE);
         });
     });
 
-    describe("selectSurveyTemplate method", function() {
+    describe("deleteTemplate method", function() {
         beforeEach(function() {
-            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
-        });
-
-        it("should put a selected survey template in selectedSurveyTemplatesList", function() {
-            expect(service.selectedSurveyTemplatesList).toContain(Mock.surveyTemplate_ONE);
-        });
-
-        it("should remove a selected survey template of the selectedSurveyTemplatesList if it goes selected again", function() {
-            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
-            expect(service.selectedSurveyTemplatesList.length).toBe(0);
-        });
-
-    });
-
-    describe("deleteSelectedSurveyTemplate method", function() {
-        beforeEach(function() {
-            /* populate the surveyTemplatesList */
-            service.surveyTemplatesList.push(Mock.surveyTemplate_ONE);
-            /* selecting a template */
-            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
+            /* populate the surveyTemplates */
+            service.surveyTemplates.push(Mock.surveyTemplate_ONE);
         });
 
         it("should call CrossSessionDatabaseService.deleteSurveyTemplate method", function() {
             spyOn(Mock.CrossSessionDatabaseService, "deleteSurveyTemplate");
 
-            service.deleteSelectedSurveyTemplate();
+            service.deleteSurveyTemplate(Mock.surveyTemplate_ONE);
 
             expect(Mock.CrossSessionDatabaseService.deleteSurveyTemplate).toHaveBeenCalledWith(Mock.surveyTemplate_ONE.template_oid);
         });
 
         it("should remove a recently removed surveyTemplate of surveyTemplateList", function() {
-            service.deleteSelectedSurveyTemplate();
+            service.deleteSurveyTemplate(Mock.surveyTemplate_ONE);
 
-            expect(service.surveyTemplatesList.length).toBe(0);
+            expect(service.surveyTemplates.length).toBe(0);
         });
 
     });
 
-    describe("hasSelectedSurveyTemplate method", function () {
+    describe("exportSurveyTemplate method", function() {
 
-        it("should return TRUE when the selectedSurveyTemplatesList is NOT empty", function () {
-            service.selectSurveyTemplate(Mock.surveyTemplate_ONE);
-            expect(service.hasSelectedSurveyTemplate()).toBe(true);
-        });
+        it("should call SurveyExportService.exportSurvey method", function() {
+            spyOn(Mock.SurveyExportService, "exportSurvey");
 
-        it("should return FALSE when the selectedSurveyTemplatesList is empty", function () {
-            expect(service.hasSelectedSurveyTemplate()).toBe(false);
+            service.exportSurveyTemplate(Mock.surveyTemplate_ONE);
+
+            expect(Mock.SurveyExportService.exportSurvey).toHaveBeenCalled();
         });
 
     });
@@ -103,9 +85,15 @@ describe("SurveyTemplateManagerService", function() {
         return Mock.CrossSessionDatabaseService;
     }
 
+    function mockSurveyExportService($injector) {
+        Mock.SurveyExportService = $injector.get('SurveyExportService');
+        return Mock.SurveyExportService;
+    }
+
     function mockSurveyTemplates() {
         Mock.surveyTemplate_ONE = {
             $$hashKey: 1,
+            template: {},
             template_oid: 'survey.oid',
             name: 'survey.name',
             version: 'survey.version',
