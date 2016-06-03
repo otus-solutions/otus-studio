@@ -16,16 +16,15 @@
         </div>
 
         <text-edition-menu></text-edition-menu>
-
+        <md-button class="md-fab md-mini" ng-click="mainContainer.showQuestionsMenu()">content</md-button>
     </md-toolbar>
+
     <md-content layout flex="20">
-        <md-sidenav class="palette" md-is-locked-open="true" layout="column" flex="10">
-            <otus:survey-item-palette></otus:survey-item-palette>
-        </md-sidenav>
         <md-content layout="column" layout-padding flex class="stage">
             <md-tabs id="stage-mode-selector" flex>
                 <md-tab id="editing-tab" label="Edição">
                     <otus:stage></otus:stage>
+
                 </md-tab>
                 <!--
 	            <md-tab id="preview-tab" label="Preview">

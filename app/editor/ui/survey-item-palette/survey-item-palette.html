@@ -1,15 +1,22 @@
-<div id="survey-questions" layout="column">
-    <md-button class="md-raised md-primary">Questões</md-button>
-    <otus:button click="widget.addCalendarQuestion" label="Calendário" left-icon="date_range"/>
-    <otus:button click="widget.addIntegerQuestion" label="Número Inteiro" left-icon="exposure_zero"/>
-    <otus:button click="widget.addDecimalQuestion" label="Número Decimal" left-icon="exposure_zero"/>
-    <otus:button click="widget.addSingleSelectionQuestion" label="Seleção Simples" left-icon="radio_button_checked"/>
-    <otus:button click="widget.addTextQuestion" label="Texto" left-icon="text_format"/>
-    <otus:button click="widget.addTimeQuestion" label="Relógio" left-icon="access_time"/>
-    <otus:button click="widget.addEmailQuestion" label="Email" left-icon="email" />
-    <otus:button click="widget.addPhoneQuestion" label="Telefone" left-icon="phone" />
+<md-bottom-sheet class="md-list" layout-align="space-around" layout="row">
+    <md-list ng-show="isOpened" layout="row">
+        <md-list-item><otus:button click="widget.addTextItem" tooltip="lala" left-icon="message"/></md-list-item>
+        <md-list-item><otus:button click="widget.addImageItem" tooltip="lala" left-icon="image"/></md-list-item>
+    </md-list>
+    <md-list layout="row">
+        <md-list-item><otus:button click="widget.addCalendarQuestion" tooltip="lala" left-icon="date_range"/></md-list-item>
+        <md-list-item><otus:button click="widget.addIntegerQuestion" tooltip="lala" left-icon="exposure_zero"/></md-list-item>
+        <md-list-item><otus:button click="widget.addDecimalQuestion" tooltip="lala" left-icon="exposure_zero"/></md-list-item>
+        <md-list-item><otus:button click="widget.addSingleSelectionQuestion" tooltip="lala" left-icon="radio_button_checked"/></md-list-item>
+        <md-list-item><otus:button click="widget.addTextQuestion" tooltip="lala" left-icon="text_format"/></md-list-item>
+        <md-list-item><otus:button click="widget.addTimeQuestion" tooltip="lala" left-icon="access_time"/></md-list-item>
+        <md-list-item><otus:button click="widget.addEmailQuestion" tooltip="lala" left-icon="email"/></md-list-item>
+        <md-list-item><otus:button click="widget.addPhoneQuestion" tooltip="lala" left-icon="phone"/></md-list-item>
+        <!--md-list-item>
+            <md-button class="md-fab" ng-click="isOpened=!isOpened">+</md-button>
+        </md-list-item-->
+        <md-list-item><otus:button click="widget.addTextItem" tooltip="lala" left-icon="message"/></md-list-item>
+        <md-list-item><otus:button click="widget.addImageItem" tooltip="lala" left-icon="image"/></md-list-item>
+    </md-list>
 
-    <md-button class="md-raised md-primary">Itens</md-button>
-    <otus:button click="widget.addTextItem" left-icon="message" label="Mensagem" />
-    <otus:button click="widget.addImageItem" left-icon="image" label="Imagem" />
-</div>
+</md-bottom-sheet>
