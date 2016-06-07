@@ -11,20 +11,32 @@
         /* Public interface */
         self.create = create;
 
-        function create(parentWidget) {
-            return new TextItemWidget(parentWidget);
+        function create(scope) {
+            return new TextItemWidget(scope);
         }
 
         return self;
     }
 
-    function TextItemWidget(parentWidget) {
+    function TextItemWidget(scope) {
         var self = this;
 
         self.name = 'TextItem';
-        self.parentWidget = parentWidget;
-        self.item = parentWidget.item;
-        self.template = '<text-item></text-item>';
+        self.getParent = getParent;
+        self.item = getItem();
+        self.getTemplate = getTemplate;
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<text-item></text-item>';
+        }
     }
 
 }());

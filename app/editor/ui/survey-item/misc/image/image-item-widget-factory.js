@@ -11,20 +11,32 @@
         /* Public interface */
         self.create = create;
 
-        function create(parentWidget) {
-            return new ImageItemWidget(parentWidget);
+        function create(scope) {
+            return new ImageItemWidget(scope);
         }
 
         return self;
     }
 
-    function ImageItemWidget(parentWidget) {
+    function ImageItemWidget(scope) {
         var self = this;
 
         self.name = 'ImageItem';
-        self.parentWidget = parentWidget;
-        self.item = parentWidget.item;
-        self.template = '<image-item></image-item>';
+        self.getParent = getParent;
+        self.item = getItem();
+        self.getTemplate = getTemplate;
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<image-item></image-item>';
+        }
     }
 
 }());
