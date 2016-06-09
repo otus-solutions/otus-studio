@@ -1,30 +1,39 @@
 <div layout="column" flex>
     <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
-        <div layout="row" flex="15">
-            <md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
-                <md-icon md-svg-icon="content-save"></md-icon>
-                <md-tooltip md-direction="down">
-                    Salvar
-                </md-tooltip>
-            </md-button>
-            <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()" aria-label="Exportar" class="editor-icon">
-                <md-icon md-svg-icon="file-export"></md-icon>
-                <md-tooltip md-direction="down">
-                    Exportar
-                </md-tooltip>
-            </md-button>
-        </div>
+        <div class="md-toolbar-tools" layout-align="space-between center">
+            <div layout="row" layout-align="end center">
+                <md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
+                    <md-icon md-svg-icon="content-save"></md-icon>
+                    <md-tooltip md-direction="down">
+                        Salvar
+                    </md-tooltip>
+                </md-button>
+                <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()" aria-label="Exportar" class="editor-icon">
+                    <md-icon md-svg-icon="file-export"></md-icon>
+                    <md-tooltip md-direction="down">
+                        Exportar
+                    </md-tooltip>
+                </md-button>
+            </div>
+            <text-edition-menu></text-edition-menu>
+            <div layout="row" layout-align="end center">
+                <md-button class="md-fab md-mini md-primary" ng-click="mainContainer.showQuestionsMenu()">
+                    <md-tooltip md-visible="true" md-delay="0" md-direction="bottom" md-autohide="true" ng-cloak>
+                        Menu de questões
+                    </md-tooltip>
+                    <md-icon class="material-icons">library_books</md-icon>
+                </md-button>
 
-        <text-edition-menu></text-edition-menu>
-        <md-button class="md-fab md-mini" ng-click="mainContainer.showQuestionsMenu()">content</md-button>
+            </div>
+        </div>
     </md-toolbar>
 
     <md-content layout flex="20">
+
         <md-content layout="column" layout-padding flex class="stage">
             <md-tabs id="stage-mode-selector" flex>
                 <md-tab id="editing-tab" label="Edição">
                     <otus:stage></otus:stage>
-
                 </md-tab>
                 <!--
 	            <md-tab id="preview-tab" label="Preview">
