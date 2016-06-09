@@ -42,6 +42,7 @@
         self.addTextItem = addTextItem;
         self.addImageItem = addImageItem;
         self.addPhoneQuestion = addPhoneQuestion;
+        self.addCheckboxQuestion = addCheckboxQuestion;
 
         /* Actions */
         function addCalendarQuestion() {
@@ -82,6 +83,10 @@
 
         function addPhoneQuestion() {
             AddSurveyItemEventFactory.create().execute('PhoneQuestion');
+        }
+
+        function addCheckboxQuestion() {
+            AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
         }
     }
 

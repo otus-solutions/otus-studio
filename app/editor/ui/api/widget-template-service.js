@@ -15,7 +15,9 @@
                 'TextQuestion': '<text-question></text-question>',
                 'TimeQuestion': '<time-question></time-question>',
                 'PhoneQuestion': '<phone-question></phone-question>',
-                'MetadataGroup' : '<metadata-question></metadata-question>'
+                'CheckboxQuestion': '<checkbox-question></checkbox-question>',
+                'MetadataGroup' : '<metadata-question></metadata-question>',
+
             };
 
         /* Public interface */
