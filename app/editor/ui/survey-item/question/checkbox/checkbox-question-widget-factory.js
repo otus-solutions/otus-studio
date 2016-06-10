@@ -8,11 +8,10 @@
     CheckboxQuestionWidgetFactory.$inject = [
         'AnswerOptionWidgetFactory',
         'AddAnswerOptionEventFactory',
-        'RemoveAnswerOptionEventFactory'
+        'RemoveAnswerOptionEventFactory',
     ];
 
     function CheckboxQuestionWidgetFactory(AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
-
         var self = this;
 
         /* Public interface */
@@ -22,7 +21,7 @@
             return new CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
         }
 
-        return self;''
+        return self;
     }
 
     function CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
@@ -39,7 +38,6 @@
         self.getTemplate = getTemplate;
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
-
 
         function getClassName() {
             return 'CheckboxQuestionWidget';

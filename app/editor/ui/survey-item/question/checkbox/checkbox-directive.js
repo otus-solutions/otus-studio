@@ -10,11 +10,10 @@
     ];
 
     function directive(CheckboxQuestionWidgetFactory) {
-
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/survey-item/question/checkbox/group/checkbox-question.html',
+            templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question.html',
             link: function linkFunc(scope) {
                 scope.widget = scope.$parent.widget;
             }
