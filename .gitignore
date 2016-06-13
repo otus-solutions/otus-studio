@@ -9,9 +9,8 @@
 *.swp
 npm-debug.log
 **/unit-result.report.html
-**/node_modules/
+/node_modules/
 **/*.orig
 **/env.properties
 dist/otus-studio.war
 **/.sonar
-
