@@ -11,10 +11,12 @@
     SurveyTemplatesToolbarController.$inject = [
         'SurveyTemplateManagerService',
         'SelectedSurveyTemplatesManagementService',
-        '$mdToast'
+        '$mdToast',
+        '$state',
+        '$window'
     ];
 
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, $state, $window) {
         var self = this;
         self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
@@ -28,7 +30,10 @@
         }
 
         function openEditorForSelectedSurveyTemplate() {
-            alert('Não implementado!');
+            $window.sessionStorage.setItem('surveyTemplate_OID', SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template.oid);
+            $state.transitionTo('editor', {
+                template: SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template
+            });
         }
     }
 

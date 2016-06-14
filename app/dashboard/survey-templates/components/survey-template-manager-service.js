@@ -17,6 +17,7 @@
         self.initializeSurveyTemplateList = initializeSurveyTemplateList;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
         self.exportSurveyTemplate = exportSurveyTemplate;
+        self.editSurveyTemplate = editSurveyTemplate;
 
         function initializeSurveyTemplateList() {
             var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
@@ -32,6 +33,10 @@
 
         function exportSurveyTemplate(template) {
             return SurveyExportService.exportSurvey(JSON.stringify(template.template));
+        }
+
+        function editSurveyTemplate(template) {
+                
         }
 
         /* Private methods */

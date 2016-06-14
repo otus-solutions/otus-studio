@@ -11,7 +11,7 @@
             'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
+    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider, $stateParams, $window, CrossSessionDatabaseService) {
 
         var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
 
@@ -19,7 +19,7 @@
             .state('login', {
                 url: '/login',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/authenticator/login.html',
                         controller: 'LoginController'
                     }
@@ -28,7 +28,7 @@
             .state('home', {
                 url: '/home',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -52,7 +52,7 @@
             .state('survey-templates', {
                 url: '/survey-templates',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -73,8 +73,11 @@
             })
             .state('editor', {
                 url: '/editor',
+                params: {
+                    template: null
+                },
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -91,7 +94,23 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                            },
+                            teste: function load($stateParams, SurveyEditorService) {
+                                var surveyTemplate;
+
+                                if ($stateParams.template) {
+                                    surveyTemplate = $stateParams.template;
+                                    _startEditor(surveyTemplate);
+
+                                }
+                                function _startEditor(surveyTemplate) {
+                                    SurveyEditorService.startEditorWithSurveyTemplate({
+                                        name: surveyTemplate.identity.name,
+                                        acronym: surveyTemplate.identity.acronym,
+                                        oid: surveyTemplate.oid
+                                    });
+                                }
                             }
                         }
                     }

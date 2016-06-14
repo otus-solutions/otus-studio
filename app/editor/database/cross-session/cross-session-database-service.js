@@ -22,6 +22,7 @@
         self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
         self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
 
         function saveSurveyTemplateRevision(template, session) {
             $indexedDB.openStore(STORE_NAME, function(store) {
@@ -93,6 +94,16 @@
             $indexedDB.openStore(STORE_NAME, function(store) {
                 store.getAllKeys().then(function(e) {
                     defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.find(oid).then(function(template) {
+                    defer.resolve(template);
                 });
             });
             return defer.promise;

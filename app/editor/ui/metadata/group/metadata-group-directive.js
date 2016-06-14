@@ -16,6 +16,8 @@
             templateUrl: 'app/editor/ui/metadata/group/metadata-group.html',
             link: function(scope, element) {
                 scope.widget = MetadataGroupWidgetFactory.create(scope, element);
+                //TODO
+                //console.log(scope.widget);
             }
         };
 

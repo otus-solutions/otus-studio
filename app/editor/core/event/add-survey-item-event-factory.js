@@ -30,6 +30,7 @@
         var self = this;
 
         self.execute = execute;
+        self.load = load;
 
         function execute(itemType) {
             var item = AddSurveyItemService.execute(itemType, WorkspaceService.getSurvey());
@@ -38,6 +39,23 @@
             WorkspaceService.workspace.currentItem = item;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
+        }
+
+        function load(itemToLoad) {
+            var newItem = AddSurveyItemService.execute(itemToLoad.objectType, WorkspaceService.getSurvey());
+
+            if (newItem.isQuestion()) {
+                //copy label
+                newItem.label = itemToLoad.label;
+                //copy metadata options
+                newItem.metadata.options = itemToLoad.metadata.options;
+            } else {
+                //TODO
+            }
+
+            SheetContentService.loadQuestion(newItem);
+            $rootScope.$broadcast('item.add', newItem);
+            WorkspaceService.workspace.currentItem = newItem;
         }
     }
 

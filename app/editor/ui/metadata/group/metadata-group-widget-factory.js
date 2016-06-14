@@ -28,6 +28,17 @@
         var self = this;
 
         self.options = [];
+        /**
+        //TODO: Pegando as opções de metadadado do item
+        init();
+
+        function init() {
+            getItem().metadata.options.forEach(function(metadata){
+
+            });
+
+        }
+        */
 
         /* Public methods */
         self.getClassName = getClassName;

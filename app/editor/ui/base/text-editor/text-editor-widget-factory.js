@@ -34,6 +34,7 @@
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
+        self.getLabel = getLabel;
 
         function getClassName() {
             return 'OtusTextEditorWidget';
@@ -41,6 +42,11 @@
 
         function getUUID() {
             return scope.uuid;
+        }
+
+        function getLabel() {
+            var aux = self.ngModel.ptBR.formattedText || '';
+            return aux;
         }
 
         function getElement() {
