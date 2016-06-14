@@ -23,7 +23,7 @@
         "build": "gulp compress"
     },
     "dependencies": {
-        "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#QES-59",
+        "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
         "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
         "gulp-concat": "2.6.0",
         "gulp-minify": "0.0.11",
