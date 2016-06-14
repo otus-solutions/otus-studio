@@ -5,30 +5,20 @@
         .module('studio.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$http', '$window', 'DashboardStateService', 'RestResourceService', '$mdToast'];
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
 
-    function LoginController($scope, $http, $window, DashboardStateService, RestResourceService, $mdToast) {
+    function LoginController($scope, DashboardStateService, AuthenticationService) {
+        var self = this;
+        self.authenticate = authenticate;
+        self.visitAccess = visitAccess;
 
-        $scope.authenticate = function(user) {
-            RestResourceService.setHostname(user.domain);
+        function authenticate(user) {
+            AuthenticationService.login(user);
+        }
 
-            var authenticatorResource = RestResourceService.getAuthenticatorResource();
-
-            authenticatorResource.authenticate(user, function(response) {
-                if (response.data) {
-                    DashboardStateService.goToHome();
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Login Invalido!')
-                    );
-                }
-            });
-        };
-
-        $scope.visitAccess = function() {
+        function visitAccess() {
             DashboardStateService.goToHome();
-        };
+        }
     }
 
 }());

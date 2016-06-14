@@ -7,8 +7,7 @@
             'HOME': 'home',
             'SURVEY_FORMS': 'survey-forms',
             'EDITOR': 'editor',
-            'LOGIN': 'login',
-            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
+            'LOGIN': 'login'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -21,7 +20,7 @@
                 views: {
                     'system-wrap' : {
                         templateUrl: 'app/authenticator/login.html',
-                        controller: 'LoginController'
+                        controller: 'LoginController as loginController'
                     }
                 }
             })
@@ -94,7 +93,7 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                 SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                 //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
                             }
                         }
                     }
