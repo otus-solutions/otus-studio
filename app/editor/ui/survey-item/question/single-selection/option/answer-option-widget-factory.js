@@ -11,42 +11,19 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, element, option) {
-            return new AnswerOptionWidget(scope, element, option);
+        function create(option, parentGroup) {
+            return new AnswerOptionWidget(option, parentGroup);
         }
 
         return self;
     }
 
-    function AnswerOptionWidget(scope, element, option) {
+    function AnswerOptionWidget(option, parentGroup) {
         var self = this;
 
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-
-        function getClassName() {
-            return 'AnswerOptionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return option;
-        }
+        self.name = 'AnswerOption';
+        self.parentGroup = parentGroup;
+        self.option = option;
     }
 
 }());
