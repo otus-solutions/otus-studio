@@ -55,11 +55,18 @@
             return getParent().getItem();
         }
 
-        element.on('keyup', function(event) {
-            self.ngModel.ptBR.formattedText = event.target.innerHTML;
+        function _populateLabel() {
+            self.ngModel.ptBR.formattedText = event.target.innerHTML
             self.ngModel.ptBR.plainText = event.target.innerText;
+        }
+
+        element.on('keyup', function(event) {
+            _populateLabel();
             UpdateQuestionEventFactory.create().execute(self);
+            this.childNodes[0].addEventListener('blur', function() {
+                _populateLabel();
+                UpdateQuestionEventFactory.create().execute(self);
+            });
         });
     }
-
 }());
