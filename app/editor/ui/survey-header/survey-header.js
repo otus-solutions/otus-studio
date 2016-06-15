@@ -3,8 +3,8 @@
 
     angular
         .module('ui.components')
-        .component('surveyHeader', {
-            templateUrl: 'app/shared/ui-components/survey-header/survey-header-template.html',
+        .component('otusSurveyHeader', {
+            templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
             controller: function($scope, WorkspaceService) {
                 var self = this;

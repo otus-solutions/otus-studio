@@ -97,7 +97,7 @@ md-input-container.md-input-invalid>md-icon {
  #survey-header {
      width: 210mm;
      margin-top: 20px;
-     color: #ccc;
+     color: #727272;
      padding-left: 11mm;
  }
  #survey-header md-chips-wrap{
@@ -111,7 +111,7 @@ md-input-container.md-input-invalid>md-icon {
  #survey-header .md-display-1 {
      margin: 0;
      padding: 0;
-     color: #727272;
+     font-size: 2vw;
  }
 
 

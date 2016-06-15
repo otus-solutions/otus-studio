@@ -94,7 +94,7 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                 SurveyEditorService.startEditor({name: 'Elegibilidade', acronym: 'ELE'});
+                                 //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
                             }
                         }
                     }
