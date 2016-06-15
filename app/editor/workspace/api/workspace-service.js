@@ -40,7 +40,7 @@
         }
 
         function startNewWork(initializationData) {
-            var survey = SurveyLoaderService.newSurvey(initializationData.name, initializationData.acronym, initializationData.version);
+            var survey = SurveyLoaderService.newSurvey(initializationData.name, initializationData.acronym.toUpperCase(), initializationData.version);
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
