@@ -6,12 +6,12 @@
         .controller('DashboardMenuController', DashboardMenuController);
 
     DashboardMenuController.$inject = [
-        'LogoutDialogService',
         'DashboardStateService',
-        '$mdSidenav'
+        '$mdSidenav',
+        'AuthenticationService'
     ];
 
-    function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav) {
+    function DashboardMenuController(DashboardStateService, $mdSidenav, AuthenticationService) {
         var self = this;
 
         /* Public interface */
@@ -45,9 +45,7 @@
         }
 
         function logout() {
-            close();
-            LogoutDialogService.showDialog()
-                .onConfirm(DashboardStateService.logout);
+            AuthenticationService.logout();
         }
     }
 

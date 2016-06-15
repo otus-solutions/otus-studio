@@ -11,7 +11,7 @@
             'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider, $stateParams, $window, CrossSessionDatabaseService) {
+    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
 
         var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
 
@@ -21,7 +21,7 @@
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/authenticator/login.html',
-                        controller: 'LoginController'
+                        controller: 'LoginController as loginController'
                     }
                 }
             })
@@ -96,14 +96,26 @@
                                  */
                                 //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
                             },
-                            teste: function load($stateParams, SurveyEditorService) {
-                                var surveyTemplate;
+                            editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
+                                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
 
                                 if ($stateParams.template) {
-                                    surveyTemplate = $stateParams.template;
-                                    _startEditor(surveyTemplate);
-
+                                    _startEditor($stateParams.template);
+                                } else if (surveyTemplate_OID) {
+                                    var deferred = $q.defer();
+                                    _loadFromIndexedDB();
+                                    return deferred.promise;
                                 }
+
+                                function _loadFromIndexedDB() {
+                                    var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
+                                    promise.then(function(result) {
+                                        $stateParams.template = result.template;
+                                        _startEditor($stateParams.template);
+                                        deferred.resolve(true);
+                                    });
+                                }
+
                                 function _startEditor(surveyTemplate) {
                                     SurveyEditorService.startEditorWithSurveyTemplate({
                                         name: surveyTemplate.identity.name,

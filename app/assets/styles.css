@@ -87,7 +87,36 @@ md-input-container.md-input-invalid>md-icon {
     box-sizing: border-box;
     height: 100%;
 }
+
 /**
+*
+* Survey Header.css
+*
+**/
+
+ #survey-header {
+     width: 210mm;
+     margin-top: 20px;
+     color: #727272;
+     padding-left: 11mm;
+ }
+ #survey-header md-chips-wrap{
+     box-shadow: 0 0px; !important
+ }
+ #survey-header .md-caption {
+     margin: 0;
+     padding: 0;
+ }
+
+ #survey-header .md-display-1 {
+     margin: 0;
+     padding: 0;
+     font-size: 2vw;
+ }
+
+
+
+ /**
  *
  * Sheet.css
  *
@@ -95,8 +124,8 @@ md-input-container.md-input-invalid>md-icon {
 
 #sheet {
     border: 1px solid #D8D6D6;
-    margin-top: 20px;
     margin-bottom: 20px;
+    margin-bottom: 10px;
     min-height: 297mm !important;
     padding: 10mm;
     width: 210mm;

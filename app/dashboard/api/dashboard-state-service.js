@@ -6,12 +6,12 @@
         .service('DashboardStateService', DashboardStateService);
 
     DashboardStateService.$inject = [
-        '$location',
+        '$state',
         '$http',
         'APP_STATE'
     ];
 
-    function DashboardStateService($location, $http, APP_STATE) {
+    function DashboardStateService($state, $http, APP_STATE) {
         var self = this;
 
         /* Public interface */
@@ -29,30 +29,26 @@
 
         function goToLogin() {
             self.currentState = 'Login';
-            $location.url(APP_STATE.LOGIN);
+            $state.go(APP_STATE.LOGIN);
         }
 
         function goToHome() {
             self.currentState = 'Home';
-            $location.url(APP_STATE.HOME);
+            $state.go(APP_STATE.HOME);
         }
 
         function goToFormTemplates() {
             self.currentState = 'SurveyTemplates';
-            $location.url(APP_STATE.SURVEY_TEMPLATES);
+            $state.go(APP_STATE.SURVEY_TEMPLATES);
         }
 
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
-            $location.url(APP_STATE.EDITOR);
+            $state.go(APP_STATE.EDITOR);
         }
 
         function logout() {
-            $http.post(APP_STATE.LOGOUT).then(function(response) {
-                if (response.data.data) {
-                    goToLogin();
-                }
-            });
+            goToLogin();
         }
     }
 

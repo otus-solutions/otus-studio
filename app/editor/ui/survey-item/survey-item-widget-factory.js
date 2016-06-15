@@ -11,6 +11,7 @@
         'IntegerQuestionWidgetFactory',
         'DecimalQuestionWidgetFactory',
         'SingleSelectionQuestionWidgetFactory',
+        'CheckboxQuestionWidgetFactory',
         'TextQuestionWidgetFactory',
         'TimeQuestionWidgetFactory',
         'EmailQuestionWidgetFactory',
@@ -20,7 +21,7 @@
         'ImageItemWidgetFactory'
     ];
 
-    function SurveyItemWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, EmailQuestionWidgetFactory, PhoneQuestionWidgetFactory, TextItemWidgetFactory, ImageItemWidgetFactory) {
+    function SurveyItemWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, CheckboxQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, EmailQuestionWidgetFactory, PhoneQuestionWidgetFactory, TextItemWidgetFactory, ImageItemWidgetFactory) {
         var self = this;
 
         var widgetFactories = {
@@ -28,6 +29,7 @@
             'IntegerQuestion': IntegerQuestionWidgetFactory,
             'DecimalQuestion': DecimalQuestionWidgetFactory,
             'SingleSelectionQuestion': SingleSelectionQuestionWidgetFactory,
+            'CheckboxQuestion': CheckboxQuestionWidgetFactory,
             'TextQuestion': TextQuestionWidgetFactory,
             'TimeQuestion': TimeQuestionWidgetFactory,
             'EmailQuestion': EmailQuestionWidgetFactory,

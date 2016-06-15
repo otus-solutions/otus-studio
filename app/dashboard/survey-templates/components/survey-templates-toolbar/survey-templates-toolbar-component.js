@@ -30,10 +30,16 @@
         }
 
         function openEditorForSelectedSurveyTemplate() {
-            $window.sessionStorage.setItem('surveyTemplate_OID', SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template.oid);
-            $state.transitionTo('editor', {
-                template: SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template
+            var selectedSurveyTemplate = _getSelectedSurveyTemplate();
+
+            $window.sessionStorage.setItem('surveyTemplate_OID', selectedSurveyTemplate.oid);
+            $state.go('editor', {
+                template: selectedSurveyTemplate
             });
+        }
+
+        function _getSelectedSurveyTemplate() {
+            return SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template;
         }
     }
 
