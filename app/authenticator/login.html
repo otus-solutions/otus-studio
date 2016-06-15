@@ -37,11 +37,11 @@
                             <br />
 
                             <div layout="row" layout-sm="column">
-                                <md-button type="submit" class="md-raised md-accent" ng-click="authenticate(user)"
+                                <md-button type="submit" class="md-raised md-accent" ng-click="loginController.authenticate(user)"
                                 ng-disabled="loginForm.$invalid">
                                     Logar
                                 </md-button>
-                                <md-button md-no-ink class="md-primary" ng-click="visitAccess()">Visitante</md-button>
+                                <md-button md-no-ink class="md-primary" ng-click="loginController.visitAccess()">Visitante</md-button>
                             </div>
                         </form>
                     </div>

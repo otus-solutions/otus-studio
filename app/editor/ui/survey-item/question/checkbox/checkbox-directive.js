@@ -3,19 +3,19 @@
 
     angular
         .module('editor.ui')
-        .directive('otusCheckboxQuestion', directive);
+        .directive('otusCheckboxQuestion', otusCheckboxQuestion);
 
-    directive.$inject = [
+    otusCheckboxQuestion.$inject = [
         'CheckboxQuestionWidgetFactory'
     ];
 
-    function directive(CheckboxQuestionWidgetFactory) {
+    function otusCheckboxQuestion(CheckboxQuestionWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question.html',
-            link: function linkFunc(scope) {
-                scope.widget = scope.$parent.widget;
+            link: function(scope, element) {
+                scope.widget = CheckboxQuestionWidgetFactory.create(scope, element);
             }
         };
 
