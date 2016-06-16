@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('ui.components')
+        .module('editor.ui')
         .component('otusSurveyHeader', {
             templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
