@@ -56,8 +56,12 @@
         }
 
         function _populateLabel() {
-            self.ngModel.ptBR.formattedText = event.target.innerHTML
+            self.ngModel.ptBR.formattedText = removeSpecialCharacters(event.target.innerHTML);
             self.ngModel.ptBR.plainText = event.target.innerText;
+        }
+
+        function removeSpecialCharacters(value) {
+            return value.replace(/"/g, '\'');
         }
 
         element.on('keyup', function(event) {

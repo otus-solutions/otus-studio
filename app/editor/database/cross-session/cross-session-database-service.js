@@ -22,7 +22,9 @@
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
                 entry.template = JSON.parse(template.toJson());
+                // console.log(JSON.stringify());
                 store.upsert(entry).then(function(e) {});
+
             });
         }
     }
