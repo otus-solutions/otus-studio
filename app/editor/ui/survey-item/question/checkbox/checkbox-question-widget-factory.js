@@ -39,6 +39,14 @@
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
 
+        _init();
+
+        function _init() {
+            if (self.getItem().options.length > 0) {
+                _loadAnswerOptions();
+            }
+        }
+
         function getClassName() {
             return 'CheckboxQuestionWidget';
         }
@@ -67,6 +75,13 @@
             var newOption = AddAnswerOptionEventFactory.create().execute(self);
             var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
+        }
+
+        function _loadAnswerOptions() {
+            self.getItem().options.forEach(function(awswerOption) {
+                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
+                self.options.push(optionWidget);
+            });
         }
 
         function removeLastOption() {

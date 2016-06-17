@@ -9,6 +9,7 @@
         var ddo = {
             restrict: 'E',
             controller: 'SheetController',
+            controllerAs: 'sheetController',
             templateUrl: 'app/editor/ui/sheet/sheet.html'
         };
 
