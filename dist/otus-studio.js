@@ -1324,7 +1324,9 @@
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
                 entry.template = JSON.parse(template.toJson());
+                // console.log(JSON.stringify());
                 store.upsert(entry).then(function(e) {});
+
             });
         }
     }
@@ -1854,7 +1856,7 @@
     'use strict';
 
     angular
-        .module('ui.components')
+        .module('editor.ui')
         .component('otusSurveyHeader', {
             templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
@@ -1949,6 +1951,7 @@
             link: function linkFunc(scope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 scope.widget = SurveyItemEditorWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
+                element.attr('tabindex', -1).focus();
             }
         };
 
@@ -3011,13 +3014,24 @@
             return getParent().getItem();
         }
 
-        element.on('keyup', function(event) {
-            self.ngModel.ptBR.formattedText = event.target.innerHTML;
+        function _populateLabel() {
+            self.ngModel.ptBR.formattedText = removeSpecialCharacters(event.target.innerHTML);
             self.ngModel.ptBR.plainText = event.target.innerText;
+        }
+
+        function removeSpecialCharacters(value) {
+            return value.replace(/"/g, '\'');
+        }
+
+        element.on('keyup', function(event) {
+            _populateLabel();
             UpdateQuestionEventFactory.create().execute(self);
+            this.childNodes[0].addEventListener('blur', function() {
+                _populateLabel();
+                UpdateQuestionEventFactory.create().execute(self);
+            });
         });
     }
-
 }());
 
 (function() {
