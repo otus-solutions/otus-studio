@@ -26,19 +26,9 @@
 
     function MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
-
+        self.ngModel = scope.ngModel;
         self.options = [];
-        /**
-        //TODO: Pegando as opções de metadadado do item
-        init();
 
-        function init() {
-            getItem().metadata.options.forEach(function(metadata){
-
-            });
-
-        }
-        */
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -48,6 +38,16 @@
         self.getItem = getItem;
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
+
+        init();
+
+        function init() {
+            console.log(getItem().metadata.options);
+            getItem().metadata.options.forEach(function(option){
+                _loadOption(option);
+            });
+            //self.options = getItem().metadata.options;
+        }
 
         function getClassName() {
             return 'MetadataGroupWidget';
@@ -67,6 +67,13 @@
 
         function getItem() {
             return getParent().getItem();
+        }
+
+        function _loadOption(option) {
+            var newOption = AddMetadataAnswerEventFactory.create().execute(self);
+            newOption = option;
+            MetadataOptionWidgetFactory.create(newOption, self);
+            self.options.push(newOption);
         }
 
         function addOption() {

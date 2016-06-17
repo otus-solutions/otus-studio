@@ -45,8 +45,7 @@
         }
 
         function getLabel() {
-            var aux = self.ngModel.ptBR.formattedText || '';
-            return aux;
+            return self.ngModel.ptBR.formattedText;
         }
 
         function getElement() {

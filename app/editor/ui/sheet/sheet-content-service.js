@@ -6,11 +6,10 @@
         .service('SheetContentService', SheetContentService);
 
     SheetContentService.$inject = [
-        'editor.ui.mpath',
         'TemplateLoaderService'
     ];
 
-    function SheetContentService(mpath, TemplateLoaderService, WidgetService) {
+    function SheetContentService(TemplateLoaderService) {
         var self = this;
         var scope = null;
         var sheet = null;

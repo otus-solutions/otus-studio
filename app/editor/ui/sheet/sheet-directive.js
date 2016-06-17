@@ -5,23 +5,11 @@
         .module('editor.ui')
         .directive('otusSheet', otusSheet);
 
-    otusSheet.$inject = ['AddSurveyItemService', 'WorkspaceService', 'SheetContentService', '$stateParams', 'AddSurveyItemEventFactory', 'SurveyItemWidgetFactory'];
-
-    function otusSheet(AddSurveyItemService, WorkspaceService, SheetContentService, $stateParams, AddSurveyItemEventFactory, SurveyItemWidgetFactory) {
+    function otusSheet() {
         var ddo = {
             restrict: 'E',
             controller: 'SheetController',
-            templateUrl: 'app/editor/ui/sheet/sheet.html',
-            link: function linkFunc() {
-/*                if ($stateParams.template) {
-                    //load survey template
-
-                    AddSurveyItemEventFactory.create().execute('CalendarQuestion');
-
-                    AddSurveyItemEventFactory.create().execute('IntegerQuestion');
-
-                }*/
-            }
+            templateUrl: 'app/editor/ui/sheet/sheet.html'
         };
 
         return ddo;
