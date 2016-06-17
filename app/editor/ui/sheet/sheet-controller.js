@@ -32,6 +32,7 @@
             if ($stateParams.template) {
                 surveyToLoad = $stateParams.template;
                 _render();
+                _loadLabel();
             }
         }
 
@@ -48,6 +49,13 @@
                     }, 1000);
                 }
             }
+        }
+
+        function _loadLabel() {
+            //var content = $('#my-contenteditable-div').html();
+            //var details= document.getElementById("lblMailContent").innerHTML;
+            //document.getElementById('myinput').innerText;
+
         }
 
     }
