@@ -39,7 +39,7 @@
 
         function _init() {
             if (self.ngModel) {
-                getElement().children()[0].innerHTML = getLabel();
+                _loadLabel();
             }
         }
 
@@ -67,19 +67,24 @@
             return getParent().getItem();
         }
 
-        function _saveLabel() {
-            self.ngModel.ptBR.formattedText = removeSpecialCharacters(event.target.innerHTML);
-            self.ngModel.ptBR.plainText = event.target.innerText;
-        }
-
-        function removeSpecialCharacters(value) {
-            return value.replace(/"/g, '\'');
-        }
 
         element.on('focusout', function(event) {
             _saveLabel();
             UpdateQuestionEventFactory.create().execute(self);
         });
+
+        function _saveLabel() {
+            self.ngModel.ptBR.formattedText = _removeSpecialCharacters(event.target.innerHTML);
+            self.ngModel.ptBR.plainText = event.target.innerText;
+        }
+
+        function _removeSpecialCharacters(value) {
+            return value.replace(/"/g, '\'');
+        }
+
+        function _loadLabel() {
+            self.getElement().children()[0].innerHTML = self.getLabel();
+        }
     }
 
 }());
