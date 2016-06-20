@@ -34,7 +34,7 @@
 
         /* Instance definitions */
         self.parent = parentWidget;
-        self.isToShow = true;
+        self.isToShow = false;
 
         self.changeState = changeState;
 
