@@ -53,6 +53,7 @@ md-input-container.md-input-invalid>md-icon {
     color: gray;
     border-bottom: 1px solid #C7C7C7;
 }
+
 /**
  *
  * Container.css
@@ -88,35 +89,45 @@ md-input-container.md-input-invalid>md-icon {
     height: 100%;
 }
 
+/*
+*
+Page Anchor.css
+*
+*/
+
+#page-anchor {
+    color: transparent;
+}
+
+
 /**
 *
 * Survey Header.css
 *
 **/
 
- #survey-header {
-     width: 210mm;
-     margin-top: 20px;
-     color: #727272;
-     padding-left: 11mm;
- }
- #survey-header md-chips-wrap{
-     box-shadow: 0 0px; !important
- }
- #survey-header .md-caption {
-     margin: 0;
-     padding: 0;
- }
+#survey-header {
+    width: 210mm;
+    margin-top: 20px;
+    color: #727272;
+    padding-left: 11mm;
+}
+#survey-header md-chips-wrap {
+    box-shadow: 0 0px;
+    !important
+}
+#survey-header .md-caption {
+    margin: 0;
+    padding: 0;
+}
+#survey-header .md-display-1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+}
 
- #survey-header .md-display-1 {
-     margin: 0;
-     padding: 0;
-     font-size: 2vw;
- }
 
-
-
- /**
+/**
  *
  * Sheet.css
  *
@@ -132,6 +143,7 @@ md-input-container.md-input-invalid>md-icon {
     -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+    padding-bottom: 180px;
 }
 #survey-navigation-graph {
     border: 1px solid #D8D6D6;
@@ -148,6 +160,7 @@ md-input-container.md-input-invalid>md-icon {
     background-color: #FAFAFA;
     color: #1976D2
 }
+
 /*
 ui-accordion-header {
     min-height: 75px;
@@ -181,6 +194,7 @@ ui-accordion-content.visible {
 .label-container {
     padding: 8px;
 }
+
 /**
  *
  * Properties.css
@@ -197,6 +211,7 @@ ui-accordion-content.visible {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
 }
+
 /**
  *
  * Repository.css
@@ -209,6 +224,7 @@ ui-accordion-content.visible {
 .center {
     margin: 0 auto;
 }
+
 /**
  *
  * question-editor.css
@@ -218,7 +234,8 @@ ui-accordion-content.visible {
 #editor-container {
     background: none;
 }
-.filling-mode-selector {} .editable {
+.filling-mode-selector {}
+.editable {
     border-bottom: 1px dotted gray;
     color: gray;
     font-style: italic;
@@ -251,6 +268,7 @@ ui-accordion-content.visible {
 md-backdrop {
     z-index: 65 !important
 }
+
 /**
  *
  * Toolbar Edit and Preview Navegação
@@ -261,6 +279,7 @@ md-tabs-canvas {
     background-color: #F9F9F9;
     z-index: 10;
 }
+
 /*
  * Animations
  */
