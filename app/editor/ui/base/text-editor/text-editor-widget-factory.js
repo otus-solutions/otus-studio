@@ -17,7 +17,6 @@
         function create(scope, element) {
             return new OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory);
         }
-
         return self;
     }
 
@@ -35,6 +34,14 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.getLabel = getLabel;
+
+        _init();
+
+        function _init() {
+            if (self.ngModel) {
+                getElement().children()[0].innerHTML = getLabel();
+            }
+        }
 
         function getClassName() {
             return 'OtusTextEditorWidget';
@@ -60,7 +67,7 @@
             return getParent().getItem();
         }
 
-        function _populateLabel() {
+        function _saveLabel() {
             self.ngModel.ptBR.formattedText = removeSpecialCharacters(event.target.innerHTML);
             self.ngModel.ptBR.plainText = event.target.innerText;
         }
@@ -69,13 +76,10 @@
             return value.replace(/"/g, '\'');
         }
 
-        element.on('keyup', function(event) {
-            _populateLabel();
+        element.on('focusout', function(event) {
+            _saveLabel();
             UpdateQuestionEventFactory.create().execute(self);
-            this.childNodes[0].addEventListener('blur', function() {
-                _populateLabel();
-                UpdateQuestionEventFactory.create().execute(self);
-            });
         });
     }
+
 }());
