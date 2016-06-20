@@ -12,7 +12,7 @@
                 ariaLabel: '@'
             },
             templateUrl: 'app/editor/ui/survey-item/question/integer/integer-question.html',
-            retrict: 'E'
+            restrict: 'E'
         };
         return ddo;
     }

@@ -39,14 +39,12 @@
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
 
-        init();
+        _init();
 
-        function init() {
-            console.log(getItem().metadata.options);
-            getItem().metadata.options.forEach(function(option){
-                _loadOption(option);
-            });
-            //self.options = getItem().metadata.options;
+        function _init() {
+            if(self.getItem().metadata.options.length > 0) {
+                _loadOptions();
+            }
         }
 
         function getClassName() {
@@ -69,11 +67,11 @@
             return getParent().getItem();
         }
 
-        function _loadOption(option) {
-            var newOption = AddMetadataAnswerEventFactory.create().execute(self);
-            newOption = option;
-            MetadataOptionWidgetFactory.create(newOption, self);
-            self.options.push(newOption);
+        function _loadOptions() {
+            self.getItem().metadata.options.forEach(function(option){
+                var optionWidget = MetadataOptionWidgetFactory.create(option, self);
+                self.options.push(optionWidget);
+            });
         }
 
         function addOption() {

@@ -2,7 +2,7 @@
     <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
         <div class="md-toolbar-tools" layout-align="space-between center">
             <div layout="row" layout-align="end center">
-                <md-button aria-label="Salvar" class="editor-icon" ng-click="editorToolbarController.saveOfflineWork()">
+                <md-button aria-label="Salvar" class="editor-icon" ng-disabled="editorToolbarController.isSurveyEmpty()" ng-click="editorToolbarController.saveOfflineWork()">
                     <md-icon md-svg-icon="content-save"></md-icon>
                     <md-tooltip md-direction="down">
                         Salvar

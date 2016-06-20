@@ -13,30 +13,37 @@
         'AddSurveyItemEventFactory',
         '$timeout',
         'WorkspaceService',
-        '$window'
+        '$window',
+        '$q'
     ];
 
-    function SheetController($scope, $element, SheetContentService, $stateParams, AddSurveyItemEventFactory, $timeout, WorkspaceService, $window) {
+    function SheetController($scope, $element, SheetContentService, $stateParams, AddSurveyItemEventFactory, $timeout, WorkspaceService, $window, $q) {
         var self = this;
+        self.isLoading = false;
         var surveyToLoad;
         SheetContentService.init($scope, $element);
 
-        _load();
+        _init();
 
         $scope.$on('$destroy', function cleanWorkspaceService() {
             WorkspaceService.closeWork();
             $window.sessionStorage.removeItem('surveyTemplate_OID');
         });
 
-        function _load() {
-            if ($stateParams.template) {
+        function _init() {
+            if (_isLoadMode()) {
+                self.isLoading = true;
                 surveyToLoad = $stateParams.template;
-                _render();
-                _loadLabel();
+                var promise = _renderSurveyTemplate();
+                promise.then(function(value){
+                    self.isLoading = false;
+                });
+
             }
         }
 
-        function _render() {
+        function _renderSurveyTemplate() {
+            var deferred = $q.defer();
             if ($scope.$$phase) {
                 if (surveyToLoad.itemContainer.length > 0) {
                     AddSurveyItemEventFactory.create().load(surveyToLoad.itemContainer[0]);
@@ -46,16 +53,15 @@
                             AddSurveyItemEventFactory.create().load(item);
                             $scope.$digest();
                         });
+                        deferred.resolve(true);
                     }, 1000);
                 }
             }
+            return deferred.promise;
         }
 
-        function _loadLabel() {
-            //var content = $('#my-contenteditable-div').html();
-            //var details= document.getElementById("lblMailContent").innerHTML;
-            //document.getElementById('myinput').innerText;
-
+        function _isLoadMode() {
+            return $stateParams.template;
         }
 
     }

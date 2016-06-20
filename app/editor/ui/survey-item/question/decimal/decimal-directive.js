@@ -5,7 +5,9 @@
         .module('editor.ui')
         .directive('otusDecimalQuestion', directive);
 
-    function directive() {
+    directive.$inject = ['DecimalQuestionWidgetFactory'];
+
+    function directive(DecimalQuestionWidgetFactory) {
         var ddo = {
             scope: {
                 ngModel: '=',
