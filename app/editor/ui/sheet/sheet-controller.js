@@ -19,8 +19,8 @@
 
     function SheetController($scope, $element, SheetContentService, $stateParams, AddSurveyItemEventFactory, $timeout, WorkspaceService, $window, $q) {
         var self = this;
-        self.isLoading = false;
         var surveyToLoad;
+        self.isLoading = false;
         SheetContentService.init($scope, $element);
 
         _init();
@@ -32,22 +32,23 @@
 
         function _init() {
             if (_isLoadMode()) {
-                self.isLoading = true;
                 surveyToLoad = $stateParams.template;
-                var promise = _renderSurveyTemplate();
-                promise.then(function(value){
-                    self.isLoading = false;
-                });
-
+                if (surveyToLoad.itemContainer.length > 0) {
+                    self.isLoading = true;
+                    var promise = _renderSurveyTemplate();
+                    promise.then(function(value) {
+                        self.isLoading = false;
+                    });
+                }
             }
         }
 
         function _renderSurveyTemplate() {
             var deferred = $q.defer();
             if ($scope.$$phase) {
+                AddSurveyItemEventFactory.create().load(surveyToLoad.itemContainer[0]);
+                surveyToLoad.itemContainer.splice(0, 1);
                 if (surveyToLoad.itemContainer.length > 0) {
-                    AddSurveyItemEventFactory.create().load(surveyToLoad.itemContainer[0]);
-                    surveyToLoad.itemContainer.splice(0, 1);
                     $timeout(function() {
                         surveyToLoad.itemContainer.forEach(function(item) {
                             AddSurveyItemEventFactory.create().load(item);
