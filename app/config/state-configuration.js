@@ -117,11 +117,7 @@
                                 }
 
                                 function _startEditor(surveyTemplate) {
-                                    SurveyEditorService.startEditorWithSurveyTemplate({
-                                        name: surveyTemplate.identity.name,
-                                        acronym: surveyTemplate.identity.acronym,
-                                        oid: surveyTemplate.oid
-                                    });
+                                    SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
                                 }
                             }
                         }

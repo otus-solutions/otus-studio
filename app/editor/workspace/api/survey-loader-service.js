@@ -19,10 +19,8 @@
             return ModelFacadeService.getSurveyFactory().create(name, acronym);
         }
 
-        function loadSurvey(name, acronym, uuid) {
-            var surveyTemplate = ModelFacadeService.getSurveyFactory().create(name, acronym);
-            surveyTemplate.oid = uuid;
-            return surveyTemplate;
+        function loadSurvey(surveyTemplate) {
+            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
         }
     }
 

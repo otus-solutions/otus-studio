@@ -45,13 +45,12 @@
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
-        function loadWork(initializationData) {
-            var survey = SurveyLoaderService.loadSurvey(initializationData.name, initializationData.acronym, initializationData.oid);
+        function loadWork(surveyTemplate) {
+            var survey = SurveyLoaderService.loadSurvey(surveyTemplate);
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
         function closeWork() {
-            //saveProject();
             saveWork();
             self.workspace.project.close('now');
             questionIdCounter = -1;

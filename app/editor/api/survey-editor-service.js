@@ -21,11 +21,11 @@
             WorkspaceService.startNewWork(initializationData);
         }
 
-        function startEditorWithSurveyTemplate(initializationData) {
+        function startEditorWithSurveyTemplate(surveyTemplate) {
             WorkspaceService.initializeWorkspace({
                 owner: 'visitor'
             });
-            WorkspaceService.loadWork(initializationData);
+            WorkspaceService.loadWork(surveyTemplate);
         }
     }
 

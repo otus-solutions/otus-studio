@@ -12,12 +12,13 @@
         'SurveyTemplateManagerService',
         'SelectedSurveyTemplatesManagementService',
         '$mdToast',
-        '$state',
+        'DashboardStateService',
         '$window'
     ];
 
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, $state, $window) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
         var self = this;
+
         self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
         self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
         self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
@@ -33,9 +34,7 @@
             var selectedSurveyTemplate = _getSelectedSurveyTemplate();
 
             $window.sessionStorage.setItem('surveyTemplate_OID', selectedSurveyTemplate.oid);
-            $state.go('editor', {
-                template: selectedSurveyTemplate
-            });
+            DashboardStateService.goToEditorWithSurveyTemplate(selectedSurveyTemplate);
         }
 
         function _getSelectedSurveyTemplate() {
