@@ -3,21 +3,20 @@
 
     angular
         .module('editor.ui')
-        .directive('otusValidationEditor', otusValidationEditor);
+        .directive('distinctValidator', distinctValidator);
 
-    otusValidationEditor.$inject = [
+    distinctValidator.$inject = [
         'UUIDService'
     ];
 
-    function otusValidationEditor(UUIDService) {
+    function distinctValidator(UUIDService) {
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
+            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validation.html',
             link: function linkFunc(scope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 //TODO
-
             }
         };
 

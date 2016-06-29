@@ -3,21 +3,20 @@
 
     angular
         .module('editor.ui')
-        .directive('otusValidationEditor', otusValidationEditor);
+        .directive('rangeDateValidator', rangeDateValidator);
 
-    otusValidationEditor.$inject = [
+    rangeDateValidator.$inject = [
         'UUIDService'
     ];
 
-    function otusValidationEditor(UUIDService) {
+    function rangeDateValidator(UUIDService) {
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
-            link: function linkFunc(scope, element, attrs) {
+            templateUrl: 'app/editor/ui/validation/require/date/rangeDate-validation.html',
+            link: function linkFunc(sope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 //TODO
-
             }
         };
 
