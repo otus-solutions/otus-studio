@@ -34,6 +34,7 @@
         self.getItem = getItem;
         self.getContainer = getContainer;
         self.deleteSurveyItem = deleteSurveyItem;
+        self.getQuestionId = getQuestionId;
 
         function getUUID() {
             return scope.uuid;
@@ -49,6 +50,10 @@
 
         function getItem() {
             return item;
+        }
+
+        function getQuestionId(){
+            return getItem().templateID;
         }
 
         function getContainer() {

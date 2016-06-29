@@ -10,7 +10,7 @@
         'SheetContentService',
         'UUIDService',
         'PageAnchorService'
-    ];
+        ];
 
     function directive(SurveyItemEditorWidgetFactory, SheetContentService, UUIDService, PageAnchorService) {
         var ddo = {
@@ -20,7 +20,7 @@
             link: function linkFunc(scope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 scope.widget = SurveyItemEditorWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
-                PageAnchorService.focusOnElement(element);                
+                element.attr('tabindex', -1);
             }
         };
 

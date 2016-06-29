@@ -7,10 +7,14 @@
 
     SheetContentService.$inject = [
         'editor.ui.mpath',
-        'TemplateLoaderService'
+        'TemplateLoaderService',
+        'PageAnchorService',
+        '$q',
+        '$timeout'
+
     ];
 
-    function SheetContentService(mpath, TemplateLoaderService, WidgetService) {
+    function SheetContentService(mpath, TemplateLoaderService, PageAnchorService, $q, $timeout) {
         var self = this;
         var scope = null;
         var sheet = null;
@@ -28,9 +32,24 @@
         }
 
         function loadQuestion(item) {
+
             self.lastLoadedQuestion = item;
-            var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
-            sheet.find('#sheet').append(content);
+            var templateID = self.lastLoadedQuestion.templateID;
+            var promise = compileAndAppend();
+
+            promise
+                .then(function(sheetTemplate) {
+                    PageAnchorService.focusOnElement(sheetTemplate);
+                });
+
+            function compileAndAppend() {
+                var appendPromise = $q.defer();
+                var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
+                $timeout(function() {
+                    appendPromise.resolve(sheet.find('#sheet').append(content));
+                });
+                return appendPromise.promise;
+            }
         }
 
         function loadItem(item) {

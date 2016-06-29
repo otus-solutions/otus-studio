@@ -10,23 +10,25 @@
         'WorkspaceService',
         'WidgetService',
         'SheetContentService',
-        'AddSurveyItemService'
+        'AddSurveyItemService',
+        'PageAnchorService',
+        '$timeout'
     ];
 
-    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService) {
+    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService);
+            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout);
         }
 
         return self;
     }
 
-    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService) {
+    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         self.execute = execute;
