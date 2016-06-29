@@ -27,6 +27,7 @@
         /* Template definitions */
         self.ngClass.open = false;
         self.showNavigationEditor = false;
+        self.showValidationEditor = false;
 
         /* Public methods */
         self.getUUID = getUUID;
@@ -59,6 +60,7 @@
 
         function validationButton() {
             self.ngClass.open = !self.ngClass.open;
+            self.showValidationEditor = !self.showValidationEditor;
         }
     }
 

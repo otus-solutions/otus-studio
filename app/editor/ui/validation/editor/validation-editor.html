@@ -1,5 +1,60 @@
-<md-container layout="column" style="padding-top: 10px; margin-top: 0" flex >
-    <md-container layout="row">
-        <!--Ideia de md-list.  -->
-    </md-container>
+<md-container layout="column" flex>
+    <md-list>
+        <md-list-item layout="column" flex layout-align="start">
+            <md-switch ng-model="data.val" ng-model="setting.enabled" layout-align="center start">
+                Questão obrigatória
+            </md-switch>
+            <md-menu md-offset="0 -7">
+                <md-button aria-label="Opções" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                    <i class="material-icons">more_vert</i>
+                </md-button>
+                <md-menu-content width="6">
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar distinção de valor</md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar range de datas</md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Data deve ser posterior a</md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Data futura</md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar limite mínimo</md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar limite máximo</md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar tamanho mínimo de caracteres</md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-button ng-click="widget.addValidator">Adicionar tamanho máximo de caracteres</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-list-item>
+        <md-list-item ng-repeat="optionWidget in widget.options">
+
+        </md-list-item>
+    </md-list>
+
+    <div>
+        <md-content layout="column" flex>
+            <!-- VAI APARECER AS VALIDAÇÔES ADICIONADAS AQUI -->
+            <otus:distinct-validation></otus:distinct-validation>
+            <otus:rangeDate-validation></otus:rangeDate-validation>
+            <otus:pastDate-validation></otus:pastDate-validation>
+            <otus:futureDate-validation></otus:futureDate-validation>
+            <otus:lowerLimit-validation></otus:lowerLimit-validation>
+            <otus:upperLimit-validation></otus:upperLimit-validation>
+            <otus:minLength-validation></otus:minLength-validation>
+            <otus:maxLength-validation></otus:maxLength-validation>
+        </md-content>
+    </div>
 </md-container>
