@@ -307,3 +307,34 @@ pre {
 .custom-whiteframe:hover {
     box-shadow: 0 1px 20px 0 rgba(24, 42, 72, 0.65), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
+
+
+/**
+ *
+ * Survey Templates
+ *
+ */
+survey-template md-card {
+    cursor: pointer;
+}
+
+survey-template md-card:focus {
+    outline: none;
+    border: 0;
+ }
+
+.selected-template {
+    background-color: bisque !important;
+}
+
+.template-animate.ng-enter, .template.animate.ng-leave {
+    transition: 500ms linear all;
+}
+
+.template-animate.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.template-animate.ng-enter.ng-enter-active {
+    opacity: 1;
+}

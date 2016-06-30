@@ -17,9 +17,10 @@
         /* Public interface */
         self.goToLogin = goToLogin;
         self.goToHome = goToHome;
-        self.goToSurveyForms = goToSurveyForms;
+        self.goToFormTemplates = goToFormTemplates;
         self.goToEditor = goToEditor;
         self.logout = logout;
+        self.goToEditorWithSurveyTemplate = goToEditorWithSurveyTemplate;
 
         init();
 
@@ -37,14 +38,21 @@
             $state.go(APP_STATE.HOME);
         }
 
-        function goToSurveyForms() {
-            self.currentState = 'SurveyForms';
-            $state.go(APP_STATE.SURVEY_FORMS);
+        function goToFormTemplates() {
+            self.currentState = 'SurveyTemplates';
+            $state.go(APP_STATE.SURVEY_TEMPLATES);
         }
 
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
             $state.go(APP_STATE.EDITOR);
+        }
+
+        function goToEditorWithSurveyTemplate(surveyTemplate) {
+            self.currentState = 'Edição de Formulário';
+            $state.go(APP_STATE.EDITOR, {
+                template: surveyTemplate
+            });
         }
 
         function logout() {

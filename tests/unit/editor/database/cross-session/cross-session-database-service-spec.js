@@ -48,6 +48,16 @@ describe('CrossSessionDatabaseService', function() {
 
     });
 
+    describe('getTemplateRevisionByContributor method', function(){
+
+        xit("should return a correct template", function () {
+            var USER = 'user';
+            var templates = [];
+            templates = service.getAllTemplatesRevision(USER);
+            expect(templates).toBeGreaterThan(0);
+        });
+    });
+
     function mockIndexedDB($injector) {
         Mock.$indexedDB = $injector.get('$indexedDB');
         return Mock.$indexedDB;

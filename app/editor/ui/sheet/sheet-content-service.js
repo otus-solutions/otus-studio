@@ -6,14 +6,11 @@
         .service('SheetContentService', SheetContentService);
 
     SheetContentService.$inject = [
-        'editor.ui.mpath',
         'TemplateLoaderService',
-        'PageAnchorService',
-        '$q',
-        '$timeout'
+        'PageAnchorService'
     ];
 
-    function SheetContentService(mpath, TemplateLoaderService, PageAnchorService, $q, $timeout) {
+    function SheetContentService(TemplateLoaderService, PageAnchorService, $q, $timeout) {
         var self = this;
         var scope = null;
         var sheet = null;
@@ -32,7 +29,6 @@
 
         function loadQuestion(item) {
             self.lastLoadedQuestion = item;
-            var templateID = self.lastLoadedQuestion.templateID;
             var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
             var sheetTemplate = sheet.find('#sheet').append(content);
             PageAnchorService.sheetAutoFocus(sheetTemplate);

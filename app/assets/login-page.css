@@ -35,17 +35,19 @@
 }
 
 #login-page .logo {
-    margin: 0 auto;
-    height: 186px;
-    display: block;
-    z-index: 3;
+    width: 21.4%;
     position: absolute;
-    bottom: 70%;
-    left: 38%;
+    left: 41%;
+    transform: translate(-30%, -30%);
 }
 
-#login-page #logo_test {
-	content: url(../assets/img/ImageProjectStudio.png);
+@media screen and (max-width: 1280px) and (min-width: 800px) {
+    #login-page .logo {
+        width: 29%;
+        position: absolute;
+        left: 45%;
+        transform: translate(-30%, -30%);
+    }
 }
 
 #login-page #content {

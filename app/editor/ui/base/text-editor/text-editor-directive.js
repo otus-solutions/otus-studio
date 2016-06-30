@@ -11,7 +11,7 @@
         var ddo = {
             scope: {
                 placeholder: '@',
-                label: '@',
+                label: '=',
                 ariaLabel: '@',
                 leftIcon: '@',
                 ngModel: '='

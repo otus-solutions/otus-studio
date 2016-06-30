@@ -8,11 +8,10 @@
     SurveyItemSettingsController.$inject = [
         '$scope',
         '$element',
-        'TemplateLoaderService',
         'SurveyItemSettingsContentService'
     ];
 
-    function SurveyItemSettingsController($scope, $element, TemplateLoaderService, SurveyItemSettingsContentService) {
+    function SurveyItemSettingsController($scope, $element, SurveyItemSettingsContentService) {
         var self = this;
 
         self.navigation = navigation;

@@ -10,6 +10,7 @@
             'editor',
             'otusjs',
             'preview',
+            'surveyTemplates',
             /* Otus platform modules */
             'ui.components',
             'utils'
@@ -95,9 +96,10 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
-            'SURVEY_FORMS': 'survey-forms',
+            'SURVEY_TEMPLATES': 'survey-templates',
             'EDITOR': 'editor',
-            'LOGIN': 'login'
+            'LOGIN': 'login',
+            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -108,7 +110,7 @@
             .state('login', {
                 url: '/login',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/authenticator/login.html',
                         controller: 'LoginController as loginController'
                     }
@@ -117,7 +119,7 @@
             .state('home', {
                 url: '/home',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -125,7 +127,7 @@
                         templateUrl: dashboardMenu,
                     },
                     'system-content@home': {
-                        templateUrl: 'app/dashboard/template/dashboard-content-template.html'
+                        templateUrl: 'app/dashboard/home/layout-template.html'
                     },
                     'section-info@home': {
                         templateUrl: 'app/dashboard/home/home-info-section.html'
@@ -138,35 +140,35 @@
                     }
                 }
             })
-            .state('survey-forms', {
-                url: '/survey-forms',
+            .state('survey-templates', {
+                url: '/survey-templates',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
-                    'dashboard-menu@survey-forms': {
+                    'dashboard-menu@survey-templates': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content@survey-forms': {
-                        templateUrl: 'app/dashboard/template/dashboard-content-template.html',
+                    'system-content@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/layout-template.html',
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-info@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-info-section.html'
+                    'section-view@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html'
                     },
-                    'section-view@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-view-section.html'
-                    },
-                    'section-commands@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-commands-section.html'
+                    'section-commands@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-commands-section.html'
                     }
                 }
             })
             .state('editor', {
                 url: '/editor',
+                params: {
+                    template: null
+                },
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -183,7 +185,31 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                 //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                            },
+                            editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
+                                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
+
+                                if ($stateParams.template) {
+                                    _startEditor($stateParams.template);
+                                } else if (surveyTemplate_OID) {
+                                    var deferred = $q.defer();
+                                    _loadFromIndexedDB();
+                                    return deferred.promise;
+                                }
+
+                                function _loadFromIndexedDB() {
+                                    var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
+                                    promise.then(function(result) {
+                                        $stateParams.template = result.template;
+                                        _startEditor($stateParams.template);
+                                        deferred.resolve(true);
+                                    });
+                                }
+
+                                function _startEditor(surveyTemplate) {
+                                    SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
+                                }
                             }
                         }
                     }
@@ -324,9 +350,10 @@
         /* Public interface */
         self.goToLogin = goToLogin;
         self.goToHome = goToHome;
-        self.goToSurveyForms = goToSurveyForms;
+        self.goToFormTemplates = goToFormTemplates;
         self.goToEditor = goToEditor;
         self.logout = logout;
+        self.goToEditorWithSurveyTemplate = goToEditorWithSurveyTemplate;
 
         init();
 
@@ -344,14 +371,21 @@
             $state.go(APP_STATE.HOME);
         }
 
-        function goToSurveyForms() {
-            self.currentState = 'SurveyForms';
-            $state.go(APP_STATE.SURVEY_FORMS);
+        function goToFormTemplates() {
+            self.currentState = 'SurveyTemplates';
+            $state.go(APP_STATE.SURVEY_TEMPLATES);
         }
 
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
             $state.go(APP_STATE.EDITOR);
+        }
+
+        function goToEditorWithSurveyTemplate(surveyTemplate) {
+            self.currentState = 'Edição de Formulário';
+            $state.go(APP_STATE.EDITOR, {
+                template: surveyTemplate
+            });
         }
 
         function logout() {
@@ -418,7 +452,7 @@
         self.open = open;
         self.close = close;
         self.openHome = openHome;
-        self.openSurveyForms = openSurveyForms;
+        self.openFormTemplates = openFormTemplates;
         self.logout = logout;
 
         function getSelectedSystemArea() {
@@ -438,8 +472,8 @@
             close();
         }
 
-        function openSurveyForms() {
-            DashboardStateService.goToSurveyForms();
+        function openFormTemplates() {
+            DashboardStateService.goToFormTemplates();
             close();
         }
 
@@ -484,6 +518,14 @@
     'use strict';
 
     angular
+        .module('surveyTemplates', []);
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
         .module('editor')
         .service('SurveyEditorService', SurveyEditorService);
 
@@ -494,12 +536,20 @@
 
         /* Public interface */
         self.startEditor = startEditor;
+        self.startEditorWithSurveyTemplate = startEditorWithSurveyTemplate;
 
         function startEditor(initializationData) {
             WorkspaceService.initializeWorkspace({
-                owner: 'user'
+                owner: 'visitor'
             });
             WorkspaceService.startNewWork(initializationData);
+        }
+
+        function startEditorWithSurveyTemplate(surveyTemplate) {
+            WorkspaceService.initializeWorkspace({
+                owner: 'visitor'
+            });
+            WorkspaceService.loadWork(surveyTemplate);
         }
     }
 
@@ -519,11 +569,10 @@
     angular
         .module('editor.database', [])
         .config(function($indexedDBProvider) {
-            window.indexedDB.deleteDatabase('otus-studio');
             $indexedDBProvider
                 .connection('otus-studio')
                 .upgradeDatabase(1, function(event, db, tx) {
-                    var store = db.createObjectStore('survey_template', { keyPath: 'template_oid' });
+                    var store = db.createObjectStore('survey_template', { keyPath: 'template_oid'});
                     store.createIndex('contributor_idx', 'contributor', { unique: false });
                 });
         });
@@ -545,6 +594,72 @@
     angular.module('editor.workspace', []);
 
 }());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('preview')
+        .service('EditionPreviewService', EditionPreviewService);
+
+    EditionPreviewService.$inject = [
+        '$stateParams',
+        'AddSurveyItemEventFactory',
+        '$timeout',
+        '$q'
+    ];
+
+    function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
+        var self = this;
+        var _surveyToLoad;
+        var _scope;
+
+        self.isLoading = false;
+        self.setScope = setScope;
+        self.isLoadingMode = isLoadingMode;
+        self.loadSurveyTemplate = loadSurveyTemplate;
+
+        function loadSurveyTemplate() {
+            _surveyToLoad = $stateParams.template;
+            if (_surveyToLoad.itemContainer.length > 0) {
+                self.isLoading = true;
+                var promise = _renderSurveyTemplate();
+                promise.then(function(value) {
+                    self.isLoading = false;
+                });
+            }
+        }
+
+        function _renderSurveyTemplate() {
+            var deferred = $q.defer();
+            if (_scope.$$phase) {
+                AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
+                _surveyToLoad.itemContainer.splice(0, 1);
+                if (_surveyToLoad.itemContainer.length > 0) {
+                    $timeout(function() {
+                        _surveyToLoad.itemContainer.forEach(function(item) {
+                            AddSurveyItemEventFactory.create().load(item);
+                            _scope.$digest();
+                        });
+                        deferred.resolve(true);
+                    }, 1000);
+                } else {
+                    deferred.resolve(true);
+                }
+            }
+            return deferred.promise;
+        }
+
+        function isLoadingMode() {
+            return $stateParams.template;
+        }
+
+        function setScope(scope) {
+            _scope = scope;
+        }
+    }
+
+})();
 
 (function() {
     'use strict';
@@ -738,6 +853,239 @@
         function confirm(response) {
             $mdDialog.hide(response);
         }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SelectedSurveyTemplatesManagementService', SelectedSurveyTemplatesManagementService);
+
+    function SelectedSurveyTemplatesManagementService() {
+        var self = this;
+        self.selectedSurveyTemplates = [];
+
+        self.selectSurveyTemplate = selectSurveyTemplate;
+        self.removeSurveyTemplate = removeSurveyTemplate;
+        self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
+        self.hasOnlyOneSelectedSurveyTemplate = hasOnlyOneSelectedSurveyTemplate;
+
+        function selectSurveyTemplate(template) {
+            self.selectedSurveyTemplates.push(template);
+        }
+
+        function removeSurveyTemplate(template) {
+            self.selectedSurveyTemplates.splice(_getSelectedTemplateIndex(template), 1);
+        }
+
+        function hasSelectedSurveyTemplate() {
+            return self.selectedSurveyTemplates.length !== 0;
+        }
+
+        function hasOnlyOneSelectedSurveyTemplate() {
+            return self.selectedSurveyTemplates.length === 1;
+        }
+
+        /* Private methods */
+        function _getSelectedTemplateIndex(template) {
+            return self.selectedSurveyTemplates.indexOf(template);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SurveyTemplateManagerService', SurveyTemplateManagerService);
+
+    SurveyTemplateManagerService.$inject = [
+        'CrossSessionDatabaseService',
+        'SurveyExportService'
+    ];
+
+    function SurveyTemplateManagerService(CrossSessionDatabaseService, SurveyExportService) {
+        var self = this;
+        self.surveyTemplates = [];
+
+        self.initializeSurveyTemplateList = initializeSurveyTemplateList;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.exportSurveyTemplate = exportSurveyTemplate;
+        self.editSurveyTemplate = editSurveyTemplate;
+
+        function initializeSurveyTemplateList() {
+            var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
+            promise.then(function(value) {
+                self.surveyTemplates = value;
+            });
+        }
+
+        function deleteSurveyTemplate(template) {
+            CrossSessionDatabaseService.deleteSurveyTemplate(template.template_oid);
+            _removeOfSurveyTemplatesList(template);
+        }
+
+        function exportSurveyTemplate(template) {
+            return SurveyExportService.exportSurvey(JSON.stringify(template.template));
+        }
+
+        function editSurveyTemplate(template) {
+                
+        }
+
+        /* Private methods */
+        function _getTemplateIndex(template) {
+            return self.surveyTemplates.indexOf(template);
+        }
+
+        function _removeOfSurveyTemplatesList(template) {
+            self.surveyTemplates.splice(_getTemplateIndex(template), 1);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .directive('surveyTemplateUpload', SurveyTemplateUpload);
+
+    SurveyTemplateUpload.$inject = ['SurveyTemplateUploadService'];
+
+    function SurveyTemplateUpload(SurveyTemplateUploadService) {
+        var ddo = {
+            restrict: 'A',
+            link: linkFunction
+        };
+        return ddo;
+
+        function linkFunction($scope, $element, $attrs) {
+            var fileUploadElement;
+
+            $element.on('click', function() {
+                fileUploadElement = _createInput();
+                fileUploadElement.click();
+                fileUploadElement.addEventListener('change', function() {
+                    var fileToUpload = this.files[0];
+                    _uploadSurveyTemplate(fileToUpload);
+                });
+            });
+
+            function _uploadSurveyTemplate(fileToUpload) {
+                SurveyTemplateUploadService.upload(fileToUpload);
+            }
+
+            function _createInput() {
+                fileUploadElement = document.createElement('input');
+                fileUploadElement.setAttribute('type', 'file');
+                fileUploadElement.setAttribute('accept', '.json');
+                return fileUploadElement;
+            }
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SurveyTemplateUploadService', SurveyTemplateUploadService);
+
+    SurveyTemplateUploadService.$inject = [
+        'CrossSessionDatabaseService',
+        'SurveyTemplateManagerService',
+        '$mdToast'
+    ];
+
+    function SurveyTemplateUploadService(CrossSessionDatabaseService, SurveyTemplateManagerService, $mdToast) {
+        var self = this;
+        var jsonReaded;
+
+        self.upload = upload;
+
+        function upload(fileSurveyTemplate) {
+            var reader = new FileReader();
+            reader.readAsText(fileSurveyTemplate);
+
+            reader.onload = function() {
+                jsonReaded = reader.result;
+
+                var promise = CrossSessionDatabaseService.insertSurveyTemplate(jsonReaded, {
+                    owner: 'visitor'
+                });
+
+                promise.then(function(value) {
+                    if (value) {
+                        $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso!'));
+                    }
+                }, function(error) {
+                    $mdToast.show($mdToast.simple().textContent(_getErrorMessage(error)));
+                });
+
+                /** Reload list of Survey Templates */
+                SurveyTemplateManagerService.initializeSurveyTemplateList();
+            };
+        }
+
+        function _getErrorMessage(error) {
+            var message;
+            switch (error) {
+                case 'Key already exists in the object store.':
+                    message = 'Esse template já existe.';
+                    break;
+                default:
+                    message = 'Ocorreu um erro ao realizar o upload';
+                    console.log(error);
+            }
+            return message;
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .directive('surveyTemplatesExport', surveyTemplatesExport);
+
+    surveyTemplatesExport.$inject = [
+        'SurveyTemplateManagerService',
+        '$mdToast',
+        '$timeout',
+        'SelectedSurveyTemplatesManagementService'
+    ];
+
+    function surveyTemplatesExport(SurveyTemplateManagerService, $mdToast, $timeout, SelectedSurveyTemplatesManagementService) {
+        var ddo = {
+            restrict: 'A',
+            link: function(scope, element) {
+                element.on('click', function() {
+                    SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
+                        var downloadElement = document.createElement('a');
+                        downloadElement.setAttribute('href', SurveyTemplateManagerService.exportSurveyTemplate(template));
+                        downloadElement.setAttribute('download', 'surveyTemplate.json');
+                        downloadElement.setAttribute('target', '_blank');
+                        downloadElement.click();
+                    });
+                    $timeout(function() {
+                        $mdToast.show($mdToast.simple().textContent('Template(s) exportado(s) com sucesso!'));
+                    }, 1000);
+
+                });
+            }
+        };
+        return ddo;
     }
 
 }());
@@ -978,6 +1326,7 @@
         var self = this;
 
         self.execute = execute;
+        self.load = load;
 
         function execute(itemType) {
             var item = AddSurveyItemService.execute(itemType, WorkspaceService.getSurvey());
@@ -986,6 +1335,34 @@
             WorkspaceService.workspace.currentItem = item;
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
+        }
+
+        function load(itemToLoad) {
+            var newItem = AddSurveyItemService.execute(itemToLoad.objectType, WorkspaceService.getSurvey());
+            //copy data from itemToLoad to newItem
+            if (newItem.isQuestion()) {
+                newItem.label = itemToLoad.label;
+                newItem.metadata.options = itemToLoad.metadata.options;
+
+                if(itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
+                    newItem.options = itemToLoad.options;
+                }
+
+                if(itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
+                    newItem.unit = itemToLoad.unit;
+                }
+            } else {
+                if(itemToLoad.objectType === 'ImageItem') {
+                    newItem.url = itemToLoad.url;
+                    newItem.footer = itemToLoad.footer;
+                } else {
+                    newItem.value = itemToLoad.value;
+                }
+            }
+
+            SheetContentService.loadQuestion(newItem);
+            $rootScope.$broadcast('item.add', newItem);
+            WorkspaceService.workspace.currentItem = newItem;
         }
     }
 
@@ -1308,24 +1685,109 @@
         .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
 
     CrossSessionDatabaseService.$inject = [
+        '$q',
         '$indexedDB',
         'InsertHelperService'
     ];
 
-    function CrossSessionDatabaseService($indexedDB, InsertHelperService) {
-        var self = this;
+    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
 
         /* Public interface */
         self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
 
         function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore('survey_template', function(store) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
                 var entry = {};
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
                 entry.template = JSON.parse(template.toJson());
+                // console.log(JSON.stringify());
                 store.upsert(entry).then(function(e) {});
+
             });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function(success) {
+                    defer.resolve(success);
+                }, function(error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAll().then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.delete(templateOID).then(function() {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAllKeys().then(function(e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.find(oid).then(function(template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
         }
     }
 
@@ -1746,11 +2208,10 @@
         .service('SheetContentService', SheetContentService);
 
     SheetContentService.$inject = [
-        'editor.ui.mpath',
         'TemplateLoaderService'
     ];
 
-    function SheetContentService(mpath, TemplateLoaderService, WidgetService) {
+    function SheetContentService(TemplateLoaderService) {
         var self = this;
         var scope = null;
         var sheet = null;
@@ -1803,12 +2264,33 @@
     SheetController.$inject = [
         '$scope',
         '$element',
-        'SheetContentService'
+        'SheetContentService',
+        'EditionPreviewService',
+        'WorkspaceService',
+        '$window'
     ];
 
-    function SheetController($scope, $element, SheetContentService) {
+    function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window) {
         var self = this;
+        self.EditionPreviewService = EditionPreviewService;
+
         SheetContentService.init($scope, $element);
+
+        _init();
+
+        function _init() {
+            if (EditionPreviewService.isLoadingMode()) {
+                EditionPreviewService.setScope($scope);
+                EditionPreviewService.loadSurveyTemplate();
+            } else {
+                $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
+            }
+        }
+
+        $scope.$on('$destroy', function cleanWorkspaceService() {
+            WorkspaceService.closeWork();
+            $window.sessionStorage.removeItem('surveyTemplate_OID');
+        });
     }
 
 }());
@@ -1824,6 +2306,7 @@
         var ddo = {
             restrict: 'E',
             controller: 'SheetController',
+            controllerAs: 'sheetController',
             templateUrl: 'app/editor/ui/sheet/sheet.html'
         };
 
@@ -1854,7 +2337,7 @@
     'use strict';
 
     angular
-        .module('ui.components')
+        .module('editor.ui')
         .component('otusSurveyHeader', {
             templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
@@ -1949,6 +2432,7 @@
             link: function linkFunc(scope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 scope.widget = SurveyItemEditorWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
+                element.attr('tabindex', -1).focus();
             }
         };
 
@@ -2201,10 +2685,15 @@
 
         /* Public interface */
         self.newSurvey = newSurvey;
+        self.loadSurvey = loadSurvey;
 
         /* Public interface implementation */
         function newSurvey(name, acronym, version) {
             return ModelFacadeService.getSurveyFactory().create(name, acronym);
+        }
+
+        function loadSurvey(surveyTemplate) {
+            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
         }
     }
 
@@ -2285,6 +2774,7 @@
 
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService, SurveyExportService) {
         var self = this,
+            workspace,
             questionIdCounter = -1,
             observers = [];
 
@@ -2314,14 +2804,17 @@
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
-        function loadWork() {
-            var survey = SurveyLoaderService.newSurvey();
+        function loadWork(surveyTemplate) {
+            var survey = SurveyLoaderService.loadSurvey(surveyTemplate);
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
         function closeWork() {
-            saveProject();
+            saveWork();
             self.workspace.project.close('now');
+            questionIdCounter = -1;
+            observers = [];
+            self.workspace = undefined;
         }
 
         function saveWork() {
@@ -2329,7 +2822,7 @@
         }
 
         function exportWork() {
-            return SurveyExportService.exportSurvey(self.workspace.project.survey);
+            return SurveyExportService.exportSurvey(self.workspace.project.survey.toJson());
         }
 
         function getQuestionId() {
@@ -2400,8 +2893,8 @@
         /* Public interface */
         self.exportSurvey = exportSurvey;
 
-        function exportSurvey(template) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(template.toJson());
+        function exportSurvey(JsonTemplate) {
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
         }
     }
 
@@ -2686,6 +3179,144 @@
     'use strict';
 
     angular
+        .module('surveyTemplates')
+        .component('surveyTemplate', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
+            controller: SurveyTemplateController,
+            bindings: {
+                surveyTemplate: '<'
+            }
+        });
+
+    SurveyTemplateController.$inject = [
+        '$element',
+        '$scope',
+        'SelectedSurveyTemplatesManagementService'
+    ];
+
+    function SurveyTemplateController($element, $scope, SelectedSurveyTemplatesManagementService) {
+        var mdCard;
+        var self = this;
+        self.isSelected = false;
+
+        self.$onDestroy = function() {
+            if (self.isSelected) {
+                SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+            }
+        };
+
+        $element.on('click', function() {
+            mdCard = $element.children();
+            if (!self.isSelected) {
+                _select();
+            } else {
+                _remove();
+            }
+
+            _scopeApply();
+        });
+
+        function _select() {
+            self.isSelected = true;
+            mdCard.addClass('selected-template');
+            SelectedSurveyTemplatesManagementService.selectSurveyTemplate(self.surveyTemplate);
+        }
+
+        function _remove() {
+            self.isSelected = false;
+            mdCard.removeClass('selected-template');
+            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+        }
+
+        /**
+         * This method calls the AngularJS Digest Cycle
+         * It updates all watchers
+         */
+        function _scopeApply() {
+            $scope.$apply();
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .component('surveyTemplatesList', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
+            controller: SurveyTemplateControllerList,
+        });
+
+    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
+
+    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
+        var self = this;
+
+        self.getSurveyTemplatesList = getSurveyTemplatesList;
+
+        function getSurveyTemplatesList() {
+            return SurveyTemplateManagerService.surveyTemplates;
+        }
+
+        self.$onInit = function() {
+            SurveyTemplateManagerService.initializeSurveyTemplateList();
+        };
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .component('surveyTemplatesToolbar', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-template.html',
+            controller: SurveyTemplatesToolbarController,
+        });
+
+    SurveyTemplatesToolbarController.$inject = [
+        'SurveyTemplateManagerService',
+        'SelectedSurveyTemplatesManagementService',
+        '$mdToast',
+        'DashboardStateService',
+        '$window'
+    ];
+
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
+        var self = this;
+
+        self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
+        self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
+        self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
+
+        function deleteSelectedSurveyTemplate() {
+            SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
+                SurveyTemplateManagerService.deleteSurveyTemplate(template);
+            });
+            $mdToast.show($mdToast.simple().textContent('Template(s) removido(s) com sucesso!'));
+        }
+
+        function openEditorForSelectedSurveyTemplate() {
+            var selectedSurveyTemplate = _getSelectedSurveyTemplate();
+
+            $window.sessionStorage.setItem('surveyTemplate_OID', selectedSurveyTemplate.oid);
+            DashboardStateService.goToEditorWithSurveyTemplate(selectedSurveyTemplate);
+        }
+
+        function _getSelectedSurveyTemplate() {
+            return SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template;
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
         .module('studio.dashboard')
         .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
 
@@ -2702,7 +3333,7 @@
         function init() {
             self.dialogSettings = {
                 parent: angular.element(document.body),
-                templateUrl: 'app/dashboard/survey-form/dialog/new-survey-form/new-survey-form-dialog.html',
+                templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
                 controller: DialogController,
                 controllerAs: 'controller',
                 openFrom: '#system-toolbar',
@@ -2750,7 +3381,6 @@
         }
 
         function createSurveyForm(response) {
-            console.log(response.data.acronym);
             $mdDialog.hide(response);
         }
     }
@@ -2937,7 +3567,7 @@
         var ddo = {
             scope: {
                 placeholder: '@',
-                label: '@',
+                label: '=',
                 ariaLabel: '@',
                 leftIcon: '@',
                 ngModel: '='
@@ -2973,7 +3603,6 @@
         function create(scope, element) {
             return new OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory);
         }
-
         return self;
     }
 
@@ -2990,6 +3619,15 @@
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
+        self.getLabel = getLabel;
+
+        _init();
+
+        function _init() {
+            if (self.ngModel) {
+                _loadLabel();
+            }
+        }
 
         function getClassName() {
             return 'OtusTextEditorWidget';
@@ -2997,6 +3635,10 @@
 
         function getUUID() {
             return scope.uuid;
+        }
+
+        function getLabel() {
+            return self.ngModel.ptBR.formattedText;
         }
 
         function getElement() {
@@ -3011,11 +3653,24 @@
             return getParent().getItem();
         }
 
-        element.on('keyup', function(event) {
-            self.ngModel.ptBR.formattedText = event.target.innerHTML;
-            self.ngModel.ptBR.plainText = event.target.innerText;
+
+        element.on('focusout', function(event) {
+            _saveLabel();
             UpdateQuestionEventFactory.create().execute(self);
         });
+
+        function _saveLabel() {
+            self.ngModel.ptBR.formattedText = _removeSpecialCharacters(event.target.innerHTML);
+            self.ngModel.ptBR.plainText = event.target.innerText;
+        }
+
+        function _removeSpecialCharacters(value) {
+            return value.replace(/"/g, '\'');
+        }
+
+        function _loadLabel() {
+            self.getElement().children()[0].innerHTML = self.getLabel();
+        }
     }
 
 }());
@@ -3074,8 +3729,9 @@
 
     function MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
-
+        self.ngModel = scope.ngModel;
         self.options = [];
+
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -3085,6 +3741,14 @@
         self.getItem = getItem;
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
+
+        _init();
+
+        function _init() {
+            if(self.getItem().metadata.options.length > 0) {
+                _loadOptions();
+            }
+        }
 
         function getClassName() {
             return 'MetadataGroupWidget';
@@ -3104,6 +3768,13 @@
 
         function getItem() {
             return getParent().getItem();
+        }
+
+        function _loadOptions() {
+            self.getItem().metadata.options.forEach(function(option){
+                var optionWidget = MetadataOptionWidgetFactory.create(option, self);
+                self.options.push(optionWidget);
+            });
         }
 
         function addOption() {
@@ -3507,11 +4178,10 @@
     SurveyItemSettingsController.$inject = [
         '$scope',
         '$element',
-        'TemplateLoaderService',
         'SurveyItemSettingsContentService'
     ];
 
-    function SurveyItemSettingsController($scope, $element, TemplateLoaderService, SurveyItemSettingsContentService) {
+    function SurveyItemSettingsController($scope, $element, SurveyItemSettingsContentService) {
         var self = this;
 
         self.navigation = navigation;
@@ -4335,6 +5005,14 @@
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
 
+        _init();
+
+        function _init() {
+            if (self.getItem().options.length > 0) {
+                _loadAnswerOptions();
+            }
+        }
+
         function getClassName() {
             return 'CheckboxQuestionWidget';
         }
@@ -4365,6 +5043,13 @@
             self.options.push(optionWidget);
         }
 
+        function _loadAnswerOptions() {
+            self.getItem().options.forEach(function(awswerOption) {
+                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
+                self.options.push(optionWidget);
+            });
+        }
+
         function removeLastOption() {
             RemoveAnswerOptionEventFactory.create().execute(self);
             self.options.splice(-1);
@@ -4380,14 +5065,19 @@
         .module('editor.ui')
         .directive('otusDecimalQuestion', directive);
 
-    function directive() {
+    directive.$inject = ['DecimalQuestionWidgetFactory'];
+
+    function directive(DecimalQuestionWidgetFactory) {
         var ddo = {
             scope: {
                 ngModel: '=',
                 ariaLabel: '@'
             },
             templateUrl: 'app/editor/ui/survey-item/question/decimal/decimal-question.html',
-            restrict: 'E'
+            restrict: 'E',
+            link: function(scope, element) {
+                scope.widget = DecimalQuestionWidgetFactory.create(scope, element);
+            }
         };
         return ddo;
     }
@@ -4594,14 +5284,19 @@
         .module('editor.ui')
         .directive('otusIntegerQuestion', directive);
 
-    function directive() {
+    directive.$inject = ['IntegerQuestionWidgetFactory'];
+
+    function directive(IntegerQuestionWidgetFactory) {
         var ddo = {
             scope: {
                 ngModel: '=',
                 ariaLabel: '@'
             },
             templateUrl: 'app/editor/ui/survey-item/question/integer/integer-question.html',
-            retrict: 'E'
+            restrict: 'E',
+            link: function(scope, element) {
+                scope.widget = IntegerQuestionWidgetFactory.create(scope, element);
+            }
         };
         return ddo;
     }
@@ -5024,6 +5719,14 @@
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
 
+        _init();
+
+        function _init() {
+            if (self.getItem().options.length > 0) {
+                _loadAnswerOptions();
+            }
+        }
+
         function getClassName() {
             return 'SingleSelectionQuestionWidget';
         }
@@ -5052,6 +5755,13 @@
             var newOption = AddAnswerOptionEventFactory.create().execute(self);
             var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
+        }
+
+        function _loadAnswerOptions() {
+            self.getItem().options.forEach(function(awswerOption) {
+                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
+                self.options.push(optionWidget);
+            });
         }
 
         function removeLastOption() {

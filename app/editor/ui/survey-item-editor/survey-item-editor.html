@@ -7,7 +7,7 @@
                         {{widget.getItem().templateID}}
                     </md-card>
                     <md-content layout-padding layout-align="start center" flex>
-                        <label>{{widget.getItem().label.ptBR.plainText}}</label>
+                        <label>{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</label>
                     </md-content>
                 </md-content>
             </md-content>

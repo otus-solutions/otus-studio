@@ -12,10 +12,15 @@
 
         /* Public interface */
         self.newSurvey = newSurvey;
+        self.loadSurvey = loadSurvey;
 
         /* Public interface implementation */
         function newSurvey(name, acronym, version) {
             return ModelFacadeService.getSurveyFactory().create(name, acronym);
+        }
+
+        function loadSurvey(surveyTemplate) {
+            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
         }
     }
 

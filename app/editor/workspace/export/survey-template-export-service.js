@@ -12,8 +12,8 @@
         /* Public interface */
         self.exportSurvey = exportSurvey;
 
-        function exportSurvey(template) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(template.toJson());
+        function exportSurvey(JsonTemplate) {
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
         }
     }
 

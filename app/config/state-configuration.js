@@ -5,9 +5,10 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
-            'SURVEY_FORMS': 'survey-forms',
+            'SURVEY_TEMPLATES': 'survey-templates',
             'EDITOR': 'editor',
-            'LOGIN': 'login'
+            'LOGIN': 'login',
+            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -18,7 +19,7 @@
             .state('login', {
                 url: '/login',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/authenticator/login.html',
                         controller: 'LoginController as loginController'
                     }
@@ -27,7 +28,7 @@
             .state('home', {
                 url: '/home',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -35,7 +36,7 @@
                         templateUrl: dashboardMenu,
                     },
                     'system-content@home': {
-                        templateUrl: 'app/dashboard/template/dashboard-content-template.html'
+                        templateUrl: 'app/dashboard/home/layout-template.html'
                     },
                     'section-info@home': {
                         templateUrl: 'app/dashboard/home/home-info-section.html'
@@ -48,35 +49,35 @@
                     }
                 }
             })
-            .state('survey-forms', {
-                url: '/survey-forms',
+            .state('survey-templates', {
+                url: '/survey-templates',
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
-                    'dashboard-menu@survey-forms': {
+                    'dashboard-menu@survey-templates': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content@survey-forms': {
-                        templateUrl: 'app/dashboard/template/dashboard-content-template.html',
+                    'system-content@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/layout-template.html',
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-info@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-info-section.html'
+                    'section-view@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html'
                     },
-                    'section-view@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-view-section.html'
-                    },
-                    'section-commands@survey-forms': {
-                        templateUrl: 'app/dashboard/survey-form/survey-form-commands-section.html'
+                    'section-commands@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-commands-section.html'
                     }
                 }
             })
             .state('editor', {
                 url: '/editor',
+                params: {
+                    template: null
+                },
                 views: {
-                    'system-wrap' : {
+                    'system-wrap': {
                         templateUrl: 'app/dashboard/main-dashboard-content-template.html',
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
@@ -93,7 +94,31 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                //  SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                            },
+                            editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
+                                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
+
+                                if ($stateParams.template) {
+                                    _startEditor($stateParams.template);
+                                } else if (surveyTemplate_OID) {
+                                    var deferred = $q.defer();
+                                    _loadFromIndexedDB();
+                                    return deferred.promise;
+                                }
+
+                                function _loadFromIndexedDB() {
+                                    var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
+                                    promise.then(function(result) {
+                                        $stateParams.template = result.template;
+                                        _startEditor($stateParams.template);
+                                        deferred.resolve(true);
+                                    });
+                                }
+
+                                function _startEditor(surveyTemplate) {
+                                    SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
+                                }
                             }
                         }
                     }

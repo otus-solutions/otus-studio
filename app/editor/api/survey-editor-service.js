@@ -12,12 +12,20 @@
 
         /* Public interface */
         self.startEditor = startEditor;
+        self.startEditorWithSurveyTemplate = startEditorWithSurveyTemplate;
 
         function startEditor(initializationData) {
             WorkspaceService.initializeWorkspace({
-                owner: 'user'
+                owner: 'visitor'
             });
             WorkspaceService.startNewWork(initializationData);
+        }
+
+        function startEditorWithSurveyTemplate(surveyTemplate) {
+            WorkspaceService.initializeWorkspace({
+                owner: 'visitor'
+            });
+            WorkspaceService.loadWork(surveyTemplate);
         }
     }
 

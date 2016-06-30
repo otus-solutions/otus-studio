@@ -26,8 +26,9 @@
 
     function MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
         var self = this;
-
+        self.ngModel = scope.ngModel;
         self.options = [];
+
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -37,6 +38,14 @@
         self.getItem = getItem;
         self.addOption = addOption;
         self.removeLastOption = removeLastOption;
+
+        _init();
+
+        function _init() {
+            if(self.getItem().metadata.options.length > 0) {
+                _loadOptions();
+            }
+        }
 
         function getClassName() {
             return 'MetadataGroupWidget';
@@ -56,6 +65,13 @@
 
         function getItem() {
             return getParent().getItem();
+        }
+
+        function _loadOptions() {
+            self.getItem().metadata.options.forEach(function(option){
+                var optionWidget = MetadataOptionWidgetFactory.create(option, self);
+                self.options.push(optionWidget);
+            });
         }
 
         function addOption() {

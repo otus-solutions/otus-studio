@@ -15,6 +15,7 @@
 
     function WorkspaceService(WorkspaceFactory, SurveyProjectFactory, SurveyLoaderService, CrossSessionDatabaseService, SurveyExportService) {
         var self = this,
+            workspace,
             questionIdCounter = -1,
             observers = [];
 
@@ -44,14 +45,17 @@
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
-        function loadWork() {
-            var survey = SurveyLoaderService.newSurvey();
+        function loadWork(surveyTemplate) {
+            var survey = SurveyLoaderService.loadSurvey(surveyTemplate);
             importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
         }
 
         function closeWork() {
-            saveProject();
+            saveWork();
             self.workspace.project.close('now');
+            questionIdCounter = -1;
+            observers = [];
+            self.workspace = undefined;
         }
 
         function saveWork() {
@@ -59,7 +63,7 @@
         }
 
         function exportWork() {
-            return SurveyExportService.exportSurvey(self.workspace.project.survey);
+            return SurveyExportService.exportSurvey(self.workspace.project.survey.toJson());
         }
 
         function getQuestionId() {

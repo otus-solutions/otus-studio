@@ -10,6 +10,7 @@
             'editor',
             'otusjs',
             'preview',
+            'surveyTemplates',
             /* Otus platform modules */
             'ui.components',
             'utils'
