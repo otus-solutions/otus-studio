@@ -1306,23 +1306,25 @@
         'WorkspaceService',
         'WidgetService',
         'SheetContentService',
-        'AddSurveyItemService'
+        'AddSurveyItemService',
+        'PageAnchorService',
+        '$timeout'
     ];
 
-    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService) {
+    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService);
+            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout);
         }
 
         return self;
     }
 
-    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService) {
+    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         self.execute = execute;
@@ -2205,13 +2207,81 @@
 
     angular
         .module('editor.ui')
+        .component('otusPageAnchor', {
+            templateUrl: 'app/editor/ui/page-anchor-item/page-anchor-template.html',
+            controller: AnchorController,
+            bindings: {
+                id: '<'
+            }
+        });
+
+    AnchorController.$inject = [
+        '$element',
+        'PageAnchorService'
+    ];
+
+    function AnchorController($element, PageAnchorService) {
+        var self = this;
+
+        self.$onInit = function() {
+            $element.attr('tabindex', -1);
+            PageAnchorService.anchorRegistry($element);
+        };
+    }
+
+}());
+
+(function() {
+    angular
+        .module('editor.ui')
+        .service('PageAnchorService', PageAnchorService);
+
+    function PageAnchorService() {
+        var self = this;
+        var anchorList = {};
+
+        // public interface
+        self.sheetAutoFocus = sheetAutoFocus;
+        self.anchorRegistry = anchorRegistry;
+
+
+        function anchorRegistry(anchorElement) {
+            anchorList[anchorElement[0].id] = anchorElement;
+        }
+
+        function sheetAutoFocus(sheet) {
+            var childrenNb = sheet.children().length;
+            if (childrenNb > 6) {
+                _focusOnBottom();
+            } else {
+                _focusOnTop();
+            }
+        }
+
+        function _focusOnTop() {
+            anchorList['top-anchor'].focus();
+        }
+
+        function _focusOnBottom() {
+            anchorList['bottom-anchor'].focus();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .service('SheetContentService', SheetContentService);
 
     SheetContentService.$inject = [
-        'TemplateLoaderService'
+        'TemplateLoaderService',
+        'PageAnchorService'
     ];
 
-    function SheetContentService(TemplateLoaderService) {
+    function SheetContentService(TemplateLoaderService, PageAnchorService, $q, $timeout) {
         var self = this;
         var scope = null;
         var sheet = null;
@@ -2231,7 +2301,8 @@
         function loadQuestion(item) {
             self.lastLoadedQuestion = item;
             var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
-            sheet.find('#sheet').append(content);
+            var sheetTemplate = sheet.find('#sheet').append(content);
+            PageAnchorService.sheetAutoFocus(sheetTemplate);
         }
 
         function loadItem(item) {
@@ -2341,7 +2412,7 @@
         .component('otusSurveyHeader', {
             templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
-            controller: function($scope, WorkspaceService) {
+            controller: function(WorkspaceService) {
                 var self = this;
 
                 self.name = '';
@@ -2421,10 +2492,11 @@
     directive.$inject = [
         'SurveyItemEditorWidgetFactory',
         'SheetContentService',
-        'UUIDService'
-    ];
+        'UUIDService',
+        'PageAnchorService'
+        ];
 
-    function directive(SurveyItemEditorWidgetFactory, SheetContentService, UUIDService) {
+    function directive(SurveyItemEditorWidgetFactory, SheetContentService, UUIDService, PageAnchorService) {
         var ddo = {
             scope: {},
             templateUrl: 'app/editor/ui/survey-item-editor/survey-item-editor.html',
@@ -2432,7 +2504,6 @@
             link: function linkFunc(scope, element, attrs) {
                 scope.uuid = UUIDService.generateUUID();
                 scope.widget = SurveyItemEditorWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
-                element.attr('tabindex', -1).focus();
             }
         };
 
@@ -2477,6 +2548,7 @@
         self.getItem = getItem;
         self.getContainer = getContainer;
         self.deleteSurveyItem = deleteSurveyItem;
+        self.getQuestionId = getQuestionId;
 
         function getUUID() {
             return scope.uuid;
@@ -2492,6 +2564,10 @@
 
         function getItem() {
             return item;
+        }
+
+        function getQuestionId(){
+            return getItem().templateID;
         }
 
         function getContainer() {
