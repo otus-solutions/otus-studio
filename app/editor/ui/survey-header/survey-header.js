@@ -6,7 +6,7 @@
         .component('otusSurveyHeader', {
             templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
 
-            controller: function($scope, WorkspaceService) {
+            controller: function(WorkspaceService) {
                 var self = this;
 
                 self.name = '';

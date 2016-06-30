@@ -66,7 +66,6 @@
         }
 
         function createSurveyForm(response) {
-            console.log(response.data.acronym);
             $mdDialog.hide(response);
         }
     }

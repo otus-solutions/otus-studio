@@ -3,37 +3,34 @@
         .module('editor.ui')
         .service('PageAnchorService', PageAnchorService);
 
-    PageAnchorService.$inject = [
-        'WorkspaceService',
-        '$timeout'
-    ];
-
-    function PageAnchorService(WorkspaceService, $timeout) {
+    function PageAnchorService() {
         var self = this;
-        var childrenNb;
-        var bottomAnchor;
+        var anchorList = {};
+
         // public interface
-        self.focusOnElement = focusOnElement;
+        self.sheetAutoFocus = sheetAutoFocus;
+        self.anchorRegistry = anchorRegistry;
 
-        _init();
 
-        function _init() {
-            bottomAnchor = angular.element(document.querySelector('#page-anchor'));
+        function anchorRegistry(anchorElement) {
+            anchorList[anchorElement[0].id] = anchorElement;
         }
 
-        function focusOnElement(sheet) {
-            childrenNb = sheet.children().length;
+        function sheetAutoFocus(sheet) {
+            var childrenNb = sheet.children().length;
             if (childrenNb > 6) {
-                bottomAnchor.focus();
+                _focusOnBottom();
             } else {
-                var domElement = sheet[0].lastChild;
-                domElement.focus();
+                _focusOnTop();
             }
         }
 
-        function _getElementByID(templateID) {
-            focusId = '#' + templateID;
-            return document.querySelector(focusId);
+        function _focusOnTop() {
+            anchorList['top-anchor'].focus();
+        }
+
+        function _focusOnBottom() {
+            anchorList['bottom-anchor'].focus();
         }
     }
 

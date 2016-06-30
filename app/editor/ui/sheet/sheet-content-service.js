@@ -11,7 +11,6 @@
         'PageAnchorService',
         '$q',
         '$timeout'
-
     ];
 
     function SheetContentService(mpath, TemplateLoaderService, PageAnchorService, $q, $timeout) {
@@ -32,24 +31,11 @@
         }
 
         function loadQuestion(item) {
-
             self.lastLoadedQuestion = item;
             var templateID = self.lastLoadedQuestion.templateID;
-            var promise = compileAndAppend();
-
-            promise
-                .then(function(sheetTemplate) {
-                    PageAnchorService.focusOnElement(sheetTemplate);
-                });
-
-            function compileAndAppend() {
-                var appendPromise = $q.defer();
-                var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
-                $timeout(function() {
-                    appendPromise.resolve(sheet.find('#sheet').append(content));
-                });
-                return appendPromise.promise;
-            }
+            var content = TemplateLoaderService.loadDirective('<otus:survey-item-editor></otus:survey-item-editor>', scope);
+            var sheetTemplate = sheet.find('#sheet').append(content);
+            PageAnchorService.sheetAutoFocus(sheetTemplate);
         }
 
         function loadItem(item) {
