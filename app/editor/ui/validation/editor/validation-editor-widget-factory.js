@@ -36,11 +36,11 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.addValidator = addValidator;
-        self.removeLastOption = removeLastOption;
 
         _init();
 
         function _init() {
+          console.log(self.getItem());
             if(self.getItem().validate.options.length > 0){
                 _loadOptions();
             }

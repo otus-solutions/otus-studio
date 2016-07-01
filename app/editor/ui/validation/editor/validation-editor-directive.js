@@ -6,21 +6,21 @@
         .directive('otusValidationEditor', otusValidationEditor);
 
     otusValidationEditor.$inject = [
-        'UUIDService'
+        'ValidationEditorWidgetFactory'
     ];
 
-    function otusValidationEditor(UUIDService) {
+    function otusValidationEditor(ValidationEditorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
-            link: function linkFunc(scope, element, attrs) {
-                scope.uuid = UUIDService.generateUUID();
-                //TODO
+            link: function linkFunc(scope, element) {
+                scope.widget = ValidationEditorWidgetFactory.create(scope, element);
 
             }
         };
 
         return ddo;
     }
+
 }());
