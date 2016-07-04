@@ -7,24 +7,25 @@
 
     ValidationEditorWidgetFactory.$inject = [
         'ValidationOptionWidgetFactory',
-        'AddValidationEventFactory'
+        'AddValidationEventFactory',
+        'OtusValidationWidgetFactory'
     ];
 
-    function ValidationEditorWidgetFactory(ValidationOptionWidgetFactory, AddValidationEventFactory) {
+    function ValidationEditorWidgetFactory(ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory);
+            return new ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory);
         }
 
         return self;
 
     }
 
-    function ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory) {
+    function ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -36,13 +37,15 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.addValidator = addValidator;
+        self.appendValidation = appendValidation;
+        self.checkIfShow = checkIfShow;
 
         _init();
 
         function _init() {
-          console.log(self.getItem());
-            if(self.getItem().validate.options.length > 0){
-                _loadOptions();
+            console.log(self.getItem());
+            if (self.getItem().validate.options.length > 0) {
+              _loadOptions();
             }
         }
 
@@ -67,7 +70,7 @@
         }
 
         function _loadOptions() {
-            self.getItem().validate.options.forEach(function(option){
+            self.getItem().validate.options.forEach(function(option) {
                 var optionWidget = ValidationOptionWidgetFactory.create(option, self);
                 self.options.push(optionWidget);
             });
@@ -77,6 +80,22 @@
             var newOption = AddValidationEventFactory.create().execute(self);
             var optionWidget = ValidationOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
+        }
+
+        function appendValidation() {
+            var append = OtusValidationWidgetFactory.lalaia(getItem().validators());
+        }
+
+        //TODO
+        function checkIfShow(validation){
+          var options={};
+          var validators = getItem().validators();
+          console.log(validators);
+          validators.forEach(function(item) {
+            options[item]=true;
+          });
+          console.log(options);
+          return options;
         }
     }
 

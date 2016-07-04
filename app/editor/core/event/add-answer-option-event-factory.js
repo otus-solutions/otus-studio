@@ -30,7 +30,6 @@
 
         function execute(eventSource) {
             var option = AddAnswerOptionService.execute(eventSource.getItem());
-            console.log(eventSource);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
             return option;

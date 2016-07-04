@@ -29,6 +29,7 @@
         self.getItem = getItem;
         self.getTemplate = getTemplate;
 
+
         function getClassName() {
             return 'CalendarQuestionWidget';
         }

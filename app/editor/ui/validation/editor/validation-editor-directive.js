@@ -11,7 +11,8 @@
 
     function otusValidationEditor(ValidationEditorWidgetFactory) {
         var ddo = {
-            scope: {},
+            scope: {
+            },
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
             link: function linkFunc(scope, element) {
