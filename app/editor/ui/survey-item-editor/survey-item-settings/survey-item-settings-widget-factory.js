@@ -28,8 +28,7 @@
         self.ngClass.open = false;
         self.showNavigationEditor = false;
         self.showValidationEditor = false;
-        self.qes='lalaia';
-        
+
         /* Public methods */
         self.getUUID = getUUID;
         self.getElement = getElement;
