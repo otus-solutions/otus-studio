@@ -5,7 +5,7 @@
         .module('editor.ui')
         .directive('rangeDateValidator', rangeDateValidator);
 
-    function rangeDateValidator(UUIDService) {
+    function rangeDateValidator() {
         var ddo = {
             scope: {},
             restrict: 'E',
