@@ -4,19 +4,18 @@
         angular
             .module('editor.ui')
             .factory('OtusValidationWidgetFactory', OtusValidationWidgetFactory);
+            OtusValidationWidgetFactory.$inject = [
+              '$compile'
+            ];
 
 
-        function OtusValidationWidgetFactory() {
+        function OtusValidationWidgetFactory($compile, scope) {
             var self = this;
 
             /* Public interface */
-            self.lalaia = lalaia;
+            self.validatorsTemplates = validatorsTemplates;  
 
-            function lalaia(validator) {
-                console.log(_validatorsTemplates(validator));
-            }
-
-            function _validatorsTemplates(validator) {
+            function validatorsTemplates(validator) {
                 var templatesList = {
                     distinct: '<otus:distinct-validation></otus:distinct-validation>'
                   }

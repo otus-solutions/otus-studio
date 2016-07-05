@@ -8,24 +8,25 @@
     ValidationEditorWidgetFactory.$inject = [
         'ValidationOptionWidgetFactory',
         'AddValidationEventFactory',
-        'OtusValidationWidgetFactory'
+        'OtusValidationWidgetFactory',
+        '$compile'
     ];
 
-    function ValidationEditorWidgetFactory(ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory) {
+    function ValidationEditorWidgetFactory(ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory, $compile) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory);
+            return new ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory, $compile);
         }
 
         return self;
 
     }
 
-    function ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory) {
+    function ValidationEditorWidget(scope, element, ValidationOptionWidgetFactory, AddValidationEventFactory, OtusValidationWidgetFactory, $compile) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -83,7 +84,12 @@
         }
 
         function appendValidation(validator) {
-            var append = OtusValidationWidgetFactory.lalaia(validator);
+            var template = OtusValidationWidgetFactory.validatorsTemplates(validator);
+            console.log(template);
+            var validatorsColumn = element.find('#validators-column');
+            var validatorTemplate = $compile(template)(scope);
+            console.log(validatorTemplate);
+            validatorsColumn.append(validatorTemplate)
         }
 
         //TODO

@@ -98,20 +98,12 @@
                 </md-menu-content>
             </md-menu>
         </md-list-item>
-        <md-list-item ng-repeat="optionWidget in widget.options"></md-list-item>
+        <md-list-item>
+            <md-list id="validators-column" layout-padding layout = "column">
+
+            </md-list>
+        </md-list-item>
+
     </md-list>
 
-    <div>
-        <md-content layout="column" flex>
-            <!-- VAI APARECER AS VALIDAÇÔES ADICIONADAS AQUI -->
-            <!-- <otus:distinct-validation></otus:distinct-validation>
-            <otus:rangeDate-validation></otus:rangeDate-validation>
-            <otus:pastDate-validation></otus:pastDate-validation>
-            <otus:futureDate-validation></otus:futureDate-validation>
-            <otus:lowerLimit-validation></otus:lowerLimit-validation>
-            <otus:upperLimit-validation></otus:upperLimit-validation>
-            <otus:minLength-validation></otus:minLength-validation>
-            <otus:maxLength-validation></otus:maxLength-validation> -->
-        </md-content>
-    </div>
 </md-container>
