@@ -82,17 +82,19 @@
             self.options.push(optionWidget);
         }
 
-        function appendValidation(validator) {
-            var append = OtusValidationWidgetFactory.lalaia(validator);
+        function appendValidation() {
+            var append = OtusValidationWidgetFactory.lalaia(getItem().validators());
         }
 
         //TODO
         function checkIfShow(validation){
           var options={};
           var validators = getItem().validators();
+          console.log(validators);
           validators.forEach(function(item) {
             options[item]=true;
           });
+          console.log(options);
           return options;
         }
     }
