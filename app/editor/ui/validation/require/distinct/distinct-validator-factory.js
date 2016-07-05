@@ -21,6 +21,9 @@
     function DistinctValidator(scope, element) {
         var self = this;
 
+        function getTemplate(){
+          return '<otus:distinct-validator></otus:distinct-validator>';
+        }
         //TODO
     }
 

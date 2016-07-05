@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .directive('otusDistinctValidation', distinctValidation);
+        .directive('otusDistinctValidator', otusDistinctValidator);
 
-    function distinctValidation() {
+    function otusDistinctValidator() {
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validation.html'
+            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html'
         };
 
         return ddo;

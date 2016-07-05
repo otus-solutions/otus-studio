@@ -13,30 +13,32 @@
             var self = this;
 
             /* Public interface */
-            self.validatorsTemplates = validatorsTemplates;  
+            self.validatorsTemplates = validatorsTemplates;
 
             function validatorsTemplates(validator) {
                 var templatesList = {
-                    distinct: '<otus:distinct-validation></otus:distinct-validation>',
-                    rangeDate: '<otus:rangeDate-validation></otus:rangeDate-validation>',
-                    minDate: '<otus:minDate-validation></otus:minDate-validation>',
-                    maxDate: '<otus:maxDate-validation></otus:maxDate-validation>',
-                    futureDate: '<otus:futureDate-validation></otus:futureDate-validation>',
-                    pastDate: '<otus:pastDate-validation></otus:pastDate-validation>',
-                    loweLimit: '<otus:lowerLimit-validation></otus:lowerLimit-validation>',
-                    upperLimit: '<otus:upperLimit-validation></otus:upperLimit-validation>',
-                    scale: '<otus:scale-validation></otus:scale-validation>',
-                    in: '<otus:in-validation></otus:in-validation>',
-                    precision: '<otus:precision-validation></otus:precision-validation>',
-                    alphanumeric: '<otus:alphanumeric-validation></otus:alphanumeric-validation>',
-                    lowercase: '<otus:lowerCase-validation></otus:lowerCase-validation>',
-                    upperCase: '<otus:upperCase-validation></otus:upperCase-validation>',
-                    minLength: '<otus:minLength-validation></otus:minLength-validation>',
-                    maxLength: '<otus:maxLength-validation></otus:maxLength-validation>',
-                    specials: '<otus:specials-validation></otus:specials-validation>',
-                    minTime: '<otus:minTime-validation></otus:minTime-validation>',
-                    maxTime: '<otus:maxTime-validation></otus:maxTime-validation>',
-                    parameter: '<otus:parameter-validation></otus:parameter-validation>'
+                    distinct: '<otus:distinct-validator></otus:distinct-validator>',
+                    futureDate: '<otus:future-date-validator></otus:future-date-validator>',
+                    lowerLimit: '<otus:lower-limit-validator></otus:lower-limit-validator>',
+                    maxDate: '<otus:max-date-validator></otus:max-date-validator>',
+                    maxLength: '<otus:max-length-validator></otus:max-length-validator>',
+                    minLength: '<otus:min-length-validator></otus:min-length-validator>',
+                    pastDate: '<otus:past-date-validator></otus:past-date-validator>',
+                    rangeDate: '<otus:range-date-validator></otus:range-date-validator>',
+                    upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>',
+
+                    //TODO
+                    alphanumeric: '<otus:alphanumeric-validator></otus:alphanumeric-validator>',
+                    in: '<otus:in-validator></otus:in-validator>',
+                    lowercase: '<otus:lower-case-validator></otus:lower-case-validator>',
+                    minDate: '<otus:min-date-validator></otus:min-date-validator>',
+                    maxTime: '<otus:max-time-validator></otus:max-time-validator>',
+                    minTime: '<otus:min-time-validator></otus:min-time-validator>',
+                    precision: '<otus:precision-validator></otus:precision-validator>',
+                    scale: '<otus:scale-validator></otus:scale-validator>',
+                    specials: '<otus:specials-validator></otus:specials-validator>',
+                    parameter: '<otus:parameter-validator></otus:parameter-validator>',
+                    upperCase: '<otus:upper-case-validator></otus:upper-case-validator>'
                   }
                     return templatesList[validator];
                 }

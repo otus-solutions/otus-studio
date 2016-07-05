@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .directive('mandatoryValidator', mandatoryValidator);
+        .directive('otusMandatoryValidator', otusMandatoryValidator);
 
-    function mandatoryValidator() {
+    function otusMandatoryValidator() {
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/mandatoryValidator/mandatory-validation.html',
+            templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
 
         };
 

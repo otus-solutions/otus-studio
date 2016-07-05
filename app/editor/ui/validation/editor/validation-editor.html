@@ -10,50 +10,50 @@
                 </md-button>
                 <md-menu-content width="6">
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().rangeDate">
-                        <md-button ng-click="widget.appendValidation('rangeDate')">Adicionar range de datas</md-button>
+                        <md-button ng-click="widget.appendValidation('rangeDate')">[rangeDate] Adicionar range de datas</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().minDate">
-                        <md-button ng-click="widget.appendValidation('minDate')">Data deve ser posterior a</md-button>
+                        <md-button ng-click="widget.appendValidation('minDate')">[minDate] Data deve ser posterior a</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().maxDate">
-                        <md-button ng-click="widget.appendValidation('maxDate')">Data deve ser anterior a</md-button>
+                        <md-button ng-click="widget.appendValidation('maxDate')">[maxDate] Data deve ser anterior a</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().futureDate">
-                        <md-button ng-click="widget.appendValidation('futureDate')">Data futura</md-button>
+                        <md-button ng-click="widget.appendValidation('futureDate')">[futureDate] Data futura</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().pastDate">
-                        <md-button ng-click="widget.appendValidation('pastDate')">Data passada</md-button>
+                        <md-button ng-click="widget.appendValidation('pastDate')">[pastDate] Data passada</md-button>
                     </md-menu-item>
                     <md-menu-divider></md-menu-divider>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().distinct">
-                        <md-button ng-click="widget.appendValidation('distinct')">Deve ser diferente de
+                        <md-button ng-click="widget.appendValidation('distinct')">[distinct] Deve ser diferente de
                         </md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().lowerLimit">
-                        <md-button ng-click="widget.appendValidation('lowerLimit')">Limite mínimo de
+                        <md-button ng-click="widget.appendValidation('lowerLimit')">[lowerLimit] Limite mínimo de
                         </md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().scale">
-                        <md-button ng-click="widget.appendValidation('scale')">Número de casas decimais exigidas
+                        <md-button ng-click="widget.appendValidation('scale')">[scale] Número de casas decimais exigidas
                         </md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().upperLimit">
-                        <md-button ng-click="widget.appendValidation('upperLimit')">Limite máximo de
+                        <md-button ng-click="widget.appendValidation('upperLimit')">[upperLimit] Limite máximo de
                         </md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().precision">
-                        <md-button ng-click="widget.appendValidation('precision')">Quantidade total de dígitos do número
+                        <md-button ng-click="widget.appendValidation('precision')">[precision] Quantidade total de dígitos do número
                         </md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().alphanumeric">
-                        <md-button ng-click="widget.appendValidation('alphanumeric')">Indica que permite caracteres alfanuméricos</md-button>
+                        <md-button ng-click="widget.appendValidation('alphanumeric')">[alphanumeric] Indica que permite caracteres alfanuméricos</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().lowercase">
-                        <md-button ng-click="widget.appendValidation('lowercase')">Indica que permite texto em minúsculo</md-button>
+                        <md-button ng-click="widget.appendValidation('lowercase')">[lowercase] Indica que permite texto em minúsculo</md-button>
                     </md-menu-item>
                     <md-menu-item class="md-indent" ng-show="widget.checkIfShow().minLength">
                         <md-button ng-click="widget.appendValidation('minLength')">
-                            Informa o tamanho mínimo que a string da resposta deverá ter.
+                            [minLength] Informa o tamanho mínimo que a string da resposta deverá ter.
                         </md-button>
                     </md-menu-item>
 
@@ -99,9 +99,7 @@
             </md-menu>
         </md-list-item>
         <md-list-item>
-            <md-list id="validators-column" layout-padding layout = "column">
-
-            </md-list>
+            <md-list id="validators-column" layout-padding layout="column"></md-list>
         </md-list-item>
 
     </md-list>
