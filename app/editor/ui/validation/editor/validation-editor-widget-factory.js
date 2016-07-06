@@ -84,7 +84,9 @@
         }
 
         function appendValidation(validator) {
-            var template = OtusValidationWidgetFactory.validatorsTemplates(validator);
+            // var template = OtusValidationWidgetFactory.create(scope, element, validator);
+            var validatorObject = OtusValidationWidgetFactory.create(validator);
+            var template = validatorObject.getTemplate();
             console.log(template);
             var validatorsColumn = element.find('#validators-column');
             var validatorTemplate = $compile(template)(scope);

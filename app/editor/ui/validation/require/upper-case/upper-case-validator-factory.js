@@ -3,29 +3,29 @@
 
     angular
         .module('editor.ui')
-        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
+        .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
 
-    function PastDateValidatorFactory() {
+    function UpperCaseValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new PastDateValidator();
+            return new UpperCaseValidator();
         }
 
         return self;
     }
 
-    function PastDateValidator() {
+    function UpperCaseValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
 
         function getTemplate(){
-          return '<otus:past-date-validator></otus:past-date-validator>';
+          return '<otus:upper-case-validator></otus:upper-case-validator>';
         }
         //TODO
     }

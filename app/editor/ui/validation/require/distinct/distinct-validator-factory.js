@@ -3,23 +3,26 @@
 
     angular
         .module('editor.ui')
-        .factory('distinctValidatorFactory', distinctValidatorFactory);
+        .factory('DistinctValidatorFactory', DistinctValidatorFactory);
 
-    function distinctValidatorFactory() {
+    function DistinctValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(scope, element) {
-            return new DistinctValidator(scope, element);
+        function create() {
+            return new DistinctValidator();
         }
 
         return self;
     }
 
-    function DistinctValidator(scope, element) {
+    function DistinctValidator() {
         var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
 
         function getTemplate(){
           return '<otus:distinct-validator></otus:distinct-validator>';

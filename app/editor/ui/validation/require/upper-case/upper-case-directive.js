@@ -9,7 +9,7 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/upper-case-validator.html',
+            templateUrl: 'app/editor/ui/validation/require/upper-case/upper-case-validator.html',
         };
 
         return ddo;
