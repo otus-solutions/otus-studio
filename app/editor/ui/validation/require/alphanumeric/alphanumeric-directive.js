@@ -7,14 +7,13 @@
 
     function otusAlphanumericValidator() {
         var ddo = {
-            require: 'ngModel'
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/alphanumeric/alphanumeric-validator.html',
-            link: function (scope, element, attr, ngModel){
-                var validator = function(value) {
-                    //TODO
-                }
+            // link: function (scope, element, attr, ngModel){
+            //     var validator = function(value) {
+            //         //TODO
+            //     }
             }
         };
 
