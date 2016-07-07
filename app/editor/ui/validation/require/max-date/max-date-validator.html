@@ -1,7 +1,8 @@
 <md-content layout-padding>
-    <div layout="row">
-        <md-input-container class="md-block" flex-gt-sm="45">
-            <input type="text" name="decimal" min="0" step="0.1" required ui-decimal aria-label="Insira um valor máximo" />
-        </md-input-container>
+    <div>
+        <p>
+            Adicionar uma data máxima
+        </p>
+        <md-datepicker ng-model="maxDateValidation" md-placeholder="Insira uma data máxima" md-max-date="maxDate"></md-datepicker>
     </div>
 </md-content>
