@@ -3,25 +3,31 @@
 
     angular
         .module('editor.ui')
-        .factory('futureDateValidatorFactory', futureDateValidatorFactory);
+        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
 
-    function futureDateValidatorFactory() {
+    function FutureDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(scope, element) {
-            return new futureDateValidator(scope, element);
+        function create() {
+            return new FutureDateValidator();
         }
 
         return self;
     }
 
-    function futureDateValidator(scope, element) {
+    function FutureDateValidator() {
         var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+
+        function getTemplate(){
+          return '<otus:future-date-validator></otus:future-date-validator>';
+        }
         //TODO
     }
-
 
 }());

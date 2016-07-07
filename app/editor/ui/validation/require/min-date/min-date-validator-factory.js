@@ -3,29 +3,29 @@
 
     angular
         .module('editor.ui')
-        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
+        .factory('MinDateValidatorFactory', MinDateValidatorFactory);
 
-    function PastDateValidatorFactory() {
+    function MinDateValidatorFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new PastDateValidator();
+            return new MinDateValidator();
         }
 
         return self;
     }
 
-    function PastDateValidator() {
+    function MinDateValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
 
         function getTemplate(){
-          return '<otus:past-date-validator></otus:past-date-validator>';
+          return '<otus:min-date-validator></otus:min-date-validator>';
         }
         //TODO
     }

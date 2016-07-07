@@ -1,15 +1,34 @@
 (function() {
-    'use strict';
+        'use strict';
 
     angular
         .module('editor.ui')
         .factory('OtusValidationWidgetFactory', OtusValidationWidgetFactory);
     OtusValidationWidgetFactory.$inject = [
-        '$compile'
+        'AlphanumericValidatorFactory',
+        'DistinctValidatorFactory',
+        'FutureDateValidatorFactory',
+        'InValidatorFactory',
+        'LowerLimitValidatorFactory',
+        'LowerCaseValidatorFactory',
+        'MaxDateValidatorFactory',
+        'MaxLengthValidatorFactory',
+        'MaxTimeValidatorFactory',
+        'MinDateValidatorFactory',
+        'MinLengthValidatorFactory',
+        'MinTimeValidatorFactory',
+        'ParameterValidatorFactory',
+        'PastDateValidatorFactory',
+        'PrecisionValidatorFactory',
+        'RangeDateValidatorFactory',
+        'ScaleValidatorFactory',
+        'SpecialsValidatorFactory',
+        'UpperCaseValidatorFactory',
+        'UpperLimitValidatorFactory'
     ];
 
 
-    function OtusValidationWidgetFactory($compile, scope) {
+    function OtusValidationWidgetFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerLimitValidatorFactory, LowerCaseValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
         var self = this;
 
         /* Public interface */
@@ -17,31 +36,37 @@
 
         function validatorsTemplates(validator) {
             var templatesList = {
-                distinct: '<otus:distinct-validator></otus:distinct-validator>',
-                futureDate: '<otus:future-date-validator></otus:future-date-validator>',
-                lowerLimit: '<otus:lower-limit-validator></otus:lower-limit-validator>',
-                maxDate: '<otus:max-date-validator></otus:max-date-validator>',
-                maxLength: '<otus:max-length-validator></otus:max-length-validator>',
-                minLength: '<otus:min-length-validator></otus:min-length-validator>',
-                pastDate: '<otus:past-date-validator></otus:past-date-validator>',
-                rangeDate: '<otus:range-date-validator></otus:range-date-validator>',
-                upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>',
-
-                //TODO
-                alphanumeric: '<otus:alphanumeric-validator></otus:alphanumeric-validator>',
-                in: '<otus:in-validator></otus:in-validator>',
-                lowercase: '<otus:lower-case-validator></otus:lower-case-validator>',
-                minDate: '<otus:min-date-validator></otus:min-date-validator>',
-                maxTime: '<otus:max-time-validator></otus:max-time-validator>',
-                minTime: '<otus:min-time-validator></otus:min-time-validator>',
-                precision: '<otus:precision-validator></otus:precision-validator>',
-                scale: '<otus:scale-validator></otus:scale-validator>',
-                specials: '<otus:specials-validator></otus:specials-validator>',
-                parameter: '<otus:parameter-validator></otus:parameter-validator>',
-                upperCase: '<otus:upper-case-validator></otus:upper-case-validator>'
+                alphanumeric: AlphanumericValidatorFactory,
+                distinct: DistinctValidatorFactory,
+                futureDate: FutureDateValidatorFactory,
+                in: InValidatorFactory,
+                lowerLimit: LowerLimitValidatorFactory,
+                lowercase: LowerCaseValidatorFactory,
+                maxDate: MaxDateValidatorFactory,
+                maxLength: MaxLengthValidatorFactory,
+                maxTime: MaxTimeValidatorFactory,
+                minDate: MinDateValidatorFactory,
+                minLength: MinLengthValidatorFactory,
+                minTime: MinTimeValidatorFactory,
+                parameter: ParameterValidatorFactory,
+                pastDate: PastDateValidatorFactory,
+                precision: PrecisionValidatorFactory,
+                rangeDate: RangeDateValidatorFactory,
+                scale: ScaleValidatorFactory,
+                specials: SpecialsValidatorFactory,
+                upperCase: UpperCaseValidatorFactory,
+                upperLimit: UpperLimitValidatorFactory
             }
             return templatesList[validator];
         }
+
+        /* Public interface */
+        self.create = create;
+        // function create(scope, element, validator) {
+        function create(validator) {
+            return validatorsTemplates(validator).create();
+        }
+
 
         return self;
 

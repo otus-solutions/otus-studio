@@ -9,7 +9,7 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/minTime/min-time-validator.html',
+            templateUrl: 'app/editor/ui/validation/require/min-time/min-time-validator.html',
         };
 
         return ddo;
