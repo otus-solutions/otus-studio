@@ -9,7 +9,7 @@
         var ddo = {
             scope: {},
             restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/lowerCase/lower-case-validator.html',
+            templateUrl: 'app/editor/ui/validation/require/lower-case/lower-case-validator.html',
         };
 
         return ddo;
