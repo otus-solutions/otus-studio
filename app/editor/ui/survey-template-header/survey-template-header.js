@@ -3,8 +3,8 @@
 
     angular
         .module('editor.ui')
-        .component('otusSurveyHeader', {
-            templateUrl: 'app/editor/ui/survey-header/survey-header-template.html',
+        .component('otusSurveyTemplateHeader', {
+            templateUrl: 'app/editor/ui/survey-template-header/survey-template-header-template.html',
 
             controller: function(WorkspaceService) {
                 var self = this;
