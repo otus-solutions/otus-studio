@@ -50,7 +50,7 @@
         }
 
         function getTemplate() {
-            return '<otus-calendar-question></otus-calendar-question>';
+            return '<calendar-question></calendar-question>';
         }
     }
 
