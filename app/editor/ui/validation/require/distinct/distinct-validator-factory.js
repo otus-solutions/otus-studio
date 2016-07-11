@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = [];
 
         function getTemplate(){
           return '<otus:distinct-validator></otus:distinct-validator>';

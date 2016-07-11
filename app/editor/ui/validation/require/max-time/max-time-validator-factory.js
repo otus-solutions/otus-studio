@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = null;
 
         function getTemplate(){
           return '<otus:max-time-validator></otus:max-time-validator>';

@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.date = new Date();
 
         function getTemplate(){
           return '<otus:past-date-validator></otus:past-date-validator>';

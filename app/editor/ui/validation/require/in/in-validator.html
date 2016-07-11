@@ -1,6 +1,9 @@
 <md-list-item layout-padding>
     <span>Insira a lista de valores</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="integer" min="0" step="1" required ui-integer aria-label="Insira a lista de valores" />
+        <input type="text" name="ans1" min="0" step="1" required ui-integer aria-label="Insira a lista de valores" ng-model="widget.answer[0]"/>
+    </md-input-container>
+    <md-input-container class="md-block" flex-gt-sm="45">
+        <input type="text" name="ans2" min="0" step="1" required ui-integer aria-label="Insira a lista de valores" ng-model="widget.answer[1]"/>
     </md-input-container>
 </md-list-item>

@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = null;
 
         function getTemplate(){
           return '<otus:scale-validator></otus:scale-validator>';

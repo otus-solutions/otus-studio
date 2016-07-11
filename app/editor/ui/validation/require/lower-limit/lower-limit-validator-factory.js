@@ -23,7 +23,8 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-
+        self.answer = null;
+        
         function getTemplate(){
           return '<otus:lower-limit-validator></otus:lower-limit-validator>';
         }

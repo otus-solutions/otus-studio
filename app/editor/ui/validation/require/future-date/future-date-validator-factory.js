@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.date = new Date();
 
         function getTemplate(){
           return '<otus:future-date-validator></otus:future-date-validator>';

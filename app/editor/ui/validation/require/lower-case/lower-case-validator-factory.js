@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = false;
 
         function getTemplate(){
           return '<otus:lower-case-validator></otus:lower-case-validator>';

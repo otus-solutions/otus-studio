@@ -3,25 +3,24 @@
 
     angular
         .module('editor.ui')
-        .factory('ValidationOptionWidgetFactory', ValidationOptionWidgetFactory);
+        .factory('FillingRulesOptionWidgetFactory', FillingRulesOptionWidgetFactory);
 
-    function ValidationOptionWidgetFactory() {
+    function FillingRulesOptionWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(option, parentGroup) {
-            return new ValidationOptionWidget(option, parentGroup);
+            return new FilingRulesOptionWidget(option, parentGroup);
         }
 
         return self;
     }
 
-    function ValidationOptionWidget(option, parentGroup) {
+    function FilingRulesOptionWidget(option, parentGroup) {
         var self = this;
-
-        self.name= 'ValidationOption';
+        self.name= 'FilingRules';
         self.parentGroup = parentGroup;
         self.option = option;
     }

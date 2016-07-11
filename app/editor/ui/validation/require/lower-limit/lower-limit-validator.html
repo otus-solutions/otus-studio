@@ -1,6 +1,7 @@
 <md-list-item layout-padding>
     <span>Insira um valor mínimo</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="integer" min="0" step="1" required ui-integer aria-label="Insira um valor mínimo">
+        <input type="text" name="integer" min="0" step="1" required ui-integer aria-label="Insira um valor mínimo" ng-model="widget.answer" >
     </md-input-container>
+    <button type="button" ng-click = widget.showMe()></button>
 </md-list-item>

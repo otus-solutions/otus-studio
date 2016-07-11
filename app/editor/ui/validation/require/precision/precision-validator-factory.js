@@ -23,7 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-
+        self.answer = null;
         function getTemplate(){
           return '<otus:precision-validator></otus:precision-validator>';
         }

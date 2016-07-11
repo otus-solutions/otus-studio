@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = false;
 
         function getTemplate(){
           return '<otus:upper-case-validator></otus:upper-case-validator>';

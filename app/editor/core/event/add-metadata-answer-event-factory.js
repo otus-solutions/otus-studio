@@ -29,7 +29,9 @@
         self.execute = execute;
 
         function execute(eventSource) {
+          console.log(eventSource);          
             var option = AddMetadataAnswerService.execute(eventSource.getItem());
+            console.log(self);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
             return option;

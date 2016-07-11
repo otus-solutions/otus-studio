@@ -1,10 +1,11 @@
 (function() {
-        'use strict';
+    'use strict';
 
     angular
         .module('editor.ui')
-        .factory('OtusValidationWidgetFactory', OtusValidationWidgetFactory);
-    OtusValidationWidgetFactory.$inject = [
+        .factory('OtusFillingRulesWidgetFactory', OtusFillingRulesWidgetFactory);
+
+    OtusFillingRulesWidgetFactory.$inject = [
         'AlphanumericValidatorFactory',
         'DistinctValidatorFactory',
         'FutureDateValidatorFactory',
@@ -28,7 +29,7 @@
     ];
 
 
-    function OtusValidationWidgetFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerLimitValidatorFactory, LowerCaseValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+    function OtusFillingRulesWidgetFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerLimitValidatorFactory, LowerCaseValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
         var self = this;
 
         /* Public interface */

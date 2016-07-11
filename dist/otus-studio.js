@@ -63,7 +63,7 @@
         'indexedDB',
         'immutable',
         'ui.utils.masks',
-        'otusDomainClient'
+        'otusDomainClient',
     ]);
 
 }());
@@ -185,7 +185,7 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
                             },
                             editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
                                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
@@ -1094,6 +1094,122 @@
     'use strict';
 
     angular
+        .module('editor.database')
+        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
+
+    CrossSessionDatabaseService.$inject = [
+        '$q',
+        '$indexedDB',
+        'InsertHelperService'
+    ];
+
+    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
+
+        /* Public interface */
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
+
+        function saveSurveyTemplateRevision(template, session) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = JSON.parse(template.toJson());
+                // console.log(JSON.stringify());
+                store.upsert(entry).then(function(e) {});
+
+            });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function(success) {
+                    defer.resolve(success);
+                }, function(error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAll().then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.delete(templateOID).then(function() {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAllKeys().then(function(e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.find(oid).then(function(template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('editor.core')
         .factory('AddAnswerOptionEventFactory', AddAnswerOptionEventFactory);
 
@@ -1135,6 +1251,47 @@
 
     angular
         .module('editor.core')
+        .factory('AddFillingRulesEventFactory', AddFillingRulesEventFactory);
+
+    AddFillingRulesEventFactory.$inject = [
+        'AddFillingRulesService',
+        'WorkspaceService'
+    ];
+
+    function AddFillingRulesEventFactory(AddFillingRulesService, WorkspaceService){
+        var self = this;
+
+        self.create = create;
+
+        function create() {
+            return new AddFillingRulesEvent(AddFillingRulesService, WorkspaceService);
+        }
+
+        return self;
+    }
+
+    function AddFillingRulesEvent(AddFillingRulesService, WorkspaceService) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(validationWidget) {
+            var option = AddFillingRulesService.execute(validationWidget.getItem());
+            console.log('option');
+            console.log(option);
+            WorkspaceService.workspace.isdb.userEdits.store(self);
+            WorkspaceService.saveWork();
+            return option;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core')
         .factory('AddMetadataAnswerEventFactory', AddMetadataAnswerEventFactory);
 
     AddMetadataAnswerEventFactory.$inject = [
@@ -1161,7 +1318,9 @@
         self.execute = execute;
 
         function execute(eventSource) {
+          console.log(eventSource);          
             var option = AddMetadataAnswerService.execute(eventSource.getItem());
+            console.log(self);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
             return option;
@@ -1343,6 +1502,7 @@
             if (newItem.isQuestion()) {
                 newItem.label = itemToLoad.label;
                 newItem.metadata.options = itemToLoad.metadata.options;
+                newItem.validate.options = [];
 
                 if(itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
                     newItem.options = itemToLoad.options;
@@ -1672,122 +1832,6 @@
         function execute(eventSource) {
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database')
-        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
-
-    CrossSessionDatabaseService.$inject = [
-        '$q',
-        '$indexedDB',
-        'InsertHelperService'
-    ];
-
-    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
-        var self = this,
-            STORE_NAME = 'survey_template',
-            INDEX = 'contributor_idx';
-
-        /* Public interface */
-        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllSurveyTemplates = getAllSurveyTemplates;
-        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.insertSurveyTemplate = insertSurveyTemplate;
-        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
-
-        function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var entry = {};
-                entry.template_oid = template.oid;
-                entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());
-                // console.log(JSON.stringify());
-                store.upsert(entry).then(function(e) {});
-
-            });
-        }
-
-        function insertSurveyTemplate(template, session) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var parsedTemplate = JSON.parse(template);
-                var entry = {};
-                entry.template_oid = parsedTemplate.oid;
-                entry.contributor = session.owner;
-                entry.template = parsedTemplate;
-                store.insert(entry).then(function(success) {
-                    defer.resolve(success);
-                }, function(error) {
-                    defer.reject(error);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplates() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAll().then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplatesByContributor() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-
-                var criteria = store.query();
-                criteria = criteria.$eq('visitor');
-                criteria = criteria.$index(INDEX);
-
-                store.eachWhere(criteria).then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function deleteSurveyTemplate(templateOID) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.delete(templateOID).then(function() {
-                    defer.resolve(true);
-                });
-            });
-            return defer.promise;
-        }
-
-        /**
-         * Returns a User + UUID Template + Repository in Base64
-         */
-        function getAllKeys() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAllKeys().then(function(e) {
-                    defer.resolve(e);
-                });
-            });
-            return defer.promise;
-        }
-
-        function findSurveyTemplateByOID(oid) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.find(oid).then(function(template) {
-                    defer.resolve(template);
-                });
-            });
-            return defer.promise;
         }
     }
 
@@ -2668,6 +2712,84 @@
             return $compile(html)(scope);
         }
     }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('OtusFillingRulesWidgetFactory', OtusFillingRulesWidgetFactory);
+
+    OtusFillingRulesWidgetFactory.$inject = [
+        'AlphanumericValidatorFactory',
+        'DistinctValidatorFactory',
+        'FutureDateValidatorFactory',
+        'InValidatorFactory',
+        'LowerLimitValidatorFactory',
+        'LowerCaseValidatorFactory',
+        'MaxDateValidatorFactory',
+        'MaxLengthValidatorFactory',
+        'MaxTimeValidatorFactory',
+        'MinDateValidatorFactory',
+        'MinLengthValidatorFactory',
+        'MinTimeValidatorFactory',
+        'ParameterValidatorFactory',
+        'PastDateValidatorFactory',
+        'PrecisionValidatorFactory',
+        'RangeDateValidatorFactory',
+        'ScaleValidatorFactory',
+        'SpecialsValidatorFactory',
+        'UpperCaseValidatorFactory',
+        'UpperLimitValidatorFactory'
+    ];
+
+
+    function OtusFillingRulesWidgetFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerLimitValidatorFactory, LowerCaseValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.validatorsTemplates = validatorsTemplates;
+
+        function validatorsTemplates(validator) {
+            var templatesList = {
+                alphanumeric: AlphanumericValidatorFactory,
+                distinct: DistinctValidatorFactory,
+                futureDate: FutureDateValidatorFactory,
+                in: InValidatorFactory,
+                lowerLimit: LowerLimitValidatorFactory,
+                lowercase: LowerCaseValidatorFactory,
+                maxDate: MaxDateValidatorFactory,
+                maxLength: MaxLengthValidatorFactory,
+                maxTime: MaxTimeValidatorFactory,
+                minDate: MinDateValidatorFactory,
+                minLength: MinLengthValidatorFactory,
+                minTime: MinTimeValidatorFactory,
+                parameter: ParameterValidatorFactory,
+                pastDate: PastDateValidatorFactory,
+                precision: PrecisionValidatorFactory,
+                rangeDate: RangeDateValidatorFactory,
+                scale: ScaleValidatorFactory,
+                specials: SpecialsValidatorFactory,
+                upperCase: UpperCaseValidatorFactory,
+                upperLimit: UpperLimitValidatorFactory
+            }
+            return templatesList[validator];
+        }
+
+        /* Public interface */
+        self.create = create;
+        // function create(scope, element, validator) {
+        function create(validator) {
+            return validatorsTemplates(validator).create();
+        }
+
+
+        return self;
+
+    }
+
 
 }());
 
@@ -3779,6 +3901,7 @@
 
         function addOption() {
             var newOption = AddMetadataAnswerEventFactory.create().execute(self);
+            // console.log(newOption);
             var optionWidget = MetadataOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
         }
@@ -4257,6 +4380,7 @@
         /* Template definitions */
         self.ngClass.open = false;
         self.showNavigationEditor = false;
+        self.showValidationEditor = false;
 
         /* Public methods */
         self.getUUID = getUUID;
@@ -4264,6 +4388,7 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.navigationButton = navigationButton;
+        self.validationButton = validationButton;
 
         function getUUID() {
             return scope.uuid;
@@ -4285,6 +4410,182 @@
             self.ngClass.open = !self.ngClass.open;
             self.showNavigationEditor = !self.showNavigationEditor;
         }
+
+        function validationButton() {
+            self.ngClass.open = !self.ngClass.open;
+            self.showValidationEditor = !self.showValidationEditor;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusFillingRulesEditor', otusFillingRulesEditor);
+
+    otusFillingRulesEditor.$inject = [
+        'FillingRulesEditorWidgetFactory'
+    ];
+
+    function otusFillingRulesEditor(FillingRulesEditorWidgetFactory) {
+        var ddo = {
+            scope: {
+            },
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = FillingRulesEditorWidgetFactory.create(scope, element);
+
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('FillingRulesEditorWidgetFactory', FillingRulesEditorWidgetFactory);
+
+    FillingRulesEditorWidgetFactory.$inject = [
+        'FillingRulesOptionWidgetFactory',
+        'AddFillingRulesEventFactory',
+        'OtusFillingRulesWidgetFactory',
+        '$compile',
+        'WorkspaceService'
+    ];
+
+    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+        var self = this;
+
+        /*Public interface*/
+        self.create = create;
+
+        function create(scope, element) {
+            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService);
+        }
+
+        return self;
+
+    }
+
+    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+        var self = this;
+        self.ngModel = scope.ngModel;
+        self.options = [];
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.addValidator = addValidator;
+        self.appendFillingRules = appendFillingRules;
+        self.checkIfShow = checkIfShow;
+
+        _init();
+
+        function _init() {
+            console.log(self.getItem());
+            if (self.getItem().validate.options.length > 0) {
+                _loadOptions();
+            }
+        }
+
+        function getClassName() {
+            return 'FillingRulesEditorWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function _loadOptions() {
+            self.getItem().validate.options.forEach(function(option) {
+                var optionWidget = FillingRulesOptionWidgetFactory.create(option, self);
+                self.options.push(optionWidget);
+            });
+        }
+
+        function addValidator() {
+            var newOption = AddFillingRulesEventFactory.create().execute(self);
+            var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
+            self.options.push(optionWidget);
+        }
+
+        function appendFillingRules(validator) {
+
+            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
+            addValidator();
+            scope.addedValidatorWidget = validatorObject;
+
+
+            var template = validatorObject.getTemplate();
+            var validatorsColumn = element.find('#validators-column');
+
+            var validatorTemplate = $compile(template)(scope);
+            validatorsColumn.append(validatorTemplate);
+            console.log(getItem());
+        }
+
+        //TODO
+        function checkIfShow() {
+            var options = {};
+            var validators = getItem().validators();
+            validators.forEach(function(item) {
+                options[item] = true;
+            });
+            return options;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('FillingRulesOptionWidgetFactory', FillingRulesOptionWidgetFactory);
+
+    function FillingRulesOptionWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(option, parentGroup) {
+            return new FilingRulesOptionWidget(option, parentGroup);
+        }
+
+        return self;
+    }
+
+    function FilingRulesOptionWidget(option, parentGroup) {
+        var self = this;
+        self.name= 'FilingRules';
+        self.parentGroup = parentGroup;
+        self.option = option;
     }
 
 }());
@@ -4910,6 +5211,7 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.getTemplate = getTemplate;
+
 
         function getClassName() {
             return 'CalendarQuestionWidget';
@@ -5640,6 +5942,1212 @@
         function getTemplate() {
             return '<otus-time-question></otus-time-question>';
         }
+    }
+
+}());
+
+(function () {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusAlphanumericValidator', otusAlphanumericValidator);
+
+    function otusAlphanumericValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/alphanumeric/alphanumeric-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('AlphanumericValidatorFactory', AlphanumericValidatorFactory);
+
+    function AlphanumericValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new AlphanumericValidator();
+        }
+
+        return self;
+    }
+
+    function AlphanumericValidator() {
+        var self = this;
+
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = false;
+
+        function getTemplate(){
+          return '<otus:alphanumeric-validator></otus:alphanumeric-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusDistinctValidator', otusDistinctValidator);
+
+    function otusDistinctValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('DistinctValidatorFactory', DistinctValidatorFactory);
+
+    function DistinctValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new DistinctValidator();
+        }
+
+        return self;
+    }
+
+    function DistinctValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = [];
+
+        function getTemplate(){
+          return '<otus:distinct-validator></otus:distinct-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusFutureDateValidator', otusFutureDateValidator);
+
+    function otusFutureDateValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/future-date/future-date-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
+
+    function FutureDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new FutureDateValidator();
+        }
+
+        return self;
+    }
+
+    function FutureDateValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.date = new Date();
+
+        function getTemplate(){
+          return '<otus:future-date-validator></otus:future-date-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusInValidator', otusInValidator);
+
+    function otusInValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/in/in-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('InValidatorFactory', InValidatorFactory);
+
+    function InValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new InValidator();
+        }
+
+        return self;
+    }
+
+    function InValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = [];
+        function getTemplate(){
+          return '<otus:in-validator></otus:in-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusLowerCaseValidator', otusLowerCaseValidator);
+
+    function otusLowerCaseValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/lower-case/lower-case-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
+
+    function LowerCaseValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new LowerCaseValidator();
+        }
+
+        return self;
+    }
+
+    function LowerCaseValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = false;
+
+        function getTemplate(){
+          return '<otus:lower-case-validator></otus:lower-case-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusLowerLimitValidator', otusLowerLimitValidator);
+
+    function otusLowerLimitValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/lower-limit/lower-limit-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
+
+    function LowerLimitValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new LowerLimitValidator();
+        }
+
+        return self;
+    }
+
+    function LowerLimitValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+        
+        function getTemplate(){
+          return '<otus:lower-limit-validator></otus:lower-limit-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMandatoryValidator', otusMandatoryValidator);
+
+    otusMandatoryValidator.$inject = [
+        'MandatoryValidatorFactory'
+    ];
+
+    function otusMandatoryValidator(MandatoryValidatorFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
+            link: function linkFunc(scope) {
+                scope.widget = MandatoryValidatorFactory.create();
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MandatoryValidatorFactory', MandatoryValidatorFactory);
+
+    function MandatoryValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MandatoryValidator();
+        }
+
+        return self;
+    }
+
+    function MandatoryValidator() {
+        var self = this;
+
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = false;
+
+        function getTemplate(){
+          return '<otus:mandatory-validator></otus:mandatory-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMaxLengthValidator', otusMaxLengthValidator);
+
+    function otusMaxLengthValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/max-length/max-length-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MaxLengthValidatorFactory', MaxLengthValidatorFactory);
+
+    function MaxLengthValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MaxLengthValidator();
+        }
+
+        return self;
+    }
+
+    function MaxLengthValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+        self.showMe = showMe;
+
+        function showMe(){
+            console.log(self.answer);
+        }
+
+        function getTemplate(){
+          return '<otus:max-length-validator></otus:max-length-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMaxDateValidator', otusMaxDateValidator);
+
+    function otusMaxDateValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/max-date/max-date-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
+
+    function MaxDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MaxDateValidator();
+        }
+
+        return self;
+    }
+
+    function MaxDateValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.date = new Date();
+
+
+        function getTemplate(){
+          return '<otus:max-date-validator></otus:max-date-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMaxTimeValidator', otusMaxTimeValidator);
+
+    function otusMaxTimeValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/max-time/max-time-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+
+    function MaxTimeValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MaxTimeValidator();
+        }
+
+        return self;
+    }
+
+    function MaxTimeValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+
+        function getTemplate(){
+          return '<otus:max-time-validator></otus:max-time-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMinDateValidator', otusMinDateValidator);
+
+    function otusMinDateValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-date/min-date-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MinDateValidatorFactory', MinDateValidatorFactory);
+
+    function MinDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MinDateValidator();
+        }
+
+        return self;
+    }
+
+    function MinDateValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.date = new Date();
+
+        function getTemplate(){
+          return '<otus:min-date-validator></otus:min-date-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMinLengthValidator', otusMinLengthValidator);
+
+    function otusMinLengthValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-length/min-length-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MinLengthValidatorFactory', MinLengthValidatorFactory);
+
+    function MinLengthValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MinLengthValidator();
+        }
+
+        return self;
+    }
+
+    function MinLengthValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+
+        function getTemplate(){
+          return '<otus:min-length-validator></otus:min-length-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMinTimeValidator', otusMinTimeValidator);
+
+    function otusMinTimeValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-time/min-time-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+
+    function MinTimeValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MinTimeValidator();
+        }
+
+        return self;
+    }
+
+    function MinTimeValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+
+        function getTemplate(){
+          return '<otus:min-time-validator></otus:min-time-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusParameterValidator', otusParameterValidator);
+
+    function otusParameterValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/parameter/parameter-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('ParameterValidatorFactory', ParameterValidatorFactory);
+
+    function ParameterValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new ParameterValidator();
+        }
+
+        return self;
+    }
+
+    function ParameterValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+        function getTemplate(){
+          return '<otus:parameter-validator></otus:parameter-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusPastDateValidator', otusPastDateValidator);
+
+    function otusPastDateValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/past-date/past-date-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('PastDateValidatorFactory', PastDateValidatorFactory);
+
+    function PastDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new PastDateValidator();
+        }
+
+        return self;
+    }
+
+    function PastDateValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.date = new Date();
+
+        function getTemplate(){
+          return '<otus:past-date-validator></otus:past-date-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusPrecisionValidator', otusPrecisionValidator);
+
+    function otusPrecisionValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/precision/precision-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
+
+    function PrecisionValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new PrecisionValidator();
+        }
+
+        return self;
+    }
+
+    function PrecisionValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+        function getTemplate(){
+          return '<otus:precision-validator></otus:precision-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusRangeDateValidator', otusRangeDateValidator);
+
+    function otusRangeDateValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/range-date/range-date-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('RangeDateValidatorFactory', RangeDateValidatorFactory);
+
+    function RangeDateValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new RangeDateValidator();
+        }
+
+        return self;
+    }
+
+    function RangeDateValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.dateMindate = new Date();
+        self.dateMaxdate = new Date();
+
+
+        function getTemplate(){
+          return '<otus:range-date-validator></otus:range-date-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusScaleValidator', otusScaleValidator);
+
+    function otusScaleValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/scale/scale-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('ScaleValidatorFactory', ScaleValidatorFactory);
+
+    function ScaleValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new ScaleValidator();
+        }
+
+        return self;
+    }
+
+    function ScaleValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+
+        function getTemplate(){
+          return '<otus:scale-validator></otus:scale-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusSpecialsValidator', otusSpecialsValidator);
+
+    function otusSpecialsValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/specials/specials-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
+
+    function SpecialsValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new SpecialsValidator();
+        }
+
+        return self;
+    }
+
+    function SpecialsValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = false;
+
+        function getTemplate(){
+          return '<otus:specials-validator></otus:specials-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusUpperCaseValidator', otusUpperCaseValidator);
+
+    function otusUpperCaseValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/upper-case/upper-case-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
+
+    function UpperCaseValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new UpperCaseValidator();
+        }
+
+        return self;
+    }
+
+    function UpperCaseValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = false;
+
+        function getTemplate(){
+          return '<otus:upper-case-validator></otus:upper-case-validator>';
+        }
+        //TODO
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusUpperLimitValidator', otusUpperLimitValidator);
+
+    function otusUpperLimitValidator() {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/upper-limit/upper-limit-validator.html',
+            link: function linkFunc(scope) {
+               scope.widget = scope.$parent.addedValidatorWidget;
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
+
+    function UpperLimitValidatorFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new UpperLimitValidator();
+        }
+
+        return self;
+    }
+
+    function UpperLimitValidator() {
+        var self = this;
+
+        /* Public Methods */
+        self.getTemplate = getTemplate;
+        self.answer = null;
+
+        function getTemplate(){
+          return '<otus:upper-limit-validator></otus:upper-limit-validator>';
+        }
+        //TODO
     }
 
 }());

@@ -23,7 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-
+        self.answer = [];
         function getTemplate(){
           return '<otus:in-validator></otus:in-validator>';
         }

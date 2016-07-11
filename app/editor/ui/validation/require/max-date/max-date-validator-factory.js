@@ -23,6 +23,8 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.date = new Date();
+
 
         function getTemplate(){
           return '<otus:max-date-validator></otus:max-date-validator>';

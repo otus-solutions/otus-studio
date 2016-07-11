@@ -23,6 +23,7 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
+        self.answer = null;
 
         function getTemplate(){
           return '<otus:min-length-validator></otus:min-length-validator>';
