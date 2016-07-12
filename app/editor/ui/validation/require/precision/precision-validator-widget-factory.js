@@ -3,30 +3,29 @@
 
     angular
         .module('editor.ui')
-        .factory('SpecialsValidatorFactory', SpecialsValidatorFactory);
+        .factory('PrecisionValidatorWidgetFactory', PrecisionValidatorWidgetFactory);
 
-    function SpecialsValidatorFactory() {
+    function PrecisionValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new SpecialsValidator();
+            return new PrecisionValidator();
         }
 
         return self;
     }
 
-    function SpecialsValidator() {
+    function PrecisionValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = false;
-
+        self.answer = null;
         function getTemplate(){
-          return '<otus:specials-validator></otus:specials-validator>';
+          return '<otus:precision-validator></otus:precision-validator>';
         }
         //TODO
     }

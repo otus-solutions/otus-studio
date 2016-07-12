@@ -3,30 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('LowerCaseValidatorFactory', LowerCaseValidatorFactory);
+        .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
 
-    function LowerCaseValidatorFactory() {
+    function MinDateValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new LowerCaseValidator();
+            return new MinDateValidator();
         }
 
         return self;
     }
 
-    function LowerCaseValidator() {
+    function MinDateValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = false;
+        self.date = new Date();
 
         function getTemplate(){
-          return '<otus:lower-case-validator></otus:lower-case-validator>';
+          return '<otus:min-date-validator></otus:min-date-validator>';
         }
         //TODO
     }

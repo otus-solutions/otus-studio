@@ -3,30 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('FutureDateValidatorFactory', FutureDateValidatorFactory);
+        .factory('LowerCaseValidatorWidgetFactory', LowerCaseValidatorWidgetFactory);
 
-    function FutureDateValidatorFactory() {
+    function LowerCaseValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new FutureDateValidator();
+            return new LowerCaseValidator();
         }
 
         return self;
     }
 
-    function FutureDateValidator() {
+    function LowerCaseValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
+        self.answer = false;
 
         function getTemplate(){
-          return '<otus:future-date-validator></otus:future-date-validator>';
+          return '<otus:lower-case-validator></otus:lower-case-validator>';
         }
         //TODO
     }

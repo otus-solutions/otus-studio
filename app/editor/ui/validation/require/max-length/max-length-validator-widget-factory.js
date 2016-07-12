@@ -3,30 +3,35 @@
 
     angular
         .module('editor.ui')
-        .factory('LowerLimitValidatorFactory', LowerLimitValidatorFactory);
+        .factory('MaxLengthValidatorWidgetFactory', MaxLengthValidatorWidgetFactory);
 
-    function LowerLimitValidatorFactory() {
+    function MaxLengthValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new LowerLimitValidator();
+            return new MaxLengthValidator();
         }
 
         return self;
     }
 
-    function LowerLimitValidator() {
+    function MaxLengthValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.answer = null;
-        
+        self.showMe = showMe;
+
+        function showMe(){
+            console.log(self.answer);
+        }
+
         function getTemplate(){
-          return '<otus:lower-limit-validator></otus:lower-limit-validator>';
+          return '<otus:max-length-validator></otus:max-length-validator>';
         }
         //TODO
     }

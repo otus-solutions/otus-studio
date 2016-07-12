@@ -3,29 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('InValidatorFactory', InValidatorFactory);
+        .factory('ScaleValidatorWidgetFactory', ScaleValidatorWidgetFactory);
 
-    function InValidatorFactory() {
+    function ScaleValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new InValidator();
+            return new ScaleValidator();
         }
 
         return self;
     }
 
-    function InValidator() {
+    function ScaleValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = [];
+        self.answer = null;
+
         function getTemplate(){
-          return '<otus:in-validator></otus:in-validator>';
+          return '<otus:scale-validator></otus:scale-validator>';
         }
         //TODO
     }

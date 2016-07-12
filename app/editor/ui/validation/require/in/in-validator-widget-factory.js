@@ -3,30 +3,29 @@
 
     angular
         .module('editor.ui')
-        .factory('UpperLimitValidatorFactory', UpperLimitValidatorFactory);
+        .factory('InValidatorWidgetFactory', InValidatorWidgetFactory);
 
-    function UpperLimitValidatorFactory() {
+    function InValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpperLimitValidator();
+            return new InValidator();
         }
 
         return self;
     }
 
-    function UpperLimitValidator() {
+    function InValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
-
+        self.answer = [];
         function getTemplate(){
-          return '<otus:upper-limit-validator></otus:upper-limit-validator>';
+          return '<otus:in-validator></otus:in-validator>';
         }
         //TODO
     }

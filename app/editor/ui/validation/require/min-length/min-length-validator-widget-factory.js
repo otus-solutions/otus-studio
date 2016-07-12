@@ -3,29 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('PrecisionValidatorFactory', PrecisionValidatorFactory);
+        .factory('MinLengthValidatorWidgetFactory', MinLengthValidatorWidgetFactory);
 
-    function PrecisionValidatorFactory() {
+    function MinLengthValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new PrecisionValidator();
+            return new MinLengthValidator();
         }
 
         return self;
     }
 
-    function PrecisionValidator() {
+    function MinLengthValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.answer = null;
+
         function getTemplate(){
-          return '<otus:precision-validator></otus:precision-validator>';
+          return '<otus:min-length-validator></otus:min-length-validator>';
         }
         //TODO
     }

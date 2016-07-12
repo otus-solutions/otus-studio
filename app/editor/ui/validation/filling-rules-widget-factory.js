@@ -1,71 +1,68 @@
 (function() {
-    'use strict';
+        'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('OtusFillingRulesWidgetFactory', OtusFillingRulesWidgetFactory);
+        angular
+            .module('editor.ui')
+            .factory('OtusFillingRulesWidgetFactory', OtusFillingRulesWidgetFactory);
 
-    OtusFillingRulesWidgetFactory.$inject = [
-        'AlphanumericValidatorFactory',
-        'DistinctValidatorFactory',
-        'FutureDateValidatorFactory',
-        'InValidatorFactory',
-        'LowerLimitValidatorFactory',
-        'LowerCaseValidatorFactory',
-        'MaxDateValidatorFactory',
-        'MaxLengthValidatorFactory',
-        'MaxTimeValidatorFactory',
-        'MinDateValidatorFactory',
-        'MinLengthValidatorFactory',
-        'MinTimeValidatorFactory',
-        'ParameterValidatorFactory',
-        'PastDateValidatorFactory',
-        'PrecisionValidatorFactory',
-        'RangeDateValidatorFactory',
-        'ScaleValidatorFactory',
-        'SpecialsValidatorFactory',
-        'UpperCaseValidatorFactory',
-        'UpperLimitValidatorFactory'
-    ];
+        OtusFillingRulesWidgetFactory.$inject = [
+            'AlphanumericValidatorWidgetFactory',
+            'DistinctValidatorWidgetFactory',
+            'FutureDateValidatorWidgetFactory',
+            'InValidatorWidgetFactory',
+            'LowerCaseValidatorWidgetFactory',
+            'LowerLimitValidatorWidgetFactory',
+            'MaxDateValidatorWidgetFactory',
+            'MaxLengthValidatorWidgetFactory',
+            'MaxTimeValidatorWidgetFactory',
+            'MinDateValidatorWidgetFactory',
+            'MinLengthValidatorWidgetFactory',
+            'MinTimeValidatorWidgetFactory',
+            'ParameterValidatorWidgetFactory',
+            'PastDateValidatorWidgetFactory',
+            'PrecisionValidatorWidgetFactory',
+            'RangeDateValidatorWidgetFactory',
+            'ScaleValidatorWidgetFactory',
+            'SpecialsValidatorWidgetFactory',
+            'UpperCaseValidatorWidgetFactory',
+            'UpperLimitValidatorWidgetFactory'
+        ];
 
 
-    function OtusFillingRulesWidgetFactory(AlphanumericValidatorFactory, DistinctValidatorFactory, FutureDateValidatorFactory, InValidatorFactory, LowerLimitValidatorFactory, LowerCaseValidatorFactory, MaxDateValidatorFactory, MaxLengthValidatorFactory, MaxTimeValidatorFactory, MinDateValidatorFactory, MinLengthValidatorFactory, MinTimeValidatorFactory, ParameterValidatorFactory, PastDateValidatorFactory, PrecisionValidatorFactory, RangeDateValidatorFactory, ScaleValidatorFactory, SpecialsValidatorFactory, UpperCaseValidatorFactory, UpperLimitValidatorFactory) {
-        var self = this;
+        function OtusFillingRulesWidgetFactory(AlphanumericValidatorWidgetFactory, DistinctValidatorWidgetFactory, FutureDateValidatorWidgetFactory, InValidatorWidgetFactory, LowerLimitValidatorWidgetFactory, LowerCaseValidatorWidgetFactory, MaxDateValidatorWidgetFactory, MaxLengthValidatorWidgetFactory, MaxTimeValidatorWidgetFactory, MinDateValidatorWidgetFactory, MinLengthValidatorWidgetFactory, MinTimeValidatorWidgetFactory, ParameterValidatorWidgetFactory, PastDateValidatorWidgetFactory, PrecisionValidatorWidgetFactory, RangeDateValidatorWidgetFactory, ScaleValidatorWidgetFactory, SpecialsValidatorWidgetFactory, UpperCaseValidatorWidgetFactory, UpperLimitValidatorWidgetFactory) {
+            var self = this;
 
-        /* Public interface */
-        self.validatorsTemplates = validatorsTemplates;
+            /* Public interface */
+            self.validatorsTemplates = validatorsTemplates;
+            self.create = create;
 
-        function validatorsTemplates(validator) {
-            var templatesList = {
-                alphanumeric: AlphanumericValidatorFactory,
-                distinct: DistinctValidatorFactory,
-                futureDate: FutureDateValidatorFactory,
-                in: InValidatorFactory,
-                lowerLimit: LowerLimitValidatorFactory,
-                lowercase: LowerCaseValidatorFactory,
-                maxDate: MaxDateValidatorFactory,
-                maxLength: MaxLengthValidatorFactory,
-                maxTime: MaxTimeValidatorFactory,
-                minDate: MinDateValidatorFactory,
-                minLength: MinLengthValidatorFactory,
-                minTime: MinTimeValidatorFactory,
-                parameter: ParameterValidatorFactory,
-                pastDate: PastDateValidatorFactory,
-                precision: PrecisionValidatorFactory,
-                rangeDate: RangeDateValidatorFactory,
-                scale: ScaleValidatorFactory,
-                specials: SpecialsValidatorFactory,
-                upperCase: UpperCaseValidatorFactory,
-                upperLimit: UpperLimitValidatorFactory
+
+            var validatorsTemplates = {
+                alphanumeric: AlphanumericValidatorWidgetFactory,
+                distinct: DistinctValidatorWidgetFactory,
+                futureDate: FutureDateValidatorWidgetFactory,
+                in: InValidatorWidgetFactory,
+                lowerLimit: LowerLimitValidatorWidgetFactory,
+                lowercase: LowerCaseValidatorWidgetFactory,
+                maxDate: MaxDateValidatorWidgetFactory,
+                maxLength: MaxLengthValidatorWidgetFactory,
+                maxTime: MaxTimeValidatorWidgetFactory,
+                minDate: MinDateValidatorWidgetFactory,
+                minLength: MinLengthValidatorWidgetFactory,
+                minTime: MinTimeValidatorWidgetFactory,
+                parameter: ParameterValidatorWidgetFactory,
+                pastDate: PastDateValidatorWidgetFactory,
+                precision: PrecisionValidatorWidgetFactory,
+                rangeDate: RangeDateValidatorWidgetFactory,
+                scale: ScaleValidatorWidgetFactory,
+                specials: SpecialsValidatorWidgetFactory,
+                upperCase: UpperCaseValidatorWidgetFactory,
+                upperLimit: UpperLimitValidatorWidgetFactory
             }
-            return templatesList[validator];
-        }
 
-        /* Public interface */
-        self.create = create;
-        // function create(scope, element, validator) {
+
         function create(validator) {
-            return validatorsTemplates(validator).create();
+            return validatorsTemplates[validator].create();
         }
 
 

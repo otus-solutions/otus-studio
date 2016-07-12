@@ -3,22 +3,22 @@
 
     angular
         .module('editor.ui')
-        .factory('ScaleValidatorFactory', ScaleValidatorFactory);
+        .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
 
-    function ScaleValidatorFactory() {
+    function MinTimeValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new ScaleValidator();
+            return new MinTimeValidator();
         }
 
         return self;
     }
 
-    function ScaleValidator() {
+    function MinTimeValidator() {
         var self = this;
 
         /* Public Methods */
@@ -26,7 +26,7 @@
         self.answer = null;
 
         function getTemplate(){
-          return '<otus:scale-validator></otus:scale-validator>';
+          return '<otus:min-time-validator></otus:min-time-validator>';
         }
         //TODO
     }

@@ -3,31 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('MaxDateValidatorFactory', MaxDateValidatorFactory);
+        .factory('SpecialsValidatorWidgetFactory', SpecialsValidatorWidgetFactory);
 
-    function MaxDateValidatorFactory() {
+    function SpecialsValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new MaxDateValidator();
+            return new SpecialsValidator();
         }
 
         return self;
     }
 
-    function MaxDateValidator() {
+    function SpecialsValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
-
+        self.answer = false;
 
         function getTemplate(){
-          return '<otus:max-date-validator></otus:max-date-validator>';
+          return '<otus:specials-validator></otus:specials-validator>';
         }
         //TODO
     }

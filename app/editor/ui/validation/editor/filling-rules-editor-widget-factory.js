@@ -85,12 +85,12 @@
         }
 
         function appendFillingRules(validator) {
-
+          console.log(validator);
             var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
             addValidator();
             scope.addedValidatorWidget = validatorObject;
 
-
+            console.log(validatorObject);
             var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
 

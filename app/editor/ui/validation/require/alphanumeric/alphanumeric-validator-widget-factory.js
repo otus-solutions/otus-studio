@@ -3,30 +3,31 @@
 
     angular
         .module('editor.ui')
-        .factory('UpperCaseValidatorFactory', UpperCaseValidatorFactory);
+        .factory('AlphanumericValidatorWidgetFactory', AlphanumericValidatorWidgetFactory);
 
-    function UpperCaseValidatorFactory() {
+    function AlphanumericValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpperCaseValidator();
+            return new AlphanumericValidator();
         }
 
         return self;
     }
 
-    function UpperCaseValidator() {
+    function AlphanumericValidator() {
         var self = this;
+
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.answer = false;
 
         function getTemplate(){
-          return '<otus:upper-case-validator></otus:upper-case-validator>';
+          return '<otus:alphanumeric-validator></otus:alphanumeric-validator>';
         }
         //TODO
     }

@@ -3,30 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('MinTimeValidatorFactory', MinTimeValidatorFactory);
+        .factory('DistinctValidatorWidgetFactory', DistinctValidatorWidgetFactory);
 
-    function MinTimeValidatorFactory() {
+    function DistinctValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new MinTimeValidator();
+            return new DistinctValidator();
         }
 
         return self;
     }
 
-    function MinTimeValidator() {
+    function DistinctValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
+        self.answer = [];
 
         function getTemplate(){
-          return '<otus:min-time-validator></otus:min-time-validator>';
+          return '<otus:distinct-validator></otus:distinct-validator>';
         }
         //TODO
     }

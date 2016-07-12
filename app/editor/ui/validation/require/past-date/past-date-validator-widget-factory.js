@@ -3,29 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('ParameterValidatorFactory', ParameterValidatorFactory);
+        .factory('PastDateValidatorWidgetFactory', PastDateValidatorWidgetFactory);
 
-    function ParameterValidatorFactory() {
+    function PastDateValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new ParameterValidator();
+            return new PastDateValidator();
         }
 
         return self;
     }
 
-    function ParameterValidator() {
+    function PastDateValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
+        self.date = new Date();
+
         function getTemplate(){
-          return '<otus:parameter-validator></otus:parameter-validator>';
+          return '<otus:past-date-validator></otus:past-date-validator>';
         }
         //TODO
     }

@@ -3,30 +3,32 @@
 
     angular
         .module('editor.ui')
-        .factory('DistinctValidatorFactory', DistinctValidatorFactory);
+        .factory('RangeDateValidatorWidgetFactory', RangeDateValidatorWidgetFactory);
 
-    function DistinctValidatorFactory() {
+    function RangeDateValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new DistinctValidator();
+            return new RangeDateValidator();
         }
 
         return self;
     }
 
-    function DistinctValidator() {
+    function RangeDateValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = [];
+        self.dateMindate = new Date();
+        self.dateMaxdate = new Date();
+
 
         function getTemplate(){
-          return '<otus:distinct-validator></otus:distinct-validator>';
+          return '<otus:range-date-validator></otus:range-date-validator>';
         }
         //TODO
     }

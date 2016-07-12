@@ -3,22 +3,22 @@
 
     angular
         .module('editor.ui')
-        .factory('MaxTimeValidatorFactory', MaxTimeValidatorFactory);
+        .factory('UpperLimitValidatorWidgetFactory', UpperLimitValidatorWidgetFactory);
 
-    function MaxTimeValidatorFactory() {
+    function UpperLimitValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new MaxTimeValidator();
+            return new UpperLimitValidator();
         }
 
         return self;
     }
 
-    function MaxTimeValidator() {
+    function UpperLimitValidator() {
         var self = this;
 
         /* Public Methods */
@@ -26,7 +26,7 @@
         self.answer = null;
 
         function getTemplate(){
-          return '<otus:max-time-validator></otus:max-time-validator>';
+          return '<otus:upper-limit-validator></otus:upper-limit-validator>';
         }
         //TODO
     }

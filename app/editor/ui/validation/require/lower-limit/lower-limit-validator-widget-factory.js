@@ -3,30 +3,30 @@
 
     angular
         .module('editor.ui')
-        .factory('MinDateValidatorFactory', MinDateValidatorFactory);
+        .factory('LowerLimitValidatorWidgetFactory', LowerLimitValidatorWidgetFactory);
 
-    function MinDateValidatorFactory() {
+    function LowerLimitValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new MinDateValidator();
+            return new LowerLimitValidator();
         }
 
         return self;
     }
 
-    function MinDateValidator() {
+    function LowerLimitValidator() {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
+        self.answer = null;
 
         function getTemplate(){
-          return '<otus:min-date-validator></otus:min-date-validator>';
+          return '<otus:lower-limit-validator></otus:lower-limit-validator>';
         }
         //TODO
     }
