@@ -1,0 +1,21 @@
+md-icon[md-svg-icon="eraser"] {
+    color: #FF7B1C
+}
+md-icon[md-svg-icon="check"] {
+    color: green
+}
+
+/* SURVEY HEADER */
+
+otus-survey-header {
+    color: #727272;
+    min-height: 250px
+}
+otus-survey-header md-chips-wrap {
+    box-shadow: 0 0px !important;
+}
+
+/* SURVEY ITEM */
+otus-survey-item {
+    min-height: 510px
+}
