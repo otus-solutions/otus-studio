@@ -42,6 +42,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
             /* Otus platform */
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils-min.js',
+            NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otus-preview-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model-min.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
