@@ -49,7 +49,7 @@ describe('TimeQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-time-question></otus-time-question>');
+                expect(widget.getTemplate()).toEqual('<time-question></time-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

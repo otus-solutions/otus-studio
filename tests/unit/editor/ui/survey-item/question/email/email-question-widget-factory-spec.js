@@ -49,7 +49,7 @@ describe('EmailQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-email-question></otus-email-question>');
+                expect(widget.getTemplate()).toEqual('<email-question></email-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

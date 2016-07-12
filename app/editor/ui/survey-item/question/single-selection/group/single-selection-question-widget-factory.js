@@ -68,7 +68,7 @@
         }
 
         function getTemplate() {
-            return '<otus-single-selection-question></otus-single-selection-question>';
+            return '<single-selection-question></single-selection-question>';
         }
 
         function addOption() {

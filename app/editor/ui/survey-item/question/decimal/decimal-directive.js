@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusDecimalQuestion', directive);
+        .directive('decimalQuestion', directive);
 
     directive.$inject = ['DecimalQuestionWidgetFactory'];
 

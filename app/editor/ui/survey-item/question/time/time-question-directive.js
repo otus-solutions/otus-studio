@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusTimeQuestion', directive);
+        .directive('timeQuestion', directive);
 
     function directive() {
         var ddo = {

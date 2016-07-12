@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusIntegerQuestion', directive);
+        .directive('integerQuestion', directive);
 
     directive.$inject = ['IntegerQuestionWidgetFactory'];
 

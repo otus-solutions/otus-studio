@@ -49,7 +49,7 @@ describe('DecimalQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-decimal-question></otus-decimal-question>');
+                expect(widget.getTemplate()).toEqual('<decimal-question></decimal-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

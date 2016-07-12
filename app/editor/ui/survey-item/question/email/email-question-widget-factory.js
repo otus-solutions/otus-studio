@@ -50,7 +50,7 @@
         }
 
         function getTemplate() {
-            return '<otus-email-question></otus-email-question>';
+            return '<email-question></email-question>';
         }
     }
 

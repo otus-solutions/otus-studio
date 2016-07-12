@@ -49,7 +49,7 @@ describe('CheckboxQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-checkbox-question></otus-checkbox-question>');
+                expect(widget.getTemplate()).toEqual('<checkbox-question></checkbox-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

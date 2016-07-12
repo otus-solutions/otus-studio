@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusSingleSelectionQuestion', directive);
+        .directive('singleSelectionQuestion', directive);
 
     directive.$inject = [
         'SingleSelectionQuestionWidgetFactory'

@@ -49,7 +49,7 @@ describe('SingleSelectionQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-single-selection-question></otus-single-selection-question>');
+                expect(widget.getTemplate()).toEqual('<single-selection-question></single-selection-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 
