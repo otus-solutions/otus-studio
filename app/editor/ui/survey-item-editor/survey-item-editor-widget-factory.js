@@ -60,7 +60,7 @@
             if(item.isQuestion()) {
                 return '<otus:question-item></otus:question-item>';
             } else {
-                return '<otus:misc-item></otus:misc-item>';
+                return '<misc-item></misc-item>';
             }
         }
 
