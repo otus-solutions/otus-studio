@@ -33,7 +33,6 @@
             var self = this;
 
             /* Public interface */
-            self.validatorsTemplates = validatorsTemplates;
             self.create = create;
 
 
@@ -59,7 +58,6 @@
                 upperCase: UpperCaseValidatorWidgetFactory,
                 upperLimit: UpperLimitValidatorWidgetFactory
             }
-
 
         function create(validator) {
             return validatorsTemplates[validator].create();

@@ -39,14 +39,13 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.addValidator = addValidator;
-        self.appendFillingRules = appendFillingRules;
         self.checkIfShow = checkIfShow;
 
         _init();
 
         function _init() {
             console.log(self.getItem());
-            if (self.getItem().validate.options.length > 0) {
+            if (self.getItem().fillingRules.options.length > 0) {
                 _loadOptions();
             }
         }
@@ -72,31 +71,29 @@
         }
 
         function _loadOptions() {
-            self.getItem().validate.options.forEach(function(option) {
+            self.getItem().fillingRules.options.forEach(function(option) {
                 var optionWidget = FillingRulesOptionWidgetFactory.create(option, self);
                 self.options.push(optionWidget);
             });
         }
 
-        function addValidator() {
-            var newOption = AddFillingRulesEventFactory.create().execute(self);
+        function addValidator(validator) {
+            var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
+
+            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
+            scope.addedValidatorWidget = validatorObject;
+            appendFillingRules(validatorObject);
         }
 
-        function appendFillingRules(validator) {
-          console.log(validator);
-            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
-            addValidator();
-            scope.addedValidatorWidget = validatorObject;
+        function appendFillingRules(validatorObject) {
 
-            console.log(validatorObject);
             var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
 
             var validatorTemplate = $compile(template)(scope);
             validatorsColumn.append(validatorTemplate);
-            console.log(getItem());
         }
 
         //TODO

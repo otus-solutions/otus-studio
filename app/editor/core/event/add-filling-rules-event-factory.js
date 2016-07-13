@@ -10,7 +10,7 @@
         'WorkspaceService'
     ];
 
-    function AddFillingRulesEventFactory(AddFillingRulesService, WorkspaceService){
+    function AddFillingRulesEventFactory(AddFillingRulesService, WorkspaceService) {
         var self = this;
 
         self.create = create;
@@ -27,10 +27,8 @@
 
         self.execute = execute;
 
-        function execute(validationWidget) {
-            var option = AddFillingRulesService.execute(validationWidget.getItem());
-            console.log('option');
-            console.log(option);
+        function execute(questionReference, validator) {            
+            var option = AddFillingRulesService.execute(questionReference, validator);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
             return option;
