@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new LowerLimitValidator();
+        function create(scope) {
+            return new LowerLimitValidator(scope);
         }
 
         return self;
     }
 
-    function LowerLimitValidator() {
+    function LowerLimitValidator(scope) {
         var self = this;
 
         /* Public Methods */

@@ -1,4 +1,4 @@
 <md-list-item layout-padding>
     <span>Adicionar uma data passada</span>
-    <md-datepicker ng-model="widget.date" md-placeholder="Insira uma data passada"></md-datepicker>
+    <md-datepicker ng-model="widget.date" ng-change="widget.updateData()" md-placeholder="Insira uma data passada"></md-datepicker>
 </md-list-item>

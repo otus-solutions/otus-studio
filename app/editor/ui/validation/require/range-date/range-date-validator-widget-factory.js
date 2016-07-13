@@ -26,10 +26,10 @@
         self.dateMindate = new Date();
         self.dateMaxdate = new Date();
 
-
         function getTemplate(){
           return '<otus:range-date-validator></otus:range-date-validator>';
         }
+        
         //TODO
     }
 

@@ -10,8 +10,8 @@
             'DistinctValidatorWidgetFactory',
             'FutureDateValidatorWidgetFactory',
             'InValidatorWidgetFactory',
-            'LowerCaseValidatorWidgetFactory',
             'LowerLimitValidatorWidgetFactory',
+            'LowerCaseValidatorWidgetFactory',
             'MaxDateValidatorWidgetFactory',
             'MaxLengthValidatorWidgetFactory',
             'MaxTimeValidatorWidgetFactory',
@@ -60,6 +60,7 @@
             }
 
         function create(validator, scope) {
+            console.log(validatorsTemplates);
             return validatorsTemplates[validator].create(scope);
         }
 

@@ -11,19 +11,30 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new MinDateValidator();
+        function create(scope) {
+            return new MinDateValidator(scope);
         }
 
         return self;
     }
 
-    function MinDateValidator() {
+    function MinDateValidator(scope) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.date = new Date();
+        self.updateData = updateData;
+
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.date;
+        }
+
+        function getRuleType() {
+            return parent.fillingRules.options['minDate'];
+        }
 
         function getTemplate(){
           return '<otus:min-date-validator></otus:min-date-validator>';
