@@ -11,22 +11,33 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new FutureDateValidator();
+        function create(scope) {
+            return new FutureDateValidator(scope);
         }
 
         return self;
     }
 
-    function FutureDateValidator() {
+    function FutureDateValidator(scope) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.date = new Date();
+        self.updateData = updateData;
 
-        function getTemplate(){
-          return '<otus:future-date-validator></otus:future-date-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData(){
+          getRuleType().data.value = self.date;
+        }
+
+        function getRuleType() {
+            return parent.fillingRules.options['futureDate'];
+        }
+
+        function getTemplate() {
+            return '<otus:future-date-validator></otus:future-date-validator>';
         }
         //TODO
     }

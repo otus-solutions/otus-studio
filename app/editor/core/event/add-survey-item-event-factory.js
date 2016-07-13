@@ -47,7 +47,7 @@
             if (newItem.isQuestion()) {
                 newItem.label = itemToLoad.label;
                 newItem.metadata.options = itemToLoad.metadata.options;
-                newItem.fillingRules.options = [];
+                newItem.fillingRules.options = {};
 
                 if(itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
                     newItem.options = itemToLoad.options;
