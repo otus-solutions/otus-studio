@@ -8,26 +8,27 @@
     FillingRulesEditorWidgetFactory.$inject = [
         'FillingRulesOptionWidgetFactory',
         'AddFillingRulesEventFactory',
+        'RemoveFillingRulesEventFactory',
         'OtusFillingRulesWidgetFactory',
         '$compile',
         'WorkspaceService'
     ];
 
-    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService);
+            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService);
         }
 
         return self;
 
     }
 
-    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -51,14 +52,15 @@
         }
         var showList;
 
-        function showListFeeder(){
-          var showList = {};
-          var validators = getItem().validators();
-          validators.forEach(function(item) {
-            showList[item] = true;
-          });
-          return showList;
+        function showListFeeder() {
+            var showList = {};
+            var validators = getItem().validators();
+            validators.forEach(function(item) {
+                showList[item] = true;
+            });
+            return showList;
         }
+
         function getClassName() {
             return 'FillingRulesEditorWidget';
         }
@@ -83,12 +85,12 @@
         }
 
         function addValidator(validator) {
-          showList[validator] = false;
+            showList[validator] = false;
             var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
 
-            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope, self);
+            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
             scope.addedValidatorWidget = validatorObject;
             appendFillingRules(validatorObject);
         }
@@ -101,15 +103,16 @@
             validatorsColumn.append(validatorTemplate);
         }
 
-        function deleteValidator(validator){
-          console.log(validator);
-          showList[validator] = true;
-          //TODO
+        function deleteValidator(validator) {
+            //   showList[validator] = true;
+            //TODO
+            RemoveFillingRulesEventFactory.create().execute(self);
+            self.options.splice(-1);
         }
 
 
         function checkIfShow(fillingRule) {
-          return showList;
+            return showList;
         }
 
     }

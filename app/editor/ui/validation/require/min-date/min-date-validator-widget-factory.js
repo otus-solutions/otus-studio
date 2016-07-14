@@ -5,20 +5,24 @@
         .module('editor.ui')
         .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
 
-    function MinDateValidatorWidgetFactory() {
+    MinDateValidatorWidgetFactory.$inject = [
+        'RemoveFillingRulesEventFactory'
+    ];
+
+    function MinDateValidatorWidgetFactory(RemoveFillingRulesEventFactory ) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new MinDateValidator(scope, menuFactory);
+        function create(scope) {
+            return new MinDateValidator(scope, menuFactory, RemoveFillingRulesEventFactory );
         }
 
         return self;
     }
 
-    function MinDateValidator(scope, menuFactory) {
+    function MinDateValidator(scope, menuFactory, RemoveFillingRulesEventFactory ) {
         var self = this;
 
         /* Public Methods */
@@ -47,6 +51,7 @@
             self.element.remove();
             self.directiveScope.$destroy();
         }
+
     }
 
 }());
