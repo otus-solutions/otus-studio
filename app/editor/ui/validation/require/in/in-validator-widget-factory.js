@@ -19,15 +19,33 @@
     }
 
     function InValidator() {
-        var self = this;
+      var self = this;
 
-        /* Public Methods */
-        self.getTemplate = getTemplate;
-        self.answer = [];
+      /* Public Methods */
+      self.getTemplate = getTemplate;
+      self.date = [];
+      self.updateData = updateData;
+      self.deleteValidator = deleteValidator;
+
+      var parent = scope.$parent.widget.getItem();
+
+      function updateData() {
+          getRuleType().data.value = self.date;
+      }
+
+      function getRuleType() {
+          return parent.fillingRules.options['minDate'];
+      }
+
         function getTemplate(){
           return '<otus:in-validator></otus:in-validator>';
         }
-        //TODO
-    }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('in');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }    }
 
 }());

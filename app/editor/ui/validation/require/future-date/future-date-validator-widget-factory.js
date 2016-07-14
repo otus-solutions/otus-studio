@@ -25,11 +25,13 @@
         self.getTemplate = getTemplate;
         self.date = new Date();
         self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
 
         var parent = scope.$parent.widget.getItem();
 
-        function updateData(){
-          getRuleType().data.value = self.date;
+        function updateData() {
+            getRuleType().data.value = self.date;
         }
 
         function getRuleType() {
@@ -39,7 +41,13 @@
         function getTemplate() {
             return '<otus:future-date-validator></otus:future-date-validator>';
         }
-        //TODO
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('futureDate');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
     }
 
 }());

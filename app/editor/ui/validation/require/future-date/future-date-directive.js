@@ -12,6 +12,8 @@
             templateUrl: 'app/editor/ui/validation/require/future-date/future-date-validator.html',
             link: function linkFunc(scope) {
                scope.widget = scope.$parent.addedValidatorWidget;
+               scope.widget.element = element;
+               scope.widget.directiveScope = scope;
             }
 
         };

@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope) {
-            return new MinDateValidator(scope);
+        function create(scope, menuFactory) {
+            return new MinDateValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function MinDateValidator(scope) {
+    function MinDateValidator(scope, menuFactory) {
         var self = this;
 
         /* Public Methods */
@@ -37,14 +37,16 @@
             return parent.fillingRules.options['minDate'];
         }
 
-        function getTemplate(){
-          return '<otus:min-date-validator></otus:min-date-validator>';
+        function getTemplate() {
+            return '<otus:min-date-validator></otus:min-date-validator>';
         }
 
-        function deleteValidator(){
-          // scope.$parent.widget.deleteValidator('minDate');
+        function deleteValidator() {
+            menuFactory.deleteValidator('minDate');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
         }
-        //TODO
     }
 
 }());

@@ -16,6 +16,8 @@
             templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
             link: function linkFunc(scope) {
                 scope.widget = MandatoryValidatorFactory.create();
+                scope.widget.element = element;
+                scope.widget.directiveScope = scope;
             }
 
         };

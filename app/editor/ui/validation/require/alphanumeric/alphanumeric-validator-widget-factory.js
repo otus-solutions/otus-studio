@@ -11,25 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new AlphanumericValidator();
+        function create(scope, menuFactory) {
+            return new AlphanumericValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function AlphanumericValidator() {
+    function AlphanumericValidator(scope, menuFactory) {
         var self = this;
-
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = false;
+        self.date = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:alphanumeric-validator></otus:alphanumeric-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.date;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['futureDate'];
+        }
+
+        function getTemplate() {
+            return '<otus:alphanumeric-validator></otus:alphanumeric-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('futureDate');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
     }
 
 }());

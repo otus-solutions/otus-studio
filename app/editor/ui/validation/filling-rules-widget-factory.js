@@ -59,8 +59,8 @@
                 upperLimit: UpperLimitValidatorWidgetFactory
             }
 
-        function create(validator, scope) {
-            return validatorsTemplates[validator].create(scope);
+        function create(validator, scope, self) {
+            return validatorsTemplates[validator].create(scope, self);
         }
 
 

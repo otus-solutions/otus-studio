@@ -40,7 +40,7 @@
         self.addValidator = addValidator;
         self.checkIfShow = checkIfShow;
         self.deleteValidator = deleteValidator;
-        
+
         _init();
 
         function _init() {
@@ -88,7 +88,7 @@
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
 
-            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope);
+            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope, self);
             scope.addedValidatorWidget = validatorObject;
             appendFillingRules(validatorObject);
         }
@@ -102,6 +102,7 @@
         }
 
         function deleteValidator(validator){
+          console.log(validator);
           showList[validator] = true;
           //TODO
         }
