@@ -24,6 +24,16 @@
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.answer = null;
+        //
+        // var parent = scope.$parent.widget.getItem();
+        //
+        // function updateData() {
+        //     getRuleType().data.value = self.answer;
+        // }
+        //
+        // function getRuleType() {
+        //     return parent.fillingRules.options['lowerLimit'];
+        // }
 
         function getTemplate(){
           return '<otus:lower-limit-validator></otus:lower-limit-validator>';

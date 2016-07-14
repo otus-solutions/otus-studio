@@ -5,20 +5,24 @@
         .module('editor.ui')
         .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
 
-    function MinDateValidatorWidgetFactory() {
+    MinDateValidatorWidgetFactory.$inject = [
+        'RemoveFillingRulesEventFactory'
+    ];
+
+    function MinDateValidatorWidgetFactory(RemoveFillingRulesEventFactory ) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope) {
-            return new MinDateValidator(scope);
+            return new MinDateValidator(scope, RemoveFillingRulesEventFactory );
         }
 
         return self;
     }
 
-    function MinDateValidator(scope) {
+    function MinDateValidator(scope, RemoveFillingRulesEventFactory ) {
         var self = this;
 
         /* Public Methods */
@@ -37,12 +41,15 @@
             return parent.fillingRules.options['minDate'];
         }
 
-        function getTemplate(){
-          return '<otus:min-date-validator></otus:min-date-validator>';
+        function getTemplate() {
+            return '<otus:min-date-validator></otus:min-date-validator>';
         }
 
-        function deleteValidator(){
-          // scope.$parent.widget.deleteValidator('minDate');
+        function deleteValidator() {
+            //   return scope.$parent.widget.deleteValidator(getRuleType().validatorType);
+            // console.log(getRuleType().validatorType);
+            RemoveFillingRulesEventFactory.create().execute(self);
+            self.options.splice(-1);
         }
         //TODO
     }
