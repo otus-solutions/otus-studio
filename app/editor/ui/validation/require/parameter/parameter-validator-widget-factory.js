@@ -11,23 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new ParameterValidator();
+        function create(scope, menuFactory) {
+            return new ParameterValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function ParameterValidator() {
+    function ParameterValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
-        function getTemplate(){
-          return '<otus:parameter-validator></otus:parameter-validator>';
+        self.data = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['parameter'];
+        }
+
+        function getTemplate() {
+            return '<otus:parameter-validator></otus:parameter-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('parameter');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

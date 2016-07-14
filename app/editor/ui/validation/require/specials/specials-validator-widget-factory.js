@@ -11,24 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new SpecialsValidator();
+        function create(scope, menuFactory) {
+            return new SpecialsValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function SpecialsValidator() {
+    function SpecialsValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = false;
+        self.data = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:specials-validator></otus:specials-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['specials'];
+        }
+
+        function getTemplate() {
+            return '<otus:specials-validator></otus:specials-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('specials');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

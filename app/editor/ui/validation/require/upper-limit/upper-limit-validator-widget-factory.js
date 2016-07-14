@@ -11,24 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new UpperLimitValidator();
+        function create(scope, menuFactory) {
+            return new UpperLimitValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function UpperLimitValidator() {
+    function UpperLimitValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
+        self.data = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:upper-limit-validator></otus:upper-limit-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['upperLimit'];
+        }
+
+        function getTemplate() {
+            return '<otus:upper-limit-validator></otus:upper-limit-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('upperLimit');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

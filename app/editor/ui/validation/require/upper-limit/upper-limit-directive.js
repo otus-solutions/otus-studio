@@ -10,7 +10,7 @@
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/upper-limit/upper-limit-validator.html',
-            link: function linkFunc(scope) {
+            link: function linkFunc(scope, element) {
                scope.widget = scope.$parent.addedValidatorWidget;
             }
         };

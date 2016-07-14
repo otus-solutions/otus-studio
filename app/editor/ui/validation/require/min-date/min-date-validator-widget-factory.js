@@ -5,36 +5,32 @@
         .module('editor.ui')
         .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
 
-    MinDateValidatorWidgetFactory.$inject = [
-        'RemoveFillingRulesEventFactory'
-    ];
-
-    function MinDateValidatorWidgetFactory(RemoveFillingRulesEventFactory ) {
+    function MinDateValidatorWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(scope) {
-            return new MinDateValidator(scope, menuFactory, RemoveFillingRulesEventFactory );
+        function create(scope, menuFactory) {
+            return new MinDateValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function MinDateValidator(scope, menuFactory, RemoveFillingRulesEventFactory ) {
+    function MinDateValidator(scope, menuFactory) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
+        self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            getRuleType().data.value = self.date;
+            getRuleType().data.value = self.data;
         }
 
         function getRuleType() {
@@ -46,8 +42,8 @@
         }
 
         function deleteValidator() {
+          console.log(menuFactory);
             menuFactory.deleteValidator('minDate');
-            console.log(self.element);
             self.element.remove();
             self.directiveScope.$destroy();
         }

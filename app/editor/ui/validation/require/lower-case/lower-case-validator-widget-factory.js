@@ -11,24 +11,43 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new LowerCaseValidator();
+        function create(scope, menuFactory) {
+            return new LowerCaseValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function LowerCaseValidator() {
+    function LowerCaseValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = false;
+        self.data = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:lower-case-validator></otus:lower-case-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['lowerCase'];
+        }
+
+        function getTemplate() {
+            return '<otus:lower-case-validator></otus:lower-case-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('lowerCase');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

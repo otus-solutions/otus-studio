@@ -11,35 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope) {
-            return new PastDateValidator(scope);
+        function create(scope, menuFactory) {
+            return new PastDateValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function PastDateValidator(scope) {
+    function PastDateValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
+        self.data = false;
         self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            getRuleType().data.value = self.date;
+            getRuleType().data.value = self.data;
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['pastDate'];
+            return parent.fillingRules.options['PastDate'];
         }
 
-        function getTemplate(){
-          return '<otus:past-date-validator></otus:past-date-validator>';
+        function getTemplate() {
+            return '<otus:past-date-validator></otus:past-date-validator>';
         }
-        //TODO
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('PastDate');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

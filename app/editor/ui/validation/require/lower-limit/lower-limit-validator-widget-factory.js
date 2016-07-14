@@ -11,34 +11,43 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope) {
-            return new LowerLimitValidator(scope);
+        function create(scope, menuFactory) {
+            return new LowerLimitValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function LowerLimitValidator(scope) {
+    function LowerLimitValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
-        //
-        // var parent = scope.$parent.widget.getItem();
-        //
-        // function updateData() {
-        //     getRuleType().data.value = self.answer;
-        // }
-        //
-        // function getRuleType() {
-        //     return parent.fillingRules.options['lowerLimit'];
-        // }
+        self.data = 0;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:lower-limit-validator></otus:lower-limit-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['lowerLimit'];
+        }
+
+        function getTemplate() {
+            return '<otus:lower-limit-validator></otus:lower-limit-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('lowerLimit');
+            console.log(self.element);
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

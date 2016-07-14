@@ -11,26 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new RangeDateValidator();
+        function create(scope, menuFactory) {
+            return new RangeDateValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function RangeDateValidator() {
+    function RangeDateValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.dateMindate = new Date();
-        self.dateMaxdate = new Date();
+        self.data = [];
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:range-date-validator></otus:range-date-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['rangeDate'];
+        }
+
+        function getTemplate() {
+            return '<otus:range-date-validator></otus:range-date-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('rangeDate');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

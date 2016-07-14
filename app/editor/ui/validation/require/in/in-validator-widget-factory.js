@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new InValidator();
+        function create(scope, menuFactory) {
+            return new InValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function InValidator() {
+    function InValidator(scope, menuFactory) {
       var self = this;
 
       /* Public Methods */
@@ -34,7 +34,7 @@
       }
 
       function getRuleType() {
-          return parent.fillingRules.options['minDate'];
+          return parent.fillingRules.options['in'];
       }
 
         function getTemplate(){

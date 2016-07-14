@@ -11,29 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new MaxLengthValidator();
+        function create(scope, menuFactory) {
+            return new MaxLengthValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function MaxLengthValidator() {
+    function MaxLengthValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
-        self.showMe = showMe;
+        self.data = 0;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function showMe(){
-            console.log(self.answer);
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
 
-        function getTemplate(){
-          return '<otus:max-length-validator></otus:max-length-validator>';
+        function getRuleType() {
+            return parent.fillingRules.options['maxLength'];
         }
-        //TODO
+
+        function getTemplate() {
+            return '<otus:max-length-validator></otus:max-length-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('maxLength');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());

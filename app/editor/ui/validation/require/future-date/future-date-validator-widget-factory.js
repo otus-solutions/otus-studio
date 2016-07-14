@@ -11,31 +11,30 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope) {
-            return new FutureDateValidator(scope);
+        function create(scope, menuFactory) {
+            return new FutureDateValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function FutureDateValidator(scope) {
+    function FutureDateValidator(scope, menuFactory) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.date = new Date();
+        self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
-
 
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            getRuleType().data.value = self.date;
+            getRuleType().data.value = self.data;
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['futureDate'];
+            return parent.fillingRules.options['FutureDate'];
         }
 
         function getTemplate() {
@@ -48,6 +47,7 @@
             self.element.remove();
             self.directiveScope.$destroy();
         }
+
     }
 
 }());

@@ -11,24 +11,42 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new MaxTimeValidator();
+        function create(scope, menuFactory) {
+            return new MaxTimeValidator(scope, menuFactory );
         }
 
         return self;
     }
 
-    function MaxTimeValidator() {
+    function MaxTimeValidator(scope, menuFactory ) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = null;
+        self.data = false;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:max-time-validator></otus:max-time-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.value = self.data;
         }
-        //TODO
+
+        function getRuleType() {
+            return parent.fillingRules.options['maxTime'];
+        }
+
+        function getTemplate() {
+            return '<otus:max-time-validator></otus:max-time-validator>';
+        }
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('maxTime');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
+
     }
 
 }());
