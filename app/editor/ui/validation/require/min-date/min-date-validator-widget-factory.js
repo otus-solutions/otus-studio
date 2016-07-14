@@ -25,6 +25,7 @@
         self.getTemplate = getTemplate;
         self.date = new Date();
         self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
@@ -38,6 +39,10 @@
 
         function getTemplate(){
           return '<otus:min-date-validator></otus:min-date-validator>';
+        }
+
+        function deleteValidator(){
+          // scope.$parent.widget.deleteValidator('minDate');
         }
         //TODO
     }

@@ -60,7 +60,6 @@
             }
 
         function create(validator, scope) {
-            console.log(validatorsTemplates);
             return validatorsTemplates[validator].create(scope);
         }
 

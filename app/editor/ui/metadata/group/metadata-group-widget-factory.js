@@ -76,7 +76,6 @@
 
         function addOption() {
             var newOption = AddMetadataAnswerEventFactory.create().execute(self);
-            // console.log(newOption);
             var optionWidget = MetadataOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
         }

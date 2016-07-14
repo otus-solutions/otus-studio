@@ -34,28 +34,33 @@
 
         /* Public methods */
         self.getClassName = getClassName;
-        self.getUUID = getUUID;
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
         self.addValidator = addValidator;
         self.checkIfShow = checkIfShow;
-
+        self.deleteValidator = deleteValidator;
+        
         _init();
 
         function _init() {
-            console.log(self.getItem());
             if (self.getItem().fillingRules.options.length > 0) {
                 _loadOptions();
             }
+            showList = showListFeeder();
         }
+        var showList;
 
+        function showListFeeder(){
+          var showList = {};
+          var validators = getItem().validators();
+          validators.forEach(function(item) {
+            showList[item] = true;
+          });
+          return showList;
+        }
         function getClassName() {
             return 'FillingRulesEditorWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
         }
 
         function getElement() {
@@ -78,6 +83,7 @@
         }
 
         function addValidator(validator) {
+          showList[validator] = false;
             var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
@@ -88,7 +94,6 @@
         }
 
         function appendFillingRules(validatorObject) {
-
             var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
 
@@ -96,15 +101,16 @@
             validatorsColumn.append(validatorTemplate);
         }
 
-        //TODO
-        function checkIfShow() {
-            var options = {};
-            var validators = getItem().validators();
-            validators.forEach(function(item) {
-                options[item] = true;
-            });
-            return options;
+        function deleteValidator(validator){
+          showList[validator] = true;
+          //TODO
         }
+
+
+        function checkIfShow(fillingRule) {
+          return showList;
+        }
+
     }
 
 }());
