@@ -12,13 +12,13 @@
         self.create = create;
 
         function create(scope, menuFactory) {
-            return new UpperLimitValidator(scope, menuFactory );
+            return new UpperLimitValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function UpperLimitValidator(scope, menuFactory ) {
+    function UpperLimitValidator(scope, menuFactory) {
         var self = this;
 
         /* Public Methods */

@@ -11,24 +11,30 @@
         /* Public interface */
         self.create = create;
 
-        function create() {
-            return new DistinctValidator();
+        function create(scope, menuFactory) {
+            return new DistinctValidator(scope, menuFactory);
         }
 
         return self;
     }
 
-    function DistinctValidator() {
+    function DistinctValidator(scope, menuFactory) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.answer = [];
+        self.deleteValidator = deleteValidator;
 
         function getTemplate(){
           return '<otus:distinct-validator></otus:distinct-validator>';
         }
-        //TODO
+
+        function deleteValidator() {
+            menuFactory.deleteValidator('distinct');
+            self.element.remove();
+            self.directiveScope.$destroy();
+        }
     }
 
 }());

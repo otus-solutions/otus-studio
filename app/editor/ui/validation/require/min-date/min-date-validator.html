@@ -1,5 +1,5 @@
-<md-list-item layout-padding>
+<md-list-item layout-padding flex="100">
     <span>Adicionar uma data mínima</span>
     <md-datepicker ng-model="widget.data" ng-change="widget.updateData()" md-placeholder="Insira uma data mínima" md-min-date="minDate"></md-datepicker>
-    <md-button ng-click = "widget.deleteValidator()">x</md-button>
+    <md-button ng-click = "widget.deleteValidator()" layout-align="end">x</md-button>
 </md-list-item>

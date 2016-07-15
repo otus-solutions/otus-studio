@@ -1,12 +1,11 @@
 <md-container layout="column" flex>
-    <md-list>
-        <md-list-item layout="column" flex layout-align="start">
+    <md-list ng-cloak>
+        <md-list-item layout="column" flex layout-align="center end">
             <md-menu md-offset="0 -7">
                 <md-button aria-label="Opções" class="md-button" ng-click="$mdOpenMenu($event)">
                     Adiocionar Validações
                     <i class="material-icons">more_vert</i>
                 </md-button>
-                
                 <md-menu-content width="6">
                     <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow().rangeDate">
                         <md-button ng-click="widget.addValidator('rangeDate')">[rangeDate] Adicionar range de datas</md-button>
@@ -113,6 +112,9 @@
                 </md-menu-content>
             </md-menu>
         </md-list-item>
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Validações</md-subheader>
+
         <md-list-item>
             <md-list id="validators-column" layout-padding layout="column">
               <md-list-item> <otus:mandatory-validator></otus:mandatory-validator> </md-list-item>
