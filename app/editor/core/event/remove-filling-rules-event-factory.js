@@ -28,8 +28,8 @@
 
         self.execute = execute;
 
-        function execute(eventSource) {
-            RemoveFillingRulesWorkService.execute(eventSource.getItem());
+        function execute(questionSource, fillingRuleType) {
+            RemoveFillingRulesWorkService.execute(questionSource.getItem(), fillingRuleType);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

@@ -42,7 +42,7 @@
                 futureDate: FutureDateValidatorWidgetFactory,
                 in: InValidatorWidgetFactory,
                 lowerLimit: LowerLimitValidatorWidgetFactory,
-                lowercase: LowerCaseValidatorWidgetFactory,
+                lowerCase: LowerCaseValidatorWidgetFactory,
                 maxDate: MaxDateValidatorWidgetFactory,
                 maxLength: MaxLengthValidatorWidgetFactory,
                 maxTime: MaxTimeValidatorWidgetFactory,

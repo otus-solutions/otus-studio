@@ -104,9 +104,10 @@
         }
 
         function deleteValidator(validator) {
+          console.log(showList);
             showList[validator] = true;
-            // RemoveFillingRulesEventFactory.create().execute(self);
-            // self.options.splice(-1);
+            RemoveFillingRulesEventFactory.create().execute(self, validator);
+            delete self.options[validator];
         }
 
 

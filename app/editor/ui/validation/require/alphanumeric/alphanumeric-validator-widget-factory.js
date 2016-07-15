@@ -34,7 +34,7 @@
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['futureDate'];
+            return parent.fillingRules.options['alphanumeric'];
         }
 
         function getTemplate() {
@@ -42,7 +42,7 @@
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('futureDate');
+            menuFactory.deleteValidator('alphanumeric');
             console.log(self.element);
             self.element.remove();
             self.directiveScope.$destroy();
