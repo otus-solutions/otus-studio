@@ -1,7 +1,9 @@
 <md-list-item layout-padding flex="100">
     <span>Insira um valor máximo</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="integer" min="0" step="1" required ui-integer aria-label="Insira um valor máximo" ng-model="widget.answer">
+        <input type="text" name="integer" min="0" step="1" ui-integer aria-label="Insira um valor máximo" ng-model="widget.answer">
     </md-input-container>
-    <md-button ng-click = "widget.deleteValidator()">x</md-button>
+    <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
+        <i class="material-icons">clear</i>
+    </md-button>
 </md-list-item>

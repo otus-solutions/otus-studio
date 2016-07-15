@@ -1,5 +1,7 @@
 <md-list-item layout-padding flex="100">
     <span>Adicionar uma data passada</span>
     <md-datepicker ng-model="widget.date" ng-change="widget.updateData()" md-placeholder="Insira uma data passada"></md-datepicker>
-    <md-button ng-click = "widget.deleteValidator()">x</md-button>
+    <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
+        <i class="material-icons">clear</i>
+    </md-button>
 </md-list-item>
