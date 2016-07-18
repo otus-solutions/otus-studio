@@ -29,9 +29,9 @@
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            // console.log(parent);
-            parent.fillingRules.options['mandatory']=self;            
-            getRuleType().data.reference = self.data;
+            console.log(parent);
+            parent.fillingRules.options['mandatory']={};
+            // getRuleType().data.reference = self.data;
         }
 
         function getRuleType() {

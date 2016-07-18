@@ -45,10 +45,11 @@
         _init();
 
         function _init() {
-            if (self.getItem().fillingRules.options.length > 0) {
+            showList = showListFeeder();
+            console.log(Object.keys(self.getItem().fillingRules.options));
+            if (self.getItem().fillingRules.options !== {}) {
                 _loadOptions();
             }
-            showList = showListFeeder();
         }
         var showList;
 
@@ -78,24 +79,25 @@
         }
 
         function _loadOptions() {
-            self.getItem().fillingRules.options.forEach(function(option) {
-                var optionWidget = FillingRulesOptionWidgetFactory.create(option, self);
-                self.options.push(optionWidget);
+            Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
+                var validatorToLoadWidget = FillingRulesOptionWidgetFactory.create(validatorToLoad, self);
+                self.options.push(validatorToLoadWidget);
+                appendFillingRules(validatorToLoad);
+                console.log(validatorToLoad);
             });
         }
 
         function addValidator(validator) {
-            showList[validator] = false;
             var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
             self.options.push(optionWidget);
-
-            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope, self);
-            scope.addedValidatorWidget = validatorObject;
-            appendFillingRules(validatorObject);
+            appendFillingRules(validator);
         }
 
-        function appendFillingRules(validatorObject) {
+        function appendFillingRules(validator) {
+            showList[validator] = false;
+            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope, self);
+            scope.addedValidatorWidget = validatorObject;
             var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
 
@@ -104,7 +106,6 @@
         }
 
         function deleteValidator(validator) {
-          console.log(showList);
             showList[validator] = true;
             RemoveFillingRulesEventFactory.create().execute(self, validator);
             delete self.options[validator];

@@ -27,7 +27,7 @@
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
-        var parent = scope.$parent.widget.getItem();
+        var parent = scope.$parent.widget.getItem();        
 
         function updateData() {
             getRuleType().data.reference = self.data;

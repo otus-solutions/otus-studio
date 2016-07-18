@@ -34,7 +34,7 @@
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['PastDate'];
+            return parent.fillingRules.options['pastDate'];
         }
 
         function getTemplate() {
@@ -42,7 +42,7 @@
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('PastDate');
+            menuFactory.deleteValidator('pastDate');
             self.element.remove();
             self.directiveScope.$destroy();
         }
