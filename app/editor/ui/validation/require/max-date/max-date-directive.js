@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusMaxDateValidator', otusMaxDateValidator);
 
-    function otusMaxDateValidator() {
+        otusMaxDateValidator.$inject =[
+          'MaxDateValidatorWidgetFactory'
+        ];
+
+    function otusMaxDateValidator(MaxDateValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/max-date/max-date-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+               scope.widget = MaxDateValidatorWidgetFactory.create(scope, element);
             }
 
         };

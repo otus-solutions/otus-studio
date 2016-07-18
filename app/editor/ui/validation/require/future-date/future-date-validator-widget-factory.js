@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new FutureDateValidator(scope, menuFactory);
+        function create(scope, element) {
+            return new FutureDateValidator(scope, element);
         }
 
         return self;
     }
 
-    function FutureDateValidator(scope, menuFactory) {
+    function FutureDateValidator(scope, element) {
         var self = this;
 
         /* Public Methods */
@@ -27,14 +27,14 @@
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
-        var parent = scope.$parent.widget.getItem();        
+        var parent = scope.$parent.widget.getItem();
 
         function updateData() {
             getRuleType().data.reference = self.data;
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['FutureDate'];
+            return parent.fillingRules.options['futureDate'];
         }
 
         function getTemplate() {
@@ -42,10 +42,9 @@
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('futureDate');
-            console.log(self.element);
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator('futureDate');
+            element.remove();
+            scope.$destroy();
         }
 
     }

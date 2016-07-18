@@ -79,6 +79,7 @@
         }
 
         function _loadOptions() {
+          console.log(self.getItem().fillingRules.options);
             Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
                 var validatorToLoadWidget = FillingRulesOptionWidgetFactory.create(validatorToLoad, self);
                 self.options.push(validatorToLoadWidget);
@@ -96,11 +97,11 @@
 
         function appendFillingRules(validator) {
             showList[validator] = false;
-            var validatorObject = OtusFillingRulesWidgetFactory.create(validator, scope, self);
-            scope.addedValidatorWidget = validatorObject;
-            var template = validatorObject.getTemplate();
+            var template = OtusFillingRulesWidgetFactory.create(validator);
+            // scope.addedValidatorWidget = validatorObject;
+            // var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
-
+            console.log(template);
             var validatorTemplate = $compile(template)(scope);
             validatorsColumn.append(validatorTemplate);
         }

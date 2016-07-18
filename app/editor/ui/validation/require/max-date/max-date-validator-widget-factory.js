@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new MaxDateValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new MaxDateValidator(scope, element );
         }
 
         return self;
     }
 
-    function MaxDateValidator(scope, menuFactory ) {
+    function MaxDateValidator(scope, element ) {
         var self = this;
 
         /* Public Methods */
@@ -40,11 +40,11 @@
         function getTemplate() {
             return '<otus:max-date-validator></otus:max-date-validator>';
         }
-
+        
         function deleteValidator() {
-            menuFactory.deleteValidator('maxDate');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator('maxDate');
+            element.remove();
+            scope.$destroy();
         }
 
     }

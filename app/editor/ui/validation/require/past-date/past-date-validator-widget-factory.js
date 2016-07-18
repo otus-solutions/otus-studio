@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new PastDateValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new PastDateValidator(scope, element );
         }
 
         return self;
     }
 
-    function PastDateValidator(scope, menuFactory ) {
+    function PastDateValidator(scope, element ) {
         var self = this;
 
         /* Public Methods */
@@ -42,9 +42,9 @@
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('pastDate');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator('pastDate');
+            element.remove();
+            scope.$destroy();
         }
 
     }

@@ -39,20 +39,20 @@
             var validatorsTemplates = {
                 alphanumeric: AlphanumericValidatorWidgetFactory,
                 distinct: DistinctValidatorWidgetFactory,
-                futureDate: FutureDateValidatorWidgetFactory,
+                futureDate: '<otus:future-date-validator></otus:future-date-validator>',
                 in: InValidatorWidgetFactory,
                 lowerLimit: LowerLimitValidatorWidgetFactory,
                 lowerCase: LowerCaseValidatorWidgetFactory,
-                maxDate: MaxDateValidatorWidgetFactory,
+                maxDate: '<otus:max-date-validator></otus:max-date-validator>',
                 maxLength: MaxLengthValidatorWidgetFactory,
                 maxTime: MaxTimeValidatorWidgetFactory,
-                minDate: MinDateValidatorWidgetFactory,
+                minDate: '<otus:min-date-validator></otus:min-date-validator>',
                 minLength: MinLengthValidatorWidgetFactory,
                 minTime: MinTimeValidatorWidgetFactory,
                 parameter: ParameterValidatorWidgetFactory,
-                pastDate: PastDateValidatorWidgetFactory,
+                pastDate: '<otus:past-date-validator></otus:past-date-validator>',
                 precision: PrecisionValidatorWidgetFactory,
-                rangeDate: RangeDateValidatorWidgetFactory,
+                rangeDate: '<otus:range-date-validator></otus:range-date-validator>',
                 scale: ScaleValidatorWidgetFactory,
                 specials: SpecialsValidatorWidgetFactory,
                 upperCase: UpperCaseValidatorWidgetFactory,
@@ -60,7 +60,7 @@
             }
 
         function create(validator, scope, self) {
-            return validatorsTemplates[validator].create(scope, self);
+            return validatorsTemplates[validator];
         }
 
 

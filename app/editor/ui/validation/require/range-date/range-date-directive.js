@@ -5,15 +5,16 @@
         .module('editor.ui')
         .directive('otusRangeDateValidator', otusRangeDateValidator);
 
-    function otusRangeDateValidator() {
+        otusRangeDateValidator.$inject=[
+          'RangeDateValidatorWidgetFactory'          
+        ];
+    function otusRangeDateValidator(RangeDateValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/range-date/range-date-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+               scope.widget = RangeDateValidatorWidgetFactory.create(scope, element);
             }
 
         };
