@@ -1,7 +1,7 @@
 <md-list-item layout-padding flex="100">
     <span>Insira a quantidade total de números</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="integer" min="0" step="1" ui-integer aria-label="Insira a quantidade total de números" ng-model="widget.answer">
+        <input type="text" name="integer" min="0" step="1" ui-integer aria-label="Insira a quantidade total de números" ng-model="widget.data" ng-change="widget.updateData()">
     </md-input-container>
     <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
         <i class="material-icons">clear</i>

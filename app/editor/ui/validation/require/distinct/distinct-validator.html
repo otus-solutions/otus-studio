@@ -1,10 +1,10 @@
 <md-list-item layout-padding flex="100">
     <span>Insira um valor de distinção</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans1" min="0" step="1" ng-model="widget.answer[0]">
+        <input type="text" name="ans1" min="0" step="1" ng-change="widget.updateData()" ng-model="widget.data">
     </md-input-container>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans1" min="0" step="1" ng-model="widget.answer[1]">
+        <input type="text" name="ans1" min="0" step="1" ng-change="widget.updateData()" ng-model="widget.data">
     </md-input-container>
     <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
         <i class="material-icons">clear</i>

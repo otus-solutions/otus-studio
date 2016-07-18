@@ -1,7 +1,7 @@
 <md-list-item layout-padding flex="100">
     <span>Hora mínima esperada</span>
     <md-input-container class="md-block" flex-gt-sm="60">
-        <input type="time" aria-label="Tempo" min="0" max="4999" ng-model="widget.answer">
+        <input type="time" aria-label="Tempo" min="0" max="4999" ng-model="widget.data" ng-change="widget.updateData()">
     </md-input-container>
     <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
         <i class="material-icons">clear</i>

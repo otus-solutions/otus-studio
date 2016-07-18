@@ -6,18 +6,16 @@
         .directive('otusMandatoryValidator', otusMandatoryValidator);
 
     otusMandatoryValidator.$inject = [
-        'MandatoryValidatorFactory'
+        'MandatoryValidatorWidgetFactory'
     ];
 
-    function otusMandatoryValidator(MandatoryValidatorFactory) {
+    function otusMandatoryValidator(MandatoryValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
             link: function linkFunc(scope, element) {
-                scope.widget = MandatoryValidatorFactory.create();
-                scope.widget.element = element;
-                scope.widget.directiveScope = scope;
+                scope.widget = MandatoryValidatorWidgetFactory.create(scope, element);
             }
 
         };

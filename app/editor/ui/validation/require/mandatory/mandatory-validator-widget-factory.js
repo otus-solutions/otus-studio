@@ -11,26 +11,27 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new MandatoryValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new MandatoryValidator(scope, element);
         }
 
         return self;
     }
 
-    function MandatoryValidator(scope, menuFactory ) {
+    function MandatoryValidator(scope, element) {
         var self = this;
 
         /* Public Methods */
         self.getTemplate = getTemplate;
         self.data = false;
         self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            getRuleType().data.value = self.data;
+            // console.log(parent);
+            parent.fillingRules.options['mandatory']=self;            
+            getRuleType().data.reference = self.data;
         }
 
         function getRuleType() {

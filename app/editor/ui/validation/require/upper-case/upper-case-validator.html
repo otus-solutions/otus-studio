@@ -1,5 +1,5 @@
 <md-list-item class="upperCaseValidation" layout-padding flex="100">
-    <md-switch ng-model="widget.answer" ng-model="setting.enabled" layout-align="center start">
+    <md-switch ng-model="widget.data" layout-align="center start" ng-change="widget.updateData()">
         Letra maiúscula
     </md-switch>
     <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">

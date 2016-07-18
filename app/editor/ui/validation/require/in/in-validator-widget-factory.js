@@ -23,14 +23,14 @@
 
       /* Public Methods */
       self.getTemplate = getTemplate;
-      self.date = [];
+      self.data = {'initial':null, 'end': null};
       self.updateData = updateData;
       self.deleteValidator = deleteValidator;
 
       var parent = scope.$parent.widget.getItem();
 
       function updateData() {
-          getRuleType().data.value = self.date;
+          getRuleType().data.reference = self.data;
       }
 
       function getRuleType() {

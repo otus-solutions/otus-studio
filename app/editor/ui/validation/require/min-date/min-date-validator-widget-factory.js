@@ -30,7 +30,7 @@
         var parent = scope.$parent.widget.getItem();
 
         function updateData() {
-            getRuleType().data.value = self.data;
+            getRuleType().data.reference = self.data;
         }
 
         function getRuleType() {

@@ -23,11 +23,22 @@
 
         /* Public Methods */
         self.getTemplate = getTemplate;
-        self.answer = [];
+        self.answer = null;
+        self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
-        function getTemplate(){
-          return '<otus:distinct-validator></otus:distinct-validator>';
+        var parent = scope.$parent.widget.getItem();
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+        }
+
+        function getRuleType() {
+            return parent.fillingRules.options['distinct'];
+        }
+
+        function getTemplate() {
+            return '<otus:distinct-validator></otus:distinct-validator>';
         }
 
         function deleteValidator() {
