@@ -11,40 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new UpperCaseValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new UpperCaseValidator(scope, element);
         }
 
         return self;
     }
 
-    function UpperCaseValidator(scope, menuFactory ) {
+    function UpperCaseValidator(scope, element) {
         var self = this;
+        var whoAmI = 'upperCase';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = true;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['upperCase'];
-        }
-
-        function getTemplate() {
-            return '<otus:upper-case-validator></otus:upper-case-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('upperCase');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

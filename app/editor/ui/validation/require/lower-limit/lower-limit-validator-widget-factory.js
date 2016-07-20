@@ -11,41 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new LowerLimitValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new LowerLimitValidator(scope, element);
         }
 
         return self;
     }
 
-    function LowerLimitValidator(scope, menuFactory ) {
+    function LowerLimitValidator(scope, element) {
         var self = this;
+        var whoAmI = 'lowerLimit';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = null;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['lowerLimit'];
-        }
-
-        function getTemplate() {
-            return '<otus:lower-limit-validator></otus:lower-limit-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('lowerLimit');
-            console.log(self.element);
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

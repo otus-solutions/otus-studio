@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusLowerCaseValidator', otusLowerCaseValidator);
 
-    function otusLowerCaseValidator() {
+    otusLowerCaseValidator.$inject = [
+        'LowerCaseValidatorWidgetFactory'
+    ];
+
+    function otusLowerCaseValidator(LowerCaseValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/lower-case/lower-case-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = LowerCaseValidatorWidgetFactory.create(scope, element);
             }
         };
 

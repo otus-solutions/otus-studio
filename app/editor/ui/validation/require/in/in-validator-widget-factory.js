@@ -11,41 +11,52 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new InValidator(scope, menuFactory);
+        function create(scope, element) {
+            return new InValidator(scope, element);
         }
 
         return self;
     }
 
-    function InValidator(scope, menuFactory) {
-      var self = this;
+    function InValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'in';
 
-      /* Public Methods */
-      self.getTemplate = getTemplate;
-      self.data = {'initial':null, 'end': null};
-      self.updateData = updateData;
-      self.deleteValidator = deleteValidator;
 
-      var parent = scope.$parent.widget.getItem();
+        /* Public Methods */
+        self.data = {
+            'initial': null,
+            'end': null
+        };
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
 
-      function updateData() {
-          getRuleType().data.reference = self.data;
-      }
+        var parent = scope.$parent.widget.getItem();
 
-      function getRuleType() {
-          return parent.fillingRules.options['in'];
-      }
+        _init();
 
-        function getTemplate(){
-          return '<otus:in-validator></otus:in-validator>';
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('in');
-            console.log(self.element);
-            self.element.remove();
-            self.directiveScope.$destroy();
-        }    }
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
 
 }());

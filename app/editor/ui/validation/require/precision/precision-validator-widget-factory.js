@@ -11,40 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new PrecisionValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new PrecisionValidator(scope, element);
         }
 
         return self;
     }
 
-    function PrecisionValidator(scope, menuFactory ) {
+    function PrecisionValidator(scope, element) {
         var self = this;
+        var whoAmI = 'precision';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = null;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['precision'];
-        }
-
-        function getTemplate() {
-            return '<otus:precision-validator></otus:precision-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('precision');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

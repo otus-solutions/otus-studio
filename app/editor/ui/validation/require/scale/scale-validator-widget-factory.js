@@ -11,40 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new ScaleValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new ScaleValidator(scope, element);
         }
 
         return self;
     }
 
-    function ScaleValidator(scope, menuFactory ) {
+    function ScaleValidator(scope, element) {
         var self = this;
+        var whoAmI = 'scale';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = null;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['scale'];
-        }
-
-        function getTemplate() {
-            return '<otus:scale-validator></otus:scale-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('scale');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

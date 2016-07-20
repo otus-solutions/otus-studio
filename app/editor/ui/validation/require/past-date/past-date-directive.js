@@ -5,9 +5,9 @@
         .module('editor.ui')
         .directive('otusPastDateValidator', otusPastDateValidator);
 
-          otusPastDateValidator.$inject=[
-            'PastDateValidatorWidgetFactory'
-          ];
+    otusPastDateValidator.$inject = [
+        'PastDateValidatorWidgetFactory'
+    ];
 
     function otusPastDateValidator(PastDateValidatorWidgetFactory) {
         var ddo = {
@@ -15,7 +15,7 @@
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/past-date/past-date-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = PastDateValidatorWidgetFactory.create(scope, element)
+                scope.widget = PastDateValidatorWidgetFactory.create(scope, element)
             }
 
         };

@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusPrecisionValidator', otusPrecisionValidator);
 
-    function otusPrecisionValidator() {
+    otusPrecisionValidator.$inject = [
+        'PrecisionValidatorWidgetFactory'
+    ];
+
+    function otusPrecisionValidator(PrecisionValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/precision/precision-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = PrecisionValidatorWidgetFactory.create(scope, element);
             }
         };
 

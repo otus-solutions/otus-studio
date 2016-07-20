@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusMinLengthValidator', otusMinLengthValidator);
 
-    function otusMinLengthValidator() {
+    otusMinLengthValidator.$inject = [
+        'MinLengthValidatorWidgetFactory'
+    ];
+
+    function otusMinLengthValidator(MinLengthValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/min-length/min-length-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = MinLengthValidatorWidgetFactory.create(scope, element);
             }
 
         };

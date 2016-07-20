@@ -20,29 +20,36 @@
 
     function FutureDateValidator(scope, element) {
         var self = this;
+        var whoAmI = 'futureDate';
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
+
         var parent = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = new Date(avaiableRules[whoAmI].data.reference);
+            }
+        }
 
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['futureDate'];
-        }
-
-        function getTemplate() {
-            return '<otus:future-date-validator></otus:future-date-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            scope.$parent.widget.deleteValidator('futureDate');
+            scope.$parent.widget.deleteValidator(whoAmI);
             element.remove();
             scope.$destroy();
         }

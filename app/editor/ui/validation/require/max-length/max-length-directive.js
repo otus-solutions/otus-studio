@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusMaxLengthValidator', otusMaxLengthValidator);
 
-    function otusMaxLengthValidator() {
+    otusMaxLengthValidator.$inject = [
+        'MaxLengthValidatorWidgetFactory'
+    ];
+
+    function otusMaxLengthValidator(MaxLengthValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/max-length/max-length-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = MaxLengthValidatorWidgetFactory.create(scope, element);
             }
 
         };

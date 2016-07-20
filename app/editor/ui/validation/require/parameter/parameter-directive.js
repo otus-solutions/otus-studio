@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusParameterValidator', otusParameterValidator);
 
-    function otusParameterValidator() {
+    otusParameterValidator.$inject = [
+        'ParameterValidatorWidgetFactory'
+    ];
+
+    function otusParameterValidator(ParameterValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/parameter/parameter-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = ParameterValidatorWidgetFactory.create(scope, element);
             }
         };
 

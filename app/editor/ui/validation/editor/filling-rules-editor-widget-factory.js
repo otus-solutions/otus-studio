@@ -11,24 +11,24 @@
         'RemoveFillingRulesEventFactory',
         'OtusFillingRulesWidgetFactory',
         '$compile',
-        'WorkspaceService'
+        'UpdateSurveyItemEventFactory'
     ];
 
-    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService);
+            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory);
         }
 
         return self;
 
     }
 
-    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, WorkspaceService) {
+    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -41,11 +41,14 @@
         self.addValidator = addValidator;
         self.checkIfShow = checkIfShow;
         self.deleteValidator = deleteValidator;
+        self.updateFillingRules = updateFillingRules;
+        self.menuDisabler = menuDisabler;
 
         _init();
 
         function _init() {
             showList = showListFeeder();
+            console.log(self.getItem());
             console.log(Object.keys(self.getItem().fillingRules.options));
             if (self.getItem().fillingRules.options !== {}) {
                 _loadOptions();
@@ -54,11 +57,7 @@
         var showList;
 
         function showListFeeder() {
-            var showList = {};
-            var validators = getItem().validators();
-            validators.forEach(function(item) {
-                showList[item] = true;
-            });
+            var showList = getItem().validators();
             return showList;
         }
 
@@ -79,12 +78,10 @@
         }
 
         function _loadOptions() {
-          console.log(self.getItem().fillingRules.options);
             Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
                 var validatorToLoadWidget = FillingRulesOptionWidgetFactory.create(validatorToLoad, self);
                 self.options.push(validatorToLoadWidget);
                 appendFillingRules(validatorToLoad);
-                console.log(validatorToLoad);
             });
         }
 
@@ -96,25 +93,43 @@
         }
 
         function appendFillingRules(validator) {
-            showList[validator] = false;
+          console.log(showList);
+
+            showList.splice(showList.indexOf(validator), 1);
+
+
             var template = OtusFillingRulesWidgetFactory.create(validator);
-            // scope.addedValidatorWidget = validatorObject;
-            // var template = validatorObject.getTemplate();
             var validatorsColumn = element.find('#validators-column');
-            console.log(template);
             var validatorTemplate = $compile(template)(scope);
             validatorsColumn.append(validatorTemplate);
         }
 
         function deleteValidator(validator) {
-            showList[validator] = true;
+            showList.push(validator);
             RemoveFillingRulesEventFactory.create().execute(self, validator);
             delete self.options[validator];
         }
 
+        function updateFillingRules() {
+            UpdateSurveyItemEventFactory.create().execute();
+        }
+
 
         function checkIfShow(fillingRule) {
-            return showList;
+            if (showList.indexOf(fillingRule)>-1){
+              return true;
+            }
+            else{
+              return false;
+            }
+        }
+
+        function menuDisabler() {
+            if (showList.length > 1) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
     }

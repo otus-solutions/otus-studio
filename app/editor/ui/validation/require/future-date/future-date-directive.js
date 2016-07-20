@@ -5,9 +5,9 @@
         .module('editor.ui')
         .directive('otusFutureDateValidator', otusFutureDateValidator);
 
-        otusFutureDateValidator.$inject =[
-          'FutureDateValidatorWidgetFactory'
-        ];
+    otusFutureDateValidator.$inject = [
+        'FutureDateValidatorWidgetFactory'
+    ];
 
     function otusFutureDateValidator(FutureDateValidatorWidgetFactory) {
         var ddo = {
@@ -15,7 +15,7 @@
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/future-date/future-date-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = FutureDateValidatorWidgetFactory.create(scope, element);
+                scope.widget = FutureDateValidatorWidgetFactory.create(scope, element);
             }
 
         };

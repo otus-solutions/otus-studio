@@ -20,14 +20,13 @@
 
     function MinDateValidator(scope, element) {
         var self = this;
+        var whoAmI = 'minDate';
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
-        var whoAmI = 'minDate'
 
         var parent = scope.$parent.widget.getItem();
 
@@ -35,22 +34,17 @@
         function _init(){
           var avaiableRules = parent.fillingRules.options;
           if (avaiableRules.hasOwnProperty(whoAmI)){
-            console.log(new Date(avaiableRules[whoAmI].data.reference.toString()));
-            // self.data = avaiableRules[whoAmI].data.reference;
+            self.data = new Date(avaiableRules[whoAmI].data.reference);
           }
-
         }
 
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
             return parent.fillingRules.options[whoAmI];
-        }
-
-        function getTemplate() {
-            return '<otus:min-date-validator></otus:min-date-validator>';
         }
 
         function deleteValidator() {

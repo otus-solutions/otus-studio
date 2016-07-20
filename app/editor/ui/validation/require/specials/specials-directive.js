@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusSpecialsValidator', otusSpecialsValidator);
 
-    function otusSpecialsValidator() {
+    otusSpecialsValidator.$inject = [
+        'SpecialsValidatorWidgetFactory'
+    ];
+
+    function otusSpecialsValidator(SpecialsValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/specials/specials-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = SpecialsValidatorWidgetFactory.create(scope, element);
             }
         };
 

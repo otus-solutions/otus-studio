@@ -11,40 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new MinLengthValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new MinLengthValidator(scope, element);
         }
 
         return self;
     }
 
-    function MinLengthValidator(scope, menuFactory ) {
+    function MinLengthValidator(scope, element) {
         var self = this;
+        var whoAmI = 'minLength';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = null;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
-            getRuleType().data.size = self.data;
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['minLength'];
-        }
-
-        function getTemplate() {
-            return '<otus:min-length-validator></otus:min-length-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('minLength');
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

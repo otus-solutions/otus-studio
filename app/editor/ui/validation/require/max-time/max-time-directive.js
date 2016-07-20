@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusMaxTimeValidator', otusMaxTimeValidator);
 
-    function otusMaxTimeValidator() {
+    otusMaxTimeValidator.$inject = [
+        'MaxTimeValidatorWidgetFactory'
+    ];
+
+    function otusMaxTimeValidator(MaxTimeValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/max-time/max-time-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = MaxTimeValidatorWidgetFactory.create(scope, element);
             }
         };
 

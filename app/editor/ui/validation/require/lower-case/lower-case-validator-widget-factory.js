@@ -11,41 +11,47 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, menuFactory) {
-            return new LowerCaseValidator(scope, menuFactory );
+        function create(scope, element) {
+            return new LowerCaseValidator(scope, element);
         }
 
         return self;
     }
 
-    function LowerCaseValidator(scope, menuFactory ) {
+    function LowerCaseValidator(scope, element) {
         var self = this;
+        var whoAmI = 'lowerCase';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = true;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['lowerCase'];
-        }
-
-        function getTemplate() {
-            return '<otus:lower-case-validator></otus:lower-case-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            menuFactory.deleteValidator('lowerCase');
-            console.log(self.element);
-            self.element.remove();
-            self.directiveScope.$destroy();
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
         }
 
     }

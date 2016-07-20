@@ -20,29 +20,39 @@
 
     function RangeDateValidator(scope, element) {
         var self = this;
+        var whoAmI = 'rangeDate';
+
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
-        self.data = {'initial': new Date(), 'end': new Date()};
+        self.data = {
+            'initial': new Date(),
+            'end': new Date()
+        };
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
             getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['rangeDate'];
-        }
-
-        function getTemplate() {
-            return '<otus:range-date-validator></otus:range-date-validator>';
+            return parent.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {
-            scope.$parent.widget.deleteValidator('rangeDate');
+            scope.$parent.widget.deleteValidator(whoAmI);
             element.remove();
             scope.$destroy();
         }

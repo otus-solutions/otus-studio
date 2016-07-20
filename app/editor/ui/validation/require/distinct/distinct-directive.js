@@ -5,15 +5,17 @@
         .module('editor.ui')
         .directive('otusDistinctValidator', otusDistinctValidator);
 
-    function otusDistinctValidator() {
+    otusDistinctValidator.$inject = [
+        'DistinctValidatorWidgetFactory'
+    ];
+
+    function otusDistinctValidator(DistinctValidatorWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',
             templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
             link: function linkFunc(scope, element) {
-               scope.widget = scope.$parent.addedValidatorWidget;
-               scope.widget.element = element;
-               scope.widget.directiveScope = scope;
+                scope.widget = DistinctValidatorWidgetFactory.create(scope, element);
             }
         };
 
