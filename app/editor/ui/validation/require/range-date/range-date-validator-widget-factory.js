@@ -38,7 +38,8 @@
         function _init() {
             var avaiableRules = parent.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = avaiableRules[whoAmI].data.reference;
+                self.data['initial'] = new Date(avaiableRules[whoAmI].data.reference['initial']);
+                self.data['end'] = new Date (avaiableRules[whoAmI].data.reference['end']);
             }
         }
 

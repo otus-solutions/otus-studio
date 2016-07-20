@@ -48,8 +48,6 @@
 
         function _init() {
             showList = showListFeeder();
-            console.log(self.getItem());
-            console.log(Object.keys(self.getItem().fillingRules.options));
             if (self.getItem().fillingRules.options !== {}) {
                 _loadOptions();
             }
@@ -93,11 +91,7 @@
         }
 
         function appendFillingRules(validator) {
-          console.log(showList);
-
             showList.splice(showList.indexOf(validator), 1);
-
-
             var template = OtusFillingRulesWidgetFactory.create(validator);
             var validatorsColumn = element.find('#validators-column');
             var validatorTemplate = $compile(template)(scope);

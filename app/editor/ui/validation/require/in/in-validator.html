@@ -1,10 +1,10 @@
 <md-list-item layout-padding flex="100">
-    <span>Insira a lista de valores</span>
+    <span>Insira um intervalo de valores</span>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans1" min="0" step="1" ui-integer aria-label="Insira a lista de valores"  ng-change="widget.updateData()" ng-model="widget.data.initial"/>
+        <input type="text" name="ans1" min="0" step="1" ui-integer aria-label="Insira o primeiro valor"  ng-change="widget.updateData()" ng-model="widget.data.initial"/>
     </md-input-container>
     <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans2" min="0" step="1" ui-integer aria-label="Insira a lista de valores" ng-change="widget.updateData()" ng-model="widget.data.end"/>
+        <input type="text" name="ans2" min="0" step="1" ui-integer aria-label="Insira o segundo valor" ng-change="widget.updateData()" ng-model="widget.data.end"/>
     </md-input-container>
     <md-button ng-click = "widget.deleteValidator()" class="md-icon-button md-button">
         <i class="material-icons">clear</i>
