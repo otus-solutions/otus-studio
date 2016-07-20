@@ -3,31 +3,31 @@
 
     angular
         .module('editor.core')
-        .factory('UpdateSurveyItemEventFactory', UpdateSurveyItemEventFactory);
+        .factory('UpdateFillingRulesEventFactory', UpdateFillingRulesEventFactory);
 
-    UpdateSurveyItemEventFactory.$inject = [
+    UpdateFillingRulesEventFactory.$inject = [
         'WorkspaceService'
     ];
 
-    function UpdateSurveyItemEventFactory(WorkspaceService) {
+    function UpdateFillingRulesEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpdateSurveyItemEvent(WorkspaceService);
+            return new UpdateFillingRulesEvent(WorkspaceService);
         }
 
         return self;
     }
 
-    function UpdateSurveyItemEvent(WorkspaceService) {
+    function UpdateFillingRulesEvent(WorkspaceService) {
         var self = this;
 
         self.execute = execute;
 
-        function execute(data) {
+        function execute() {
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

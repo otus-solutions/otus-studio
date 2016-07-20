@@ -11,24 +11,26 @@
         'RemoveFillingRulesEventFactory',
         'OtusFillingRulesWidgetFactory',
         '$compile',
-        'UpdateSurveyItemEventFactory'
+        'UpdateFillingRulesEventFactory',
+        '$timeout'
+
     ];
 
-    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory) {
+    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory);
+            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout);
         }
 
         return self;
 
     }
 
-    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateSurveyItemEventFactory) {
+    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -48,8 +50,12 @@
 
         function _init() {
             showList = showListFeeder();
-            if (self.getItem().fillingRules.options !== {}) {
+            if (Object.keys(self.getItem().fillingRules.options).length > 0) {
+              Object.keys(self.getItem().fillingRules.options)
                 _loadOptions();
+            }
+            else{
+              addMandatoryValidator();
             }
         }
         var showList;
@@ -83,6 +89,13 @@
             });
         }
 
+        function addMandatoryValidator() {
+            var newOption = AddFillingRulesEventFactory.create().execute(getItem(), 'mandatory');
+            var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
+            self.options.push(optionWidget);
+            appendFillingRules('mandatory')
+        }
+
         function addValidator(validator) {
             var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
             var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
@@ -105,21 +118,20 @@
         }
 
         function updateFillingRules() {
-            UpdateSurveyItemEventFactory.create().execute();
+            UpdateFillingRulesEventFactory.create().execute();
         }
 
 
         function checkIfShow(fillingRule) {
-            if (showList.indexOf(fillingRule)>-1){
-              return true;
-            }
-            else{
-              return false;
+            if (showList.indexOf(fillingRule) > -1) {
+                return true;
+            } else {
+                return false;
             }
         }
 
         function menuDisabler() {
-            if (showList.length > 1) {
+            if (showList.length > 0) {
                 return false;
             } else {
                 return true;

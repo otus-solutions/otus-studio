@@ -19,6 +19,7 @@
                 in: '<otus:in-validator></otus:in-validator>',
                 lowerLimit: '<otus:lower-limit-validator></otus:lower-limit-validator>',
                 lowerCase: '<otus:lower-case-validator></otus:lower-case-validator>',
+                mandatory: '<otus:mandatory-validator></otus:mandatory-validator>',
                 maxDate: '<otus:max-date-validator></otus:max-date-validator>',
                 maxLength: '<otus:max-length-validator></otus:max-length-validator>',
                 maxTime: '<otus:max-time-validator></otus:max-time-validator>',

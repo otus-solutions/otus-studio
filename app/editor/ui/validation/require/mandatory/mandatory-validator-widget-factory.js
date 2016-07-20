@@ -20,28 +20,33 @@
 
     function MandatoryValidator(scope, element) {
         var self = this;
+        var whoAmI = 'mandatory';
 
         /* Public Methods */
-        self.getTemplate = getTemplate;
         self.data = false;
         self.updateData = updateData;
 
         var parent = scope.$parent.widget.getItem();
 
+        _init();
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                console.log(avaiableRules[whoAmI].data);
+                self.data = avaiableRules[whoAmI].data.reference;
+            }
+        }
+
         function updateData() {
-            console.log(parent);
-            parent.fillingRules.options['mandatory']={};
-            // getRuleType().data.reference = self.data;
+            getRuleType().data.reference = self.data;
+            console.log(getRuleType().data);
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
-            return parent.fillingRules.options['mandatory'];
+            return parent.fillingRules.options[whoAmI];
         }
-
-        function getTemplate() {
-            return '<otus:mandatory-validator></otus:mandatory-validator>';
-        }
-
 
     }
 
