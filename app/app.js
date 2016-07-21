@@ -14,8 +14,9 @@
             /* Otus platform modules */
             'ui.components',
             'utils',
-            'otus.preview.component',
-            'otus.allPurpose.component'
+            /* otusjs.player */
+            'otusjs.player.core',
+            'otusjs.player.component'
         ]);
 
 }());
