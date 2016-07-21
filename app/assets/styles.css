@@ -8,40 +8,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     overflow-y: hidden !important;
 }
-.image-user-div {
-    border-radius: 35px;
-    float: right;
-    width: 45px;
-    height: 45px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-.image-user-div img {
-    cursor: pointer;
-    height: inherit;
-    width: inherit;
-    border-radius: inherit;
-    height: inherit;
-}
-.image-component {
-    border-radius: 35px;
-    height: 47px;
-    padding: 1px;
-    margin: 10px;
-    min-width: 45px;
-    min-height: 45px;
-}
-.image-otus-toolbar {
-    height: 41px;
-    width: 54px;
-    margin: 10px;
-    margin-top: inherit;
-    min-width: 54px;
-    min-height: 41px;
-}
+
 .icon-white {
     color: white!important;
 }
@@ -161,35 +132,21 @@ Page Anchor.css
     color: #1976D2
 }
 
-/*
-ui-accordion-header {
-    min-height: 75px;
+.toolbar-icon {
+    float: right;
+    height: 45px;
 }
-ui-accordion-header {
-    border-bottom: 1px solid #E0E0E0;
+.icon-clickable {
+    cursor: pointer;
 }
-ui-accordion-header button {
-    margin-top: 7px !important;
+.image-brand {
+    border-radius: 25px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
 }
-ui-accordion-header md-fab-speed-dial * {
-    display: inherit;
-}
-ui-accordion-header md-fab-speed-dial.hidden {
-    display: none;
-}
-ui-accordion-header md-fab-speed-dial.visible {
-    display: flex;
-}
-ui-accordion-content {
-    transition: all .3s cubic-bezier(.55, 0, .55, .2)
-}
-ui-accordion-content.hidden {
-    display: none;
-}
-ui-accordion-content.visible {
-    display: flex;
-}
-*/
 
 .label-container {
     padding: 8px;
