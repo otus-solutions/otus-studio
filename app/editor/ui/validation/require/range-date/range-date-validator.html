@@ -1,10 +1,17 @@
-<md-list-item layout-padding flex="100">
-    <span>Intervalo de datas permitido:</span>
-    <md-datepicker ng-model="widget.data.initial" md-placeholder="Insira uma data mínima" md-min-date="minDate" ng-change="widget.updateData()"></md-datepicker>
-    <md-datepicker ng-model="widget.data.end" md-placeholder="Insira uma data máxima" md-max-date="maxDate" ng-change="widget.updateData()"></md-datepicker>
-    <div style="letter-spacing: 5%;">
+<md-list-item layout-padding layout-align="space-between">
+    <md-content layout="column" flex="90">
+        <md-content layout="row">
+            <span>Intervalo de datas permitido:</span>
+        </md-content>
+        <md-content layout="row">
+            <md-datepicker ng-model="widget.data.initial" md-placeholder="Insira uma data mínima" md-min-date="minDate" ng-change="widget.updateData()"></md-datepicker>
+            <md-datepicker ng-model="widget.data.end" md-placeholder="Insira uma data máxima" md-max-date="maxDate" ng-change="widget.updateData()"></md-datepicker>
+        </md-content>
+    </md-content>
+    <md-content layout="column" flex="10">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
-            <i class="material-icons">clear</i>
+            <i class="material-icons">close</i>
         </md-button>
-    </div>
+    </md-content>
+
 </md-list-item>
