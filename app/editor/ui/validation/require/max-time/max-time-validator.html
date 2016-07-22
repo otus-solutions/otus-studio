@@ -1,9 +1,11 @@
 <md-list-item layout-padding flex="100">
-    <span>Hora máxima esperada:</span>
-    <md-input-container class="md-block" flex-gt-sm="60">
-        <input type="time" aria-label="Tempo" ng-model="widget.data" ng-change="widget.updateData()">
-    </md-input-container>
-    <md-content style="letter-spacing: 5%;">
+    <md-content layout="column" layout-align="start" flex="90">
+        <md-input-container layout="row" layout-align="start center" flex-offset="5">
+            <span class="md-body-1">Hora máxima esperada:</span>
+            <input type="time" flex="20" flex-offset="5" aria-label="Tempo" ng-model="widget.data" ng-change="widget.updateData()">
+        </md-input-container>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="center center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>

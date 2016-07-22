@@ -1,12 +1,18 @@
-<md-list-item layout-padding flex="100">
-    <span>Intervalo de valores:</span>
-    <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans1" min="0" step="1" ui-integer aria-label="Insira o primeiro valor" ng-change="widget.updateData()" ng-model="widget.data.initial" />
-    </md-input-container>
-    <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="ans2" min="0" step="1" ui-integer aria-label="Insira o segundo valor" ng-change="widget.updateData()" ng-model="widget.data.end" />
-    </md-input-container>
-    <md-content style="letter-spacing: 5%;">
+<md-list-item layout-padding layout-align="space-between">
+    <md-content layout="column" flex="90" layout-align="start start">
+      <div layout="row" layout-align="start end">
+        <span layout="row" class="md-body-1">Intervalo de valores:</span>
+        <md-input-container flex-offset="5" flex="20" layout="row">
+          <input type="number" min="0" step="1" ui-integer aria-label="Insira o primeiro valor" ng-change="widget.updateData()" ng-model="widget.data.initial"/>
+        </md-input-container>
+
+        <md-input-container flex-offset="5" flex="20"layout="row">
+          <input type="number" min="0" step="1" ui-integer aria-label="Insira o segundo valor" ng-change="widget.updateData()" ng-model="widget.data.end"/>
+        </md-input-container>
+      </div>
+
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="end center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>

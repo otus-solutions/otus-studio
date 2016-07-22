@@ -1,7 +1,13 @@
-<md-list-item layout-padding flex="100" layout-padding flex="100">
-    <span>Data máxima esperada:</span>
-    <md-datepicker ng-model="widget.data" ng-change="widget.updateData()" md-placeholder="Insira uma data máxima" md-max-date="maxDate"></md-datepicker>
-    <md-content style="letter-spacing: 5%;">
+<md-list-item layout-padding layout-align="space-between">
+    <md-content layout="column" flex="90">
+        <md-content layout="row">
+            <span class="md-body-1">Data Máxima:</span>
+        </md-content>
+        <md-content layout="row" layout-align="start">
+            <md-datepicker ng-model="widget.data" md-placeholder="Insira uma data máxima" ng-change="widget.updateData()"></md-datepicker>
+        </md-content>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="end center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>

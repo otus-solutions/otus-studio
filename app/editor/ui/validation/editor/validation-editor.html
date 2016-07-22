@@ -1,124 +1,123 @@
 <md-container layout="column" flex>
     <md-list ng-cloak>
-      <md-divider></md-divider>
-      <md-subheader class="md-no-sticky">Validações</md-subheader>
-        <md-list-item layout="column" flex layout-align="center end">
-            <md-menu md-offset="0 -7">
-                <md-button aria-label="Opções" class="md-icon-button md-button"  ng-disabled="widget.menuDisabler()" ng-click="$mdOpenMenu($event)">
-                    <i class="material-icons">more_vert</i>
-                </md-button>
-                <md-menu-content width="6">
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('rangeDate')">
-                        <md-button ng-click="widget.addValidator('rangeDate')">Adicionar intervalo de datas</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+        <md-divider></md-divider>
+        <md-list-item layout="column" flex layout-align="center start">
+            <md-content layout="row">
+                <md-subheader class="md-no-sticky">Validações</md-subheader>
+                <md-menu md-offset="0 -7">
+                    <md-button aria-label="Opções" class="md-icon-button md-button" ng-disabled="widget.menuDisabler()" ng-click="$mdOpenMenu($event)">
+                        <i class="material-icons">more_vert</i>
+                    </md-button>
+                    <md-menu-content width="6">
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('rangeDate')">
+                            <md-button ng-click="widget.addValidator('rangeDate')">Adicionar intervalo de datas</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minDate')">
-                        <md-button ng-click="widget.addValidator('minDate')">Adicionar data mínima esperada</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minDate')">
+                            <md-button ng-click="widget.addValidator('minDate')">Adicionar data mínima esperada</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxDate')">
-                        <md-button ng-click="widget.addValidator('maxDate')">Adicionar data máxima esperada</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxDate')">
+                            <md-button ng-click="widget.addValidator('maxDate')">Adicionar data máxima esperada</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('futureDate')">
-                        <md-button ng-click="widget.addValidator('futureDate')">Adicionar data futura</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('futureDate')">
+                            <md-button ng-click="widget.addValidator('futureDate')">Adicionar data futura</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('pastDate')">
-                        <md-button ng-click="widget.addValidator('pastDate')">Adicionar data passada</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('pastDate')">
+                            <md-button ng-click="widget.addValidator('pastDate')">Adicionar data passada</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('distinct')">
-                        <md-button ng-click="widget.addValidator('distinct')">Adicionar valor de distinção</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('distinct')">
+                            <md-button ng-click="widget.addValidator('distinct')">Adicionar valor de distinção</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('lowerLimit')">
-                        <md-button ng-click="widget.addValidator('lowerLimit')">Adcionar valor mínimo esperado
-                        </md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('lowerLimit')">
+                            <md-button ng-click="widget.addValidator('lowerLimit')">Adcionar valor mínimo esperado
+                            </md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('upperLimit')">
-                        <md-button ng-click="widget.addValidator('upperLimit')">Adcionar valor máximo esperado
-                        </md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('upperLimit')">
+                            <md-button ng-click="widget.addValidator('upperLimit')">Adcionar valor máximo esperado
+                            </md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('scale')">
-                        <md-button ng-click="widget.addValidator('scale')">Adicionar quantidade de casas decimais
-                        </md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('scale')">
+                            <md-button ng-click="widget.addValidator('scale')">Adicionar quantidade de casas decimais
+                            </md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('precision')">
-                        <md-button ng-click="widget.addValidator('precision')">Adicionar quantidade total de dígitos do número
-                        </md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('precision')">
+                            <md-button ng-click="widget.addValidator('precision')">Adicionar quantidade total de dígitos do número
+                            </md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('alphanumeric')">
-                        <md-button ng-click="widget.addValidator('alphanumeric')">Permite caracteres alfanuméricos</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('alphanumeric')">
+                            <md-button ng-click="widget.addValidator('alphanumeric')">Permite caracteres alfanuméricos</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('lowerCase')">
-                        <md-button ng-click="widget.addValidator('lowerCase')">Permite letra minúscula</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('lowerCase')">
+                            <md-button ng-click="widget.addValidator('lowerCase')">Permite letra minúscula</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('upperCase')">
-                        <md-button ng-click="widget.addValidator('upperCase')">Permite letra maiúscula</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('upperCase')">
+                            <md-button ng-click="widget.addValidator('upperCase')">Permite letra maiúscula</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('specials')">
-                        <md-button ng-click="widget.addValidator('specials')">Permite caracteres especiais</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('specials')">
+                            <md-button ng-click="widget.addValidator('specials')">Permite caracteres especiais</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minLength')">
-                        <md-button ng-click="widget.addValidator('minLength')">Adicionar quantidade de caracteres mínima</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minLength')">
+                            <md-button ng-click="widget.addValidator('minLength')">Adicionar quantidade de caracteres mínima</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxLength')">
-                        <md-button ng-click="widget.addValidator('maxLength')">Adicionar quantidade de caracteres máxima</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxLength')">
+                            <md-button ng-click="widget.addValidator('maxLength')">Adicionar quantidade de caracteres máxima</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minTime')">
+                            <md-button ng-click="widget.addValidator('minTime')">Adicionar hora mínima esperada</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minTime')">
-                        <md-button ng-click="widget.addValidator('minTime')">Adicionar hora mínima esperada</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxTime')">
+                            <md-button ng-click="widget.addValidator('maxTime')">Adicionar hora máxima esperada</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxTime')">
-                        <md-button ng-click="widget.addValidator('maxTime')">Adicionar hora máxima esperada</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('parameter')">
+                            <md-button ng-click="widget.addValidator('parameter')">Ajustar o tipo de contagem do cronômetro</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
 
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('parameter')">
-                        <md-button ng-click="widget.addValidator('parameter')">Ajustar o tipo de contagem do cronômetro</md-button>
-                        <md-menu-divider></md-menu-divider>
-                    </md-menu-item>
-
-                    <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('in')">
-                        <md-button ng-click="widget.addValidator('in')">Adicionar intervalo de valores</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('in')">
+                            <md-button ng-click="widget.addValidator('in')">Adicionar intervalo de valores</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-content>
         </md-list-item>
 
-
         <md-list-item>
-            <md-list id="validators-column" layout-padding layout="column" flex="100">
-            </md-list>
+            <md-list id="validators-column" layout-padding layout="column" flex="100"></md-list>
         </md-list-item>
 
     </md-list>

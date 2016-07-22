@@ -1,9 +1,11 @@
-<md-list-item layout-padding flex="100">
-    <span>Quantidade total de dígitos do número:</span>
-    <md-input-container class="md-block" flex-gt-sm="45">
-        <input type="text" name="integer" min="0" step="1" ui-integer aria-label="Insira a quantidade total de números" ng-model="widget.data" ng-change="widget.updateData()">
-    </md-input-container>
-    <md-content style="letter-spacing: 5%;">
+<md-list-item layout-padding flex>
+    <md-content layout="column" layout-align="start" flex="90">
+        <md-input-container layout="row" layout-align="start center">
+            <span class="md-body-1">Total de dígitos:</span>
+            <input type="number" flex="20" min="0" flex-offset="5" aria-label="Total de dígitos" ng-model="widget.data" ng-change="widget.updateData()">
+        </md-input-container>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="center center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>
