@@ -44,7 +44,9 @@
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data;
+          getRuleType().data.reference['initial']=self.data['initial'].toLocaleDateString();
+          getRuleType().data.reference['end']=self.data['end'].toLocaleDateString();
+          console.log(getRuleType().data.reference);            
             scope.$parent.widget.updateFillingRules();
         }
 

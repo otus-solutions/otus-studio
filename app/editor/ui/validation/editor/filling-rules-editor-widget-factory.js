@@ -11,26 +11,25 @@
         'RemoveFillingRulesEventFactory',
         'OtusFillingRulesWidgetFactory',
         '$compile',
-        'UpdateFillingRulesEventFactory',
-        '$timeout'
+        'UpdateFillingRulesEventFactory'
 
     ];
 
-    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout) {
+    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout);
+            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory);
         }
 
         return self;
 
     }
 
-    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory, $timeout) {
+    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
         var self = this;
         self.ngModel = scope.ngModel;
         self.options = [];
@@ -116,6 +115,7 @@
             RemoveFillingRulesEventFactory.create().execute(self, validator);
             delete self.options[validator];
         }
+
 
         function updateFillingRules() {
             UpdateFillingRulesEventFactory.create().execute();

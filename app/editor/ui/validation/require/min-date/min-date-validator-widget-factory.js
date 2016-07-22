@@ -23,7 +23,7 @@
         var whoAmI = 'minDate';
 
         /* Public Methods */
-        self.data = new Date();
+        self.data = new Date().toLocaleDateString();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -31,16 +31,18 @@
         var parent = scope.$parent.widget.getItem();
 
         _init();
-        function _init(){
-          var avaiableRules = parent.fillingRules.options;
-          if (avaiableRules.hasOwnProperty(whoAmI)){
-            self.data = new Date(avaiableRules[whoAmI].data.reference);
-          }
+
+        function _init() {
+            var avaiableRules = parent.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = new Date(avaiableRules[whoAmI].data.reference);
+            }
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data;
+            getRuleType().data.reference = self.data.toLocaleDateString();
             scope.$parent.widget.updateFillingRules();
+            // console.log($filter(self.data)(item.date, "yyyy-MM-dd"));
         }
 
         function getRuleType() {

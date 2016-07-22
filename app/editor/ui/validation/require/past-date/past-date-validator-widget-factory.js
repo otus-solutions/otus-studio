@@ -40,7 +40,7 @@
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data;
+            getRuleType().data.reference = self.data.toLocaleDateString();
             scope.$parent.widget.updateFillingRules();
         }
 

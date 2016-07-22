@@ -334,17 +334,17 @@ survey-template md-card:focus {
   * Validations(Filling Rules)
   *
   */
-#validators-column > *:nth-child(even) *{
+/*#validators-column > *:nth-child(even) *{
   background-color: #f2f2f2;
-}
+}*/
+
+/*#validators-column .md-ripple-container{
+  background-color: transparent;
+}*/
 
 #validators-column * {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
-}
-
-#validators-column md-switch{
-  background-color: white; !important
 }

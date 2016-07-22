@@ -33,14 +33,12 @@
         function _init() {
             var avaiableRules = parent.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
-                console.log(avaiableRules[whoAmI].data);
                 self.data = avaiableRules[whoAmI].data.reference;
             }
         }
 
         function updateData() {
             getRuleType().data.reference = self.data;
-            console.log(getRuleType().data);
             scope.$parent.widget.updateFillingRules();
         }
 

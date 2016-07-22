@@ -24,23 +24,28 @@
 
 
         /* Public Methods */
-        self.data = '';
+        self.data = moment().hour('01').minute('23').second(0).milliseconds(0).toDate();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
         var parent = scope.$parent.widget.getItem();
-
         _init();
 
         function _init() {
+          console.log(Date().prototype.getTimezoneOffset());
             var avaiableRules = parent.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = avaiableRules[whoAmI].data.reference;
+              console.log(avaiableRules[whoAmI].data.reference);
+              console.log(Date(avaiableRules[whoAmI].data.reference));
+                // self.data = Date(avaiableRules[whoAmI].data.reference);
             }
         }
 
         function updateData() {
+          if(self.data){
+            console.log(self.data);
             getRuleType().data.reference = self.data;
+          }
             scope.$parent.widget.updateFillingRules();
         }
 
