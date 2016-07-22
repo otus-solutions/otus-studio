@@ -3,8 +3,8 @@
         <otus:accordion-header>
             <md-content layout-align="start center" style="padding: 0" flex>
                 <md-content layout="row">
-                    <md-card class="item-id-frame" style="margin: 5px" layout-padding layout="column">
-                        {{widget.getItem().templateID}}
+                    <md-card layout-align="center">
+                        <editable-item-id template-id="widget.getItem().templateID"></editable-item-id>
                     </md-card>
                     <md-content layout-padding layout-align="start center" flex>
                         <label>{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</label>

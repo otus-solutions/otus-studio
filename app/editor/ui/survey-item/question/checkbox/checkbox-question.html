@@ -1,8 +1,11 @@
 <md-content layout-padding>
     <md-radio-group>
-        <md-content ng-repeat="optionWidget in widget.options" layout="row" style="margin: 10px">
-            <md-checkbox value="{{optionWidget.option.value}}" aria-label="{{optionWidget.id}}" flex></md-checkbox>
-            <otus:text-editor flex="95" ng-model="optionWidget.option.label" label="optionWidget.option.label.ptBR.formattedText" placeholder="Clique para inserir o texto da opção de resposta"></otus:text-editor>
+        <md-content ng-repeat="optionWidget in widget.options" layout="row" layout-align="start center">
+            <md-card>
+                <editable-item-id template-id="widget.getItem().templateID"></editable-item-id>
+            </md-card>
+            <md-checkbox value="{{optionWidget.option.value}}" aria-label="{{optionWidget.id}}" style="margin-top: 15px;"></md-checkbox>
+            <otus:text-editor flex ng-model="optionWidget.option.label" label="optionWidget.option.label.ptBR.formattedText" placeholder="Clique para inserir o texto da opção de resposta"></otus:text-editor>
         </md-content>
     </md-radio-group>
     <md-content>
