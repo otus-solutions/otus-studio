@@ -39,14 +39,14 @@
             var avaiableRules = parent.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
                 self.data['initial'] = new Date(avaiableRules[whoAmI].data.reference['initial']);
-                self.data['end'] = new Date (avaiableRules[whoAmI].data.reference['end']);
+                self.data['end'] = new Date(avaiableRules[whoAmI].data.reference['end']);
             }
+            self.updateData();
         }
 
         function updateData() {
-          getRuleType().data.reference['initial']=self.data['initial'].toLocaleDateString();
-          getRuleType().data.reference['end']=self.data['end'].toLocaleDateString();
-          console.log(getRuleType().data.reference);            
+            getRuleType().data.reference['initial'] = self.data['initial'].toLocaleDateString();
+            getRuleType().data.reference['end'] = self.data['end'].toLocaleDateString();
             scope.$parent.widget.updateFillingRules();
         }
 

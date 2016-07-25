@@ -24,7 +24,7 @@
 
 
         /* Public Methods */
-        self.data = '';
+        self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -33,15 +33,24 @@
         _init();
 
         function _init() {
-            var avaiableRules = parent.fillingRules.options;
-            if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = avaiableRules[whoAmI].data.reference;
+            var referenceValue = parent.fillingRules.options[whoAmI].data.reference;
+            if (referenceValue != '') {
+              self.data = new Date(referenceValue);
             }
+            else {
+              self.data.setHours('01')
+              self.data.setMinutes('00');
+              self.data.setSeconds('00');
+              self.data.setMilliseconds('00');
+            }
+            self.updateData()
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
+            if (self.data) {
+                getRuleType().data.reference = self.data.toString();
+                scope.$parent.widget.updateFillingRules();
+            }
         }
 
         function getRuleType() {

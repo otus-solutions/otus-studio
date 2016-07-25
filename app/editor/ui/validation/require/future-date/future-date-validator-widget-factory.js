@@ -37,6 +37,7 @@
             if (avaiableRules.hasOwnProperty(whoAmI)) {
                 self.data = new Date(avaiableRules[whoAmI].data.reference);
             }
+            self.updateData();
         }
 
         function updateData() {
