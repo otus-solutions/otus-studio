@@ -1,11 +1,11 @@
 <md-list-item layout-padding flex>
-    <md-content layout="column" layout-align="start" flex="90">
+    <md-content layout="column" layout-align="start" flex="85">
         <md-input-container layout="row" layout-align="start center">
             <span class="md-body-1">Mínimo de Caracteres:</span>
             <input type="number" min="0" flex="20" flex-offset="5" aria-label="Mínimo de caracteres" ng-model="widget.data" ng-change="widget.updateData()">
         </md-input-container>
     </md-content>
-    <md-content layout="column" flex="10" layout-padding layout-align="center center">
+    <md-content layout="column" flex="15" layout-padding layout-align="center center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>
