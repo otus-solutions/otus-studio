@@ -34,15 +34,13 @@
 
         function _init() {
             var avaiableRules = parent.fillingRules.options;
-            if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = new Date(avaiableRules[whoAmI].data.reference);
-            }
+            self.data = new Date(avaiableRules[whoAmI].data.reference);
             self.updateData();
         }
 
         function updateData() {
             getRuleType().data.reference = self.data.toLocaleDateString();
-            scope.$parent.widget.updateFillingRules();            
+            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
