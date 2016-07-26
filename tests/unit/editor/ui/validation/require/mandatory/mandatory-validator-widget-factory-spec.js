@@ -18,10 +18,14 @@ describe('MandatoryValidatorWidgetFactory', function() {
 
     describe('Interface description', function() {
 
-        it('test method updateData', function() {
-            // expect(mockParentWidget.getItem()).toEqual();
-            // console.log(mockParentWidget);
+        it('test method updateData is defined', function() {
+            expect(widget.updateData).toBeDefined();
         });
+
+        it('confirm if updateData in reference to be true', function() {
+            expect(Mock.question.fillingRules.options['mandatory'].data.reference).toBe(true);
+            // console.log(Mock.question);
+        })
     });
 
     function mockElement() {
