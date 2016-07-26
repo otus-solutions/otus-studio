@@ -35,7 +35,6 @@
         self.options = [];
 
         /* Public methods */
-        self.getClassName = getClassName;
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
@@ -62,10 +61,6 @@
         function showListFeeder() {
             var showList = getItem().validators();
             return showList;
-        }
-
-        function getClassName() {
-            return 'FillingRulesEditorWidget';
         }
 
         function getElement() {

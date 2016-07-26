@@ -31,8 +31,7 @@
         _init();
 
         function _init() {
-            var avaiableRules = parent.fillingRules.options;
-            self.data = parent.fillingRules.options[whoAmI].data.reference;            
+            self.data = parent.fillingRules.options[whoAmI].data.reference;
         }
 
         function updateData() {
