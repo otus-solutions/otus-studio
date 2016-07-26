@@ -28,18 +28,25 @@ describe('MandatoryValidatorWidgetFactory', function() {
         Mock.element = {};
     }
 
+    function mockUpdateData(){
+      mockParentWidget($injector);
+
+      Mock.updateData = {
+        getRuleType: function(){
+          return Mock.parentWidget.getItem().fillingRules.options['mandatory'];
+        }
+      };
+
+      return Mock.updateData;
+    }
+
     function mockWidgetScope($injector) {
         Mock.scope = {
             class: '',
-            uuid: 'uuid',
             $parent: {
                 widget: mockParentWidget($injector)
-            },
-            $on: function() {}
+            }
         };
-
-        spyOn(Mock.scope, '$on');
-
         return Mock.scope;
     }
 
@@ -49,9 +56,6 @@ describe('MandatoryValidatorWidgetFactory', function() {
         Mock.parentWidget = {
             getItem: function() {
                 return Mock.question;
-            },
-            updateFillingRules: function() {
-                return undefined;
             }
         };
 
