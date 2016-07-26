@@ -30,7 +30,7 @@
 
         _init();
 
-        function _init() {
+        function _init() {            
             self.data = parent.fillingRules.options[whoAmI].data.reference;
         }
 

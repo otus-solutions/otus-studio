@@ -32,12 +32,9 @@
 
         _init();
 
-        function _init() {
-            var avaiableRules = parent.fillingRules.options;
-            if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = new Date(avaiableRules[whoAmI].data.reference);
-            }
-            self.updateData();
+        function _init() {            
+            self.data = new Date(parent.fillingRules.options[whoAmI].data.reference);
+            updateData();
         }
 
         function updateData() {
