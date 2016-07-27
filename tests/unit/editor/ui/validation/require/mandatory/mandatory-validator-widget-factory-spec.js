@@ -22,7 +22,6 @@ describe('MandatoryValidatorWidgetFactory', function() {
       });
 
       it ('should start the data field as false', function() {
-
         expect(widget.data).toBeDefined();
         expect(widget.data).toEqual(false);
       });
@@ -59,7 +58,7 @@ describe('MandatoryValidatorWidgetFactory', function() {
         };
         return Mock.scope;
     }
-    //
+
     function mockParentWidget($injector) {
         mockQuestion($injector);
 

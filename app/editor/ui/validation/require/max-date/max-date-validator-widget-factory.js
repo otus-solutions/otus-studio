@@ -28,12 +28,12 @@
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
-        var parent = scope.$parent.widget.getItem();
+        var question = scope.$parent.widget.getItem();
 
         _init();
 
-        function _init() {            
-            self.data = new Date(parent.fillingRules.options[whoAmI].data.reference);
+        function _init() {
+            self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
             updateData();
         }
 
@@ -43,7 +43,7 @@
         }
 
         function getRuleType() {
-            return parent.fillingRules.options[whoAmI];
+            return question.fillingRules.options[whoAmI];
         }
 
         function deleteValidator() {

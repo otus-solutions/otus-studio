@@ -1,4 +1,4 @@
-describe('DistinctValidatorWidgetFactory', function() {
+describe('LowerCaseValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -10,27 +10,28 @@ describe('DistinctValidatorWidgetFactory', function() {
 
         inject(function(_$injector_) {
             mockWidgetScope(_$injector_);
-            factory = _$injector_.get('DistinctValidatorWidgetFactory');
+            factory = _$injector_.get('LowerCaseValidatorWidgetFactory');
         });
 
         widget = factory.create(Mock.scope, Mock.element);
     });
 
-    describe('Start a distinct Factory Object', function() {
-        xit('should return a distinct Validator Object', function() {
+    describe('Start a lowerCase Factory Object', function() {
+        it('should return a lowerCase Validator Object', function() {
             pending();
         });
 
         it('should start the data field as false', function() {
-            expect(widget.data).toBeUndefined();
-            expect(widget.data).toEqual(undefined);
+
+            expect(widget.data).toBeDefined();
+            expect(widget.data).toEqual(true);
         });
     });
 
 
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
-            expect(Mock.question.fillingRules.options['distinct'].data.reference).toEqual(widget.data);
+            expect(Mock.question.fillingRules.options['lowerCase'].data.reference).toEqual(widget.data);
         });
 
         it('should call updateFillingRules from parente widget', function() {
@@ -44,21 +45,20 @@ describe('DistinctValidatorWidgetFactory', function() {
 
     });
 
-
     describe('exclusion of a validator', function() {
         it('should exlude a validator from the question', function() {
-          spyOn(Mock.parentWidget, 'deleteValidator');
+            spyOn(Mock.parentWidget, 'deleteValidator');
 
-          widget.deleteValidator();
+            widget.deleteValidator();
 
-          expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
+            expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
         });
 
     });
 
     function mockElement() {
         Mock.element = {
-          remove: function(){}
+            remove: function() {}
         };
     }
 
@@ -89,7 +89,7 @@ describe('DistinctValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['distinct'] = $injector.get('RulesFactory').create('distinct');
+        Mock.question.fillingRules.options['lowerCase'] = $injector.get('RulesFactory').create('lowerCase');
         return Mock.question;
     }
 
