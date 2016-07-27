@@ -16,32 +16,38 @@ describe('MandatoryValidatorWidgetFactory', function() {
         widget = factory.create(Mock.scope, Mock.element);
     });
 
-    describe('Interface description', function() {
+    describe('Start a Mandatory Factory Object', function() {
+      it ('should return a Mandatory Validator Object', function() {
+        pending();
+      });
 
-        it('test method updateData is defined', function() {
-            expect(widget.updateData).toBeDefined();
-        });
+      it ('should start the data field as false', function() {
 
-        it('confirm if updateData in reference to be true', function() {
-            expect(Mock.question.fillingRules.options['mandatory'].data.reference).toBe(true);
-            // console.log(Mock.question);
-        })
+        expect(widget.data).toBeDefined();
+        expect(widget.data).toEqual(false);
+      });
     });
+
+
+    describe('updates on data', function() {
+      it('should model data value be equal to self value', function(){
+        expect(Mock.question.fillingRules.options['mandatory'].data.reference).toEqual(widget.data);
+      });
+
+      it('should call updateFillingRules from parente widget', function(){
+        spyOn(Mock.parentWidget, 'updateFillingRules');
+
+        widget.updateData();
+
+        expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
+      });
+
+
+    });
+
 
     function mockElement() {
         Mock.element = {};
-    }
-
-    function mockUpdateData(){
-      mockParentWidget($injector);
-
-      Mock.updateData = {
-        getRuleType: function(){
-          return Mock.parentWidget.getItem().fillingRules.options['mandatory'];
-        }
-      };
-
-      return Mock.updateData;
     }
 
     function mockWidgetScope($injector) {
@@ -53,14 +59,15 @@ describe('MandatoryValidatorWidgetFactory', function() {
         };
         return Mock.scope;
     }
-
+    //
     function mockParentWidget($injector) {
         mockQuestion($injector);
 
         Mock.parentWidget = {
             getItem: function() {
                 return Mock.question;
-            }
+            },
+            updateFillingRules: function(){}
         };
 
         return Mock.parentWidget;
@@ -68,12 +75,13 @@ describe('MandatoryValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['mandatory'] = {
-            data:{
-                reference: true
-            }
-        };
+        Mock.question.fillingRules.options['mandatory'] = $injector.get('RulesFactory').create('mandatory');
         return Mock.question;
+    }
+
+    function mockAdd($injector){
+      Mock.add = $injector.get('FillingRulesEditorWidgetFactory').create();
+
     }
 
 });

@@ -31,7 +31,6 @@
             var option = AddFillingRulesService.execute(questionReference, validator);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
-            console.log(WorkspaceService);
             return option;
         }
     }

@@ -26,12 +26,12 @@
         self.data;
         self.updateData = updateData;
 
-        var parent = scope.$parent.widget.getItem();
+        var question = scope.$parent.widget.getItem();
 
         _init();
 
-        function _init() {            
-            self.data = parent.fillingRules.options[whoAmI].data.reference;
+        function _init() {
+            self.data = question.fillingRules.options[whoAmI].data.reference;
         }
 
         function updateData() {
@@ -40,7 +40,7 @@
         }
 
         function getRuleType() {
-            return parent.fillingRules.options[whoAmI];
+            return question.fillingRules.options[whoAmI];
         }
 
     }
