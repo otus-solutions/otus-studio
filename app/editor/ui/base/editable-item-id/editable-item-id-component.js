@@ -7,25 +7,30 @@
             templateUrl: 'app/editor/ui/base/editable-item-id/editable-item-id.html',
             controller: EditableItemID,
             bindings: {
-                templateId: '<'
+                item: '<'
             }
         });
 
     EditableItemID.$inject = [
-        '$element'
+        '$element',
+        'UpdateQuestionEventFactory'
     ];
 
-    function EditableItemID($element) {
+    function EditableItemID($element, UpdateQuestionEventFactory) {
         self = this;
         self.$onInit = onInit;
 
         function onInit() {
-            $element.children()[0].innerHTML = self.templateId;
+            $element.children()[0].innerText = self.item.templateID;
+            console.log(self.item.templateID);
         }
 
         $element.on('focusout', function(){
-            self.templateId = $element.children()[0].innerHTML;
-            onInit();
+             var newID = $element.children()[0].innerText.trim();
+             self.item.setCustomID(newID);
+             self.item.templateID = newID;
+             onInit();
+             UpdateQuestionEventFactory.create().execute(self);
         });
     }
 

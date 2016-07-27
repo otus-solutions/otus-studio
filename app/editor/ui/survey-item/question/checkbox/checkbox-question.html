@@ -2,7 +2,7 @@
     <md-radio-group>
         <md-content ng-repeat="optionWidget in widget.options" layout="row" layout-align="start center">
             <md-card>
-                <editable-item-id template-id="widget.getItem().templateID"></editable-item-id>
+                <editable-item-id item="widget.getItem()"></editable-item-id>
             </md-card>
             <md-checkbox value="{{optionWidget.option.value}}" aria-label="{{optionWidget.id}}" style="margin-top: 15px;"></md-checkbox>
             <otus:text-editor flex ng-model="optionWidget.option.label" label="optionWidget.option.label.ptBR.formattedText" placeholder="Clique para inserir o texto da opção de resposta"></otus:text-editor>
