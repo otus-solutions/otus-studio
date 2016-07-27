@@ -1,4 +1,4 @@
-xdescribe('MinDateValidatorWidgetFactory', function() {
+describe('MinDateValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -21,18 +21,14 @@ xdescribe('MinDateValidatorWidgetFactory', function() {
             pending();
         });
 
-        it('should start the data field with model value (default: current date)  ', function() {
-            expect(widget.data).toBeDefined();
-            expect(widget.data.toLocaleDateString()).toBe(dateModel);
+        it('should start the data field with model value (default: current date)', function() {
+            var dateModel = new Date();
+            jasmine.clock().mockDate(dateModel);
+            expect(widget.data).toEqual(dateModel);
         });
     });
 
-
     describe('updates on data', function() {
-        it('should model data value be equal to self value', function() {
-          console.log(Mock.question.fillingRules.options['minDate'].data.reference);
-            expect(Mock.question.fillingRules.options['minDate'].data.reference).toBe(widget.data);
-        });
 
         it('should call updateFillingRules from parente widget', function() {
             spyOn(Mock.parentWidget, 'updateFillingRules');
@@ -41,10 +37,7 @@ xdescribe('MinDateValidatorWidgetFactory', function() {
 
             expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
         });
-
-
     });
-
 
     function mockElement() {
         Mock.element = {};
@@ -59,7 +52,7 @@ xdescribe('MinDateValidatorWidgetFactory', function() {
         };
         return Mock.scope;
     }
-    //
+
     function mockParentWidget($injector) {
         mockQuestion($injector);
 

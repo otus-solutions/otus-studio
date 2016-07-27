@@ -28,7 +28,6 @@ describe('LowerCaseValidatorWidgetFactory', function() {
         });
     });
 
-
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
             expect(Mock.question.fillingRules.options['lowerCase'].data.reference).toEqual(widget.data);
@@ -41,7 +40,6 @@ describe('LowerCaseValidatorWidgetFactory', function() {
 
             expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
         });
-
 
     });
 

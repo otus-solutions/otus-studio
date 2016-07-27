@@ -22,21 +22,14 @@ describe('FutureDateValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as date', function() {
-
+            var dateModel = new Date();
+            jasmine.clock().mockDate(dateModel);
             expect(widget.data).toBeDefined();
-            // expect(widget.data).toEqual(Date());
+            expect(widget.data).toEqual(dateModel);
         });
     });
 
     describe('updates on data', function() {
-        it('should model data value be equal to self value', function() {
-            var windowDate = new Date();
-
-            console.log(windowDate);
-            console.log('futuredate test');
-
-            // expect(Mock.question.fillingRules.options['futureDate'].data.reference).toEqual(windowDate);
-        });
 
         it('should call updateFillingRules from parente widget', function() {
             spyOn(Mock.parentWidget, 'updateFillingRules');
@@ -46,9 +39,7 @@ describe('FutureDateValidatorWidgetFactory', function() {
             expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
         });
 
-
     });
-
 
     describe('exclusion of a validator', function() {
         it('should exlude a validator from the question', function() {

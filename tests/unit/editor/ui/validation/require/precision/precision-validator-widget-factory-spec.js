@@ -1,4 +1,4 @@
-xdescribe('PastDateValidatorWidgetFactory', function() {
+describe('PrecisionValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -10,41 +10,38 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
 
         inject(function(_$injector_) {
             mockWidgetScope(_$injector_);
-            factory = _$injector_.get('PastDateValidatorWidgetFactory');
+            factory = _$injector_.get('PrecisionValidatorWidgetFactory');
         });
 
         widget = factory.create(Mock.scope, Mock.element);
     });
 
-    describe('Start a PastDate Factory Object', function() {
-      it ('should return a PastDate Validator Object', function() {
-        pending();
-      });
+    describe('Start a precision Factory Object', function() {
+        it('should return a precision Validator Object', function() {
+            pending();
+        });
 
-      it ('should start the data field as false', function() {
-
-        expect(widget.data).toBeDefined();
-        expect(widget.data).toEqual(false);
-      });
+        it('should start the data field as false', function() {
+            expect(widget.data).toBeDefined();
+            expect(widget.data).toEqual(null);
+        });
     });
 
 
     describe('updates on data', function() {
-      it('should model data value be equal to self value', function(){
-        expect(Mock.question.fillingRules.options['pastDate'].data.reference).toEqual(widget.data);
-      });
+        it('should model data value be equal to self value', function() {
+            expect(Mock.question.fillingRules.options['precision'].data.reference).toEqual(widget.data);
+        });
 
-      it('should call updateFillingRules from parente widget', function(){
-        spyOn(Mock.parentWidget, 'updateFillingRules');
+        it('should call updateFillingRules from parente widget', function() {
+            spyOn(Mock.parentWidget, 'updateFillingRules');
 
-        widget.updateData();
+            widget.updateData();
 
-        expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
-      });
-
+            expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
+        });
 
     });
-
 
     function mockElement() {
         Mock.element = {};
@@ -59,7 +56,7 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
         };
         return Mock.scope;
     }
-    //
+
     function mockParentWidget($injector) {
         mockQuestion($injector);
 
@@ -67,7 +64,7 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
             getItem: function() {
                 return Mock.question;
             },
-            updateFillingRules: function(){}
+            updateFillingRules: function() {}
         };
 
         return Mock.parentWidget;
@@ -75,12 +72,12 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['pastDate'] = $injector.get('RulesFactory').create('pastDate');
+        Mock.question.fillingRules.options['precision'] = $injector.get('RulesFactory').create('precision');
         return Mock.question;
     }
 
-    function mockAdd($injector){
-      Mock.add = $injector.get('FillingRulesEditorWidgetFactory').create();
+    function mockAdd($injector) {
+        Mock.add = $injector.get('FillingRulesEditorWidgetFactory').create();
 
     }
 

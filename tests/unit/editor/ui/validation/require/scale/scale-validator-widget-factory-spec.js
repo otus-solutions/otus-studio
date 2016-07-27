@@ -1,4 +1,4 @@
-xdescribe('ScaleValidatorWidgetFactory', function() {
+describe('ScaleValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -17,34 +17,31 @@ xdescribe('ScaleValidatorWidgetFactory', function() {
     });
 
     describe('Start a Scale Factory Object', function() {
-      it ('should return a Scale Validator Object', function() {
-        pending();
-      });
+        it('should return a Scale Validator Object', function() {
+            pending();
+        });
 
-      it ('should start the data field as false', function() {
-
-        expect(widget.data).toBeDefined();
-        expect(widget.data).toEqual(false);
-      });
+        it('should start the data field as false', function() {
+            expect(widget.data).toBeDefined();
+            expect(widget.data).toEqual(null);
+        });
     });
 
 
     describe('updates on data', function() {
-      it('should model data value be equal to self value', function(){
-        expect(Mock.question.fillingRules.options['scale'].data.reference).toEqual(widget.data);
-      });
+        it('should model data value be equal to self value', function() {
+            expect(Mock.question.fillingRules.options['scale'].data.reference).toEqual(widget.data);
+        });
 
-      it('should call updateFillingRules from parente widget', function(){
-        spyOn(Mock.parentWidget, 'updateFillingRules');
+        it('should call updateFillingRules from parente widget', function() {
+            spyOn(Mock.parentWidget, 'updateFillingRules');
 
-        widget.updateData();
+            widget.updateData();
 
-        expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
-      });
-
+            expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
+        });
 
     });
-
 
     function mockElement() {
         Mock.element = {};
@@ -59,7 +56,7 @@ xdescribe('ScaleValidatorWidgetFactory', function() {
         };
         return Mock.scope;
     }
-    //
+
     function mockParentWidget($injector) {
         mockQuestion($injector);
 
@@ -67,7 +64,7 @@ xdescribe('ScaleValidatorWidgetFactory', function() {
             getItem: function() {
                 return Mock.question;
             },
-            updateFillingRules: function(){}
+            updateFillingRules: function() {}
         };
 
         return Mock.parentWidget;
@@ -79,8 +76,8 @@ xdescribe('ScaleValidatorWidgetFactory', function() {
         return Mock.question;
     }
 
-    function mockAdd($injector){
-      Mock.add = $injector.get('FillingRulesEditorWidgetFactory').create();
+    function mockAdd($injector) {
+        Mock.add = $injector.get('FillingRulesEditorWidgetFactory').create();
 
     }
 

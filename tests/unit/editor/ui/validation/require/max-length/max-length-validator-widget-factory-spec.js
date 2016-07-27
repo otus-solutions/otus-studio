@@ -27,7 +27,6 @@ describe('MaxLengthValidatorWidgetFactory', function() {
         });
     });
 
-
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
             expect(Mock.question.fillingRules.options['maxLength'].data.reference).toEqual(widget.data);
@@ -41,24 +40,22 @@ describe('MaxLengthValidatorWidgetFactory', function() {
             expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
         });
 
-
     });
-
 
     describe('exclusion of a validator', function() {
         it('should exlude a validator from the question', function() {
-          spyOn(Mock.parentWidget, 'deleteValidator');
+            spyOn(Mock.parentWidget, 'deleteValidator');
 
-          widget.deleteValidator();
+            widget.deleteValidator();
 
-          expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
+            expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
         });
 
     });
 
     function mockElement() {
         Mock.element = {
-          remove: function(){}
+            remove: function() {}
         };
     }
 

@@ -21,16 +21,16 @@ describe('MaxDateValidatorWidgetFactory', function() {
             pending();
         });
 
-        it('should start the data field as false', function() {
-            console.log('maxdate test');
-            // expect(widget.data).toBeDefined();
-            // expect(widget.data).toEqual(true);
+        it('should start the data field as date', function() {
+            var dateModel = new Date();
+            jasmine.clock().mockDate(dateModel);
+            expect(widget.data).toBeDefined();
+            expect(widget.data).toEqual(dateModel);
         });
     });
 
-
     describe('updates on data', function() {
-        it('should model data value be equal to self value', function() {
+        xit('should model data value be equal to self value', function() {
             // expect(Mock.question.fillingRules.options['maxDate'].data.reference).toEqual(widget.data);
         });
 
@@ -42,24 +42,22 @@ describe('MaxDateValidatorWidgetFactory', function() {
             expect(Mock.parentWidget.updateFillingRules).toHaveBeenCalled();
         });
 
-
     });
-
 
     describe('exclusion of a validator', function() {
         it('should exlude a validator from the question', function() {
-          spyOn(Mock.parentWidget, 'deleteValidator');
+            spyOn(Mock.parentWidget, 'deleteValidator');
 
-          widget.deleteValidator();
+            widget.deleteValidator();
 
-          expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
+            expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
         });
 
     });
 
     function mockElement() {
         Mock.element = {
-          remove: function(){}
+            remove: function() {}
         };
     }
 

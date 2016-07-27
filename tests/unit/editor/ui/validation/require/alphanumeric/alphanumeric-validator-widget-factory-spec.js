@@ -48,18 +48,18 @@ describe('AlphanumericValidatorWidgetFactory', function() {
 
     describe('exclusion of a validator', function() {
         it('should exlude a validator from the question', function() {
-          spyOn(Mock.parentWidget, 'deleteValidator');
+            spyOn(Mock.parentWidget, 'deleteValidator');
 
-          widget.deleteValidator();
+            widget.deleteValidator();
 
-          expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
+            expect(Mock.parentWidget.deleteValidator).toHaveBeenCalled();
         });
 
     });
 
     function mockElement() {
         Mock.element = {
-          remove: function(){}
+            remove: function() {}
         };
     }
 

@@ -29,7 +29,6 @@ describe('InValidatorWidgetFactory', function() {
         });
     });
 
-
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
             expect(Mock.question.fillingRules.options['in'].data.reference).toEqual(widget.data);
