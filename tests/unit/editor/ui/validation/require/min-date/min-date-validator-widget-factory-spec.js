@@ -23,8 +23,7 @@ describe('MinDateValidatorWidgetFactory', function() {
 
         it('should start the data field with model value (default: current date)', function() {
             var dateModel = new Date();
-            jasmine.clock().mockDate(dateModel);
-            expect(widget.data).toEqual(dateModel);
+            expect(widget.data.toLocaleDateString()).toEqual(dateModel.toLocaleDateString());
         });
     });
 

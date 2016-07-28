@@ -22,10 +22,9 @@ describe('RangeDateValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as dateModel', function() {
-            var dateModel = new Date();
-            jasmine.clock().mockDate(dateModel);
-            expect(widget.data.initial).toEqual(dateModel);
-            expect(widget.data.end).toEqual(dateModel);
+            var dateModel = new Date().toLocaleDateString();
+            expect(widget.data.initial.toLocaleDateString()).toEqual(dateModel);
+            expect(widget.data.end.toLocaleDateString()).toEqual(dateModel);
         });
     });
 

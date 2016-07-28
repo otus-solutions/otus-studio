@@ -23,7 +23,7 @@
         var whoAmI = 'futureDate';
 
         /* Public Methods */
-        self.data = new Date();
+        self.data;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -34,11 +34,10 @@
 
         function _init() {
             self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
-            updateData();
         }
 
 
-        function updateData() {
+        function updateData() {          
             getRuleType().data.reference = self.data.toLocaleDateString();
             scope.$parent.widget.updateFillingRules();
         }

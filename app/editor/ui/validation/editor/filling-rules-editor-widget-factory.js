@@ -6,7 +6,6 @@
         .factory('FillingRulesEditorWidgetFactory', FillingRulesEditorWidgetFactory);
 
     FillingRulesEditorWidgetFactory.$inject = [
-        'FillingRulesOptionWidgetFactory',
         'AddFillingRulesEventFactory',
         'RemoveFillingRulesEventFactory',
         'OtusFillingRulesWidgetFactory',
@@ -15,24 +14,23 @@
 
     ];
 
-    function FillingRulesEditorWidgetFactory(FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
+    function FillingRulesEditorWidgetFactory(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
         var self = this;
 
         /*Public interface*/
         self.create = create;
 
         function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory);
+            return new FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory);
         }
 
         return self;
 
     }
 
-    function FillingRulesEditorWidget(scope, element, FillingRulesOptionWidgetFactory, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
+    function FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
         var self = this;
         self.ngModel = scope.ngModel;
-        self.options = [];
 
         /* Public methods */
         self.getElement = getElement;
@@ -53,7 +51,7 @@
                 _loadOptions();
             }
             else{
-              addMandatoryValidator();
+              addValidator('mandatory');
             }
         }
         var showList;
@@ -77,23 +75,12 @@
 
         function _loadOptions() {
             Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
-                var validatorToLoadWidget = FillingRulesOptionWidgetFactory.create(validatorToLoad, self);
-                self.options.push(validatorToLoadWidget);
                 appendFillingRules(validatorToLoad);
             });
         }
 
-        function addMandatoryValidator() {
-            var newOption = AddFillingRulesEventFactory.create().execute(getItem(), 'mandatory');
-            var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
-            appendFillingRules('mandatory')
-        }
-
         function addValidator(validator) {
-            var newOption = AddFillingRulesEventFactory.create().execute(getItem(), validator);
-            var optionWidget = FillingRulesOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
+            AddFillingRulesEventFactory.create().execute(getItem(), validator);
             appendFillingRules(validator);
         }
 
@@ -108,7 +95,6 @@
         function deleteValidator(validator) {
             showList.push(validator);
             RemoveFillingRulesEventFactory.create().execute(self, validator);
-            delete self.options[validator];
         }
 
 
