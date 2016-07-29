@@ -46,19 +46,25 @@
         function load(itemToLoad) {
             var newItem = AddSurveyItemService.execute(itemToLoad.objectType, WorkspaceService.getSurvey());
             //copy data from itemToLoad to newItem
+            if (itemToLoad.customID) {
+                newItem.customID = itemToLoad.customID;
+            } else {
+                newItem.customID = newItem.templateID;
+            }
+
             if (newItem.isQuestion()) {
                 newItem.label = itemToLoad.label;
                 newItem.metadata.options = itemToLoad.metadata.options;
 
-                if(itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
+                if (itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
                     newItem.options = itemToLoad.options;
                 }
 
-                if(itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
+                if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
                     newItem.unit = itemToLoad.unit;
                 }
             } else {
-                if(itemToLoad.objectType === 'ImageItem') {
+                if (itemToLoad.objectType === 'ImageItem') {
                     newItem.url = itemToLoad.url;
                     newItem.footer = itemToLoad.footer;
                 } else {
