@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="app/assets/img/coruja_construtora.png" rel="icon"/>
+        <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
         <title>Otus Studio</title>
     </head>
 
@@ -100,6 +101,7 @@
     <script src="app/dashboard/home/home-controller.js"></script>
 
     <!-- MENU -->
+    <script src="app/dashboard/menu/toolbar/menu-toolbar-directive.js"></script>
     <script src="app/dashboard/menu/dashboard-menu-controller.js"></script>
 
     <!-- SURVEY-TEMPLATES -->
@@ -175,12 +177,16 @@
 
 
     <!-- Template Header -->
-    <script src="app/editor/ui/survey-header/survey-header.js"></script>
+    <script src="app/editor/ui/survey-template-header/survey-template-header.js"></script>
+
+    <!-- Page Anchor -->
+    <script src="app/editor/ui/page-anchor-item/page-anchor-component.js"></script>
+    <script src="app/editor/ui/page-anchor-item/page-anchor-service.js"></script>
 
     <!-- CORE.SHEET -->
     <script src="app/editor/ui/sheet/sheet-content-service.js"></script>
     <script src="app/editor/ui/sheet/sheet-controller.js"></script>
-    <script src="app/editor/ui/sheet/sheet-directive.js"></script>
+    <script src="app/editor/ui/sheet/edition-sheet-directive.js"></script>
 
     <!-- CORE.TEMPLATE -->
     <script src="app/editor/ui/template/template-loader-service.js"></script>
@@ -423,6 +429,9 @@
     <!-- EDITION-PREVIEW -->
     <script src="app/preview/edition-preview/edition-preview-service.js"></script>
 
+    <!-- OTUS-SURVEY-PREVIEW -->
+    <script src="app/preview/otus-survey-preview/otus-survey-preview-generator-directive.js"></script>
+
     <!-- ************************************** Studio Login ************************************** -->
     <!-- app.login -->
     <script src="app/authenticator/authenticator-module.js"></script>
@@ -432,6 +441,10 @@
 
     <!-- ************************************** Otus Domain Client ************************************** -->
     <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
+
+    <!-- ************************************** Otus Preview ************************************** -->
+    <script src="node_modules/otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js"></script>
+    <script src="node_modules/angular-mousewheel/mousewheel.js"></script>
 
 
 </html>

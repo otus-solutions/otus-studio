@@ -34,6 +34,7 @@
         self.getItem = getItem;
         self.getContainer = getContainer;
         self.deleteSurveyItem = deleteSurveyItem;
+        self.getQuestionId = getQuestionId;
 
         function getUUID() {
             return scope.uuid;
@@ -51,11 +52,15 @@
             return item;
         }
 
+        function getQuestionId(){
+            return getItem().templateID;
+        }
+
         function getContainer() {
             if(item.isQuestion()) {
                 return '<otus:question-item></otus:question-item>';
             } else {
-                return '<otus:misc-item></otus:misc-item>';
+                return '<misc-item></misc-item>';
             }
         }
 

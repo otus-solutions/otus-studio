@@ -49,7 +49,7 @@ describe('PhoneQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-phone-question></otus-phone-question>');
+                expect(widget.getTemplate()).toEqual('<phone-question></phone-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

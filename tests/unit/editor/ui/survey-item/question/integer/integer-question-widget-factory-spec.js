@@ -49,7 +49,7 @@ describe('IntegerQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-integer-question></otus-integer-question>');
+                expect(widget.getTemplate()).toEqual('<integer-question></integer-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusTextQuestion', directive);
+        .directive('textQuestion', directive);
 
     function directive() {
         var ddo = {

@@ -50,7 +50,7 @@
         }
 
         function getTemplate() {
-            return '<otus-integer-question></otus-integer-question>';
+            return '<integer-question></integer-question>';
         }
     }
 

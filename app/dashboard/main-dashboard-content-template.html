@@ -4,24 +4,7 @@
 </md-sidenav>
 
 <md-content layout="column" flex ng-cloak>
-    <!-- MenuBar -->
-    <md-toolbar layout="row" id="system-toolbar" class="md-accent md-hue-1">
-        <a class="navbar-brand" rel="home" title="Otus" layout="row" layout-align="center center">
-            <img ng-src="app/assets/img/coruja_construtora.png" class="image-otus-toolbar" />
-        </a>
-        <md-button ng-click="dashboardMenu.open()">
-            <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-            Otus Studio
-        </md-button>
-        <span flex></span>
-        <span flex="5"></span>
-        <md-whiteframe class="md-whiteframe-3dp image-component" layout="row">
-            <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
-                <img ng-src="app/assets/img/user.png" class="image-user-div" />
-            </a>
-        </md-whiteframe>
-    </md-toolbar>
-    <!-- End Menubar -->
+    <otus:toolbar></otus:toolbar>
 
     <!-- MainContent -->
     <md-content ui-view="system-content" layout="row" flex></md-content>

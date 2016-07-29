@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusDecimalQuestion', directive);
+        .directive('decimalQuestion', directive);
 
     directive.$inject = ['DecimalQuestionWidgetFactory'];
 
@@ -14,7 +14,10 @@
                 ariaLabel: '@'
             },
             templateUrl: 'app/editor/ui/survey-item/question/decimal/decimal-question.html',
-            restrict: 'E'
+            restrict: 'E',
+            link: function(scope, element) {
+                scope.widget = DecimalQuestionWidgetFactory.create(scope, element);
+            }
         };
         return ddo;
     }

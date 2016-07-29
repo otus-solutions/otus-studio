@@ -3,13 +3,13 @@
 
     angular
         .module('editor.ui')
-        .directive('otusCheckboxQuestion', otusCheckboxQuestion);
+        .directive('checkboxQuestion', checkboxQuestion);
 
-    otusCheckboxQuestion.$inject = [
+    checkboxQuestion.$inject = [
         'CheckboxQuestionWidgetFactory'
     ];
 
-    function otusCheckboxQuestion(CheckboxQuestionWidgetFactory) {
+    function checkboxQuestion(CheckboxQuestionWidgetFactory) {
         var ddo = {
             scope: {},
             restrict: 'E',

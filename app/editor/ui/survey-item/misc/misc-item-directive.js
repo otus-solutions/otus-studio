@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusMiscItem', directive);
+        .directive('miscItem', directive);
 
     directive.$inject = [
         'SurveyItemWidgetFactory',

@@ -8,40 +8,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     overflow-y: hidden !important;
 }
-.image-user-div {
-    border-radius: 35px;
-    float: right;
-    width: 45px;
-    height: 45px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-.image-user-div img {
-    cursor: pointer;
-    height: inherit;
-    width: inherit;
-    border-radius: inherit;
-    height: inherit;
-}
-.image-component {
-    border-radius: 35px;
-    height: 47px;
-    padding: 1px;
-    margin: 10px;
-    min-width: 45px;
-    min-height: 45px;
-}
-.image-otus-toolbar {
-    height: 41px;
-    width: 54px;
-    margin: 10px;
-    margin-top: inherit;
-    min-width: 54px;
-    min-height: 41px;
-}
+
 .icon-white {
     color: white!important;
 }
@@ -53,6 +24,7 @@ md-input-container.md-input-invalid>md-icon {
     color: gray;
     border-bottom: 1px solid #C7C7C7;
 }
+
 /**
  *
  * Container.css
@@ -88,35 +60,45 @@ md-input-container.md-input-invalid>md-icon {
     height: 100%;
 }
 
+/*
+*
+Page Anchor.css
+*
+*/
+
+.anchor {
+    color: transparent;
+}
+
+
 /**
 *
 * Survey Header.css
 *
 **/
 
- #survey-header {
-     width: 210mm;
-     margin-top: 20px;
-     color: #727272;
-     padding-left: 11mm;
- }
- #survey-header md-chips-wrap{
-     box-shadow: 0 0px; !important
- }
- #survey-header .md-caption {
-     margin: 0;
-     padding: 0;
- }
+#survey-header {
+    width: 210mm;
+    margin-top: 20px;
+    color: #727272;
+    padding-left: 11mm;
+}
+#survey-header md-chips-wrap {
+    box-shadow: 0 0px;
+    !important
+}
+#survey-header .md-caption {
+    margin: 0;
+    padding: 0;
+}
+#survey-header .md-display-1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+}
 
- #survey-header .md-display-1 {
-     margin: 0;
-     padding: 0;
-     font-size: 2vw;
- }
 
-
-
- /**
+/**
  *
  * Sheet.css
  *
@@ -132,6 +114,7 @@ md-input-container.md-input-invalid>md-icon {
     -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
     box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+    padding-bottom: 180px;
 }
 #survey-navigation-graph {
     border: 1px solid #D8D6D6;
@@ -148,39 +131,27 @@ md-input-container.md-input-invalid>md-icon {
     background-color: #FAFAFA;
     color: #1976D2
 }
-/*
-ui-accordion-header {
-    min-height: 75px;
+
+.toolbar-icon {
+    float: right;
+    height: 45px;
 }
-ui-accordion-header {
-    border-bottom: 1px solid #E0E0E0;
+.icon-clickable {
+    cursor: pointer;
 }
-ui-accordion-header button {
-    margin-top: 7px !important;
+.image-brand {
+    border-radius: 25px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
 }
-ui-accordion-header md-fab-speed-dial * {
-    display: inherit;
-}
-ui-accordion-header md-fab-speed-dial.hidden {
-    display: none;
-}
-ui-accordion-header md-fab-speed-dial.visible {
-    display: flex;
-}
-ui-accordion-content {
-    transition: all .3s cubic-bezier(.55, 0, .55, .2)
-}
-ui-accordion-content.hidden {
-    display: none;
-}
-ui-accordion-content.visible {
-    display: flex;
-}
-*/
 
 .label-container {
     padding: 8px;
 }
+
 /**
  *
  * Properties.css
@@ -197,6 +168,7 @@ ui-accordion-content.visible {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
 }
+
 /**
  *
  * Repository.css
@@ -209,6 +181,7 @@ ui-accordion-content.visible {
 .center {
     margin: 0 auto;
 }
+
 /**
  *
  * question-editor.css
@@ -218,7 +191,8 @@ ui-accordion-content.visible {
 #editor-container {
     background: none;
 }
-.filling-mode-selector {} .editable {
+.filling-mode-selector {}
+.editable {
     border-bottom: 1px dotted gray;
     color: gray;
     font-style: italic;
@@ -251,6 +225,7 @@ ui-accordion-content.visible {
 md-backdrop {
     z-index: 65 !important
 }
+
 /**
  *
  * Toolbar Edit and Preview Navegação
@@ -261,6 +236,7 @@ md-tabs-canvas {
     background-color: #F9F9F9;
     z-index: 10;
 }
+
 /*
  * Animations
  */

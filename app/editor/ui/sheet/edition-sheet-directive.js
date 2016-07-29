@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusSheet', otusSheet);
+        .directive('otusEditionSheet', otusSheet);
 
     function otusSheet() {
         var ddo = {

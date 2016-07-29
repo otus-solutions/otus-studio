@@ -68,7 +68,7 @@
         }
 
         function getTemplate() {
-            return '<otus-checkbox-question></otus-checkbox-question>';
+            return '<checkbox-question></checkbox-question>';
         }
 
         function addOption() {

@@ -49,7 +49,7 @@ describe('TextQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-text-question></otus-text-question>');
+                expect(widget.getTemplate()).toEqual('<text-question></text-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 

@@ -50,7 +50,7 @@
         }
 
         function getTemplate() {
-            return '<otus-decimal-question></otus-decimal-question>';
+            return '<decimal-question></decimal-question>';
         }
     }
 

@@ -13,7 +13,10 @@
             'surveyTemplates',
             /* Otus platform modules */
             'ui.components',
-            'utils'
+            'utils',
+            /* otusjs.player */
+            'otusjs.player.core',
+            'otusjs.player.component'
         ]);
 
 }());

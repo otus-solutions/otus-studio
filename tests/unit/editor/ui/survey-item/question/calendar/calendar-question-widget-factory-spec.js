@@ -49,7 +49,7 @@ describe('CalendarQuestionWidgetFactory', function() {
             });
 
             it('should create an object with getTemplate() method defined', function() {
-                expect(widget.getTemplate()).toEqual('<otus-calendar-question></otus-calendar-question>');
+                expect(widget.getTemplate()).toEqual('<calendar-question></calendar-question>');
                 expect(widget.getTemplate).toBeDefined();
             });
 
