@@ -2,6 +2,7 @@ describe('FillingRulesEditorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var validator = 'mandatory';
+    var directive;
 
     beforeEach(function() {
         module('studio');
@@ -9,6 +10,7 @@ describe('FillingRulesEditorWidgetFactory', function() {
         mockElement();
 
         inject(function($injector) {
+            // rootScope = $rootScope;
             mockWidgetScope($injector);
 
             factory = $injector.get('FillingRulesEditorWidgetFactory', {
@@ -17,8 +19,10 @@ describe('FillingRulesEditorWidgetFactory', function() {
                 OtusFillingRulesWidgetFactory: mockOtusFillingRulesWidgetFactory($injector),
                 UpdateFillingRulesEventFactory: mockUpdateFillingRulesEventFactory($injector)
             });
+
+            // directive = getCompiledDirective($rootScope, $compile);
         });
-        // spyOn(Mock.AddFillingRulesEventFactory, 'create');
+
         widget = factory.create(Mock.scope, Mock.element);
     });
 
@@ -28,16 +32,31 @@ describe('FillingRulesEditorWidgetFactory', function() {
             expect(widget.getElement()).toBeDefined();
         });
 
+        it('should return a defined parent', function() {
+            expect(widget.getParent()).toBeDefined();
+        })
+
+        it('should return a defined item', function() {
+            expect(widget.getItem()).toBeDefined();
+        });
+
+        it('should return a defined checkIfShow', function() {
+            expect(widget.checkIfShow()).toBeDefined();
+        });
+
         xit('should create an object and return Item', function() {
             expect(widget.getItem()).toEqual(mockParentWidget.getItem());
         });
+
     });
 
 
-    describe('a validator addition', function() {
+    describe('a validator checkIfShow', function() {
 
-        it('template should be a otus: string', function() {
+        it('template should be false with checkIfShow mandatory', function() {
+            expect(widget.checkIfShow(validator)).toBe(false);
         });
+
     });
 
     function mockElement() {
@@ -104,4 +123,10 @@ describe('FillingRulesEditorWidgetFactory', function() {
         Mock.item = $injector.get('SurveyItemFactory').create('DecimalQuestion', 'Q1');
         return Mock.item;
     }
+
+    // function getCompiledDirective($rootScope, $compile) {
+    //     Mock.scope = $rootScope.$new();
+    //     var element = angular.element('<otus:alphanumeric-validator></otus:alphanumeric-validator>');
+    //     return $compile(element)(Mock.scope);
+    // }
 });
