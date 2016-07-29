@@ -10,7 +10,6 @@ describe('FillingRulesEditorWidgetFactory', function() {
         mockElement();
 
         inject(function($injector) {
-            // rootScope = $rootScope;
             mockWidgetScope($injector);
 
             factory = $injector.get('FillingRulesEditorWidgetFactory', {
@@ -20,7 +19,6 @@ describe('FillingRulesEditorWidgetFactory', function() {
                 UpdateFillingRulesEventFactory: mockUpdateFillingRulesEventFactory($injector)
             });
 
-            // directive = getCompiledDirective($rootScope, $compile);
         });
 
         widget = factory.create(Mock.scope, Mock.element);
@@ -53,8 +51,18 @@ describe('FillingRulesEditorWidgetFactory', function() {
 
     describe('a validator checkIfShow', function() {
 
+        beforeEach(inject(function($rootScope, $compile) {
+            template = '<otus:mandatory-validator></otus:mandatory-validator>';
+            var scope = $rootScope;
+            $compile(template)(scope);
+        }));
+
         it('template should be false with checkIfShow mandatory', function() {
             expect(widget.checkIfShow(validator)).toBe(false);
+        });
+
+        it('test if variable mandatory validator should be equal Element', function() {
+            expect(Mock.OtusFillingRulesWidgetFactory.create(validator)).toEqual(template);
         });
 
     });
@@ -124,9 +132,4 @@ describe('FillingRulesEditorWidgetFactory', function() {
         return Mock.item;
     }
 
-    // function getCompiledDirective($rootScope, $compile) {
-    //     Mock.scope = $rootScope.$new();
-    //     var element = angular.element('<otus:alphanumeric-validator></otus:alphanumeric-validator>');
-    //     return $compile(element)(Mock.scope);
-    // }
 });
