@@ -13,25 +13,57 @@
 
     EditableItemID.$inject = [
         '$element',
-        'UpdateQuestionEventFactory'
+        'UpdateQuestionEventFactory',
+        'UpdateSurveyItemCustomID'
     ];
 
-    function EditableItemID($element, UpdateQuestionEventFactory) {
+    function EditableItemID($element, UpdateQuestionEventFactory, UpdateSurveyItemCustomID) {
+
         self = this;
         self.$onInit = onInit;
 
+        var _item;
+        var divContentEditable;
+
         function onInit() {
-            $element.children()[0].innerText = self.item.templateID;
-            console.log(self.item.templateID);
+            _item = self.item;
+            divContentEditable = $element.children()[0];
+            divContentEditable.innerText = _item.customID;
         }
 
-        $element.on('focusout', function(){
-             var newID = $element.children()[0].innerText.trim();
-             self.item.setCustomID(newID);
-             self.item.templateID = newID;
-             onInit();
-             UpdateQuestionEventFactory.create().execute(self);
+        $element.on('focusout', function() {
+            var editedID = divContentEditable.innerText;
+            if (isEmpty(editedID)) {
+                editedID = restoreTemplateID(editedID);
+            }
+            if (hasChanges(editedID)) {
+                updateCustomID(removeAllBlankSpaces(editedID));
+            }
         });
+
+        function removeAllBlankSpaces(editedID) {
+            return editedID.replace(/\s/g, '');
+        }
+
+        function isEmpty(editedID) {
+            return removeAllBlankSpaces(editedID) === '';
+        }
+
+        function restoreTemplateID(editedID) {
+            divContentEditable.innerText = _item.templateID;
+            editedID = _item.templateID;
+            return editedID;
+        }
+
+        function hasChanges(editedID) {
+            return editedID !== _item.customID;
+        }
+
+        function updateCustomID(editedID) {
+            divContentEditable.innerText = editedID;
+            UpdateSurveyItemCustomID.execute(_item, editedID);
+            UpdateQuestionEventFactory.create().execute(self);
+        }
     }
 
 })();
