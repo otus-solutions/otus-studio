@@ -37,6 +37,7 @@
         "angular-input-masks": "^2.3.0",
         "angular-material-icons": "0.6.0",
         "angular-messages": "^1.5.0",
+        "angular-mousewheel": "^1.0.5",
         "js-base64": "^2.1.9",
         "node-uuid": "^1.4.7",
         "angular-ui-mask": "^1.8.3",
