@@ -4682,11 +4682,10 @@
         function _init() {
             showList = showListFeeder();
             if (Object.keys(self.getItem().fillingRules.options).length > 0) {
-              Object.keys(self.getItem().fillingRules.options)
+                Object.keys(self.getItem().fillingRules.options)
                 _loadOptions();
-            }
-            else{
-              addValidator('mandatory');
+            } else {
+                addValidator('mandatory');
             }
         }
         var showList;
