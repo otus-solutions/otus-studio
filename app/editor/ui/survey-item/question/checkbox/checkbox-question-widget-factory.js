@@ -6,25 +6,24 @@
         .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
 
     CheckboxQuestionWidgetFactory.$inject = [
-        'AnswerOptionWidgetFactory',
         'AddAnswerOptionEventFactory',
         'RemoveAnswerOptionEventFactory',
     ];
 
-    function CheckboxQuestionWidgetFactory(AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidgetFactory(AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
+            return new CheckboxQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
         }
 
         return self;
     }
 
-    function CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
         var self = this;
 
         self.options = [];
@@ -73,14 +72,19 @@
 
         function addOption() {
             var newOption = AddAnswerOptionEventFactory.create().execute(self);
-            var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
+            self.options.push(newOption);
         }
 
         function _loadAnswerOptions() {
-            self.getItem().options.forEach(function(awswerOption) {
-                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
-                self.options.push(optionWidget);
+            var clonedArray = angular.copy(self.getItem().options);
+            self.getItem().options = [];
+
+            clonedArray.forEach(function(checkboxAnswerOption) {
+                var newOption = AddAnswerOptionEventFactory.create().execute(self);
+                newOption.optionID = checkboxAnswerOption.optionID;
+                newOption.customOptionID = checkboxAnswerOption.customOptionID;
+                newOption.label = checkboxAnswerOption.label;
+                self.options.push(newOption);
             });
         }
 
