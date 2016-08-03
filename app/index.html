@@ -142,11 +142,14 @@
     <script src="app/editor/core/event/add-route-condition-event-factory.js"></script>
     <script src="app/editor/core/event/add-rule-event-factory.js"></script>
     <script src="app/editor/core/event/add-survey-item-event-factory.js"></script>
+    <script src="app/editor/core/event/add-filling-rules-event-factory.js"></script>
     <script src="app/editor/core/event/remove-answer-option-event-factory.js"></script>
+    <script src="app/editor/core/event/remove-filling-rules-event-factory.js"></script>
     <script src="app/editor/core/event/remove-metadata-option-event-factory.js"></script>
     <script src="app/editor/core/event/remove-route-event-factory.js"></script>
     <script src="app/editor/core/event/remove-rule-event-factory.js"></script>
     <script src="app/editor/core/event/remove-survey-item-event-factory.js"></script>
+    <script src="app/editor/core/event/update-filling-rules-event-factory.js"></script>
     <script src="app/editor/core/event/update-question-event-factory.js"></script>
     <script src="app/editor/core/event/update-route-event-factory.js"></script>
     <script src="app/editor/core/event/update-rule-event-factory.js"></script>
@@ -236,6 +239,95 @@
     <!-- WIDGET.NAVIGATION.RULE.EDITOR -->
     <script src="app/editor/ui/navigation/rule/editor/rule-editor-directive.js"></script>
     <script src="app/editor/ui/navigation/rule/editor/rule-editor-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.EDITOR -->
+    <script src="app/editor/ui/validation/editor/filling-rules-editor-directive.js"></script>
+    <script src="app/editor/ui/validation/editor/filling-rules-editor-widget-factory.js"></script>
+    <script src="app/editor/ui/validation/filling-rules-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.RANGEDATE -->
+    <script src="app/editor/ui/validation/require/range-date/range-date-directive.js"></script>
+    <script src="app/editor/ui/validation/require/range-date/range-date-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.DISTINCT -->
+    <script src="app/editor/ui/validation/require/max-date/max-date-directive.js"></script>
+    <script src="app/editor/ui/validation/require/max-date/max-date-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.DISTINCT -->
+    <script src="app/editor/ui/validation/require/distinct/distinct-directive.js"></script>
+    <script src="app/editor/ui/validation/require/distinct/distinct-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.PASTDATE -->
+    <script src="app/editor/ui/validation/require/past-date/past-date-directive.js"></script>
+    <script src="app/editor/ui/validation/require/past-date/past-date-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.FUTUREDATE -->
+    <script src="app/editor/ui/validation/require/future-date/future-date-directive.js"></script>
+    <script src="app/editor/ui/validation/require/future-date/future-date-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.UPPERLIMIT -->
+    <script src="app/editor/ui/validation/require/upper-limit/upper-limit-directive.js"></script>
+    <script src="app/editor/ui/validation/require/upper-limit/upper-limit-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.LOWERLIMIT -->
+    <script src="app/editor/ui/validation/require/lower-limit/lower-limit-directive.js"></script>
+    <script src="app/editor/ui/validation/require/lower-limit/lower-limit-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MINLENGTH -->
+    <script src="app/editor/ui/validation/require/min-length/min-length-directive.js"></script>
+    <script src="app/editor/ui/validation/require/min-length/min-length-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MAXLENGTH -->
+    <script src="app/editor/ui/validation/require/max-length/max-length-directive.js"></script>
+    <script src="app/editor/ui/validation/require/max-length/max-length-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MANDATORY -->
+    <script src="app/editor/ui/validation/require/mandatory/mandatory-directive.js"></script>
+    <script src="app/editor/ui/validation/require/mandatory/mandatory-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.ALPHANUMERIC -->
+    <script src="app/editor/ui/validation/require/alphanumeric/alphanumeric-directive.js"></script>
+    <script src="app/editor/ui/validation/require/alphanumeric/alphanumeric-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.IN -->
+    <script src="app/editor/ui/validation/require/in/in-directive.js"></script>
+    <script src="app/editor/ui/validation/require/in/in-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.LOWERCASE -->
+    <script src="app/editor/ui/validation/require/lower-case/lower-case-directive.js"></script>
+    <script src="app/editor/ui/validation/require/lower-case/lower-case-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MAXTIME -->
+    <script src="app/editor/ui/validation/require/max-time/max-time-directive.js"></script>
+    <script src="app/editor/ui/validation/require/max-time/max-time-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MINDATE -->
+    <script src="app/editor/ui/validation/require/min-date/min-date-directive.js"></script>
+    <script src="app/editor/ui/validation/require/min-date/min-date-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.MINTIME -->
+    <script src="app/editor/ui/validation/require/min-time/min-time-directive.js"></script>
+    <script src="app/editor/ui/validation/require/min-time/min-time-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.PARAMETER -->
+    <script src="app/editor/ui/validation/require/parameter/parameter-directive.js"></script>
+    <script src="app/editor/ui/validation/require/parameter/parameter-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.PRECISION -->
+    <script src="app/editor/ui/validation/require/precision/precision-directive.js"></script>
+    <script src="app/editor/ui/validation/require/precision/precision-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.SPECIALS -->
+    <script src="app/editor/ui/validation/require/specials/specials-directive.js"></script>
+    <script src="app/editor/ui/validation/require/specials/specials-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.UPPERCASE -->
+    <script src="app/editor/ui/validation/require/upper-case/upper-case-directive.js"></script>
+    <script src="app/editor/ui/validation/require/upper-case/upper-case-validator-widget-factory.js"></script>
+
+    <!-- WIDGET.VALIDATION.REQUIRE.SCALE -->
+    <script src="app/editor/ui/validation/require/scale/scale-directive.js"></script>
+    <script src="app/editor/ui/validation/require/scale/scale-validator-widget-factory.js"></script>
 
     <!-- WIDGET.SURVEY-ITEM -->
     <script src="app/editor/ui/survey-item/misc/misc-item-directive.js"></script>

@@ -15,9 +15,10 @@
             }).accentPalette('blue-grey', {
                 'default': '900',
                 'hue-1': '50'
-            }).warnPalette('red');
+            }).warnPalette('red')
 
-
+        $mdThemingProvider.theme('greyTheme')
+            .primaryPalette('grey');
         /*Configuration icons*/
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('app/assets/img/icons/mdi.svg', 24);

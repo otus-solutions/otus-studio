@@ -11,7 +11,7 @@
         'indexedDB',
         'immutable',
         'ui.utils.masks',
-        'otusDomainClient'
+        'otusDomainClient',
     ]);
 
 }());

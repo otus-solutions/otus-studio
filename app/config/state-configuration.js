@@ -94,7 +94,7 @@
                                  * DO NOT REMOVE this comment. So use it at your own risk.
                                  *
                                  */
-                                //SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
+                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
                             },
                             editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
                                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
@@ -125,9 +125,10 @@
                 }
             });
 
-        /* Default state (route) */
+        /* Default state (route)
+         * $locationProvider.html5Mode(true);
+         */
         $urlRouterProvider.otherwise('/login');
-        $locationProvider.html5Mode(true);
     }
 
 }());

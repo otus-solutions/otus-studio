@@ -27,6 +27,7 @@
         /* Template definitions */
         self.ngClass.open = false;
         self.showNavigationEditor = false;
+        self.showValidationEditor = false;
 
         /* Public methods */
         self.getUUID = getUUID;
@@ -34,6 +35,7 @@
         self.getParent = getParent;
         self.getItem = getItem;
         self.navigationButton = navigationButton;
+        self.validationButton = validationButton;
 
         function getUUID() {
             return scope.uuid;
@@ -54,6 +56,11 @@
         function navigationButton() {
             self.ngClass.open = !self.ngClass.open;
             self.showNavigationEditor = !self.showNavigationEditor;
+        }
+
+        function validationButton() {          
+            self.ngClass.open = !self.ngClass.open;
+            self.showValidationEditor = !self.showValidationEditor;
         }
     }
 
