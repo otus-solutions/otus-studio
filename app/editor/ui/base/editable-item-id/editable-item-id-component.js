@@ -14,10 +14,11 @@
     EditableItemID.$inject = [
         '$element',
         'UpdateQuestionEventFactory',
-        'UpdateSurveyItemCustomID'
+        'UpdateSurveyItemCustomID',
+        'WorkspaceService'
     ];
 
-    function EditableItemID($element, UpdateQuestionEventFactory, UpdateSurveyItemCustomID) {
+    function EditableItemID($element, UpdateQuestionEventFactory, UpdateSurveyItemCustomID, WorkspaceService) {
 
         self = this;
         self.$onInit = onInit;
@@ -56,13 +57,20 @@
         }
 
         function hasChanges(editedID) {
-            return editedID !== _item.customID;
+            return (editedID !== _item.customID);
         }
 
         function updateCustomID(editedID) {
             divContentEditable.innerText = editedID;
-            UpdateSurveyItemCustomID.execute(_item, editedID);
-            UpdateQuestionEventFactory.create().execute(self);
+            if (WorkspaceService.getSurvey().isAvailableID(editedID)) {
+                UpdateSurveyItemCustomID.execute(_item, editedID);
+                UpdateQuestionEventFactory.create().execute(self);
+            } else {
+                alert('O ID inserido já está em uso!');
+                restoreTemplateID(editedID);
+                UpdateQuestionEventFactory.create().execute(self);
+                return;
+            }
         }
     }
 
