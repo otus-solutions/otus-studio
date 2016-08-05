@@ -7,8 +7,7 @@
             'HOME': 'home',
             'SURVEY_TEMPLATES': 'survey-templates',
             'EDITOR': 'editor',
-            'LOGIN': 'login',
-            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
+            'LOGIN': 'login'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -64,10 +63,11 @@
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
                     'section-view@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html'
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html',
+                        controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-commands@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/survey-form-commands-section.html'
+                    'template-menu@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/menu/md-fab.html'
                     }
                 }
             })
