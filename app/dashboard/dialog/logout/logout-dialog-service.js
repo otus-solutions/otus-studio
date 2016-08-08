@@ -37,7 +37,7 @@
                 );
 
             return {
-                onConfirm: function onConfirm(callback) {
+                onConfirm: function (callback) {
                     self.callback = callback;
                 }
             };
@@ -49,8 +49,7 @@
             }
         }
 
-        function forwardUnsuccessfulExecution(error) {
-            //TODO
+        function forwardUnsuccessfulExecution() {
         }
     }
 

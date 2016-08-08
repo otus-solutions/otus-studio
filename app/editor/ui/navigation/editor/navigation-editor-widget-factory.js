@@ -87,8 +87,8 @@
         var disableQuestionRemoveEventListener;
 
         function setupScopeEvents() {
-            enableQuestionAddEventListener(disableQuestionRemoveEventListener);
-            enableQuestionRemoveEventListener(getItem().templateID, disableQuestionAddEventListener);
+            enableQuestionAddEventListener();
+            enableQuestionRemoveEventListener(getItem().templateID);
         }
 
         function enableQuestionAddEventListener() {
@@ -102,14 +102,13 @@
         function addQuestionListener(event, addedQuestion) {
             navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
             if (navigation) {
-                // routeCreatorWidget.routeData.parentNavigation = navigation;
                 addRoute(navigation.listRoutes()[0]);
                 enableQuestionRemoveEventListener(addedQuestion.templateID);
                 disableQuestionAddEventListener();
             }
         }
 
-        function removeQuestionListener(event, removedQuestion) {
+        function removeQuestionListener(event) {
             routeEditorWidgets = [];
             navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
 

@@ -49,7 +49,6 @@
                     break;
                 default:
                     message = 'Ocorreu um erro ao realizar o upload';
-                    console.log(error);
             }
             return message;
         }

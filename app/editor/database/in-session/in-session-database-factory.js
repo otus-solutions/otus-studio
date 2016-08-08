@@ -74,7 +74,7 @@
         function fetchEventBy(attribute, value) {
             var data = self.collection.chain()
                         .where(function(obj) {
-                            return getModelValue(attribute, obj) == value;
+                            return getModelValue(attribute, obj) === value;
                         })
                         .simplesort('$loki', 'isdesc').data();
 
