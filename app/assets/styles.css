@@ -8,11 +8,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     overflow-y: hidden !important;
 }
-
 .icon-white {
     color: white!important;
 }
@@ -24,7 +22,6 @@ md-input-container.md-input-invalid>md-icon {
     color: gray;
     border-bottom: 1px solid #C7C7C7;
 }
-
 /**
  *
  * Container.css
@@ -59,7 +56,6 @@ md-input-container.md-input-invalid>md-icon {
     box-sizing: border-box;
     height: 100%;
 }
-
 /*
 *
 Page Anchor.css
@@ -69,8 +65,6 @@ Page Anchor.css
 .anchor {
     color: transparent;
 }
-
-
 /**
 *
 * Survey Header.css
@@ -96,8 +90,6 @@ Page Anchor.css
     padding: 0;
     font-size: 2vw;
 }
-
-
 /**
  *
  * Sheet.css
@@ -131,7 +123,6 @@ Page Anchor.css
     background-color: #FAFAFA;
     color: #1976D2
 }
-
 .toolbar-icon {
     float: right;
     height: 45px;
@@ -147,11 +138,14 @@ Page Anchor.css
     min-width: 45px;
     min-height: 45px;
 }
-
+.clipped {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .label-container {
     padding: 8px;
 }
-
 /**
  *
  * Properties.css
@@ -168,7 +162,6 @@ Page Anchor.css
     padding-top: 0px !important;
     padding-bottom: 0px !important;
 }
-
 /**
  *
  * Repository.css
@@ -181,7 +174,6 @@ Page Anchor.css
 .center {
     margin: 0 auto;
 }
-
 /**
  *
  * question-editor.css
@@ -191,8 +183,7 @@ Page Anchor.css
 #editor-container {
     background: none;
 }
-.filling-mode-selector {}
-.editable {
+.filling-mode-selector {} .editable {
     border-bottom: 1px dotted gray;
     color: gray;
     font-style: italic;
@@ -225,7 +216,6 @@ Page Anchor.css
 md-backdrop {
     z-index: 65 !important
 }
-
 /**
  *
  * Toolbar Edit and Preview Navegação
@@ -236,7 +226,6 @@ md-tabs-canvas {
     background-color: #F9F9F9;
     z-index: 10;
 }
-
 /*
  * Animations
  */
@@ -264,52 +253,44 @@ pre {
 .custom-whiteframe:hover {
     box-shadow: 0 1px 20px 0 rgba(24, 42, 72, 0.65), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
-
-
 /**
  *
  * Survey Templates
  *
  */
+
 survey-template md-card {
     cursor: pointer;
 }
-
 survey-template md-card:focus {
     outline: none;
     border: 0;
- }
-
+}
 .selected-template {
     background-color: bisque !important;
 }
-
-.template-animate.ng-enter, .template.animate.ng-leave {
+.template-animate.ng-enter,
+.template.animate.ng-leave {
     transition: 500ms linear all;
 }
-
 .template-animate.ng-leave.ng-leave-active {
     opacity: 0;
 }
-
 .template-animate.ng-enter.ng-enter-active {
     opacity: 1;
 }
-
-
-
 /**
  *
  * Survey Item
  *
  */
 
-
- /**
+/**
   *
   * Validations(Filling Rules)
   *
   */
+
 /*#validators-column > *:nth-child(even) *{
   background-color: #f2f2f2;
 }*/
@@ -319,8 +300,8 @@ survey-template md-card:focus {
 }*/
 
 #validators-column * {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
