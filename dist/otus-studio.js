@@ -182,14 +182,6 @@
                         templateUrl: 'app/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer',
                         resolve: {
-                            executor: function instantiateInDevEnvironment(SurveyEditorService) {
-                                /**
-                                 *
-                                 * DO NOT REMOVE this comment. So use it at your own risk.
-                                 *
-                                 */
-                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
-                            },
                             editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
                                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
 
@@ -2458,11 +2450,15 @@
         }
 
         function _focusOnTop() {
-            anchorList['top-anchor'].focus();
+            if (anchorList['top-anchor']) {
+                anchorList['top-anchor'].focus();
+            }
         }
 
         function _focusOnBottom() {
-            anchorList['bottom-anchor'].focus();
+            if (anchorList['bottom-anchor']) {
+                anchorList['bottom-anchor'].focus();
+            }
         }
     }
 
@@ -2528,6 +2524,7 @@
             self.lastLoadedQuestion = item;
             var content = TemplateLoaderService.loadDirective('<otus:page-item-editor></otus:page-item-editor>', scope);
             sheet.find('#sheet').append(content);
+            PageAnchorService.sheetAutoFocus(sheetTemplate);
         }
 
         function unloadQuestion(question) {
