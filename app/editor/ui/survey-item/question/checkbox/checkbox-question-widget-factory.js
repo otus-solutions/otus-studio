@@ -6,27 +6,26 @@
         .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
 
     CheckboxQuestionWidgetFactory.$inject = [
-        'AddAnswerOptionEventFactory',
-        'RemoveAnswerOptionEventFactory',
+        'UpdateQuestionEventFactory',
+        'CheckboxSuffixIDGenerator',
+        'WorkspaceService'
     ];
 
-    function CheckboxQuestionWidgetFactory(AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
+            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService);
         }
 
         return self;
     }
 
-    function CheckboxQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
-
-        self.options = [];
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -71,8 +70,8 @@
         }
 
         function addOption() {
-            var newOption = AddAnswerOptionEventFactory.create().execute(self);
-            self.options.push(newOption);
+            self.getItem().createOption(_generateOptionId());
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
 
         function _loadAnswerOptions() {
@@ -80,18 +79,24 @@
             self.getItem().options = [];
 
             clonedArray.forEach(function(checkboxAnswerOption) {
-                var newOption = AddAnswerOptionEventFactory.create().execute(self);
-                newOption.optionID = checkboxAnswerOption.optionID;
-                newOption.customOptionID = checkboxAnswerOption.customOptionID;
-                newOption.label = checkboxAnswerOption.label;
-                self.options.push(newOption);
+                self.getItem().loadJsonOption(JSON.stringify(checkboxAnswerOption));
             });
         }
 
         function removeLastOption() {
-            RemoveAnswerOptionEventFactory.create().execute(self);
-            self.options.splice(-1);
+            self.getItem().removeLastOption();
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
+
+        function _generateOptionId() {
+            var checkboxID;
+            var quantity = self.getItem().options.length;
+            do {
+                checkboxID = self.getItem().customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+            } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
+            return checkboxID;
+        }
+
     }
 
 }());

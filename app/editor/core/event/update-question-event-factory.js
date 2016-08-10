@@ -6,24 +6,23 @@
         .factory('UpdateQuestionEventFactory', UpdateQuestionEventFactory);
 
     UpdateQuestionEventFactory.$inject = [
-        'SheetContentService',
         'WorkspaceService'
     ];
 
-    function UpdateQuestionEventFactory(SheetContentService, WorkspaceService) {
+    function UpdateQuestionEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpdateQuestionEvent(SheetContentService, WorkspaceService);
+            return new UpdateQuestionEvent(WorkspaceService);
         }
 
         return self;
     }
 
-    function UpdateQuestionEvent(SheetContentService, WorkspaceService) {
+    function UpdateQuestionEvent(WorkspaceService) {
         var self = this;
 
         self.execute = execute;
