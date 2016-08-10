@@ -1,13 +1,19 @@
 <md-whiteframe id={{widget.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
     <otus:accordion flex>
         <otus:accordion-header>
-            <md-content layout-align="start center" style="padding: 0" flex>
+            <md-content  flex>
                 <md-content layout="row">
+                    <md-card class="item-id-frame" layout-padding style="padding: 0" layout-align="center center">
+                        <otus:item-icon item="{{widget.getItem().objectType}}">
+                    </md-card>
+
                     <md-card layout-align="center">
                         <editable-id item="widget.getItem()"></editable-id>
                     </md-card>
-                    <md-content layout-padding layout-align="start center" flex>
-                        <label>{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</label>
+                    <md-content layout-padding flex>
+                        <div layout-align="center center" class="clipped">
+                            <span class="md-body-1">{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</span>
+                        </div>
                     </md-content>
                 </md-content>
             </md-content>

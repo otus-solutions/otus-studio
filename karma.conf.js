@@ -69,14 +69,20 @@ module.exports = function(config) {
         },
         // optionally, configure the reporter
         coverageReporter: {
-            type : 'html',
-            dir : 'target/test-coverage/'
+            reporters: [{
+                type: 'html',
+                dir: 'target/test-coverage/'
+            }, {
+                type: 'lcov',
+                dir: 'target/test-coverage/',
+                subdir: 'report-lcov'
+            }]
         },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'html', 'coverage'],
+        reporters: ['progress', 'html', 'coverage', 'lcov'],
 
         htmlReporter: {
             outputFile: 'target/unit-result.report.html',

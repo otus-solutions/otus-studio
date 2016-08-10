@@ -44,8 +44,6 @@
                     var endKey = (keycode === 35);
                     var deleteKey = (keycode === 46);
                     var controlKey = (keycode === 17);
-                    // var cKey = (keycode === 67);
-                    // var vKey = (keycode === 86);
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 

@@ -19,18 +19,36 @@
         self.login = login;
 
         function logout() {
-            var authenticatorResource = RestResourceService.getAuthenticatorResource();
             LogoutDialogService.showDialog()
                 .onConfirm(function() {
-                    authenticatorResource.invalidate(function(response) {
-                        $window.sessionStorage.clear();
-                        DashboardStateService.logout();
-                    });
+                    invalidateSession(RestResourceService);
                 });
         }
 
+        function invalidateSession(domainRestResourceService) {
+            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
+
+            if (!domainRestResourceService.isLogged()) {
+                invalidateSessionVisitant();
+            } else {
+                invalidateSessionLoggedUser(authenticatorResource);
+            }
+        }
+
+        function invalidateSessionLoggedUser(authenticatorResource) {
+            authenticatorResource.invalidate(function(response) {
+                DashboardStateService.logout();
+                $window.sessionStorage.clear();
+            });
+        }
+
+        function invalidateSessionVisitant() {
+            $window.sessionStorage.clear();
+            DashboardStateService.logout();
+        }
+
         function login(user) {
-            RestResourceService.setHostname(user.domain);
+            RestResourceService.setUrl(user.domain);
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function(response) {

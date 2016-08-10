@@ -34,16 +34,16 @@
 
         function _init() {
             var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            if (referenceValue != '') {
+            if (referenceValue !== '') {
               self.data = new Date(referenceValue);
             }
             else {
-              self.data.setHours('01')
+              self.data.setHours('01');
               self.data.setMinutes('00');
               self.data.setSeconds('00');
               self.data.setMilliseconds('00');
             }
-            self.updateData()
+            self.updateData();
         }
 
         function updateData() {

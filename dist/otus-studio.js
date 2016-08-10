@@ -101,8 +101,7 @@
             'HOME': 'home',
             'SURVEY_TEMPLATES': 'survey-templates',
             'EDITOR': 'editor',
-            'LOGIN': 'login',
-            'LOGOUT': 'http://' + window.location.hostname + '/otus-domain-rest/session/rest/authentication/logout'
+            'LOGIN': 'login'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -158,10 +157,11 @@
                         controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
                     'section-view@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html'
+                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html',
+                        controller: 'SurveyFormDashboardController as surveyFormDashboard'
                     },
-                    'section-commands@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/survey-form-commands-section.html'
+                    'template-menu@survey-templates': {
+                        templateUrl: 'app/dashboard/survey-templates/menu/md-fab.html'
                     }
                 }
             })
@@ -182,14 +182,6 @@
                         templateUrl: 'app/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer',
                         resolve: {
-                            executor: function instantiateInDevEnvironment(SurveyEditorService) {
-                                /**
-                                 *
-                                 * DO NOT REMOVE this comment. So use it at your own risk.
-                                 *
-                                 */
-                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
-                            },
                             editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
                                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
 
@@ -305,18 +297,36 @@
         self.login = login;
 
         function logout() {
-            var authenticatorResource = RestResourceService.getAuthenticatorResource();
             LogoutDialogService.showDialog()
                 .onConfirm(function() {
-                    authenticatorResource.invalidate(function(response) {
-                        $window.sessionStorage.clear();
-                        DashboardStateService.logout();
-                    });
+                    invalidateSession(RestResourceService);
                 });
         }
 
+        function invalidateSession(domainRestResourceService) {
+            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
+
+            if (!domainRestResourceService.isLogged()) {
+                invalidateSessionVisitant();
+            } else {
+                invalidateSessionLoggedUser(authenticatorResource);
+            }
+        }
+
+        function invalidateSessionLoggedUser(authenticatorResource) {
+            authenticatorResource.invalidate(function(response) {
+                DashboardStateService.logout();
+                $window.sessionStorage.clear();
+            });
+        }
+
+        function invalidateSessionVisitant() {
+            $window.sessionStorage.clear();
+            DashboardStateService.logout();
+        }
+
         function login(user) {
-            RestResourceService.setHostname(user.domain);
+            RestResourceService.setUrl(user.domain);
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function(response) {
@@ -872,7 +882,7 @@
                 );
 
             return {
-                onConfirm: function onConfirm(callback) {
+                onConfirm: function (callback) {
                     self.callback = callback;
                 }
             };
@@ -884,8 +894,7 @@
             }
         }
 
-        function forwardUnsuccessfulExecution(error) {
-            //TODO
+        function forwardUnsuccessfulExecution() {
         }
     }
 
@@ -1112,7 +1121,6 @@
                     break;
                 default:
                     message = 'Ocorreu um erro ao realizar o upload';
-                    console.log(error);
             }
             return message;
         }
@@ -2083,7 +2091,7 @@
         function fetchEventBy(attribute, value) {
             var data = self.collection.chain()
                         .where(function(obj) {
-                            return getModelValue(attribute, obj) == value;
+                            return getModelValue(attribute, obj) === value;
                         })
                         .simplesort('$loki', 'isdesc').data();
 
@@ -2442,11 +2450,15 @@
         }
 
         function _focusOnTop() {
-            anchorList['top-anchor'].focus();
+            if (anchorList['top-anchor']) {
+                anchorList['top-anchor'].focus();
+            }
         }
 
         function _focusOnBottom() {
-            anchorList['bottom-anchor'].focus();
+            if (anchorList['bottom-anchor']) {
+                anchorList['bottom-anchor'].focus();
+            }
         }
     }
 
@@ -2512,6 +2524,7 @@
             self.lastLoadedQuestion = item;
             var content = TemplateLoaderService.loadDirective('<otus:page-item-editor></otus:page-item-editor>', scope);
             sheet.find('#sheet').append(content);
+            PageAnchorService.sheetAutoFocus(sheetTemplate);
         }
 
         function unloadQuestion(question) {
@@ -3661,7 +3674,7 @@
                 );
 
             return {
-                onConfirm: function onConfirm(callback) {
+                onConfirm: function (callback) {
                     self.callback = callback;
                 }
             };
@@ -3674,7 +3687,6 @@
         }
 
         function forwardUnsuccessfulExecution(error) {
-            //TODO
         }
     }
 
@@ -4250,8 +4262,8 @@
         var disableQuestionRemoveEventListener;
 
         function setupScopeEvents() {
-            enableQuestionAddEventListener(disableQuestionRemoveEventListener);
-            enableQuestionRemoveEventListener(getItem().templateID, disableQuestionAddEventListener);
+            enableQuestionAddEventListener();
+            enableQuestionRemoveEventListener(getItem().templateID);
         }
 
         function enableQuestionAddEventListener() {
@@ -4265,14 +4277,13 @@
         function addQuestionListener(event, addedQuestion) {
             navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
             if (navigation) {
-                // routeCreatorWidget.routeData.parentNavigation = navigation;
                 addRoute(navigation.listRoutes()[0]);
                 enableQuestionRemoveEventListener(addedQuestion.templateID);
                 disableQuestionAddEventListener();
             }
         }
 
-        function removeQuestionListener(event, removedQuestion) {
+        function removeQuestionListener(event) {
             routeEditorWidgets = [];
             navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
 
@@ -4443,6 +4454,50 @@
         };
 
         return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusItemIcon', otusItemIcon);
+
+    otusItemIcon.$inject = [];
+
+    function otusItemIcon() {
+        var ddo = {
+            scope: {
+                item: '@item',
+            },
+            templateUrl: 'app/editor/ui/survey-item-editor/item-icon/otus-item-icon-template.html',
+            retrict: 'E',
+            link: function linkFunc(scope, element, attrs) {
+                scope.type = getItemIcon(scope.item);
+            }
+        };
+
+        return ddo;
+    }
+
+    function getItemIcon(objectType){
+        var mapping = {
+            CalendarQuestion : {icon : 'date_range', tooltip : 'Data'},
+            IntegerQuestion : {icon : 'looks_one', tooltip : 'Número Inteiro'},
+            DecimalQuestion : {icon : 'exposure_zero', tooltip : 'Número Decimal'},
+            SingleSelectionQuestion : {icon : 'radio_button_checked', tooltip : 'Seleção Única'},
+            CheckboxQuestion : {icon : 'check_box', tooltip : 'Checkbox'},
+            TextQuestion : {icon : 'text_format', tooltip : 'Texto'},
+            EmailQuestion : {icon : 'email', tooltip : 'Email'},
+            TimeQuestion : {icon : 'access_time', tooltip : 'Hora'},
+            PhoneQuestion : {icon : 'phone', tooltip : 'Telefone'},
+            TextItem : {icon : 'message', tooltip : 'Texto'},
+            ImageItem : {icon : 'image', tooltip : 'Imagem'}
+        };
+
+       return mapping[objectType];
     }
 
 }());
@@ -5657,8 +5712,6 @@
                     var endKey = (keycode === 35);
                     var deleteKey = (keycode === 46);
                     var controlKey = (keycode === 17);
-                    // var cKey = (keycode === 67);
-                    // var vKey = (keycode === 86);
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
@@ -5874,8 +5927,6 @@
                     var endKey = (keycode === 35);
                     var deleteKey = (keycode === 46);
                     var controlKey = (keycode === 17);
-                    // var cKey = (keycode === 67);
-                    // var vKey = (keycode === 86);
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
@@ -6933,16 +6984,16 @@
 
         function _init() {
             var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            if (referenceValue != '') {
+            if (referenceValue !== '') {
               self.data = new Date(referenceValue);
             }
             else {
-              self.data.setHours('01')
+              self.data.setHours('01');
               self.data.setMinutes('00');
               self.data.setSeconds('00');
               self.data.setMilliseconds('00');
             }
-            self.updateData()
+            self.updateData();
         }
 
         function updateData() {
@@ -7055,6 +7106,100 @@
 
     angular
         .module('editor.ui')
+        .directive('otusMinTimeValidator', otusMinTimeValidator);
+
+    otusMinTimeValidator.$inject = [
+        'MinTimeValidatorWidgetFactory'
+    ];
+
+    function otusMinTimeValidator(MinTimeValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-time/min-time-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MinTimeValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
+
+    function MinTimeValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new MinTimeValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function MinTimeValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'minTime';
+
+
+        /* Public Methods */
+        self.data = new Date("Fri Mar 25 2015 09:56:24 GMT+0100 (Tokyo Time)");
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            var referenceValue = question.fillingRules.options[whoAmI].data.reference;
+            if (referenceValue !== '') {
+              self.data = new Date(referenceValue);
+            }
+            else {
+              self.data.setHours('01');
+              self.data.setMinutes('00');
+              self.data.setSeconds('00');
+              self.data.setMilliseconds('00');
+            }
+            self.updateData();
+        }
+
+        function updateData() {
+            if (self.data) {
+                getRuleType().data.reference = self.data.toString();
+                scope.$parent.widget.updateFillingRules();
+            }
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusMinLengthValidator', otusMinLengthValidator);
 
     otusMinLengthValidator.$inject = [
@@ -7118,100 +7263,6 @@
         function updateData() {
             getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusMinTimeValidator', otusMinTimeValidator);
-
-    otusMinTimeValidator.$inject = [
-        'MinTimeValidatorWidgetFactory'
-    ];
-
-    function otusMinTimeValidator(MinTimeValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/min-time/min-time-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MinTimeValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
-
-    function MinTimeValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new MinTimeValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function MinTimeValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'minTime';
-
-
-        /* Public Methods */
-        self.data = new Date("Fri Mar 25 2015 09:56:24 GMT+0100 (Tokyo Time)");
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            if (referenceValue != '') {
-              self.data = new Date(referenceValue);
-            }
-            else {
-              self.data.setHours('01')
-              self.data.setMinutes('00');
-              self.data.setSeconds('00');
-              self.data.setMilliseconds('00');
-            }
-            self.updateData()
-        }
-
-        function updateData() {
-            if (self.data) {
-                getRuleType().data.reference = self.data.toString();
-                scope.$parent.widget.updateFillingRules();
-            }
         }
 
         function getRuleType() {
