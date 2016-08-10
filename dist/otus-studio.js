@@ -1457,20 +1457,26 @@
         function load(itemToLoad) {
             var newItem = AddSurveyItemService.execute(itemToLoad.objectType, WorkspaceService.getSurvey());
             //copy data from itemToLoad to newItem
+            if (itemToLoad.customID) {
+                newItem.customID = itemToLoad.customID;
+            } else {
+                newItem.customID = newItem.templateID;
+            }
+
             if (newItem.isQuestion()) {
                 newItem.label = itemToLoad.label;
                 newItem.metadata.options = itemToLoad.metadata.options;
                 newItem.fillingRules.options = itemToLoad.fillingRules.options;
 
-                if(itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
+                if (itemToLoad.objectType === 'SingleSelectionQuestion' || itemToLoad.objectType === 'CheckboxQuestion') {
                     newItem.options = itemToLoad.options;
                 }
 
-                if(itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
+                if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
                     newItem.unit = itemToLoad.unit;
                 }
             } else {
-                if(itemToLoad.objectType === 'ImageItem') {
+                if (itemToLoad.objectType === 'ImageItem') {
                     newItem.url = itemToLoad.url;
                     newItem.footer = itemToLoad.footer;
                 } else {
@@ -1767,24 +1773,23 @@
         .factory('UpdateQuestionEventFactory', UpdateQuestionEventFactory);
 
     UpdateQuestionEventFactory.$inject = [
-        'SheetContentService',
         'WorkspaceService'
     ];
 
-    function UpdateQuestionEventFactory(SheetContentService, WorkspaceService) {
+    function UpdateQuestionEventFactory(WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new UpdateQuestionEvent(SheetContentService, WorkspaceService);
+            return new UpdateQuestionEvent(WorkspaceService);
         }
 
         return self;
     }
 
-    function UpdateQuestionEvent(SheetContentService, WorkspaceService) {
+    function UpdateQuestionEvent(WorkspaceService) {
         var self = this;
 
         self.execute = execute;
@@ -3794,6 +3799,175 @@
 
     angular
         .module('editor.ui')
+        .service('EditableCustomIDService', EditableCustomIDService);
+
+    EditableCustomIDService.$inject = [
+        'WorkspaceService',
+        'UpdateQuestionEventFactory',
+        '$mdToast'
+    ];
+
+    function EditableCustomIDService(WorkspaceService, UpdateQuestionEventFactory, $mdToast) {
+        var self = this;
+
+        self.isEmpty = isEmpty;
+        self.removeAllBlankSpaces = removeAllBlankSpaces;
+        self.restoreScreenID = restoreScreenID;
+        self.hasChanges = hasChanges;
+        self.execute = execute;
+
+        function isEmpty(customizedID) {
+            return customizedID === '';
+        }
+
+        function removeAllBlankSpaces(customizedID) {
+            return customizedID.replace(/\s/g, '');
+        }
+
+        function restoreScreenID(event, editableID_Object) {
+            event.target.innerText = editableID_Object.getCustomizedID();
+        }
+
+        function hasChanges(customizedID, editableID_Object) {
+            return customizedID !== editableID_Object.getCustomizedID();
+        }
+
+        function execute(event, editableID_Object) {
+            var customizedID = removeAllBlankSpaces(event.target.innerText);
+
+            if (customizedID === editableID_Object.getCustomizedID() || isEmpty(customizedID)) {
+                restoreScreenID(event, editableID_Object);
+            } else {
+                if (hasChanges(customizedID, editableID_Object)) {
+                    if (_checkIfIsAvailable(customizedID)) {
+                        editableID_Object.updateCustomizedID(customizedID);
+                        UpdateQuestionEventFactory.create().execute(self);
+                        restoreScreenID(event, editableID_Object);
+                    } else {
+                        $mdToast.show($mdToast.simple().textContent('O ID inserido já está em uso.'));
+                        restoreScreenID(event, editableID_Object);
+                    }
+                }
+            }
+        }
+
+        function _checkIfIsAvailable(customizedID) {
+            return WorkspaceService.getSurvey().isAvailableCustomID(customizedID) ? true : false;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .component('editableId', {
+            templateUrl: 'app/editor/ui/base/editable-id/editable-id.html',
+            controller: EditableID,
+            bindings: {
+                item: '<'
+            }
+        });
+
+    EditableID.$inject = [
+        '$element',
+        'EditableIDFactory',
+        'EditableCustomIDService'
+    ];
+
+    function EditableID($element, EditableIDFactory, EditableCustomIDService) {
+        self = this;
+        var _editableID;
+
+        self.$onInit = onInit;
+
+        function onInit() {
+            _editableID = EditableIDFactory.create(self.item);
+            $element.children()[0].innerText = _editableID.getCustomizedID();
+        }
+
+        $element.on('focusout', function(event) {
+            EditableCustomIDService.execute(event, _editableID);
+        });
+
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('EditableIDFactory', EditableIDFactory);
+
+    EditableIDFactory.$inject = ['UpdateSurveyItemCustomID'];
+
+    function EditableIDFactory(UpdateSurveyItemCustomID) {
+        var self = this;
+
+        self.create = create;
+
+        function create(object) {
+            return new EditableIDComponent(object, UpdateSurveyItemCustomID);
+        }
+
+        return self;
+    }
+
+    function EditableIDComponent(object, UpdateSurveyItemCustomID) {
+        var self = this;
+        var _object = object;
+        var _lastValidID;
+
+        self.getCustomizedID = getCustomizedID;
+        self.getAutoGeneratedID = getAutoGeneratedID;
+        self.getLastValidID = getLastValidID;
+        self.updateCustomizedID = updateCustomizedID;
+
+        function getAutoGeneratedID() {
+            var autoGeneratedID;
+            if (_object.objectType === "CheckboxAnswerOption") {
+                autoGeneratedID = _object.optionID;
+            } else {
+                autoGeneratedID = _object.templateID;
+            }
+            return autoGeneratedID;
+        }
+
+        function getCustomizedID() {
+            var customizedID;
+            if (_object.objectType === "CheckboxAnswerOption") {
+                customizedID = _object.customOptionID;
+            } else {
+                customizedID = _object.customID;
+            }
+            return customizedID;
+        }
+
+        function getLastValidID() {
+            return _lastValidID;
+        }
+
+        function updateCustomizedID(customizedID) {
+            _lastValidID = customizedID;
+            if (_object.objectType === "CheckboxAnswerOption") {
+                _object.setCustomOptionID(customizedID);
+            } else {
+                UpdateSurveyItemCustomID.execute(_object, customizedID);
+            }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusInputText', otusInputText);
 
     otusInputText.$inject = ['OtusInputTextWidgetFactory'];
@@ -5496,28 +5670,26 @@
         .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
 
     CheckboxQuestionWidgetFactory.$inject = [
-        'AnswerOptionWidgetFactory',
-        'AddAnswerOptionEventFactory',
-        'RemoveAnswerOptionEventFactory',
+        'UpdateQuestionEventFactory',
+        'CheckboxSuffixIDGenerator',
+        'WorkspaceService'
     ];
 
-    function CheckboxQuestionWidgetFactory(AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
+            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService);
         }
 
         return self;
     }
 
-    function CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
-
-        self.options = [];
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -5562,22 +5734,33 @@
         }
 
         function addOption() {
-            var newOption = AddAnswerOptionEventFactory.create().execute(self);
-            var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
+            self.getItem().createOption(_generateOptionId());
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
 
         function _loadAnswerOptions() {
-            self.getItem().options.forEach(function(awswerOption) {
-                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
-                self.options.push(optionWidget);
+            var clonedArray = angular.copy(self.getItem().options);
+            self.getItem().options = [];
+
+            clonedArray.forEach(function(checkboxAnswerOption) {
+                self.getItem().loadJsonOption(JSON.stringify(checkboxAnswerOption));
             });
         }
 
         function removeLastOption() {
-            RemoveAnswerOptionEventFactory.create().execute(self);
-            self.options.splice(-1);
+            self.getItem().removeLastOption();
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
+
+        function _generateOptionId() {
+            var checkboxID;
+            var quantity = self.getItem().options.length;
+            do {
+                checkboxID = self.getItem().customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+            } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
+            return checkboxID;
+        }
+
     }
 
 }());
@@ -7106,6 +7289,90 @@
 
     angular
         .module('editor.ui')
+        .directive('otusMinLengthValidator', otusMinLengthValidator);
+
+    otusMinLengthValidator.$inject = [
+        'MinLengthValidatorWidgetFactory'
+    ];
+
+    function otusMinLengthValidator(MinLengthValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-length/min-length-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MinLengthValidatorWidgetFactory.create(scope, element);
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MinLengthValidatorWidgetFactory', MinLengthValidatorWidgetFactory);
+
+    function MinLengthValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new MinLengthValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function MinLengthValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'minLength';
+
+
+        /* Public Methods */
+        self.data = null;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            self.data = question.fillingRules.options[whoAmI].data.reference;
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusMinTimeValidator', otusMinTimeValidator);
 
     otusMinTimeValidator.$inject = [
@@ -7179,90 +7446,6 @@
                 getRuleType().data.reference = self.data.toString();
                 scope.$parent.widget.updateFillingRules();
             }
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusMinLengthValidator', otusMinLengthValidator);
-
-    otusMinLengthValidator.$inject = [
-        'MinLengthValidatorWidgetFactory'
-    ];
-
-    function otusMinLengthValidator(MinLengthValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/min-length/min-length-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MinLengthValidatorWidgetFactory.create(scope, element);
-            }
-
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('MinLengthValidatorWidgetFactory', MinLengthValidatorWidgetFactory);
-
-    function MinLengthValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new MinLengthValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function MinLengthValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'minLength';
-
-
-        /* Public Methods */
-        self.data = null;
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            self.data = question.fillingRules.options[whoAmI].data.reference;
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
         }
 
         function getRuleType() {
