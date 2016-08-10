@@ -38,6 +38,7 @@
             self.lastLoadedQuestion = item;
             var content = TemplateLoaderService.loadDirective('<otus:page-item-editor></otus:page-item-editor>', scope);
             sheet.find('#sheet').append(content);
+            PageAnchorService.sheetAutoFocus(sheetTemplate);
         }
 
         function unloadQuestion(question) {

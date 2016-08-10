@@ -88,14 +88,6 @@
                         templateUrl: 'app/editor/ui/main/main-container.html',
                         controller: 'MainContainerController as mainContainer',
                         resolve: {
-                            executor: function instantiateInDevEnvironment(SurveyEditorService) {
-                                /**
-                                 *
-                                 * DO NOT REMOVE this comment. So use it at your own risk.
-                                 *
-                                 */
-                                // SurveyEditorService.startEditor({name: 'DEV Environment', acronym: 'DEV'});
-                            },
                             editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
                                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
 

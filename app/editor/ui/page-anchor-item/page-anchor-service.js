@@ -26,11 +26,15 @@
         }
 
         function _focusOnTop() {
-            anchorList['top-anchor'].focus();
+            if (anchorList['top-anchor']) {
+                anchorList['top-anchor'].focus();
+            }
         }
 
         function _focusOnBottom() {
-            anchorList['bottom-anchor'].focus();
+            if (anchorList['bottom-anchor']) {
+                anchorList['bottom-anchor'].focus();
+            }
         }
     }
 
