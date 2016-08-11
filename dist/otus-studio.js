@@ -67,6 +67,7 @@
         'immutable',
         'ui.utils.masks',
         'otusDomainClient',
+        'otus.textEdition'
     ]);
 
 }());
@@ -795,24 +796,26 @@
     'use strict';
 
     angular
-        .module('ui.components')
-        .directive('textEditionMenu', textEditionMenu);
+        .module('otus.textEdition')
+        .controller('otus.textEdition.TextEditionMenuController', controller);
 
-    function textEditionMenu() {
-        var ddo = {
-            templateUrl: 'app/shared/text-edition-menu/text-edition-menu-template.html',
-            retrict: 'E',
-            link: linkFunc
-        };
+    controller.$inject = ['$scope', '$mdDialog', 'otus.textEdition.ColorContext'];
 
-        return ddo;
-    }
+    function controller($scope, $mdDialog, ColorContext) {
+        var self = this;
 
-    function linkFunc(scope, element, attrs) {
-        scope.bold = bold;
-        scope.italic = italic;
-        scope.underlined = underlined;
-        scope.strikeThrough = strikeThrough;
+        self.bold = bold;
+        self.italic = italic;
+        self.underlined = underlined;
+        self.strikeThrough = strikeThrough;
+        self.openColors = openColors;
+        self.foreColor = foreColor;
+        self.hiliteColor = hiliteColor;
+        self.justifyCenter = justifyCenter;
+        self.justifyLeft = justifyLeft;
+        self.justifyRight = justifyRight;
+        self.justifyFull = justifyFull;
+        self.removeFormat = removeFormat;
 
         function bold() {
             document.execCommand('bold', false, null);
@@ -833,7 +836,81 @@
             document.execCommand('strikeThrough', false, null);
             return false;
         }
+
+        function foreColor() {
+            var textColor = ColorContext.textColor;
+            document.execCommand('ForeColor', false, textColor);
+            return false;
+        }
+
+        function hiliteColor() {
+            var backgroundColor = ColorContext.backgroundColor;
+            document.execCommand('HiliteColor', false, backgroundColor);
+            return false;
+        }
+
+        function justifyCenter() {
+            document.execCommand('justifyCenter', false, null);
+            return false;
+        }
+
+        function justifyFull() {
+            document.execCommand('justifyFull', false, null);
+            return false;
+        }
+
+        function justifyLeft() {
+            document.execCommand('justifyLeft', false, null);
+            return false;
+        }
+
+        function justifyRight() {
+            document.execCommand('justifyRight', false, null);
+            return false;
+        }
+
+        function removeFormat() {
+            document.execCommand('removeFormat', false, null);
+            return false;
+        }
+
+        function openColors() {
+            $mdDialog.show({
+                templateUrl: 'app/shared/text-edition-menu/color/color-picker-template.html',
+                controller: 'otus.textEdition.ColorController as controller',
+                clickOutsideToClose: true
+            });
+        }
     }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition')
+        .directive('otusTextEditionMenu', directive);
+
+    function directive() {
+        var ddo = {
+            templateUrl: 'app/shared/text-edition-menu/text-edition-menu-template.html',
+            retrict: 'E',
+            controller: 'otus.textEdition.TextEditionMenuController as controller'
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition', [
+            'mdColorPicker'
+        ]);
+
 }());
 
 (function() {
@@ -3413,6 +3490,57 @@
         function renderGraph(createdGraph) {
            renderer = new Graph.Renderer.Raphael('survey-navigation-graph', createdGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
            renderer.draw();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition')
+        .service('otus.textEdition.ColorContext', service);
+
+    function service() {
+        var self = this;
+
+        self.backgroundColor = '#448aff';
+        self.textColor = '#737373';
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition')
+        .controller('otus.textEdition.ColorController', controller);
+
+    controller.$inject = ['otus.textEdition.ColorContext', '$mdDialog'];
+
+    function controller(ColorContext, $mdDialog) {
+        var self = this;
+        self.select = select;
+        self.cancel = cancel;
+
+        _init();
+
+        function _init() {
+            self.currentBackgroundColor = ColorContext.backgroundColor;
+            self.currentTextColor = ColorContext.textColor;
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+
+        function select() {
+            ColorContext.backgroundColor = self.currentBackgroundColor;
+            ColorContext.textColor = self.currentTextColor;
+            $mdDialog.hide();
         }
     }
 
