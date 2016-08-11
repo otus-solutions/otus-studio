@@ -1,14 +1,14 @@
 <md-whiteframe id={{widget.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
     <otus:accordion flex>
         <otus:accordion-header>
-            <md-content style="padding: 0" flex>
+            <md-content  flex>
                 <md-content layout="row">
-                    <md-card class="item-id-frame" layout-padding layout="column">
+                    <md-card class="item-id-frame" layout-padding style="padding: 0" layout-align="center center">
                         <otus:item-icon item="{{widget.getItem().objectType}}">
                     </md-card>
 
-                    <md-card class="item-id-frame" layout-padding layout="column">
-                        <span>{{widget.getItem().templateID}}</span>
+                    <md-card layout-align="center">
+                        <editable-id item="widget.getItem()"></editable-id>
                     </md-card>
                     <md-content layout-padding flex>
                         <div layout-align="center center" class="clipped">
@@ -22,7 +22,7 @@
         <otus:accordion-content>
             <md-content bind-html-compile="widget.getContainer()"></md-content>
             <otus:survey-item-settings></otus:survey-item-settings>
-            </ui-accordion-content>
-            </ui-accordion>
+        </ui-accordion-content>
+    </ui-accordion>
 </md-whiteframe>
 <br/>

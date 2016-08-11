@@ -6,28 +6,26 @@
         .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
 
     CheckboxQuestionWidgetFactory.$inject = [
-        'AnswerOptionWidgetFactory',
-        'AddAnswerOptionEventFactory',
-        'RemoveAnswerOptionEventFactory',
+        'UpdateQuestionEventFactory',
+        'CheckboxSuffixIDGenerator',
+        'WorkspaceService'
     ];
 
-    function CheckboxQuestionWidgetFactory(AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
+            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService);
         }
 
         return self;
     }
 
-    function CheckboxQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
+    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
         var self = this;
-
-        self.options = [];
 
         /* Public methods */
         self.getClassName = getClassName;
@@ -72,22 +70,33 @@
         }
 
         function addOption() {
-            var newOption = AddAnswerOptionEventFactory.create().execute(self);
-            var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
+            self.getItem().createOption(_generateOptionId());
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
 
         function _loadAnswerOptions() {
-            self.getItem().options.forEach(function(awswerOption) {
-                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
-                self.options.push(optionWidget);
+            var clonedArray = angular.copy(self.getItem().options);
+            self.getItem().options = [];
+
+            clonedArray.forEach(function(checkboxAnswerOption) {
+                self.getItem().loadJsonOption(JSON.stringify(checkboxAnswerOption));
             });
         }
 
         function removeLastOption() {
-            RemoveAnswerOptionEventFactory.create().execute(self);
-            self.options.splice(-1);
+            self.getItem().removeLastOption();
+            UpdateQuestionEventFactory.create().execute(self.getItem());
         }
+
+        function _generateOptionId() {
+            var checkboxID;
+            var quantity = self.getItem().options.length;
+            do {
+                checkboxID = self.getItem().customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+            } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
+            return checkboxID;
+        }
+
     }
 
 }());
