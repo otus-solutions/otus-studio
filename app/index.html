@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="studio">
+
     <head>
-        <base href="/otus-studio/"/>
-        <meta charset="UTF-8"/>
+        <base href="/otus-studio/" />
+        <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="app/assets/img/coruja_construtora.png" rel="icon"/>
-        <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+        <link href="app/assets/img/coruja_construtora.png" rel="icon" />
+        <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css"
+              rel="stylesheet">
         <title>Otus Studio</title>
     </head>
 
@@ -35,7 +37,8 @@
     <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
     <!-- ************************************* Angular Material ************************************* -->
-    <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
+    <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"
+                                                                        />
     <script src="node_modules/angular-material/angular-material.min.js"></script>
 
     <!-- ************************************* Lokijs ************************************* -->
@@ -61,9 +64,9 @@
     <script src="node_modules/js-base64/base64.min.js"></script>
     <script src="node_modules/otus-model-js/dist/st-utils-min.js"></script>
 
-	<!-- ************************************** Angular-input-masks ************************************** -->
-	<script src="node_modules/angular-input-masks/releases/angular-input-masks-dependencies.js"></script>
-	<script src="node_modules/angular-input-masks/releases/angular-input-masks.js"></script>
+    <!-- ************************************** Angular-input-masks ************************************** -->
+    <script src="node_modules/angular-input-masks/releases/angular-input-masks-dependencies.js"></script>
+    <script src="node_modules/angular-input-masks/releases/angular-input-masks.js"></script>
 
     <!-- ************************************* UI Components ************************************* -->
     <script src="app/shared/ui-components/ui-components-module.js"></script>
@@ -76,8 +79,8 @@
     <script src="app/app.js"></script>
 
     <!-- assets -->
-    <link href="app/assets/styles.css" rel="stylesheet"/>
-    <link href="app/assets/login-page.css" rel="stylesheet"/>
+    <link href="app/assets/styles.css" rel="stylesheet" />
+    <link href="app/assets/login-page.css" rel="stylesheet" />
 
     <!-- app.config -->
     <script src="app/config/dependencies-configuration.js"></script>
@@ -92,7 +95,15 @@
     <script src="app/dashboard/api/dashboard-state-service.js"></script>
 
     <!-- TEXT EDITION MENU -->
+    <link href="node_modules/md-color-picker/dist/mdColorPicker.min.css" rel="stylesheet">
+    <script src="node_modules/angular-cookies/angular-cookies.js"></script>
+    <script src="node_modules/tinycolor2/dist/tinycolor-min.js"></script>
+    <script src="node_modules/md-color-picker/dist/mdColorPicker.min.js"></script>
+    <script src="app/shared/text-edition-menu/text-edition-module.js"></script>
     <script src="app/shared/text-edition-menu/text-edition-menu-directive.js"></script>
+    <script src="app/shared/text-edition-menu/text-edition-controller.js"></script>
+    <script src="app/shared/text-edition-menu/color/color-picker-controller.js"></script>
+    <script src="app/shared/text-edition-menu/color/color-picker-context.js"></script>
 
     <!-- DIALOG -->
     <script src="app/dashboard/dialog/logout/logout-dialog-service.js"></script>
@@ -110,8 +121,8 @@
     <!-- SURVEY-TEMPLATES.DIALOG-NEW-SURVEY-FORM -->
     <script src="app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog-service.js"></script>
 
-	<!-- SURVEY-TEMPLATES.COMPONENTS -->
-	<script src="app/dashboard/survey-templates/survey-templates-module.js"></script>
+    <!-- SURVEY-TEMPLATES.COMPONENTS -->
+    <script src="app/dashboard/survey-templates/survey-templates-module.js"></script>
     <script src="app/dashboard/survey-templates/components/survey-template-manager-service.js"></script>
     <script src="app/dashboard/survey-templates/components/selected-survey-templates-management-service.js"></script>
     <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATE -->

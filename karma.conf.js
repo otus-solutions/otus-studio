@@ -41,6 +41,10 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks-dependencies.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks.js',
             NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
+            NODE_MODULES_ROOT_PATH + 'tinycolor2/dist/tinycolor-min.js',
+            NODE_MODULES_ROOT_PATH + 'md-color-picker/dist/mdColorPicker.min.js',
+            DEPENDENCIES_ROOT_PATH + 'text-edition-menu/**/*-module.js',
+            DEPENDENCIES_ROOT_PATH + 'text-edition-menu/**/*.js',
             /* Otus platform */
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js',

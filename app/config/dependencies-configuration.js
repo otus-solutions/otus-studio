@@ -12,6 +12,7 @@
         'immutable',
         'ui.utils.masks',
         'otusDomainClient',
+        'otus.textEdition'
     ]);
 
 }());
