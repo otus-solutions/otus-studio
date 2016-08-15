@@ -36,6 +36,7 @@
 
                 function isValidKey(keycode) {
                     var shiftKey = (keycode === 16);
+                    var capslock = (keycode === 20);
                     var backspaceKey = (keycode === 8);
                     var homeKey = (keycode === 36);
                     var endKey = (keycode === 35);
@@ -43,9 +44,9 @@
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
-                    return (shiftKey || backspaceKey || homeKey || endKey || deleteKey || leftKey || rightKey);
+                    return (shiftKey || capslock || backspaceKey || homeKey || endKey || deleteKey || leftKey || rightKey);
                 }
             }
         }
     });
-});
+}());

@@ -31,11 +31,12 @@
                 }
 
                 function isSpecialsKey(keycode) {
-                    return ((keycode = 32) || (keycode >= 48 && keycode <= 57) || (keycode = 59) || (keycode = 107) || (keycode = 109) || (keycode >= 190 && keycode <= 192) (keycode >= 219 && keycode <= 222) || (keycode = 188) || (keycode >= 190 && keycode <= 192)) ? true : false;
+                    return ((keycode >= 48 && keycode <= 57) || (keycode >= 190 && keycode <= 192)(keycode >= 219 && keycode <= 222) || (keycode = 188)) ? true : false;
                 }
 
                 function isValidKey(keycode) {
                     var shiftKey = (keycode === 16);
+                    var ctrlkey = (keycode === 17);
                     var backspaceKey = (keycode === 8);
                     var homeKey = (keycode === 36);
                     var endKey = (keycode === 35);
@@ -43,9 +44,9 @@
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
-                    return (shiftKey || backspaceKey || homeKey || endKey || deleteKey || leftKey || rightKey);
+                    return (shiftKey || ctrlkey || backspaceKey || homeKey || endKey || deleteKey || leftKey || rightKey);
                 }
             }
         }
     });
-});
+}());
