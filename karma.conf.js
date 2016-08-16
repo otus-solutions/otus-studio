@@ -35,6 +35,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+            NODE_MODULES_ROOT_PATH + 'sigma/build/sigma.min.js',
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/raphael-min.js',
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graffle.js',
             NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',

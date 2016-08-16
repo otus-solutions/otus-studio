@@ -10,6 +10,7 @@
             'editor',
             'otusjs',
             'preview',
+            'otusjs.studio.navigationBuilder',
             'surveyTemplates',
             /* Otus platform modules */
             'ui.components',

@@ -19,7 +19,7 @@
         "test": "karma start karma.conf.js --single-run",
         "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
         "gulp": "gulp",
-        "start": "npm run gulp browser-sync",
+        "start": "npm run gulp browser-sync --no-online",
         "karma": "karma",
         "build": "gulp compress"
     },
@@ -52,7 +52,9 @@
         "angular-resource": "1.5.3",
         "tinycolor2" : "1.4.1",
         "md-color-picker" : "0.2.6",
-        "angular-cookies" : "1.5.8"
+        "angular-cookies" : "1.5.8",
+        "sigma": "1.1.0",
+        "cytoscape": "2.7.7"
     },
     "devDependencies": {
         "gulp-sonar": "2.1.0",

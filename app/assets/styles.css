@@ -5,23 +5,24 @@
  **/
 
 * {
-    padding: 0;
-    box-sizing: border-box;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
-    overflow-y: hidden !important;
+  overflow-y: hidden !important;
 }
 .icon-white {
-    color: white!important;
+  color: white!important;
 }
 md-input-container.md-input-invalid>md-icon {
-    color: red;
+  color: red;
 }
 #subarea-toolbar {
-    background: #E0E0E0;
-    color: gray;
-    border-bottom: 1px solid #C7C7C7;
+  background: #E0E0E0;
+  color: gray;
+  border-bottom: 1px solid #C7C7C7;
 }
+
 /**
  *
  * Container.css
@@ -29,33 +30,34 @@ md-input-container.md-input-invalid>md-icon {
  **/
 
 .palette {
-    border-right: 1px solid #E1E1E1;
-    background-color: #FFFFFF;
+  border-right: 1px solid #E1E1E1;
+  background-color: #FFFFFF;
 }
 .editor-toolbar {
-    border-bottom: 1px solid #E1E1E1;
-    height: 24px;
-    min-height: 50px;
+  border-bottom: 1px solid #E1E1E1;
+  height: 24px;
+  min-height: 50px;
 }
 .editor-icon {
-    height: 37px;
-    width: 35px;
-    min-width: 35px;
-    min-height: 37px;
+  height: 37px;
+  width: 35px;
+  min-width: 35px;
+  min-height: 37px;
 }
 .stage {
-    margin: 0 1px 0px;
-    padding-top: 0px !important;
-    background-color: #F9F9F9 !important;
+  margin: 0 1px 0px;
+  padding-top: 0px !important;
+  background-color: #F9F9F9 !important;
 }
 .resource {
-    border-left: 1px solid #E1E1E1;
-    background-color: #FFFFFF;
+  border-left: 1px solid #E1E1E1;
+  background-color: #FFFFFF;
 }
 .boxWithHeight {
-    box-sizing: border-box;
-    height: 100%;
+  box-sizing: border-box;
+  height: 100%;
 }
+
 /*
 *
 Page Anchor.css
@@ -63,8 +65,9 @@ Page Anchor.css
 */
 
 .anchor {
-    color: transparent;
+  color: transparent;
 }
+
 /**
 *
 * Survey Header.css
@@ -72,24 +75,25 @@ Page Anchor.css
 **/
 
 #survey-header {
-    width: 210mm;
-    margin-top: 20px;
-    color: #727272;
-    padding-left: 11mm;
+  width: 210mm;
+  margin-top: 20px;
+  color: #727272;
+  padding-left: 11mm;
 }
 #survey-header md-chips-wrap {
-    box-shadow: 0 0px;
-    !important
+  box-shadow: 0 0px;
+  !important
 }
 #survey-header .md-caption {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 #survey-header .md-display-1 {
-    margin: 0;
-    padding: 0;
-    font-size: 2vw;
+  margin: 0;
+  padding: 0;
+  font-size: 2vw;
 }
+
 /**
  *
  * Sheet.css
@@ -97,55 +101,45 @@ Page Anchor.css
  **/
 
 #sheet {
-    border: 1px solid #D8D6D6;
-    margin-bottom: 20px;
-    margin-bottom: 10px;
-    min-height: 297mm !important;
-    padding: 10mm;
-    width: 210mm;
-    -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
-    -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
-    box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
-    padding-bottom: 180px;
-}
-#survey-navigation-graph {
-    border: 1px solid #D8D6D6;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    min-height: 297mm !important;
-    padding: 10mm;
-    width: 210mm;
-    -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
-    -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
-    box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+  border: 1px solid #D8D6D6;
+  margin-bottom: 20px;
+  margin-bottom: 10px;
+  min-height: 297mm !important;
+  padding: 10mm;
+  width: 210mm;
+  -webkit-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+  box-shadow: 0px 0px 2px 2px rgba(181, 181, 181, 0.35);
+  padding-bottom: 180px;
 }
 .item-id-frame {
-    background-color: #FAFAFA;
-    color: #1976D2
+  background-color: #FAFAFA;
+  color: #1976D2
 }
 .toolbar-icon {
-    float: right;
-    height: 45px;
+  float: right;
+  height: 45px;
 }
 .icon-clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 .image-brand {
-    border-radius: 25px;
-    height: 47px;
-    padding: 1px;
-    margin: 10px;
-    min-width: 45px;
-    min-height: 45px;
+  border-radius: 25px;
+  height: 47px;
+  padding: 1px;
+  margin: 10px;
+  min-width: 45px;
+  min-height: 45px;
 }
 .clipped {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .label-container {
-    padding: 8px;
+  padding: 8px;
 }
+
 /**
  *
  * Properties.css
@@ -153,15 +147,16 @@ Page Anchor.css
  **/
 
 .properties-frame {
-    background-color: #FFFFFF;
-    max-height: 315px;
+  background-color: #FFFFFF;
+  max-height: 315px;
 }
 .properties-frame-body {
-    overflow-y: scroll;
-    max-height: 215px;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+  overflow-y: scroll;
+  max-height: 215px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
+
 /**
  *
  * Repository.css
@@ -169,11 +164,12 @@ Page Anchor.css
 **/
 
 #repository {
-    width: 55%;
+  width: 55%;
 }
 .center {
-    margin: 0 auto;
+  margin: 0 auto;
 }
+
 /**
  *
  * question-editor.css
@@ -181,41 +177,43 @@ Page Anchor.css
 **/
 
 #editor-container {
-    background: none;
+  background: none;
 }
-.filling-mode-selector {} .editable {
-    border-bottom: 1px dotted gray;
-    color: gray;
-    font-style: italic;
-    font-size: 20pt;
+.filling-mode-selector {}
+.editable {
+  border-bottom: 1px dotted gray;
+  color: gray;
+  font-style: italic;
+  font-size: 20pt;
 }
 [preview-mode] {
-    border: none;
+  border: none;
 }
 [edit-mode] {
-    border: 1px dashed #FFFFFF;
+  border: 1px dashed #FFFFFF;
 }
 [edit-mode]:hover {
-    background-color: #fffae9;
-    border: 1px dashed #D0D0D0;
-    cursor: prompt;
-    cursor: pointer;
+  background-color: #fffae9;
+  border: 1px dashed #D0D0D0;
+  cursor: prompt;
+  cursor: pointer;
 }
 [contenteditable=true]:empty:before {
-    content: attr(edit-placeholder);
-    display: block;
-    font-style: italic;
-    color: #A0A0A0
+  content: attr(edit-placeholder);
+  display: block;
+  font-style: italic;
+  color: #A0A0A0
 }
 #sheet .md-tab {
-    text-transform: none !important;
+  text-transform: none !important;
 }
 .uppercase-text {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 md-backdrop {
-    z-index: 65 !important
+  z-index: 65 !important
 }
+
 /**
  *
  * Toolbar Edit and Preview Navegação
@@ -223,36 +221,38 @@ md-backdrop {
 **/
 
 md-tabs-canvas {
-    background-color: #F9F9F9;
-    z-index: 10;
+  background-color: #F9F9F9;
+  z-index: 10;
 }
+
 /*
  * Animations
  */
 
 .opened {
-    height: 500px !important;
-    transition: all 0.5s ease-in-out;
-    overflow: hidden;
+  height: 500px !important;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
 }
 .closed {
-    height: 0px !important;
-    transition: all 0.5s ease-in-out;
-    overflow: hidden;
+  height: 0px !important;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
 }
 .short-opened {
-    height: 200px !important;
-    transition: all 0.5s ease-in-out;
+  height: 200px !important;
+  transition: all 0.5s ease-in-out;
 }
 pre {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 .custom-whiteframe {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
 .custom-whiteframe:hover {
-    box-shadow: 0 1px 20px 0 rgba(24, 42, 72, 0.65), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
+  box-shadow: 0 1px 20px 0 rgba(24, 42, 72, 0.65), 0 1px 1px 0 #E8E8E8, 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
+
 /**
  *
  * Survey Templates
@@ -260,30 +260,31 @@ pre {
  */
 
 survey-template md-card {
-    cursor: pointer;
+  cursor: pointer;
 }
 survey-template md-card:focus {
-    outline: none;
-    border: 0;
+  outline: none;
+  border: 0;
 }
 .selected-template {
-    background-color: bisque !important;
+  background-color: bisque !important;
 }
-.template-animate.ng-enter,
-.template.animate.ng-leave {
-    transition: 500ms linear all;
+.template-animate.ng-enter, .template.animate.ng-leave {
+  transition: 500ms linear all;
 }
 .template-animate.ng-leave.ng-leave-active {
-    opacity: 0;
+  opacity: 0;
 }
 .template-animate.ng-enter.ng-enter-active {
-    opacity: 1;
+  opacity: 1;
 }
+
 /**
  *
  * Survey Item
  *
  */
+
 
 /**
   *
@@ -291,17 +292,40 @@ survey-template md-card:focus {
   *
   */
 
+
 /*#validators-column > *:nth-child(even) *{
   background-color: #f2f2f2;
 }*/
+
 
 /*#validators-column .md-ripple-container{
   background-color: transparent;
 }*/
 
 #validators-column * {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* NAVIGATION BUILDER */
+.route-detail-open {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s ease-in-out
+}
+
+.route-detail-close {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s ease-in-out
+}
+
+.route-selected {
+  background-color: #DDD;
+}
+
+.route {
+  background-color: white;
 }

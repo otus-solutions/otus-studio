@@ -2,15 +2,14 @@
 <html lang="en" ng-app="studio">
 
     <head>
-        <base href="/otus-studio/" />
-        <meta charset="UTF-8" />
+        <base href="/otus-studio/"/>
+        <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="app/assets/img/coruja_construtora.png" rel="icon" />
-        <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css"
-              rel="stylesheet">
+        <link href="app/assets/img/coruja_construtora.png" rel="icon"/>
+        <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
         <title>Otus Studio</title>
     </head>
 
@@ -21,6 +20,8 @@
     <!-- Script imports -->
     <!-- ************************************* jQuery ************************************* -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script src="node_modules/sigma/build/sigma.min.js"></script>
 
     <!-- ************************************* Graphdracula ************************************* -->
     <script src="node_modules/graphdracula/js/raphael-min.js"></script>
@@ -37,8 +38,7 @@
     <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
     <!-- ************************************* Angular Material ************************************* -->
-    <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"
-                                                                        />
+    <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
     <script src="node_modules/angular-material/angular-material.min.js"></script>
 
     <!-- ************************************* Lokijs ************************************* -->
@@ -79,8 +79,8 @@
     <script src="app/app.js"></script>
 
     <!-- assets -->
-    <link href="app/assets/styles.css" rel="stylesheet" />
-    <link href="app/assets/login-page.css" rel="stylesheet" />
+    <link href="app/assets/styles.css" rel="stylesheet"/>
+    <link href="app/assets/login-page.css" rel="stylesheet"/>
 
     <!-- app.config -->
     <script src="app/config/dependencies-configuration.js"></script>
@@ -146,7 +146,6 @@
     <!-- ************************************** Studio Editor Core ************************************** -->
     <script src="app/editor/core/editor-core-module.js"></script>
 
-
     <!-- EVENT -->
     <script src="app/editor/core/event/add-answer-option-event-factory.js"></script>
     <script src="app/editor/core/event/add-metadata-answer-event-factory.js"></script>
@@ -193,7 +192,6 @@
 
     <!-- Template Header -->
     <script src="app/editor/ui/survey-template-header/survey-template-header.js"></script>
-
 
     <!-- CORE.SHEET -->
     <script src="app/editor/ui/sheet/sheet-content-service.js"></script>
@@ -438,14 +436,25 @@
     <!-- ************************************** Studio Preview ************************************** -->
     <script src="app/preview/preview-module.js"></script>
 
-    <!-- SURVEY-NAVIGATION -->
-    <script src="app/preview/survey-navigation/survey-navigation-preview-module.js"></script>
-
+    <!-- NAVIGATION-BUILDER -->
+    <script src="app/navigation-builder/navigation-builder-module.js"></script>
     <!-- API -->
-    <script src="app/preview/survey-navigation/api/navigation-preview-service.js"></script>
-
-    <script src="app/preview/survey-navigation/graph-factory.js"></script>
-    <script src="app/preview/survey-navigation/survey-navigation-preview-directive.js"></script>
+    <script src="app/navigation-builder/api/navigation-builder-api.js"></script>
+    <!-- COMPONENT -->
+    <script src="app/navigation-builder/component/navigation-builder-component.js"></script>
+    <script src="app/navigation-builder/component/navigation-builder-service.js"></script>
+    <!-- MODEL -->
+    <script src="app/navigation-builder/model/navigation-builder-model-module.js"></script>
+    <script src="app/navigation-builder/model/map-factory.js"></script>
+    <!-- NAVIGATION-DETAIL-COMPONENT -->
+    <script src="app/navigation-builder/navigation-detail/component/navigation-data-panel-component.js"></script>
+    <!-- NAVIGATION-DETAIL-DIALOG -->
+    <script src="app/navigation-builder/navigation-detail/dialog/navigation-detail-dialog-service.js"></script>
+    <!-- NAVIGATION-DETAIL-MINIMAP -->
+    <script src="app/navigation-builder/navigation-detail/minimap/minimap-component.js"></script>
+    <!-- MAP -->
+    <script src="app/navigation-builder/navigation-map/map-component.js"></script>
+    <script src="app/navigation-builder/navigation-map/map-panel-component.js"></script>
 
     <!-- EDITION-PREVIEW -->
     <script src="app/preview/edition-preview/edition-preview-service.js"></script>
@@ -459,13 +468,10 @@
     <script src="app/authenticator/login-controller.js"></script>
     <script src="app/authenticator/api/authentication-service.js"></script>
 
-
     <!-- ************************************** Otus Domain Client ************************************** -->
     <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
 
     <!-- ************************************** Otus Preview ************************************** -->
     <script src="node_modules/otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js"></script>
     <script src="node_modules/angular-mousewheel/mousewheel.js"></script>
-
-
 </html>
