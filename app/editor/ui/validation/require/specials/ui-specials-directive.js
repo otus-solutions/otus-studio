@@ -31,7 +31,7 @@
                 }
 
                 function isSpecialsKey(keycode) {
-                    return ((keycode >= 48 && keycode <= 57) || (keycode >= 190 && keycode <= 192)(keycode >= 219 && keycode <= 222) || (keycode = 188)) ? true : false;
+                    return ((keycode >= 48 && keycode <= 57) || (keycode >= 190 && keycode <= 192) || (keycode >= 219 && keycode <= 222) || (keycode = 188)) ? true : false;
                 }
 
                 function isValidKey(keycode) {
