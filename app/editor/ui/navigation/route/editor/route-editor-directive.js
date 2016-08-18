@@ -3,7 +3,7 @@
 
     angular
         .module('editor.ui')
-        .directive('otusRouteEditor', otusRouteEditor);
+        .directive('otusRouteEditors', otusRouteEditor);
 
     function otusRouteEditor() {
         var ddo = {

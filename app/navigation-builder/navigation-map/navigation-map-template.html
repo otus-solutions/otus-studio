@@ -1,0 +1,15 @@
+<div layout="row" flex style="margin-top: 20px">
+    <md-fab-speed-dial md-open="false" ng-class="md-scale" md-direction="down">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab">
+          <md-icon md-svg-icon="routes"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <md-button aria-label="Nova rota" ng-click="$ctrl.routeMenuCtrl.addRoute()" class="md-fab md-raised md-mini">
+          <md-icon md-svg-icon="plus"></md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+</div>
+<div id="map-view" style="width: 100%; height: 100%"></div>

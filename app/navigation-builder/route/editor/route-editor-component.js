@@ -3,11 +3,12 @@
 
   angular
     .module('otusjs.studio.navigationBuilder')
-    .component('otusNavigationDataPanel', {
-      templateUrl: 'app/navigation-builder/navigation-detail/component/navigation-data-panel.html',
+    .component('otusRouteEditor', {
+      templateUrl: 'app/navigation-builder/route/editor/route-editor.html',
       controller: component,
       bindings: {
-        navigation: '<'
+        originNode: '<',
+        destinationNode: '<'
       }
     });
 
@@ -20,30 +21,31 @@
 
   function component($scope, $element, NBEVENTS, NavigationBuilderService) {
     var self = this;
-
-    var ci = 1;
+    var _conditionCounter = 1;
 
     self.selectedRoute = {};
+    self.routeConditions = {};
 
     /* Public methods */
     self.$onInit = onInit;
-    self.openRouteDetail = openRouteDetail;
     self.addCondition = addCondition;
 
     function onInit() {
-      self.open = false;
-    }
-
-    function openRouteDetail(route) {
-      self.selectedRoute = route;
-      self.open = !self.open;
+      if (self.originNode) {
+        self.routeConditions = self.originNode.navigation.routes[0].conditions;
+      }
     }
 
     function addCondition() {
-      self.selectedRoute.conditionSet[ci] = {
-        name: 'CONDIÇÃO ' + ci
+      self.routeConditions[_conditionCounter] = {
+        name: 'CONDIÇÃO ' + _conditionCounter,
+        rules: []
       };
-      ++ci;
+      ++_conditionCounter;
+    }
+
+    function selectCondition(condition) {
+      self.selectedCondition = condition;
     }
   }
 })();

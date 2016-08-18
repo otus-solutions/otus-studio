@@ -1,0 +1,39 @@
+<md-toolbar layout="row" flex>
+  <div class="md-toolbar-tools">
+    <h2>Criar de Rota</h2>
+  </div>
+</md-toolbar>
+<md-dialog-content flex layout-margin>
+  <span layout="column" flex layout-align="center center">Você irá definir uma rota entre estes dois itens:</span>
+</md-dialog-content>
+<md-dialog-content layout="row" layout-align="center center">
+  <span layout="column" flex="35" layout-align="center center">{{ $ctrl.originNode.label }}</span>
+  <span layout="column" flex></span>
+  <span layout="column" flex="35" layout-align="center center">{{ $ctrl.destinationNode.label }}</span>
+</md-dialog-content>
+<md-dialog-content layout="row" flex>
+  <div layout="column">
+    <md-button class="md-raised" ng-click="$ctrl.addCondition()" flex="10">Criar condição</md-button>
+    <md-list flex>
+      <md-list-item ng-repeat="condition in $ctrl.routeConditions track by $index" ng-click="$ctrl.selectCondition(condition)" class="md-1-line">
+        <div class="md-list-item-text" layout="column">
+          <span>{{ condition.name }}</span>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div layout="column" layout-padding flex layout-align="space-around center" layout-margin ng-class="{'route-detail-open': $ctrl.selectedRoute, 'route-detail-close': !$ctrl.selectedRoute}">
+      <h3 ng-show="false" layout-align="center center" flex>Você ainda não criou condições de rota. Faça isso clicando em "Criar condição"</h3>
+      <md-list flex>
+        <md-list-item ng-repeat="rule in $ctrl.selectedCondition.rules track by $index" class="md-1-line">
+          <div class="md-list-item-text" layout="column">
+            <span>{{ rule }}</span>
+          </div>
+        </md-list-item>
+      </md-list>
+  </div>
+</md-dialog-content>
+<md-dialog-actions layout="row" flex>
+  <md-button class="md-raised">Cancelar</md-button>
+  <md-button class="md-raised md-primary">Salvar Rota</md-button>
+</md-dialog-actions>

@@ -6,11 +6,10 @@
     .service('otusjs.studio.navigationBuilder.NavigationDataDialogService', service);
 
   service.$inject = [
-    '$mdDialog',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+    '$mdDialog'
   ];
 
-  function service($mdDialog, NavigationBuilderService) {
+  function service($mdDialog) {
     var self = this;
     var _dialogSettings = {};
 
@@ -20,26 +19,28 @@
     _init();
 
     function _init() {
-      _dialogSettings.templateUrl = 'app/navigation-builder/navigation-detail/dialog/navigation-detail-dialog-template.html';
+      _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
       _dialogSettings.controller = DialogController;
-      _dialogSettings.controllerAs = 'controller';
+      _dialogSettings.controllerAs = 'ctrl';
       _dialogSettings.escapeToClose = true;
       _dialogSettings.fullscreen = true;
       _dialogSettings.hasBackdrop = true;
     }
 
-    function showDialog(sigmaNode) {
-      NavigationBuilderService.selectNode(sigmaNode);
-      var navigation = NavigationBuilderService.selectedNavigation();
-      _dialogSettings.locals = { navigation: navigation };
+    function showDialog(originNode, destinationNode) {
+      _dialogSettings.locals = {
+        origin: originNode,
+        destination: destinationNode
+      };
       $mdDialog.show(_dialogSettings);
     }
   }
 
-  function DialogController($mdDialog, navigation) {
+  function DialogController($mdDialog, origin, destination) {
     var self = this;
 
-    self.navigation = navigation;
+    self.origin = origin;
+    self.destination = destination;
 
     /* Public interface */
     self.cancel = cancel;

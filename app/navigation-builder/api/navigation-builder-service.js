@@ -6,14 +6,16 @@
     .service('otusjs.studio.navigationBuilder.NavigationBuilderService', service);
 
   service.$inject = [
-    'otusjs.studio.navigationBuilder.model.MapFactory'
+    'otusjs.studio.navigationBuilder.model.MapFactory',
+    'otusjs.studio.navigationBuilder.RouteBuilderService',
+    'otusjs.studio.navigationBuilder.NavigationInspectorService'
   ];
 
-  function service(MapFactory) {
+  function service(MapFactory, RouteBuilderService, NavigationInspectorService) {
     var self = this;
     var _rawData = {};
     var _navigationMap = {};
-    var _selectedNode = null;
+    var _activeServiceMode = null;
 
     self.mapData = null;
 
@@ -27,6 +29,8 @@
     self.selectedNavigation = selectedNavigation;
     self.selectedNodeFamily = selectedNodeFamily;
     self.selectedEdges = selectedEdges;
+    self.activateRouteCreatorMode = activateRouteCreatorMode;
+    self.activateNavigationInspectorMode = activateNavigationInspectorMode;
 
     function navigationMap() {
       return _navigationMap;
@@ -48,39 +52,33 @@
     }
 
     function selectNode(node) {
-      _selectedNode = node;
+      _activeServiceMode.selectNode(node);
     }
 
     function selectedNode() {
-      return _selectedNode;
+      return _activeServiceMode.selectedNode();
     }
 
     function selectedNavigation() {
-      return _selectedNode.navigation;
+      return _activeServiceMode.selectedNavigation();
     }
 
     function selectedNodeFamily() {
-      var nodes = [selectedNode()];
-      _selectedNode.navigation.routes.forEach(function(route) {
-        var result = _navigationMap.nodes().filter(function(node) {
-          return node.id === route.destination;
-        });
-        nodes.push(result[0]);
-      });
-
-      return nodes;
+      return _activeServiceMode.selectedNodeFamily();
     }
 
     function selectedEdges() {
-      var edges = [];
-      _selectedNode.navigation.routes.forEach(function(route) {
-        var result = _navigationMap.edges().filter(function(edge) {
-          return edge.target === route.destination;
-        });
-        edges.push(result[0]);
-      });
+      return _activeServiceMode.selectedEdges();
+    }
 
-      return edges;
+    function activateRouteCreatorMode($scope) {
+      _activeServiceMode = RouteBuilderService;
+      _activeServiceMode.setScope($scope);
+      $scope.$emit($scope.events.ROUTE_SERVICE_MODE_ACTIVE);
+    }
+
+    function activateNavigationInspectorMode($scope) {
+      _activeServiceMode = NavigationInspectorService;
     }
 
     function _addNodes(templateNavigations) {
