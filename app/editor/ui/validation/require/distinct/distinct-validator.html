@@ -1,11 +1,17 @@
 <md-list-item layout-padding flex>
-    <md-content layout="column" layout-align="start" flex="90">
-        <md-input-container layout="row" layout-align="start center">
-            <span class="md-body-1">Valor diferente de:</span>
-            <input type="number" min="0" flex="20" flex-offset="5" aria-label="Distinto" ng-model="widget.data" ng-change="widget.updateData()">
-        </md-input-container>
-    </md-content>
-    <md-content layout="column" flex="10" layout-padding layout-align="center center">
+    <form name="distinctValidator" flex-gt-xs>
+        <md-content layout="column" layout-align="start" flex="80">
+            <md-input-container layout="row" layout-align="start center">
+                <span class="md-body-1">Valor diferente de:</span>
+                <input name="distinct" type="number" min="0" flex="50" flex-offset="5" aria-label="Distinto" ng-model="widget.data" ng-change="widget.updateData()" required>
+
+                <div ng-messages="distinctValidator.distinct.$error">
+                    <div ng-message="required">Adicione um valor de distinção</div>
+                </div>
+            </md-input-container>
+        </md-content>
+    </form>
+    <md-content layout="column" flex="20" layout-padding layout-align="center end">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>

@@ -37,8 +37,8 @@
         }
 
 
-        function updateData() {          
-            getRuleType().data.reference = self.data.toLocaleDateString();
+        function updateData() {
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 

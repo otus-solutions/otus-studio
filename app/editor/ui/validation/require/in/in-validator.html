@@ -1,17 +1,27 @@
 <md-list-item layout-padding layout-align="space-between">
-    <md-content layout="column" flex="90" layout-align="start start">
-      <div layout="row" layout-align="start end">
-        <span layout="row" class="md-body-1">Intervalo de valores:</span>
-        <md-input-container flex-offset="5" flex="20" layout="row">
-          <input type="number" min="0" step="1" ui-integer aria-label="Insira o primeiro valor" ng-change="widget.updateData()" ng-model="widget.data.initial"/>
-        </md-input-container>
+    <form name="inValidator" flex-gt-xs>
+        <md-content layout="column" flex="90" layout-align="start start">
+            <div layout="row" layout-align="start end">
+                <span layout="row" class="md-body-1">Intervalo de valores:</span>
+                <md-input-container flex-offset="5" flex="25" layout="row">
+                    <input name="inFirst" type="number" min="0" step="1" ui-integer aria-label="Insira o primeiro valor" ng-change="widget.updateData()" ng-model="widget.data.initial" required/>
 
-        <md-input-container flex-offset="5" flex="20"layout="row">
-          <input type="number" min="0" step="1" ui-integer aria-label="Insira o segundo valor" ng-change="widget.updateData()" ng-model="widget.data.end"/>
-        </md-input-container>
-      </div>
+                    <div ng-messages="inValidator.inFirst.$error">
+                        <div ng-message="required">Adicione um valor</div>
+                    </div>
+                </md-input-container>
 
-    </md-content>
+                <md-input-container flex-offset="5" flex="25" layout="row">
+                    <input name="inSecond" type="number" min="0" step="1" ui-integer aria-label="Insira o segundo valor" ng-change="widget.updateData()" ng-model="widget.data.end" required/>
+
+
+                    <div ng-messages="inValidator.inSecond.$error">
+                        <div ng-message="required">Adicione um valor</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-content>
+    </form>
     <md-content layout="column" flex="10" layout-padding layout-align="end center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>

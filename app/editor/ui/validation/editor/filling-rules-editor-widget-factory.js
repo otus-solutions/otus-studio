@@ -51,6 +51,8 @@
                 _loadOptions();
             } else {
                 addValidator('mandatory');
+                //TODO
+                //fazer um comportamento para questão de data (future e past)
             }
         }
         var showList;
