@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder')
-    .service('otusjs.studio.navigationBuilder.NavigationDataDialogService', service);
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService', service);
 
   service.$inject = [
     '$mdDialog'
@@ -19,24 +19,29 @@
     _init();
 
     function _init() {
+      _setupDialogConfiguration();
+    }
+
+    function _setupDialogConfiguration() {
       _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
       _dialogSettings.controller = DialogController;
       _dialogSettings.controllerAs = 'ctrl';
-      _dialogSettings.escapeToClose = true;
+      _dialogSettings.escapeToClose = false;
       _dialogSettings.fullscreen = true;
       _dialogSettings.hasBackdrop = true;
     }
 
-    function showDialog(originNode, destinationNode) {
+    function showDialog(originNode, destinationNode, eventScope) {
       _dialogSettings.locals = {
         origin: originNode,
-        destination: destinationNode
+        destination: destinationNode,
+        eventScope: eventScope
       };
       $mdDialog.show(_dialogSettings);
     }
   }
 
-  function DialogController($mdDialog, origin, destination) {
+  function DialogController($mdDialog, origin, destination, eventScope) {
     var self = this;
 
     self.origin = origin;
@@ -48,9 +53,11 @@
 
     function cancel(response) {
       $mdDialog.hide(response);
+      eventScope.$broadcast(eventScope.events.ROUTE_BUILD_CANCELED);
     }
 
     function confirm(response) {
+      // eventScope.$broadcast(eventScope.events.ROUTE_BUILD_CANCELED);
       $mdDialog.hide(response);
     }
   }

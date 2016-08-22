@@ -2,52 +2,57 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder')
-    .service('otusjs.studio.navigationBuilder.RouteBuilderService', service);
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
 
   service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationDataDialogService'
+    'otusjs.studio.navigationBuilder.routeBuilder.DataService',
+    'otusjs.studio.navigationBuilder.routeBuilder.EventsService',
+    'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
   ];
 
-  function service(NavigationDataDialogService) {
+  function service(DataService, EventsService, UiEventsService) {
     var self = this;
-    var _originNode = null;
-    var _destinationNode = null;
     var _scope = null;
 
     /* Public methods */
-    self.setScope = setScope;
+    self.activate = activate;
     self.selectNode = selectNode;
+    self.selectedNode = selectedNode;
+    self.selectedNavigation = selectedNavigation;
+    self.selectedNodeFamily = selectedNodeFamily;
+    self.selectedEdges = selectedEdges;
+    self.deactivate = deactivate;
 
-    function setScope(scope) {
+    function activate(scope) {
       _scope = scope;
+      DataService.activate(scope);
+      EventsService.activate(scope);
+      UiEventsService.activate(scope);
     }
 
     function selectNode(node) {
-      if (!_originNode) {
-        _originNode = node;
-        _scope.$emit(_scope.events.ORIGIN_NODE_SELECTED);
-      } else {
-        _destinationNode = node;
-        _scope.$emit(_scope.events.DESTINATION_NODE_SELECTED);
-        NavigationDataDialogService.showDialog(_originNode, _destinationNode);
-      }
+      DataService.selectNode(node);
     }
 
     function selectedNode() {
-      return [_originNode, _destinationNode];
+      return DataService.selectedNode();
     }
 
     function selectedNavigation() {
-      return [_originNode.navigation, _destinationNode.navigation];
+      return DataService.selectedNavigation();
     }
 
     function selectedNodeFamily() {
-      return undefined;
+      return DataService.selectedNodeFamily();
     }
 
     function selectedEdges() {
-      return undefined;
+      return DataService.selectedEdges();
+    }
+
+    function deactivate() {
+      DataService.deactivate();
     }
   }
 })();

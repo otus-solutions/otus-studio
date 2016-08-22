@@ -2,13 +2,15 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder')
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
     .component('otusRouteEditor', {
       templateUrl: 'app/navigation-builder/route/editor/route-editor.html',
       controller: component,
       bindings: {
         originNode: '<',
-        destinationNode: '<'
+        destinationNode: '<',
+        onCancel: '<',
+        onConfirm: '<'
       }
     });
 
@@ -29,6 +31,8 @@
     /* Public methods */
     self.$onInit = onInit;
     self.addCondition = addCondition;
+    self.cancel = cancel;
+    self.save = save;
 
     function onInit() {
       if (self.originNode) {
@@ -46,6 +50,14 @@
 
     function selectCondition(condition) {
       self.selectedCondition = condition;
+    }
+
+    function cancel() {
+      self.onCancel();
+    }
+
+    function save() {
+      self.onSave();
     }
   }
 })();

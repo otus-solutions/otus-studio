@@ -26,10 +26,7 @@
             _surveyToLoad = $stateParams.template;
             if (_surveyToLoad.itemContainer.length > 0) {
                 self.isLoading = true;
-                var promise = _renderSurveyTemplate();
-                promise.then(function(value) {
-                    self.isLoading = false;
-                });
+                return _renderSurveyTemplate();
             }
         }
 
@@ -44,10 +41,10 @@
                             AddSurveyItemEventFactory.create().load(item);
                             _scope.$digest();
                         });
-                        deferred.resolve(true);
+                        deferred.resolve($stateParams.template);
                     }, 1000);
                 } else {
-                    deferred.resolve(true);
+                    deferred.resolve($stateParams.template);
                 }
             }
             return deferred.promise;

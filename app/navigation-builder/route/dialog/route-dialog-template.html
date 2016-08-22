@@ -1,3 +1,7 @@
 <md-dialog layout="row" flex ng-cloak>
-  <otus-route-editor origin-node="ctrl.origin" destination-node="ctrl.destination" flex></otus-route-editor>
+  <otus-route-editor flex
+    origin-node="ctrl.origin"
+    destination-node="ctrl.destination"
+    on-cancel="ctrl.cancel"
+    on-confirm="ctrl.confirm"></otus-route-editor>
 </md-dialog>

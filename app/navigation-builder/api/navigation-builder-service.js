@@ -7,7 +7,7 @@
 
   service.$inject = [
     'otusjs.studio.navigationBuilder.model.MapFactory',
-    'otusjs.studio.navigationBuilder.RouteBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.NavigationInspectorService'
   ];
 
@@ -31,6 +31,7 @@
     self.selectedEdges = selectedEdges;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
+    self.deactiveMode = deactiveMode;
 
     function navigationMap() {
       return _navigationMap;
@@ -71,14 +72,17 @@
       return _activeServiceMode.selectedEdges();
     }
 
-    function activateRouteCreatorMode($scope) {
+    function activateRouteCreatorMode(scope) {
       _activeServiceMode = RouteBuilderService;
-      _activeServiceMode.setScope($scope);
-      $scope.$emit($scope.events.ROUTE_SERVICE_MODE_ACTIVE);
+      _activeServiceMode.activate(scope);
     }
 
     function activateNavigationInspectorMode($scope) {
       _activeServiceMode = NavigationInspectorService;
+    }
+
+    function deactiveMode() {
+      return _activeServiceMode.end();
     }
 
     function _addNodes(templateNavigations) {

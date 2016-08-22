@@ -10,12 +10,9 @@ describe('NavigationBuilderService', function() {
     mockNodes();
     mockEdges();
 
-    inject(function(_$injector_, $rootScope) {
-      mockScope($rootScope, _$injector_);
-
+    inject(function(_$injector_) {
       service = _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderService', {
-        MapFactory: mockMapFactory(_$injector_),
-        RouteBuilderService: mockRouteBuilderService(_$injector_)
+        MapFactory: mockMapFactory(_$injector_)
       });
     });
   });
@@ -44,123 +41,58 @@ describe('NavigationBuilderService', function() {
 
   });
 
-  describe('activateRouteCreatorMode method', function() {
-
-    it('should call RouteBuilderService.setScope', function() {
-      spyOn(Mock.RouteBuilderService, 'setScope');
-
-      service.activateRouteCreatorMode(Mock.scope);
-
-      expect(Mock.RouteBuilderService.setScope).toHaveBeenCalledWith(Mock.scope);
-    });
-
-    it('should call scope.$emit with mode activation event', function() {
-      spyOn(Mock.scope, '$emit');
-
-      service.activateRouteCreatorMode(Mock.scope);
-
-      expect(Mock.scope.$emit).toHaveBeenCalledWith(Mock.scope.events.ROUTE_SERVICE_MODE_ACTIVE);
-    });
-
-  });
-
   describe('selectNode method', function() {
 
-    describe('when route creator mode is active', function() {
+    it('should store a reference to selected node from map', function() {
+      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.selectNode(Mock.nodes[0]);
 
-      beforeEach(function() {
-        service.activateRouteCreatorMode(Mock.scope);
-      });
+      var node = service.selectedNode();
 
-      it('should delegate work to RouteBuilderService', function() {
-        spyOn(Mock.RouteBuilderService, 'selectNode');
-
-        service.selectNode(Mock.nodes[0]);
-
-        expect(Mock.RouteBuilderService.selectNode).toHaveBeenCalledWith(Mock.nodes[0]);
-      });
-
-    })
-
-  });
-
-  describe('selectedNode method', function() {
-
-    describe('when route creator mode is active', function() {
-
-      beforeEach(function() {
-        service.activateRouteCreatorMode(Mock.scope);
-      });
-
-      it('should call RouteBuilderService.selectedNode', function() {
-        spyOn(Mock.RouteBuilderService, 'selectedNode');
-
-        service.selectedNode();
-
-        expect(Mock.RouteBuilderService.selectedNode).toHaveBeenCalled();
-      });
-
-    })
+      expect(node.id).toEqual(Mock.nodes[0].id);
+    });
 
   });
 
   describe('selectedNavigation method', function() {
 
-    describe('when route creator mode is active', function() {
+    it('should return a navigation that corresponds to selected node', function() {
+      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.selectNode(Mock.nodes[0]);
 
-      beforeEach(function() {
-        service.activateRouteCreatorMode(Mock.scope);
-      });
+      var node = service.selectedNode();
 
-      it('should call RouteBuilderService.selectedNavigation', function() {
-        spyOn(Mock.RouteBuilderService, 'selectedNavigation');
-
-        service.selectedNavigation();
-
-        expect(Mock.RouteBuilderService.selectedNavigation).toHaveBeenCalled();
-      });
-
-    })
+      expect(node.navigation.origin).toEqual(Mock.nodes[0].navigation.origin);
+    });
 
   });
 
   describe('selectedNodeFamily method', function() {
 
-    describe('when route creator mode is active', function() {
+    it('should return the selected node and nodes that are your routes', function() {
+      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.selectNode(Mock.nodes[0]);
 
-      beforeEach(function() {
-        service.activateRouteCreatorMode(Mock.scope);
-      });
+      var nodes = service.selectedNodeFamily();
 
-      it('should call RouteBuilderService.selectedNodeFamily', function() {
-        spyOn(Mock.RouteBuilderService, 'selectedNodeFamily');
-
-        service.selectedNodeFamily();
-
-        expect(Mock.RouteBuilderService.selectedNodeFamily).toHaveBeenCalled();
-      });
-
-    })
+      expect(nodes[0].id).toEqual(Mock.nodes[0].id);
+      expect(nodes[1].id).toEqual(Mock.nodes[1].id);
+      expect(nodes.length).toBe(2);
+    });
 
   });
 
   describe('selectedEdges method', function() {
 
-    describe('when route creator mode is active', function() {
+    it('should return the selected edges that connect the nodes of family', function() {
+      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.selectNode(Mock.nodes[0]);
 
-      beforeEach(function() {
-        service.activateRouteCreatorMode(Mock.scope);
-      });
+      var edges = service.selectedEdges();
 
-      it('should call RouteBuilderService.selectedEdges', function() {
-        spyOn(Mock.RouteBuilderService, 'selectedEdges');
-
-        service.selectedEdges();
-
-        expect(Mock.RouteBuilderService.selectedEdges).toHaveBeenCalled();
-      });
-
-    })
+      expect(edges[0].id).toEqual(Mock.edges[0].id);
+      expect(edges.length).toBe(1);
+    });
 
   });
 
@@ -255,16 +187,6 @@ describe('NavigationBuilderService', function() {
       source: 'CAD3',
       target: 'CAD4'
     }];
-  }
-
-  function mockScope($rootScope, $injector) {
-    Mock.scope = $rootScope.$new();
-    Mock.scope.events = $injector.get('NBEVENTS');
-  }
-
-  function mockRouteBuilderService($injector) {
-    Mock.RouteBuilderService = $injector.get('otusjs.studio.navigationBuilder.RouteBuilderService');
-    return Mock.RouteBuilderService;
   }
 
 });
