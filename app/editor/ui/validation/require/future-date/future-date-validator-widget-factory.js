@@ -33,6 +33,7 @@
         _init();
 
         function _init() {
+            var avaiableRules = question.fillingRules.options;
             self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
         }
 
