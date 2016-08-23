@@ -15,13 +15,11 @@
     var self = this;
     var _originNode = null;
     var _destinationNode = null;
-    var _scope = null;
 
     /* Public methods */
     self.activate = activate;
 
-    function activate(scope) {
-      _scope = scope;
+    function activate() {
       MapEventsHandlerService.loadMapView(MapVisualHandlerService.mapView());
       MapEventsHandlerService.onClickNode(function(event) {
         var clickedNode = event.data.node;

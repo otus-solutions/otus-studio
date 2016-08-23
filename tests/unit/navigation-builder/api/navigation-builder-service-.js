@@ -2,41 +2,40 @@ describe('NavigationBuilderService', function() {
 
   var Mock = {};
   var service = {};
+  var injections = {};
 
   beforeEach(function() {
     module('otusjs.studio.navigationBuilder');
 
-    mockTemplateNavigations();
-    mockNodes();
-    mockEdges();
-
     inject(function(_$injector_, $rootScope) {
+      mockTemplateNavigations();
+      mockNodes();
+      mockEdges();
       mockScope($rootScope, _$injector_);
+      mockMapFactory(_$injector_);
+      mockRouteBuilderService(_$injector_);
 
-      service = _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderService', {
-        MapFactory: mockMapFactory(_$injector_),
-        RouteBuilderService: mockRouteBuilderService(_$injector_)
-      });
+      service = _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderService', injections);
     });
   });
 
-  describe('loadTemplateNavigations method', function() {
+  describe('setSurvey method', function() {
 
     it('should initialize a Map', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.setSurvey(Mock.templateNavigations);
 
       expect(service.navigationMap()).toBeDefined();
     });
 
     it('should convert each navigation from template to Nodes', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.setSurvey(Mock.templateNavigations);
 
       expect(service.nodes().length).not.toBe(0);
       expect(service.navigationMap().nodes().length).not.toBe(0);
     });
 
     it('should create edges to each navigation route case', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
+      service.setSurvey(Mock.templateNavigations);
 
       expect(service.edges().length).not.toBe(0);
       expect(service.navigationMap().edges().length).not.toBe(0);
@@ -46,20 +45,12 @@ describe('NavigationBuilderService', function() {
 
   describe('activateRouteCreatorMode method', function() {
 
-    it('should call RouteBuilderService.setScope', function() {
-      spyOn(Mock.RouteBuilderService, 'setScope');
+    it('should call RouteBuilderService.activate', function() {
+      spyOn(Mock.RouteBuilderService, 'activate');
 
-      service.activateRouteCreatorMode(Mock.scope);
+      service.activateRouteCreatorMode();
 
-      expect(Mock.RouteBuilderService.setScope).toHaveBeenCalledWith(Mock.scope);
-    });
-
-    it('should call scope.$emit with mode activation event', function() {
-      spyOn(Mock.scope, '$emit');
-
-      service.activateRouteCreatorMode(Mock.scope);
-
-      expect(Mock.scope.$emit).toHaveBeenCalledWith(Mock.scope.events.ROUTE_SERVICE_MODE_ACTIVE);
+      expect(Mock.RouteBuilderService.activate).toHaveBeenCalled();
     });
 
   });
@@ -164,11 +155,6 @@ describe('NavigationBuilderService', function() {
 
   });
 
-  function mockMapFactory($injector) {
-    Mock.MapFactory = $injector.get('otusjs.studio.navigationBuilder.model.MapFactory');
-    return Mock.MapFactory;
-  }
-
   function mockTemplateNavigations() {
     Mock.templateNavigations = [{
       "extents": "StudioObject",
@@ -262,9 +248,14 @@ describe('NavigationBuilderService', function() {
     Mock.scope.events = $injector.get('NBEVENTS');
   }
 
+  function mockMapFactory($injector) {
+    Mock.MapFactory = $injector.get('otusjs.studio.navigationBuilder.model.MapFactory');
+    injections.MapFactory = Mock.MapFactory;
+  }
+
   function mockRouteBuilderService($injector) {
     Mock.RouteBuilderService = $injector.get('otusjs.studio.navigationBuilder.RouteBuilderService');
-    return Mock.RouteBuilderService;
+    injections.RouteBuilderService = Mock.RouteBuilderService;
   }
 
 });

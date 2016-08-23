@@ -1,39 +1,55 @@
 <md-toolbar layout="row" flex>
   <div class="md-toolbar-tools">
-    <h2>Criar de Rota</h2>
+    <h2>{{ $ctrl.label.dialog.title }}</h2>
   </div>
 </md-toolbar>
-<md-dialog-content flex layout-margin>
-  <span layout="column" flex layout-align="center center">Você irá definir uma rota entre estes dois itens:</span>
-</md-dialog-content>
 <md-dialog-content layout="row" layout-align="center center">
-  <span layout="column" flex="35" layout-align="center center">{{ $ctrl.originNode.label }}</span>
+  <md-card layout="column" flex="40" layout-align="center center">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-subhead" style="color: #3D855B !important">{{ $ctrl.label.origin }}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <span layout-align="center center">{{ $ctrl.label.originNode }}</span>
+    </md-card-content>
+  </md-card>
   <span layout="column" flex></span>
-  <span layout="column" flex="35" layout-align="center center">{{ $ctrl.destinationNode.label }}</span>
+  <md-card layout="column" flex="40" layout-align="center center">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-subhead" style="color: #1B5BD1 !important">{{ $ctrl.label.destination }}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <span layout-align="center center">{{ $ctrl.label.destinationNode }}</span>
+    </md-card-content>
+  </md-card>
 </md-dialog-content>
 <md-dialog-content layout="row" flex>
   <div layout="column">
-    <md-button class="md-raised" ng-click="$ctrl.addCondition()" flex="10">Criar condição</md-button>
+    <md-button class="md-raised" ng-click="$ctrl.addCondition()" flex="10">{{ $ctrl.label.button.createCondition }}</md-button>
     <md-list flex>
-      <md-list-item ng-repeat="condition in $ctrl.routeConditions track by $index" ng-click="$ctrl.selectCondition(condition)" class="md-1-line">
-        <div class="md-list-item-text" layout="column">
+      <md-list-item ng-repeat="condition in $ctrl.selectedRoute.conditionSet track by $index" ng-click="$ctrl.selectCondition(condition)" class="md-1-line">
+        <div class="md-list-item-text" layout="column" ng-click="$ctrl.selectCondition(condition)">
           <span>{{ condition.name }}</span>
         </div>
       </md-list-item>
     </md-list>
   </div>
   <div layout="column" layout-padding flex layout-align="space-around center" layout-margin ng-class="{'route-detail-open': $ctrl.selectedRoute, 'route-detail-close': !$ctrl.selectedRoute}">
-      <h3 ng-show="false" layout-align="center center" flex>Você ainda não criou condições de rota. Faça isso clicando em "Criar condição"</h3>
+      <h3 ng-show="false" layout-align="center center" flex>{{ $ctrl.label.message.emptyConditions }}</h3>
       <md-list flex>
-        <md-list-item ng-repeat="rule in $ctrl.selectedCondition.rules track by $index" class="md-1-line">
+        <otus-rule-editor></otus-rule-editor>
+        <md-list-item ng-repeat="rule in $ctrl.selectedCondition.rules" class="md-1-line">
           <div class="md-list-item-text" layout="column">
-            <span>{{ rule }}</span>
+            <otus-rule-editor></otus-rule-editor>
           </div>
         </md-list-item>
       </md-list>
   </div>
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
-  <md-button class="md-raised" ng-click="$ctrl.cancel()">Cancelar</md-button>
-  <md-button class="md-raised md-primary" ng-click="$ctrl.save()">Salvar Rota</md-button>
+  <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
+  <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>

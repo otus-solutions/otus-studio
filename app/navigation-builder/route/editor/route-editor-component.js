@@ -15,41 +15,38 @@
     });
 
   component.$inject = [
-    '$scope',
-    '$element',
-    'NBEVENTS',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
   ];
 
-  function component($scope, $element, NBEVENTS, NavigationBuilderService) {
+  function component(RouteBuilderService) {
     var self = this;
-    var _conditionCounter = 1;
-
-    self.selectedRoute = {};
-    self.routeConditions = {};
+    var _rootNavigation = {};
 
     /* Public methods */
     self.$onInit = onInit;
     self.addCondition = addCondition;
+    self.selectCondition = selectCondition;
     self.cancel = cancel;
     self.save = save;
 
     function onInit() {
-      if (self.originNode) {
-        self.routeConditions = self.originNode.navigation.routes[0].conditions;
-      }
+      _initializeLabels();
+      _rootNavigation = self.originNode.navigation;
+      RouteBuilderService.startRouteBuilding();
+      self.selectedRoute = RouteBuilderService.routeData;
     }
 
     function addCondition() {
-      self.routeConditions[_conditionCounter] = {
-        name: 'CONDIÇÃO ' + _conditionCounter,
-        rules: []
-      };
-      ++_conditionCounter;
+      var newConditionData = {};
+      newConditionData.name = 'CONDIÇÃO ' + self.selectedRoute.conditionSet.length;
+      newConditionData.rules = [];
+
+      RouteBuilderService.routeData.conditionSet.push(newConditionData);
     }
 
     function selectCondition(condition) {
       self.selectedCondition = condition;
+      console.dir(self.selectedCondition);
     }
 
     function cancel() {
@@ -57,7 +54,27 @@
     }
 
     function save() {
-      self.onSave();
+      console.dir(RouteBuilderService.routeData);
+    }
+
+    function _initializeLabels() {
+      self.label = {
+        dialog: {
+          title: 'Criar nova Rota'
+        },
+        button: {
+          cancel: 'Cancelar',
+          save: 'Salvar Rota',
+          createCondition: 'Criar Condição'
+        },
+        origin: 'Origem',
+        destination: 'Destino',
+        originNode: self.originNode.label,
+        destinationNode: self.destinationNode.label,
+        message: {
+          emptyConditions: 'Você ainda não criou condições de rota. Faça isso clicando em "Criar condição"',
+        }
+      };
     }
   }
 })();

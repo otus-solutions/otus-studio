@@ -13,22 +13,28 @@
 
   function service(DataService, EventsService, UiEventsService) {
     var self = this;
-    var _scope = null;
+    self.routeData = null;
 
     /* Public methods */
     self.activate = activate;
+    self.deactivate = deactivate;
     self.selectNode = selectNode;
     self.selectedNode = selectedNode;
-    self.selectedNavigation = selectedNavigation;
-    self.selectedNodeFamily = selectedNodeFamily;
     self.selectedEdges = selectedEdges;
-    self.deactivate = deactivate;
+    self.startRouteBuilding = startRouteBuilding;
+    self.addRule = addRule;
+    self.getWhenListForRule = getWhenListForRule;
+    self.getOperatorListForRule = getOperatorListForRule;
+    self.getAnswerListForRule = getAnswerListForRule;
 
-    function activate(scope) {
-      _scope = scope;
-      DataService.activate(scope);
-      EventsService.activate(scope);
-      UiEventsService.activate(scope);
+    function activate(survey) {
+      DataService.activate(survey);
+      EventsService.activate();
+      UiEventsService.activate();
+    }
+
+    function deactivate() {
+      DataService.deactivate();
     }
 
     function selectNode(node) {
@@ -39,20 +45,39 @@
       return DataService.selectedNode();
     }
 
-    function selectedNavigation() {
-      return DataService.selectedNavigation();
-    }
-
-    function selectedNodeFamily() {
-      return DataService.selectedNodeFamily();
-    }
-
     function selectedEdges() {
       return DataService.selectedEdges();
     }
 
-    function deactivate() {
-      DataService.deactivate();
+    function startRouteBuilding() {
+      var sourceNavigation = selectedNode()[0].navigation;
+      var targetNavigation = selectedNode()[1].navigation;
+
+      self.routeData = {};
+      self.routeData.origin = sourceNavigation.origin;
+      self.routeData.destination = targetNavigation.origin;
+
+      self.routeData.conditionSet = [];
+    }
+
+    function addRule(when, operator, answer) {
+      var ruleData = {};
+      ruleData.when = when;
+      ruleData.operator = operator;
+      ruleData.answer = answer;
+      self.routeData.conditionSet.push(ruleData);
+    }
+
+    function getWhenListForRule() {
+      return DataService.listAvailableWhen();
+    }
+
+    function getOperatorListForRule(itemType) {
+      return DataService.listAvailableOperator(itemType);
+    }
+
+    function getAnswerListForRule(question) {
+      return DataService.listAvailableAnswer(question);
     }
   }
 })();

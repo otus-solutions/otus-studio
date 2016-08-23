@@ -4,6 +4,7 @@
     angular.module('otusjs.studio.navigationBuilder', [
         'otusjs.studio.navigationBuilder.model',
         'otusjs.studio.navigationBuilder.routeBuilder',
+        'otusjs.studio.navigationBuilder.messenger',
         'ngMaterial'
     ])
     .constant('NBEVENTS', {

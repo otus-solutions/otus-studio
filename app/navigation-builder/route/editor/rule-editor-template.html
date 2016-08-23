@@ -1,0 +1,78 @@
+<div layout="row">
+
+  <!-- WHEN PARAMETER -->
+  <md-autocomplete
+    md-no-cache="true"
+    md-selected-item="$ctrl.selectedWhen"
+    md-selected-item-change="$ctrl.whenChange($ctrl.selectedWhen)"
+    md-search-text="$ctrl.whenSearchText"
+    md-items="when in $ctrl.whens($ctrl.whenSearchText)"
+    md-item-text="when.customID"
+    md-min-length="0"
+    placeholder="Quando..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <otus:item-icon item="{{ when.icon }}">
+      </span>
+      <span class="item-metadata">
+        <span class="item-metastat">
+          <strong>{{ when.customID }}</strong>
+        </span>
+        <span class="item-metastat">
+          <span>{{ when.label }}</span>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /WHEN PARAMETER -->
+
+  <!-- OPERATOR PARAMETER -->
+  <md-autocomplete
+    md-no-cache="true"
+    ng-disabled="$ctrl.isOperatorDisable"
+    md-selected-item="$ctrl.selectedOperator"
+    md-selected-item-change="$ctrl.operatorChange($ctrl.selectedOperator)"
+    md-search-text="$ctrl.operatorSearchText"
+    md-items="operator in $ctrl.operators"
+    md-item-text="operator.label"
+    md-min-length="0"
+    placeholder="Comparador..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <span>
+          <strong>{{ operator.label }}</strong>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /OPERATOR PARAMETER -->
+
+  <!-- ANSWER PARAMETER -->
+  <md-autocomplete
+    md-no-cache="true"
+    ng-disabled="ctrl.isAnswerDisable"
+    md-selected-item="$ctrl.selectedAnswer"
+    md-selected-item-change="$ctrl.answerChange($ctrl.selectedAnswer)"
+    md-search-text="$ctrl.answerSearchText"
+    md-items="answer in $ctrl.answers($ctrl.answerSearchText)"
+    md-item-text="answer.label"
+    md-min-length="0"
+    placeholder="Valor..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <span>
+          <strong>{{ answer.label }}</strong>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /ANSWER PARAMETER -->
+
+  <!-- ACTIONS -->
+  <md-button aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button">
+    <md-icon md-svg-icon="plus"></md-icon>
+  </md-button>
+</div>

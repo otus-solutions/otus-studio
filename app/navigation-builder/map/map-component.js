@@ -9,15 +9,13 @@
     });
 
   component.$inject = [
-    '$scope',
-    'NBEVENTS',
-    'NBMESSAGES',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.MapVisualHandlerService',
     'otusjs.studio.navigationBuilder.NavigationBuilderService',
-    'otusjs.studio.navigationBuilder.NavigationMessengerService'
+    'otusjs.studio.navigationBuilder.messenger.InstructorService'
   ];
 
-  function component($scope, NBEVENTS, NBMESSAGES, MapVisualHandlerService, NavigationBuilderService, NavigationMessengerService) {
+  function component(scopeService, MapVisualHandlerService, NavigationBuilderService, NavigationMessengerService) {
     var self = this;
 
     self.showMessenger = true;
@@ -26,22 +24,18 @@
     self.$onInit = onInit;
 
     function onInit() {
-      $scope.events = NBEVENTS;
-      $scope.messages = NBMESSAGES;
-
       _initializeComponents();
       _initializeModuleEvents();
     }
 
     function _initializeComponents() {
-      self.routeMenuCtrl = new routeMenuController($scope, NavigationBuilderService);
+      self.routeMenuCtrl = new routeMenuController(NavigationBuilderService);
     }
 
     function _initializeModuleEvents() {
-      $scope.$parent.$parent.$on(NBEVENTS.MAP_CONTAINER_READY, function(event, data) {
+      scopeService.onEvent(scopeService.NBEVENTS.MAP_CONTAINER_READY, function(event, data) {
         MapVisualHandlerService.loadMapView(new sigma('map-view'));
         _renderMap();
-        NavigationMessengerService.setScope($scope);
       });
     }
 
@@ -53,7 +47,7 @@
     }
   }
 
-  function routeMenuController($scope, NavigationBuilderService) {
+  function routeMenuController(NavigationBuilderService) {
     var self = this;
 
     _init();
@@ -67,7 +61,7 @@
     }
 
     function addRoute() {
-      NavigationBuilderService.activateRouteCreatorMode($scope);
+      NavigationBuilderService.activateRouteCreatorMode();
     }
 
     function _init() {

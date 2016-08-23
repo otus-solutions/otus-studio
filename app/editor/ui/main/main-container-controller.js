@@ -10,11 +10,12 @@
     'MainContainerContentService',
     'UiBindingService',
     '$mdBottomSheet',
-    'otusjs.studio.navigationBuilder.NavigationBuilderAPI',
-    'WorkspaceService'
+    'otusjs.studio.navigationBuilder.NavigationBuilderService',
+    'WorkspaceService',
+    'NBEVENTS'
   ];
 
-  function MainContainerController($scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet, NavigationBuilderAPI, WorkspaceService) {
+  function MainContainerController($scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet, NavigationBuilderService, WorkspaceService, NBEVENTS) {
     var self = this;
 
     self.showQuestionsMenu = showQuestionsMenu;
@@ -44,9 +45,8 @@
         $navContainer.css('height', ($tabContainer.height() - 10) + 'px');
       });
 
-      var navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-      NavigationBuilderAPI.loadTemplateNavigations(navigations);
-      $scope.$broadcast(NavigationBuilderAPI.NBEVENTS.MAP_CONTAINER_READY);
+      NavigationBuilderService.setSurvey(WorkspaceService.getSurvey());
+      $scope.$broadcast(NBEVENTS.MAP_CONTAINER_READY);
     }
   }
 }());

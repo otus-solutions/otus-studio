@@ -8,8 +8,9 @@ describe('RouteBuilderService', function() {
     module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_, $rootScope) {
-      mockNodes();
       mockScope($rootScope, _$injector_);
+      mockTemplateNavigations();
+      mockNodes();
       mockDataService(_$injector_);
       mockEventsService(_$injector_);
       mockUiEventsService(_$injector_);
@@ -19,6 +20,7 @@ describe('RouteBuilderService', function() {
   });
 
   describe('activate method', function() {
+
     beforeEach(function() {
       service.activate(Mock.scope);
     });
@@ -33,6 +35,16 @@ describe('RouteBuilderService', function() {
 
     it('should call UiEventsService.activate', function() {
       expect(Mock.UiEventsService.activate).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('deactivate method', function() {
+
+    it('should call DataService.deactivate', function() {
+      service.deactivate();
+
+      expect(Mock.DataService.deactivate).toHaveBeenCalled();
     });
 
   });
@@ -57,26 +69,6 @@ describe('RouteBuilderService', function() {
 
   });
 
-  describe('selectedNode method', function() {
-
-    it('should call DataService.selectedNavigation', function() {
-      service.selectedNavigation();
-
-      expect(Mock.DataService.selectedNavigation).toHaveBeenCalled();
-    });
-
-  });
-
-  describe('selectedNodeFamily method', function() {
-
-    it('should call DataService.selectedNodeFamily', function() {
-      service.selectedNodeFamily();
-
-      expect(Mock.DataService.selectedNodeFamily).toHaveBeenCalled();
-    });
-
-  });
-
   describe('selectedEdges method', function() {
 
     it('should call DataService.selectedEdges', function() {
@@ -87,12 +79,55 @@ describe('RouteBuilderService', function() {
 
   });
 
-  describe('deactivate method', function() {
+  describe('startRouteBuilding method', function() {
 
-    it('should call DataService.deactivate', function() {
-      service.deactivate();
+    beforeEach(function() {
+      service.selectNode(Mock.n1);
+      service.selectNode(Mock.n2);
+    });
 
-      expect(Mock.DataService.deactivate).toHaveBeenCalled();
+    it('should define a property routeData', function() {
+      service.startRouteBuilding();
+
+      expect(service.routeData).toBeDefined();
+    });
+
+    it('should set origin value in routeData', function() {
+      service.startRouteBuilding();
+
+      expect(service.routeData.origin).toBeDefined();
+    });
+
+    it('should set destination value in routeData', function() {
+      service.startRouteBuilding();
+
+      expect(service.routeData.destination).toBeDefined();
+    });
+
+    it('should set conditionSet value in routeData', function() {
+      service.startRouteBuilding();
+
+      expect(service.routeData.conditionSet).toBeDefined();
+    });
+
+  });
+
+  describe('getWhenListForRule method', function() {
+
+    beforeEach(function() {
+      service.startRouteBuilding();
+    });
+
+    it('should call DataService.listAvailableWhen', function() {
+      service.getWhenListForRule();
+
+      expect(Mock.DataService.listAvailableWhen).toHaveBeenCalled();
+    });
+
+    it('should return an array of SurveyItems', function() {
+      var returnedValue = service.getWhenListForRule();
+
+      expect(returnedValue).toEqual(jasmine.any(Array));
     });
 
   });
@@ -103,17 +138,72 @@ describe('RouteBuilderService', function() {
     Mock.scope.messages = $injector.get('NBMESSAGES');
   }
 
+  function mockTemplateNavigations() {
+    Mock.templateNavigations = [{
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD1",
+      "routes": [{
+        "extents": "StudioObject",
+        "objectType": "Route",
+        "name": "1",
+        "origin": "CAD1",
+        "destination": "CAD2",
+        "conditionSet": {}
+      }]
+    }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD2",
+      "routes": [{
+        "extents": "StudioObject",
+        "objectType": "Route",
+        "name": "1",
+        "origin": "CAD2",
+        "destination": "CAD3",
+        "conditionSet": {}
+      }]
+    }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD3",
+      "routes": [{
+        "extents": "StudioObject",
+        "objectType": "Route",
+        "name": "1",
+        "origin": "CAD3",
+        "destination": "CAD4",
+        "conditionSet": {}
+      }]
+    }, {
+      "extents": "StudioObject",
+      "objectType": "Navigation",
+      "origin": "CAD4",
+      "routes": [{
+        "extents": "StudioObject",
+        "objectType": "Route",
+        "name": "1",
+        "origin": "CAD4",
+        "destination": "CAD5",
+        "conditionSet": {}
+      }]
+    }];
+  }
+
   function mockNodes() {
     Mock.n1 = {
-      id: 'N1'
+      id: 'N1',
+      navigation: Mock.templateNavigations[0]
     };
 
     Mock.n2 = {
-      id: 'N2'
+      id: 'N2',
+      navigation: Mock.templateNavigations[1]
     };
 
     Mock.n3 = {
-      id: 'N3'
+      id: 'N3',
+      navigation: Mock.templateNavigations[2]
     };
   }
 
@@ -122,11 +212,10 @@ describe('RouteBuilderService', function() {
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'activate');
     spyOn(Mock.DataService, 'selectNode');
-    spyOn(Mock.DataService, 'selectedNode');
-    spyOn(Mock.DataService, 'selectedNavigation');
-    spyOn(Mock.DataService, 'selectedNodeFamily');
+    spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
     spyOn(Mock.DataService, 'selectedEdges');
     spyOn(Mock.DataService, 'deactivate');
+    spyOn(Mock.DataService, 'listAvailableWhen').and.returnValue([]);
   }
 
   function mockEventsService($injector) {

@@ -6,10 +6,11 @@
     .service('otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService', service);
 
   service.$inject = [
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
   ];
 
-  function service($mdDialog) {
+  function service($mdDialog, scopeService) {
     var self = this;
     var _dialogSettings = {};
 
@@ -31,17 +32,17 @@
       _dialogSettings.hasBackdrop = true;
     }
 
-    function showDialog(originNode, destinationNode, eventScope) {
+    function showDialog(originNode, destinationNode) {
       _dialogSettings.locals = {
         origin: originNode,
         destination: destinationNode,
-        eventScope: eventScope
+        scopeService: scopeService
       };
       $mdDialog.show(_dialogSettings);
     }
   }
 
-  function DialogController($mdDialog, origin, destination, eventScope) {
+  function DialogController($mdDialog, origin, destination, scopeService) {
     var self = this;
 
     self.origin = origin;
@@ -53,7 +54,7 @@
 
     function cancel(response) {
       $mdDialog.hide(response);
-      eventScope.$broadcast(eventScope.events.ROUTE_BUILD_CANCELED);
+      scopeService.broadcast(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED);
     }
 
     function confirm(response) {

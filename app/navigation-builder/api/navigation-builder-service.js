@@ -13,7 +13,7 @@
 
   function service(MapFactory, RouteBuilderService, NavigationInspectorService) {
     var self = this;
-    var _rawData = {};
+    var _survey = {};
     var _navigationMap = {};
     var _activeServiceMode = null;
 
@@ -23,7 +23,7 @@
     self.navigationMap = navigationMap;
     self.nodes = nodes;
     self.edges = edges;
-    self.loadTemplateNavigations = loadTemplateNavigations;
+    self.setSurvey = setSurvey;
     self.selectNode = selectNode;
     self.selectedNode = selectedNode;
     self.selectedNavigation = selectedNavigation;
@@ -45,11 +45,9 @@
       return _navigationMap.edges();
     }
 
-    function loadTemplateNavigations(templateNavigations) {
-      _rawData = templateNavigations;
-      _navigationMap = MapFactory.create();
-      _addNodes(templateNavigations);
-      _addEdges(templateNavigations);
+    function setSurvey(survey) {
+      _survey = survey;
+      _loadTemplateNavigations(survey.NavigationManager.getNavigationList());
     }
 
     function selectNode(node) {
@@ -72,12 +70,12 @@
       return _activeServiceMode.selectedEdges();
     }
 
-    function activateRouteCreatorMode(scope) {
+    function activateRouteCreatorMode() {
       _activeServiceMode = RouteBuilderService;
-      _activeServiceMode.activate(scope);
+      _activeServiceMode.activate(_survey);
     }
 
-    function activateNavigationInspectorMode($scope) {
+    function activateNavigationInspectorMode() {
       _activeServiceMode = NavigationInspectorService;
     }
 
@@ -108,6 +106,12 @@
         });
 
       });
+    }
+
+    function _loadTemplateNavigations(templateNavigations) {
+      _navigationMap = MapFactory.create();
+      _addNodes(templateNavigations);
+      _addEdges(templateNavigations);
     }
   }
 })();

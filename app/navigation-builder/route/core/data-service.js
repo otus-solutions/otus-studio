@@ -5,59 +5,57 @@
     .module('otusjs.studio.navigationBuilder.routeBuilder')
     .service('otusjs.studio.navigationBuilder.routeBuilder.DataService', service);
 
-  function service() {
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.routeBuilder.OperatorSelectorService',
+    'otusjs.studio.navigationBuilder.routeBuilder.AnswerSelectorService'
+  ];
+
+  function service(scopeService, OperatorSelectorService, AnswerSelectorService) {
     var self = this;
+    var _survey = null;
     var _originNode = null;
     var _destinationNode = null;
-    var _scope = null;
 
     /* Public methods */
     self.activate = activate;
     self.deactivate = deactivate;
     self.selectNode = selectNode;
     self.selectedNode = selectedNode;
-    self.selectedNavigation = selectedNavigation;
-    self.selectedNodeFamily = selectedNodeFamily;
     self.selectedEdges = selectedEdges;
     self.hasOriginNode = hasOriginNode;
     self.hasDestinationNode = hasDestinationNode;
+    self.listAvailableWhen = listAvailableWhen;
+    self.listAvailableOperator = listAvailableOperator;
+    self.listAvailableAnswer = listAvailableAnswer;
 
-    function activate(scope) {
-      _scope = scope;
+    function activate(survey) {
+      _survey = survey;
     }
 
     function deactivate() {
       _originNode = null;
       _destinationNode = null;
-      _scope = null;
     }
 
     function selectNode(node) {
       if (_areSameNode(_originNode, node)) {
         _originNode = null;
-        _scope.$emit(_scope.events.ORIGIN_NODE_UNSELECTED, node);
+        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_UNSELECTED, node);
       } else if (_areSameNode(_destinationNode, node)) {
         _destinationNode = null;
-        _scope.$emit(_scope.events.DESTINATION_NODE_UNSELECTED, node);
+        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_UNSELECTED, node);
       } else if (!hasOriginNode()) {
         _originNode = node;
-        _scope.$emit(_scope.events.ORIGIN_NODE_SELECTED, node);
+        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_SELECTED, node);
       } else {
         _destinationNode = node;
-        _scope.$emit(_scope.events.DESTINATION_NODE_SELECTED, selectedNode());
+        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_SELECTED, selectedNode());
       }
     }
 
     function selectedNode() {
       return [_originNode, _destinationNode];
-    }
-
-    function selectedNavigation() {
-      return [_originNode.navigation, _destinationNode.navigation];
-    }
-
-    function selectedNodeFamily() {
-      return undefined;
     }
 
     function selectedEdges() {
@@ -74,6 +72,18 @@
       } else {
         return true;
       }
+    }
+
+    function listAvailableWhen() {
+      return _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
+    }
+
+    function listAvailableOperator(itemType) {
+      return OperatorSelectorService.listOperators(itemType);
+    }
+
+    function listAvailableAnswer(item) {
+      return AnswerSelectorService.listAnswers(item);
     }
 
     function _areSameNode(originalNode, nodeToCompare) {

@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.studio.navigationBuilder.routeBuilder')
-    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderMessageService', service);
+    .service('otusjs.studio.navigationBuilder.routeBuilder.MessageService', service);
 
   function service() {
     var self = this;
