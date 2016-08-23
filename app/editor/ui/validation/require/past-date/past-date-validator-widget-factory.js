@@ -24,7 +24,7 @@
 
 
         /* Public Methods */
-        self.data = new Date();
+        self.data;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -34,7 +34,7 @@
 
         function _init() {
             var avaiableRules = question.fillingRules.options;
-            self.data = new Date(avaiableRules[whoAmI].data.reference);
+            self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
             self.updateData();
         }
 
