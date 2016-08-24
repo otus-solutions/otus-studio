@@ -38,7 +38,7 @@
 
     function addCondition() {
       var newConditionData = {};
-      newConditionData.name = 'CONDIÇÃO ' + self.selectedRoute.conditionSet.length;
+      newConditionData.name = 'GRUPO DE REGRAS ' + self.selectedRoute.conditionSet.length;
       newConditionData.rules = [];
 
       RouteBuilderService.routeData.conditionSet.push(newConditionData);
@@ -65,7 +65,7 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createCondition: 'Criar Condição'
+          createCondition: 'Criar grupo de Regras'
         },
         origin: 'Origem',
         destination: 'Destino',

@@ -27,29 +27,30 @@
   </md-card>
 </md-dialog-content>
 <md-dialog-content layout="row" flex>
-  <div layout="column">
-    <md-button class="md-raised" ng-click="$ctrl.addCondition()" flex="10">{{ $ctrl.label.button.createCondition }}</md-button>
-    <md-list flex>
-      <md-list-item ng-repeat="condition in $ctrl.selectedRoute.conditionSet track by $index" ng-click="$ctrl.selectCondition(condition)" class="md-1-line">
-        <div class="md-list-item-text" layout="column" ng-click="$ctrl.selectCondition(condition)">
-          <span>{{ condition.name }}</span>
-        </div>
-      </md-list-item>
-    </md-list>
-  </div>
-  <div layout="column" layout-padding flex layout-align="space-around center" layout-margin ng-class="{'route-detail-open': $ctrl.selectedRoute, 'route-detail-close': !$ctrl.selectedRoute}">
-      <h3 ng-show="false" layout-align="center center" flex>{{ $ctrl.label.message.emptyConditions }}</h3>
-      <md-list flex>
-        <otus-rule-editor></otus-rule-editor>
-        <md-list-item ng-repeat="rule in $ctrl.selectedCondition.rules" class="md-1-line">
-          <div class="md-list-item-text" layout="column">
-            <otus-rule-editor></otus-rule-editor>
-          </div>
-        </md-list-item>
-      </md-list>
-  </div>
+    <h3 ng-show="false" layout-align="center center" flex>{{ $ctrl.label.message.emptyConditions }}</h3>
+
+    <md-tabs flex md-selected="selectedIndex" md-border-bottom md-autoselect md-dynamic-height>
+      <md-tab flex label="{{ condition.name }}" ng-repeat="condition in $ctrl.selectedRoute.conditionSet track by $index" ng-click="$ctrl.selectCondition(condition)">
+
+        <md-list flex>
+          <md-list-item flex ng-repeat="rule in $ctrl.selectedCondition.rules" class="md-1-line">
+            <div class="md-list-item-text" layout="column" flex>
+              <otus-rule-editor flex create-mode="false"></otus-rule-editor>
+            </div>
+          </md-list-item>
+          <md-list-item flex class="md-1-line" flex>
+            <otus-rule-editor flex create-mode="true"></otus-rule-editor>
+          </md-list-item>
+        </md-list>
+
+      </md-tab>
+    </md-tabs>
+
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
+  <div flex layout-align="start center">
+    <md-button ng-click="$ctrl.addCondition()" flex>{{ $ctrl.label.button.createCondition }}</md-button>
+  </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
   <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>

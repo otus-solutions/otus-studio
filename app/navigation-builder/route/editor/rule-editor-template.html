@@ -1,7 +1,8 @@
-<div layout="row">
+<div layout="row" layout-align="space-between center" layout-margin>
 
   <!-- WHEN PARAMETER -->
   <md-autocomplete
+    flex="30"
     md-no-cache="true"
     md-selected-item="$ctrl.selectedWhen"
     md-selected-item-change="$ctrl.whenChange($ctrl.selectedWhen)"
@@ -29,6 +30,7 @@
 
   <!-- OPERATOR PARAMETER -->
   <md-autocomplete
+    flex="30"
     md-no-cache="true"
     ng-disabled="$ctrl.isOperatorDisable"
     md-selected-item="$ctrl.selectedOperator"
@@ -51,6 +53,7 @@
 
   <!-- ANSWER PARAMETER -->
   <md-autocomplete
+    flex="30"
     md-no-cache="true"
     ng-disabled="ctrl.isAnswerDisable"
     md-selected-item="$ctrl.selectedAnswer"
@@ -72,7 +75,10 @@
   <!-- /ANSWER PARAMETER -->
 
   <!-- ACTIONS -->
-  <md-button aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button">
-    <md-icon md-svg-icon="plus"></md-icon>
+  <md-button aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button" ng-show="$ctrl.showSaveRuleButton">
+    <md-icon md-svg-icon="check"></md-icon>
+  </md-button>
+  <md-button aria-label="Excluir regra" ng-click="$ctrl.deleteRule()" class="md-mini md-icon-button" ng-show="$ctrl.showDeleteRuleButton">
+    <md-icon md-svg-icon="close"></md-icon>
   </md-button>
 </div>

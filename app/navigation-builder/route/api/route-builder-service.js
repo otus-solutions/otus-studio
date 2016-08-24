@@ -65,7 +65,7 @@
       ruleData.when = when;
       ruleData.operator = operator;
       ruleData.answer = answer;
-      self.routeData.conditionSet.push(ruleData);
+      self.routeData.conditionSet[0].rules.push(ruleData);
     }
 
     function getWhenListForRule() {
