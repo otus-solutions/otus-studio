@@ -34,7 +34,11 @@
 
         function _init() {
             var avaiableRules = question.fillingRules.options;
-            self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
+                console.log(avaiableRules[whoAmI].data.reference);
+                self.updateData();
+            }
         }
 
 
