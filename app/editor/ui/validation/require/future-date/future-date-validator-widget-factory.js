@@ -23,7 +23,6 @@
         var whoAmI = 'futureDate';
 
         /* Public Methods */
-        self.data;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -35,7 +34,7 @@
         function _init() {
             var avaiableRules = question.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
-                self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
+                self.data = question.fillingRules.options[whoAmI].data.reference;
                 console.log(avaiableRules[whoAmI].data.reference);
                 self.updateData();
             }
