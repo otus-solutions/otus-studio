@@ -74,7 +74,7 @@
     //-----------------------------------------------------
 
     function startRouteBuilding(origin, destination) {
-      if (DataService.isSimpleNavigation(origin)) {
+      if (DataService.isSimpleNavigation(origin.id)) {
         DataService.initializeRouteData();
         DataService.createCondition();
       } else {
@@ -85,6 +85,7 @@
           DataService.createCondition();
         }
       }
+      DataService.selectCondition(0);
     }
 
     function saveRouteBuilding() {

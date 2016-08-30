@@ -30,12 +30,12 @@
 
     function onInit() {
       _initializeLabels();
-      RouteBuilderService.startRouteBuilding();
-      self.condition = RouteBuilderService.selectedRouteCondition();
+      RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
+      self.condition = RouteBuilderService.selectedCondition();
     }
 
     function deleteRule(ruleIndex) {
-      RouteBuilderService.selectedRouteCondition().rules.splice(ruleIndex, 1);
+      RouteBuilderService.selectedCondition().rules.splice(ruleIndex, 1);
     }
 
     function cancel() {
@@ -54,8 +54,8 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createRouteCondition: 'Criar grupo de Regras',
-          deleteRouteCondition: 'Excluir grupo atual'
+          createCondition: 'Criar grupo de Regras',
+          deleteCondition: 'Excluir grupo atual'
         },
         origin: 'Origem',
         destination: 'Destino',

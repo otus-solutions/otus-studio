@@ -95,7 +95,7 @@ describe('RouteBuilderService', function() {
         spyOn(Mock.DataService, 'routeExists');
         spyOn(Mock.DataService, 'isSimpleNavigation');
 
-        service.startRouteBuilding();
+        service.startRouteBuilding(Mock.n1, Mock.n2);
 
         expect(Mock.DataService.isSimpleNavigation).toHaveBeenCalled();
       });
@@ -107,13 +107,13 @@ describe('RouteBuilderService', function() {
         });
 
         it('should call DataService.initializeRouteData', function() {
-          service.startRouteBuilding();
+          service.startRouteBuilding(Mock.n1, Mock.n2);
 
           expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
         });
 
         it('should call DataService.createCondition', function() {
-          service.startRouteBuilding();
+          service.startRouteBuilding(Mock.n1, Mock.n2);
 
           expect(Mock.DataService.createCondition).toHaveBeenCalled();
         });
@@ -141,13 +141,13 @@ describe('RouteBuilderService', function() {
           });
 
           it('should call DataService.initializeRouteData', function() {
-            service.startRouteBuilding();
+            service.startRouteBuilding(Mock.n1, Mock.n2);
 
             expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
           });
 
           it('should call DataService.createCondition', function() {
-            service.startRouteBuilding();
+            service.startRouteBuilding(Mock.n1, Mock.n2);
 
             expect(Mock.DataService.createCondition).toHaveBeenCalled();
           });
@@ -182,7 +182,7 @@ describe('RouteBuilderService', function() {
 
       beforeEach(function() {
         spyOn(Mock.DataService, 'routeExists');
-        service.startRouteBuilding();
+        service.startRouteBuilding(Mock.n1, Mock.n2);
       });
 
       it('should call DataService.listAvailableWhen', function() {
@@ -282,6 +282,7 @@ describe('RouteBuilderService', function() {
     spyOn(Mock.DataService, 'activate');
     spyOn(Mock.DataService, 'initializeRouteData');
     spyOn(Mock.DataService, 'createCondition');
+    spyOn(Mock.DataService, 'selectCondition');
     spyOn(Mock.DataService, 'selectNode');
     spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
     spyOn(Mock.DataService, 'selectedEdges');
