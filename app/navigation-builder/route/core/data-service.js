@@ -144,28 +144,22 @@
       _routeData.conditionSet = [];
     }
 
-==== BASE ====
     function selectCondition(index) {
       if (_routeData.length) {
-        _selectedConditionIndex = index;
         _selectedCondition = _routeData.conditionSet[index];
-==== BASE ====
       } else {
         return false;
       }
     }
 
-==== BASE ====
     function selectedCondition() {
       return _selectedCondition;
     }
 
     function selectedRoute() {
       return _routeData;
-==== BASE ====
     }
 
-==== BASE ====
     function isSimpleNavigation(origin) {
       if (selectNavigation(origin).listRoutes().length === 1) {
         return true;
@@ -186,7 +180,6 @@
       return _selectedNavigation.hasRoute(routeData);
     }
 
-==== BASE ====
     //-----------------------------------------------------
     // Rule editor
     //-----------------------------------------------------
