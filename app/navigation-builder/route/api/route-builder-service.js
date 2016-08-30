@@ -18,19 +18,20 @@
     // Service management
     self.activate = activate;
     self.deactivate = deactivate;
-    // Service interactions
+    // Map interactions
     self.selectNode = selectNode;
-    self.selectedNode = selectedNode;
-    self.selectedEdges = selectedEdges;
-    self.selectedRoute = selectedRoute;
     self.selectedCondition = selectedCondition;
+    self.selectedEdges = selectedEdges;
+    self.selectedNode = selectedNode;
+    self.selectedRoute = selectedRoute;
+    // Route editor
     self.createCondition = createCondition;
     self.deleteCondition = deleteCondition;
-    // Route editor
-    self.startRouteBuilding = startRouteBuilding;
     self.saveRouteBuilding = saveRouteBuilding;
+    self.selectCondition = selectCondition;
+    self.startRouteBuilding = startRouteBuilding;
     // Rule editor
-    self.addRule = addRule;
+    self.createRule = createRule;
     self.deleteRule = deleteRule;
     self.getAnswerListForRule = getAnswerListForRule;
     self.getOperatorListForRule = getOperatorListForRule;
@@ -59,6 +60,10 @@
       DataService.selectNode(node);
     }
 
+    function selectedCondition() {
+      return DataService.selectedCondition();
+    }
+
     function selectedNode() {
       return DataService.selectedNode();
     }
@@ -71,10 +76,6 @@
       return DataService.selectedRoute();
     }
 
-    function selectedCondition() {
-      return DataService.selectedCondition();
-    }
-
     //-----------------------------------------------------
     // Route editor
     //-----------------------------------------------------
@@ -82,8 +83,17 @@
     function createCondition() {
       DataService.createCondition();
     }
+
     function deleteCondition(index) {
       DataService.deleteCondition(index);
+    }
+
+    function saveRouteBuilding() {
+      DataService.apply();
+    }
+
+    function selectCondition(index) {
+      DataService.selectCondition(index);
     }
 
     function startRouteBuilding(origin, destination) {
@@ -101,15 +111,11 @@
       DataService.selectCondition(0);
     }
 
-    function saveRouteBuilding() {
-      DataService.apply();
-    }
-
     //-----------------------------------------------------
     // Rule editor
     //-----------------------------------------------------
 
-    function addRule(when, operator, answer) {
+    function createRule(when, operator, answer) {
       DataService.createRule(when, operator, answer);
     }
 
