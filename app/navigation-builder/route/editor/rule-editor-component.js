@@ -114,7 +114,7 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        RouteBuilderService.addRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
       }
       self.whenSearchText = '';
       self.operatorSearchText = '';

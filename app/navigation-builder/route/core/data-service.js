@@ -54,6 +54,7 @@
 
     function activate(survey) {
       _survey = survey;
+      window.survey = _survey;
     }
 
     function deactivate() {
@@ -145,7 +146,7 @@
     }
 
     function selectCondition(index) {
-      if (_routeData.length) {
+      if (_routeData.conditionSet.length) {
         _selectedCondition = _routeData.conditionSet[index];
       } else {
         return false;
