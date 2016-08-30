@@ -196,16 +196,6 @@ describe('DataService', function() {
       service.initializeRouteData();
     });
 
-    describe('initializeRouteData method', function() {
-
-      it('should create a route data object', function() {
-        service.initializeRouteData();
-
-        expect(service.selectedRoute()).toBeDefined();
-      });
-
-    });
-
     describe('createCondition method', function() {
 
       it('should create a route condition data object', function() {
@@ -213,6 +203,16 @@ describe('DataService', function() {
         service.selectCondition(0);
 
         expect(service.selectedCondition()).toBeDefined();
+      });
+
+    });
+
+    describe('initializeRouteData method', function() {
+
+      it('should create a route data object', function() {
+        service.initializeRouteData();
+
+        expect(service.selectedRoute()).toBeDefined();
       });
 
     });

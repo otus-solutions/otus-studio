@@ -170,6 +170,26 @@ describe('RouteBuilderService', function() {
 
     });
 
+    describe('createCondition method', function() {
+
+      it('should call DataService.createCondition', function() {
+        service.createCondition();
+
+        expect(Mock.DataService.createCondition).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('deleteCondition method', function() {
+
+      it('should call DataService.deleteCondition', function() {
+        service.deleteCondition();
+
+        expect(Mock.DataService.deleteCondition).toHaveBeenCalled();
+      });
+
+    });
+
   });
 
   describe('in rule editor methods', function() {
@@ -282,6 +302,7 @@ describe('RouteBuilderService', function() {
     spyOn(Mock.DataService, 'activate');
     spyOn(Mock.DataService, 'initializeRouteData');
     spyOn(Mock.DataService, 'createCondition');
+    spyOn(Mock.DataService, 'deleteCondition');
     spyOn(Mock.DataService, 'selectCondition');
     spyOn(Mock.DataService, 'selectNode');
     spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);

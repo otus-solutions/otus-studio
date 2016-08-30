@@ -15,21 +15,27 @@
     var self = this;
 
     /* Public methods */
+    // Service management
     self.activate = activate;
     self.deactivate = deactivate;
+    // Service interactions
     self.selectNode = selectNode;
     self.selectedNode = selectedNode;
     self.selectedEdges = selectedEdges;
     self.selectedRoute = selectedRoute;
     self.selectedCondition = selectedCondition;
+    self.createCondition = createCondition;
+    self.deleteCondition = deleteCondition;
+    // Route editor
     self.startRouteBuilding = startRouteBuilding;
-    self.addRule = addRule;
-    self.updateRule = updateRule;
-    self.deleteRule = deleteRule;
     self.saveRouteBuilding = saveRouteBuilding;
-    self.getWhenListForRule = getWhenListForRule;
-    self.getOperatorListForRule = getOperatorListForRule;
+    // Rule editor
+    self.addRule = addRule;
+    self.deleteRule = deleteRule;
     self.getAnswerListForRule = getAnswerListForRule;
+    self.getOperatorListForRule = getOperatorListForRule;
+    self.getWhenListForRule = getWhenListForRule;
+    self.updateRule = updateRule;
 
     //-----------------------------------------------------
     // Service management
@@ -73,6 +79,13 @@
     // Route editor
     //-----------------------------------------------------
 
+    function createCondition() {
+      DataService.createCondition();
+    }
+    function deleteCondition(index) {
+      DataService.deleteCondition(index);
+    }
+
     function startRouteBuilding(origin, destination) {
       if (DataService.isSimpleNavigation(origin.id)) {
         DataService.initializeRouteData();
@@ -96,28 +109,29 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function getWhenListForRule() {
-      return DataService.listAvailableWhen();
+    function addRule(when, operator, answer) {
+      DataService.createRule(when, operator, answer);
     }
 
-    function getOperatorListForRule(itemType) {
-      return DataService.listAvailableOperator(itemType);
+    function deleteRule(ruleIndex) {
+      DataService.deleteRule(ruleIndex);
     }
 
     function getAnswerListForRule(question) {
       return DataService.listAvailableAnswer(question);
     }
 
-    function addRule(when, operator, answer) {
-      DataService.createRule(when, operator, answer);
+    function getOperatorListForRule(itemType) {
+      return DataService.listAvailableOperator(itemType);
+    }
+
+    function getWhenListForRule() {
+      return DataService.listAvailableWhen();
     }
 
     function updateRule(ruleIndex, when, operator, answer) {
       DataService.updateRule(ruleIndex, when, operator, answer);
     }
 
-    function deleteRule(ruleIndex) {
-      DataService.deleteRule(ruleIndex);
-    }
   }
 })();

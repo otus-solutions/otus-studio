@@ -34,6 +34,7 @@
     // Route editor
     self.apply = apply;
     self.createCondition = createCondition;
+    self.deleteCondition = deleteCondition;
     self.initializeRouteData = initializeRouteData;
     self.selectCondition = selectCondition;
     self.selectedCondition = selectedCondition;
@@ -131,6 +132,11 @@
       _routeData.conditionSet.push(newConditionData);
     }
 
+    function deleteCondition(index) {
+      _routeData.conditionSet.splice(index, 1);
+      selectCondition(0);
+    }
+
     function initializeRouteData() {
       selectNavigation(_originNode.id);
       _routeData = {};
@@ -140,8 +146,13 @@
     }
 
     function selectCondition(index) {
-      _selectedConditionIndex = index;
-      _selectedCondition = _routeData.conditionSet[index];
+      if (_routeData.length) {
+        _selectedConditionIndex = index;
+        _selectedCondition = _routeData.conditionSet[index];
+      } else {
+        _selectedConditionIndex = null;
+        _selectedCondition = null;
+      }
     }
 
     function selectedCondition() {
