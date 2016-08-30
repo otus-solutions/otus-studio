@@ -26,28 +26,28 @@
     self.activate = activate;
     self.deactivate = deactivate;
     // Map interactions
-    self.selectNode = selectNode;
-    self.selectedNode = selectedNode;
-    self.selectedEdges = selectedEdges;
-    self.hasOriginNode = hasOriginNode;
     self.hasDestinationNode = hasDestinationNode;
+    self.hasOriginNode = hasOriginNode;
+    self.selectNode = selectNode;
+    self.selectedEdges = selectedEdges;
+    self.selectedNode = selectedNode;
     // Route editor
     self.apply = apply;
     self.createCondition = createCondition;
     self.deleteCondition = deleteCondition;
     self.initializeRouteData = initializeRouteData;
+    self.isSimpleNavigation = isSimpleNavigation;
+    self.routeExists = routeExists;
     self.selectCondition = selectCondition;
     self.selectedCondition = selectedCondition;
     self.selectedRoute = selectedRoute;
-    self.isSimpleNavigation = isSimpleNavigation;
-    self.routeExists = routeExists;
     // Rule editor
-    self.listAvailableWhen = listAvailableWhen;
-    self.listAvailableOperator = listAvailableOperator;
-    self.listAvailableAnswer = listAvailableAnswer;
     self.createRule = createRule;
-    self.updateRule = updateRule;
     self.deleteRule = deleteRule;
+    self.listAvailableAnswer = listAvailableAnswer;
+    self.listAvailableOperator = listAvailableOperator;
+    self.listAvailableWhen = listAvailableWhen;
+    self.updateRule = updateRule;
 
     //-----------------------------------------------------
     // Service management
@@ -67,6 +67,14 @@
     // Map interactions
     //-----------------------------------------------------
 
+    function hasDestinationNode() {
+      return _nodeExists(_destinationNode);
+    }
+
+    function hasOriginNode() {
+      return _nodeExists(_originNode);
+    }
+
     function selectNode(node) {
       if (_areSameNode(_originNode, node)) {
         _originNode = null;
@@ -83,21 +91,13 @@
       }
     }
 
-    function selectedNode() {
-      return [_originNode, _destinationNode];
-    }
-
     // TODO: implementar
     function selectedEdges() {
       return null;
     }
 
-    function hasOriginNode() {
-      return _nodeExists(_originNode);
-    }
-
-    function hasDestinationNode() {
-      return _nodeExists(_destinationNode);
+    function selectedNode() {
+      return [_originNode, _destinationNode];
     }
 
     function _areSameNode(originalNode, nodeToCompare) {
@@ -145,6 +145,21 @@
       _routeData.conditionSet = [];
     }
 
+    function isSimpleNavigation(origin) {
+      if (selectNavigation(origin).listRoutes().length === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function routeExists(origin, destination) {
+      var routeData = {};
+      routeData.origin = origin;
+      routeData.destination = destination;
+      return _selectedNavigation.hasRoute(routeData);
+    }
+
     function selectCondition(index) {
       if (_routeData.length) {
         _selectedConditionIndex = index;
@@ -155,6 +170,11 @@
       }
     }
 
+    function selectNavigation(origin) {
+      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
     function selectedCondition() {
       return _selectedCondition;
     }
@@ -163,41 +183,9 @@
       return _routeData;
     }
 
-    function isSimpleNavigation(origin) {
-      if (selectNavigation(origin).listRoutes().length === 1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function selectNavigation(origin) {
-      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
-      return _selectedNavigation;
-    }
-
-    function routeExists(origin, destination) {
-      var routeData = {};
-      routeData.origin = origin;
-      routeData.destination = destination;
-      return _selectedNavigation.hasRoute(routeData);
-    }
-
     //-----------------------------------------------------
     // Rule editor
     //-----------------------------------------------------
-
-    function listAvailableWhen() {
-      return _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
-    }
-
-    function listAvailableOperator(itemType) {
-      return OperatorSelectorService.listOperators(itemType);
-    }
-
-    function listAvailableAnswer(item) {
-      return AnswerSelectorService.listAnswers(item);
-    }
 
     function createRule(when, operator, answer) {
       var ruleData = {};
@@ -207,6 +195,22 @@
       _selectedCondition.rules.push(ruleData);
     }
 
+    function deleteRule(ruleIndex) {
+      _selectedCondition.rules.splice[ruleIndex, 1];
+    }
+
+    function listAvailableAnswer(item) {
+      return AnswerSelectorService.listAnswers(item);
+    }
+
+    function listAvailableOperator(itemType) {
+      return OperatorSelectorService.listOperators(itemType);
+    }
+
+    function listAvailableWhen() {
+      return _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
+    }
+
     function updateRule(ruleIndex, when, operator, answer) {
       var ruleData = _selectedCondition.rules[ruleIndex];
       ruleData.when = when;
@@ -214,8 +218,5 @@
       ruleData.answer = answer;
     }
 
-    function deleteRule(ruleIndex) {
-      _selectedCondition.rules.splice[ruleIndex, 1];
-    }
   }
 })();

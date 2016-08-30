@@ -89,6 +89,48 @@ describe('RouteBuilderService', function() {
 
   describe('in route editor methods', function() {
 
+    describe('createCondition method', function() {
+
+      it('should call DataService.createCondition', function() {
+        service.createCondition();
+
+        expect(Mock.DataService.createCondition).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('deleteCondition method', function() {
+
+      it('should call DataService.deleteCondition', function() {
+        service.deleteCondition();
+
+        expect(Mock.DataService.deleteCondition).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('saveRouteBuilding method', function() {
+
+      beforeEach(function() {
+        service.saveRouteBuilding();
+      });
+
+      it('should call DataService.apply', function() {
+        expect(Mock.DataService.apply).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('selectCondition method', function() {
+
+      it('should call DataService.selectCondition', function() {
+        service.selectCondition();
+
+        expect(Mock.DataService.selectCondition).toHaveBeenCalled();
+      });
+
+    });
+
     describe('startRouteBuilding method', function() {
 
       it('should call DataService.isSimpleNavigation', function() {
@@ -158,44 +200,74 @@ describe('RouteBuilderService', function() {
 
     });
 
-    describe('saveRouteBuilding method', function() {
-
-      beforeEach(function() {
-        service.saveRouteBuilding();
-      });
-
-      it('should call DataService.apply', function() {
-        expect(Mock.DataService.apply).toHaveBeenCalled();
-      });
-
-    });
-
-    describe('createCondition method', function() {
-
-      it('should call DataService.createCondition', function() {
-        service.createCondition();
-
-        expect(Mock.DataService.createCondition).toHaveBeenCalled();
-      });
-
-    });
-
-    describe('deleteCondition method', function() {
-
-      it('should call DataService.deleteCondition', function() {
-        service.deleteCondition();
-
-        expect(Mock.DataService.deleteCondition).toHaveBeenCalled();
-      });
-
-    });
-
   });
 
   describe('in rule editor methods', function() {
 
     beforeEach(function() {
       spyOn(Mock.DataService, 'isSimpleNavigation');
+    });
+
+    describe('createRule method', function() {
+
+      it('should call DataService.createRule', function() {
+        service.createRule();
+
+        expect(Mock.DataService.createRule).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('deleteRule method', function() {
+
+      it('should call DataService.deleteRule', function() {
+        service.deleteRule();
+
+        expect(Mock.DataService.deleteRule).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('getAnswerListForRule method', function() {
+
+      beforeEach(function() {
+        spyOn(Mock.DataService, 'routeExists');
+        service.startRouteBuilding(Mock.n1, Mock.n2);
+      });
+
+      it('should call DataService.listAvailableAnswer', function() {
+        service.getAnswerListForRule();
+
+        expect(Mock.DataService.listAvailableAnswer).toHaveBeenCalled();
+      });
+
+      it('should return an array of operators', function() {
+        var returnedValue = service.getAnswerListForRule();
+
+        expect(returnedValue).toEqual(jasmine.any(Array));
+      });
+
+    });
+
+    describe('getOperatorListForRule method', function() {
+
+      beforeEach(function() {
+        spyOn(Mock.DataService, 'routeExists');
+        service.startRouteBuilding(Mock.n1, Mock.n2);
+      });
+
+      it('should call DataService.listAvailableOperator', function() {
+        service.getOperatorListForRule();
+
+        expect(Mock.DataService.listAvailableOperator).toHaveBeenCalled();
+      });
+
+      it('should return an array of operators', function() {
+        var returnedValue = service.getOperatorListForRule();
+
+        expect(returnedValue).toEqual(jasmine.any(Array));
+      });
+
     });
 
     describe('getWhenListForRule method', function() {
@@ -218,6 +290,17 @@ describe('RouteBuilderService', function() {
       });
 
     });
+
+    describe('updateRule method', function() {
+
+      it('should call DataService.updateRule', function() {
+        service.updateRule();
+
+        expect(Mock.DataService.updateRule).toHaveBeenCalled();
+      });
+
+    });
+
 
   });
 
@@ -302,12 +385,17 @@ describe('RouteBuilderService', function() {
     spyOn(Mock.DataService, 'activate');
     spyOn(Mock.DataService, 'initializeRouteData');
     spyOn(Mock.DataService, 'createCondition');
+    spyOn(Mock.DataService, 'createRule');
+    spyOn(Mock.DataService, 'deleteRule');
+    spyOn(Mock.DataService, 'updateRule');
     spyOn(Mock.DataService, 'deleteCondition');
     spyOn(Mock.DataService, 'selectCondition');
     spyOn(Mock.DataService, 'selectNode');
     spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
     spyOn(Mock.DataService, 'selectedEdges');
     spyOn(Mock.DataService, 'deactivate');
+    spyOn(Mock.DataService, 'listAvailableAnswer').and.returnValue([]);
+    spyOn(Mock.DataService, 'listAvailableOperator').and.returnValue([]);
     spyOn(Mock.DataService, 'listAvailableWhen').and.returnValue([]);
     spyOn(Mock.DataService, 'apply');
   }
