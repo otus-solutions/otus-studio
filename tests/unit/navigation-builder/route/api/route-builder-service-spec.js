@@ -19,115 +19,171 @@ describe('RouteBuilderService', function() {
     });
   });
 
-  describe('activate method', function() {
+  describe('in service management methods', function() {
+
+    describe('activate method', function() {
+
+      beforeEach(function() {
+        service.activate(Mock.scope);
+      });
+
+      it('should call DataService.activate', function() {
+        expect(Mock.DataService.activate).toHaveBeenCalled();
+      });
+
+      it('should call EventsService.activate', function() {
+        expect(Mock.EventsService.activate).toHaveBeenCalled();
+      });
+
+      it('should call UiEventsService.activate', function() {
+        expect(Mock.UiEventsService.activate).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('deactivate method', function() {
+
+      it('should call DataService.deactivate', function() {
+        service.deactivate();
+
+        expect(Mock.DataService.deactivate).toHaveBeenCalled();
+      });
+
+    });
+
+  });
+
+  describe('in map interactions methods', function() {
+
+    describe('selectNode method', function() {
+
+      it('should call DataService.selectNode', function() {
+        service.selectNode(Mock.n1);
+
+        expect(Mock.DataService.selectNode).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('selectedNode method', function() {
+
+      it('should call DataService.selectedNode', function() {
+        service.selectedNode();
+
+        expect(Mock.DataService.selectedNode).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('selectedEdges method', function() {
+
+      it('should call DataService.selectedEdges', function() {
+        service.selectedEdges();
+
+        expect(Mock.DataService.selectedEdges).toHaveBeenCalled();
+      });
+
+    });
+
+  });
+
+  describe('in route editor methods', function() {
+
+    describe('startRouteBuilding method', function() {
+
+      it('should call DataService.isSimpleNavigation', function() {
+        spyOn(Mock.DataService, 'isSimpleNavigation');
+
+        service.startRouteBuilding();
+
+        expect(Mock.DataService.isSimpleNavigation).toHaveBeenCalled();
+      });
+
+      fit('should call DataService.selectNavigation', function() {
+        spyOn(Mock.DataService, 'selectNavigation');
+
+        service.startRouteBuilding();
+
+        expect(Mock.DataService.selectNavigation).toHaveBeenCalled();
+      });
+
+      describe('when current navigation is simple', function() {
+
+        beforeEach(function() {
+          spyOn(Mock.DataService, 'isSimpleNavigation').and.returnValue(true);
+        });
+
+        it('should call DataService.initializeRouteData', function() {
+          service.startRouteBuilding();
+
+          expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
+        });
+
+        it('should call DataService.createCondition', function() {
+          service.startRouteBuilding();
+
+          expect(Mock.DataService.createCondition).toHaveBeenCalled();
+        });
+
+      });
+
+      describe('when current navigation is not simple', function() {
+
+        beforeEach(function() {
+          spyOn(Mock.DataService, 'isSimpleNavigation').and.returnValue(false);
+        });
+
+        it('should call DataService.initializeRouteData', function() {
+          expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
+        });
+
+        it('should call DataService.createCondition', function() {
+          expect(Mock.DataService.createCondition).toHaveBeenCalled();
+        });
+
+      });
+
+
+    });
+
+    describe('saveRouteBuilding method', function() {
+
+      beforeEach(function() {
+        service.saveRouteBuilding();
+      });
+
+      it('should call DataService.apply', function() {
+        expect(Mock.DataService.apply).toHaveBeenCalled();
+      });
+
+    });
+
+  });
+
+  describe('in rule editor methods', function() {
 
     beforeEach(function() {
-      service.activate(Mock.scope);
+      spyOn(Mock.DataService, 'isSimpleNavigation');
     });
 
-    it('should call DataService.activate', function() {
-      expect(Mock.DataService.activate).toHaveBeenCalled();
-    });
+    describe('getWhenListForRule method', function() {
 
-    it('should call EventsService.activate', function() {
-      expect(Mock.EventsService.activate).toHaveBeenCalled();
-    });
+      beforeEach(function() {
+        service.startRouteBuilding();
+      });
 
-    it('should call UiEventsService.activate', function() {
-      expect(Mock.UiEventsService.activate).toHaveBeenCalled();
-    });
+      it('should call DataService.listAvailableWhen', function() {
+        service.getWhenListForRule();
 
-  });
+        expect(Mock.DataService.listAvailableWhen).toHaveBeenCalled();
+      });
 
-  describe('deactivate method', function() {
+      it('should return an array of SurveyItems', function() {
+        var returnedValue = service.getWhenListForRule();
 
-    it('should call DataService.deactivate', function() {
-      service.deactivate();
+        expect(returnedValue).toEqual(jasmine.any(Array));
+      });
 
-      expect(Mock.DataService.deactivate).toHaveBeenCalled();
-    });
-
-  });
-
-  describe('selectNode method', function() {
-
-    it('should call DataService.selectNode', function() {
-      service.selectNode(Mock.n1);
-
-      expect(Mock.DataService.selectNode).toHaveBeenCalled();
-    });
-
-  });
-
-  describe('selectedNode method', function() {
-
-    it('should call DataService.selectedNode', function() {
-      service.selectedNode();
-
-      expect(Mock.DataService.selectedNode).toHaveBeenCalled();
-    });
-
-  });
-
-  describe('selectedEdges method', function() {
-
-    it('should call DataService.selectedEdges', function() {
-      service.selectedEdges();
-
-      expect(Mock.DataService.selectedEdges).toHaveBeenCalled();
-    });
-
-  });
-
-  describe('startRouteBuilding method', function() {
-
-    beforeEach(function() {
-      service.selectNode(Mock.n1);
-      service.selectNode(Mock.n2);
-    });
-
-    it('should define a property routeData', function() {
-      service.startRouteBuilding();
-
-      expect(service.routeData).toBeDefined();
-    });
-
-    it('should set origin value in routeData', function() {
-      service.startRouteBuilding();
-
-      expect(service.routeData.origin).toBeDefined();
-    });
-
-    it('should set destination value in routeData', function() {
-      service.startRouteBuilding();
-
-      expect(service.routeData.destination).toBeDefined();
-    });
-
-    it('should set conditionSet value in routeData', function() {
-      service.startRouteBuilding();
-
-      expect(service.routeData.conditionSet).toBeDefined();
-    });
-
-  });
-
-  describe('getWhenListForRule method', function() {
-
-    beforeEach(function() {
-      service.startRouteBuilding();
-    });
-
-    it('should call DataService.listAvailableWhen', function() {
-      service.getWhenListForRule();
-
-      expect(Mock.DataService.listAvailableWhen).toHaveBeenCalled();
-    });
-
-    it('should return an array of SurveyItems', function() {
-      var returnedValue = service.getWhenListForRule();
-
-      expect(returnedValue).toEqual(jasmine.any(Array));
     });
 
   });
@@ -211,11 +267,14 @@ describe('RouteBuilderService', function() {
     Mock.DataService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.DataService');
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'activate');
+    spyOn(Mock.DataService, 'initializeRouteData');
+    spyOn(Mock.DataService, 'createCondition');
     spyOn(Mock.DataService, 'selectNode');
     spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
     spyOn(Mock.DataService, 'selectedEdges');
     spyOn(Mock.DataService, 'deactivate');
     spyOn(Mock.DataService, 'listAvailableWhen').and.returnValue([]);
+    spyOn(Mock.DataService, 'apply');
   }
 
   function mockEventsService($injector) {

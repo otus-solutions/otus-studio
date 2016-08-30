@@ -27,7 +27,6 @@
     function initialize(scope) {
       scope.events = NBEVENTS;
       scope.messages = NBMESSAGES;
-
       _scope = scope;
     }
 
@@ -46,6 +45,5 @@
     function digest() {
       _scope.$digest();
     }
-
   }
 }());

@@ -27,30 +27,22 @@
   </md-card>
 </md-dialog-content>
 <md-dialog-content layout="row" flex>
-    <h3 ng-show="false" layout-align="center center" flex>{{ $ctrl.label.message.emptyConditions }}</h3>
-
-    <md-tabs flex md-selected="selectedIndex" md-border-bottom md-autoselect md-dynamic-height>
-      <md-tab flex label="{{ condition.name }}" ng-repeat="condition in $ctrl.selectedRoute.conditionSet track by $index" ng-click="$ctrl.selectCondition(condition)">
-
-        <md-list flex>
-          <md-list-item flex ng-repeat="rule in $ctrl.selectedCondition.rules" class="md-1-line">
-            <div class="md-list-item-text" layout="column" flex>
-              <otus-rule-editor flex create-mode="false"></otus-rule-editor>
-            </div>
-          </md-list-item>
-          <md-list-item flex class="md-1-line" flex>
-            <otus-rule-editor flex create-mode="true"></otus-rule-editor>
-          </md-list-item>
-        </md-list>
-
-      </md-tab>
-    </md-tabs>
-
+  <md-content layout="column" flex>
+    <div layout="row" flex>
+      <md-list layout="column" flex>
+        <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in $ctrl.condition.rules track by $index">
+          <div layout="column" flex class="md-list-item-text">
+            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" flex class="md-1-line">
+          <otus-rule-editor flex></otus-rule-editor>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-content>
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
-  <div flex layout-align="start center">
-    <md-button ng-click="$ctrl.addCondition()" flex>{{ $ctrl.label.button.createCondition }}</md-button>
-  </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
   <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>

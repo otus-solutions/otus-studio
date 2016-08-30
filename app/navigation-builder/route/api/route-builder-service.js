@@ -13,7 +13,6 @@
 
   function service(DataService, EventsService, UiEventsService) {
     var self = this;
-    self.routeData = null;
 
     /* Public methods */
     self.activate = activate;
@@ -21,11 +20,20 @@
     self.selectNode = selectNode;
     self.selectedNode = selectedNode;
     self.selectedEdges = selectedEdges;
+    self.selectedRoute = selectedRoute;
+    self.selectedCondition = selectedCondition;
     self.startRouteBuilding = startRouteBuilding;
     self.addRule = addRule;
+    self.updateRule = updateRule;
+    self.deleteRule = deleteRule;
+    self.saveRouteBuilding = saveRouteBuilding;
     self.getWhenListForRule = getWhenListForRule;
     self.getOperatorListForRule = getOperatorListForRule;
     self.getAnswerListForRule = getAnswerListForRule;
+
+    //-----------------------------------------------------
+    // Service management
+    //-----------------------------------------------------
 
     function activate(survey) {
       DataService.activate(survey);
@@ -36,6 +44,10 @@
     function deactivate() {
       DataService.deactivate();
     }
+
+    //-----------------------------------------------------
+    // Map interactions
+    //-----------------------------------------------------
 
     function selectNode(node) {
       DataService.selectNode(node);
@@ -49,24 +61,34 @@
       return DataService.selectedEdges();
     }
 
-    function startRouteBuilding() {
-      var sourceNavigation = selectedNode()[0].navigation;
-      var targetNavigation = selectedNode()[1].navigation;
-
-      self.routeData = {};
-      self.routeData.origin = sourceNavigation.origin;
-      self.routeData.destination = targetNavigation.origin;
-
-      self.routeData.conditionSet = [];
+    function selectedRoute() {
+      return DataService.selectedRoute();
     }
 
-    function addRule(when, operator, answer) {
-      var ruleData = {};
-      ruleData.when = when;
-      ruleData.operator = operator;
-      ruleData.answer = answer;
-      self.routeData.conditionSet[0].rules.push(ruleData);
+    function selectedCondition() {
+      return DataService.selectedCondition();
     }
+
+    //-----------------------------------------------------
+    // Route editor
+    //-----------------------------------------------------
+
+    function startRouteBuilding(origin, destination) {
+      if (DataService.isSimpleNavigation(origin)) {
+        DataService.initializeRouteData();
+        DataService.createCondition();
+      } else {
+        
+      }
+    }
+
+    function saveRouteBuilding() {
+      DataService.apply();
+    }
+
+    //-----------------------------------------------------
+    // Rule editor
+    //-----------------------------------------------------
 
     function getWhenListForRule() {
       return DataService.listAvailableWhen();
@@ -78,6 +100,18 @@
 
     function getAnswerListForRule(question) {
       return DataService.listAvailableAnswer(question);
+    }
+
+    function addRule(when, operator, answer) {
+      DataService.createRule(when, operator, answer);
+    }
+
+    function updateRule(ruleIndex, when, operator, answer) {
+      DataService.updateRule(ruleIndex, when, operator, answer);
+    }
+
+    function deleteRule(ruleIndex) {
+      DataService.deleteRule(ruleIndex);
     }
   }
 })();

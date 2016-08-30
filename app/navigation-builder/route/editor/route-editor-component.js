@@ -9,8 +9,8 @@
       bindings: {
         originNode: '<',
         destinationNode: '<',
-        onCancel: '<',
-        onConfirm: '<'
+        onCancel: '&',
+        onConfirm: '&'
       }
     });
 
@@ -20,33 +20,22 @@
 
   function component(RouteBuilderService) {
     var self = this;
-    var _rootNavigation = {};
+    self.routeConditions = [];
 
     /* Public methods */
     self.$onInit = onInit;
-    self.addCondition = addCondition;
-    self.selectCondition = selectCondition;
+    self.deleteRule = deleteRule;
     self.cancel = cancel;
     self.save = save;
 
     function onInit() {
       _initializeLabels();
-      _rootNavigation = self.originNode.navigation;
       RouteBuilderService.startRouteBuilding();
-      self.selectedRoute = RouteBuilderService.routeData;
+      self.condition = RouteBuilderService.selectedRouteCondition();
     }
 
-    function addCondition() {
-      var newConditionData = {};
-      newConditionData.name = 'GRUPO DE REGRAS ' + self.selectedRoute.conditionSet.length;
-      newConditionData.rules = [];
-
-      RouteBuilderService.routeData.conditionSet.push(newConditionData);
-    }
-
-    function selectCondition(condition) {
-      self.selectedCondition = condition;
-      console.dir(self.selectedCondition);
+    function deleteRule(ruleIndex) {
+      RouteBuilderService.selectedRouteCondition().rules.splice(ruleIndex, 1);
     }
 
     function cancel() {
@@ -54,7 +43,7 @@
     }
 
     function save() {
-      console.dir(RouteBuilderService.routeData);
+      RouteBuilderService.saveRouteBuilding();
     }
 
     function _initializeLabels() {
@@ -65,14 +54,15 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createCondition: 'Criar grupo de Regras'
+          createRouteCondition: 'Criar grupo de Regras',
+          deleteRouteCondition: 'Excluir grupo atual'
         },
         origin: 'Origem',
         destination: 'Destino',
         originNode: self.originNode.label,
         destinationNode: self.destinationNode.label,
         message: {
-          emptyConditions: 'Você ainda não criou condições de rota. Faça isso clicando em "Criar condição"',
+          emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR GRUPO DE REGRAS',
         }
       };
     }

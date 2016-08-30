@@ -7,7 +7,9 @@
       templateUrl: 'app/navigation-builder/route/editor/rule-editor-template.html',
       controller: component,
       bindings: {
-        createMode: '<'
+        ruleData: '<',
+        ruleItemIndex: '<',
+        onDelete: '&'
       }
     });
 
@@ -17,46 +19,73 @@
 
   function component(RouteBuilderService) {
     var self = this;
-    var _whenList = [];
-    var _answerList = [];
 
     /* Public methods */
     self.$onInit = onInit;
-    self.whens = whens;
     self.answers = answers;
-    self.saveRule = saveRule;
-    self.whenChange = whenChange;
-    self.operatorChange = operatorChange;
     self.answerChange = answerChange;
+    self.answerInputChange = answerInputChange;
+    self.operatorChange = operatorChange;
+    self.whens = whens;
+    self.whenChange = whenChange;
+    self.saveRule = saveRule;
+    self.updateRule = updateRule;
+    self.deleteRule = deleteRule;
 
     function onInit() {
       _initializeWhenList();
-      self.isOperatorDisable = true;
-      self.isAnswerDisable = true;
-      self.showSaveRuleButton = self.createMode;
-      self.showDeleteRuleButton = !self.createMode;
 
-      console.log(self.showSaveRuleButton);
-      console.log(self.showDeleteRuleButton);
+      if (self.ruleData) {
+        self.ruleData.index = self.ruleItemIndex;
+        self.selectedWhen = self.ruleData.when;
+        self.selectedOperator = self.ruleData.operator;
+        self.selectedAnswer = self.ruleData.answer.label || self.ruleData.answer;
+        self.isOperatorDisable = false;
+        self.isAnswerDisable = false;
+        self.showSaveRuleButton = false;
+        self.showUpdateRuleButton = true;
+        self.showDeleteRuleButton = true;
+      } else {
+        self.isOperatorDisable = true;
+        self.isAnswerDisable = true;
+        self.showSaveRuleButton = true;
+        self.showUpdateRuleButton = false;
+        self.showDeleteRuleButton = false;
+        self.readyToSave = _readyToSave();
+      }
     }
 
-    function whens(filterValue) {
+    function answers(filterValue) {
+      self.inputedValue = filterValue;
       if (!filterValue) {
-        return _whenList;
+        return self.answerList;
       } else {
-        var filterResult = _whenList.filter(function(when) {
-          return when.label.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
+        var filterResult = self.answerList.filter(function(answer) {
+          return answer.label.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
         return filterResult;
       }
     }
 
-    function answers(filterValue) {
+    function answerChange(answer) {
+      self.readyToSave = _readyToSave();
+    }
+
+    function answerInputChange() {
+      self.readyToSave = _readyToSave();
+    }
+
+    function operatorChange(operator) {
+      self.selectedOperator = operator;
+      self.readyToSave = _readyToSave();
+    }
+
+    function whens(filterValue) {
       if (!filterValue) {
-        return _answerList;
+        return self.whenList;
       } else {
-        var filterResult = _answerList.filter(function(answer) {
-          return answer.label.search(filterValue) != -1 || answer.customID.search(filterValue) != -1;
+        var filterResult = self.whenList.filter(function(when) {
+          return when.label.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
         });
         return filterResult;
       }
@@ -64,39 +93,47 @@
 
     function whenChange(when) {
       self.selectedWhen = when;
+
+      self.operators = [];
+      self.answerList = [];
+
       if (self.selectedWhen) {
-        self.operators = [];
-        self.selectedOperator = undefined;
+        // self.selectedOperator = undefined;
         self.operators = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
         RouteBuilderService.getAnswerListForRule(self.selectedWhen.question).forEach(function(answer) {
-          _answerList.push(_createAnswerItem(answer));
+          self.answerList.push(_createAnswerItem(answer));
         });
         self.isOperatorDisable = false;
       } else {
-        self.operators = [];
-        self.selectedOperator = undefined;
-        self.answers = [];
+        // self.selectedOperator = undefined;
         self.isOperatorDisable = true;
       }
-    }
 
-    function operatorChange(operator) {
-      self.selectedOperator = operator;
-    }
-
-    function answerChange(answer) {
+      self.readyToSave = _readyToSave();
     }
 
     function saveRule() {
-      RouteBuilderService.addRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+      if (_readyToSave()) {
+        RouteBuilderService.addRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+      }
+      self.whenSearchText = '';
+      self.operatorSearchText = '';
+      self.answerSearchText = '';
+    }
+
+    function updateRule() {
+      RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
     }
 
     function deleteRule() {
+      RouteBuilderService.deleteRule(self.ruleData.index);
+      self.onDelete({ruleIndex: self.ruleData.index});
     }
 
     function _initializeWhenList() {
+      self.whenList = [];
       RouteBuilderService.getWhenListForRule().forEach(function(when) {
-        _whenList.push(_createWhenItem(when));
+        self.whenList.push(_createWhenItem(when));
       });
     }
 
@@ -117,6 +154,41 @@
         label: answerData.label.ptBR.plainText,
         option: answerData
       };
+    }
+
+    function _readyToSave() {
+      if (_resolveRuleWhen() && _resolveRuleOperator() && _resolveRuleAnswer()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function _resolveRuleWhen() {
+      if (!self.selectedWhen) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function _resolveRuleOperator() {
+      if (!self.selectedOperator) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function _resolveRuleAnswer() {
+      if (!self.selectedAnswer && !self.inputedValue) {
+        return false;
+      } else if (!self.selectedAnswer && self.inputedValue) {
+        self.selectedAnswer = self.inputedValue;
+        return true;
+      } else if (self.selectedAnswer) {
+        return true;
+      }
     }
   }
 })();

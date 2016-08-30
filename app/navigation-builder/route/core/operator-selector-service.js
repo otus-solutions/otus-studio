@@ -64,8 +64,8 @@
         label: 'Diferente de'
       };
 
-      var _equals = {
-        type: 'equals',
+      var _equal = {
+        type: 'equal',
         label: 'Igual a'
       };
 
@@ -105,10 +105,10 @@
       };
 
       // Text operators
-      _operatorMap.text = [_notEqual, _equals, _contains];
+      _operatorMap.text = [_notEqual, _equal, _contains];
 
       // Number operators
-      _operatorMap.number = [_notEqual, _equals, _in, _between, _greater, _greaterEqual, _lower, _lowerEqual];
+      _operatorMap.number = [_notEqual, _equal, _in, _between, _greater, _greaterEqual, _lower, _lowerEqual];
 
       // Date operators
       _operatorMap.date = _operatorMap.number;
@@ -117,7 +117,7 @@
       _operatorMap.time = _operatorMap.date;
 
       // Single choice operators
-      _operatorMap.singleChoice = [_notEqual, _equals];
+      _operatorMap.singleChoice = [_notEqual, _equal];
 
       // Multiple choice operators
       _operatorMap.multipleChoice = _operatorMap.text;

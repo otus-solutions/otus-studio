@@ -30,7 +30,7 @@
 
   <!-- OPERATOR PARAMETER -->
   <md-autocomplete
-    flex="30"
+    flex="25"
     md-no-cache="true"
     ng-disabled="$ctrl.isOperatorDisable"
     md-selected-item="$ctrl.selectedOperator"
@@ -55,10 +55,10 @@
   <md-autocomplete
     flex="30"
     md-no-cache="true"
-    ng-disabled="ctrl.isAnswerDisable"
     md-selected-item="$ctrl.selectedAnswer"
     md-selected-item-change="$ctrl.answerChange($ctrl.selectedAnswer)"
     md-search-text="$ctrl.answerSearchText"
+    md-search-text-change="$ctrl.answerInputChange($ctrl.answerSearchText)"
     md-items="answer in $ctrl.answers($ctrl.answerSearchText)"
     md-item-text="answer.label"
     md-min-length="0"
@@ -75,10 +75,17 @@
   <!-- /ANSWER PARAMETER -->
 
   <!-- ACTIONS -->
-  <md-button aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button" ng-show="$ctrl.showSaveRuleButton">
-    <md-icon md-svg-icon="check"></md-icon>
-  </md-button>
-  <md-button aria-label="Excluir regra" ng-click="$ctrl.deleteRule()" class="md-mini md-icon-button" ng-show="$ctrl.showDeleteRuleButton">
-    <md-icon md-svg-icon="close"></md-icon>
-  </md-button>
+  <div layout="column" flex="10">
+    <div layout="row" flex>
+      <md-button layout="column" aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button" ng-show="$ctrl.showSaveRuleButton" ng-disabled="!$ctrl.readyToSave">
+        <md-icon md-svg-icon="check"></md-icon>
+      </md-button>
+      <md-button layout="column" aria-label="Atualizar regra" ng-click="$ctrl.updateRule()" class="md-mini md-icon-button" ng-show="$ctrl.showUpdateRuleButton">
+        <md-icon md-svg-icon="cached"></md-icon>
+      </md-button>
+      <md-button layout="column" aria-label="Excluir regra" ng-click="$ctrl.deleteRule()" class="md-mini md-icon-button" ng-show="$ctrl.showDeleteRuleButton">
+        <md-icon md-svg-icon="close"></md-icon>
+      </md-button>
+    </div>
+  </div>
 </div>
