@@ -144,12 +144,39 @@
       _routeData.conditionSet = [];
     }
 
+==== BASE ====
+    function selectCondition(index) {
+      if (_routeData.length) {
+        _selectedConditionIndex = index;
+        _selectedCondition = _routeData.conditionSet[index];
+==== BASE ====
+      } else {
+        return false;
+      }
+    }
+
+==== BASE ====
+    function selectedCondition() {
+      return _selectedCondition;
+    }
+
+    function selectedRoute() {
+      return _routeData;
+==== BASE ====
+    }
+
+==== BASE ====
     function isSimpleNavigation(origin) {
       if (selectNavigation(origin).listRoutes().length === 1) {
         return true;
       } else {
         return false;
       }
+    }
+
+    function selectNavigation(origin) {
+      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
+      return _selectedNavigation;
     }
 
     function routeExists(origin, destination) {
@@ -159,27 +186,7 @@
       return _selectedNavigation.hasRoute(routeData);
     }
 
-    function selectCondition(index) {
-      if (_routeData.length) {
-        _selectedCondition = _routeData.conditionSet[index];
-      } else {
-        _selectedCondition = null;
-      }
-    }
-
-    function selectNavigation(origin) {
-      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
-      return _selectedNavigation;
-    }
-
-    function selectedCondition() {
-      return _selectedCondition;
-    }
-
-    function selectedRoute() {
-      return _routeData;
-    }
-
+==== BASE ====
     //-----------------------------------------------------
     // Rule editor
     //-----------------------------------------------------
