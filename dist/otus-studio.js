@@ -66,7 +66,7 @@
         'indexedDB',
         'immutable',
         'ui.utils.masks',
-        'otusDomainClient',
+        'otus.domain.client',
         'otus.textEdition'
     ]);
 
