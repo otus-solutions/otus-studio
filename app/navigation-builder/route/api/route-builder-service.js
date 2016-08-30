@@ -78,7 +78,12 @@
         DataService.initializeRouteData();
         DataService.createCondition();
       } else {
-        
+        if (DataService.routeExists(origin, destination)) {
+          // TODO: implementar recuperação dos dados da rota
+        } else {
+          DataService.initializeRouteData();
+          DataService.createCondition();
+        }
       }
     }
 

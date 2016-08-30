@@ -17,6 +17,7 @@
     var _originNode = null;
     var _destinationNode = null;
     var _routeData = null;
+    var _selectedNavigation = null;
     var _selectedCondition = null;
     var _selectedConditionIndex = null;
 
@@ -38,6 +39,7 @@
     self.selectedCondition = selectedCondition;
     self.selectedRoute = selectedRoute;
     self.isSimpleNavigation = isSimpleNavigation;
+    self.routeExists = routeExists;
     // Rule editor
     self.listAvailableWhen = listAvailableWhen;
     self.listAvailableOperator = listAvailableOperator;
@@ -130,6 +132,7 @@
     }
 
     function initializeRouteData() {
+      selectNavigation(_originNode.id);
       _routeData = {};
       _routeData.origin = _originNode.id;
       _routeData.destination = _destinationNode.id;
@@ -150,9 +153,7 @@
     }
 
     function isSimpleNavigation(origin) {
-      var navigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
-
-      if (navigation.listRoutes().length === 1) {
+      if (selectNavigation(origin).listRoutes().length === 1) {
         return true;
       } else {
         return false;
@@ -160,7 +161,15 @@
     }
 
     function selectNavigation(origin) {
+      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
 
+    function routeExists(origin, destination) {
+      var routeData = {};
+      routeData.origin = origin;
+      routeData.destination = destination;
+      return _selectedNavigation.hasRoute(routeData);
     }
 
     //-----------------------------------------------------

@@ -92,19 +92,12 @@ describe('RouteBuilderService', function() {
     describe('startRouteBuilding method', function() {
 
       it('should call DataService.isSimpleNavigation', function() {
+        spyOn(Mock.DataService, 'routeExists');
         spyOn(Mock.DataService, 'isSimpleNavigation');
 
         service.startRouteBuilding();
 
         expect(Mock.DataService.isSimpleNavigation).toHaveBeenCalled();
-      });
-
-      fit('should call DataService.selectNavigation', function() {
-        spyOn(Mock.DataService, 'selectNavigation');
-
-        service.startRouteBuilding();
-
-        expect(Mock.DataService.selectNavigation).toHaveBeenCalled();
       });
 
       describe('when current navigation is simple', function() {
@@ -133,16 +126,35 @@ describe('RouteBuilderService', function() {
           spyOn(Mock.DataService, 'isSimpleNavigation').and.returnValue(false);
         });
 
-        it('should call DataService.initializeRouteData', function() {
-          expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
+        it('should call DataService.routeExists', function() {
+          spyOn(Mock.DataService, 'routeExists');
+
+          service.startRouteBuilding(Mock.n1.id, Mock.n2.id);
+
+          expect(Mock.DataService.routeExists).toHaveBeenCalled();
         });
 
-        it('should call DataService.createCondition', function() {
-          expect(Mock.DataService.createCondition).toHaveBeenCalled();
+        describe('when route does not exists', function() {
+
+          beforeEach(function() {
+            spyOn(Mock.DataService, 'routeExists').and.returnValue(false);
+          });
+
+          it('should call DataService.initializeRouteData', function() {
+            service.startRouteBuilding();
+
+            expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
+          });
+
+          it('should call DataService.createCondition', function() {
+            service.startRouteBuilding();
+
+            expect(Mock.DataService.createCondition).toHaveBeenCalled();
+          });
+
         });
 
       });
-
 
     });
 
@@ -169,6 +181,7 @@ describe('RouteBuilderService', function() {
     describe('getWhenListForRule method', function() {
 
       beforeEach(function() {
+        spyOn(Mock.DataService, 'routeExists');
         service.startRouteBuilding();
       });
 

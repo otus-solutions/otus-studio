@@ -272,8 +272,12 @@ describe('DataService', function() {
 
     describe('routeExists method', function() {
 
-      it('should call', function() {
+      it('should call hasRoute from selected navigation', function() {
+        Mock.navigation.hasRoute = jasmine.createSpy('hasRoute');
 
+        service.routeExists(Mock.n1, Mock.n2);
+
+        expect(Mock.navigation.hasRoute).toHaveBeenCalled();
       });
 
     });
