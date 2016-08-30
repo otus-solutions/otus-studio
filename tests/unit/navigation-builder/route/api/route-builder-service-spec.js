@@ -176,6 +176,21 @@ describe('RouteBuilderService', function() {
           expect(Mock.DataService.routeExists).toHaveBeenCalled();
         });
 
+        describe('when route exists', function() {
+
+          beforeEach(function() {
+            spyOn(Mock.DataService, 'routeExists').and.returnValue(true);
+            spyOn(Mock.DataService, 'useCurrentRouteData');
+          });
+
+          it('should call DataService.useCurrentRouteData', function() {
+            service.startRouteBuilding(Mock.n1, Mock.n2);
+
+            expect(Mock.DataService.useCurrentRouteData).toHaveBeenCalled();
+          });
+
+        });
+
         describe('when route does not exists', function() {
 
           beforeEach(function() {

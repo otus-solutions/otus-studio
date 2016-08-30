@@ -40,6 +40,7 @@
     self.selectCondition = selectCondition;
     self.selectedCondition = selectedCondition;
     self.selectedRoute = selectedRoute;
+    self.useCurrentRouteData = useCurrentRouteData;
     // Rule editor
     self.createRule = createRule;
     self.deleteRule = deleteRule;
@@ -181,6 +182,15 @@
       return _selectedNavigation.hasRoute(routeData);
     }
 
+    function useCurrentRouteData(origin, destination) {
+      selectNavigation(_originNode.id);
+      var routeQuery = {
+        name: origin + '_' + destination
+      };
+      _routeData = _selectedNavigation.getRoute(routeQuery).toJson();
+      _routeData = JSON.parse(_routeData);
+    }
+
     //-----------------------------------------------------
     // Rule editor
     //-----------------------------------------------------
@@ -215,6 +225,5 @@
       ruleData.operator = operator;
       ruleData.answer = answer;
     }
-
   }
 })();

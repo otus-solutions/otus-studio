@@ -193,10 +193,13 @@ describe('DataService', function() {
     beforeEach(function() {
       service.selectNode(Mock.n1);
       service.selectNode(Mock.n2);
-      service.initializeRouteData();
     });
 
     describe('createCondition method', function() {
+
+      beforeEach(function() {
+        service.initializeRouteData();
+      });
 
       it('should create a route condition data object', function() {
         service.createCondition();
@@ -209,6 +212,10 @@ describe('DataService', function() {
 
     describe('initializeRouteData method', function() {
 
+      beforeEach(function() {
+        service.initializeRouteData();
+      });
+
       it('should create a route data object', function() {
         service.initializeRouteData();
 
@@ -218,6 +225,10 @@ describe('DataService', function() {
     });
 
     describe('selectCondition method', function() {
+
+      beforeEach(function() {
+        service.initializeRouteData();
+      });
 
       it('should set a reference to condition set identified by the index', function() {
         service.createCondition();
@@ -272,12 +283,52 @@ describe('DataService', function() {
 
     describe('routeExists method', function() {
 
+      beforeEach(function() {
+        service.initializeRouteData();
+      });
+
       it('should call hasRoute from selected navigation', function() {
         Mock.navigation.hasRoute = jasmine.createSpy('hasRoute');
 
         service.routeExists(Mock.n1, Mock.n2);
 
         expect(Mock.navigation.hasRoute).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('useCurrentRouteData method', function() {
+
+      beforeEach(function() {
+        Mock.route = {};
+        Mock.route.toJson = jasmine.createSpy('toJson').and.returnValue('{}');
+        Mock.navigation.getRoute = jasmine.createSpy('getRoute').and.returnValue(Mock.route);
+      });
+
+      it('should call getRoute method from navigation', function() {
+        service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
+
+        expect(Mock.navigation.getRoute).toHaveBeenCalled();
+      });
+
+      it('should call toJson method from route', function() {
+        service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
+
+        expect(Mock.route.toJson).toHaveBeenCalled();
+      });
+
+      it('should parse route json to object type', function() {
+        spyOn(JSON, 'parse');
+
+        service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
+
+        expect(JSON.parse).toHaveBeenCalledWith(Mock.route.toJson());
+      });
+
+      it('should set the json parse result to current route data reference', function() {
+        service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
+
+        expect(service.selectedRoute()).not.toBe(null);
       });
 
     });

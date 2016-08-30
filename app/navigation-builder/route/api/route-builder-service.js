@@ -102,7 +102,7 @@
         DataService.createCondition();
       } else {
         if (DataService.routeExists(origin, destination)) {
-          // TODO: implementar recuperação dos dados da rota
+          DataService.useCurrentRouteData(origin, destination);
         } else {
           DataService.initializeRouteData();
           DataService.createCondition();
