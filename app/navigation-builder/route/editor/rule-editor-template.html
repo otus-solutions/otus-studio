@@ -14,14 +14,14 @@
     md-menu-class="autocomplete-custom-template">
     <md-item-template>
       <span class="item-title">
-        <otus:item-icon item="{{ when.icon }}">
+        <otus:item-icon item="{{ ::when.icon }}">
       </span>
       <span class="item-metadata">
         <span class="item-metastat">
-          <strong>{{ when.customID }}</strong>
+          <strong>{{ ::when.customID }}</strong>
         </span>
         <span class="item-metastat">
-          <span>{{ when.label }}</span>
+          <span>{{ ::when.label.ptBR.plainText }}</span>
         </span>
       </span>
     </md-item-template>
@@ -36,15 +36,15 @@
     md-selected-item="$ctrl.selectedOperator"
     md-selected-item-change="$ctrl.operatorChange($ctrl.selectedOperator)"
     md-search-text="$ctrl.operatorSearchText"
-    md-items="operator in $ctrl.operators"
-    md-item-text="operator.label"
+    md-items="operator in $ctrl.operatorList"
+    md-item-text="operator.label.ptBR.plainText"
     md-min-length="0"
     placeholder="Comparador..."
     md-menu-class="autocomplete-custom-template">
     <md-item-template>
       <span class="item-title">
         <span>
-          <strong>{{ operator.label }}</strong>
+          <strong>{{ ::operator.label.ptBR.plainText }}</strong>
         </span>
       </span>
     </md-item-template>
@@ -60,14 +60,14 @@
     md-search-text="$ctrl.answerSearchText"
     md-search-text-change="$ctrl.answerInputChange($ctrl.answerSearchText)"
     md-items="answer in $ctrl.answers($ctrl.answerSearchText)"
-    md-item-text="answer.label"
+    md-item-text="answer.option.label.ptBR.plainText"
     md-min-length="0"
     placeholder="Valor..."
     md-menu-class="autocomplete-custom-template">
     <md-item-template>
       <span class="item-title">
         <span>
-          <strong>{{ answer.label }}</strong>
+          <strong>{{ ::answer.option.label.ptBR.plainText }}</strong>
         </span>
       </span>
     </md-item-template>

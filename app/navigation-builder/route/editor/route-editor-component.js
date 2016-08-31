@@ -9,7 +9,6 @@
       bindings: {
         originNode: '<',
         destinationNode: '<',
-        onCancel: '&',
         onConfirm: '&'
       }
     });
@@ -39,7 +38,7 @@
     }
 
     function cancel() {
-      self.onCancel();
+      RouteBuilderService.cancelRouteBuilding();
     }
 
     function save() {

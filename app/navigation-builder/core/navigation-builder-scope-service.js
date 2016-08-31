@@ -31,7 +31,7 @@
     }
 
     function onEvent(event, listener) {
-      _scope.$on(event, listener);
+      return _scope.$on(event, listener);
     }
 
     function broadcast(event, data) {

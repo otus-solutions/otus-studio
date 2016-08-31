@@ -89,6 +89,8 @@
       _selectedNodes.forEach(function(node) {
         node.color = '#000';
       });
+      // clearMap();
+      drawMap();
     }
   }
 })();

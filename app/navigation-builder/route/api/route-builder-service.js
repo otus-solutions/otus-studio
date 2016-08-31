@@ -6,12 +6,13 @@
     .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
 
   service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.routeBuilder.DataService',
     'otusjs.studio.navigationBuilder.routeBuilder.EventsService',
     'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
   ];
 
-  function service(DataService, EventsService, UiEventsService) {
+  function service(scopeService, DataService, EventsService, UiEventsService) {
     var self = this;
 
     /* Public methods */
@@ -30,6 +31,7 @@
     self.saveRouteBuilding = saveRouteBuilding;
     self.selectCondition = selectCondition;
     self.startRouteBuilding = startRouteBuilding;
+    self.cancelRouteBuilding = cancelRouteBuilding;
     // Rule editor
     self.createRule = createRule;
     self.deleteRule = deleteRule;
@@ -50,6 +52,8 @@
 
     function deactivate() {
       DataService.deactivate();
+      EventsService.deactivate();
+      UiEventsService.deactivate();
     }
 
     //-----------------------------------------------------
@@ -90,6 +94,8 @@
 
     function saveRouteBuilding() {
       DataService.apply();
+      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_SAVED);
+      deactivate();
     }
 
     function selectCondition(index) {
@@ -102,13 +108,18 @@
         DataService.createCondition();
       } else {
         if (DataService.routeExists(origin, destination)) {
-          DataService.useCurrentRouteData(origin, destination);
+          DataService.useCurrentRouteData();
         } else {
           DataService.initializeRouteData();
           DataService.createCondition();
         }
       }
       DataService.selectCondition(0);
+    }
+
+    function cancelRouteBuilding() {
+      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED);
+      deactivate();
     }
 
     //-----------------------------------------------------
@@ -138,6 +149,5 @@
     function updateRule(ruleIndex, when, operator, answer) {
       DataService.updateRule(ruleIndex, when, operator, answer);
     }
-
   }
 })();

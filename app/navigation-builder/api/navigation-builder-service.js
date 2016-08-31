@@ -80,7 +80,7 @@
     }
 
     function deactiveMode() {
-      return _activeServiceMode.end();
+      return _activeServiceMode.deactivate();
     }
 
     function _addNodes(templateNavigations) {

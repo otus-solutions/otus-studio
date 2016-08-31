@@ -12,6 +12,8 @@ describe('DataService', function() {
       mockNodes();
       mockScope($rootScope, _$injector_);
       mockNavigationBuilderScopeService(_$injector_);
+      mockRuleWhenBuilderService(_$injector_);
+      mockRuleOperatorBuilderService(_$injector_);
 
       service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.DataService', injections);
     });
@@ -337,11 +339,11 @@ describe('DataService', function() {
 
   describe('in rule editor methods', function() {
 
-    describe('listAvailableWhen method', function() {
+    beforeEach(function() {
+      service.selectNode(Mock.n2);
+    });
 
-      beforeEach(function() {
-        service.selectNode(Mock.n2);
-      });
+    describe('listAvailableWhen method', function() {
 
       it('should call NavigationManagerService.getAvaiableRuleCriterionTargets', function() {
         service.listAvailableWhen();
@@ -349,10 +351,33 @@ describe('DataService', function() {
         expect(Mock.survey.NavigationManager.getAvaiableRuleCriterionTargets).toHaveBeenCalled();
       });
 
+      it('should call itemList.map with RuleWhenBuilderService.build', function() {
+        spyOn(Mock.itemList, 'map');
+
+        service.listAvailableWhen();
+
+        expect(Mock.itemList.map).toHaveBeenCalledWith(Mock.RuleWhenBuilderService.build);
+      });
+
       it('should return a list of available items to define a rule criterion', function() {
+        var expectedItems = Mock.itemList.map(Mock.RuleWhenBuilderService.build);
         var availableItems = service.listAvailableWhen();
 
-        expect(availableItems).toEqual(jasmine.arrayContaining([Mock.n1]));
+        expect(availableItems).toEqual(expectedItems);
+      });
+
+    });
+
+    describe('listAvailableOperator method', function() {
+
+      it('should call itemList.map with RuleOperatorBuilderService.build', function() {
+        service.listAvailableOperator();
+
+        expect(Mock.RuleOperatorBuilderService.build).toHaveBeenCalled();
+      });
+
+      it('should return a list of available operators', function() {
+        expect(service.listAvailableOperator('TextQuestion')).toEqual(jasmine.any(Array));
       });
 
     });
@@ -385,16 +410,166 @@ describe('DataService', function() {
     spyOn(Mock.NavigationBuilderScopeService, 'emit');
   }
 
+  function mockRuleWhenBuilderService($injector) {
+    Mock.RuleWhenBuilderService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService');
+    injections.RuleWhenBuilderService = Mock.RuleWhenBuilderService;
+    spyOn(Mock.RuleWhenBuilderService, 'build').and.callThrough();
+  }
+
+  function mockRuleOperatorBuilderService($injector) {
+    Mock.RuleOperatorBuilderService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService');
+    injections.RuleOperatorBuilderService = Mock.RuleOperatorBuilderService;
+    spyOn(Mock.RuleOperatorBuilderService, 'build').and.callThrough();
+  }
+
   function mockSurvey() {
+    mockQuestionItem();
+    Mock.itemList = [Mock.questionItem];
     Mock.survey = {};
     Mock.survey.NavigationManager = {};
 
-    var spy = jasmine.createSpy('getAvaiableRuleCriterionTargets').and.returnValue([Mock.n1]);
+    var spy = jasmine.createSpy('getAvaiableRuleCriterionTargets').and.returnValue(Mock.itemList);
     Mock.survey.NavigationManager.getAvaiableRuleCriterionTargets = spy;
 
     Mock.navigation = {};
     spy = jasmine.createSpy('selectNavigationByOrigin').and.returnValue(Mock.navigation);
     Mock.survey.NavigationManager.selectNavigationByOrigin = spy;
+  }
+
+  function mockQuestionItem() {
+    Mock.questionItem = {
+      extents: 'SurveyItem',
+      objectType: 'TextQuestion',
+      templateID: 'CAD4',
+      customID: 'CAD4',
+      dataType: 'String',
+      label: {
+        ptBR: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '4. Qual outro?',
+          formattedText: '4. Qual outro?'
+        },
+        enUS: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '',
+          formattedText: ''
+        },
+        esES: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '',
+          formattedText: ''
+        }
+      },
+      metadata: {
+        extents: 'StudioObject',
+        objectType: 'MetadataGroup',
+        options: [{
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 1,
+          label: {
+            ptBR: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não se aplica',
+              formattedText: 'Não se aplica'
+            },
+            enUS: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            },
+            esES: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            }
+          }
+        }, {
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 2,
+          label: {
+            ptBR: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não quer responder',
+              formattedText: 'Não quer responder'
+            },
+            enUS: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            },
+            esES: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            }
+          }
+        }, {
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 3,
+          label: {
+            ptBR: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não sabe responder',
+              formattedText: 'Não sabe responder'
+            },
+            enUS: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            },
+            esES: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            }
+          }
+        }]
+      },
+      fillingRules: {
+        extends: 'StudioObject',
+        objectType: 'FillingRules',
+        options: {
+          mandatory: {
+            extends: 'StudioObject',
+            objectType: 'Rule',
+            validatorType: 'mandatory',
+            data: {
+              reference: true
+            }
+          }
+        }
+      }
+    };
   }
 
 });

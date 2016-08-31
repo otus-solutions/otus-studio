@@ -16,20 +16,12 @@
 
     /* Public interface */
     self.showDialog = showDialog;
+    self.closeDialog = closeDialog;
 
     _init();
 
     function _init() {
       _setupDialogConfiguration();
-    }
-
-    function _setupDialogConfiguration() {
-      _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
-      _dialogSettings.controller = DialogController;
-      _dialogSettings.controllerAs = 'ctrl';
-      _dialogSettings.escapeToClose = false;
-      _dialogSettings.fullscreen = true;
-      _dialogSettings.hasBackdrop = true;
     }
 
     function showDialog(originNode, destinationNode) {
@@ -39,6 +31,19 @@
         scopeService: scopeService
       };
       $mdDialog.show(_dialogSettings);
+    }
+
+    function closeDialog() {
+      $mdDialog.hide();
+    }
+
+    function _setupDialogConfiguration() {
+      _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
+      _dialogSettings.controller = DialogController;
+      _dialogSettings.controllerAs = 'ctrl';
+      _dialogSettings.escapeToClose = false;
+      _dialogSettings.fullscreen = true;
+      _dialogSettings.hasBackdrop = true;
     }
   }
 
@@ -54,11 +59,9 @@
 
     function cancel(response) {
       $mdDialog.hide(response);
-      scopeService.broadcast(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED);
     }
 
     function confirm(response) {
-      // eventScope.$broadcast(eventScope.events.ROUTE_BUILD_CANCELED);
       $mdDialog.hide(response);
     }
   }

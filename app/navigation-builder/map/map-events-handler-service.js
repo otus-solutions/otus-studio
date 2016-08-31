@@ -17,6 +17,7 @@
     self.loadMapView = loadMapView;
     self.mapView = mapView;
     self.onClickNode = onClickNode;
+    self.clearAllEventListeners = clearAllEventListeners;
 
     function loadMapView(mapView) {
       _mapView = mapView;
@@ -30,6 +31,11 @@
     function onClickNode(listener) {
       _clickNodeListeners = [];
       _clickNodeListeners.push(listener);
+    }
+
+    function clearAllEventListeners() {
+      _clickNodeListeners = [];
+      _mapView.unbind(CLICK_NODE);
     }
 
     function _initializeEventListeners() {

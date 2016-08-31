@@ -37,9 +37,9 @@
 
       if (self.ruleData) {
         self.ruleData.index = self.ruleItemIndex;
-        self.selectedWhen = self.ruleData.when;
-        self.selectedOperator = self.ruleData.operator;
-        self.selectedAnswer = self.ruleData.answer.label || self.ruleData.answer;
+        _applyRuleDataWhen();
+        _applyRuleDataOperator();
+        _applyRuleDataAnswer();
         self.isOperatorDisable = false;
         self.isAnswerDisable = false;
         self.showSaveRuleButton = false;
@@ -53,6 +53,40 @@
         self.showDeleteRuleButton = false;
         self.readyToSave = _readyToSave();
       }
+    }
+
+    function _applyRuleDataWhen() {
+      var customID = self.ruleData.when.customID || self.ruleData.when;
+      self.whenList.some(function(when) {
+        if (when.customID === customID) {
+          self.selectedWhen = when;
+          return true;
+        }
+      });
+    }
+
+    function _applyRuleDataOperator() {
+      self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+      var type = self.ruleData.operator.type || self.ruleData.operator;
+      self.operatorList.some(function(operator) {
+        if (operator.type === type) {
+          self.selectedOperator = operator;
+          return true;
+        }
+      });
+    }
+
+    function _applyRuleDataAnswer() {
+      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+      var value = (self.ruleData.answer.option)
+        ? self.ruleData.answer.option.value
+        : self.ruleData.answer;
+      self.answerList.some(function(answer) {
+        if (answer.option.value === value) {
+          self.selectedAnswer = answer;
+          return true;
+        }
+      });
     }
 
     function answers(filterValue) {
@@ -85,7 +119,7 @@
         return self.whenList;
       } else {
         var filterResult = self.whenList.filter(function(when) {
-          return when.label.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
+          return when.label.ptBR.plainText.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
         });
         return filterResult;
       }
@@ -94,18 +128,14 @@
     function whenChange(when) {
       self.selectedWhen = when;
 
-      self.operators = [];
+      self.operatorList = [];
       self.answerList = [];
 
       if (self.selectedWhen) {
-        // self.selectedOperator = undefined;
-        self.operators = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
-        RouteBuilderService.getAnswerListForRule(self.selectedWhen.question).forEach(function(answer) {
-          self.answerList.push(_createAnswerItem(answer));
-        });
+        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
         self.isOperatorDisable = false;
       } else {
-        // self.selectedOperator = undefined;
         self.isOperatorDisable = true;
       }
 
@@ -132,20 +162,7 @@
 
     function _initializeWhenList() {
       self.whenList = [];
-      RouteBuilderService.getWhenListForRule().forEach(function(when) {
-        self.whenList.push(_createWhenItem(when));
-      });
-    }
-
-    function _createWhenItem(whenData) {
-      return {
-        type: whenData.objectType,
-        icon: whenData.objectType,
-        customID: whenData.customID,
-        label: whenData.label.ptBR.plainText,
-        validators: whenData.validators(),
-        question: whenData
-      };
+      self.whenList = RouteBuilderService.getWhenListForRule();
     }
 
     function _createAnswerItem(answerData) {

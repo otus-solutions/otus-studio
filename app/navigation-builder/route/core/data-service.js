@@ -7,11 +7,12 @@
 
   service.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.routeBuilder.OperatorSelectorService',
-    'otusjs.studio.navigationBuilder.routeBuilder.AnswerSelectorService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function service(scopeService, OperatorSelectorService, AnswerSelectorService) {
+  function service(scopeService, RuleWhenBuilderService, RuleOperatorBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _survey = null;
     var _originNode = null;
@@ -59,9 +60,12 @@
     }
 
     function deactivate() {
+      _survey = null;
       _originNode = null;
       _destinationNode = null;
       _routeData = null;
+      _selectedNavigation = null;
+      _selectedCondition = null;
     }
 
     //-----------------------------------------------------
@@ -177,15 +181,15 @@
 
     function routeExists(origin, destination) {
       var routeData = {};
-      routeData.origin = origin;
-      routeData.destination = destination;
+      routeData.origin = origin.id;
+      routeData.destination = destination.id;
       return _selectedNavigation.hasRoute(routeData);
     }
 
-    function useCurrentRouteData(origin, destination) {
+    function useCurrentRouteData() {
       selectNavigation(_originNode.id);
       var routeQuery = {
-        name: origin + '_' + destination
+        name: _originNode.id + '_' + _destinationNode.id
       };
       _routeData = _selectedNavigation.getRoute(routeQuery).toJson();
       _routeData = JSON.parse(_routeData);
@@ -208,15 +212,16 @@
     }
 
     function listAvailableAnswer(item) {
-      return AnswerSelectorService.listAnswers(item);
+      return RuleAnswerBuilderService.build(item);
     }
 
     function listAvailableOperator(itemType) {
-      return OperatorSelectorService.listOperators(itemType);
+      return RuleOperatorBuilderService.build(itemType);
     }
 
     function listAvailableWhen() {
-      return _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
+      var itemList = _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
+      return itemList.map(RuleWhenBuilderService.build);
     }
 
     function updateRule(ruleIndex, when, operator, answer) {

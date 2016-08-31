@@ -316,7 +316,6 @@ describe('RouteBuilderService', function() {
 
     });
 
-
   });
 
   function mockScope($rootScope, $injector) {
@@ -419,12 +418,14 @@ describe('RouteBuilderService', function() {
     Mock.EventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.EventsService');
     injections.EventsService = Mock.EventsService;
     spyOn(Mock.EventsService, 'activate');
+    spyOn(Mock.EventsService, 'deactivate');
   }
 
   function mockUiEventsService($injector) {
     Mock.UiEventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService');
     injections.UiEventsService = Mock.UiEventsService;
     spyOn(Mock.UiEventsService, 'activate');
+    spyOn(Mock.UiEventsService, 'deactivate');
   }
 
 });

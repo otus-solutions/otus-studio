@@ -18,6 +18,7 @@
 
     /* Public methods */
     self.activate = activate;
+    self.deactivate = deactivate;
 
     function activate() {
       MapEventsHandlerService.loadMapView(MapVisualHandlerService.mapView());
@@ -28,6 +29,10 @@
           DataService.selectNode(event.data.node);
         };
       });
+    }
+
+    function deactivate() {
+      MapEventsHandlerService.clearAllEventListeners();
     }
   }
 })();
