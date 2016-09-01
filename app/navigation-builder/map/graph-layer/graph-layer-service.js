@@ -20,9 +20,11 @@
     self.initialize = initialize;
     self.lockPreviousNodeOf = lockPreviousNodeOf;
     self.releasePreviousNodesOf = releasePreviousNodesOf;
-    self.setNodeAsPathStart = setNodeAsPathStart;
+    self.setNodeAsTrailhead = setNodeAsTrailhead;
+    self.setNodeAsTrailend = setNodeAsTrailend;
     self.clearNode = clearNode;
     self.applyVisualChanges = applyVisualChanges;
+    self.clearVisualChanges = clearVisualChanges;
 
     function initialize() {
       _graphLayer = GraphLayerFactory.create('map-view');
@@ -43,14 +45,24 @@
       _graphLayer.updateNodeStyleBefore(style, node);
     }
 
-    function setNodeAsPathStart(node) {
+    function setNodeAsTrailhead(node) {
       var style = { color: '#3D855B' };
       _graphLayer.updateNodeStyle(style, node);
     }
 
-    function clearNode(node) {
-      var style = { color: '#000' };
+    function setNodeAsTrailend(node) {
+      var style = { color: '#1B5BD1' };
       _graphLayer.updateNodeStyle(style, node);
+    }
+
+    function clearNode(node) {
+      var style = { color: '#000', isDisabled: false };
+      _graphLayer.updateNodeStyle(style, node);
+    }
+
+    function clearVisualChanges() {
+      var style = { color: '#000', isDisabled: false };
+      _graphLayer.updateAllNodesStyle(style, node);
     }
 
     function applyVisualChanges() {

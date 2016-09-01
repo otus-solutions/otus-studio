@@ -51,7 +51,7 @@
 
     function _onOriginNodeSelected(event, node) {
       GraphLayerService.lockPreviousNodeOf(node);
-      GraphLayerService.setNodeAsPathStart(node);
+      GraphLayerService.setNodeAsTrailhead(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
       moduleScope.digest();
@@ -66,29 +66,29 @@
     }
 
     function _onDestinationNodeSelected(event, node) {
-      MapVisualHandlerService.markDestinationRouteNode(node);
-      MapVisualHandlerService.drawMap();
+      GraphLayerService.setNodeAsTrailend(node);
+      GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.showDialog(node[0], node[1]);
       moduleScope.digest();
     }
 
     function _onDestinationNodeUnselected(event, node) {
-      MapVisualHandlerService.unmarkNode(node);
-      MapVisualHandlerService.drawMap();
+      GraphLayerService.clearNode(node);
+      GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
       moduleScope.digest();
     }
 
     function _onRouteBuildSaved(event) {
-      MapVisualHandlerService.clearSelections();
+      GraphLayerService.clearVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
     }
 
     function _onRouteBuildCanceled(event) {
-      MapVisualHandlerService.clearSelections();
+      GraphLayerService.clearVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);

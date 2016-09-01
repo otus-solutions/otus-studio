@@ -52,6 +52,10 @@
       _mapView.graph.updateNodeStyle(style, node);
     }
 
+    function updateAllNodesStyle(style, node) {
+      _mapView.graph.updateAllNodesStyle(style, node);
+    }
+
     function releasePreviousNodesOf(nodeLimiter) {
       _mapView.graph.releasePreviousNodesOf(nodeLimiter);
     }
@@ -63,6 +67,7 @@
     function _loadInternalBehaviour() {
       sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
       sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
+      sigma.classes.graph.addMethod('updateAllNodesStyle', _updateAllNodesStyle);
       _mapView = new sigma(mapViewContainer);
     }
 
@@ -83,6 +88,13 @@
           node.isDisabled = style.isDisabled;
           return true;
         }
+      });
+    }
+
+    function _updateAllNodesStyle(style, nodeToUpdate) {
+      this.nodesArray.forEach(function(node) {
+        node.color = style.color;
+        node.isDisabled = style.isDisabled;
       });
     }
   }
