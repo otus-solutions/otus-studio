@@ -27,22 +27,36 @@
   </md-card>
 </md-dialog-content>
 <md-dialog-content layout="row" flex>
-  <md-content layout="column" flex>
-    <div layout="row" flex>
-      <md-list layout="column" flex>
-        <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in $ctrl.condition.rules track by $index">
-          <div layout="column" flex class="md-list-item-text">
-            <otus-rule-editor flex rule-data="rule" rule-item-index="$index"></otus-rule-editor>
-          </div>
-        </md-list-item>
-        <md-list-item layout="row" flex class="md-1-line">
-          <otus-rule-editor flex></otus-rule-editor>
-        </md-list-item>
+  <div layout="column" flex>
+    <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="group in $ctrl.groups track by $index">
+      <md-list layout="column">
+        <otus:accordion flex>
+          <otus:accordion-header>
+            <md-content flex>
+              Grupo de condições
+            </md-content>
+          </otus:accordion-header>
+          <otus:accordion-content>
+            <md-content flex>
+              <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in $ctrl.condition.rules track by $index">
+                <div layout="column" flex class="md-list-item-text">
+                  <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>
+                </div>
+              </md-list-item>
+              <md-list-item layout="row" flex class="md-1-line">
+                <otus-rule-editor flex></otus-rule-editor>
+              </md-list-item>
+            </md-content>
+          </otus:accordion-content>
+        </otus:accordion>
       </md-list>
-    </div>
-  </md-content>
+    </md-whiteframe>
+  </div>
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
+  <div flex layout-align="start center">
+    <md-button class="md-raised" ng-click="$ctrl.createGroupCondition()" flex>{{ $ctrl.label.button.createGroupCondition }}</md-button>
+  </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
   <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>
