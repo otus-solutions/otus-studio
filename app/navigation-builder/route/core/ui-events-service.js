@@ -6,12 +6,11 @@
     .service('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService', service);
 
   service.$inject = [
-    'otusjs.studio.navigationBuilder.MapVisualHandlerService',
-    'otusjs.studio.navigationBuilder.MapEventsHandlerService',
+    'otusjs.studio.navigationBuilder.GraphLayerService',
     'otusjs.studio.navigationBuilder.routeBuilder.DataService'
   ];
 
-  function service(MapVisualHandlerService, MapEventsHandlerService, DataService) {
+  function service(GraphLayerService, DataService) {
     var self = this;
     var _originNode = null;
     var _destinationNode = null;
@@ -21,18 +20,15 @@
     self.deactivate = deactivate;
 
     function activate() {
-      MapEventsHandlerService.loadMapView(MapVisualHandlerService.mapView());
-      MapEventsHandlerService.onClickNode(function(event) {
-        var clickedNode = event.data.node;
-
-        if (!clickedNode.isDisabled) {
-          DataService.selectNode(event.data.node);
-        };
-      });
+      GraphLayerService.eventService.onClickNode(_selectRouteNode);
     }
 
     function deactivate() {
-      MapEventsHandlerService.clearAllEventListeners();
+      GraphLayerService.eventService.clearAllEventListeners();
+    }
+
+    function _selectRouteNode(event) {
+      DataService.selectNode(event.data.node);
     }
   }
 })();

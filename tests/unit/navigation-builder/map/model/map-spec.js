@@ -1,5 +1,6 @@
 describe('Map', function() {
 
+  var Mocks = {};
   var factory = {};
   var map = {};
 
@@ -7,25 +8,36 @@ describe('Map', function() {
     module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.studio.navigationBuilder.model.MapFactory');
+      mockNodeFactory(_$injector_);
+      mockEdgeFactory(_$injector_);
+
+      factory = _$injector_.get('otusjs.studio.navigationBuilder.MapFactory', Mocks);
       map = factory.create();
     });
   });
 
   describe('createNode method', function() {
 
-    it('should return an instance of Node', function() {
-      var object = map.createNode({id: 'N1', label: 'Node 1'});
-      expect(object.constructor.name).toBe('Node');
+    it('should call NodeFactory.create with options', function() {
+      spyOn(Mocks.NodeFactory, 'create');
+
+      var options = {id: 'N1', label: 'Node 1'};
+      map.createNode(options);
+
+      expect(Mocks.NodeFactory.create).toHaveBeenCalledWith(options);
     });
 
   });
 
   describe('createEdge method', function() {
 
-    it('should return an instance of Edge', function() {
-      var object = map.createEdge({id: 'E1', source: 'N1', target: 'N2'});
-      expect(object.constructor.name).toBe('Edge');
+    it('should call EdgeFactory.create with options', function() {
+      spyOn(Mocks.EdgeFactory, 'create');
+
+      var options = {id: 'E1', source: 'N1', target: 'N2'};
+      map.createEdge(options);
+
+      expect(Mocks.EdgeFactory.create).toHaveBeenCalledWith(options);
     });
 
   });
@@ -73,5 +85,13 @@ describe('Map', function() {
     });
 
   });
+
+  function mockNodeFactory($injector) {
+    Mocks.NodeFactory = $injector.get('otusjs.studio.navigationBuilder.NodeFactory');
+  }
+
+  function mockEdgeFactory($injector) {
+    Mocks.EdgeFactory = $injector.get('otusjs.studio.navigationBuilder.EdgeFactory');
+  }
 
 });

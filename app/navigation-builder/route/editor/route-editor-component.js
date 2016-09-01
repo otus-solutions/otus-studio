@@ -23,7 +23,6 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.deleteRule = deleteRule;
     self.cancel = cancel;
     self.save = save;
 
@@ -31,10 +30,6 @@
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
       self.condition = RouteBuilderService.selectedCondition();
-    }
-
-    function deleteRule(ruleIndex) {
-      RouteBuilderService.selectedCondition().rules.splice(ruleIndex, 1);
     }
 
     function cancel() {

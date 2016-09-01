@@ -21,12 +21,8 @@
     <!-- ************************************* jQuery ************************************* -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
+    <!-- ************************************* SigmaJS ************************************* -->
     <script src="node_modules/sigma/build/sigma.min.js"></script>
-
-    <!-- ************************************* Graphdracula ************************************* -->
-    <script src="node_modules/graphdracula/js/raphael-min.js"></script>
-    <script src="node_modules/graphdracula/js/dracula_graffle.js"></script>
-    <script src="node_modules/graphdracula/js/dracula_graph.js"></script>
 
     <!-- ************************************* Angular ************************************* -->
     <script src="node_modules/angular/angular.min.js"></script>
@@ -422,9 +418,13 @@
     <!-- INSPECTOR -->
     <script src="app/navigation-builder/inspector/navigation-inspector-service.js"></script>
     <!-- MAP -->
-    <script src="app/navigation-builder/map/map-component.js"></script>
-    <script src="app/navigation-builder/map/map-events-handler-service.js"></script>
-    <script src="app/navigation-builder/map/map-visual-handler-service.js"></script>
+    <script src="app/navigation-builder/map/component/map-component.js"></script>
+    <script src="app/navigation-builder/map/graph-layer/graph-layer-event-service.js"></script>
+    <script src="app/navigation-builder/map/graph-layer/graph-layer-factory.js"></script>
+    <script src="app/navigation-builder/map/graph-layer/graph-layer-service.js"></script>
+    <script src="app/navigation-builder/map/model/edge-factory.js"></script>
+    <script src="app/navigation-builder/map/model/map-factory.js"></script>
+    <script src="app/navigation-builder/map/model/node-factory.js"></script>
     <!-- MESSENGER -->
     <script src="app/navigation-builder/messenger/messenger-module.js"></script>
     <script src="app/navigation-builder/messenger/dialog/text/text-dialog-service.js"></script>
@@ -432,15 +432,12 @@
     <!-- INSTRUCTOR -->
     <script src="app/navigation-builder/messenger/instructor/instructor-component.js"></script>
     <script src="app/navigation-builder/messenger/instructor/instructor-service.js"></script>
-    <!-- MODEL -->
-    <script src="app/navigation-builder/model/navigation-builder-model-module.js"></script>
-    <script src="app/navigation-builder/model/map-factory.js"></script>
     <!-- ROUTE -->
     <script src="app/navigation-builder/route/route-builder-module.js"></script>
     <script src="app/navigation-builder/route/api/route-builder-service.js"></script>
     <script src="app/navigation-builder/route/core/data-service.js"></script>
-    <script src="app/navigation-builder/route/core/events-service.js"></script>
     <script src="app/navigation-builder/route/core/message-service.js"></script>
+    <script src="app/navigation-builder/route/core/module-event-service.js"></script>
     <script src="app/navigation-builder/route/core/rule-answer-builder-service.js"></script>
     <script src="app/navigation-builder/route/core/rule-operator-builder-service.js"></script>
     <script src="app/navigation-builder/route/core/rule-when-builder-service.js"></script>

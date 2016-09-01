@@ -8,8 +8,7 @@
       controller: component,
       bindings: {
         ruleData: '<',
-        ruleItemIndex: '<',
-        onDelete: '&'
+        ruleItemIndex: '<'
       }
     });
 
@@ -157,7 +156,6 @@
 
     function deleteRule() {
       RouteBuilderService.deleteRule(self.ruleData.index);
-      self.onDelete({ruleIndex: self.ruleData.index});
     }
 
     function _initializeWhenList() {

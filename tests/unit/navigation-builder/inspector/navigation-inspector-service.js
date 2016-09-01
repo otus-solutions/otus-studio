@@ -97,7 +97,7 @@ describe('NavigationBuilderService', function() {
   });
 
   function mockMapFactory($injector) {
-    Mock.MapFactory = $injector.get('otusjs.studio.navigationBuilder.model.MapFactory');
+    Mock.MapFactory = $injector.get('otusjs.studio.navigationBuilder.MapFactory');
     return Mock.MapFactory;
   }
 

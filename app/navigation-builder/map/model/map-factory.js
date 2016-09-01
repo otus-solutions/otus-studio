@@ -2,11 +2,24 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.model')
-    .factory('otusjs.studio.navigationBuilder.model.MapFactory', factory);
+    .module('otusjs.studio.navigationBuilder')
+    .factory('otusjs.studio.navigationBuilder.MapFactory', factory);
 
-  function factory() {
+  factory.$inject = [
+    'otusjs.studio.navigationBuilder.NodeFactory',
+    'otusjs.studio.navigationBuilder.EdgeFactory'
+  ];
+
+  var Inject = {
+    NodeFactory: {},
+    EdgeFactory: {}
+  }
+
+  function factory(NodeFactory, EdgeFactory) {
     var self = this;
+
+    Inject.NodeFactory = NodeFactory;
+    Inject.EdgeFactory = EdgeFactory;
 
     self.create = create;
 
@@ -66,11 +79,11 @@
     }
 
     function createNode(options) {
-      return new Node(options);
+      return Inject.NodeFactory.create(options);
     }
 
     function createEdge(options) {
-      return new Edge(options);
+      return Inject.EdgeFactory.create(options);
     }
 
     function getNavigation(node) {
@@ -97,22 +110,5 @@
 
       return result.length ? true : false;
     }
-  }
-
-  function Node(options) {
-    var self = this;
-    self.id = options.id;
-    self.label = options.label;
-    self.x = options.x || 0;
-    self.y = options.y || 0;
-    self.size = options.size || '10';
-    self.color = options.color || '#000';
-  }
-
-  function Edge(options) {
-    var self = this;
-    self.id = options.id;
-    self.source = options.source;
-    self.target = options.target;
   }
 }());

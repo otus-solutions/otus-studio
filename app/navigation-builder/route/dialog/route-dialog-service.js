@@ -10,7 +10,7 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
   ];
 
-  function service($mdDialog, scopeService) {
+  function service($mdDialog, moduleScope) {
     var self = this;
     var _dialogSettings = {};
 
@@ -28,7 +28,7 @@
       _dialogSettings.locals = {
         origin: originNode,
         destination: destinationNode,
-        scopeService: scopeService
+        moduleScope: moduleScope
       };
       $mdDialog.show(_dialogSettings);
     }
@@ -47,7 +47,7 @@
     }
   }
 
-  function DialogController($mdDialog, origin, destination, scopeService) {
+  function DialogController($mdDialog, origin, destination, moduleScope) {
     var self = this;
 
     self.origin = origin;

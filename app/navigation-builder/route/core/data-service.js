@@ -12,7 +12,7 @@
     'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function service(scopeService, RuleWhenBuilderService, RuleOperatorBuilderService, RuleAnswerBuilderService) {
+  function service(moduleScope, RuleWhenBuilderService, RuleOperatorBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _survey = null;
     var _originNode = null;
@@ -83,16 +83,16 @@
     function selectNode(node) {
       if (_areSameNode(_originNode, node)) {
         _originNode = null;
-        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_UNSELECTED, node);
+        moduleScope.emit(moduleScope.NBEVENTS.ORIGIN_NODE_UNSELECTED, node);
       } else if (_areSameNode(_destinationNode, node)) {
         _destinationNode = null;
-        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_UNSELECTED, node);
+        moduleScope.emit(moduleScope.NBEVENTS.DESTINATION_NODE_UNSELECTED, node);
       } else if (!hasOriginNode()) {
         _originNode = node;
-        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_SELECTED, node);
+        moduleScope.emit(moduleScope.NBEVENTS.ORIGIN_NODE_SELECTED, node);
       } else {
         _destinationNode = node;
-        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_SELECTED, selectedNode());
+        moduleScope.emit(moduleScope.NBEVENTS.DESTINATION_NODE_SELECTED, selectedNode());
       }
     }
 
@@ -208,7 +208,7 @@
     }
 
     function deleteRule(ruleIndex) {
-      _selectedCondition.rules.splice[ruleIndex, 1];
+      _selectedCondition.rules.splice(ruleIndex, 1);
     }
 
     function listAvailableAnswer(item) {

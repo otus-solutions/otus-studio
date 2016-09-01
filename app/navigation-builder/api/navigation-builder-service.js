@@ -6,7 +6,7 @@
     .service('otusjs.studio.navigationBuilder.NavigationBuilderService', service);
 
   service.$inject = [
-    'otusjs.studio.navigationBuilder.model.MapFactory',
+    'otusjs.studio.navigationBuilder.MapFactory',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.NavigationInspectorService'
   ];
@@ -20,22 +20,12 @@
     self.mapData = null;
 
     /* Public methods */
-    self.navigationMap = navigationMap;
     self.nodes = nodes;
     self.edges = edges;
     self.setSurvey = setSurvey;
-    self.selectNode = selectNode;
-    self.selectedNode = selectedNode;
-    self.selectedNavigation = selectedNavigation;
-    self.selectedNodeFamily = selectedNodeFamily;
-    self.selectedEdges = selectedEdges;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
-
-    function navigationMap() {
-      return _navigationMap;
-    }
 
     function nodes() {
       return _navigationMap.nodes();
@@ -50,26 +40,6 @@
       _loadTemplateNavigations(survey.NavigationManager.getNavigationList());
     }
 
-    function selectNode(node) {
-      _activeServiceMode.selectNode(node);
-    }
-
-    function selectedNode() {
-      return _activeServiceMode.selectedNode();
-    }
-
-    function selectedNavigation() {
-      return _activeServiceMode.selectedNavigation();
-    }
-
-    function selectedNodeFamily() {
-      return _activeServiceMode.selectedNodeFamily();
-    }
-
-    function selectedEdges() {
-      return _activeServiceMode.selectedEdges();
-    }
-
     function activateRouteCreatorMode() {
       _activeServiceMode = RouteBuilderService;
       _activeServiceMode.activate(_survey);
@@ -81,6 +51,12 @@
 
     function deactiveMode() {
       return _activeServiceMode.deactivate();
+    }
+
+    function _loadTemplateNavigations(templateNavigations) {
+      _navigationMap = MapFactory.create();
+      _addNodes(templateNavigations);
+      _addEdges(templateNavigations);
     }
 
     function _addNodes(templateNavigations) {
@@ -106,12 +82,6 @@
         });
 
       });
-    }
-
-    function _loadTemplateNavigations(templateNavigations) {
-      _navigationMap = MapFactory.create();
-      _addNodes(templateNavigations);
-      _addEdges(templateNavigations);
     }
   }
 })();

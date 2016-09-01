@@ -8,11 +8,11 @@
   service.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.routeBuilder.DataService',
-    'otusjs.studio.navigationBuilder.routeBuilder.EventsService',
+    'otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService',
     'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
   ];
 
-  function service(scopeService, DataService, EventsService, UiEventsService) {
+  function service(moduleScope, DataService, EventsService, UiEventsService) {
     var self = this;
 
     /* Public methods */
@@ -46,8 +46,9 @@
 
     function activate(survey) {
       DataService.activate(survey);
-      EventsService.activate();
       UiEventsService.activate();
+      EventsService.activate();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_ON);
     }
 
     function deactivate() {
@@ -94,7 +95,7 @@
 
     function saveRouteBuilding() {
       DataService.apply();
-      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_SAVED);
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED);
       deactivate();
     }
 
@@ -118,7 +119,7 @@
     }
 
     function cancelRouteBuilding() {
-      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED);
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED);
       deactivate();
     }
 

@@ -10,7 +10,7 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderService',
   ];
 
-  function service(scopeService, NavigationBuilderService) {
+  function service(moduleScope, NavigationBuilderService) {
     var self = this;
     var _scope = null;
 
@@ -18,7 +18,7 @@
     self.activate = activate;
 
     function activate() {
-      scopeService.onEvent(scopeService.NBEVENTS.MODULE_MODE_OFF, function(event) {
+      moduleScope.onEvent(moduleScope.NBEVENTS.ROUTE_MODE_OFF, function(event) {
         NavigationBuilderService.deactiveMode();
       });
     }

@@ -8,8 +8,7 @@ describe('UiEventsService', function() {
     module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
-      mockMapVisualHandlerService(_$injector_);
-      mockMapEventsHandlerService(_$injector_);
+      mockGraphLayerService(_$injector_);
       mockDataService(_$injector_);
 
       service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService', injections);
@@ -22,31 +21,21 @@ describe('UiEventsService', function() {
       service.activate();
     });
 
-    it('should call MapVisualHandlerService.mapView', function() {
-      expect(Mock.MapVisualHandlerService.mapView).toHaveBeenCalled();
-    });
-
-    it('should call MapEventsHandlerService.loadMapView', function() {
-      expect(Mock.MapEventsHandlerService.loadMapView).toHaveBeenCalled();
-    });
-
-    it('should call MapEventsHandlerService.onClickNode', function() {
-      expect(Mock.MapEventsHandlerService.onClickNode).toHaveBeenCalled();
+    xit('should call GraphLayerService.mapView', function() {
+      expect(Mock.GraphLayerService.mapView).toHaveBeenCalled();
     });
 
   });
 
-  function mockMapVisualHandlerService($injector) {
-    Mock.MapVisualHandlerService = $injector.get('otusjs.studio.navigationBuilder.MapVisualHandlerService');
-    injections.MapVisualHandlerService = Mock.MapVisualHandlerService;
-    spyOn(Mock.MapVisualHandlerService, 'mapView');
-  }
-
-  function mockMapEventsHandlerService($injector) {
-    Mock.MapEventsHandlerService = $injector.get('otusjs.studio.navigationBuilder.MapEventsHandlerService');
-    injections.MapEventsHandlerService = Mock.MapEventsHandlerService;
-    spyOn(Mock.MapEventsHandlerService, 'loadMapView');
-    spyOn(Mock.MapEventsHandlerService, 'onClickNode');
+  function mockMapGraphLayerService($injector) {
+    Mock.GraphLayerService = $injector.get('otusjs.studio.navigationBuilder.GraphLayerService');
+    injections.GraphLayerService = Mock.GraphLayerService;
+    spyOn(Mock.GraphLayerService, 'initialize');
+    spyOn(Mock.GraphLayerService, 'lockPreviousNodeOf');
+    spyOn(Mock.GraphLayerService, 'releasePreviousNodesOf');
+    spyOn(Mock.GraphLayerService, 'setNodeAsPathStart');
+    spyOn(Mock.GraphLayerService, 'clearNode');
+    spyOn(Mock.GraphLayerService, 'applyVisualChanges');
   }
 
   function mockDataService($injector) {

@@ -6,7 +6,7 @@ describe('MapFactory', function() {
     module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.studio.navigationBuilder.model.MapFactory');
+      factory = _$injector_.get('otusjs.studio.navigationBuilder.MapFactory');
     });
   });
 

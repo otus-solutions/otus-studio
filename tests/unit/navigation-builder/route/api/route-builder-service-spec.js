@@ -12,7 +12,7 @@ describe('RouteBuilderService', function() {
       mockTemplateNavigations();
       mockNodes();
       mockDataService(_$injector_);
-      mockEventsService(_$injector_);
+      mockModuleEventsService(_$injector_);
       mockUiEventsService(_$injector_);
 
       service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', injections);
@@ -414,8 +414,8 @@ describe('RouteBuilderService', function() {
     spyOn(Mock.DataService, 'apply');
   }
 
-  function mockEventsService($injector) {
-    Mock.EventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.EventsService');
+  function mockModuleEventsService($injector) {
+    Mock.EventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService');
     injections.EventsService = Mock.EventsService;
     spyOn(Mock.EventsService, 'activate');
     spyOn(Mock.EventsService, 'deactivate');

@@ -10,6 +10,7 @@
             'editor',
             'otusjs',
             'preview',
+            'otusjs.studio.navigationBuilder',
             'surveyTemplates',
             /* Otus platform modules */
             'ui.components',
@@ -66,7 +67,7 @@
         'indexedDB',
         'immutable',
         'ui.utils.masks',
-        'otusDomainClient',
+        'otus.domain.client',
         'otus.textEdition'
     ]);
 
@@ -269,11 +270,57 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular.module('otusjs.studio.navigationBuilder', [
+      'otusjs.studio.navigationBuilder.model',
+      'otusjs.studio.navigationBuilder.routeBuilder',
+      'otusjs.studio.navigationBuilder.messenger',
+      'ngMaterial'
+    ])
+    .constant('NBEVENTS', {
+      /* Map root */
+      'ROUTE_MODE_OFF': 'nbevents.module.mode.off',
+      'MAP_CONTAINER_READY': 'nbevents.map.container.ready',
+      'ROUTE_BUILD_STARTED': 'nbevents.map.route.started',
+      'ROUTE_BUILD_SAVED': 'nbevents.map.route.build.saved',
+      'ROUTE_BUILD_CANCELED': 'nbevents.map.route.build.canceled',
+      'ORIGIN_NODE_SELECTED': 'nbevents.map.route.node.origin.selected',
+      'ORIGIN_NODE_UNSELECTED': 'nbevents.map.route.node.origin.unselected',
+      'DESTINATION_NODE_SELECTED': 'nbevents.map.route.node.destination.selected',
+      'DESTINATION_NODE_UNSELECTED': 'nbevents.map.route.node.destination.unselected',
+
+      /* Messenger root */
+      'SHOW_MESSENGER': 'nbevents.messenger.show',
+      'HIDE_MESSENGER': 'nbevents.messenger.hide'
+    })
+    .constant('NBMESSAGES', {
+      'ROUTE_BUILDER': {
+        'SELECT_ORIGIN': {
+          header: 'Origem da Rota',
+          content: 'Escolha o item que determinará o início da rota.'
+        },
+        'SELECT_DESTINATION': {
+          header: 'Destino da Rota',
+          content: 'Escolha o item que determinará o destino da rota.'
+        }
+      }
+    })
+    .run([
+      'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+      'otusjs.studio.navigationBuilder.EventsService',
+      '$rootScope',
+      function(NavigationBuilderScopeService, EventsService, $rootScope) {
+        NavigationBuilderScopeService.initialize($rootScope.$new());
+        EventsService.activate();
+      }
+    ]);
+}());
+
+(function() {
     'use strict';
 
-    angular.module('preview', [
-        'preview.navigation'
-    ]);
+    angular.module('preview', []);
 
 }());
 
@@ -612,68 +659,650 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.NavigationBuilderService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.model.MapFactory',
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
+    'otusjs.studio.navigationBuilder.NavigationInspectorService'
+  ];
+
+  function service(MapFactory, RouteBuilderService, NavigationInspectorService) {
+    var self = this;
+    var _survey = {};
+    var _navigationMap = {};
+    var _activeServiceMode = null;
+
+    self.mapData = null;
+
+    /* Public methods */
+    // self.navigationMap = navigationMap;
+    self.nodes = nodes;
+    self.edges = edges;
+    self.setSurvey = setSurvey;
+    self.activateRouteCreatorMode = activateRouteCreatorMode;
+    self.activateNavigationInspectorMode = activateNavigationInspectorMode;
+    self.deactiveMode = deactiveMode;
+
+    function navigationMap() {
+      return _navigationMap;
+    }
+
+    function nodes() {
+      return _navigationMap.nodes();
+    }
+
+    function edges() {
+      return _navigationMap.edges();
+    }
+
+    function setSurvey(survey) {
+      _survey = survey;
+      _loadTemplateNavigations(survey.NavigationManager.getNavigationList());
+    }
+
+    function activateRouteCreatorMode() {
+      _activeServiceMode = RouteBuilderService;
+      _activeServiceMode.activate(_survey);
+    }
+
+    function activateNavigationInspectorMode() {
+      _activeServiceMode = NavigationInspectorService;
+    }
+
+    function deactiveMode() {
+      return _activeServiceMode.deactivate();
+    }
+
+    function _addNodes(templateNavigations) {
+      templateNavigations.forEach(function(navigation) {
+        var nodeOptions = { id: navigation.origin, label: navigation.origin };
+        var node = _navigationMap.createNode(nodeOptions);
+        node.navigation = navigation;
+        _navigationMap.addNode(node);
+      });
+    }
+
+    function _addEdges(templateNavigations) {
+      templateNavigations.forEach(function(navigation) {
+
+        navigation.routes.forEach(function(route) {
+          var edgeOptions = {};
+          edgeOptions.id = navigation.origin;
+          edgeOptions.source = route.origin;
+          edgeOptions.target = route.destination;
+          var edge = _navigationMap.createEdge(edgeOptions);
+          edge.route = route;
+          _navigationMap.addEdge(edge);
+        });
+
+      });
+    }
+
+    function _loadTemplateNavigations(templateNavigations) {
+      _navigationMap = MapFactory.create();
+      _addNodes(templateNavigations);
+      _addEdges(templateNavigations);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.NavigationInspectorService', service);
+
+  function service() {
+    var self = this;
+    var _selectedNode = null;
+
+    /* Public methods */
+    self.selectNode = selectNode;
+
+    function selectNode(node) {
+      _selectedNode = node;
+      _selectedNodeFamily = [_selectedNode];
+      _selectedEdges = [];
+
+      _selectedNode.navigation.routes.forEach(function(route) {
+        _calculateSelectedNodeFamily(route);
+        _calculateSelectedEdges(route);
+      });
+    }
+
+    function selectedNode() {
+      return _selectedNode;
+    }
+
+    function selectedNavigation() {
+      return _selectedNode.navigation;
+    }
+
+    function selectedNodeFamily() {
+      return _selectedNodeFamily;
+    }
+
+    function selectedEdges() {
+      return _selectedEdges;
+    }
+
+    function _calculateSelectedNodeFamily(route) {
+      var result = _navigationMap.nodes().filter(function(node) {
+        return node.id === route.destination;
+      });
+      _selectedNodeFamily.push(result[0]);
+    }
+
+    function _calculateSelectedEdges(route) {
+      var result = _navigationMap.edges().filter(function(edge) {
+        return edge.target === route.destination;
+      });
+      _selectedEdges.push(result[0]);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.EventsService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService',
+  ];
+
+  function service(scopeService, NavigationBuilderService) {
+    var self = this;
+    var _scope = null;
+
+    /* Public methods */
+    self.activate = activate;
+
+    function activate() {
+      scopeService.onEvent(scopeService.NBEVENTS.ROUTE_MODE_OFF, function(event) {
+        NavigationBuilderService.deactiveMode();
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.NavigationBuilderScopeService', service);
+
+  service.$injects = [
+    'NBEVENTS',
+    'NBMESSAGES'
+  ]
+
+  function service(NBEVENTS, NBMESSAGES) {
+    var self = this;
+    var _scope = null;
+
+    self.NBEVENTS = NBEVENTS;
+    self.NBMESSAGES = NBMESSAGES;
+
+    /* Public methods */
+    self.initialize = initialize;
+    self.onEvent = onEvent;
+    self.broadcast = broadcast;
+    self.emit = emit;
+    self.digest = digest;
+
+    function initialize(scope) {
+      scope.events = NBEVENTS;
+      scope.messages = NBMESSAGES;
+      _scope = scope;
+    }
+
+    function onEvent(event, listener) {
+      return _scope.$on(event, listener);
+    }
+
+    function broadcast(event, data) {
+      _scope.$broadcast(event, data);
+    }
+
+    function emit(event, data) {
+      _scope.$emit(event, data);
+    }
+
+    function digest() {
+      _scope.$digest();
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .component('otusNavigationMap', {
+      templateUrl: 'app/navigation-builder/map/map-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.MapVisualHandlerService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService',
+    'otusjs.studio.navigationBuilder.messenger.InstructorService'
+  ];
+
+  function component(scopeService, MapVisualHandlerService, NavigationBuilderService, NavigationMessengerService) {
+    var self = this;
+
+    self.showMessenger = true;
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      _initializeComponents();
+      _initializeModuleEvents();
+    }
+
+    function _initializeComponents() {
+      self.routeMenuCtrl = new routeMenuController(NavigationBuilderService);
+    }
+
+    function _initializeModuleEvents() {
+      scopeService.onEvent(scopeService.NBEVENTS.MAP_CONTAINER_READY, function(event, data) {
+        MapVisualHandlerService.loadMapView(new sigma('map-view'));
+        _renderMap();
+      });
+    }
+
+    function _renderMap() {
+      var nodes = NavigationBuilderService.nodes();
+      var edges = NavigationBuilderService.edges();
+      MapVisualHandlerService.loadMapData(nodes, edges);
+      MapVisualHandlerService.drawMap();
+    }
+  }
+
+  function routeMenuController(NavigationBuilderService) {
+    var self = this;
+
+    _init();
+
+    /* Public methods */
+    self.click = click;
+    self.addRoute = addRoute;
+
+    function click() {
+      self.isOpen = !self.isOpen;
+    }
+
+    function addRoute() {
+      NavigationBuilderService.activateRouteCreatorMode();
+    }
+
+    function _init() {
+      self.isOpen = false;
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.MapEventsHandlerService', service);
+
+  function service() {
+    var self = this;
+
+    const CLICK_NODE = 'clickNode';
+
+    var _mapView = null;
+    var _clickNodeListeners = [];
+
+    /* Public methods */
+    self.loadMapView = loadMapView;
+    self.mapView = mapView;
+    self.onClickNode = onClickNode;
+    self.clearAllEventListeners = clearAllEventListeners;
+
+    function loadMapView(mapView) {
+      _mapView = mapView;
+      _initializeEventListeners();
+    }
+
+    function mapView() {
+      return _mapView;
+    }
+
+    function onClickNode(listener) {
+      _clickNodeListeners = [];
+      _clickNodeListeners.push(listener);
+    }
+
+    function clearAllEventListeners() {
+      _clickNodeListeners = [];
+      _mapView.unbind(CLICK_NODE);
+    }
+
+    function _initializeEventListeners() {
+      _mapView.bind(CLICK_NODE, function(event) {
+        _clickNodeListeners.forEach(function(listener) {
+          listener(event);
+        })
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.MapVisualHandlerService', service);
+
+  function service() {
+    var self = this;
+    var _mapView = null;
+    var _selectedNodes = [];
+
+    /* Public methods */
+    self.mapView = mapView;
+    self.loadMapView = loadMapView;
+    self.loadMapData = loadMapData;
+    self.drawMap = drawMap;
+    self.clearMap = clearMap;
+    self.markOriginRouteNode = markOriginRouteNode;
+    self.markDestinationRouteNode = markDestinationRouteNode;
+    self.unmarkNode = unmarkNode;
+    self.lockPreviousNodesOf = lockPreviousNodesOf;
+    self.releasePreviousNodesOf = releasePreviousNodesOf;
+    self.clearSelections = clearSelections;
+
+    function mapView() {
+      return _mapView;
+    }
+
+    function loadMapView(mapView) {
+      clearMap();
+      _mapView = mapView;
+    }
+
+    function loadMapData(nodes, edges) {
+      _mapView.graph.read({
+        nodes: nodes,
+        edges: edges
+      });
+    }
+
+    function drawMap() {
+      _mapView.refresh();
+    }
+
+    function clearMap() {
+      if (_mapView) {
+        _mapView.graph.clear();
+        $('#map-view').empty();
+      }
+    }
+
+    function markOriginRouteNode(nodeToMark) {
+      nodeToMark.color = '#00F';
+      _selectedNodes.push(nodeToMark);
+    }
+
+    function markDestinationRouteNode(nodeToMark) {
+      nodeToMark.color = '#F00';
+      _selectedNodes.push(nodeToMark);
+    }
+
+    function unmarkNode(nodeToMark) {
+      nodeToMark.color = '#000';
+    }
+
+    function lockPreviousNodesOf(nodeLimiter) {
+      _mapView.graph.nodes().every(function(node) {
+        if (node.id !== nodeLimiter.id) {
+          node.color = '#CCC';
+          node.isDisabled = true;
+          _selectedNodes.push(node);
+          return true;
+        }
+      });
+    }
+
+    function releasePreviousNodesOf(nodeLimiter) {
+      _mapView.graph.nodes().every(function(node) {
+        if (node.id !== nodeLimiter.id) {
+          node.color = '#000';
+          node.isEnabled = false;
+          return true;
+        }
+      });
+    }
+
+    function clearSelections() {
+      _selectedNodes.forEach(function(node) {
+        node.color = '#000';
+      });
+      // clearMap();
+      drawMap();
+    }
+  }
+})();
+
+(function() {
     'use strict';
 
-    angular
-        .module('preview')
-        .service('EditionPreviewService', EditionPreviewService);
+    angular.module('otusjs.studio.navigationBuilder.messenger', []);
 
-    EditionPreviewService.$inject = [
-        '$stateParams',
-        'AddSurveyItemEventFactory',
-        '$timeout',
-        '$q'
-    ];
+}());
 
-    function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
-        var self = this;
-        var _surveyToLoad;
-        var _scope;
+(function() {
+  'use strict';
 
-        self.isLoading = false;
-        self.setScope = setScope;
-        self.isLoadingMode = isLoadingMode;
-        self.loadSurveyTemplate = loadSurveyTemplate;
+  angular
+    .module('otusjs.studio.navigationBuilder.model')
+    .factory('otusjs.studio.navigationBuilder.model.MapFactory', factory);
 
-        function loadSurveyTemplate() {
-            _surveyToLoad = $stateParams.template;
-            if (_surveyToLoad.itemContainer.length > 0) {
-                self.isLoading = true;
-                var promise = _renderSurveyTemplate();
-                promise.then(function(value) {
-                    self.isLoading = false;
-                });
-            }
-        }
+  function factory() {
+    var self = this;
 
-        function _renderSurveyTemplate() {
-            var deferred = $q.defer();
-            if (_scope.$$phase) {
-                AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
-                _surveyToLoad.itemContainer.splice(0, 1);
-                if (_surveyToLoad.itemContainer.length > 0) {
-                    $timeout(function() {
-                        _surveyToLoad.itemContainer.forEach(function(item) {
-                            AddSurveyItemEventFactory.create().load(item);
-                            _scope.$digest();
-                        });
-                        deferred.resolve(true);
-                    }, 1000);
-                } else {
-                    deferred.resolve(true);
-                }
-            }
-            return deferred.promise;
-        }
+    self.create = create;
 
-        function isLoadingMode() {
-            return $stateParams.template;
-        }
-
-        function setScope(scope) {
-            _scope = scope;
-        }
+    function create(data) {
+      return new Map(data);
     }
+
+    return self;
+  }
+
+  function Map(data) {
+    var self = this;
+    var _nodes = [];
+    var _edges = [];
+    var _yAxis = 0;
+
+    _init();
+
+    function _init() {
+      if (data) {
+        _yAxis = parseInt((data.nodes.length / 2));
+        data.nodes.forEach(function(item) {
+          addNode(_parseToNodeOptions(item));
+        });
+      }
+    }
+
+    /* Public methods */
+    self.addNode = addNode;
+    self.addEdge = addEdge;
+    self.nodes = nodes;
+    self.edges = edges;
+    self.createNode = createNode;
+    self.createEdge = createEdge;
+    self.getNavigation = getNavigation;
+
+    function nodes() {
+      return _nodes;
+    }
+
+    function edges() {
+      return _edges;
+    }
+
+    function addNode(node) {
+      if (!_nodeExists(node.id)) {
+        node.x = _nodes.length;
+        node.y = 0;
+        _nodes.push(node);
+      }
+    }
+
+    function addEdge(edge) {
+      if (_nodeExists(edge.source) && _nodeExists(edge.target)) {
+        _edges.push(edge);
+      }
+    }
+
+    function createNode(options) {
+      return new Node(options);
+    }
+
+    function createEdge(options) {
+      return new Edge(options);
+    }
+
+    function getNavigation(node) {
+      var result = _nodes.filter(function(nodeToCompare) {
+        return nodeToCompare.id === node.id;
+      });
+
+      return result.length ? result[0].navigation : undefined;
+    }
+
+    function _parseToNodeOptions(data) {
+      return {
+        id: data.origin,
+        label: data.origin,
+        x: _nodes.length,
+        y: _yAxis
+      };
+    }
+
+    function _nodeExists(nodeID) {
+      var result = _nodes.filter(function(node) {
+        return node.id === nodeID;
+      });
+
+      return result.length ? true : false;
+    }
+  }
+
+  function Node(options) {
+    var self = this;
+    self.id = options.id;
+    self.label = options.label;
+    self.x = options.x || 0;
+    self.y = options.y || 0;
+    self.size = options.size || '10';
+    self.color = options.color || '#000';
+  }
+
+  function Edge(options) {
+    var self = this;
+    self.id = options.id;
+    self.source = options.source;
+    self.target = options.target;
+  }
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('otusjs.studio.navigationBuilder.model', []);
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('otusjs.studio.navigationBuilder.routeBuilder', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .service('EditionPreviewService', EditionPreviewService);
+
+  EditionPreviewService.$inject = [
+    '$stateParams',
+    'AddSurveyItemEventFactory',
+    '$timeout',
+    '$q'
+  ];
+
+  function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
+    var self = this;
+    var _surveyToLoad;
+    var _scope;
+
+    self.isLoading = false;
+    self.setScope = setScope;
+    self.isLoadingMode = isLoadingMode;
+    self.loadSurveyTemplate = loadSurveyTemplate;
+
+    function loadSurveyTemplate() {
+      _surveyToLoad = $stateParams.template;
+      if (_surveyToLoad.itemContainer.length > 0) {
+        self.isLoading = true;
+        return _renderSurveyTemplate();
+      }
+    }
+
+    function _renderSurveyTemplate() {
+      var deferred = $q.defer();
+      if (_scope.$$phase) {
+        AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
+        _surveyToLoad.itemContainer.splice(0, 1);
+        if (_surveyToLoad.itemContainer.length > 0) {
+          $timeout(function() {
+            _surveyToLoad.itemContainer.forEach(function(item) {
+              AddSurveyItemEventFactory.create().load(item);
+              _scope.$digest();
+            });
+            deferred.resolve($stateParams.template);
+          }, 1000);
+        } else {
+          deferred.resolve($stateParams.template);
+        }
+      }
+      return deferred.promise;
+    }
+
+    function isLoadingMode() {
+      return $stateParams.template;
+    }
+
+    function setScope(scope) {
+      _scope = scope;
+    }
+  }
 
 })();
 
@@ -721,73 +1350,6 @@
     }
 
 })();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('preview.navigation')
-        .factory('GraphFactory', GraphFactory);
-
-    /* Factory interface */
-    function GraphFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new Graph();
-        }
-
-        return self;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    var DOM_LOCATION_NAVEGATION_GRAPH = '#survey-navigation-graph > svg:nth-child(1)';
-
-    angular
-        .module('preview.navigation')
-        .directive('surveyNavigationPreviewGenerator', surveyNavigationPreviewGenerator);
-
-    surveyNavigationPreviewGenerator.$inject = [
-        'NavigationPreviewService',
-        'WorkspaceService'
-    ];
-
-    function surveyNavigationPreviewGenerator(NavigationPreviewService, WorkspaceService) {
-
-        function link(scope, element, attrs) {
-            element.on('click', function(){
-                if(element.find(DOM_LOCATION_NAVEGATION_GRAPH)){
-                    $(DOM_LOCATION_NAVEGATION_GRAPH).remove();
-                }
-                var navigationObject = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-                var createdGraph = NavigationPreviewService.createGraph(navigationObject);
-                NavigationPreviewService.renderGraph(createdGraph);
-            });
-        }
-
-        var ddo =  {
-            restrict : 'A',
-            link : link
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('preview.navigation', []);
-
-}());
 
 (function(){"use strict";var __slice=[].slice;angular.module("indexedDB",[]).provider("$indexedDB",function(){var IDBKeyRange,allTransactions,apiDirection,appendResultsToPromise,applyNeededUpgrades,cursorDirection,db,dbMode,dbName,dbPromise,dbVersion,defaultQueryOptions,errorMessageFor,indexedDB,readyState,upgradesByVersion;indexedDB=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB,IDBKeyRange=window.IDBKeyRange||window.mozIDBKeyRange||window.webkitIDBKeyRange||window.msIDBKeyRange,dbMode={readonly:"readonly",readwrite:"readwrite"},readyState={pending:"pending"},cursorDirection={next:"next",nextunique:"nextunique",prev:"prev",prevunique:"prevunique"},apiDirection={ascending:cursorDirection.next,descending:cursorDirection.prev},dbName="",dbVersion=1,db=null,upgradesByVersion={},dbPromise=null,allTransactions=[],defaultQueryOptions={useIndex:void 0,keyRange:null,direction:cursorDirection.next},applyNeededUpgrades=function(oldVersion,event,db,tx,$log){var version;for(version in upgradesByVersion)!upgradesByVersion.hasOwnProperty(version)||oldVersion>=version||($log.log("$indexedDB: Running upgrade : "+version+" from "+oldVersion),upgradesByVersion[version](event,db,tx))},errorMessageFor=function(e){return e.target.readyState===readyState.pending?"Error: Operation pending":e.target.webkitErrorMessage||e.target.error.message||e.target.errorCode},appendResultsToPromise=function(promise,results){return void 0!==results?promise.then(function(){return results}):promise},this.connection=function(databaseName){return dbName=databaseName,this},this.upgradeDatabase=function(newVersion,callback){return upgradesByVersion[newVersion]=callback,dbVersion=Math.max.apply(null,Object.keys(upgradesByVersion)),this},this.$get=["$q","$rootScope","$log",function($q,$rootScope,$log){var DbQ,ObjectStore,Query,Transaction,addTransaction,closeDatabase,createDatabaseConnection,keyRangeForOptions,openDatabase,openTransaction,rejectWithError,validateStoreNames;return rejectWithError=function(deferred){return function(error){return $rootScope.$apply(function(){return deferred.reject(errorMessageFor(error))})}},createDatabaseConnection=function(){var dbReq,deferred;return deferred=$q.defer(),dbReq=indexedDB.open(dbName,parseInt(dbVersion)||1),dbReq.onsuccess=function(){db=dbReq.result,$rootScope.$apply(function(){deferred.resolve(db)})},dbReq.onblocked=dbReq.onerror=rejectWithError(deferred),dbReq.onupgradeneeded=function(event){var tx;db=event.target.result,tx=event.target.transaction,$log.log("$indexedDB: Upgrading database '"+db.name+"' from version "+event.oldVersion+" to version "+event.newVersion+" ..."),applyNeededUpgrades(event.oldVersion,event,db,tx,$log)},deferred.promise},openDatabase=function(){return dbPromise||(dbPromise=createDatabaseConnection())},closeDatabase=function(){return openDatabase().then(function(){return db.close(),db=null,dbPromise=null})},validateStoreNames=function(storeNames){var found,storeName,_i,_len;for(found=!0,_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],found&=db.objectStoreNames.contains(storeName);return found},openTransaction=function(storeNames,mode){return null==mode&&(mode=dbMode.readonly),openDatabase().then(function(){return validateStoreNames(storeNames)?new Transaction(storeNames,mode):$q.reject("Object stores "+storeNames+" do not exist.")})},keyRangeForOptions=function(options){return options.beginKey&&options.endKey?IDBKeyRange.bound(options.beginKey,options.endKey):void 0},addTransaction=function(transaction){return allTransactions.push(transaction.promise),transaction.promise["finally"](function(){var index;return index=allTransactions.indexOf(transaction.promise),index>-1?allTransactions.splice(index,1):void 0})},Transaction=function(){function Transaction(storeNames,mode){null==mode&&(mode=dbMode.readonly),this.transaction=db.transaction(storeNames,mode),this.defer=$q.defer(),this.promise=this.defer.promise,this.setupCallbacks()}return Transaction.prototype.setupCallbacks=function(){return this.transaction.oncomplete=function(_this){return function(){return $rootScope.$apply(function(){return _this.defer.resolve("Transaction Completed")})}}(this),this.transaction.onabort=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Aborted",error)})}}(this),this.transaction.onerror=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Error",error)})}}(this),addTransaction(this)},Transaction.prototype.objectStore=function(storeName){return this.transaction.objectStore(storeName)},Transaction.prototype.abort=function(){return this.transaction.abort()},Transaction}(),DbQ=function(){function DbQ(){this.q=$q.defer(),this.promise=this.q.promise}return DbQ.prototype.reject=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).reject.apply(_ref,args)}}(this))},DbQ.prototype.rejectWith=function(req){return req.onerror=req.onblocked=function(_this){return function(e){return _this.reject(errorMessageFor(e))}}(this)},DbQ.prototype.resolve=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).resolve.apply(_ref,args)}}(this))},DbQ.prototype.notify=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).notify.apply(_ref,args)}}(this))},DbQ.prototype.dbErrorFunction=function(){return function(_this){return function(error){return $rootScope.$apply(function(){return _this.q.reject(errorMessageFor(error))})}}(this)},DbQ.prototype.resolveWith=function(req){return this.rejectWith(req),req.onsuccess=function(_this){return function(e){return _this.resolve(e.target.result)}}(this)},DbQ}(),ObjectStore=function(){function ObjectStore(storeName,transaction){this.storeName=storeName,this.store=transaction.objectStore(storeName),this.transaction=transaction}return ObjectStore.prototype.defer=function(){return new DbQ},ObjectStore.prototype._mapCursor=function(defer,mapFunc,req){var results;return null==req&&(req=this.store.openCursor()),results=[],defer.rejectWith(req),req.onsuccess=function(e){var cursor;return(cursor=e.target.result)?(results.push(mapFunc(cursor)),defer.notify(mapFunc(cursor)),cursor["continue"]()):defer.resolve(results)}},ObjectStore.prototype._arrayOperation=function(data,mapFunc){var defer,item,req,results,_i,_len;for(defer=this.defer(),angular.isArray(data)||(data=[data]),_i=0,_len=data.length;_len>_i;_i++)item=data[_i],req=mapFunc(item),results=[],defer.rejectWith(req),req.onsuccess=function(e){return results.push(e.target.result),defer.notify(e.target.result),results.length>=data.length?defer.resolve(results):void 0};return 0===data.length?$q.when([]):defer.promise},ObjectStore.prototype.getAllKeys=function(){var defer,req;return defer=this.defer(),this.store.getAllKeys?(req=this.store.getAllKeys(),defer.resolveWith(req)):this._mapCursor(defer,function(cursor){return cursor.key}),defer.promise},ObjectStore.prototype.clear=function(){var defer,req;return defer=this.defer(),req=this.store.clear(),defer.resolveWith(req),defer.promise},ObjectStore.prototype["delete"]=function(key){var defer;return defer=this.defer(),defer.resolveWith(this.store["delete"](key)),defer.promise},ObjectStore.prototype.upsert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.put(item)}}(this))},ObjectStore.prototype.insert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.add(item)}}(this))},ObjectStore.prototype.getAll=function(){var defer;return defer=this.defer(),this.store.getAll?defer.resolveWith(this.store.getAll()):this._mapCursor(defer,function(cursor){return cursor.value}),defer.promise},ObjectStore.prototype.eachWhere=function(query){var defer,direction,indexName,keyRange,req;return defer=this.defer(),indexName=query.indexName,keyRange=query.keyRange,direction=query.direction,req=indexName?this.store.index(indexName).openCursor(keyRange,direction):this.store.openCursor(keyRange,direction),this._mapCursor(defer,function(cursor){return cursor.value},req),defer.promise},ObjectStore.prototype.findWhere=function(query){return this.eachWhere(query)},ObjectStore.prototype.each=function(options){return null==options&&(options={}),this.eachBy(void 0,options)},ObjectStore.prototype.eachBy=function(indexName,options){var q;return null==indexName&&(indexName=void 0),null==options&&(options={}),q=new Query,q.indexName=indexName,q.keyRange=keyRangeForOptions(options),q.direction=options.direction||defaultQueryOptions.direction,this.eachWhere(q)},ObjectStore.prototype.count=function(){var defer;return defer=this.defer(),defer.resolveWith(this.store.count()),defer.promise},ObjectStore.prototype.find=function(key){var defer,req;return defer=this.defer(),req=this.store.get(key),defer.rejectWith(req),req.onsuccess=function(_this){return function(e){return e.target.result?defer.resolve(e.target.result):defer.reject(""+_this.storeName+":"+key+" not found.")}}(this),defer.promise},ObjectStore.prototype.findBy=function(index,key){var defer;return defer=this.defer(),defer.resolveWith(this.store.index(index).get(key)),defer.promise},ObjectStore.prototype.query=function(){return new Query},ObjectStore}(),Query=function(){function Query(){this.indexName=void 0,this.keyRange=void 0,this.direction=cursorDirection.next}return Query.prototype.$lt=function(value){return this.keyRange=IDBKeyRange.upperBound(value,!0),this},Query.prototype.$gt=function(value){return this.keyRange=IDBKeyRange.lowerBound(value,!0),this},Query.prototype.$lte=function(value){return this.keyRange=IDBKeyRange.upperBound(value),this},Query.prototype.$gte=function(value){return this.keyRange=IDBKeyRange.lowerBound(value),this},Query.prototype.$eq=function(value){return this.keyRange=IDBKeyRange.only(value),this},Query.prototype.$between=function(low,hi,exLow,exHi){return null==exLow&&(exLow=!1),null==exHi&&(exHi=!1),this.keyRange=IDBKeyRange.bound(low,hi,exLow,exHi),this},Query.prototype.$desc=function(unique){return this.direction=unique?cursorDirection.prevunique:cursorDirection.prev,this},Query.prototype.$asc=function(unique){return this.direction=unique?cursorDirection.nextunique:cursorDirection.next,this},Query.prototype.$index=function(indexName){return this.indexName=indexName,this},Query}(),{openStore:function(storeName,callBack,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction([storeName],mode).then(function(transaction){var results;return results=callBack(new ObjectStore(storeName,transaction)),appendResultsToPromise(transaction.promise,results)})},openStores:function(storeNames,callback,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction(storeNames,mode).then(function(transaction){var objectStores,results,storeName;return objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)})},openAllStores:function(callback,mode){return null==mode&&(mode=dbMode.readwrite),openDatabase().then(function(_this){return function(){var objectStores,results,storeName,storeNames,transaction;return storeNames=Array.prototype.slice.apply(db.objectStoreNames),transaction=new Transaction(storeNames,mode),objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)}}(this))},closeDatabase:function(){return closeDatabase()},deleteDatabase:function(){return closeDatabase().then(function(){var defer;return defer=new DbQ,defer.resolveWith(indexedDB.deleteDatabase(dbName)),defer.promise})["finally"](function(){return $log.log("$indexedDB: "+dbName+" database deleted.")})},queryDirection:apiDirection,flush:function(){return allTransactions.length>0?$q.all(allTransactions):$q.when([])},databaseInfo:function(){return openDatabase().then(function(){var storeNames,transaction;return transaction=null,storeNames=Array.prototype.slice.apply(db.objectStoreNames),openTransaction(storeNames,dbMode.readonly).then(function(transaction){var store,storeName,stores;return stores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],store=transaction.objectStore(storeName),_results.push({name:storeName,keyPath:store.keyPath,autoIncrement:store.autoIncrement,indices:Array.prototype.slice.apply(store.indexNames)});return _results}(),transaction.promise.then(function(){return{name:db.name,version:db.version,objectStores:stores}})})})}}}]})}).call(this);
 //# sourceMappingURL=angular-indexed-db.min.js.map
@@ -2286,14 +2848,11 @@
         'SurveyItemEditorWidgetFactory',
         'AnswerOptionWidgetFactory',
         'MetadataGroupWidgetFactory',
-        'MetadataOptionWidgetFactory',
-        'NavigationWidgetFactory',
-        'RouteEditorWidgetFactory',
-        'RouteCreatorWidgetFactory'
+        'MetadataOptionWidgetFactory'
     ];
 
     function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, AnswerOptionWidgetFactory,
-        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory, NavigationWidgetFactory, RouteEditorWidgetFactory, RouteCreatorWidgetFactory) {
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory) {
 
         var self = this;
 
@@ -2305,9 +2864,6 @@
         self.getSurveyItemEditorWidget = getSurveyItemEditorWidget;
         self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
         self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
-        self.getNavigationEditorWidget = getNavigationEditorWidget;
-        self.getRouteWidget = getRouteWidget;
-        self.getRouteCreatorWidget = getRouteCreatorWidget;
 
         function getWidgetForModel(model) {
             var widget = SurveyItemWidgetFactory.create(model);
@@ -2331,24 +2887,6 @@
 
         function getMetadataAnswerOptionWidget(model) {
             return MetadataOptionWidgetFactory.create(model);
-        }
-
-        function getNavigationEditorWidget(model) {
-            return NavigationWidgetFactory.create(model);
-        }
-
-        function getRouteWidget(navigation, model) {
-            return RouteEditorWidgetFactory.create(navigation, model);
-        }
-
-        function getRouteCreatorWidget(model, element) {
-            var widget = RouteCreatorWidgetFactory.create(model, element);
-
-            self.widgetMap[widget.type] = self.widgetMap[widget.type] || {};
-            self.widgetMap[widget.type][widget.name.guid] = widget.name;
-            self.widgetMap[widget.type][widget.destination.guid] = widget.destination;
-            self.widgetMap[widget.type][widget.processor.guid] = widget.processor;
-            return widget;
         }
     }
 
@@ -2441,38 +2979,56 @@
 
 (function() {
 
-    angular
-        .module('editor.ui')
-        .controller('MainContainerController', MainContainerController);
+  angular
+    .module('editor.ui')
+    .controller('MainContainerController', MainContainerController);
 
-    MainContainerController.$inject = [
-        '$scope',
-        'MainContainerContentService',
-        'UiBindingService',
-        '$mdBottomSheet'
-    ];
+  MainContainerController.$inject = [
+    '$scope',
+    '$window',
+    'MainContainerContentService',
+    'UiBindingService',
+    '$mdBottomSheet',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'WorkspaceService',
+    'NBEVENTS'
+  ];
 
-    function MainContainerController($scope, MainContainerContentService, UiBindingService, $mdBottomSheet) {
-        var self = this;
+  function MainContainerController($scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet, NavigationBuilderService, NavigationBuilderScopeService, WorkspaceService, NBEVENTS) {
+    var self = this;
 
-        self.showQuestionsMenu = showQuestionsMenu;
+    self.showQuestionsMenu = showQuestionsMenu;
+    self.startNavigationBuilder = startNavigationBuilder;
 
-        init();
+    init();
 
-        function init() {
-            MainContainerContentService.init(self);
-        }
-        UiBindingService.setScope($scope);
-
-        function showQuestionsMenu() {
-            $mdBottomSheet.show({
-                templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
-                //disableBackdrop: true,
-                disableParentScroll: false
-            });
-        }
+    function init() {
+      MainContainerContentService.init(self);
+      UiBindingService.setScope($scope);
     }
 
+    function showQuestionsMenu() {
+      $mdBottomSheet.show({
+        templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
+        //disableBackdrop: true,
+        disableParentScroll: false
+      });
+    }
+
+    function startNavigationBuilder() {
+      var $navContainer = $('#navigation-preview-container');
+      var $tabContainer = $navContainer.parent().parent().parent();
+      $navContainer.css('margin-top', '10px');
+      $navContainer.css('height', ($tabContainer.height() - 10) + 'px');
+      $window.addEventListener('resize', function() {
+        $navContainer.css('height', ($tabContainer.height() - 10) + 'px');
+      });
+
+      NavigationBuilderService.setSurvey(WorkspaceService.getSurvey());
+      NavigationBuilderScopeService.broadcast(NBEVENTS.MAP_CONTAINER_READY);
+    }
+  }
 }());
 
 (function() {
@@ -2624,43 +3180,46 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .controller('SheetController', SheetController);
+  angular
+    .module('editor.ui')
+    .controller('SheetController', SheetController);
 
-    SheetController.$inject = [
-        '$scope',
-        '$element',
-        'SheetContentService',
-        'EditionPreviewService',
-        'WorkspaceService',
-        '$window'
-    ];
+  SheetController.$inject = [
+    '$scope',
+    '$element',
+    'SheetContentService',
+    'EditionPreviewService',
+    'WorkspaceService',
+    '$window'
+  ];
 
-    function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window) {
-        var self = this;
-        self.EditionPreviewService = EditionPreviewService;
+  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window) {
+    var self = this;
+    self.EditionPreviewService = EditionPreviewService;
 
-        SheetContentService.init($scope, $element);
+    SheetContentService.init($scope, $element);
 
-        _init();
+    _init();
 
-        function _init() {
-            if (EditionPreviewService.isLoadingMode()) {
-                EditionPreviewService.setScope($scope);
-                EditionPreviewService.loadSurveyTemplate();
-            } else {
-                $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
-            }
-        }
-
-        $scope.$on('$destroy', function cleanWorkspaceService() {
-            WorkspaceService.closeWork();
-            $window.sessionStorage.removeItem('surveyTemplate_OID');
+    function _init() {
+      if (EditionPreviewService.isLoadingMode()) {
+        EditionPreviewService.setScope($scope);
+        EditionPreviewService.loadSurveyTemplate().then(function(template) {
+          EditionPreviewService.isLoading = false;
+          WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
         });
+      } else {
+        $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
+      }
     }
+
+    $scope.$on('$destroy', function cleanWorkspaceService() {
+      WorkspaceService.closeWork();
+      $window.sessionStorage.removeItem('surveyTemplate_OID');
+    });
+  }
 
 }());
 
@@ -3428,72 +3987,1147 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('preview.navigation')
-        .service('NavigationPreviewService', NavigationPreviewService);
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
 
-        NavigationPreviewService.$inject = ['GraphFactory'];
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
 
-    function NavigationPreviewService(GraphFactory) {
-        var self = this;
+  function component($scope, scopeService) {
+    var self = this;
 
-        // Public interface
-        self.createGraph = createGraph;
-        self.renderGraph = renderGraph;
+    self.message = {};
+    self.isVisible = false
 
-        // Private Interface
-        var navigationGraph,
-        renderer,
-        layouter;
+    /* Component cicle methods */
+    self.$onInit = onInit;
 
-        function createGraph(navigationRules) {
-            init();
-            iterate(navigationRules, drawNodes);
-            iterate(navigationRules, drawEdges);
-            draw();
-            return navigationGraph;
-        }
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
 
-        function init() {
-            navigationGraph = GraphFactory.create();
-        }
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
 
-        function iterate(navigationRules, drawOptions) {
-            for (var navigationRule in navigationRules) {
-                drawOptions(navigationRules[navigationRule]);
-            }
-        }
+(function() {
+  'use strict';
 
-        function drawNodes(navigationRule) {
-            if (navigationRule.hasOwnProperty('origin')) {
-                navigationGraph.addNode(navigationRule.origin);
-            }
-        }
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
 
-        function drawEdges(navigationRule) {
-            if (navigationRule.hasOwnProperty('routes')) {
-                for (var i = 0; i < navigationRule.routes.length; i++) {
-                    navigationGraph.addEdge(navigationRule.origin, navigationRule.routes[i].destination, {
-                        directed: true
-                    });
-                }
-            }
-        }
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
 
-        function draw() {
-            layouter = new Graph.Layout.Spring(navigationGraph);
-            layouter.layout();
-        }
+  function service(scopeService) {
+    var self = this;
 
-        function renderGraph(createdGraph) {
-           renderer = new Graph.Renderer.Raphael('survey-navigation-graph', createdGraph, $('#survey-navigation-graph').width(), $('#survey-navigation-graph').height());
-           renderer.draw();
-        }
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
     }
 
-}());
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.routeBuilder.DataService',
+    'otusjs.studio.navigationBuilder.routeBuilder.EventsService',
+    'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
+  ];
+
+  function service(scopeService, DataService, EventsService, UiEventsService) {
+    var self = this;
+
+    /* Public methods */
+    // Service management
+    self.activate = activate;
+    self.deactivate = deactivate;
+    // Map interactions
+    self.selectNode = selectNode;
+    self.selectedCondition = selectedCondition;
+    self.selectedEdges = selectedEdges;
+    self.selectedNode = selectedNode;
+    self.selectedRoute = selectedRoute;
+    // Route editor
+    self.createCondition = createCondition;
+    self.deleteCondition = deleteCondition;
+    self.saveRouteBuilding = saveRouteBuilding;
+    self.selectCondition = selectCondition;
+    self.startRouteBuilding = startRouteBuilding;
+    self.cancelRouteBuilding = cancelRouteBuilding;
+    // Rule editor
+    self.createRule = createRule;
+    self.deleteRule = deleteRule;
+    self.getAnswerListForRule = getAnswerListForRule;
+    self.getOperatorListForRule = getOperatorListForRule;
+    self.getWhenListForRule = getWhenListForRule;
+    self.updateRule = updateRule;
+
+    //-----------------------------------------------------
+    // Service management
+    //-----------------------------------------------------
+
+    function activate(survey) {
+      DataService.activate(survey);
+      UiEventsService.activate();
+      EventsService.activate();
+    }
+
+    function deactivate() {
+      DataService.deactivate();
+      EventsService.deactivate();
+      UiEventsService.deactivate();
+    }
+
+    //-----------------------------------------------------
+    // Map interactions
+    //-----------------------------------------------------
+
+    function selectNode(node) {
+      DataService.selectNode(node);
+    }
+
+    function selectedCondition() {
+      return DataService.selectedCondition();
+    }
+
+    function selectedNode() {
+      return DataService.selectedNode();
+    }
+
+    function selectedEdges() {
+      return DataService.selectedEdges();
+    }
+
+    function selectedRoute() {
+      return DataService.selectedRoute();
+    }
+
+    //-----------------------------------------------------
+    // Route editor
+    //-----------------------------------------------------
+
+    function createCondition() {
+      DataService.createCondition();
+    }
+
+    function deleteCondition(index) {
+      DataService.deleteCondition(index);
+    }
+
+    function saveRouteBuilding() {
+      DataService.apply();
+      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_SAVED);
+      deactivate();
+    }
+
+    function selectCondition(index) {
+      DataService.selectCondition(index);
+    }
+
+    function startRouteBuilding(origin, destination) {
+      if (DataService.isSimpleNavigation(origin.id)) {
+        DataService.initializeRouteData();
+        DataService.createCondition();
+      } else {
+        if (DataService.routeExists(origin, destination)) {
+          DataService.useCurrentRouteData();
+        } else {
+          DataService.initializeRouteData();
+          DataService.createCondition();
+        }
+      }
+      DataService.selectCondition(0);
+    }
+
+    function cancelRouteBuilding() {
+      scopeService.emit(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED);
+      deactivate();
+    }
+
+    //-----------------------------------------------------
+    // Rule editor
+    //-----------------------------------------------------
+
+    function createRule(when, operator, answer) {
+      DataService.createRule(when, operator, answer);
+    }
+
+    function deleteRule(ruleIndex) {
+      DataService.deleteRule(ruleIndex);
+    }
+
+    function getAnswerListForRule(question) {
+      return DataService.listAvailableAnswer(question);
+    }
+
+    function getOperatorListForRule(itemType) {
+      return DataService.listAvailableOperator(itemType);
+    }
+
+    function getWhenListForRule() {
+      return DataService.listAvailableWhen();
+    }
+
+    function updateRule(ruleIndex, when, operator, answer) {
+      DataService.updateRule(ruleIndex, when, operator, answer);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.DataService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
+  ];
+
+  function service(scopeService, RuleWhenBuilderService, RuleOperatorBuilderService, RuleAnswerBuilderService) {
+    var self = this;
+    var _survey = null;
+    var _originNode = null;
+    var _destinationNode = null;
+    var _routeData = null;
+    var _selectedNavigation = null;
+    var _selectedCondition = null;
+
+    /* Public methods */
+    // Service management
+    self.activate = activate;
+    self.deactivate = deactivate;
+    // Map interactions
+    self.hasDestinationNode = hasDestinationNode;
+    self.hasOriginNode = hasOriginNode;
+    self.selectNode = selectNode;
+    self.selectedEdges = selectedEdges;
+    self.selectedNode = selectedNode;
+    // Route editor
+    self.apply = apply;
+    self.createCondition = createCondition;
+    self.deleteCondition = deleteCondition;
+    self.initializeRouteData = initializeRouteData;
+    self.isSimpleNavigation = isSimpleNavigation;
+    self.routeExists = routeExists;
+    self.selectCondition = selectCondition;
+    self.selectedCondition = selectedCondition;
+    self.selectedRoute = selectedRoute;
+    self.useCurrentRouteData = useCurrentRouteData;
+    // Rule editor
+    self.createRule = createRule;
+    self.deleteRule = deleteRule;
+    self.listAvailableAnswer = listAvailableAnswer;
+    self.listAvailableOperator = listAvailableOperator;
+    self.listAvailableWhen = listAvailableWhen;
+    self.updateRule = updateRule;
+
+    //-----------------------------------------------------
+    // Service management
+    //-----------------------------------------------------
+
+    function activate(survey) {
+      _survey = survey;
+      window.survey = _survey;
+    }
+
+    function deactivate() {
+      _survey = null;
+      _originNode = null;
+      _destinationNode = null;
+      _routeData = null;
+      _selectedNavigation = null;
+      _selectedCondition = null;
+    }
+
+    //-----------------------------------------------------
+    // Map interactions
+    //-----------------------------------------------------
+
+    function hasDestinationNode() {
+      return _nodeExists(_destinationNode);
+    }
+
+    function hasOriginNode() {
+      return _nodeExists(_originNode);
+    }
+
+    function selectNode(node) {
+      if (_areSameNode(_originNode, node)) {
+        _originNode = null;
+        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_UNSELECTED, node);
+      } else if (_areSameNode(_destinationNode, node)) {
+        _destinationNode = null;
+        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_UNSELECTED, node);
+      } else if (!hasOriginNode()) {
+        _originNode = node;
+        scopeService.emit(scopeService.NBEVENTS.ORIGIN_NODE_SELECTED, node);
+      } else {
+        _destinationNode = node;
+        scopeService.emit(scopeService.NBEVENTS.DESTINATION_NODE_SELECTED, selectedNode());
+      }
+    }
+
+    // TODO: implementar
+    function selectedEdges() {
+      return null;
+    }
+
+    function selectedNode() {
+      return [_originNode, _destinationNode];
+    }
+
+    function _areSameNode(originalNode, nodeToCompare) {
+      if (_nodeExists(originalNode) && (originalNode.id === nodeToCompare.id)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function _nodeExists(node) {
+      if (!node) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    //-----------------------------------------------------
+    // Route editor
+    //-----------------------------------------------------
+
+    function apply() {
+      _survey.NavigationManager.selectNavigationByOrigin(_originNode.id);
+      _survey.NavigationManager.applyRoute(_routeData);
+    }
+
+    function createCondition() {
+      var newConditionData = {};
+      newConditionData.name = 'ROUTE_CONDITION';
+      newConditionData.rules = [];
+      _routeData.conditionSet.push(newConditionData);
+    }
+
+    function deleteCondition(index) {
+      _routeData.conditionSet.splice(index, 1);
+      selectCondition(0);
+    }
+
+    function initializeRouteData() {
+      selectNavigation(_originNode.id);
+      _routeData = {};
+      _routeData.origin = _originNode.id;
+      _routeData.destination = _destinationNode.id;
+      _routeData.conditionSet = [];
+    }
+
+    function selectCondition(index) {
+      if (_routeData.conditionSet.length) {
+        _selectedCondition = _routeData.conditionSet[index];
+      } else {
+        return false;
+      }
+    }
+
+    function selectedCondition() {
+      return _selectedCondition;
+    }
+
+    function selectedRoute() {
+      return _routeData;
+    }
+
+    function isSimpleNavigation(origin) {
+      if (selectNavigation(origin).listRoutes().length === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function selectNavigation(origin) {
+      _selectedNavigation = _survey.NavigationManager.selectNavigationByOrigin(origin);
+      return _selectedNavigation;
+    }
+
+    function routeExists(origin, destination) {
+      var routeData = {};
+      routeData.origin = origin.id;
+      routeData.destination = destination.id;
+      return _selectedNavigation.hasRoute(routeData);
+    }
+
+    function useCurrentRouteData() {
+      selectNavigation(_originNode.id);
+      var routeQuery = {
+        name: _originNode.id + '_' + _destinationNode.id
+      };
+      _routeData = _selectedNavigation.getRoute(routeQuery).toJson();
+      _routeData = JSON.parse(_routeData);
+    }
+
+    //-----------------------------------------------------
+    // Rule editor
+    //-----------------------------------------------------
+
+    function createRule(when, operator, answer) {
+      var ruleData = {};
+      ruleData.when = when;
+      ruleData.operator = operator;
+      ruleData.answer = answer;
+      _selectedCondition.rules.push(ruleData);
+    }
+
+    function deleteRule(ruleIndex) {
+      _selectedCondition.rules.splice(ruleIndex, 1);
+    }
+
+    function listAvailableAnswer(item) {
+      return RuleAnswerBuilderService.build(item);
+    }
+
+    function listAvailableOperator(itemType) {
+      return RuleOperatorBuilderService.build(itemType);
+    }
+
+    function listAvailableWhen() {
+      var itemList = _survey.NavigationManager.getAvaiableRuleCriterionTargets(_originNode.id);
+      return itemList.map(RuleWhenBuilderService.build);
+    }
+
+    function updateRule(ruleIndex, when, operator, answer) {
+      var ruleData = _selectedCondition.rules[ruleIndex];
+      ruleData.when = when;
+      ruleData.operator = operator;
+      ruleData.answer = answer;
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.EventsService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.MapVisualHandlerService',
+    'otusjs.studio.navigationBuilder.MapEventsHandlerService',
+    'otusjs.studio.navigationBuilder.messenger.InstructorService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService'
+  ];
+
+  function service(scopeService, MapVisualHandlerService, MapEventsHandlerService, InstructorService, RouteDialogService) {
+    var self = this;
+    var _events = [];
+
+    /* Public methods */
+    self.activate = activate;
+    self.deactivate = deactivate;
+
+    function activate() {
+      var event = scopeService.onEvent(scopeService.NBEVENTS.ORIGIN_NODE_SELECTED, function(event, selectedNode) {
+        MapVisualHandlerService.lockPreviousNodesOf(selectedNode);
+        MapVisualHandlerService.markOriginRouteNode(selectedNode);
+        MapVisualHandlerService.drawMap();
+        InstructorService.showMessenger(scopeService.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
+        scopeService.digest();
+      });
+      _events.push(event);
+
+      event = scopeService.onEvent(scopeService.NBEVENTS.ORIGIN_NODE_UNSELECTED, function(event, selectedNode) {
+        MapVisualHandlerService.releasePreviousNodesOf(selectedNode);
+        MapVisualHandlerService.unmarkNode(selectedNode);
+        MapVisualHandlerService.drawMap();
+        InstructorService.showMessenger(scopeService.NBMESSAGES.ROUTE_BUILDER.SELECT_ORIGIN);
+        scopeService.digest();
+      });
+      _events.push(event);
+
+      event = scopeService.onEvent(scopeService.NBEVENTS.DESTINATION_NODE_SELECTED, function(event, selectedNode) {
+        MapVisualHandlerService.markDestinationRouteNode(selectedNode);
+        MapVisualHandlerService.drawMap();
+        InstructorService.clearMessenger();
+        RouteDialogService.showDialog(selectedNode[0], selectedNode[1]);
+        scopeService.digest();
+      });
+      _events.push(event);
+
+      event = scopeService.onEvent(scopeService.NBEVENTS.DESTINATION_NODE_UNSELECTED, function(event, selectedNode) {
+        MapVisualHandlerService.unmarkNode(selectedNode);
+        MapVisualHandlerService.drawMap();
+        InstructorService.showMessenger(scopeService.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
+        scopeService.digest();
+      });
+      _events.push(event);
+
+      event = scopeService.onEvent(scopeService.NBEVENTS.ROUTE_BUILD_SAVED, function(event) {
+        MapVisualHandlerService.clearSelections();
+        InstructorService.clearMessenger();
+        RouteDialogService.closeDialog();
+        scopeService.emit(scopeService.NBEVENTS.ROUTE_MODE_OFF);
+      });
+      _events.push(event);
+
+      event = scopeService.onEvent(scopeService.NBEVENTS.ROUTE_BUILD_CANCELED, function(event) {
+        MapVisualHandlerService.clearSelections();
+        InstructorService.clearMessenger();
+        RouteDialogService.closeDialog();
+        scopeService.emit(scopeService.NBEVENTS.ROUTE_MODE_OFF);
+      });
+      _events.push(event);
+
+      InstructorService.showMessenger(scopeService.NBMESSAGES.ROUTE_BUILDER.SELECT_ORIGIN);
+    }
+
+    function deactivate() {
+      _events.forEach(function(event) {
+        event();
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.MessageService', service);
+
+  function service() {
+    var self = this;
+
+    // self.setScope = setScope;
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService', service);
+
+  function service() {
+    var self = this;
+
+    /* Public methods */
+    self.build = build;
+
+    function build(item) {
+      var answers = [];
+
+      if (item.options) {
+        answers = answers.concat(item.options.map(getAnswerOption));
+      }
+
+      if (item.metadata && item.metadata.options) {
+        answers = answers.concat(item.metadata.options.map(getMetadataOption));
+      }
+
+      return answers;
+    }
+
+    function getAnswerOption(option) {
+      return {
+        isMetadata: false,
+        option: option
+      }
+    }
+
+    function getMetadataOption(option) {
+      return {
+        isMetadata: true,
+        option: option
+      }
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService', service);
+
+  function service() {
+    var self = this;
+    var _operatorMap = {};
+
+    _initOperatorMap();
+
+    /* Public methods */
+    self.build = build;
+
+    function build(itemType) {
+      if (_isTextItem(itemType)) {
+        return _operatorMap.text;
+      } else if (_isNumberItem(itemType)) {
+        return _operatorMap.number;
+      } else if (_isDateItem(itemType)) {
+        return _operatorMap.date;
+      } else if (_isTimeItem(itemType)) {
+        return _operatorMap.time;
+      } else if (_isSingleChoiceItem(itemType)) {
+        return _operatorMap.singleChoice;
+      } else if (_isMultipleChoiceItem(itemType)) {
+        return _operatorMap.multipleChoice;
+      } else {
+        return [];
+      }
+    }
+
+    function _isTextItem(itemType) {
+      return (itemType === 'TextQuestion' || itemType === 'EmailQuestion' || itemType === 'PhoneQuestion');
+    }
+
+    function _isNumberItem(itemType) {
+      return (itemType === 'IntegerQuestion' || itemType === 'DecimalQuestion');
+    }
+
+    function _isDateItem(itemType) {
+      return (itemType === 'CalendarQuestion');
+    }
+
+    function _isTimeItem(itemType) {
+      return (itemType === 'TimeQuestion');
+    }
+
+    function _isSingleChoiceItem(itemType) {
+      return (itemType === 'SingleSelectionQuestion');
+    }
+
+    function _isMultipleChoiceItem(itemType) {
+      return (itemType === 'CheckboxQuestion');
+    }
+
+    function _initOperatorMap() {
+      _operatorMap = {};
+
+      var _notEqual = {}
+      _notEqual.type = 'notEqual';
+      _notEqual.label = {};
+      _notEqual.label.ptBR = {};
+      _notEqual.label.ptBR.plainText = 'Diferente de';
+
+      var _equal = {};
+      _equal.type = 'equal';
+      _equal.label = {};
+      _equal.label.ptBR = {};
+      _equal.label.ptBR.plainText = 'Igual a';
+
+      var _contains = {};
+      _contains.type = 'contains';
+      _contains.label = {};
+      _contains.label.ptBR = {};
+      _contains.label.ptBR.plainText = 'Contém';
+
+      var _in = {};
+      _in.type = 'in';
+      _in.label = {};
+      _in.label.ptBR = {};
+      _in.label.ptBR.plainText = 'Está dentro do intervalo';
+
+      var _between = {};
+      _between.type = 'between';
+      _between.label = {};
+      _between.label.ptBR = {};
+      _between.label.ptBR.plainText = 'Está entre os valores';
+
+      var _greater = {};
+      _greater.type = 'greater';
+      _greater.label = {};
+      _greater.label.ptBR = {};
+      _greater.label.ptBR.plainText = 'É maior que';
+
+      var _greaterEqual = {};
+      _greaterEqual.type = 'greaterEqual';
+      _greaterEqual.label = {};
+      _greaterEqual.label.ptBR = {};
+      _greaterEqual.label.ptBR.plainText = 'É maior ou igual a';
+
+      var _lower = {};
+      _lower.type = 'lower';
+      _lower.label = {};
+      _lower.label.ptBR = {};
+      _lower.label.ptBR.plainText = 'É menor que';
+
+      var _lowerEqual = {};
+      _lowerEqual.type = 'lowerEqual';
+      _lowerEqual.label = {};
+      _lowerEqual.label.ptBR = {};
+      _lowerEqual.label.ptBR.plainText = 'É menor ou igual a';
+
+      // Single choice operators
+      _operatorMap.singleChoice = [_notEqual, _equal];
+
+      // Text operators
+      _operatorMap.text = Array.prototype.concat(_operatorMap.singleChoice, [_contains]);
+
+      // Number operators
+      _operatorMap.number = Array.prototype.concat(_operatorMap.singleChoice, [_in, _between, _greater, _greaterEqual, _lower, _lowerEqual]);
+
+      // Date operators
+      _operatorMap.date = _operatorMap.number;
+
+      // Time operators
+      _operatorMap.time = _operatorMap.date;
+
+      // Multiple choice operators
+      _operatorMap.multipleChoice = _operatorMap.text;
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService', service);
+
+  function service() {
+    var self = this;
+
+    /* Public methods */
+    self.build = build;
+
+    function build(item) {
+      var builded = {};
+
+      builded.type = item.objectType;
+      builded.icon = item.objectType;
+      builded.customID = item.customID;
+      builded.label = item.label;
+      builded.item = item;
+
+      return builded;
+    }
+ }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.MapVisualHandlerService',
+    'otusjs.studio.navigationBuilder.MapEventsHandlerService',
+    'otusjs.studio.navigationBuilder.routeBuilder.DataService'
+  ];
+
+  function service(MapVisualHandlerService, MapEventsHandlerService, DataService) {
+    var self = this;
+    var _originNode = null;
+    var _destinationNode = null;
+
+    /* Public methods */
+    self.activate = activate;
+    self.deactivate = deactivate;
+
+    function activate() {
+      MapEventsHandlerService.loadMapView(MapVisualHandlerService.mapView());
+      MapEventsHandlerService.onClickNode(function(event) {
+        var clickedNode = event.data.node;
+
+        if (!clickedNode.isDisabled) {
+          DataService.selectNode(event.data.node);
+        };
+      });
+    }
+
+    function deactivate() {
+      MapEventsHandlerService.clearAllEventListeners();
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService', service);
+
+  service.$inject = [
+    '$mdDialog',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service($mdDialog, scopeService) {
+    var self = this;
+    var _dialogSettings = {};
+
+    /* Public interface */
+    self.showDialog = showDialog;
+    self.closeDialog = closeDialog;
+
+    _init();
+
+    function _init() {
+      _setupDialogConfiguration();
+    }
+
+    function showDialog(originNode, destinationNode) {
+      _dialogSettings.locals = {
+        origin: originNode,
+        destination: destinationNode,
+        scopeService: scopeService
+      };
+      $mdDialog.show(_dialogSettings);
+    }
+
+    function closeDialog() {
+      $mdDialog.hide();
+    }
+
+    function _setupDialogConfiguration() {
+      _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
+      _dialogSettings.controller = DialogController;
+      _dialogSettings.controllerAs = 'ctrl';
+      _dialogSettings.escapeToClose = false;
+      _dialogSettings.fullscreen = true;
+      _dialogSettings.hasBackdrop = true;
+    }
+  }
+
+  function DialogController($mdDialog, origin, destination, scopeService) {
+    var self = this;
+
+    self.origin = origin;
+    self.destination = destination;
+
+    /* Public interface */
+    self.cancel = cancel;
+    self.confirm = confirm;
+
+    function cancel(response) {
+      $mdDialog.hide(response);
+    }
+
+    function confirm(response) {
+      $mdDialog.hide(response);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .component('otusRouteEditor', {
+      templateUrl: 'app/navigation-builder/route/editor/route-editor.html',
+      controller: component,
+      bindings: {
+        originNode: '<',
+        destinationNode: '<',
+        onConfirm: '&'
+      }
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+  ];
+
+  function component(RouteBuilderService) {
+    var self = this;
+    self.routeConditions = [];
+
+    /* Public methods */
+    self.$onInit = onInit;
+    self.cancel = cancel;
+    self.save = save;
+
+    function onInit() {
+      _initializeLabels();
+      RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
+      self.condition = RouteBuilderService.selectedCondition();
+    }
+
+    function cancel() {
+      RouteBuilderService.cancelRouteBuilding();
+    }
+
+    function save() {
+      RouteBuilderService.saveRouteBuilding();
+    }
+
+    function _initializeLabels() {
+      self.label = {
+        dialog: {
+          title: 'Criar nova Rota'
+        },
+        button: {
+          cancel: 'Cancelar',
+          save: 'Salvar Rota',
+          createCondition: 'Criar grupo de Regras',
+          deleteCondition: 'Excluir grupo atual'
+        },
+        origin: 'Origem',
+        destination: 'Destino',
+        originNode: self.originNode.label,
+        destinationNode: self.destinationNode.label,
+        message: {
+          emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR GRUPO DE REGRAS',
+        }
+      };
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .component('otusRuleEditor', {
+      templateUrl: 'app/navigation-builder/route/editor/rule-editor-template.html',
+      controller: component,
+      bindings: {
+        ruleData: '<',
+        ruleItemIndex: '<'
+      }
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+  ];
+
+  function component(RouteBuilderService) {
+    var self = this;
+
+    /* Public methods */
+    self.$onInit = onInit;
+    self.answers = answers;
+    self.answerChange = answerChange;
+    self.answerInputChange = answerInputChange;
+    self.operatorChange = operatorChange;
+    self.whens = whens;
+    self.whenChange = whenChange;
+    self.saveRule = saveRule;
+    self.updateRule = updateRule;
+    self.deleteRule = deleteRule;
+
+    function onInit() {
+      _initializeWhenList();
+
+      if (self.ruleData) {
+        self.ruleData.index = self.ruleItemIndex;
+        _applyRuleDataWhen();
+        _applyRuleDataOperator();
+        _applyRuleDataAnswer();
+        self.isOperatorDisable = false;
+        self.isAnswerDisable = false;
+        self.showSaveRuleButton = false;
+        self.showUpdateRuleButton = true;
+        self.showDeleteRuleButton = true;
+      } else {
+        self.isOperatorDisable = true;
+        self.isAnswerDisable = true;
+        self.showSaveRuleButton = true;
+        self.showUpdateRuleButton = false;
+        self.showDeleteRuleButton = false;
+        self.readyToSave = _readyToSave();
+      }
+    }
+
+    function _applyRuleDataWhen() {
+      var customID = self.ruleData.when.customID || self.ruleData.when;
+      self.whenList.some(function(when) {
+        if (when.customID === customID) {
+          self.selectedWhen = when;
+          return true;
+        }
+      });
+    }
+
+    function _applyRuleDataOperator() {
+      self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+      var type = self.ruleData.operator.type || self.ruleData.operator;
+      self.operatorList.some(function(operator) {
+        if (operator.type === type) {
+          self.selectedOperator = operator;
+          return true;
+        }
+      });
+    }
+
+    function _applyRuleDataAnswer() {
+      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+      var value = (self.ruleData.answer.option)
+        ? self.ruleData.answer.option.value
+        : self.ruleData.answer;
+      self.answerList.some(function(answer) {
+        if (answer.option.value === value) {
+          self.selectedAnswer = answer;
+          return true;
+        }
+      });
+    }
+
+    function answers(filterValue) {
+      self.inputedValue = filterValue;
+      if (!filterValue) {
+        return self.answerList;
+      } else {
+        var filterResult = self.answerList.filter(function(answer) {
+          return answer.label.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
+        });
+        return filterResult;
+      }
+    }
+
+    function answerChange(answer) {
+      self.readyToSave = _readyToSave();
+    }
+
+    function answerInputChange() {
+      self.readyToSave = _readyToSave();
+    }
+
+    function operatorChange(operator) {
+      self.selectedOperator = operator;
+      self.readyToSave = _readyToSave();
+    }
+
+    function whens(filterValue) {
+      if (!filterValue) {
+        return self.whenList;
+      } else {
+        var filterResult = self.whenList.filter(function(when) {
+          return when.label.ptBR.plainText.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
+        });
+        return filterResult;
+      }
+    }
+
+    function whenChange(when) {
+      self.selectedWhen = when;
+
+      self.operatorList = [];
+      self.answerList = [];
+
+      if (self.selectedWhen) {
+        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+        self.isOperatorDisable = false;
+      } else {
+        self.isOperatorDisable = true;
+      }
+
+      self.readyToSave = _readyToSave();
+    }
+
+    function saveRule() {
+      if (_readyToSave()) {
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+      }
+      self.whenSearchText = '';
+      self.operatorSearchText = '';
+      self.answerSearchText = '';
+    }
+
+    function updateRule() {
+      RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+    }
+
+    function deleteRule() {
+      RouteBuilderService.deleteRule(self.ruleData.index);
+    }
+
+    function _initializeWhenList() {
+      self.whenList = [];
+      self.whenList = RouteBuilderService.getWhenListForRule();
+    }
+
+    function _createAnswerItem(answerData) {
+      return {
+        value: answerData.value,
+        label: answerData.label.ptBR.plainText,
+        option: answerData
+      };
+    }
+
+    function _readyToSave() {
+      if (_resolveRuleWhen() && _resolveRuleOperator() && _resolveRuleAnswer()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function _resolveRuleWhen() {
+      if (!self.selectedWhen) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function _resolveRuleOperator() {
+      if (!self.selectedOperator) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function _resolveRuleAnswer() {
+      if (!self.selectedAnswer && !self.inputedValue) {
+        return false;
+      } else if (!self.selectedAnswer && self.inputedValue) {
+        self.selectedAnswer = self.inputedValue;
+        return true;
+      } else if (self.selectedAnswer) {
+        return true;
+      }
+    }
+  }
+})();
 
 (function() {
     'use strict';
@@ -4449,268 +6083,6 @@
 
     angular
         .module('editor.ui')
-        .directive('otusNavigationEditor', otusNavigationEditor);
-
-    otusNavigationEditor.$inject = [
-        'RouteEditorWidgetFactory',
-        'NavigationWidgetFactory',
-        'WorkspaceService',
-        'UUIDService'
-    ];
-
-    function otusNavigationEditor(RouteEditorWidgetFactory, NavigationWidgetFactory, WorkspaceService, UUIDService) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/editor/navigation-editor.html',
-            link: function linkFunc(scope, element, attrs) {
-                scope.uuid = UUIDService.generateUUID();
-                var NavigationManager = WorkspaceService.getSurvey().NavigationManager;
-                scope.widget = NavigationWidgetFactory.create(scope, element, NavigationManager, RouteEditorWidgetFactory);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('NavigationWidgetFactory', NavigationWidgetFactory);
-
-    function NavigationWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element, NavigationManagerService, RouteEditorWidgetFactory) {
-            return new NavigationWidget(scope, element, NavigationManagerService, RouteEditorWidgetFactory);
-        }
-
-        return self;
-    }
-
-    function NavigationWidget(scope, element, NavigationManagerService, RouteEditorWidgetFactory) {
-        var self = this;
-
-        self.className = 'NavigationEditorWidget';
-        self.css = {};
-
-        var navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
-        var routeEditorWidgets = [];
-        var routeCreatorWidget = null;
-
-        /* Public methods */
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getNavigation = getNavigation;
-        self.getItem = getItem;
-        self.listRouteWidgets = listRouteWidgets;
-        self.addRoute = addRoute;
-        self.removeRoute = removeRoute;
-
-        setupScopeEvents();
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getNavigation() {
-            return navigation;
-        }
-
-        function listRouteWidgets() {
-            return routeEditorWidgets;
-        }
-
-        function addRoute(route) {
-            var routeWidget = RouteEditorWidgetFactory.create(route, navigation);
-            routeEditorWidgets.push(routeWidget);
-        }
-
-        function removeRoute(name) {
-            var routeToRemove = routeEditorWidgets.filter(function(routeEditorWidget) {
-                return routeEditorWidget.name() === name;
-            });
-
-            var indexToRemove = routeEditorWidgets.indexOf(routeToRemove[0]);
-            if (indexToRemove > -1) routeEditorWidgets.splice(indexToRemove, 1);
-
-            return routeToRemove[0];
-        }
-
-        //---------------------------------------------------------------------
-        // Scope event definitions
-        //---------------------------------------------------------------------
-        var disableQuestionAddEventListener;
-        var disableQuestionRemoveEventListener;
-
-        function setupScopeEvents() {
-            enableQuestionAddEventListener();
-            enableQuestionRemoveEventListener(getItem().templateID);
-        }
-
-        function enableQuestionAddEventListener() {
-            disableQuestionAddEventListener = scope.$on('item.add', addQuestionListener);
-        }
-
-        function enableQuestionRemoveEventListener(templateID) {
-            disableQuestionRemoveEventListener = scope.$on('item.remove.' + templateID, removeQuestionListener);
-        }
-
-        function addQuestionListener(event, addedQuestion) {
-            navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
-            if (navigation) {
-                addRoute(navigation.listRoutes()[0]);
-                enableQuestionRemoveEventListener(addedQuestion.templateID);
-                disableQuestionAddEventListener();
-            }
-        }
-
-        function removeQuestionListener(event) {
-            routeEditorWidgets = [];
-            navigation = NavigationManagerService.getNavigationByOrigin(getItem().templateID);
-
-            if (navigation) {
-                navigation.routes.forEach(function(route) {
-                    addRoute(route);
-                    enableQuestionRemoveEventListener(route.destination);
-                });
-            } else {
-                enableQuestionAddEventListener();
-                disableQuestionRemoveEventListener();
-            }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusRouteCondition', directive);
-
-    directive.$inject = ['RouteConditionWidgetFactory'];
-
-    function directive(RouteConditionWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/route-condition/route-condition.html',
-            link: function linkFunc(scope) {
-                var route = scope.$parent.routeConditionDialog.currentRoute;
-                scope.widget = RouteConditionWidgetFactory.create(route, scope.$parent.routeConditionDialog);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('RouteConditionWidgetFactory', RouteConditionWidgetFactory);
-
-    RouteConditionWidgetFactory.$inject = [
-        'AddRouteConditionEventFactory'
-    ];
-
-    function RouteConditionWidgetFactory(AddRouteConditionEventFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(route, parentWidget) {
-            return new RouteConditionWidget(route, parentWidget, AddRouteConditionEventFactory);
-        }
-
-        return self;
-    }
-
-    function RouteConditionWidget(route, parentWidget, AddRouteConditionEventFactory) {
-        var self = this;
-
-        var GROUP_NAME_SUFIX = 'Grupo ';
-
-        /* Type definitions */
-        self.className = self.constructor.name;
-
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.route = route;
-        self.routeConditionName = '';
-        self.routeConditions = [];
-
-        /* Public methods */
-        self.addRouteCondition = addRouteCondition;
-        self.newRouteConditionName = newRouteConditionName;
-        self.addRule = addRule;
-        self.updateRuleList = updateRuleList;
-
-        function newRouteConditionName(value) {
-            if (value !== undefined) {
-                self.routeConditionName = value;
-            }
-
-            return self.routeConditionName;
-        }
-
-        function addRouteCondition() {
-            var routeCondition = AddRouteConditionEventFactory.create().execute(GROUP_NAME_SUFIX, self.route);
-            var routeConditionWidget = {
-                name: routeCondition.name,
-                rules: []
-            };
-            self.routeConditions.push(routeConditionWidget);
-        }
-
-        function addRule(ruleWidget) {
-            self.routeConditions[0].rules.push(ruleWidget);
-        }
-
-        function updateRuleList(widget) {
-            var ruleToRemove = self.routeConditions[0].rules.filter(function(ruleWidget) {
-                return ruleWidget.uuid === widget.uuid;
-            });
-
-            var indexToRemove = self.routeConditions[0].rules.indexOf(ruleToRemove[0]);
-            if (indexToRemove > -1) self.routeConditions[0].rules.splice(indexToRemove, 1);
-            return ruleToRemove[0];
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('miscItem', directive);
 
     directive.$inject = [
@@ -5115,444 +6487,130 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .directive('otusRouteCreator', otusRouteCreator);
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.TextDialogService', service);
 
-    otusRouteCreator.$inject = ['RouteCreatorWidgetFactory'];
+  service.$inject = [
+    '$mdDialog'
+  ];
 
-    function otusRouteCreator(RouteCreatorWidgetFactory) {
-        var ddo = {
-            scope: {
-                flex: '@',
-                leftIcon: '@',
-                layout: '@'
-            },
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/route/creator/route-creator.html',
-            link: function link(scope, element, attr, controller) {
-                scope.widget = RouteCreatorWidgetFactory.create(attr, element, scope.$parent.widget);
-            }
-        };
+  function service($mdDialog) {
+    var self = this;
+    var _dialogSettings = {};
 
-        return ddo;
+    _init();
+
+    /* Public methods */
+    self.showDialog = showDialog;
+
+    function _init() {
+      _dialogSettings.templateUrl = 'app/navigation-builder/messenger/dialog/text/text-dialog-template.html';
+      _dialogSettings.controller = DialogController;
+      _dialogSettings.controllerAs = 'ctrl';
+      _dialogSettings.escapeToClose = false;
+      _dialogSettings.fullscreen = false;
+      _dialogSettings.hasBackdrop = false;
     }
 
-}());
+    function showDialog(message) {
+      _dialogSettings.locals = {
+        message: message
+      };
+      $mdDialog.show(_dialogSettings);
+    }
+  }
+
+  function DialogController($mdDialog, message) {
+    var self = this;
+
+    self.message = message;
+
+    /* Public interface */
+    self.cancel = cancel;
+    self.confirm = confirm;
+
+    function cancel(response) {
+      $mdDialog.hide(response);
+    }
+
+    function confirm(response) {
+      $mdDialog.hide(response);
+    }
+  }
+})();
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('RouteCreatorWidgetFactory', RouteCreatorWidgetFactory);
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.TextPanelService', service);
 
-    RouteCreatorWidgetFactory.$inject = [
-        'AddRouteEventFactory',
-        'RouteEditorWidgetFactory'
-    ];
+  service.$inject = [
+    '$mdPanel'
+  ];
 
-    function RouteCreatorWidgetFactory(AddRouteEventFactory, RouteEditorWidgetFactory) {
-        var self = this;
+  function service($mdPanel) {
+    var self = this;
+    var _dialogSettings = {};
+    var _panelRef = null;
 
-        /* Public interface */
-        self.create = create;
+    _init();
 
-        function create(templateData, element, parentWidget) {
-            return new RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory, RouteEditorWidgetFactory);
-        }
+    /* Public methods */
+    self.showDialog = showDialog;
 
-        return self;
+    function _init() {
+      var panelPosition = $mdPanel.newPanelPosition()
+      .absolute()
+      .center();
+
+      // var panelAnimation = $mdPanelAnimation
+      //   .targetEvent($event)
+      //   .defaultAnimation('md-panel-animate-fly')
+      //   .closeTo('.show-button');
+
+      _dialogSettings.attachTo = angular.element(document.body);
+      _dialogSettings.controller = DialogController;
+      _dialogSettings.controllerAs = 'ctrl';
+      _dialogSettings.position = panelPosition;
+      // _dialogSettings.targetEvent = $event;
+      _dialogSettings.templateUrl = 'app/navigation-builder/messenger/dialog/text/text-panel-template.html';
     }
 
-    function RouteCreatorWidget(templateData, element, parentWidget, AddRouteEventFactory, RouteEditorWidgetFactory) {
-        var self = this;
+    function showDialog(message) {
+      _dialogSettings.locals = {
+        message: message
+      };
 
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.template = {};
-        self.css = {};
-        self.css.ngClass = {};
-        self.element = element;
+      _panelRef = $mdPanel.create(_dialogSettings);
+      _panelRef.open().finally(function() {
+        _panelRef = undefined;
+      });
+    }
+  }
 
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.routeData = {};
-        self.routeData.parentNavigation = parentWidget.navigation;
+  function DialogController(message) {
+    var self = this;
 
-        /* Template definitions */
-        self.template.flex = templateData.flex;
-        self.template.icon = 'low_priority';
-        self.template.layout = templateData.layout;
+    self.message = message;
 
-        /* CSS definitions */
-        self.css.class = templateData.class;
-        self.css.ngClass.open = false;
+    /* Public interface */
+    self.cancel = cancel;
+    self.confirm = confirm;
 
-        /* Public methods */
-        self.routeDestination = routeDestination;
-        self.createRoute = createRoute;
-
-        self.parent.routeCreatorWidget = self;
-
-        function routeDestination(value) {
-            if (value !== undefined)
-                self.routeData.destination = value;
-
-            return self.routeData.destination;
-        }
-
-        function createRoute() {
-            self.routeData.name = self.parent.getRouteName();
-            var route = AddRouteEventFactory.create().execute(self.routeData);
-            self.parent.addRoute(route);
-
-            self.element.find('input').val('');
-            self.element.find('input').blur();
-        }
+    function cancel(response) {
+      $mdDialog.hide(response);
     }
 
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusRouteEditor', otusRouteEditor);
-
-    function otusRouteEditor() {
-        var ddo = {
-            scope: {
-                leftIcon: '@',
-                widget: '='
-            },
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/route/editor/route-editor.html'
-        };
-
-        return ddo;
+    function confirm(response) {
+      $mdDialog.hide(response);
     }
-
-}());
-
- (function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('RouteEditorWidgetFactory', RouteEditorWidgetFactory);
-
-    RouteEditorWidgetFactory.$inject = [
-        '$mdDialog',
-        'RemoveRouteEventFactory',
-        'UpdateRouteEventFactory'
-    ];
-
-    function RouteEditorWidgetFactory($mdDialog, RemoveRouteEventFactory, UpdateRouteEventFactory) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(route, parentWidget) {
-            return new RouteEditorWidget(route, parentWidget, $mdDialog, RemoveRouteEventFactory, UpdateRouteEventFactory);
-        }
-
-        return self;
-    }
-
-    function RouteEditorWidget(route, parentWidget, $mdDialog, RemoveRouteEventFactory, UpdateRouteEventFactory) {
-        var self = this;
-
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.css = {};
-        self.css.ngClass = {};
-        self.template = {};
-
-        /* Template definitions */
-        
-
-        /* CSS definitions */
-        self.css.ngClass.isSimpleRoute = route.isSimple || true;
-
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.routeData = route;
-        self.routeData.parentNavigation = parentWidget.navigation;
-
-        /* Public methods */
-        self.editRoute = editRoute;
-        self.removeRoute = removeRoute;
-        self.name = name;
-        self.destination = destination;
-
-        /* Actions */
-        function editRoute() {
-            self.dialogSettings = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/editor/ui/navigation/route-condition/route-condition-dialog.html',
-                openFrom: '#system-toolbar',
-                controller: function controller() {
-                    var vm = this;
-                    vm.currentRoute = self.routeData;
-
-                    vm.close = function close() {
-                        $mdDialog.hide();
-                    };
-                },
-                controllerAs: 'routeConditionDialog',
-                clickOutsideToClose: true,
-                fullscreen: true,
-                closeTo: {
-                    bottom: 0
-                }
-            };
-            $mdDialog.show(self.dialogSettings);
-        }
-
-        function removeRoute() {
-            RemoveRouteEventFactory.create().execute(self.routeData);
-            self.parent.removeRoute(self.routeData.name);
-        }
-
-        /* Getters and setters */
-        function name(value) {
-            if (value !== undefined) {
-                self.routeData.name = value;
-                UpdateRouteEventFactory.create().execute(self);
-            }
-
-            return self.routeData.name;
-        }
-
-        function destination(value) {
-            if (value !== undefined) {
-                self.routeData.destination = value;
-                UpdateRouteEventFactory.create().execute(self);
-            }
-
-            return self.routeData.destination;
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusRuleCreator', otusRuleCreator);
-
-    otusRuleCreator.$inject = ['RuleCreatorWidgetFactory'];
-
-    function otusRuleCreator(RuleCreatorWidgetFactory) {
-        var ddo = {
-            scope: {
-                leftIcon: '@'
-            },
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/rule/creator/rule-creator.html',
-            link: function link(scope, element, attr, controller) {
-                scope.widget = RuleCreatorWidgetFactory.create(scope, scope.$parent.widget);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('RuleCreatorWidgetFactory', RuleCreatorWidgetFactory);
-
-    RuleCreatorWidgetFactory.$inject = [
-        'AddRuleEventFactory',
-        'RuleEditorWidgetFactory',
-        'WorkspaceService'
-    ];
-
-    function RuleCreatorWidgetFactory(AddRuleEventFactory, RuleEditorWidgetFactory, WorkspaceService) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, parentWidget) {
-            return new RuleCreatorWidget(scope, parentWidget, AddRuleEventFactory, RuleEditorWidgetFactory, WorkspaceService);
-        }
-
-        return self;
-    }
-
-    function RuleCreatorWidget(scope, parentWidget, AddRuleEventFactory, RuleEditorWidgetFactory, WorkspaceService) {
-        var self = this;
-
-        /* Type definitions */
-        self.name = 'RuleCreator';
-
-        /* Instance definitions */
-        self.newRule = {};
-        self.parent = parentWidget;
-        self.route = parentWidget.route;
-        self.survey = WorkspaceService.getSurvey();
-
-        /* User definitions */
-        self.icon = 'low_priority';
-
-        /* Public interface */
-        self.avaiableQuestions = avaiableQuestions;
-        self.when = when;
-        self.operator = operator;
-        self.answer = answer;
-        self.saveRule = saveRule;
-
-        /* View data interface */
-        function avaiableQuestions() {
-            return Object.keys(self.survey.questionContainer);
-        }
-
-        function when(value) {
-            if (value !== undefined)
-                self.newRule.when = value;
-
-            return self.newRule.when;
-        }
-
-        function operator(value) {
-            if (value !== undefined)
-                self.newRule.operator = value;
-
-            return self.newRule.operator;
-        }
-
-        function answer(value) {
-            if (value !== undefined)
-                self.newRule.answer = value;
-
-            return self.newRule.answer;
-        }
-
-        function saveRule() {
-            var newRule = AddRuleEventFactory.create().execute(self.newRule, self.route);
-            var ruleEditorWidget = RuleEditorWidgetFactory.create(newRule, self.parent);
-            self.parent.addRule(ruleEditorWidget);
-
-            self.newRule = {};
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusRuleEditor', otusRuleEditor);
-
-    function otusRuleEditor() {
-        var ddo = {
-            scope: {
-                leftIcon: '@',
-                widget: '='
-            },
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/navigation/rule/editor/rule-editor.html'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('RuleEditorWidgetFactory', RuleEditorWidgetFactory);
-
-    RuleEditorWidgetFactory.$inject = [
-        'RemoveRuleEventFactory',
-        'UUID'
-    ];
-
-    function RuleEditorWidgetFactory(RemoveRuleEventFactory, UUID) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(rule, parentWidget) {
-            return new RuleEditorWidget(rule, parentWidget, RemoveRuleEventFactory, UUID);
-        }
-
-        return self;
-    }
-
-    function RuleEditorWidget(rule, parentWidget, RemoveRuleEventFactory, UUID) {
-        var self = this;
-
-        /* Type definitions */
-        self.className = self.constructor.name;
-
-        /* Instance definitions */
-        self.uuid = UUID.generateUUID();
-        self.parent = parentWidget;
-        self.route = parentWidget.route;
-        self.rule = rule;
-        self.newRuleGroup = {};
-        self.ruleGroups = [];
-
-        /* Public methods */
-        self.when = when;
-        self.operator = operator;
-        self.answer = answer;
-        self.removeRule = removeRule;
-
-        function when(value) {
-            if (value !== undefined) {
-                self.rule.when = value;
-            }
-
-            return self.rule.when;
-        }
-
-        function operator(value) {
-            if (value !== undefined) {
-                self.rule.operator = value;
-            }
-
-            return self.rule.operator;
-        }
-
-        function answer(value) {
-            if (value !== undefined) {
-                self.rule.answer = value;
-            }
-
-            return self.rule.answer;
-        }
-
-        function removeRule() {
-            RemoveRuleEventFactory.create().execute(self.rule, self.route);
-            // self.route.conditionSet[0].removeRule(self.rule);
-            self.parent.updateRuleList(self);
-        }
-    }
-
-}());
+  }
+})();
 
 (function() {
     'use strict';
@@ -7848,6 +8906,90 @@
 
     angular
         .module('editor.ui')
+        .directive('otusScaleValidator', otusScaleValidator);
+
+    otusScaleValidator.$inject = [
+        'ScaleValidatorWidgetFactory'
+    ];
+
+    function otusScaleValidator(ScaleValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/scale/scale-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = ScaleValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('ScaleValidatorWidgetFactory', ScaleValidatorWidgetFactory);
+
+    function ScaleValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new ScaleValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function ScaleValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'scale';
+
+
+        /* Public Methods */
+        self.data = null;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            var avaiableRules = question.fillingRules.options;
+            self.data = avaiableRules[whoAmI].data.reference;
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusRangeDateValidator', otusRangeDateValidator);
 
     otusRangeDateValidator.$inject = [
@@ -7916,90 +9058,6 @@
         function updateData() {
             getRuleType().data.reference['initial'] = self.data['initial'].toLocaleDateString();
             getRuleType().data.reference['end'] = self.data['end'].toLocaleDateString();
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusScaleValidator', otusScaleValidator);
-
-    otusScaleValidator.$inject = [
-        'ScaleValidatorWidgetFactory'
-    ];
-
-    function otusScaleValidator(ScaleValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/scale/scale-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = ScaleValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('ScaleValidatorWidgetFactory', ScaleValidatorWidgetFactory);
-
-    function ScaleValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new ScaleValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function ScaleValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'scale';
-
-
-        /* Public Methods */
-        self.data = null;
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            var avaiableRules = question.fillingRules.options;
-            self.data = avaiableRules[whoAmI].data.reference;
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
