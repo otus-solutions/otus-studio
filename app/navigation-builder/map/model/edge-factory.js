@@ -19,7 +19,7 @@
 
   function Edge(options) {
     var self = this;
-    self.id = options.id;
+    self.id = options.source + '_' + options.target;
     self.source = options.source;
     self.target = options.target;
   }

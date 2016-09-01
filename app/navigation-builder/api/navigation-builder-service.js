@@ -13,7 +13,7 @@
 
   function service(MapFactory, RouteBuilderService, NavigationInspectorService) {
     var self = this;
-    var _survey = {};
+    var _survey = null;
     var _navigationMap = {};
     var _activeServiceMode = null;
 
@@ -73,7 +73,6 @@
 
         navigation.routes.forEach(function(route) {
           var edgeOptions = {};
-          edgeOptions.id = navigation.origin;
           edgeOptions.source = route.origin;
           edgeOptions.target = route.destination;
           var edge = _navigationMap.createEdge(edgeOptions);

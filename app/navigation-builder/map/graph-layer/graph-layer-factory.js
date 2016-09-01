@@ -56,14 +56,13 @@
       _mapView.graph.updateAllNodesStyle(style);
     }
 
-    function _clear() {
-      $('#map-view').empty();
-    }
-
     function _loadInternalBehaviour() {
-      sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
-      sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
-      sigma.classes.graph.addMethod('updateAllNodesStyle', _updateAllNodesStyle);
+      if (!sigma.classes.graph.hasMethod('updateNodeStyleBefore')) {
+        sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
+        sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
+        sigma.classes.graph.addMethod('updateAllNodesStyle', _updateAllNodesStyle);
+      }
+      $('#map-view').empty();
       _mapView = new sigma(mapViewContainer);
     }
 

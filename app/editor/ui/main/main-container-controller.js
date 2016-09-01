@@ -48,6 +48,7 @@
 
       NavigationBuilderService.setSurvey(WorkspaceService.getSurvey());
       NavigationBuilderScopeService.broadcast(NBEVENTS.MAP_CONTAINER_READY);
+      NavigationBuilderScopeService.onEvent(NBEVENTS.ROUTE_BUILD_SAVED, WorkspaceService.saveWork);
     }
   }
 }());
