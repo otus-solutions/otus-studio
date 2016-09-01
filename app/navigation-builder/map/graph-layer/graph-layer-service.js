@@ -62,7 +62,7 @@
 
     function clearVisualChanges() {
       var style = { color: '#000', isDisabled: false };
-      _graphLayer.updateAllNodesStyle(style, node);
+      _graphLayer.updateAllNodesStyle(style);
     }
 
     function applyVisualChanges() {

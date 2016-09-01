@@ -12,7 +12,7 @@
     'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
   ];
 
-  function service(moduleScope, DataService, EventsService, UiEventsService) {
+  function service(moduleScope, DataService, ModuleEventService, UiEventsService) {
     var self = this;
 
     /* Public methods */
@@ -47,13 +47,13 @@
     function activate(survey) {
       DataService.activate(survey);
       UiEventsService.activate();
-      EventsService.activate();
+      ModuleEventService.activate();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_ON);
     }
 
     function deactivate() {
       DataService.deactivate();
-      EventsService.deactivate();
+      ModuleEventService.deactivate();
       UiEventsService.deactivate();
     }
 

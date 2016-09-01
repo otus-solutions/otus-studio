@@ -19,20 +19,19 @@
 
   function component(RouteBuilderService) {
     var self = this;
-    var i = 0;
-    self.routeConditions = [];
-    self.groups = [];
+
+    self.conditions = [];
 
     /* Public methods */
     self.$onInit = onInit;
     self.cancel = cancel;
     self.save = save;
-    self.createGroupCondition = createGroupCondition;
+    self.createCondition = createCondition;
 
     function onInit() {
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
-      self.condition = RouteBuilderService.selectedCondition();
+      self.conditions = RouteBuilderService.selectedRoute().conditionSet;
     }
 
     function cancel() {
@@ -43,8 +42,8 @@
       RouteBuilderService.saveRouteBuilding();
     }
 
-    function createGroupCondition() {
-      self.groups.push(RouteBuilderService.selectedCondition());
+    function createCondition() {
+      RouteBuilderService.createCondition();
     }
 
     function _initializeLabels() {
@@ -55,7 +54,7 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createGroupCondition: 'Criar grupo de Regras',
+          createCondition: 'Criar grupo de Regras',
           deleteCondition: 'Excluir grupo atual'
         },
         origin: 'Origem',

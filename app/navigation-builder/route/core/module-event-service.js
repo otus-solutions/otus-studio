@@ -82,6 +82,7 @@
 
     function _onRouteBuildSaved(event) {
       GraphLayerService.clearVisualChanges();
+      GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
@@ -89,6 +90,7 @@
 
     function _onRouteBuildCanceled(event) {
       GraphLayerService.clearVisualChanges();
+      GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);

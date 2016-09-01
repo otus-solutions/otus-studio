@@ -23,16 +23,6 @@
       _initializeEventListeners();
     }
 
-    function onClickNode(listener) {
-      _clickNodeListeners = [];
-      _clickNodeListeners.push(listener);
-    }
-
-    function clearAllEventListeners() {
-      _clickNodeListeners = [];
-      _mapView.unbind(CLICK_NODE);
-    }
-
     function _initializeEventListeners() {
       _mapView.bind(CLICK_NODE, function(event) {
         var clickedNode = event.data.node;
@@ -43,6 +33,15 @@
           })
         }
       });
+    }
+
+    function clearAllEventListeners() {
+      _clickNodeListeners = [];
+    }
+
+    function onClickNode(listener) {
+      _clickNodeListeners = [];
+      _clickNodeListeners.push(listener);
     }
   }
 })();

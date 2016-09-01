@@ -29,7 +29,7 @@
     self.render = render;
     self.updateNodeStyleBefore = updateNodeStyleBefore;
     self.updateNodeStyle = updateNodeStyle;
-    self.releasePreviousNodesOf = releasePreviousNodesOf;
+    self.updateAllNodesStyle = updateAllNodesStyle;
 
     function mapView() {
       return _mapView;
@@ -52,12 +52,8 @@
       _mapView.graph.updateNodeStyle(style, node);
     }
 
-    function updateAllNodesStyle(style, node) {
-      _mapView.graph.updateAllNodesStyle(style, node);
-    }
-
-    function releasePreviousNodesOf(nodeLimiter) {
-      _mapView.graph.releasePreviousNodesOf(nodeLimiter);
+    function updateAllNodesStyle(style) {
+      _mapView.graph.updateAllNodesStyle(style);
     }
 
     function _clear() {
@@ -91,7 +87,7 @@
       });
     }
 
-    function _updateAllNodesStyle(style, nodeToUpdate) {
+    function _updateAllNodesStyle(style) {
       this.nodesArray.forEach(function(node) {
         node.color = style.color;
         node.isDisabled = style.isDisabled;
