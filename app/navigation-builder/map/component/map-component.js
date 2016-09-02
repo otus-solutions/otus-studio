@@ -24,6 +24,7 @@
     function onInit() {
       self.routeMenuCtrl = new RouteMenuController(NavigationBuilderService);
       moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
+      // moduleScope.onEvent(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED, _renderMap);
     }
 
     function _renderMap() {

@@ -37,7 +37,10 @@
 
     function loadData(nodes, edges) {
       _mapView.graph.clear();
-      _mapView.graph.read({ nodes: nodes, edges: edges });
+      _mapView.graph.read({
+        nodes: nodes,
+        edges: edges
+      });
     }
 
     function render() {
@@ -58,9 +61,13 @@
 
     function _loadInternalBehaviour() {
       if (!sigma.classes.graph.hasMethod('updateNodeStyleBefore')) {
+        // New methods
         sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
         sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
         sigma.classes.graph.addMethod('updateAllNodesStyle', _updateAllNodesStyle);
+        // Listeners methods
+        sigma.classes.graph.attach('addNode', 'onAddNode', _onAddNode);
+        sigma.classes.graph.attach('addEdge', 'onAddEdge', _onAddEdge);
       }
       $('#map-view').empty();
       _mapView = new sigma(mapViewContainer);
@@ -91,6 +98,26 @@
         node.color = style.color;
         node.isDisabled = style.isDisabled;
       });
+    }
+
+    function _onAddNode(addedNode) {
+    }
+
+    function _onAddEdge(edge) {
+      var source = null;
+      var target = null;
+
+      this.nodesArray.some(function(node) {
+        if (node.id === edge.source) {
+          source = node;
+        } else if (node.id === edge.target) {
+          target = node;
+        }
+
+        return source !== null && target !== null;
+      });
+
+      source.connect(target);
     }
   }
 }());

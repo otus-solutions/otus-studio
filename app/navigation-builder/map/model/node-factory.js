@@ -19,11 +19,48 @@
 
   function Node(options) {
     var self = this;
-    self.id = options.id;
-    self.label = options.label;
-    self.x = options.x || 0;
-    self.y = options.y || 0;
-    self.size = options.size || '10';
-    self.color = options.color || '#000';
+
+    this.neighbors = [];
+
+    this.id = options.id;
+    this.label = options.label;
+    this.x = options.x || 0;
+    this.y = options.y || 0;
+    this.size = options.size || '10';
+    this.color = options.color || '#000';
+
+    /* Public methods */
+    this.connect = connect;
+    this.notify = notify;
+    this.update = update;
+
+    function connect(newNeighbor) {
+      this.neighbors.push(newNeighbor);
+      newNeighbor.update(this);
+    }
+
+    function notify() {
+      this.neighbors.forEach(function(neighbor) {
+        neighbor.update(this);
+      });
+    }
+
+    function update(sourceNode) {
+      if (this.x - sourceNode.x > 1) {
+        this.x = sourceNode.x + 1;
+      }
+
+      if (sourceNode.neighbors.length > 1) {
+        var thisNode = this;
+        sourceNode.neighbors.some(function(node) {
+          if (node.id !== thisNode.id) {
+            --node.y;
+          } else {
+            return false;
+          }
+        });
+        ++thisNode.y;
+      }
+    }
   }
 }());
