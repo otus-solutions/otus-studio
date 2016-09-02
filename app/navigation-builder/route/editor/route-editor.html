@@ -29,25 +29,27 @@
 <md-dialog-content layout="row" flex>
   <div layout="column" flex>
     <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="condition in $ctrl.conditions track by $index">
-      <otus:accordion flex>
-        <otus:accordion-header>
-          <md-content flex>
-            Grupo de condições
-          </md-content>
-        </otus:accordion-header>
-        <otus:accordion-content>
-          <md-content flex>
-            <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
-              <div layout="column" flex class="md-list-item-text">
-                <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>
-              </div>
-            </md-list-item>
-            <md-list-item layout="row" flex class="md-1-line">
-              <otus-rule-editor flex></otus-rule-editor>
-            </md-list-item>
-          </md-content>
-        </otus:accordion-content>
-      </otus:accordion>
+      <md-dialog-actions>
+        <md-content flex>
+          Grupo de regras
+        </md-content>
+        <md-button>
+          <md-icon md-font-set="material-icons">delete</md-icon>
+        </md-button>
+        <md-button ng-click="$ctrl.isOpen = !$ctrl.isOpen">
+          <md-icon md-font-set="material-icons">expand_more</md-icon>
+        </md-button>
+      </md-dialog-actions>
+      <md-content ng-show="$ctrl.isOpen" flex>
+        <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
+          <div layout="column" flex class="md-list-item-text">
+            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>
+          </div>
+        </md-list-item>
+        <md-list-item layout="row" flex class="md-1-line">
+          <otus-rule-editor flex></otus-rule-editor>
+        </md-list-item>
+      </md-content>
     </md-whiteframe>
   </div>
 </md-dialog-content>
