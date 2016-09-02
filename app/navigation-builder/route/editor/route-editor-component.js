@@ -21,6 +21,7 @@
     var self = this;
 
     self.conditions = [];
+    self.isOpen = false;
 
     /* Public methods */
     self.$onInit = onInit;
