@@ -36,11 +36,11 @@
         <md-button>
           <md-icon md-font-set="material-icons">delete</md-icon>
         </md-button>
-        <md-button ng-click="$ctrl.saveConditionIndex($index); showDetails = ! showDetails">
+        <md-button ng-click="$ctrl.saveConditionIndex($index, clicked); clicked = ! clicked">
           <md-icon md-font-set="material-icons">expand_more</md-icon>
         </md-button>
       </md-dialog-actions>
-      <md-content ng-show="showDetails" flex>
+      <md-content ng-show="clicked" flex>
         <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
           <div layout="column" flex class="md-list-item-text">
             <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>

@@ -21,6 +21,7 @@
     var self = this;
 
     self.conditions = [];
+    self.isClicked = false;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -47,7 +48,9 @@
       RouteBuilderService.createCondition();
     }
 
-    function saveConditionIndex(index) {
+    function saveConditionIndex(index, clicked) {
+      // self.isClicked = self.isClicked ? false : true;
+      console.log(clicked);
       RouteBuilderService.selectCondition(index);
     }
 
