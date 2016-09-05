@@ -27,6 +27,7 @@
     self.cancel = cancel;
     self.save = save;
     self.createCondition = createCondition;
+    self.saveConditionIndex = saveConditionIndex;
 
     function onInit() {
       _initializeLabels();
@@ -44,6 +45,10 @@
 
     function createCondition() {
       RouteBuilderService.createCondition();
+    }
+
+    function saveConditionIndex(index) {
+      RouteBuilderService.selectCondition(index);
     }
 
     function _initializeLabels() {
