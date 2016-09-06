@@ -49,11 +49,9 @@
     })
     .run([
       'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-      'otusjs.studio.navigationBuilder.EventsService',
       '$rootScope',
-      function(NavigationBuilderScopeService, EventsService, $rootScope) {
+      function(NavigationBuilderScopeService, $rootScope) {
         NavigationBuilderScopeService.initialize($rootScope.$new());
-        EventsService.activate();
       }
     ]);
 }());

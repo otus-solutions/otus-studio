@@ -48,6 +48,7 @@
     }
 
     function deactivate() {
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
       DataService.deactivate();
       ModuleEventService.deactivate();
       UiEventsService.deactivate();

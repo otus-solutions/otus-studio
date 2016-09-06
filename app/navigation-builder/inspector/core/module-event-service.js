@@ -21,6 +21,7 @@
 
     function activate() {
       _registerEventListener(moduleScope.NBEVENTS.INSPECTOR_MODE_ON, _onRouteModeOn);
+      _registerEventListener(moduleScope.NBEVENTS.INSPECTOR_MODE_OFF, _onRouteModeOff);
       _registerEventListener(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _onNavigationSelected);
       _registerEventListener(moduleScope.NBEVENTS.NAVIGATION_UNSELECTED, _onNavigationUnselected);
     }
@@ -42,6 +43,12 @@
 
     function _onRouteModeOn(event, node) {
       InstructorService.showMessenger(moduleScope.NBMESSAGES.NAVIGATION_INSPECTOR.SELECT_NAVIGATION);
+    }
+
+    function _onRouteModeOff(event, node) {
+      GraphLayerService.clearVisualChanges();
+      GraphLayerService.applyVisualChanges();
+      InstructorService.clearMessenger();
     }
 
     function _onNavigationSelected(event, node) {

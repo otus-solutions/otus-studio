@@ -31,6 +31,7 @@
     }
 
     function deactivate() {
+      moduleScope.emit(moduleScope.NBEVENTS.INSPECTOR_MODE_OFF);
       DataService.deactivate();
       ModuleEventService.deactivate();
       UiEventsService.deactivate();

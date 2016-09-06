@@ -41,17 +41,21 @@
     }
 
     function activateRouteCreatorMode() {
+      deactiveMode();
       _activeServiceMode = RouteBuilderService;
       _activeServiceMode.activate(_survey);
     }
 
     function activateNavigationInspectorMode() {
+      deactiveMode();
       _activeServiceMode = NavigationInspectorService;
       _activeServiceMode.activate(_survey);
     }
 
     function deactiveMode() {
-      return _activeServiceMode.deactivate();
+      if (_activeServiceMode) {
+        return _activeServiceMode.deactivate();
+      }
     }
 
     function _loadTemplateNavigations(templateNavigations) {

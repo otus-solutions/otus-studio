@@ -22,7 +22,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.routeMenuCtrl = new RouteMenuController(NavigationBuilderService);
+      self.toolsCtrl = new ToolsController(NavigationBuilderService);
       moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
       // moduleScope.onEvent(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED, _renderMap);
     }
@@ -37,7 +37,7 @@
     }
   }
 
-  function RouteMenuController(NavigationBuilderService) {
+  function ToolsController(NavigationBuilderService) {
     var self = this;
 
     _init();
