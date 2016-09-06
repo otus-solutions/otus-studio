@@ -61,6 +61,7 @@
       GraphLayerService.setNodeAsTrailhead(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
+      moduleScope.apply();
     }
 
     function _onOriginNodeUnselected(event, node) {
@@ -68,6 +69,7 @@
       GraphLayerService.clearNode(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_ORIGIN);
+      moduleScope.apply();
     }
 
     function _onDestinationNodeSelected(event, node) {

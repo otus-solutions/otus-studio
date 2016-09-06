@@ -23,6 +23,7 @@
     self.broadcast = broadcast;
     self.emit = emit;
     self.digest = digest;
+    self.apply = apply;
 
     function initialize(scope) {
       scope.events = NBEVENTS;
@@ -44,6 +45,10 @@
 
     function digest() {
       _scope.$digest();
+    }
+
+    function apply() {
+      _scope.$apply();
     }
   }
 }());
