@@ -28,6 +28,7 @@
     self.selectedRoute = selectedRoute;
     self.startRouteBuilding = startRouteBuilding;
     self.cancelRouteBuilding = cancelRouteBuilding;
+    self.deleteRoute = deleteRoute;
     // Rule editor
     self.createRule = createRule;
     self.deleteRule = deleteRule;
@@ -72,6 +73,12 @@
       deactivate();
     }
 
+    function deleteRoute() {
+      DataService.deleteRoute();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_DELETED);
+      deactivate();
+    }
+
     function selectCondition(index) {
       DataService.selectCondition(index);
     }
@@ -85,18 +92,25 @@
     }
 
     function startRouteBuilding(origin, destination) {
-      if (DataService.isSimpleNavigation(origin.id)) {
+      if (DataService.routeExists(origin, destination)) {
+        DataService.useCurrentRouteData();
+      } else {
         DataService.initializeRouteData();
         DataService.createCondition();
-      } else {
-        if (DataService.routeExists(origin, destination)) {
-          DataService.useCurrentRouteData();
-        } else {
-          DataService.initializeRouteData();
-          DataService.createCondition();
-        }
       }
       DataService.selectCondition(0);
+
+      // if (DataService.isSimpleNavigation(origin.id)) {
+      //   DataService.initializeRouteData();
+      //   DataService.createCondition();
+      // } else {
+      //   if (DataService.routeExists(origin, destination)) {
+      //     DataService.useCurrentRouteData();
+      //   } else {
+      //     DataService.initializeRouteData();
+      //     DataService.createCondition();
+      //   }
+      // }
     }
 
     function cancelRouteBuilding() {

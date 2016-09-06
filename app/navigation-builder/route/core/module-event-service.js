@@ -27,8 +27,10 @@
       _registerEventListener(moduleScope.NBEVENTS.ORIGIN_NODE_UNSELECTED, _onOriginNodeUnselected);
       _registerEventListener(moduleScope.NBEVENTS.DESTINATION_NODE_SELECTED, _onDestinationNodeSelected);
       _registerEventListener(moduleScope.NBEVENTS.DESTINATION_NODE_UNSELECTED, _onDestinationNodeUnselected);
+      _registerEventListener(moduleScope.NBEVENTS.ROUTE_DELETED, _onRouteDeleted);
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED, _onRouteBuildSaved);
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED, _onRouteBuildCanceled);
+      _registerEventListener(moduleScope.NBEVENTS.ORPHANS_ENCOUNTERED, _onOrphansEncountered);
     }
 
     function deactivate() {
@@ -85,6 +87,14 @@
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
     }
 
+    function _onRouteDeleted(event) {
+      GraphLayerService.clearVisualChanges();
+      GraphLayerService.applyVisualChanges();
+      InstructorService.clearMessenger();
+      RouteDialogService.closeDialog();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+    }
+
     function _onRouteBuildSaved(event) {
       GraphLayerService.clearVisualChanges();
       GraphLayerService.applyVisualChanges();
@@ -99,6 +109,10 @@
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+    }
+
+    function _onOrphansEncountered(event, orphans) {
+      console.log(orphans);
     }
   }
 })();

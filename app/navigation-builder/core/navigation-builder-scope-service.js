@@ -13,12 +13,15 @@
   function service(NBEVENTS, NBMESSAGES) {
     var self = this;
     var _scope = null;
+    var _moduleData = {};
 
     self.NBEVENTS = NBEVENTS;
     self.NBMESSAGES = NBMESSAGES;
 
     /* Public methods */
     self.initialize = initialize;
+    self.store = store;
+    self.getData = getData;
     self.onEvent = onEvent;
     self.broadcast = broadcast;
     self.emit = emit;
@@ -29,6 +32,14 @@
       scope.events = NBEVENTS;
       scope.messages = NBMESSAGES;
       _scope = scope;
+    }
+
+    function store(key, value) {
+      _moduleData[key] = value;
+    }
+
+    function getData(key) {
+      return _moduleData[key];
     }
 
     function onEvent(event, listener) {

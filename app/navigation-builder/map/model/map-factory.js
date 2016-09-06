@@ -48,8 +48,26 @@
     self.createEdgeForAlterantivePath = createEdgeForAlterantivePath;
     self.getNavigation = getNavigation;
 
-    function nodes() {
-      return _nodes;
+    function nodes(ids) {
+      if (!ids) {
+        return _nodes;
+      } else {
+        var result = [];
+
+        _nodes.some(function(node) {
+
+          ids.some(function(id, index) {
+            if (node.id === id) {
+              result.push(node);
+              ids.splice(index, 1);
+              return true;
+            }
+          });
+
+        });
+
+        return result;
+      }
     }
 
     function edges() {

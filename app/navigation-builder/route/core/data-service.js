@@ -35,10 +35,12 @@
     self.apply = apply;
     self.createCondition = createCondition;
     self.deleteCondition = deleteCondition;
+    self.deleteRoute = deleteRoute;
     self.initializeRouteData = initializeRouteData;
     self.isSimpleNavigation = isSimpleNavigation;
     self.routeExists = routeExists;
     self.selectCondition = selectCondition;
+    self.selectRoute = selectRoute;
     self.selectedCondition = selectedCondition;
     self.selectedRoute = selectedRoute;
     self.useCurrentRouteData = useCurrentRouteData;
@@ -142,6 +144,16 @@
       selectCondition(0);
     }
 
+    function deleteRoute() {
+      _survey.NavigationManager.selectNavigationByOrigin(_originNode.id);
+      _survey.NavigationManager.deleteRoute(_routeData);
+
+      var orphans = _survey.NavigationManager.listOrphanNavigations();
+      if (orphans.length) {
+        moduleScope.emit(moduleScope.NBEVENTS.ORPHANS_ENCOUNTERED, orphans);
+      }
+    }
+
     function initializeRouteData() {
       selectNavigation(_originNode.id);
       _routeData = {};
@@ -156,6 +168,10 @@
       } else {
         return false;
       }
+    }
+
+    function selectRoute() {
+      return _routeData;
     }
 
     function selectedCondition() {
@@ -180,6 +196,7 @@
     }
 
     function routeExists(origin, destination) {
+      selectNavigation(origin.id);
       var routeData = {};
       routeData.origin = origin.id;
       routeData.destination = destination.id;

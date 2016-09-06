@@ -26,9 +26,9 @@
     self.$onInit = onInit;
     self.cancel = cancel;
     self.save = save;
+    self.deleteRoute = deleteRoute;
     self.createCondition = createCondition;
     self.selectCondition = selectCondition;
-    self.saveConditionIndex = saveConditionIndex;
 
     function onInit() {
       _initializeLabels();
@@ -44,15 +44,15 @@
       RouteBuilderService.saveRouteBuilding();
     }
 
+    function deleteRoute() {
+      RouteBuilderService.deleteRoute();
+    }
+
     function createCondition() {
       RouteBuilderService.createCondition();
     }
 
     function selectCondition(index) {
-      RouteBuilderService.selectCondition(index);
-    }
-
-    function saveConditionIndex(index) {
       RouteBuilderService.selectCondition(index);
     }
 
@@ -64,7 +64,8 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createCondition: 'Criar condição de rota'
+          createCondition: 'Criar condição de rota',
+          deleteRoute: 'Exluir esta rota'
         },
         origin: 'Origem',
         destination: 'Destino',
