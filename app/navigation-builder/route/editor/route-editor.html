@@ -31,7 +31,7 @@
     <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="condition in $ctrl.conditions track by $index" ng-click="$ctrl.selectCondition($index)">
       <md-dialog-actions>
         <md-content flex>
-          Grupo de regras
+          {{ $ctrl.label.conditionTitle }}
         </md-content>
         <md-button>
           <md-icon md-font-set="material-icons">delete</md-icon>

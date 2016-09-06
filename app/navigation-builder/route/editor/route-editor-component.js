@@ -65,15 +65,15 @@
         button: {
           cancel: 'Cancelar',
           save: 'Salvar Rota',
-          createCondition: 'Criar grupo de Regras',
-          deleteCondition: 'Excluir grupo atual'
+          createCondition: 'Criar condição de rota'
         },
         origin: 'Origem',
         destination: 'Destino',
         originNode: self.originNode.label,
         destinationNode: self.destinationNode.label,
+        conditionTitle: 'Regras de condição',
         message: {
-          emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR GRUPO DE REGRAS',
+          emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR CONDIÇÃO DE ROTA.',
         }
       };
     }
