@@ -21,13 +21,14 @@
     var self = this;
 
     self.conditions = [];
-    self.isOpen = false;
+    self.isClicked = false;
 
     /* Public methods */
     self.$onInit = onInit;
     self.cancel = cancel;
     self.save = save;
     self.createCondition = createCondition;
+    self.saveConditionIndex = saveConditionIndex;
 
     function onInit() {
       _initializeLabels();
@@ -45,6 +46,12 @@
 
     function createCondition() {
       RouteBuilderService.createCondition();
+    }
+
+    function saveConditionIndex(index, clicked) {
+      // self.isClicked = self.isClicked ? false : true;
+      console.log(clicked);
+      RouteBuilderService.selectCondition(index);
     }
 
     function _initializeLabels() {
