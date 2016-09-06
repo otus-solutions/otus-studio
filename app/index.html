@@ -23,6 +23,10 @@
 
     <!-- ************************************* SigmaJS ************************************* -->
     <script src="node_modules/sigma/build/sigma.min.js"></script>
+    <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js"></script>
+    <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js"></script>
 
     <!-- ************************************* Angular ************************************* -->
     <script src="node_modules/angular/angular.min.js"></script>
@@ -416,7 +420,11 @@
     <script src="app/navigation-builder/core/events-service.js"></script>
     <script src="app/navigation-builder/core/navigation-builder-scope-service.js"></script>
     <!-- INSPECTOR -->
-    <script src="app/navigation-builder/inspector/navigation-inspector-service.js"></script>
+    <script src="app/navigation-builder/inspector/navigation-inspector-module.js"></script>
+    <script src="app/navigation-builder/inspector/api/navigation-inspector-service.js"></script>
+    <script src="app/navigation-builder/inspector/core/data-service.js"></script>
+    <script src="app/navigation-builder/inspector/core/module-event-service.js"></script>
+    <script src="app/navigation-builder/inspector/core/ui-events-service.js"></script>
     <!-- MAP -->
     <script src="app/navigation-builder/map/component/map-component.js"></script>
     <script src="app/navigation-builder/map/graph-layer/graph-layer-event-service.js"></script>

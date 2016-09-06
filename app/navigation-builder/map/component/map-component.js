@@ -45,6 +45,7 @@
     /* Public methods */
     self.click = click;
     self.addRoute = addRoute;
+    self.inspect = inspect;
 
     function click() {
       self.isOpen = !self.isOpen;
@@ -52,6 +53,10 @@
 
     function addRoute() {
       NavigationBuilderService.activateRouteCreatorMode();
+    }
+
+    function inspect() {
+      NavigationBuilderService.activateNavigationInspectorMode();
     }
 
     function _init() {

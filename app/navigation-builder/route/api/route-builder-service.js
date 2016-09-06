@@ -19,17 +19,13 @@
     // Service management
     self.activate = activate;
     self.deactivate = deactivate;
-    // Map interactions
-    self.selectNode = selectNode;
-    self.selectedCondition = selectedCondition;
-    self.selectedEdges = selectedEdges;
-    self.selectedNode = selectedNode;
-    self.selectedRoute = selectedRoute;
     // Route editor
     self.createCondition = createCondition;
     self.deleteCondition = deleteCondition;
     self.saveRouteBuilding = saveRouteBuilding;
     self.selectCondition = selectCondition;
+    self.selectedCondition = selectedCondition;
+    self.selectedRoute = selectedRoute;
     self.startRouteBuilding = startRouteBuilding;
     self.cancelRouteBuilding = cancelRouteBuilding;
     // Rule editor
@@ -58,30 +54,6 @@
     }
 
     //-----------------------------------------------------
-    // Map interactions
-    //-----------------------------------------------------
-
-    function selectNode(node) {
-      DataService.selectNode(node);
-    }
-
-    function selectedCondition() {
-      return DataService.selectedCondition();
-    }
-
-    function selectedNode() {
-      return DataService.selectedNode();
-    }
-
-    function selectedEdges() {
-      return DataService.selectedEdges();
-    }
-
-    function selectedRoute() {
-      return DataService.selectedRoute();
-    }
-
-    //-----------------------------------------------------
     // Route editor
     //-----------------------------------------------------
 
@@ -101,6 +73,14 @@
 
     function selectCondition(index) {
       DataService.selectCondition(index);
+    }
+
+    function selectedCondition() {
+      return DataService.selectedCondition();
+    }
+
+    function selectedRoute() {
+      return DataService.selectedRoute();
     }
 
     function startRouteBuilding(origin, destination) {

@@ -10,17 +10,21 @@
 
     self.create = create;
 
-    function create(options) {
-      return new Edge(options);
+    function create(options, isStraight) {
+      return new Edge(options, isStraight);
     }
 
     return self;
   }
 
-  function Edge(options) {
+  function Edge(options, isStraight) {
     var self = this;
     self.id = options.source + '_' + options.target;
     self.source = options.source;
     self.target = options.target;
+
+    if (!isStraight) {
+      self.type = 'curvedArrow';
+    }
   }
 }());

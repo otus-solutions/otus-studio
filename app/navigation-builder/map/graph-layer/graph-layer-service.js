@@ -22,9 +22,13 @@
     self.releasePreviousNodesOf = releasePreviousNodesOf;
     self.setNodeAsTrailhead = setNodeAsTrailhead;
     self.setNodeAsTrailend = setNodeAsTrailend;
+    self.setNodeAsInspected = setNodeAsInspected;
     self.clearNode = clearNode;
     self.applyVisualChanges = applyVisualChanges;
     self.clearVisualChanges = clearVisualChanges;
+    self.showOutputs = showOutputs;
+    self.showInputs = showInputs;
+    self.lockUnrelated = lockUnrelated;
 
     function initialize() {
       _graphLayer = GraphLayerFactory.create('map-view');
@@ -50,6 +54,11 @@
       _graphLayer.updateNodeStyle(style, node);
     }
 
+    function setNodeAsInspected(node) {
+      var style = { color: '#1B5BD1' };
+      _graphLayer.updateNodeStyle(style, node);
+    }
+
     function setNodeAsTrailend(node) {
       var style = { color: '#1B5BD1' };
       _graphLayer.updateNodeStyle(style, node);
@@ -63,10 +72,27 @@
     function clearVisualChanges() {
       var style = { color: '#000', isDisabled: false };
       _graphLayer.updateAllNodesStyle(style);
+      _graphLayer.updateAllEdgesStyle(style);
     }
 
     function applyVisualChanges() {
       _graphLayer.render();
+    }
+
+    function showOutputs(node) {
+      var style = { color: '#FF3232' };
+      _graphLayer.updateOutputs(style, node);
+    }
+
+    function showInputs(node) {
+      var style = { color: '#249C26' };
+      _graphLayer.updateInputs(style, node);
+    }
+
+    function lockUnrelated(node) {
+      var style = { color: '#CCC' };
+      _graphLayer.updateAllNodesStyle(style);
+      _graphLayer.updateAllEdgesStyle(style);
     }
   }
 })();

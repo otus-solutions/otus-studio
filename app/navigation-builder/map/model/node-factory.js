@@ -10,57 +10,45 @@
 
     self.create = create;
 
-    function create(options) {
-      return new Node(options);
+    function create(options, isDefault) {
+      return new Node(options, isDefault);
     }
 
     return self;
   }
 
-  function Node(options) {
+  function Node(options, isDefault) {
     var self = this;
 
-    this.neighbors = [];
+    this.inNeighbors = [];
+    this.outNeighbors = [];
 
+    this.index = options.index;
     this.id = options.id;
     this.label = options.label;
     this.x = options.x || 0;
-    this.y = options.y || 0;
+    this.y = isDefault ? 0 : -1;
     this.size = options.size || '10';
     this.color = options.color || '#000';
+    this.isDefault = isDefault;
 
     /* Public methods */
-    this.connect = connect;
-    this.notify = notify;
-    this.update = update;
+    this.connectIn = connectIn;
+    this.connectOut = connectOut;
+    this.updatePosition = updatePosition;
 
-    function connect(newNeighbor) {
-      this.neighbors.push(newNeighbor);
-      newNeighbor.update(this);
+    function connectIn(newNeighbor) {
+      this.inNeighbors.push(newNeighbor);
+      this.updatePosition(newNeighbor);
     }
 
-    function notify() {
-      this.neighbors.forEach(function(neighbor) {
-        neighbor.update(this);
-      });
+    function connectOut(newNeighbor) {
+      this.outNeighbors.push(newNeighbor);
+      newNeighbor.connectIn(this);
     }
 
-    function update(sourceNode) {
-      if (this.x - sourceNode.x > 1) {
-        this.x = sourceNode.x + 1;
-      }
-
-      if (sourceNode.neighbors.length > 1) {
-        var thisNode = this;
-        sourceNode.neighbors.some(function(node) {
-          if (node.id !== thisNode.id) {
-            --node.y;
-          } else {
-            return false;
-          }
-        });
-        ++thisNode.y;
-      }
+    function updatePosition(inNeighbor) {
+      this.x = inNeighbor.x + 1;
     }
   }
 }());

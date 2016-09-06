@@ -3,6 +3,7 @@
 
   angular.module('otusjs.studio.navigationBuilder', [
       'otusjs.studio.navigationBuilder.routeBuilder',
+      'otusjs.studio.navigationBuilder.navigationInspector',
       'otusjs.studio.navigationBuilder.messenger',
       'ngMaterial'
     ])
@@ -22,7 +23,11 @@
       'DESTINATION_NODE_UNSELECTED': 'nbevents.route.node.destination.unselected',
       /* Messenger events */
       'SHOW_MESSENGER': 'nbevents.messenger.show',
-      'HIDE_MESSENGER': 'nbevents.messenger.hide'
+      'HIDE_MESSENGER': 'nbevents.messenger.hide',
+
+      /* Navigation Inspector events */
+      'INSPECTOR_MODE_ON': 'nbevents.inspector.mode.on',
+      'NAVIGATION_SELECTED': 'nbevents.inspector.navigation.selected'
     })
     .constant('NBMESSAGES', {
       'ROUTE_BUILDER': {
@@ -33,6 +38,12 @@
         'SELECT_DESTINATION': {
           header: 'Destino da Rota',
           content: 'Escolha o item que determinará o destino da rota.'
+        }
+      },
+      'NAVIGATION_INSPECTOR': {
+        'SELECT_NAVIGATION': {
+          header: 'Inpecionar navegação',
+          content: 'Escolha o item que você deseja inspecionar.'
         }
       }
     })

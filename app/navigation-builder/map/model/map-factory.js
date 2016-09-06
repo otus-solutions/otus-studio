@@ -67,7 +67,7 @@
     function addNode(node) {
       if (!_nodeExists(node.id)) {
         node.x = _nodes.length;
-        node.y = 0;
+        // node.y = 0;
         _nodes.push(node);
       }
     }
@@ -78,12 +78,12 @@
       }
     }
 
-    function createNode(options) {
-      return Inject.NodeFactory.create(options);
+    function createNode(options, isDefault) {
+      return Inject.NodeFactory.create(options, isDefault);
     }
 
-    function createEdge(options) {
-      return Inject.EdgeFactory.create(options);
+    function createEdge(options, isDefault) {
+      return Inject.EdgeFactory.create(options, isDefault);
     }
 
     function getNavigation(node) {
