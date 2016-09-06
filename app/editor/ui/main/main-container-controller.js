@@ -46,8 +46,7 @@
         $navContainer.css('height', ($tabContainer.height() - 10) + 'px');
       });
 
-      NavigationBuilderService.setSurvey(WorkspaceService.getSurvey());
-      NavigationBuilderScopeService.broadcast(NBEVENTS.MAP_CONTAINER_READY);
+      NavigationBuilderScopeService.broadcast(NBEVENTS.NAVIGATION_BUILDER_ON, WorkspaceService.getSurvey());
       NavigationBuilderScopeService.onEvent(NBEVENTS.ROUTE_BUILD_SAVED, WorkspaceService.saveWork);
     }
   }

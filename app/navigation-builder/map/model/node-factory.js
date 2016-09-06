@@ -9,17 +9,31 @@
     var self = this;
 
     self.create = create;
+    self.createForDefaultPath = createForDefaultPath;
+    self.createForAlterantivePath = createForAlterantivePath;
 
-    function create(options, isDefault) {
-      return new Node(options, isDefault);
+    function create(options) {
+      return new Node(options);
+    }
+
+    function createForDefaultPath(options) {
+      options.y = 0;
+      options.color = '#448AFF';
+      options.isDefault = true;
+      return new Node(options);
+    }
+
+    function createForAlterantivePath(options) {
+      options.x = -1;
+      options.color = '#616161';
+      options.isDefault = false;
+      return new Node(options);
     }
 
     return self;
   }
 
-  function Node(options, isDefault) {
-    var self = this;
-
+  function Node(options) {
     this.inNeighbors = [];
     this.outNeighbors = [];
 
@@ -27,10 +41,10 @@
     this.id = options.id;
     this.label = options.label;
     this.x = options.x || 0;
-    this.y = isDefault ? 0 : -1;
+    this.y = options.x || 0;
     this.size = options.size || '10';
     this.color = options.color || '#000';
-    this.isDefault = isDefault;
+    this.isDefault = options.isDefault || false;
 
     /* Public methods */
     this.connectIn = connectIn;

@@ -61,7 +61,6 @@
       GraphLayerService.setNodeAsTrailhead(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
-      moduleScope.digest();
     }
 
     function _onOriginNodeUnselected(event, node) {
@@ -69,7 +68,6 @@
       GraphLayerService.clearNode(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_ORIGIN);
-      moduleScope.digest();
     }
 
     function _onDestinationNodeSelected(event, node) {
@@ -77,14 +75,12 @@
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.showDialog(node[0], node[1]);
-      moduleScope.digest();
     }
 
     function _onDestinationNodeUnselected(event, node) {
       GraphLayerService.clearNode(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
-      moduleScope.digest();
     }
 
     function _onRouteBuildSaved(event) {

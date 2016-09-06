@@ -17,8 +17,6 @@
     var _navigationMap = {};
     var _activeServiceMode = null;
 
-    self.mapData = null;
-
     /* Public methods */
     self.nodes = nodes;
     self.edges = edges;
@@ -65,24 +63,17 @@
     }
 
     function _addNodes(templateNavigations) {
-      var lastNavigation = null;
-      var isDefault = false;
-
       templateNavigations.forEach(function(navigation, index) {
-        if (lastNavigation && (lastNavigation.getDefaultRoute().destination === navigation.origin)) {
-          isDefault = true;
-          lastNavigation = navigation;
-        } else if (index === 0) {
-          isDefault = true;
-          lastNavigation = navigation;
+        var options = {
+          id: navigation.origin,
+          label: navigation.origin,
+          index: index
+        };
+        if (navigation.isDefault) {
+          _navigationMap.createNodeForDefaultPath(options);
         } else {
-          isDefault = false;
+          _navigationMap.createNodeForAlterantivePath(options);
         }
-
-        var nodeOptions = { id: navigation.origin, label: navigation.origin, index: index };
-        var node = _navigationMap.createNode(nodeOptions, isDefault);
-        node.navigation = navigation;
-        _navigationMap.addNode(node);
       });
     }
 
@@ -90,12 +81,15 @@
       templateNavigations.forEach(function(navigation) {
 
         navigation.routes.forEach(function(route) {
-          var edgeOptions = {};
-          edgeOptions.source = route.origin;
-          edgeOptions.target = route.destination;
-          var edge = _navigationMap.createEdge(edgeOptions, route.isDefault);
-          edge.route = route;
-          _navigationMap.addEdge(edge);
+          var options = {};
+          options.source = route.origin;
+          options.target = route.destination;
+
+          if (route.isDefault) {
+            _navigationMap.createEdgeForDefaultPath(options);
+          } else {
+            _navigationMap.createEdgeForAlterantivePath(options);
+          }
         });
 
       });

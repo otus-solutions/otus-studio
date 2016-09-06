@@ -45,7 +45,7 @@
     }
 
     function releasePreviousNodesOf(node) {
-      var style = { color: '#000', isDisabled: false };
+      var style = { color: '#313131', isDisabled: false };
       _graphLayer.updateNodeStyleBefore(style, node);
     }
 
@@ -55,7 +55,7 @@
     }
 
     function setNodeAsInspected(node) {
-      var style = { color: '#1B5BD1' };
+      var style = { color: '#FFD22E' };
       _graphLayer.updateNodeStyle(style, node);
     }
 
@@ -65,12 +65,12 @@
     }
 
     function clearNode(node) {
-      var style = { color: '#000', isDisabled: false };
+      var style = { color: '#313131', isDisabled: false };
       _graphLayer.updateNodeStyle(style, node);
     }
 
     function clearVisualChanges() {
-      var style = { color: '#000', isDisabled: false };
+      var style = { color: '#313131', isDisabled: false };
       _graphLayer.updateAllNodesStyle(style);
       _graphLayer.updateAllEdgesStyle(style);
     }

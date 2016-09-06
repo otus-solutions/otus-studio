@@ -34,18 +34,6 @@
     var self = this;
     var _nodes = [];
     var _edges = [];
-    var _yAxis = 0;
-
-    _init();
-
-    function _init() {
-      if (data) {
-        _yAxis = parseInt((data.nodes.length / 2));
-        data.nodes.forEach(function(item) {
-          addNode(_parseToNodeOptions(item));
-        });
-      }
-    }
 
     /* Public methods */
     self.addNode = addNode;
@@ -53,7 +41,11 @@
     self.nodes = nodes;
     self.edges = edges;
     self.createNode = createNode;
+    self.createNodeForDefaultPath = createNodeForDefaultPath;
+    self.createNodeForAlterantivePath = createNodeForAlterantivePath;
     self.createEdge = createEdge;
+    self.createEdgeForDefaultPath = createEdgeForDefaultPath;
+    self.createEdgeForAlterantivePath = createEdgeForAlterantivePath;
     self.getNavigation = getNavigation;
 
     function nodes() {
@@ -67,7 +59,6 @@
     function addNode(node) {
       if (!_nodeExists(node.id)) {
         node.x = _nodes.length;
-        // node.y = 0;
         _nodes.push(node);
       }
     }
@@ -78,12 +69,38 @@
       }
     }
 
-    function createNode(options, isDefault) {
-      return Inject.NodeFactory.create(options, isDefault);
+    function createNode(options) {
+      var node = Inject.NodeFactory.create(options);
+      addNode(node);
+      return node;
+    }
+
+    function createNodeForDefaultPath(options) {
+      var node = Inject.NodeFactory.createForDefaultPath(options);
+      addNode(node);
+      return node;
+    }
+
+    function createNodeForAlterantivePath(options) {
+      var node = Inject.NodeFactory.createForAlterantivePath(options);
+      addNode(node);
+      return node;
     }
 
     function createEdge(options, isDefault) {
       return Inject.EdgeFactory.create(options, isDefault);
+    }
+
+    function createEdgeForDefaultPath(options) {
+      var edge = Inject.EdgeFactory.createForDefaultPath(options);
+      addEdge(edge);
+      return edge;
+    }
+
+    function createEdgeForAlterantivePath(options) {
+      var edge = Inject.EdgeFactory.createForAlterantivePath(options);
+      addEdge(edge);
+      return edge;
     }
 
     function getNavigation(node) {
@@ -92,15 +109,6 @@
       });
 
       return result.length ? result[0].navigation : undefined;
-    }
-
-    function _parseToNodeOptions(data) {
-      return {
-        id: data.origin,
-        label: data.origin,
-        x: _nodes.length,
-        y: _yAxis
-      };
     }
 
     function _nodeExists(nodeID) {

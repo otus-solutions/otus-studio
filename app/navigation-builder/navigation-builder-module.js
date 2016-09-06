@@ -9,6 +9,7 @@
     ])
     .constant('NBEVENTS', {
       /* Module events */
+      'NAVIGATION_BUILDER_ON': 'nbevents.navigation.builder.on',
       'MAP_CONTAINER_READY': 'nbevents.map.container.ready',
       /* Route events */
       'ROUTE_MODE_ON': 'nbevents.route.mode.on',
@@ -49,9 +50,15 @@
     })
     .run([
       'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+      'otusjs.studio.navigationBuilder.NavigationBuilderService',
       '$rootScope',
-      function(NavigationBuilderScopeService, $rootScope) {
+      function(NavigationBuilderScopeService, NavigationBuilderService, $rootScope) {
         NavigationBuilderScopeService.initialize($rootScope.$new());
+
+        NavigationBuilderScopeService.onEvent(NavigationBuilderScopeService.NBEVENTS.NAVIGATION_BUILDER_ON, function(event, survey) {
+          NavigationBuilderService.setSurvey(survey);
+          NavigationBuilderScopeService.emit(NavigationBuilderScopeService.NBEVENTS.MAP_CONTAINER_READY);
+        })
       }
     ]);
 }());
