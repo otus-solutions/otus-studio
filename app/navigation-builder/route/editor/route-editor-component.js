@@ -50,7 +50,6 @@
 
     function selectCondition(index) {
       RouteBuilderService.selectCondition(index);
-      console.log(RouteBuilderService.selectedCondition());
     }
 
     function saveConditionIndex(index) {
