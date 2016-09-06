@@ -21,13 +21,13 @@
     var self = this;
 
     self.conditions = [];
-    self.isClicked = false;
 
     /* Public methods */
     self.$onInit = onInit;
     self.cancel = cancel;
     self.save = save;
     self.createCondition = createCondition;
+    self.selectCondition = selectCondition;
     self.saveConditionIndex = saveConditionIndex;
 
     function onInit() {
@@ -48,9 +48,12 @@
       RouteBuilderService.createCondition();
     }
 
-    function saveConditionIndex(index, clicked) {
-      // self.isClicked = self.isClicked ? false : true;
-      console.log(clicked);
+    function selectCondition(index) {
+      RouteBuilderService.selectCondition(index);
+      console.log(RouteBuilderService.selectedCondition());
+    }
+
+    function saveConditionIndex(index) {
       RouteBuilderService.selectCondition(index);
     }
 
