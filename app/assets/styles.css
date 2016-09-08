@@ -345,3 +345,9 @@ survey-template md-card:focus {
   height: 18px;
   width: 18px;
 }
+
+.md-virtual-repeat-container.md-autocomplete-suggestions-container {
+    height: 24vh;
+    min-height: 12vh;
+    max-height: 24vh !important;
+}
