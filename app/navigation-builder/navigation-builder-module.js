@@ -14,6 +14,7 @@
       /* Route events */
       'ROUTE_MODE_ON': 'nbevents.route.mode.on',
       'ROUTE_MODE_OFF': 'nbevents.route.mode.off',
+      'ROUTE_DELETED': 'nbevents.route.deleted',
       'ROUTE_BUILD_STARTED': 'nbevents.route.started',
       'ROUTE_BUILD_SAVED': 'nbevents.route.build.saved',
       'ROUTE_BUILD_CANCELED': 'nbevents.route.build.canceled',
@@ -28,7 +29,10 @@
 
       /* Navigation Inspector events */
       'INSPECTOR_MODE_ON': 'nbevents.inspector.mode.on',
-      'NAVIGATION_SELECTED': 'nbevents.inspector.navigation.selected'
+      'NAVIGATION_SELECTED': 'nbevents.inspector.navigation.selected',
+
+      /* Warning events */
+      'ORPHANS_ENCOUNTERED': 'nbevents.warning.orphans.encountered'
     })
     .constant('NBMESSAGES', {
       'ROUTE_BUILDER': {

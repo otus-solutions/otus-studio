@@ -6,12 +6,13 @@
     .service('otusjs.studio.navigationBuilder.NavigationBuilderService', service);
 
   service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.MapFactory',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService'
   ];
 
-  function service(MapFactory, RouteBuilderService, NavigationInspectorService) {
+  function service(moduleScope, MapFactory, RouteBuilderService, NavigationInspectorService) {
     var self = this;
     var _survey = null;
     var _navigationMap = {};
@@ -25,8 +26,8 @@
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
 
-    function nodes() {
-      return _navigationMap.nodes();
+    function nodes(ids) {
+      return _navigationMap.nodes(ids);
     }
 
     function edges() {
@@ -60,6 +61,7 @@
       _navigationMap = MapFactory.create();
       _addNodes(templateNavigations);
       _addEdges(templateNavigations);
+      moduleScope.store('map', _navigationMap);
     }
 
     function _addNodes(templateNavigations) {
