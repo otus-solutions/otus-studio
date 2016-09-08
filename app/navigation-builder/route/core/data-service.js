@@ -147,11 +147,6 @@
     function deleteRoute() {
       _survey.NavigationManager.selectNavigationByOrigin(_originNode.id);
       _survey.NavigationManager.deleteRoute(_routeData);
-
-      var orphans = _survey.NavigationManager.listOrphanNavigations();
-      if (orphans.length) {
-        moduleScope.emit(moduleScope.NBEVENTS.ORPHANS_ENCOUNTERED, orphans);
-      }
     }
 
     function initializeRouteData() {

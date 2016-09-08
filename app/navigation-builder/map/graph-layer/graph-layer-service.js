@@ -23,6 +23,7 @@
     self.setNodeAsTrailhead = setNodeAsTrailhead;
     self.setNodeAsTrailend = setNodeAsTrailend;
     self.setNodeAsInspected = setNodeAsInspected;
+    self.setNodesAsOrphans = setNodesAsOrphans;
     self.clearNode = clearNode;
     self.applyVisualChanges = applyVisualChanges;
     self.clearVisualChanges = clearVisualChanges;
@@ -62,6 +63,11 @@
     function setNodeAsTrailend(node) {
       var style = { color: '#1B5BD1' };
       _graphLayer.updateNodeStyle(style, node);
+    }
+
+    function setNodesAsOrphans(nodes) {
+      var style = { color: '#571616' };
+      _graphLayer.updateNodesStyle(style, nodes);
     }
 
     function clearNode(node) {

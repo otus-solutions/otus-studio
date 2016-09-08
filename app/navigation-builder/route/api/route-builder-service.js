@@ -70,13 +70,11 @@
     function saveRouteBuilding() {
       DataService.apply();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED);
-      deactivate();
     }
 
     function deleteRoute() {
       DataService.deleteRoute();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_DELETED);
-      deactivate();
     }
 
     function selectCondition(index) {
@@ -99,23 +97,10 @@
         DataService.createCondition();
       }
       DataService.selectCondition(0);
-
-      // if (DataService.isSimpleNavigation(origin.id)) {
-      //   DataService.initializeRouteData();
-      //   DataService.createCondition();
-      // } else {
-      //   if (DataService.routeExists(origin, destination)) {
-      //     DataService.useCurrentRouteData();
-      //   } else {
-      //     DataService.initializeRouteData();
-      //     DataService.createCondition();
-      //   }
-      // }
     }
 
     function cancelRouteBuilding() {
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED);
-      deactivate();
     }
 
     //-----------------------------------------------------

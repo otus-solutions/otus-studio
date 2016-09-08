@@ -11,6 +11,7 @@
       /* Module events */
       'NAVIGATION_BUILDER_ON': 'nbevents.navigation.builder.on',
       'MAP_CONTAINER_READY': 'nbevents.map.container.ready',
+      'RELOAD_MAP_DATA': 'nbevents.map.data.reload',
       /* Route events */
       'ROUTE_MODE_ON': 'nbevents.route.mode.on',
       'ROUTE_MODE_OFF': 'nbevents.route.mode.off',
@@ -62,7 +63,12 @@
         NavigationBuilderScopeService.onEvent(NavigationBuilderScopeService.NBEVENTS.NAVIGATION_BUILDER_ON, function(event, survey) {
           NavigationBuilderService.setSurvey(survey);
           NavigationBuilderScopeService.emit(NavigationBuilderScopeService.NBEVENTS.MAP_CONTAINER_READY);
-        })
+        });
+
+        NavigationBuilderScopeService.onEvent(NavigationBuilderScopeService.NBEVENTS.RELOAD_MAP_DATA, function(event) {
+          NavigationBuilderService.reloadMapData();
+          NavigationBuilderScopeService.emit(NavigationBuilderScopeService.NBEVENTS.MAP_CONTAINER_READY);
+        });
       }
     ]);
 }());

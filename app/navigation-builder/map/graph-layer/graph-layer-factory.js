@@ -29,6 +29,7 @@
     self.render = render;
     self.updateNodeStyleBefore = updateNodeStyleBefore;
     self.updateNodeStyle = updateNodeStyle;
+    self.updateNodesStyle = updateNodesStyle;
     self.updateAllNodesStyle = updateAllNodesStyle;
     self.updateAllEdgesStyle = updateAllEdgesStyle;
     self.updateOutputs = updateOutputs;
@@ -57,6 +58,10 @@
 
     function updateNodeStyle(style, node) {
       _mapView.graph.updateNodeStyle(style, node);
+    }
+
+    function updateNodesStyle(style, node) {
+      _mapView.graph.updateNodesStyle(style, node);
     }
 
     function updateAllNodesStyle(style) {
@@ -121,15 +126,14 @@
 
     function _loadInternalBehaviour() {
       if (!sigma.classes.graph.hasMethod('updateNodeStyleBefore')) {
-        // New methods
         sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
         sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
+        sigma.classes.graph.addMethod('updateNodesStyle', _updateNodesStyle);
         sigma.classes.graph.addMethod('updateAllNodesStyle', _updateAllNodesStyle);
         sigma.classes.graph.addMethod('updateAllEdgesStyle', _updateAllEdgesStyle);
         sigma.classes.graph.addMethod('updateOutputs', _updateOutputs);
         sigma.classes.graph.addMethod('updateInputs', _updateInputs);
-
-        // sigma.classes.graph.addMethod('onAddEdge', _onAddEdge);
+        sigma.classes.graph.attach('addNode', 'onAddNode', _onAddNode);
       }
       $('#map-view').empty();
       _mapView = new sigma({
@@ -155,6 +159,24 @@
         if (node.id === nodeToUpdate.id) {
           node.color = style.color;
           node.isDisabled = style.isDisabled;
+          return true;
+        }
+      });
+    }
+
+    function _updateNodesStyle(style, nodes) {
+      this.nodesArray.some(function(node) {
+
+        nodes.some(function(nodeOrigin, index, nodes) {
+          if (node.id === nodeOrigin) {
+            node.color = style.color;
+            node.isDisabled = style.isDisabled;
+            nodes.splice(index, 1);
+            return true;
+          }
+        });
+
+        if (!nodes.length) {
           return true;
         }
       });
@@ -212,6 +234,12 @@
           edge.color = style.color;
         }
       });
+    }
+
+    function _onAddNode(node) {
+      if (node.isOrphan) {
+        updateNodeStyle({ color: '#571616' }, node);
+      }
     }
   }
 }());
