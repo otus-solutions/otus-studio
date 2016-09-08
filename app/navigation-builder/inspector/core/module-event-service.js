@@ -49,6 +49,7 @@
       GraphLayerService.clearVisualChanges();
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
+      moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
 
     function _onNavigationSelected(event, node) {
@@ -62,6 +63,7 @@
     function _onNavigationUnselected(event, node) {
       GraphLayerService.clearVisualChanges();
       GraphLayerService.applyVisualChanges();
+      moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
   }
 })();

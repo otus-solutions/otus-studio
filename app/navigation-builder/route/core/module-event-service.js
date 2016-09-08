@@ -30,7 +30,6 @@
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_DELETED, _onRouteDeleted);
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED, _onRouteBuildSaved);
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED, _onRouteBuildCanceled);
-      _registerEventListener(moduleScope.NBEVENTS.ORPHANS_ENCOUNTERED, _onOrphansEncountered);
     }
 
     function deactivate() {
@@ -56,6 +55,7 @@
       GraphLayerService.clearVisualChanges();
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
+      moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
 
     function _onOriginNodeSelected(event, node) {
@@ -72,6 +72,7 @@
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_ORIGIN);
       moduleScope.apply();
+      moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
 
     function _onDestinationNodeSelected(event, node) {
@@ -85,11 +86,10 @@
       GraphLayerService.clearNode(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
+      moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
 
     function _onRouteDeleted(event) {
-      GraphLayerService.clearVisualChanges();
-      GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
@@ -109,10 +109,6 @@
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
-    }
-
-    function _onOrphansEncountered(event, orphans) {
-      console.log(orphans);
     }
   }
 })();

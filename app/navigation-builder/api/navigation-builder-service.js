@@ -25,6 +25,7 @@
     self.activateRouteCreatorMode = activateRouteCreatorMode;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
+    self.reloadMapData = reloadMapData;
 
     function nodes(ids) {
       return _navigationMap.nodes(ids);
@@ -57,6 +58,10 @@
       }
     }
 
+    function reloadMapData() {
+      _loadTemplateNavigations(_survey.NavigationManager.getNavigationList())
+    }
+
     function _loadTemplateNavigations(templateNavigations) {
       _navigationMap = MapFactory.create();
       _addNodes(templateNavigations);
@@ -66,11 +71,12 @@
 
     function _addNodes(templateNavigations) {
       templateNavigations.forEach(function(navigation, index) {
-        var options = {
-          id: navigation.origin,
-          label: navigation.origin,
-          index: index
-        };
+        var options = {};
+        options.id = navigation.origin;
+        options.label = navigation.origin;
+        options.index = navigation.index;
+        options.isOrphan = navigation.isOrphan();
+
         if (navigation.isDefault) {
           _navigationMap.createNodeForDefaultPath(options);
         } else {

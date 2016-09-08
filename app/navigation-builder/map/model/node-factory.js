@@ -18,14 +18,14 @@
 
     function createForDefaultPath(options) {
       options.y = 0;
-      options.color = '#448AFF';
+      options.color = options.isOrphan ? '#571616' : '#448AFF';
       options.isDefault = true;
       return new Node(options);
     }
 
     function createForAlterantivePath(options) {
       options.x = -1;
-      options.color = '#616161';
+      options.color = options.isOrphan ? '#571616' : '#616161';
       options.isDefault = false;
       return new Node(options);
     }
@@ -45,6 +45,7 @@
     this.size = options.size || '10';
     this.color = options.color || '#000';
     this.isDefault = options.isDefault || false;
+    this.isOrphan = options.isOrphan || false;
 
     /* Public methods */
     this.connectIn = connectIn;
