@@ -77,9 +77,9 @@
 
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      var value = (self.ruleData.answer.option)
-        ? self.ruleData.answer.option.value
-        : self.ruleData.answer;
+      var value = (self.ruleData.answer.option) ?
+        self.ruleData.answer.option.value :
+        self.ruleData.answer;
       self.answerList.some(function(answer) {
         if (answer.option.value === value) {
           self.selectedAnswer = answer;
@@ -100,16 +100,7 @@
       }
     }
 
-    function answerChange(answer) {
-      self.readyToSave = _readyToSave();
-    }
-
     function answerInputChange() {
-      self.readyToSave = _readyToSave();
-    }
-
-    function operatorChange(operator) {
-      self.selectedOperator = operator;
       self.readyToSave = _readyToSave();
     }
 
@@ -122,6 +113,18 @@
         });
         return filterResult;
       }
+    }
+
+    function answerChange(answer) {
+      self.selectedAnswer = answer;
+      self.readyToSave = _readyToSave();
+      updateRule();
+    }
+
+    function operatorChange(operator) {
+      self.selectedOperator = operator;
+      self.readyToSave = _readyToSave();
+      updateRule();
     }
 
     function whenChange(when) {
@@ -139,6 +142,7 @@
       }
 
       self.readyToSave = _readyToSave();
+      updateRule();
     }
 
     function saveRule() {
@@ -151,7 +155,9 @@
     }
 
     function updateRule() {
-      RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+      if (self.ruleData) {
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+      }
     }
 
     function deleteRule() {
