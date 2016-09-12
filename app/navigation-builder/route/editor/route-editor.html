@@ -4,6 +4,11 @@
   </div>
 </md-toolbar>
 <md-dialog-content layout="row" layout-align="center center">
+  <md-content layout="column">
+    <md-switch ng-model="$ctrl.selectedRoute.isDefault" aria-label="Tipo de Rota">
+      {{ $ctrl.label.isDefaultRoute }}
+    </md-switch>
+  </md-content>
   <md-card layout="column" flex="40" layout-align="center center">
     <md-card-title>
       <md-card-title-text>
@@ -14,7 +19,6 @@
       <span layout-align="center center">{{ $ctrl.label.originNode }}</span>
     </md-card-content>
   </md-card>
-  <span layout="column" flex></span>
   <md-card layout="column" flex="40" layout-align="center center">
     <md-card-title>
       <md-card-title-text>
@@ -26,8 +30,8 @@
     </md-card-content>
   </md-card>
 </md-dialog-content>
-<md-dialog-content layout="row" flex>
-  <div layout="column" flex>
+<md-dialog-content layout="row" id="route-conditions-container" flex>
+  <div layout="column" flex ng-show="!$ctrl.selectedRoute.isDefault">
     <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="condition in $ctrl.conditions track by $index" ng-click="$ctrl.selectCondition($index)">
       <md-dialog-actions>
         <md-content flex>
@@ -55,8 +59,8 @@
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
   <div flex layout-align="start center">
-    <md-button class="md-raised" ng-click="$ctrl.createCondition()">{{ $ctrl.label.button.createCondition }}</md-button>
-    <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()">{{ $ctrl.label.button.deleteRoute }}</md-button>
+    <md-button class="md-raised" ng-click="$ctrl.createCondition()" ng-disabled="$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.createCondition }}</md-button>
+    <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-disabled="$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.deleteRoute }}</md-button>
   </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
   <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>

@@ -47,7 +47,7 @@
       });
 
       NavigationBuilderScopeService.broadcast(NBEVENTS.NAVIGATION_BUILDER_ON, WorkspaceService.getSurvey());
-      NavigationBuilderScopeService.onEvent(NBEVENTS.ROUTE_BUILD_SAVED, WorkspaceService.saveWork);
+      NavigationBuilderScopeService.onEvent(NBEVENTS.NAVIGATION_UPDATED, WorkspaceService.saveWork);
     }
   }
 }());

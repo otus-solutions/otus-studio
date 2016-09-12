@@ -20,6 +20,7 @@
   function component(RouteBuilderService) {
     var self = this;
 
+    self.selectedRoute = [];
     self.conditions = [];
 
     /* Public methods */
@@ -33,7 +34,8 @@
     function onInit() {
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
-      self.conditions = RouteBuilderService.selectedRoute().conditionSet;
+      self.selectedRoute = RouteBuilderService.selectedRoute();
+      self.conditions = RouteBuilderService.selectedRoute().conditions;
     }
 
     function cancel() {
@@ -72,6 +74,7 @@
         originNode: self.originNode.label,
         destinationNode: self.destinationNode.label,
         conditionTitle: 'Regras de condição',
+        isDefaultRoute: 'Rota padrão',
         message: {
           emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR CONDIÇÃO DE ROTA.',
         }

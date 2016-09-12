@@ -93,6 +93,7 @@
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+      moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UPDATED);
     }
 
     function _onRouteBuildSaved(event) {
@@ -101,6 +102,7 @@
       InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+      moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UPDATED);
     }
 
     function _onRouteBuildCanceled(event) {

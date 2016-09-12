@@ -311,6 +311,10 @@ survey-template md-card:focus {
 
 /* NAVIGATION BUILDER */
 
+#route-conditions-container {
+  min-height: 52px
+}
+
 .route-detail-open {
   visibility: visible;
   opacity: 1;

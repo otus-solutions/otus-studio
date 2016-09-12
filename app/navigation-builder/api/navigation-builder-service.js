@@ -87,19 +87,19 @@
 
     function _addEdges(templateNavigations) {
       templateNavigations.forEach(function(navigation) {
-
         navigation.routes.forEach(function(route) {
-          var options = {};
-          options.source = route.origin;
-          options.target = route.destination;
+          if (route) {
+            var options = {};
+            options.source = route.origin;
+            options.target = route.destination;
 
-          if (route.isDefault) {
-            _navigationMap.createEdgeForDefaultPath(options);
-          } else {
-            _navigationMap.createEdgeForAlterantivePath(options);
+            if (route.isDefault) {
+              _navigationMap.createEdgeForDefaultPath(options);
+            } else {
+              _navigationMap.createEdgeForAlterantivePath(options);
+            }
           }
         });
-
       });
     }
   }
