@@ -29,6 +29,7 @@
     self.deleteRoute = deleteRoute;
     self.createCondition = createCondition;
     self.selectCondition = selectCondition;
+    self.deleteCondition = deleteCondition;
 
     function onInit() {
       _initializeLabels();
@@ -50,6 +51,10 @@
 
     function createCondition() {
       RouteBuilderService.createCondition();
+    }
+
+    function deleteCondition(index) {
+      RouteBuilderService.deleteCondition(index);
     }
 
     function selectCondition(index) {

@@ -33,7 +33,7 @@
         <md-content flex>
           {{ $ctrl.label.conditionTitle }}
         </md-content>
-        <md-button>
+        <md-button ng-click="$ctrl.deleteCondition($index)">
           <md-icon md-font-set="material-icons">delete</md-icon>
         </md-button>
         <md-button ng-click="clicked = !clicked">
