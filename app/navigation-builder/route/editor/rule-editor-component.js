@@ -8,7 +8,8 @@
       controller: component,
       bindings: {
         ruleData: '<',
-        ruleItemIndex: '<'
+        ruleItemIndex: '<',
+        onUpdate: '&'
       }
     });
 
@@ -80,7 +81,7 @@
       var value = (self.ruleData.answer.option) ?
         self.ruleData.answer.option.value :
         self.ruleData.answer;
-      self.answerList.some(function(answer) {
+        self.answerList.some(function(answer) {
         if (answer.option.value === value) {
           self.selectedAnswer = answer;
           return true;
@@ -148,6 +149,7 @@
     function saveRule() {
       if (_readyToSave()) {
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        self.onUpdate();
       }
       self.whenSearchText = '';
       self.operatorSearchText = '';
@@ -157,11 +159,13 @@
     function updateRule() {
       if (self.ruleData) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        self.onUpdate();
       }
     }
 
     function deleteRule() {
       RouteBuilderService.deleteRule(self.ruleData.index);
+      self.onUpdate();
     }
 
     function _initializeWhenList() {

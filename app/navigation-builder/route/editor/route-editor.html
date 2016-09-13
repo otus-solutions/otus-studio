@@ -5,7 +5,7 @@
 </md-toolbar>
 <md-dialog-content layout="row" layout-align="center center">
   <md-content layout="column">
-    <md-switch ng-model="$ctrl.selectedRoute.isDefault" aria-label="Tipo de Rota">
+    <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.updateComponentState()" aria-label="Tipo de Rota">
       {{ $ctrl.label.isDefaultRoute }}
     </md-switch>
   </md-content>
@@ -38,7 +38,7 @@
           {{ $ctrl.label.conditionTitle }}
         </md-content>
         <md-button>
-          <md-icon md-font-set="material-icons">delete</md-icon>
+          <md-icon md-font-set="material-icons" ng-show="$index !== 0">delete</md-icon>
         </md-button>
         <md-button ng-click="clicked = !clicked">
           <md-icon md-font-set="material-icons">expand_more</md-icon>
@@ -47,11 +47,11 @@
       <md-content ng-show="clicked" flex>
         <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
           <div layout="column" flex class="md-list-item-text">
-            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-delete="$ctrl.deleteRule(ruleIndex)"></otus-rule-editor>
+            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-update="$ctrl.updateComponentState()"></otus-rule-editor>
           </div>
         </md-list-item>
         <md-list-item layout="row" flex class="md-1-line">
-          <otus-rule-editor flex></otus-rule-editor>
+          <otus-rule-editor flex on-update="$ctrl.updateComponentState()"></otus-rule-editor>
         </md-list-item>
       </md-content>
     </md-whiteframe>
@@ -63,5 +63,5 @@
     <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-disabled="$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.deleteRoute }}</md-button>
   </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
-  <md-button class="md-raised md-primary" ng-click="$ctrl.save()">{{ $ctrl.label.button.save }}</md-button>
+  <md-button class="md-raised md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.readyToSave">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>

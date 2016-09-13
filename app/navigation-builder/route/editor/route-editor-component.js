@@ -23,6 +23,7 @@
     self.selectedRoute = [];
     self.conditions = [];
 
+
     /* Public methods */
     self.$onInit = onInit;
     self.cancel = cancel;
@@ -30,12 +31,14 @@
     self.deleteRoute = deleteRoute;
     self.createCondition = createCondition;
     self.selectCondition = selectCondition;
+    self.updateComponentState = updateComponentState;
 
     function onInit() {
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
       self.selectedRoute = RouteBuilderService.selectedRoute();
       self.conditions = RouteBuilderService.selectedRoute().conditions;
+      updateComponentState();
     }
 
     function cancel() {
@@ -56,6 +59,17 @@
 
     function selectCondition(index) {
       RouteBuilderService.selectCondition(index);
+    }
+
+    function updateComponentState() {
+      if (self.selectedRoute.isDefault) {
+        self.readyToSave = true;
+      } else {
+        if (!self.selectedRoute.conditions.length) {
+          createCondition();
+        }
+        self.readyToSave = !!self.selectedRoute.conditions[0].rules.length;
+      }
     }
 
     function _initializeLabels() {
