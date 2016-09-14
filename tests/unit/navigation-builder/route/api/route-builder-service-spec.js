@@ -53,40 +53,6 @@ xdescribe('RouteBuilderService', function() {
 
   });
 
-  describe('in map interactions methods', function() {
-
-    describe('selectNode method', function() {
-
-      it('should call DataService.selectNode', function() {
-        service.selectNode(Mock.n1);
-
-        expect(Mock.DataService.selectNode).toHaveBeenCalled();
-      });
-
-    });
-
-    describe('selectedNode method', function() {
-
-      it('should call DataService.selectedNode', function() {
-        service.selectedNode();
-
-        expect(Mock.DataService.selectedNode).toHaveBeenCalled();
-      });
-
-    });
-
-    describe('selectedEdges method', function() {
-
-      it('should call DataService.selectedEdges', function() {
-        service.selectedEdges();
-
-        expect(Mock.DataService.selectedEdges).toHaveBeenCalled();
-      });
-
-    });
-
-  });
-
   describe('in route editor methods', function() {
 
     describe('createCondition method', function() {
@@ -133,82 +99,52 @@ xdescribe('RouteBuilderService', function() {
 
     describe('startRouteBuilding method', function() {
 
-      it('should call DataService.isSimpleNavigation', function() {
+      it('should verify if route already exists', function() {
         spyOn(Mock.DataService, 'routeExists');
-        spyOn(Mock.DataService, 'isSimpleNavigation');
 
         service.startRouteBuilding(Mock.n1, Mock.n2);
 
-        expect(Mock.DataService.isSimpleNavigation).toHaveBeenCalled();
+        expect(Mock.DataService.routeExists).toHaveBeenCalled();
       });
 
-      describe('when current navigation is simple', function() {
+      it('should always to select the first condition of route', function() {
+        spyOn(Mock.DataService, 'routeExists');
+
+        service.startRouteBuilding(Mock.n1, Mock.n2);
+
+        expect(Mock.DataService.routeExists).toHaveBeenCalled();
+      });
+
+      describe('when exists', function() {
 
         beforeEach(function() {
-          spyOn(Mock.DataService, 'isSimpleNavigation').and.returnValue(true);
+          spyOn(Mock.DataService, 'routeExists').and.returnValue(true);
         });
 
-        it('should call DataService.initializeRouteData', function() {
+        it('should use the current route data', function() {
+          service.startRouteBuilding(Mock.n1, Mock.n2);
+
+          expect(Mock.DataService.useCurrentRouteData).toHaveBeenCalled();
+        });
+
+      });
+
+      describe('when does not exists', function() {
+
+        beforeEach(function() {
+          spyOn(Mock.DataService, 'routeExists').and.returnValue(false);
+        });
+
+        it('should initialize the route data', function() {
           service.startRouteBuilding(Mock.n1, Mock.n2);
 
           expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
         });
 
-        it('should call DataService.createCondition', function() {
+        it('should create a condition to route', function() {
           service.startRouteBuilding(Mock.n1, Mock.n2);
 
           expect(Mock.DataService.createCondition).toHaveBeenCalled();
-        });
-
-      });
-
-      describe('when current navigation is not simple', function() {
-
-        beforeEach(function() {
-          spyOn(Mock.DataService, 'isSimpleNavigation').and.returnValue(false);
-        });
-
-        it('should call DataService.routeExists', function() {
-          spyOn(Mock.DataService, 'routeExists');
-
-          service.startRouteBuilding(Mock.n1.id, Mock.n2.id);
-
-          expect(Mock.DataService.routeExists).toHaveBeenCalled();
-        });
-
-        describe('when route exists', function() {
-
-          beforeEach(function() {
-            spyOn(Mock.DataService, 'routeExists').and.returnValue(true);
-            spyOn(Mock.DataService, 'useCurrentRouteData');
-          });
-
-          it('should call DataService.useCurrentRouteData', function() {
-            service.startRouteBuilding(Mock.n1, Mock.n2);
-
-            expect(Mock.DataService.useCurrentRouteData).toHaveBeenCalled();
-          });
-
-        });
-
-        describe('when route does not exists', function() {
-
-          beforeEach(function() {
-            spyOn(Mock.DataService, 'routeExists').and.returnValue(false);
-          });
-
-          it('should call DataService.initializeRouteData', function() {
-            service.startRouteBuilding(Mock.n1, Mock.n2);
-
-            expect(Mock.DataService.initializeRouteData).toHaveBeenCalled();
-          });
-
-          it('should call DataService.createCondition', function() {
-            service.startRouteBuilding(Mock.n1, Mock.n2);
-
-            expect(Mock.DataService.createCondition).toHaveBeenCalled();
-          });
-
         });
 
       });
@@ -397,21 +333,22 @@ xdescribe('RouteBuilderService', function() {
     Mock.DataService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.DataService');
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'activate');
-    spyOn(Mock.DataService, 'initializeRouteData');
+    spyOn(Mock.DataService, 'apply');
     spyOn(Mock.DataService, 'createCondition');
     spyOn(Mock.DataService, 'createRule');
-    spyOn(Mock.DataService, 'deleteRule');
-    spyOn(Mock.DataService, 'updateRule');
+    spyOn(Mock.DataService, 'deactivate');
     spyOn(Mock.DataService, 'deleteCondition');
+    spyOn(Mock.DataService, 'deleteRule');
+    spyOn(Mock.DataService, 'initializeRouteData');
     spyOn(Mock.DataService, 'selectCondition');
     spyOn(Mock.DataService, 'selectNode');
-    spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
     spyOn(Mock.DataService, 'selectedEdges');
-    spyOn(Mock.DataService, 'deactivate');
+    spyOn(Mock.DataService, 'selectedNode').and.returnValue([Mock.n1, Mock.n2]);
+    spyOn(Mock.DataService, 'useCurrentRouteData');
+    spyOn(Mock.DataService, 'updateRule');
     spyOn(Mock.DataService, 'listAvailableAnswer').and.returnValue([]);
     spyOn(Mock.DataService, 'listAvailableOperator').and.returnValue([]);
     spyOn(Mock.DataService, 'listAvailableWhen').and.returnValue([]);
-    spyOn(Mock.DataService, 'apply');
   }
 
   function mockModuleEventsService($injector) {

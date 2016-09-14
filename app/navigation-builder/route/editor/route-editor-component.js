@@ -20,6 +20,7 @@
   function component(RouteBuilderService) {
     var self = this;
 
+    self.selectedRoute = [];
     self.conditions = [];
 
     /* Public methods */
@@ -29,12 +30,15 @@
     self.deleteRoute = deleteRoute;
     self.createCondition = createCondition;
     self.selectCondition = selectCondition;
-    self.deleteCondition = deleteCondition;
+    self.deleteCondition = deleteCondition;	
+    self.updateComponentState = updateComponentState;
 
     function onInit() {
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
-      self.conditions = RouteBuilderService.selectedRoute().conditionSet;
+      self.selectedRoute = RouteBuilderService.selectedRoute();
+      self.conditions = RouteBuilderService.selectedRoute().conditions;
+      updateComponentState();
     }
 
     function cancel() {
@@ -53,12 +57,23 @@
       RouteBuilderService.createCondition();
     }
 
-    function deleteCondition(index) {
+	function deleteCondition(index) {
       RouteBuilderService.deleteCondition(index);
     }
 
     function selectCondition(index) {
       RouteBuilderService.selectCondition(index);
+    }
+
+	function updateComponentState() {
+      if (self.selectedRoute.isDefault) {
+        self.readyToSave = true;
+      } else {
+        if (!self.selectedRoute.conditions.length) {
+          createCondition();
+        }
+        self.readyToSave = !!self.selectedRoute.conditions[0].rules.length;
+      }
     }
 
     function _initializeLabels() {
@@ -77,6 +92,7 @@
         originNode: self.originNode.label,
         destinationNode: self.destinationNode.label,
         conditionTitle: 'Regras de condição',
+        isDefaultRoute: 'Rota padrão',
         message: {
           emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR CONDIÇÃO DE ROTA.',
         }

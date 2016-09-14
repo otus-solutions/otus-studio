@@ -87,7 +87,6 @@
 
     function _addEdges(templateNavigations) {
       templateNavigations.forEach(function(navigation) {
-
         navigation.routes.forEach(function(route) {
           var options = {};
           options.source = route.origin;
@@ -99,7 +98,6 @@
             _navigationMap.createEdgeForAlterantivePath(options);
           }
         });
-
       });
     }
   }

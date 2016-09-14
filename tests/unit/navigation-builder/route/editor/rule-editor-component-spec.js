@@ -1,4 +1,4 @@
-describe('component: otusRuleEditor', function() {
+xdescribe('component: otusRuleEditor', function() {
 
   var ctrl,
     scope,

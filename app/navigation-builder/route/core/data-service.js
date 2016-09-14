@@ -136,11 +136,11 @@
       var newConditionData = {};
       newConditionData.name = 'ROUTE_CONDITION';
       newConditionData.rules = [];
-      _routeData.conditionSet.push(newConditionData);
+      _routeData.conditions.push(newConditionData);
     }
 
     function deleteCondition(index) {
-      _routeData.conditionSet.splice(index, 1);
+      _routeData.conditions.splice(index, 1);
       selectCondition(0);
     }
 
@@ -154,12 +154,12 @@
       _routeData = {};
       _routeData.origin = _originNode.id;
       _routeData.destination = _destinationNode.id;
-      _routeData.conditionSet = [];
+      _routeData.conditions = [];
     }
 
     function selectCondition(index) {
-      if (_routeData.conditionSet.length) {
-        _selectedCondition = _routeData.conditionSet[index];
+      if (_routeData.conditions.length) {
+        _selectedCondition = _routeData.conditions[index];
       } else {
         return false;
       }

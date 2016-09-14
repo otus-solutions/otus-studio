@@ -10,6 +10,7 @@
     .constant('NBEVENTS', {
       /* Module events */
       'NAVIGATION_BUILDER_ON': 'nbevents.navigation.builder.on',
+      'NAVIGATION_UPDATED': 'nbevents.navigation.updated',
       'MAP_CONTAINER_READY': 'nbevents.map.container.ready',
       'RELOAD_MAP_DATA': 'nbevents.map.data.reload',
       /* Route events */

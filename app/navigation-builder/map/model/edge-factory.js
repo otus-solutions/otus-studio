@@ -35,7 +35,7 @@
     self.id = options.source + '_' + options.target;
     self.source = options.source;
     self.target = options.target;
-    self.color = '#333';
+    self.color = options.color;
     self.type = options.type;
   }
 }());
