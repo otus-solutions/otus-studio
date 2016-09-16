@@ -19,6 +19,7 @@
       <span layout-align="center center">{{ $ctrl.label.originNode }}</span>
     </md-card-content>
   </md-card>
+  <span layout="column" flex></span>
   <md-card layout="column" flex="40" layout-align="center center">
     <md-card-title>
       <md-card-title-text>
@@ -37,8 +38,8 @@
         <md-content flex>
           {{ $ctrl.label.conditionTitle }}
         </md-content>
-        <md-button>
-          <md-icon md-font-set="material-icons" ng-show="$index !== 0">delete</md-icon>
+        <md-button ng-show="$index !== 0" ng-click="$ctrl.deleteCondition($index)">
+          <md-icon md-font-set="material-icons">delete</md-icon>
         </md-button>
         <md-button ng-click="clicked = !clicked">
           <md-icon md-font-set="material-icons">expand_more</md-icon>
