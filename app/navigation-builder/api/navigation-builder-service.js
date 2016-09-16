@@ -76,6 +76,7 @@
         options.label = navigation.origin;
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
+        options.isMyRootOrphan = navigation.isChildOfOrphan();
 
         if (navigation.isDefault) {
           _navigationMap.createNodeForDefaultPath(options);
@@ -91,6 +92,7 @@
           var options = {};
           options.source = route.origin;
           options.target = route.destination;
+          options.isFromOrphan = navigation.isOrphan();
 
           if (route.isDefault) {
             _navigationMap.createEdgeForDefaultPath(options);

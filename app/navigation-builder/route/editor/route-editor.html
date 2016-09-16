@@ -5,7 +5,7 @@
 </md-toolbar>
 <md-dialog-content layout="row" layout-align="center center">
   <md-content layout="column">
-    <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.updateComponentState()" aria-label="Tipo de Rota">
+    <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-disabled="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.updateComponentState()" aria-label="Tipo de Rota">
       {{ $ctrl.label.isDefaultRoute }}
     </md-switch>
   </md-content>
@@ -59,8 +59,8 @@
 </md-dialog-content>
 <md-dialog-actions layout="row" flex>
   <div flex layout-align="start center">
-    <md-button class="md-raised" ng-click="$ctrl.createCondition()" ng-disabled="$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.createCondition }}</md-button>
-    <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-disabled="$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.deleteRoute }}</md-button>
+    <md-button class="md-raised" ng-click="$ctrl.createCondition()" ng-show="!$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.createCondition }}</md-button>
+    <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-show="!$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.deleteRoute }}</md-button>
   </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
   <md-button class="md-raised md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.readyToSave">{{ $ctrl.label.button.save }}</md-button>

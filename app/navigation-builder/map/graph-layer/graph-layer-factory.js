@@ -41,7 +41,6 @@
 
     function loadData(nodes, edges) {
       _mapView.graph.clear();
-      // _setupEdgeRenderer();
       _mapView.graph.read({
         nodes: nodes,
         edges: edges
@@ -80,50 +79,6 @@
       _mapView.graph.updateInputs(style, referenceNode);
     }
 
-    function _setupEdgeRenderer() {
-      sigma.canvas.edges.customRenderer = function(edge, source, target, context, settings) {
-        var color = edge.color,
-          prefix = settings('prefix') || '',
-          edgeColor = settings('edgeColor'),
-          defaultNodeColor = settings('defaultNodeColor'),
-          defaultEdgeColor = settings('defaultEdgeColor');
-
-        if (!color)
-          switch (edgeColor) {
-            case 'source':
-              color = source.color || defaultNodeColor;
-              break;
-            case 'target':
-              color = target.color || defaultNodeColor;
-              break;
-            default:
-              color = defaultEdgeColor;
-              break;
-          }
-
-        context.strokeStyle = color;
-        context.lineWidth = edge[prefix + 'size'] || 1;
-        context.beginPath();
-        context.moveTo(
-          source[prefix + 'x'],
-          source[prefix + 'y']
-        );
-        context.lineTo(
-          source[prefix + 'x'],
-          source[prefix + 'y'] - 20
-        );
-        context.lineTo(
-          target[prefix + 'x'] - 0.5,
-          target[prefix + 'y'] - 20
-        );
-        context.lineTo(
-          target[prefix + 'x'] - 0.5,
-          target[prefix + 'y']
-        );
-        context.stroke();
-      };
-    }
-
     function _loadInternalBehaviour() {
       if (!sigma.classes.graph.hasMethod('updateNodeStyleBefore')) {
         sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
@@ -134,6 +89,7 @@
         sigma.classes.graph.addMethod('updateOutputs', _updateOutputs);
         sigma.classes.graph.addMethod('updateInputs', _updateInputs);
         sigma.classes.graph.attach('addNode', 'onAddNode', _onAddNode);
+        sigma.classes.graph.attach('addEdge', 'onAddEdge', _onAddEdge);
       }
       $('#map-view').empty();
       _mapView = new sigma({
@@ -240,6 +196,18 @@
       if (node.isOrphan) {
         updateNodeStyle({ color: '#571616' }, node);
       }
+    }
+
+    function _onAddEdge(edge) {
+      var source = this.nodesArray.filter(function(node) {
+        return node.id === edge.source;
+      })[0];
+
+      var target = this.nodesArray.filter(function(node) {
+        return node.id === edge.target;
+      })[0];
+
+      source.connectOut(target, edge.isDefault);
     }
   }
 }());
