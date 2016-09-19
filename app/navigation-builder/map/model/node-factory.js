@@ -18,14 +18,14 @@
 
     function createForDefaultPath(options) {
       options.y = 0;
-      options.color = options.isOrphan ? '#571616' : '#448AFF';
-      options.isDefault = true;
+      // options.color = options.isOrphan ? '#571616' : '#448AFF';
+      // options.isDefault = true;
       return new Node(options);
     }
 
     function createForAlterantivePath(options) {
-      options.color = options.isOrphan ? '#571616' : '#616161';
-      options.isDefault = false;
+      // options.color = options.isOrphan ? '#571616' : '#616161';
+      // options.isDefault = false;
       return new Node(options);
     }
 
@@ -82,10 +82,10 @@
 
       if (options.isMyRootOrphan) {
         this.y = 1;
-      } else if (this.isDefault) {
-        this.y = 0;
       } else if (defaultRouteCount > 0) {
         this.y = myDefaultParentY;
+      } else if (this.isDefault) {
+        this.y = 0;
       } else {
         var inCount = this.inNeighbors.length;
         this.y = ( (inCount) / ( !(inCount % 2) ? 1 : 2) ) * ( -1 );

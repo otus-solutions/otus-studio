@@ -18,13 +18,13 @@
 
     function createForDefaultPath(options) {
       options.isDefault = true;
-      options.color = '#448AFF';
+      // options.color = '#448AFF';
       return new Edge(options);
     }
 
     function createForAlterantivePath(options) {
       options.isDefault = false;
-      options.color = '#616161';
+      // options.color = '#616161';
       if (!options.isFromOrphan) {
         options.type = 'curvedArrow';
       }

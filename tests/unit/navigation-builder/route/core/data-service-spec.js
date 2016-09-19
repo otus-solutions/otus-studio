@@ -1,4 +1,4 @@
-describe('DataService', function() {
+xdescribe('DataService', function() {
 
   var Mock = {};
   var service = {};

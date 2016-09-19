@@ -76,7 +76,7 @@
         options.label = navigation.origin;
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
-        options.isMyRootOrphan = navigation.isChildOfOrphan();
+        options.isMyRootOrphan = navigation.hasOrphanRoot();
 
         if (navigation.isDefault) {
           _navigationMap.createNodeForDefaultPath(options);
