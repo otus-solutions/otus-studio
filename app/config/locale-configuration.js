@@ -6,16 +6,35 @@
 
     function localeConfiguration($mdDateLocaleProvider) {
 
-        $mdDateLocaleProvider.formatDate = function(dateString) {
-            date = new Date(dateString);
-            return moment(date).format('DD/MM/YYYY');
+        $mdDateLocaleProvider.formatDate = function(date) {
+          console.log('format');
+            if (Object.prototype.toString.call(date) !== '[object Date]') {
+                return null;
+            }
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + '/' + (monthIndex + 1) + '/' + year;
         };
 
         $mdDateLocaleProvider.parseDate = function(dateString) {
-            var m = moment(dateString, 'DD/MM/YYYY', true);
-            return m.isValid() ? m.toDate() : new Date(NaN);
+          console.log('parse');
+            date = new Date(dateString);
+            if (Object.prototype.toString.call(date) !== '[object Date]') {
+                return date;
+            } else {
+                newDateString = dateString.split('/');
+                if (newDateString.length === 3) {
+                  var day = newDateString[0];
+                  var monthIndex = newDateString[1]-1;
+                  var year = newDateString[2];
+                    date = new Date(year, monthIndex, day);
+                    console.log(date);
+                    return date;
+                }
+            }
         };
-
     }
 
 }());
