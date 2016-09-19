@@ -17,6 +17,7 @@
             /* otusjs.player */
             'otusjs.player.core',
             'otusjs.player.component',
+            'otus.validation'
         ]);
 
 }());

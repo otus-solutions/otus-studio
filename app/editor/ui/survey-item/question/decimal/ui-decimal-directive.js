@@ -38,6 +38,8 @@
                     var minusKey = (keycode === 109);
                     var commaKey = (keycode === 188);
                     var dotKey = (keycode === 190);
+                    var numpadDot = (keycode === 194);
+                    var decimalPoint = (keycode === 110);
                     var shiftKey = (keycode === 16);
                     var backspaceKey = (keycode === 8);
                     var homeKey = (keycode === 36);
@@ -47,7 +49,7 @@
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
-                    return (minusKey || commaKey || dotKey || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
+                    return (minusKey || commaKey || dotKey || numpadDot || decimalPoint || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
                 }
             }
         };
