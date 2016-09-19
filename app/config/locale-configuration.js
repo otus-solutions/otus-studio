@@ -6,7 +6,8 @@
 
     function localeConfiguration($mdDateLocaleProvider) {
 
-        $mdDateLocaleProvider.formatDate = function(date) {
+        $mdDateLocaleProvider.formatDate = function(dateString) {
+            date = new Date(dateString);
             return moment(date).format('DD/MM/YYYY');
         };
 
