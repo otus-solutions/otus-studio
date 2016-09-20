@@ -46,13 +46,14 @@
 
         function _init() {
             showList = showListFeeder();
+            //TODO
+            if (getItem().objectType === 'CheckboxQuestion'){
+              return;
+            }
             if (Object.keys(self.getItem().fillingRules.options).length > 0) {
-                Object.keys(self.getItem().fillingRules.options)
                 _loadOptions();
             } else {
                 addValidator('mandatory');
-                //TODO
-                //fazer um comportamento para questão de data (future e past)
             }
         }
         var showList;

@@ -7,7 +7,6 @@
     function localeConfiguration($mdDateLocaleProvider) {
 
         $mdDateLocaleProvider.formatDate = function(date) {
-          console.log('format');
             if (Object.prototype.toString.call(date) !== '[object Date]') {
                 return null;
             }
@@ -19,7 +18,6 @@
         };
 
         $mdDateLocaleProvider.parseDate = function(dateString) {
-          console.log('parse');
             date = new Date(dateString);
             if (Object.prototype.toString.call(date) !== '[object Date]') {
                 return date;
@@ -30,7 +28,6 @@
                   var monthIndex = newDateString[1]-1;
                   var year = newDateString[2];
                     date = new Date(year, monthIndex, day);
-                    console.log(date);
                     return date;
                 }
             }

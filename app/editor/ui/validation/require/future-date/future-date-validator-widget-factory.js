@@ -35,7 +35,6 @@
             var avaiableRules = question.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
                 self.data = question.fillingRules.options[whoAmI].data.reference;
-                console.log(avaiableRules[whoAmI].data.reference);
                 self.updateData();
             }
         }
