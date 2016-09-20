@@ -1,4 +1,4 @@
-describe('MinLengthValidatorWidgetFactory', function() {
+xdescribe('MinLengthValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
