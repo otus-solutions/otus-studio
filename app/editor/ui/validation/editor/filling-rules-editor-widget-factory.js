@@ -46,8 +46,11 @@
 
         function _init() {
             showList = showListFeeder();
+            //TODO
+            if (getItem().objectType === 'CheckboxQuestion'){
+              return;
+            }
             if (Object.keys(self.getItem().fillingRules.options).length > 0) {
-                Object.keys(self.getItem().fillingRules.options)
                 _loadOptions();
             } else {
                 addValidator('mandatory');

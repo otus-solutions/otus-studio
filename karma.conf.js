@@ -49,6 +49,7 @@ module.exports = function(config) {
             /* Otus platform */
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js',
+            NODE_MODULES_ROOT_PATH + 'otus-validation-js/dist/otus-validation-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model-min.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
             DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',

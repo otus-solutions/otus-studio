@@ -1,4 +1,11 @@
+# Servidor Testes
+Para realizar teste e homologações, disponibilizamos um [a  servidor](http://studio.hmg.ccem.ufrgs.br/otus-studio) aberto ao publico.
+
 # Configuração de Ambiente
+
+### Versões de ferramentas necessárias
+
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/)
 
 ### Inicializando Front-End utilizando Browser-Sync
 Para desenvolvimento de aplicações front-end, em ambiente de desenvolvimento, é possivel utilizar a ferramenta Browser Sync. Execute :

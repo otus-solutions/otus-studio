@@ -17,7 +17,8 @@
             'utils',
             /* otusjs.player */
             'otusjs.player.core',
-            'otusjs.player.component'
+            'otusjs.player.component',
+            'otus.validation'
         ]);
 
 }());

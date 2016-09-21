@@ -24,7 +24,6 @@
 
 
         /* Public Methods */
-        self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -34,12 +33,12 @@
 
         function _init() {
             var avaiableRules = question.fillingRules.options;
-            self.data = new Date(avaiableRules[whoAmI].data.reference);
+            self.data = question.fillingRules.options[whoAmI].data.reference;
             self.updateData();
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data.toLocaleDateString();
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
