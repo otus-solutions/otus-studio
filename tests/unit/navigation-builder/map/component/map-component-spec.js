@@ -1,4 +1,4 @@
-describe('otusNavigationMap', function() {
+xdescribe('otusNavigationMap', function() {
 
   var Mock = {}
   var component = {};

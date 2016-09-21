@@ -1,4 +1,4 @@
-describe('OperatorSelectorService', function() {
+xdescribe('OperatorSelectorService', function() {
 
   var service = {};
 

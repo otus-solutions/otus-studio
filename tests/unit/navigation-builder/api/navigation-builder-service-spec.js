@@ -1,4 +1,4 @@
-describe('NavigationBuilderService', function() {
+xdescribe('NavigationBuilderService', function() {
 
   var Mock = {};
   var service = {};
