@@ -16,7 +16,8 @@
             'utils',
             /* otusjs.player */
             'otusjs.player.core',
-            'otusjs.player.component'
+            'otusjs.player.component',
+            'otus.validation'
         ]);
 
 }());
@@ -81,14 +82,31 @@
     function localeConfiguration($mdDateLocaleProvider) {
 
         $mdDateLocaleProvider.formatDate = function(date) {
-            return moment(date).format('DD/MM/YYYY');
+            if (Object.prototype.toString.call(date) !== '[object Date]') {
+                return null;
+            }
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + '/' + (monthIndex + 1) + '/' + year;
         };
 
         $mdDateLocaleProvider.parseDate = function(dateString) {
-            var m = moment(dateString, 'DD/MM/YYYY', true);
-            return m.isValid() ? m.toDate() : new Date(NaN);
+            date = new Date(dateString);
+            if (Object.prototype.toString.call(date) !== '[object Date]') {
+                return date;
+            } else {
+                newDateString = dateString.split('/');
+                if (newDateString.length === 3) {
+                  var day = newDateString[0];
+                  var monthIndex = newDateString[1]-1;
+                  var year = newDateString[2];
+                    date = new Date(year, monthIndex, day);
+                    return date;
+                }
+            }
         };
-
     }
 
 }());
@@ -257,7 +275,7 @@
 
 (function() {
     'use strict';
-    
+
     angular
         .module('editor', [
             'editor.core',
@@ -5038,8 +5056,11 @@
 
         function _init() {
             showList = showListFeeder();
+            //TODO
+            if (getItem().objectType === 'CheckboxQuestion'){
+              return;
+            }
             if (Object.keys(self.getItem().fillingRules.options).length > 0) {
-                Object.keys(self.getItem().fillingRules.options)
                 _loadOptions();
             } else {
                 addValidator('mandatory');
@@ -6017,6 +6038,8 @@
                     var minusKey = (keycode === 109);
                     var commaKey = (keycode === 188);
                     var dotKey = (keycode === 190);
+                    var numpadDot = (keycode === 194);
+                    var decimalPoint = (keycode === 110);
                     var shiftKey = (keycode === 16);
                     var backspaceKey = (keycode === 8);
                     var homeKey = (keycode === 36);
@@ -6026,7 +6049,7 @@
                     var leftKey = (keycode === 37);
                     var rightKey = (keycode === 39);
 
-                    return (minusKey || commaKey || dotKey || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
+                    return (minusKey || commaKey || dotKey || numpadDot || decimalPoint || shiftKey || backspaceKey || homeKey || endKey || deleteKey || controlKey || leftKey || rightKey);
                 }
             }
         };
@@ -6705,7 +6728,6 @@
         var whoAmI = 'futureDate';
 
         /* Public Methods */
-        self.data;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -6715,12 +6737,16 @@
         _init();
 
         function _init() {
-            self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
+            var avaiableRules = question.fillingRules.options;
+            if (avaiableRules.hasOwnProperty(whoAmI)) {
+                self.data = question.fillingRules.options[whoAmI].data.reference;
+                self.updateData();
+            }
         }
 
 
-        function updateData() {          
-            getRuleType().data.reference = self.data.toLocaleDateString();
+        function updateData() {
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
@@ -7132,7 +7158,7 @@
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data.toLocaleDateString();
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
@@ -7394,7 +7420,7 @@
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data.toLocaleDateString();
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
@@ -7728,7 +7754,6 @@
 
 
         /* Public Methods */
-        self.data = new Date();
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -7738,12 +7763,12 @@
 
         function _init() {
             var avaiableRules = question.fillingRules.options;
-            self.data = new Date(avaiableRules[whoAmI].data.reference);
+            self.data = question.fillingRules.options[whoAmI].data.reference;
             self.updateData();
         }
 
         function updateData() {
-            getRuleType().data.reference = self.data.toLocaleDateString();
+            getRuleType().data.reference = self.data;
             scope.$parent.widget.updateFillingRules();
         }
 
@@ -7914,8 +7939,8 @@
         }
 
         function updateData() {
-            getRuleType().data.reference['initial'] = self.data['initial'].toLocaleDateString();
-            getRuleType().data.reference['end'] = self.data['end'].toLocaleDateString();
+            getRuleType().data.reference['initial'] = self.data['initial'];
+            getRuleType().data.reference['end'] = self.data['end'];
             scope.$parent.widget.updateFillingRules();
         }
 
