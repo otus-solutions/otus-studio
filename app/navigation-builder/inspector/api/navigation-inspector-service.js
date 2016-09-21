@@ -24,6 +24,7 @@
     //-----------------------------------------------------
 
     function activate(survey) {
+      deactivate();
       DataService.activate(survey);
       UiEventsService.activate();
       ModuleEventService.activate();

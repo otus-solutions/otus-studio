@@ -55,6 +55,7 @@
       GraphLayerService.clearVisualChanges();
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
+      deactivate();
       moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
     }
 
@@ -90,25 +91,18 @@
     }
 
     function _onRouteDeleted(event) {
-      InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
       moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UPDATED);
     }
 
     function _onRouteBuildSaved(event) {
-      GraphLayerService.clearVisualChanges();
-      GraphLayerService.applyVisualChanges();
-      InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
       moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UPDATED);
     }
 
     function _onRouteBuildCanceled(event) {
-      GraphLayerService.clearVisualChanges();
-      GraphLayerService.applyVisualChanges();
-      InstructorService.clearMessenger();
       RouteDialogService.closeDialog();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
     }

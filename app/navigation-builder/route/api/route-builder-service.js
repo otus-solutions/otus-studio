@@ -14,6 +14,7 @@
 
   function service(moduleScope, DataService, ModuleEventService, UiEventsService) {
     var self = this;
+    var _isNewRoute;
 
     /* Public methods */
     // Service management
@@ -22,6 +23,7 @@
     // Route editor
     self.createCondition = createCondition;
     self.deleteCondition = deleteCondition;
+    self.isNewRoute = isNewRoute;
     self.saveRouteBuilding = saveRouteBuilding;
     self.selectCondition = selectCondition;
     self.selectedCondition = selectedCondition;
@@ -63,6 +65,10 @@
       DataService.createCondition();
     }
 
+    function isNewRoute() {
+      return _isNewRoute;
+    }
+
     function deleteCondition(index) {
       DataService.deleteCondition(index);
     }
@@ -92,9 +98,11 @@
     function startRouteBuilding(origin, destination) {
       if (DataService.routeExists(origin, destination)) {
         DataService.useCurrentRouteData();
+        _isNewRoute = false;
       } else {
         DataService.initializeRouteData();
         DataService.createCondition();
+        _isNewRoute = true;
       }
       DataService.selectCondition(0);
     }

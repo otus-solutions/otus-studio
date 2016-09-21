@@ -13,19 +13,20 @@
     self.createForAlterantivePath = createForAlterantivePath;
 
     function create(options) {
+      options.color = options.isOrphan ? '#571616' : '#616161';
       return new Node(options);
     }
 
     function createForDefaultPath(options) {
       options.y = 0;
-      // options.color = options.isOrphan ? '#571616' : '#448AFF';
-      // options.isDefault = true;
+      options.color = options.isOrphan ? '#571616' : '#448AFF';
+      options.isDefault = true;
       return new Node(options);
     }
 
     function createForAlterantivePath(options) {
-      // options.color = options.isOrphan ? '#571616' : '#616161';
-      // options.isDefault = false;
+      options.color = options.isOrphan ? '#571616' : '#616161';
+      options.isDefault = false;
       return new Node(options);
     }
 
@@ -44,7 +45,7 @@
     this.y = _calculateInitialY();
     this.size = options.size || '10';
     this.color = options.color || '#000';
-    this.isDefault = options.isDefault || false;
+    this.isDefault = _isDefault();
     this.isOrphan = options.isOrphan || false;
 
     /* Public methods */
@@ -53,18 +54,23 @@
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
 
-    function connectIn(newNeighbor) {
+    function connectIn(newNeighbor, isDefaultConnection) {
+      this.factor = newNeighbor.outNeighbors.length;
       this.inNeighbors.push(newNeighbor);
+      if (!this.isDefault) {
+        this.isDefault = newNeighbor.isDefault && isDefaultConnection;
+      }
       this.updatePosition(newNeighbor);
     }
 
     function connectOut(newNeighbor, isDefaultConnection) {
+      this.outNeighbors.push(newNeighbor);
+
       if (isDefaultConnection) {
         this.defaultNextNode = newNeighbor;
       }
 
-      this.outNeighbors.push(newNeighbor);
-      newNeighbor.connectIn(this);
+      newNeighbor.connectIn(this, isDefaultConnection);
     }
 
     function updatePosition(inNeighbor) {
@@ -82,10 +88,10 @@
 
       if (options.isMyRootOrphan) {
         this.y = 1;
-      } else if (defaultRouteCount > 0) {
-        this.y = myDefaultParentY;
       } else if (this.isDefault) {
         this.y = 0;
+      } else if (defaultRouteCount > 0) {
+        this.y = myDefaultParentY;
       } else {
         var inCount = this.inNeighbors.length;
         this.y = ( (inCount) / ( !(inCount % 2) ? 1 : 2) ) * ( -1 );
@@ -101,6 +107,14 @@
         return 1;
       } else {
         return options.y || 0;
+      }
+    }
+
+    function _isDefault() {
+      if (options.index === 0) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
