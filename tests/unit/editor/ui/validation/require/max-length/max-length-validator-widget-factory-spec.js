@@ -1,4 +1,4 @@
-xdescribe('MaxLengthValidatorWidgetFactory', function() {
+describe('MaxLengthValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -21,15 +21,14 @@ xdescribe('MaxLengthValidatorWidgetFactory', function() {
             pending();
         });
 
-        it('should start the data field as false', function() {
-            expect(widget.data).toBeUndefined();
-            expect(widget.data).toEqual(undefined);
+        it('should start the data field as false', function() {            
+            expect(widget.data).toEqual(null);
         });
     });
 
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
-            expect(Mock.question.fillingRules.options['maxLength'].data.reference).toEqual(widget.data);
+            expect(Mock.question.fillingRules.options.maxLength.data.reference).toEqual(widget.data);
         });
 
         it('should call updateFillingRules from parente widget', function() {
@@ -86,7 +85,7 @@ xdescribe('MaxLengthValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['maxLength'] = $injector.get('RulesFactory').create('maxLength');
+        Mock.question.fillingRules.options.maxLength = $injector.get('RulesFactory').create('maxLength');
         return Mock.question;
     }
 

@@ -1,4 +1,4 @@
-xdescribe('MinLengthValidatorWidgetFactory', function() {
+describe('MinLengthValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -22,15 +22,14 @@ xdescribe('MinLengthValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as null', function() {
-            expect(widget.data).toBeUndefined();
-            expect(widget.data).toEqual(undefined);
+            expect(widget.data).toEqual(null);
         });
     });
 
 
     describe('updates on data', function() {
         it('should model data value be equal to self value', function() {
-            expect(Mock.question.fillingRules.options['minLength'].data.reference).toEqual(widget.data);
+            expect(Mock.question.fillingRules.options.minLength.data.reference).toEqual(widget.data);
         });
 
         it('should call updateFillingRules from parente widget', function() {
