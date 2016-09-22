@@ -5,8 +5,8 @@ Para realizar teste e homologações, disponibilizamos um [a  servidor](http://s
 
 ### Versões de ferramentas necessárias
 
-NodeJS: [v6.6.0](https://nodejs.org/en/download/current/)
-Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/)
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/) <br />
+Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
 
 ### Inicializando Front-End utilizando Browser-Sync
 Para desenvolvimento de aplicações front-end, em ambiente de desenvolvimento, é possivel utilizar a ferramenta Browser Sync. Execute :
