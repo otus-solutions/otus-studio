@@ -36,4 +36,9 @@ Para realizar download de dependencias de front-end
 
 O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus-studio**
 
+### Contato
+Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
+Email: ccem-projects@gmail.com <br />
+Chat : https://www.hipchat.com/gWD3zStLw
+
 
