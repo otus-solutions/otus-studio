@@ -148,7 +148,7 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
         self.onUpdate();
       }
       self.whenSearchText = '';
@@ -158,7 +158,7 @@
 
     function updateRule() {
       if (self.ruleData) {
-        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
         self.onUpdate();
       }
     }

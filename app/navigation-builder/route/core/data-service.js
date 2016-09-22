@@ -211,11 +211,12 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function createRule(when, operator, answer) {
+    function createRule(when, operator, answer, isMetadata) {
       var ruleData = {};
       ruleData.when = when;
       ruleData.operator = operator;
       ruleData.answer = answer;
+      ruleData.isMetadata = isMetadata;
       _selectedCondition.rules.push(ruleData);
     }
 
@@ -236,11 +237,12 @@
       return itemList.map(RuleWhenBuilderService.build);
     }
 
-    function updateRule(ruleIndex, when, operator, answer) {
+    function updateRule(ruleIndex, when, operator, answer, isMetadata) {
       var ruleData = _selectedCondition.rules[ruleIndex];
       ruleData.when = when;
       ruleData.operator = operator;
       ruleData.answer = answer;
+      ruleData.isMetadata = isMetadata;
     }
   }
 })();
