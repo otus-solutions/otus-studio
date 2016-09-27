@@ -13,13 +13,20 @@
     return ddo;
   }
 
-  Controller.$inject = ['$scope', '$element', '$compile', 'WorkspaceService'];
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'ActivityFacadeService'
+  ];
 
-  function Controller($scope, $element, $compile, WorkspaceService) {
-    var OTUS_SHEET_COMPONENT = '<otus-sheet md-theme="layoutTheme" survey-template="surveyTemplate" layout="column" flex="80"></otus-sheet>';
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" survey-activity="surveyActivity" layout="column" flex="80"></otus-player>';
     var _newScope;
 
     $element.on('click', function() {
+      ActivityFacadeService.createActivity(null, null, WorkspaceService.getSurvey(), null);
       var otusSheetDOMElement = $('otus-sheet');
 
       if (otusSheetDOMElement[0]) {
@@ -33,7 +40,8 @@
 
     function _generateOtusPreview() {
       _newScope = $scope.$new(true);
-      _newScope.surveyTemplate = _getSurveyTemplateObject();
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
       var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
       $('#survey-preview').append(content);
     }
