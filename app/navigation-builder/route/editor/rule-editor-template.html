@@ -14,7 +14,7 @@
     md-menu-class="autocomplete-custom-template">
     <md-item-template>
       <span class="item-title">
-        <otus:item-icon item="{{ ::when.icon }}">
+        <otus:item-icon item="{{ when.icon }}">
       </span>
       <span class="item-metadata">
         <span class="item-metastat">
@@ -58,7 +58,7 @@
     md-selected-item="$ctrl.selectedAnswer"
     md-selected-item-change="$ctrl.answerChange($ctrl.selectedAnswer)"
     md-search-text="$ctrl.answerSearchText"
-    md-search-text-change="$ctrl.answerInputChange($ctrl.answerSearchText)"
+    md-search-text-change="$ctrl.answerChange($ctrl.answerSearchText)"
     md-items="answer in $ctrl.answers($ctrl.answerSearchText)"
     md-item-text="answer.option.label.ptBR.plainText"
     md-min-length="0"

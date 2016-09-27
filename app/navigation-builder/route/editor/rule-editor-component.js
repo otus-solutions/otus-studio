@@ -14,11 +14,13 @@
     });
 
   component.$inject = [
-    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
+    var _customAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -36,6 +38,7 @@
       _initializeWhenList();
 
       if (self.ruleData) {
+        // console.log("if self.ruleData");
         self.ruleData.index = self.ruleItemIndex;
         _applyRuleDataWhen();
         _applyRuleDataOperator();
@@ -46,6 +49,7 @@
         self.showUpdateRuleButton = true;
         self.showDeleteRuleButton = true;
       } else {
+        // console.log("else self.ruleData");
         self.isOperatorDisable = true;
         self.isAnswerDisable = true;
         self.showSaveRuleButton = true;
@@ -78,10 +82,8 @@
 
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      var value = (self.ruleData.answer.option) ?
-        self.ruleData.answer.option.value :
-        self.ruleData.answer;
-        self.answerList.some(function(answer) {
+      var value = _returnValue();
+      self.answerList.some(function(answer) {
         if (answer.option.value === value) {
           self.selectedAnswer = answer;
           return true;
@@ -89,20 +91,46 @@
       });
     }
 
+    function _returnValue() {
+      if (self.ruleData.answer.isCustom) {
+        if (self.ruleData.answer.option.label.ptBR.plainText.length > 0) {
+          return self.ruleData.answer.option.label.ptBR.plainText;
+        } else {
+          return '';
+        }
+      } else {
+        return self.ruleData.answer.option.value;;
+      }
+    }
+
     function answers(filterValue) {
-      self.inputedValue = filterValue;
+      // console.log("entrei aqui!");
+      // console.log("filterValue: ");
+      // console.log(filterValue);
       if (!filterValue) {
         return self.answerList;
       } else {
         var filterResult = self.answerList.filter(function(answer) {
-          return answer.label.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
+          return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
         return filterResult;
       }
     }
 
+    /** Retirado do html!!! **/
     function answerInputChange() {
-      self.readyToSave = _readyToSave();
+      // console.log("fui chamado antes de todos?");
+      if (self.answerSearchText) {
+        // console.log("entrei no if do answerInputChange");
+        // console.log("self.answerSearchText: ");
+        // console.log(self.answerSearchText);
+        _customAnswer = self.answerSearchText;
+        console.log("_customAnswer");
+        console.log(_customAnswer);
+        self.selectedAnswer = self.answerList[0];
+        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+        self.readyToSave = _readyToSave();
+      }
     }
 
     function whens(filterValue) {
@@ -116,10 +144,43 @@
       }
     }
 
+    /** Agora esse cara é o bichão mesmo! **/
     function answerChange(answer) {
-      self.selectedAnswer = answer;
+      // console.log("answerChange: ");
+      // console.log(answer);
+      if (answer instanceof Object) { // é um objeto
+        // console.log("// é um objeto");
+        self.selectedAnswer = answer;
+        updateRule();
+      } else {
+        // console.log("self.answerSearchText: ");
+        // console.log(self.answerSearchText);
+        console.log("self.answerList");
+        console.log(self.answerList);
+        self.selectedAnswer = self.answerList[0];
+        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+      }
+
+      // if (answer) {
+      // if (isCustomAnswer(answer)) {
+      //   _customAnswer = answer;
+      // } else {
+      // self.selectedAnswer = answer;
+      // updateRule();
+      // }
+      // }
       self.readyToSave = _readyToSave();
-      updateRule();
+    }
+
+    function isCustomAnswer(answer) {
+      var isObject = (answer instanceof Object);
+      var isSelectableValue = (self.selectedWhen.type === 'SingleSelectionQuestion' || self.selectedWhen.type === 'CheckboxQuestion');
+      return !isObject && !isSelectableValue;
+    }
+
+    function parseAnswer(answer) {
+      self.answerList[0].option.label.ptBR.plainText = answer;
+      return self.answerList[0];
     }
 
     function operatorChange(operator) {
@@ -147,7 +208,9 @@
     }
 
     function saveRule() {
+      console.log("saveRule()");
       if (_readyToSave()) {
+        console.log("_readyToSave()");
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
         self.onUpdate();
       }
@@ -157,6 +220,9 @@
     }
 
     function updateRule() {
+      // console.log("updateRule");
+      // console.log("self.ruleData: ");
+      // console.log(self.ruleData);
       if (self.ruleData) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
         self.onUpdate();
@@ -181,7 +247,15 @@
       };
     }
 
+    /* chamado, todas as vezes que é preenchido algum campo, perceba ele tenta validar todos os campos! */
     function _readyToSave() {
+      console.log("_resolveRuleWhen(): ");
+      console.log(_resolveRuleWhen());
+      console.log("_resolveRuleOperator(): ");
+      console.log(_resolveRuleOperator());
+      console.log("_resolveRuleAnswer(): ");
+      console.log(_resolveRuleAnswer());
+
       if (_resolveRuleWhen() && _resolveRuleOperator() && _resolveRuleAnswer()) {
         return true;
       } else {
@@ -206,12 +280,11 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!self.selectedAnswer && !self.inputedValue) {
+      // console.log("_resolveRuleAnswer:");
+      // console.log(self.selectedAnswer);
+      if (!self.selectedAnswer || !_customAnswer) {
         return false;
-      } else if (!self.selectedAnswer && self.inputedValue) {
-        self.selectedAnswer = self.inputedValue;
-        return true;
-      } else if (self.selectedAnswer) {
+      } else {
         return true;
       }
     }
