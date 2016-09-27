@@ -23,7 +23,6 @@
       if (item.metadata && item.metadata.options) {
         answers = answers.concat(item.metadata.options.map(getMetadataOption));
       }
-
       return answers;
     }
 
