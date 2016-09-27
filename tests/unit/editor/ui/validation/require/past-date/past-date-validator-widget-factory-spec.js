@@ -1,4 +1,4 @@
-xdescribe('PastDateValidatorWidgetFactory', function() {
+describe('PastDateValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -22,10 +22,9 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as date', function() {
-            var dateModel = new Date();
-            jasmine.clock().mockDate(dateModel);
             expect(widget.data).toBeDefined();
-            expect(widget.data.toLocaleDateString()).toEqual(dateModel.toLocaleDateString());
+
+            expect(widget.data).toEqual(false);
         });
     });
 
@@ -73,7 +72,7 @@ xdescribe('PastDateValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['pastDate'] = $injector.get('RulesFactory').create('pastDate');
+        Mock.question.fillingRules.options.pastDate = $injector.get('RulesFactory').create('pastDate');
         return Mock.question;
     }
 
