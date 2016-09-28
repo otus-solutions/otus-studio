@@ -27,7 +27,7 @@
 
     $element.on('click', function() {
       ActivityFacadeService.createActivity(null, null, WorkspaceService.getSurvey(), null);
-      var otusSheetDOMElement = $('otus-sheet');
+      var otusSheetDOMElement = $('otus-player');
 
       if (otusSheetDOMElement[0]) {
         otusSheetDOMElement.remove();
