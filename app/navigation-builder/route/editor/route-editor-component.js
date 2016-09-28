@@ -32,6 +32,7 @@
     self.selectCondition = selectCondition;
     self.deleteCondition = deleteCondition;
     self.updateComponentState = updateComponentState;
+    // self.readyToSave = readyToSave;
 
     function onInit() {
       _initializeLabels();
@@ -40,6 +41,7 @@
       self.selectedRoute = RouteBuilderService.selectedRoute();
       self.conditions = RouteBuilderService.selectedRoute().conditions;
       updateComponentState();
+      // readyToSave();
     }
 
     function cancel() {
@@ -65,15 +67,23 @@
     function selectCondition(index) {
       RouteBuilderService.selectCondition(index);
     }
+    //
+    // function readyToSave() {
+    //   if (self.selectedRoute.conditions[0].rules.length > 0) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
 
     function updateComponentState() {
       if (self.selectedRoute.isDefault) {
-        self.readyToSave = true;
+        return true;
       } else {
         if (!self.selectedRoute.conditions.length) {
           createCondition();
         }
-        self.readyToSave = !!self.selectedRoute.conditions[0].rules.length;
+        return !!self.selectedRoute.conditions[0].rules.length;
       }
     }
 
