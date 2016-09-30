@@ -66,16 +66,32 @@
       });
     }
 
+    // É chamado mesmo quando é uma edição de rota
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-
+      console.log("self.answerList: ");
+      console.log(self.answerList);
+      console.log("self.ruleData: ");
+      console.log(self.ruleData);
       if (self.ruleData.answer.isCustom) {
         self.selectedAnswer = self.answerList[0];
         self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
       } else {
         self.answerList.some(function(answer, index) {
-          if (index > 0 && answer.option.value === self.ruleData.answer.option.value) {
-            self.selectedAnswer = answer;
+          // console.log("some: ");
+          // console.log("answer: ");
+          // console.log(answer);
+          // console.log("self.ruleData: ");
+          // console.log(self.ruleData);
+          // console.log("index == self.ruleData.answer");
+          // console.log(index == self.ruleData.answer);
+          // console.log("index");
+          // console.log(index);
+          // console.log("self.ruleData.answer");
+          // console.log(self.ruleData.answer);
+
+          if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
+            self.selectedAnswer = answer.option.label.ptBR.plainText;
             return true;
           }
         });

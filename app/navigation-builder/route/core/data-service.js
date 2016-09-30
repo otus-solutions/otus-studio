@@ -216,6 +216,13 @@
       ruleData.when = when;
       ruleData.operator = operator;
       ruleData.answer = answer;
+      ruleData.getCorrectAnswer =  function() {
+        if(answer.isCustom) {
+          return answer.option.label.ptBR.plainText;
+        } else {
+          return ruleData.answer;
+        }
+      };
       ruleData.isMetadata = isMetadata;
       _selectedCondition.rules.push(ruleData);
     }

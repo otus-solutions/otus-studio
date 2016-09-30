@@ -47,7 +47,6 @@
       }
     }
 
-    /** Retirado do html!!! **/
     function answerInputChange() {
       if (self.answerSearchText) {
         _customAnswer = true;
@@ -57,7 +56,6 @@
       }
     }
 
-    /** Agora esse cara é o bichão mesmo! **/
     function answerChange(answer) {
       _customAnswer = false;
       self.selectedAnswer = answer;
@@ -124,7 +122,6 @@
       self.answerSearchText = '';
     }
 
-    /* chamado, todas as vezes que é preenchido algum campo, perceba ele tenta validar todos os campos! */
     function _readyToSave() {
       if (_resolveRuleWhen() && _resolveRuleOperator() && _resolveRuleAnswer()) {
         return true;
