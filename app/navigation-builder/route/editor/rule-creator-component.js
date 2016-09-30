@@ -51,15 +51,21 @@
       if (self.answerSearchText) {
         _customAnswer = true;
         self.selectedAnswer = self.answerList[0];
+        self.selectedAnswer.isCustom = true;
         self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
         self.readyToSave = _readyToSave();
       }
+      console.log("_customAnswer");
+      console.log(_customAnswer);
     }
 
     function answerChange(answer) {
-      _customAnswer = false;
-      self.selectedAnswer = answer;
-      self.readyToSave = _readyToSave();
+      if (!self.selectedAnswer.isCustom) {
+        _customAnswer = false;
+        console.log("passei aqui!");
+        self.selectedAnswer = answer;
+        self.readyToSave = _readyToSave();
+      }
     }
 
     function _createAnswerItem(answerData) {
@@ -115,7 +121,9 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
+        console.log("_customAnswer");
+        console.log(_customAnswer);
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
       }
       self.whenSearchText = '';
       self.operatorSearchText = '';

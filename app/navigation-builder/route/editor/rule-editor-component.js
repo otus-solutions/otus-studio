@@ -73,7 +73,8 @@
       console.log(self.answerList);
       console.log("self.ruleData: ");
       console.log(self.ruleData);
-      if (self.ruleData.answer.isCustom) {
+      if (self.ruleData.isCustom) {
+        console.log("é custom");
         self.selectedAnswer = self.answerList[0];
         self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
       } else {
@@ -129,7 +130,6 @@
       }
     }
 
-    /** Agora esse cara é o bichão mesmo! **/
     function answerChange(answer) {
       _customAnswer = false;
       self.selectedAnswer = answer;
@@ -168,7 +168,7 @@
 
     function updateRule() {
       if (self.ruleData) {
-        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata);
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
         self.onUpdate();
       }
     }

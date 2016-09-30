@@ -29,7 +29,6 @@
     function getCustomAnswer() {
       return [{
         isMetadata: false,
-        isCustom: true,
         option: {
           label: {
             ptBR: {
@@ -43,7 +42,6 @@
     function getAnswerOption(option) {
       return {
         isMetadata: false,
-        isCustom: false,
         option: option
       }
     }
@@ -51,7 +49,6 @@
     function getMetadataOption(option) {
       return {
         isMetadata: true,
-        isCustom: false,
         option: option
       }
     }
