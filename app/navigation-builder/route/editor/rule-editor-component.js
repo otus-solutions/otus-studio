@@ -79,18 +79,6 @@
         self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
       } else {
         self.answerList.some(function(answer, index) {
-          // console.log("some: ");
-          // console.log("answer: ");
-          // console.log(answer);
-          // console.log("self.ruleData: ");
-          // console.log(self.ruleData);
-          // console.log("index == self.ruleData.answer");
-          // console.log(index == self.ruleData.answer);
-          // console.log("index");
-          // console.log(index);
-          // console.log("self.ruleData.answer");
-          // console.log(self.ruleData.answer);
-
           if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
             self.selectedAnswer = answer.option.label.ptBR.plainText;
             return true;

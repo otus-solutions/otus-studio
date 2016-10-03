@@ -60,12 +60,12 @@
     }
 
     function answerChange(answer) {
-      if (!self.selectedAnswer.isCustom) {
+      // if (!self.selectedAnswer.isCustom) {
         _customAnswer = false;
         console.log("passei aqui!");
         self.selectedAnswer = answer;
         self.readyToSave = _readyToSave();
-      }
+      // }
     }
 
     function _createAnswerItem(answerData) {
