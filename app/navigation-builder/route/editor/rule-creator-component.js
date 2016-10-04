@@ -51,21 +51,19 @@
       if (self.answerSearchText) {
         _customAnswer = true;
         self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.isCustom = true;
         self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+      } else {
+        _customAnswer = false;
       }
-      console.log("_customAnswer");
-      console.log(_customAnswer);
+      self.readyToSave = _readyToSave();
     }
 
     function answerChange(answer) {
-      // if (!self.selectedAnswer.isCustom) {
+      if (!_customAnswer) {
         _customAnswer = false;
-        console.log("passei aqui!");
         self.selectedAnswer = answer;
-        self.readyToSave = _readyToSave();
-      // }
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function _createAnswerItem(answerData) {
@@ -121,9 +119,8 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        console.log("_customAnswer");
-        console.log(_customAnswer);
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
+
       }
       self.whenSearchText = '';
       self.operatorSearchText = '';
@@ -155,7 +152,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (_customAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;

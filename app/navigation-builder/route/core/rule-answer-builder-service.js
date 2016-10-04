@@ -33,7 +33,8 @@
           label: {
             ptBR: {
               plainText: ''
-            }
+            },
+            value: null
           }
         }
       }];

@@ -66,24 +66,13 @@
       });
     }
 
-    // É chamado mesmo quando é uma edição de rota
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      console.log("self.answerList: ");
-      console.log(self.answerList);
-      console.log("self.ruleData: ");
-      console.log(self.ruleData);
-      if (self.ruleData.isCustom) {
-        console.log("é custom");
+      if (self.ruleData.isCustom) { // TODO: precisa ser modificado, deve ser possivel criar mais de um objeti custom!
         self.selectedAnswer = self.answerList[0];
         self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
       } else {
-        self.answerList.some(function(answer, index) {
-          if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
-            self.selectedAnswer = answer.option.label.ptBR.plainText;
-            return true;
-          }
-        });
+        self.selectedAnswer = self.ruleData.answer.option.label.ptBR.plainText;
       }
     }
 
@@ -103,8 +92,19 @@
         _customAnswer = true;
         self.selectedAnswer = self.answerList[0];
         self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+      } else {
+        _customAnswer = false;
       }
+      self.readyToSave = _readyToSave();
+    }
+
+    function answerChange(answer) {
+      if (!_customAnswer) {
+        _customAnswer = false;
+        self.selectedAnswer = answer;
+        updateRule();
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function whens(filterValue) {
@@ -116,13 +116,6 @@
         });
         return filterResult;
       }
-    }
-
-    function answerChange(answer) {
-      _customAnswer = false;
-      self.selectedAnswer = answer;
-      updateRule();
-      self.readyToSave = _readyToSave();
     }
 
     function parseAnswer(answer) {
@@ -196,7 +189,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (_customAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;

@@ -218,7 +218,7 @@
       ruleData.answer = answer;
       ruleData.getAnswer = function() {
         if (isCustom) {
-          return answer.option.label.ptBR.plainText;
+          return answer;
         } else {
           return ruleData.answer;
         }
