@@ -1,5 +1,5 @@
 # Servidor Testes
-Para realizar teste e homologações, disponibilizamos um [a  servidor](http://studio.hmg.ccem.ufrgs.br/otus-studio) aberto ao publico.
+Para realizar testes e homologações, disponibilizamos um [a  servidor](http://studio.hmg.ccem.ufrgs.br/otus-studio) aberto ao publico.
 
 # Configuração de Ambiente
 
