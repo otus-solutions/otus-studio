@@ -49,13 +49,16 @@
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        _customAnswer = true;
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-      } else {
-        _customAnswer = false;
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          _customAnswer = false;
+          self.readyToSave = false;
+        } else {
+          _customAnswer = true;
+          self.selectedAnswer = self.answerList[0];
+          self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+          self.readyToSave = _readyToSave();
+        }
       }
-      self.readyToSave = _readyToSave();
     }
 
     function answerChange(answer) {
