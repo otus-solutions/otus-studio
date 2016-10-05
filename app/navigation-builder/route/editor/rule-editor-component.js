@@ -15,10 +15,11 @@
 
   component.$inject = [
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleDataTransferenceService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService, RuleDataTransferenceService) {
     var self = this;
     var _customAnswer;
 
@@ -66,16 +67,6 @@
       });
     }
 
-    function _applyRuleDataAnswer() {
-      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      if (self.ruleData.isCustom) { // TODO: precisa ser modificado, deve ser possivel criar mais de um objeti custom!
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
-      } else {
-        self.selectedAnswer = self.ruleData.answer.option.label.ptBR.plainText;
-      }
-    }
-
     function answers(filterValue) {
       if (!filterValue) {
         return self.answerList;
@@ -87,6 +78,19 @@
       }
     }
 
+    function _applyRuleDataAnswer() {
+      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+      console.log("self.ruleData");
+      console.log(self.ruleData);
+      if (self.ruleData.isCustom) { // TODO: precisa ser modificado, deve ser possivel criar mais de um objeti custom!
+        // self.selectedAnswer = self.answerList[0];
+        // self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer;
+        self.selectedAnswer = RuleAnswerBuilderService.getCustomAnswerB(self.ruleData.answer);
+      } else {
+        self.selectedAnswer = self.answerList[self.ruleData.answer];
+      }
+    }
+
     function answerInputChange() {
       if (self.answerSearchText) {
         if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
@@ -94,8 +98,8 @@
           self.readyToSave = false;
         } else {
           _customAnswer = true;
-          self.selectedAnswer = self.answerList[0];
-          self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+          self.selectedAnswer = self.answerSearchText;
+          updateRule();
           self.readyToSave = _readyToSave();
         }
       }
@@ -119,11 +123,6 @@
         });
         return filterResult;
       }
-    }
-
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
     }
 
     function operatorChange(operator) {
@@ -151,10 +150,11 @@
     }
 
     function updateRule() {
-      if (self.ruleData) {
+      if (self.ruleData && self.selectedAnswer) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
         self.onUpdate();
       }
+      _customAnswer = false;
     }
 
     function deleteRule() {

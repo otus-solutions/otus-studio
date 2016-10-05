@@ -10,10 +10,11 @@
 
   component.$inject = [
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleDataTransferenceService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService, RuleDataTransferenceService) {
     var self = this;
     var _customAnswer;
 
@@ -54,8 +55,7 @@
           self.readyToSave = false;
         } else {
           _customAnswer = true;
-          self.selectedAnswer = self.answerList[0];
-          self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+          self.selectedAnswer = self.answerSearchText;
           self.readyToSave = _readyToSave();
         }
       }
@@ -122,9 +122,10 @@
 
     function saveRule() {
       if (_readyToSave()) {
+        RuleDataTransferenceService.trasfereceDataToDatabase(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
-
       }
+      _customAnswer = false;
       self.whenSearchText = '';
       self.operatorSearchText = '';
       self.answerSearchText = '';

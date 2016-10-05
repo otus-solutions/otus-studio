@@ -215,16 +215,14 @@
       var ruleData = {};
       ruleData.when = when;
       ruleData.operator = operator;
-      ruleData.answer = answer;
-      ruleData.getAnswer = function() {
-        if (isCustom) {
-          return answer;
-        } else {
-          return ruleData.answer;
-        }
-      };
       ruleData.isCustom = isCustom;
       ruleData.isMetadata = isMetadata;
+      if (isCustom) {
+        ruleData.answer = answer;
+      } else {
+        ruleData.answer = answer.option.value ;
+      }
+
       _selectedCondition.rules.push(ruleData);
     }
 

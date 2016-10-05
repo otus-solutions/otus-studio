@@ -10,6 +10,7 @@
 
     /* Public methods */
     self.build = build;
+    self.getCustomAnswerB = getCustomAnswerB;
 
     function build(item) {
       var answers = [];
@@ -38,6 +39,20 @@
           }
         }
       }];
+    }
+
+    function getCustomAnswerB(answer) {
+      return {
+        isMetadata: false,
+        option: {
+          label: {
+            ptBR: {
+              plainText: answer
+            },
+            value: null
+          }
+        }
+      };
     }
 
     function getAnswerOption(option) {
