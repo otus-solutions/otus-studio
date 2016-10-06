@@ -10,13 +10,13 @@
 
     /* Public methods */
     self.build = build;
-    self.getCustomAnswerB = getCustomAnswerB;
+    self.buildCustomAnswer = buildCustomAnswer;
 
     function build(item) {
       var answers = [];
 
       if (item.objectType !== 'SingleSelectionQuestion' && item.objectType !== 'CheckboxQuestion') {
-        answers = answers.concat(getCustomAnswer());
+        answers = answers.concat(_getCustomAnswer());
       } else if (item.options) {
         answers = answers.concat(item.options.map(getAnswerOption));
       }
@@ -27,7 +27,7 @@
       return answers;
     }
 
-    function getCustomAnswer() {
+    function _getCustomAnswer() {
       return [{
         isMetadata: false,
         option: {
@@ -41,7 +41,7 @@
       }];
     }
 
-    function getCustomAnswerB(answer) {
+    function buildCustomAnswer(answer) {
       return {
         isMetadata: false,
         option: {

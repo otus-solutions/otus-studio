@@ -80,7 +80,7 @@
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
       if (self.ruleData.isCustom) {
-        self.selectedAnswer = RuleAnswerBuilderService.getCustomAnswerB(self.ruleData.answer);
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData.answer);
       } else {
         self.selectedAnswer = self.answerList[self.ruleData.answer];
       }

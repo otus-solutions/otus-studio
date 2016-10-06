@@ -114,11 +114,6 @@
       self.readyToSave = _readyToSave();
     }
 
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
-    }
-
     function saveRule() {
       if (_readyToSave()) {
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
