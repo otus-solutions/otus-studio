@@ -10,11 +10,10 @@
 
   component.$inject = [
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleDataTransferenceService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService, RuleDataTransferenceService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _customAnswer;
 
@@ -122,7 +121,6 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        RuleDataTransferenceService.trasfereceDataToDatabase(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
       }
       _customAnswer = false;

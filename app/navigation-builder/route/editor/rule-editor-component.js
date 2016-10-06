@@ -15,11 +15,10 @@
 
   component.$inject = [
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RuleDataTransferenceService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService, RuleDataTransferenceService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _customAnswer;
 
@@ -80,11 +79,7 @@
 
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      console.log("self.ruleData");
-      console.log(self.ruleData);
-      if (self.ruleData.isCustom) { // TODO: precisa ser modificado, deve ser possivel criar mais de um objeti custom!
-        // self.selectedAnswer = self.answerList[0];
-        // self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer;
+      if (self.ruleData.isCustom) {
         self.selectedAnswer = RuleAnswerBuilderService.getCustomAnswerB(self.ruleData.answer);
       } else {
         self.selectedAnswer = self.answerList[self.ruleData.answer];
