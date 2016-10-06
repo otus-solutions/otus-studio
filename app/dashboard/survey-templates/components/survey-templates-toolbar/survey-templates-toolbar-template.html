@@ -1,21 +1,21 @@
 <md-toolbar layout="row">
     <div class="md-toolbar-tools" flex>
         <h2>
-            <span>Lista de Templates</span>
+            <span>Templates</span>
         </h2>
     </div>
-    <md-button aria-label="abrir"
+    <md-button aria-label="Abrir Editor"
     ng-show="$ctrl.SelectedSurveyTemplatesManagementService.hasOnlyOneSelectedSurveyTemplate()"
     ng-click="$ctrl.openEditorForSelectedSurveyTemplate()">
         <md-tooltip md-direction="down">
-            abrir editor
+            Abrir Editor
         </md-tooltip>
-        <md-icon md-svg-icon="table-edit" aria-label="abrir"></md-icon>
+        <md-icon md-svg-icon="table-edit" aria-label="Abrir"></md-icon>
     </md-button>
     <md-menu md-position-mode="target-right target" md-offset="0 52" ng-show="$ctrl.SelectedSurveyTemplatesManagementService.hasSelectedSurveyTemplate()">
         <md-button aria-label="opções" class="md-icon-button" ng-click="$mdOpenMenu($event)">
             <md-tooltip md-direction="down">
-                opções
+                Opções
             </md-tooltip>
             <md-icon md-menu-origin md-svg-icon="dots-vertical"></md-icon>
         </md-button>
