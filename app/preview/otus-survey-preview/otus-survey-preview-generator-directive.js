@@ -18,15 +18,14 @@
     '$element',
     '$compile',
     'WorkspaceService',
-    'ActivityFacadeService'
+    'otusjs.model.activity.ActivityFacadeService'
   ];
 
   function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService) {
-    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" survey-activity="surveyActivity" layout="column" flex="80"></otus-player>';
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
 
     $element.on('click', function() {
-      ActivityFacadeService.createActivity(null, null, WorkspaceService.getSurvey(), null);
       var otusSheetDOMElement = $('otus-player');
 
       if (otusSheetDOMElement[0]) {

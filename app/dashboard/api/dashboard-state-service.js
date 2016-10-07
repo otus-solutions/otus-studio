@@ -19,6 +19,7 @@
         self.goToHome = goToHome;
         self.goToFormTemplates = goToFormTemplates;
         self.goToEditor = goToEditor;
+        self.goToPreview = goToPreview;
         self.logout = logout;
         self.goToEditorWithSurveyTemplate = goToEditorWithSurveyTemplate;
 
@@ -46,6 +47,11 @@
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
             $state.go(APP_STATE.EDITOR);
+        }
+
+        function goToPreview() {
+            self.currentState = 'Preview de Formulário';
+            $state.go(APP_STATE.PREVIEW);
         }
 
         function goToEditorWithSurveyTemplate(surveyTemplate) {

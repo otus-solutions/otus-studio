@@ -23,7 +23,6 @@
           </md-tooltip>
           <md-icon class="material-icons">library_books</md-icon>
         </md-button>
-
       </div>
     </div>
   </md-toolbar>
@@ -35,11 +34,13 @@
         <md-tab id="editing-tab" label="Edição">
           <otus:stage></otus:stage>
         </md-tab>
-        <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()" otus-survey-preview-generator>
+        <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
           <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>
         </md-tab>
-        <md-tab id="preview-tab" label="Preview" otus-survey-preview-generator>
-          <div layout="row" layout-align="center center" flex id="survey-preview"></div>
+        <md-tab id="preview-tab" label="Preview" ng-click="mainContainer.startPreview()" otus-survey-preview-generator>
+          <div id="survey-preview" layout="row" layout-align="center center" flex>
+            <!-- <otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player> -->
+          </div>
         </md-tab>
       </md-tabs>
     </md-content>

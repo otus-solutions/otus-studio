@@ -11,10 +11,11 @@
     'SheetContentService',
     'EditionPreviewService',
     'WorkspaceService',
-    '$window'
+    '$window',
+    'otusjs.model.activity.ActivityFacadeService'
   ];
 
-  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window) {
+  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window, ActivityFacadeService) {
     var self = this;
     self.EditionPreviewService = EditionPreviewService;
 
@@ -28,6 +29,7 @@
         EditionPreviewService.loadSurveyTemplate().then(function(template) {
           EditionPreviewService.isLoading = false;
           WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
+          ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
         });
       } else {
         $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
