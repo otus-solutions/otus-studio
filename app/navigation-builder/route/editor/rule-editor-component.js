@@ -68,12 +68,20 @@
 
     function answers(filterValue) {
       if (!filterValue) {
-        return self.answerList;
+        return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
           return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
-        return filterResult;
+        return filterResult.filter(_filter);
+      }
+    }
+
+    function _filter(element, index) {
+      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+        return true;
+      } else {
+        return index > 0;
       }
     }
 
