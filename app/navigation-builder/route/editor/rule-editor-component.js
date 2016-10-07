@@ -141,7 +141,7 @@
       self.answerList = [];
 
       if (self.selectedWhen) {
-        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
         self.isDisable = false;
       } else {
@@ -150,6 +150,17 @@
 
       self.readyToSave = _readyToSave();
       updateRule();
+    }
+
+    //TODO: Quando implementado recuso dos operadores retirados, esse método deve ser removido!
+    function _returnFilteredOperatorList(when) {
+      var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
+        console.log(element);
+        if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
+          return true;
+        }
+      });
+      return list;
     }
 
     function updateRule() {
