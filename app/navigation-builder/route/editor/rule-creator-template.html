@@ -32,7 +32,7 @@
   <md-autocomplete
     flex="30"
     md-no-cache="true"
-    ng-disabled="$ctrl.isOperatorDisable"
+    ng-disabled="$ctrl.isDisable"
     md-selected-item="$ctrl.selectedOperator"
     md-selected-item-change="$ctrl.operatorChange($ctrl.selectedOperator)"
     md-search-text="$ctrl.operatorSearchText"
@@ -55,6 +55,7 @@
   <md-autocomplete
     flex="30"
     md-no-cache="true"
+    ng-disabled="$ctrl.isDisable"
     md-selected-item="$ctrl.selectedAnswer"
     md-selected-item-change="$ctrl.answerChange($ctrl.selectedAnswer)"
     md-search-text="$ctrl.answerSearchText"

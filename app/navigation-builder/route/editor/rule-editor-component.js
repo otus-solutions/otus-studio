@@ -40,7 +40,7 @@
       _applyRuleDataWhen();
       _applyRuleDataOperator();
       _applyRuleDataAnswer();
-      self.isOperatorDisable = false;
+      self.isDisable = false;
       self.isAnswerDisable = false;
       self.showDeleteRuleButton = true;
     }
@@ -143,9 +143,9 @@
       if (self.selectedWhen) {
         self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();

@@ -30,7 +30,7 @@
     function onInit() {
       _initializeWhenList();
 
-      self.isOperatorDisable = true;
+      self.isDisable = true;
       self.isAnswerDisable = true;
       self.showSaveRuleButton = true;
       self.readyToSave = _readyToSave();
@@ -104,9 +104,9 @@
       if (self.selectedWhen) {
         self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();
