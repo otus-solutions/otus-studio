@@ -90,7 +90,13 @@
       if (self.ruleData.isCustom) {
         self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData.answer);
       } else {
-        self.selectedAnswer = self.answerList[self.ruleData.answer];
+        self.selectedAnswer = self.answerList.filter(function(answer) {
+          if (answer.isMetadata === true) {
+            if (answer.option.value === self.ruleData.answer) {
+              return true;
+            }
+          }
+        });;
       }
     }
 
@@ -155,7 +161,6 @@
     //TODO: Quando implementado recuso dos operadores retirados, esse método deve ser removido!
     function _returnFilteredOperatorList(when) {
       var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
-        console.log(element);
         if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
           return true;
         }
