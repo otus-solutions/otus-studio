@@ -5,7 +5,7 @@
 </md-toolbar>
 <md-dialog-content layout="row" layout-align="center center">
   <md-content layout="column">
-    <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-disabled="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.updateComponentState()" aria-label="Tipo de Rota">
+    <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-disabled="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.readyToSave()" aria-label="Tipo de Rota">
       {{ $ctrl.label.isDefaultRoute }}
     </md-switch>
   </md-content>
@@ -48,11 +48,11 @@
       <md-content ng-show="clicked" flex>
         <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
           <div layout="column" flex class="md-list-item-text">
-            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-update="$ctrl.updateComponentState()"></otus-rule-editor>
+            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-update="$ctrl.readyToSave()"></otus-rule-editor>
           </div>
         </md-list-item>
         <md-list-item layout="row" flex class="md-1-line">
-          <otus-rule-editor flex on-update="$ctrl.updateComponentState()"></otus-rule-editor>
+          <otus-rule-creator flex></otus-rule-creator>
         </md-list-item>
       </md-content>
     </md-whiteframe>
@@ -64,5 +64,5 @@
     <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-show="!$ctrl.selectedRoute.isDefault && !$ctrl.isNewRoute">{{ $ctrl.label.button.deleteRoute }}</md-button>
   </div>
   <md-button class="md-raised" ng-click="$ctrl.cancel()">{{ $ctrl.label.button.cancel }}</md-button>
-  <md-button class="md-raised md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.readyToSave">{{ $ctrl.label.button.save }}</md-button>
+  <md-button class="md-raised md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.readyToSave()">{{ $ctrl.label.button.save }}</md-button>
 </md-dialog-actions>

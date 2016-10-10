@@ -14,15 +14,29 @@
     function build(item) {
       var answers = [];
 
-      if (item.options) {
+      if (item.objectType !== 'SingleSelectionQuestion' && item.objectType !== 'CheckboxQuestion') {
+        answers = answers.concat(getCustomAnswer());
+      } else if (item.options) {
         answers = answers.concat(item.options.map(getAnswerOption));
       }
 
       if (item.metadata && item.metadata.options) {
         answers = answers.concat(item.metadata.options.map(getMetadataOption));
       }
-
       return answers;
+    }
+
+    function getCustomAnswer() {
+      return [{
+        isMetadata: false,
+        option: {
+          label: {
+            ptBR: {
+              plainText: ''
+            }
+          }
+        }
+      }];
     }
 
     function getAnswerOption(option) {

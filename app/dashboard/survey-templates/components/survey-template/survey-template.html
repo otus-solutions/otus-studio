@@ -1,6 +1,17 @@
 <md-card>
-    <md-card-content>
-        <h2>{{$ctrl.surveyTemplate.template.identity.name}}</h2>
-        <p>{{$ctrl.surveyTemplate.template.identity.acronym}}</p>
-    </md-card-content>
+  <md-card-header>
+    <md-card-avatar>
+      <img class="md-avatar" src="app/assets/img/form-icon.png"/>
+    </md-card-avatar>
+    <md-card-header-text>
+      <div layout="column">
+        <span class="md-subhead">{{$ctrl.surveyTemplate.template.identity.acronym}}</span>
+        <span class="md-title">{{$ctrl.surveyTemplate.template.identity.name}}</span>
+      </div>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-content>
+    <md-icon md-font-set="material-icons"> today </md-icon>
+    <span class="md-caption">{{$ctrl.surveyTemplate.template.metainfo.creationDatetime | date : 'dd-MM-yyyy'}}</span>
+  </md-card-content>
 </md-card>

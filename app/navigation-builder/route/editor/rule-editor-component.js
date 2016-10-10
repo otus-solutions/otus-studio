@@ -14,11 +14,13 @@
     });
 
   component.$inject = [
-    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
+    'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService) {
+  function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
+    var _customAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -28,31 +30,19 @@
     self.operatorChange = operatorChange;
     self.whens = whens;
     self.whenChange = whenChange;
-    self.saveRule = saveRule;
     self.updateRule = updateRule;
     self.deleteRule = deleteRule;
 
     function onInit() {
       _initializeWhenList();
 
-      if (self.ruleData) {
-        self.ruleData.index = self.ruleItemIndex;
-        _applyRuleDataWhen();
-        _applyRuleDataOperator();
-        _applyRuleDataAnswer();
-        self.isOperatorDisable = false;
-        self.isAnswerDisable = false;
-        self.showSaveRuleButton = false;
-        self.showUpdateRuleButton = true;
-        self.showDeleteRuleButton = true;
-      } else {
-        self.isOperatorDisable = true;
-        self.isAnswerDisable = true;
-        self.showSaveRuleButton = true;
-        self.showUpdateRuleButton = false;
-        self.showDeleteRuleButton = false;
-        self.readyToSave = _readyToSave();
-      }
+      self.ruleData.index = self.ruleItemIndex;
+      _applyRuleDataWhen();
+      _applyRuleDataOperator();
+      _applyRuleDataAnswer();
+      self.isOperatorDisable = false;
+      self.isAnswerDisable = false;
+      self.showDeleteRuleButton = true;
     }
 
     function _applyRuleDataWhen() {
@@ -76,33 +66,45 @@
       });
     }
 
+    // É chamado mesmo quando é uma edição de rota
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      var value = (self.ruleData.answer.option) ?
-        self.ruleData.answer.option.value :
-        self.ruleData.answer;
-        self.answerList.some(function(answer) {
-        if (answer.option.value === value) {
-          self.selectedAnswer = answer;
-          return true;
-        }
-      });
+      console.log("self.answerList: ");
+      console.log(self.answerList);
+      console.log("self.ruleData: ");
+      console.log(self.ruleData);
+      if (self.ruleData.isCustom) {
+        console.log("é custom");
+        self.selectedAnswer = self.answerList[0];
+        self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
+      } else {
+        self.answerList.some(function(answer, index) {
+          if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
+            self.selectedAnswer = answer.option.label.ptBR.plainText;
+            return true;
+          }
+        });
+      }
     }
 
     function answers(filterValue) {
-      self.inputedValue = filterValue;
       if (!filterValue) {
         return self.answerList;
       } else {
         var filterResult = self.answerList.filter(function(answer) {
-          return answer.label.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
+          return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
         return filterResult;
       }
     }
 
     function answerInputChange() {
-      self.readyToSave = _readyToSave();
+      if (self.answerSearchText) {
+        _customAnswer = true;
+        self.selectedAnswer = self.answerList[0];
+        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
+        self.readyToSave = _readyToSave();
+      }
     }
 
     function whens(filterValue) {
@@ -117,9 +119,15 @@
     }
 
     function answerChange(answer) {
+      _customAnswer = false;
       self.selectedAnswer = answer;
-      self.readyToSave = _readyToSave();
       updateRule();
+      self.readyToSave = _readyToSave();
+    }
+
+    function parseAnswer(answer) {
+      self.answerList[0].option.label.ptBR.plainText = answer;
+      return self.answerList[0];
     }
 
     function operatorChange(operator) {
@@ -146,19 +154,9 @@
       updateRule();
     }
 
-    function saveRule() {
-      if (_readyToSave()) {
-        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer);
-        self.onUpdate();
-      }
-      self.whenSearchText = '';
-      self.operatorSearchText = '';
-      self.answerSearchText = '';
-    }
-
     function updateRule() {
       if (self.ruleData) {
-        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer);
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
         self.onUpdate();
       }
     }
@@ -171,14 +169,6 @@
     function _initializeWhenList() {
       self.whenList = [];
       self.whenList = RouteBuilderService.getWhenListForRule();
-    }
-
-    function _createAnswerItem(answerData) {
-      return {
-        value: answerData.value,
-        label: answerData.label.ptBR.plainText,
-        option: answerData
-      };
     }
 
     function _readyToSave() {
@@ -206,13 +196,10 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!self.selectedAnswer && !self.inputedValue) {
+      if (!_customAnswer && self.selectedAnswer) {
+        return true;
+      } else {
         return false;
-      } else if (!self.selectedAnswer && self.inputedValue) {
-        self.selectedAnswer = self.inputedValue;
-        return true;
-      } else if (self.selectedAnswer) {
-        return true;
       }
     }
   }

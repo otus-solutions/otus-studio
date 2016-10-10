@@ -1,4 +1,4 @@
-xdescribe('FutureDateValidatorWidgetFactory', function() {
+describe('FutureDateValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -22,9 +22,8 @@ xdescribe('FutureDateValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as date', function() {
-            var dateModel = new Date();
             expect(widget.data).toBeDefined();
-            expect(widget.data).toEqual(dateModel.toLocaleDateString());
+            expect(widget.data).toEqual(false);
         });
     });
 
@@ -84,7 +83,7 @@ xdescribe('FutureDateValidatorWidgetFactory', function() {
 
     function mockQuestion($injector) {
         Mock.question = $injector.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
-        Mock.question.fillingRules.options['futureDate'] = $injector.get('RulesFactory').create('futureDate');
+        Mock.question.fillingRules.options.futureDate = $injector.get('RulesFactory').create('futureDate');
         return Mock.question;
     }
 
