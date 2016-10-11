@@ -10,6 +10,9 @@
         ruleData: '<',
         ruleItemIndex: '<',
         onUpdate: '&'
+      },
+      require: {
+        otusRouteEditor: '^otusRouteEditor'
       }
     });
 
@@ -34,15 +37,17 @@
     self.deleteRule = deleteRule;
 
     function onInit() {
-      _initializeWhenList();
-
       self.ruleData.index = self.ruleItemIndex;
-      _applyRuleDataWhen();
-      _applyRuleDataOperator();
-      _applyRuleDataAnswer();
       self.isDisable = false;
       self.isAnswerDisable = false;
       self.showDeleteRuleButton = true;
+
+      _initializeWhenList();
+      _applyRuleDataWhen();
+      _applyRuleDataOperator();
+      _applyRuleDataAnswer();
+
+      self.otusRouteEditor.childRules.push(self);
     }
 
     function _applyRuleDataWhen() {
@@ -91,12 +96,8 @@
         self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData.answer);
       } else {
         self.selectedAnswer = self.answerList.filter(function(answer) {
-          if (answer.isMetadata === true) {
-            if (answer.option.value === self.ruleData.answer) {
-              return true;
-            }
-          }
-        });;
+          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
+        })[0];
       }
     }
 
@@ -158,7 +159,7 @@
       updateRule();
     }
 
-    //TODO: Quando implementado recuso dos operadores retirados, esse método deve ser removido!
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
     function _returnFilteredOperatorList(when) {
       var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
         if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
@@ -177,8 +178,7 @@
     }
 
     function deleteRule() {
-      RouteBuilderService.deleteRule(self.ruleData.index);
-      self.onUpdate();
+      self.onUpdate({ 'rule': self.ruleData });
     }
 
     function _initializeWhenList() {

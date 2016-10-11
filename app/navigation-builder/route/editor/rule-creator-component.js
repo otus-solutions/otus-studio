@@ -112,7 +112,7 @@
       self.readyToSave = _readyToSave();
     }
 
-    //TODO: Quando implementado recuso dos operadores retirados, esse método deve ser removido!
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
     function _returnFilteredOperatorList(when) {
       var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
         if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
@@ -133,8 +133,11 @@
     }
 
     function saveRule() {
+      console.log("saveRule chamado!");
       if (_readyToSave()) {
+        console.log("self.selectedAnswer");
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
+        console.log(self.selectedAnswer);
       }
       _customAnswer = false;
       self.whenSearchText = '';

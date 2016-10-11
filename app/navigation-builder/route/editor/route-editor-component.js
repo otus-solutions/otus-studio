@@ -34,6 +34,7 @@
     self.readyToSave = readyToSave;
 
     function onInit() {
+      self.childRules = [];
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
       self.isNewRoute = RouteBuilderService.isNewRoute();
@@ -98,6 +99,23 @@
           emptyConditions: 'Você ainda não criou condições de rota. Clicando em CRIAR CONDIÇÃO DE ROTA.',
         }
       };
+    }
+
+    self.deleteRule = function(rule) {
+      RouteBuilderService.deleteRule(rule);
+
+      let childs = [];
+      self.childRules.map(childs.push);
+      self.childRules = [];
+      self.condition = RouteBuilderService.selectedCondition();
+
+      condition.rules.forEach(function(rule, index) {
+        childs.forEach(function(child) {
+          child.ruleData = rule;
+          child.ruleData.index = index;
+          child.$onInit();
+        });
+      });
     }
   }
 })();

@@ -48,7 +48,7 @@
       <md-content ng-show="clicked" flex>
         <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules track by $index">
           <div layout="column" flex class="md-list-item-text">
-            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-update="$ctrl.readyToSave()"></otus-rule-editor>
+            <otus-rule-editor flex rule-data="rule" rule-item-index="$index" on-update="$ctrl.deleteRule(rule)"></otus-rule-editor>
           </div>
         </md-list-item>
         <md-list-item layout="row" flex class="md-1-line">
