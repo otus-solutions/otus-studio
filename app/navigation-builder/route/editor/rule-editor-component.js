@@ -72,6 +72,17 @@
       });
     }
 
+    function _applyRuleDataAnswer() {
+      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+      if (self.ruleData.isCustom) {
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData);
+      } else {
+        self.selectedAnswer = self.answerList.filter(function(answer) {
+          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
+        })[0];
+      }
+    }
+
     function answers(filterValue) {
       if (!filterValue) {
         return self.answerList.filter(_filter);
@@ -88,17 +99,6 @@
         return true;
       } else {
         return index > 0;
-      }
-    }
-
-    function _applyRuleDataAnswer() {
-      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      if (self.ruleData.isCustom) {
-        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData.answer);
-      } else {
-        self.selectedAnswer = self.answerList.filter(function(answer) {
-          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
-        })[0];
       }
     }
 

@@ -15,7 +15,7 @@
 
   function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
-    var _customAnswer;
+    var isCustomAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -58,10 +58,10 @@
     function answerInputChange() {
       if (self.answerSearchText) {
         if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
-          _customAnswer = false;
+          isCustomAnswer = false;
           self.readyToSave = false;
         } else {
-          _customAnswer = true;
+          isCustomAnswer = true;
           self.selectedAnswer = self.answerSearchText;
           self.readyToSave = _readyToSave();
         }
@@ -69,8 +69,8 @@
     }
 
     function answerChange(answer) {
-      if (!_customAnswer) {
-        _customAnswer = false;
+      if (!isCustomAnswer) {
+        isCustomAnswer = false;
         self.selectedAnswer = answer;
       }
       self.readyToSave = _readyToSave();
@@ -134,9 +134,9 @@
 
     function saveRule() {
       if (_readyToSave()) {
-        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, isCustomAnswer);
       }
-      _customAnswer = false;
+      isCustomAnswer = false;
       self.whenSearchText = '';
       self.operatorSearchText = '';
       self.answerSearchText = '';
@@ -167,7 +167,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (_customAnswer || self.selectedAnswer) {
+      if (isCustomAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;

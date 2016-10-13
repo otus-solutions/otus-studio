@@ -19,6 +19,8 @@
         answers = answers.concat(_getCustomAnswer());
       } else if (item.options) {
         answers = answers.concat(item.options.map(getAnswerOption));
+      } else if (item.options) {
+        answers = answers.concat(item.options.map(getAnswerOption));
       }
 
       if (item.metadata && item.metadata.options) {
@@ -41,13 +43,18 @@
       }];
     }
 
-    function buildCustomAnswer(answer) {
+    function buildCustomAnswer(ruleData) {
+      if (ruleData.when.type === 'CalendarQuestion') {
+        let date = new Date(ruleData.answer);
+        answer = date.getDate() + '/' + (date.getMonth() + 1)  + '/' + date.getFullYear();
+      }
+
       return {
         isMetadata: false,
         option: {
           label: {
             ptBR: {
-              plainText: answer
+              plainText: ruleData.answer
             },
             value: null
           }

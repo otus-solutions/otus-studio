@@ -215,10 +215,15 @@
       var ruleData = {};
       ruleData.when = when;
       ruleData.operator = operator;
+      ruleData.isMetadata = answer.isMetadata;
       ruleData.isCustom = isCustom;
-      ruleData.isMetadata = isMetadata;
       if (isCustom) {
-        ruleData.answer = answer;
+        if (ruleData.type === 'CalendarQuestion') {
+          let date = answer.split('/');
+          ruleData.answer = new Date(date[2] + '/' + date[1] + '/' + date[0]).toISOString();
+        } else {
+          ruleData.answer = answer;
+        }
       } else {
         ruleData.answer = answer.option.value ;
       }
@@ -248,7 +253,12 @@
       ruleData.when = when;
       ruleData.operator = operator;
       if (isCustom) {
-        ruleData.answer = answer;
+        if (_survey.SurveyItemManager.getItemByID(when.customID).objectType === 'CalendarQuestion') {
+          let date = answer.split('/');
+          ruleData.answer = new Date(date[2] + '/' + date[1] + '/' + date[0]).toISOString();
+        } else {
+          ruleData.answer = answer;
+        }
       } else {
         ruleData.answer = answer.option.value ;
       }
