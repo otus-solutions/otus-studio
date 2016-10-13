@@ -8,17 +8,20 @@
       controller: component,
       bindings: {
         ruleData: '<',
-        ruleItemIndex: '<',
         onUpdate: '&'
+      },
+      require: {
+        otusRouteEditor: '^otusRouteEditor'
       }
     });
 
   component.$inject = [
+    '$element',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService) {
+  function component($element, RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _customAnswer;
 
@@ -34,15 +37,18 @@
     self.deleteRule = deleteRule;
 
     function onInit() {
-      _initializeWhenList();
+      self.isDisable = false;
+      self.isAnswerDisable = false;
+      self.showDeleteRuleButton = true;
 
-      self.ruleData.index = self.ruleItemIndex;
+      _initializeWhenList();
       _applyRuleDataWhen();
       _applyRuleDataOperator();
       _applyRuleDataAnswer();
-      self.isOperatorDisable = false;
-      self.isAnswerDisable = false;
-      self.showDeleteRuleButton = true;
+
+      self.$element = $element;
+      self.ruleData.index = self.otusRouteEditor.childRules.length;
+      self.otusRouteEditor.childRules.push(self);
     }
 
     function _applyRuleDataWhen() {
@@ -66,45 +72,57 @@
       });
     }
 
-    // É chamado mesmo quando é uma edição de rota
-    function _applyRuleDataAnswer() {
-      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      console.log("self.answerList: ");
-      console.log(self.answerList);
-      console.log("self.ruleData: ");
-      console.log(self.ruleData);
-      if (self.ruleData.isCustom) {
-        console.log("é custom");
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
-      } else {
-        self.answerList.some(function(answer, index) {
-          if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
-            self.selectedAnswer = answer.option.label.ptBR.plainText;
-            return true;
-          }
-        });
-      }
-    }
-
     function answers(filterValue) {
       if (!filterValue) {
-        return self.answerList;
+        return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
           return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
-        return filterResult;
+        return filterResult.filter(_filter);
+      }
+    }
+
+    function _filter(element, index) {
+      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+        return true;
+      } else {
+        return index > 0;
+      }
+    }
+
+    function _applyRuleDataAnswer() {
+      self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
+      if (self.ruleData.isCustom) {
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData.answer);
+      } else {
+        self.selectedAnswer = self.answerList.filter(function(answer) {
+          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
+        })[0];
       }
     }
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        _customAnswer = true;
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          _customAnswer = false;
+          self.readyToSave = false;
+        } else {
+          _customAnswer = true;
+          self.selectedAnswer = self.answerSearchText;
+          updateRule();
+          self.readyToSave = _readyToSave();
+        }
       }
+    }
+
+    function answerChange(answer) {
+      if (!_customAnswer) {
+        _customAnswer = false;
+        self.selectedAnswer = answer;
+        updateRule();
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function whens(filterValue) {
@@ -116,18 +134,6 @@
         });
         return filterResult;
       }
-    }
-
-    function answerChange(answer) {
-      _customAnswer = false;
-      self.selectedAnswer = answer;
-      updateRule();
-      self.readyToSave = _readyToSave();
-    }
-
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
     }
 
     function operatorChange(operator) {
@@ -143,27 +149,38 @@
       self.answerList = [];
 
       if (self.selectedWhen) {
-        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();
       updateRule();
     }
 
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
+    function _returnFilteredOperatorList(when) {
+      var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
+        if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
+          return true;
+        }
+      });
+      return list;
+    }
+
     function updateRule() {
-      if (self.ruleData) {
+      if (self.ruleData && self.selectedAnswer) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
-        self.onUpdate();
       }
+      _customAnswer = false;
     }
 
     function deleteRule() {
-      RouteBuilderService.deleteRule(self.ruleData.index);
-      self.onUpdate();
+      self.onUpdate({
+        'ruleEditor': self
+      });
     }
 
     function _initializeWhenList() {
@@ -196,7 +213,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (_customAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;

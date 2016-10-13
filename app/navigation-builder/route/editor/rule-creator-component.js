@@ -30,7 +30,7 @@
     function onInit() {
       _initializeWhenList();
 
-      self.isOperatorDisable = true;
+      self.isDisable = true;
       self.isAnswerDisable = true;
       self.showSaveRuleButton = true;
       self.readyToSave = _readyToSave();
@@ -38,34 +38,42 @@
 
     function answers(filterValue) {
       if (!filterValue) {
-        return self.answerList;
+        return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
           return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
-        return filterResult;
+        return filterResult.filter(_filter);
+      }
+    }
+
+    function _filter(element, index) {
+      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+        return true;
+      } else {
+        return index > 0;
       }
     }
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        _customAnswer = true;
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.isCustom = true;
-        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          _customAnswer = false;
+          self.readyToSave = false;
+        } else {
+          _customAnswer = true;
+          self.selectedAnswer = self.answerSearchText;
+          self.readyToSave = _readyToSave();
+        }
       }
-      console.log("_customAnswer");
-      console.log(_customAnswer);
     }
 
     function answerChange(answer) {
-      // if (!self.selectedAnswer.isCustom) {
+      if (!_customAnswer) {
         _customAnswer = false;
-        console.log("passei aqui!");
         self.selectedAnswer = answer;
-        self.readyToSave = _readyToSave();
-      // }
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function _createAnswerItem(answerData) {
@@ -94,14 +102,24 @@
       self.answerList = [];
 
       if (self.selectedWhen) {
-        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();
+    }
+
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
+    function _returnFilteredOperatorList(when) {
+      var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
+        if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
+          return true;
+        }
+      });
+      return list;
     }
 
     function _initializeWhenList() {
@@ -114,17 +132,11 @@
       self.readyToSave = _readyToSave();
     }
 
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
-    }
-
     function saveRule() {
       if (_readyToSave()) {
-        console.log("_customAnswer");
-        console.log(_customAnswer);
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
       }
+      _customAnswer = false;
       self.whenSearchText = '';
       self.operatorSearchText = '';
       self.answerSearchText = '';
@@ -155,7 +167,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (_customAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;
