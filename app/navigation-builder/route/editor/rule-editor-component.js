@@ -8,7 +8,6 @@
       controller: component,
       bindings: {
         ruleData: '<',
-        ruleItemIndex: '<',
         onUpdate: '&'
       },
       require: {
@@ -17,11 +16,12 @@
     });
 
   component.$inject = [
+    '$element',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService) {
+  function component($element, RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
     var _customAnswer;
 
@@ -37,7 +37,6 @@
     self.deleteRule = deleteRule;
 
     function onInit() {
-      self.ruleData.index = self.ruleItemIndex;
       self.isDisable = false;
       self.isAnswerDisable = false;
       self.showDeleteRuleButton = true;
@@ -47,6 +46,8 @@
       _applyRuleDataOperator();
       _applyRuleDataAnswer();
 
+      self.$element = $element;
+      self.ruleData.index = self.otusRouteEditor.childRules.length;
       self.otusRouteEditor.childRules.push(self);
     }
 
@@ -172,13 +173,14 @@
     function updateRule() {
       if (self.ruleData && self.selectedAnswer) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
-        self.onUpdate();
       }
       _customAnswer = false;
     }
 
     function deleteRule() {
-      self.onUpdate({ 'rule': self.ruleData });
+      self.onUpdate({
+        'ruleEditor': self
+      });
     }
 
     function _initializeWhenList() {

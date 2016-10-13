@@ -133,11 +133,8 @@
     }
 
     function saveRule() {
-      console.log("saveRule chamado!");
       if (_readyToSave()) {
-        console.log("self.selectedAnswer");
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
-        console.log(self.selectedAnswer);
       }
       _customAnswer = false;
       self.whenSearchText = '';

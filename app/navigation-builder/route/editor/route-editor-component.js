@@ -101,21 +101,13 @@
       };
     }
 
-    self.deleteRule = function(rule) {
-      RouteBuilderService.deleteRule(rule);
-
-      let childs = [];
-      self.childRules.map(childs.push);
-      self.childRules = [];
-      self.condition = RouteBuilderService.selectedCondition();
-
-      condition.rules.forEach(function(rule, index) {
-        childs.forEach(function(child) {
-          child.ruleData = rule;
-          child.ruleData.index = index;
-          child.$onInit();
-        });
+    self.deleteRule = function(ruleEditor) {
+      RouteBuilderService.selectedCondition().rules.forEach(function(rule, index) {
+        self.childRules[index].ruleData.index = index;
       });
+
+      RouteBuilderService.deleteRule(ruleEditor.ruleData.index);
+      self.childRules.splice(ruleEditor.ruleData.index, 1);
     }
   }
 })();

@@ -116,8 +116,6 @@
     //-----------------------------------------------------
 
     function createRule(when, operator, answer, isMetadata, isCustom) {
-      console.log("createRule chamado!");
-      console.log(answer);
       DataService.createRule(when, operator, answer, isMetadata, isCustom);
     }
 

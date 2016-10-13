@@ -247,7 +247,11 @@
       var ruleData = _selectedCondition.rules[ruleIndex];
       ruleData.when = when;
       ruleData.operator = operator;
-      ruleData.answer = answer;
+      if (isCustom) {
+        ruleData.answer = answer;
+      } else {
+        ruleData.answer = answer.option.value ;
+      }
       ruleData.isMetadata = isMetadata;
     }
   }
