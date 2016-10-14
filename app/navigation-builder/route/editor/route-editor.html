@@ -29,16 +29,17 @@
     <md-card-content>
       <span layout-align="center center">{{ $ctrl.label.destinationNode }}</span>
     </md-card-content>
-  </md-card>
-</md-dialog-content>
+  </md-dialog-content>
+</md-card>
 <md-dialog-content layout="row" id="route-conditions-container" flex>
   <div layout="column" flex ng-show="!$ctrl.selectedRoute.isDefault">
     <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="condition in $ctrl.conditions track by $index" ng-click="$ctrl.selectCondition($index)">
+      <span ng-show="false">{{ conditionIndex = $index }}</span>
       <md-dialog-actions>
         <md-content flex>
           {{ $ctrl.label.conditionTitle }}
         </md-content>
-        <md-button ng-show="$index !== 0" ng-click="$ctrl.deleteCondition($index)">
+        <md-button ng-show="$index !== 0" ng-click="$ctrl.deleteCondition($index, condition)">
           <md-icon md-font-set="material-icons">delete</md-icon>
         </md-button>
         <md-button ng-click="clicked = !clicked">
@@ -48,11 +49,11 @@
       <md-content ng-show="clicked" flex>
         <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules">
           <div layout="column" flex class="md-list-item-text">
-            <otus-rule-editor flex rule-data="rule" on-update="$ctrl.deleteRule(ruleEditor)"></otus-rule-editor>
+            <otus-rule-editor flex rule-data="rule" condition="condition" condition-index="conditionIndex" on-update="$ctrl.deleteRule(ruleEditor)"></otus-rule-editor>
           </div>
         </md-list-item>
         <md-list-item layout="row" flex class="md-1-line">
-          <otus-rule-creator flex></otus-rule-creator>
+          <otus-rule-creator condition="condition" condition-index="$index" flex></otus-rule-creator>
         </md-list-item>
       </md-content>
     </md-whiteframe>

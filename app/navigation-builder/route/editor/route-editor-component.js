@@ -19,6 +19,7 @@
 
   function component(RouteBuilderService) {
     var self = this;
+    var _childs = {};
 
     self.selectedRoute = [];
     self.conditions = [];
@@ -32,14 +33,20 @@
     self.selectCondition = selectCondition;
     self.deleteCondition = deleteCondition;
     self.readyToSave = readyToSave;
+    self.childRules = childRules;
 
     function onInit() {
-      self.childRules = [];
+      _childs = {};
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
       self.isNewRoute = RouteBuilderService.isNewRoute();
       self.selectedRoute = RouteBuilderService.selectedRoute();
       self.conditions = RouteBuilderService.selectedRoute().conditions;
+
+      self.conditions.forEach(function(condition) {
+        _childs[condition.name] = [];
+      });
+
       readyToSave();
     }
 
@@ -57,9 +64,11 @@
 
     function createCondition() {
       RouteBuilderService.createCondition();
+      _childs[self.conditions[self.conditions.length - 1].name] = [];
     }
 
-    function deleteCondition(index) {
+    function deleteCondition(index, condition) {
+      delete _childs[condition.name];
       RouteBuilderService.deleteCondition(index);
     }
 
@@ -74,7 +83,9 @@
         if (!self.selectedRoute.conditions.length) {
           createCondition();
         }
-        return !!self.selectedRoute.conditions[0].rules.length;
+        return self.selectedRoute.conditions.every(function(condition) {
+          return condition.rules.length > 0;
+        });
       }
     }
 
@@ -101,13 +112,20 @@
       };
     }
 
+    function childRules(condition) {
+      return _childs[condition.name];
+    }
+
     self.deleteRule = function(ruleEditor) {
-      RouteBuilderService.selectedCondition().rules.forEach(function(rule, index) {
-        self.childRules[index].ruleData.index = index;
+      let condition = RouteBuilderService.selectedCondition();
+      let editorToDelete = _childs[condition.name].indexOf(ruleEditor);
+
+      condition.rules.forEach(function(rule, index) {
+        _childs[condition.name][index].ruleData.index = index;
       });
 
       RouteBuilderService.deleteRule(ruleEditor.ruleData.index);
-      self.childRules.splice(ruleEditor.ruleData.index, 1);
+      _childs[condition.name].splice(ruleEditor.ruleData.index, 1);
     }
   }
 })();

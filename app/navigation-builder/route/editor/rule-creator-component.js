@@ -5,7 +5,11 @@
     .module('otusjs.studio.navigationBuilder.routeBuilder')
     .component('otusRuleCreator', {
       templateUrl: 'app/navigation-builder/route/editor/rule-creator-template.html',
-      controller: component
+      controller: component,
+      bindings: {
+        condition: '<',
+        conditionIndex: '<'
+      }
     });
 
   component.$inject = [
@@ -133,6 +137,7 @@
     }
 
     function saveRule() {
+      RouteBuilderService.selectCondition(self.conditionIndex);
       if (_readyToSave()) {
         RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, isCustomAnswer);
       }
