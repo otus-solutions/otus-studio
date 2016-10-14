@@ -97,10 +97,12 @@
     }
 
     function _filter(element, index) {
-      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
-        return true;
-      } else {
-        return index > 0;
+      if (self.selectedWhen) {
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          return true;
+        } else {
+          return index > 0;
+        }
       }
     }
 
@@ -147,8 +149,8 @@
     function whenChange(when) {
       self.selectedWhen = when;
 
-      self.operatorList = [];
-      self.answerList = [];
+      self.answerSearchText = '';
+      self.operatorSearchText = '';
 
       if (self.selectedWhen) {
         self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
