@@ -26,6 +26,7 @@
     self.whens = whens;
     self.whenChange = whenChange;
     self.saveRule = saveRule;
+    self.getMyIcon = getMyIcon;
 
     function onInit() {
       _initializeWhenList();
