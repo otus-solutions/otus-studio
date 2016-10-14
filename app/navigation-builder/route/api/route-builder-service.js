@@ -115,8 +115,8 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function createRule(when, operator, answer, isMetadata, isCustom) {
-      DataService.createRule(when, operator, answer, isMetadata, isCustom);
+    function createRule(when, operator, answer, isCustom) {
+      DataService.createRule(when, operator, answer, isCustom);
     }
 
     function deleteRule(ruleIndex) {
@@ -135,8 +135,8 @@
       return DataService.listAvailableWhen();
     }
 
-    function updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom) {
-      DataService.updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom);
+    function updateRule(ruleIndex, when, operator, answer, isCustom) {
+      DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
     }
   }
 })();

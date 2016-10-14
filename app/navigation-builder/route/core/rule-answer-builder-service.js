@@ -46,7 +46,7 @@
     function buildCustomAnswer(ruleData) {
       if (ruleData.when.type === 'CalendarQuestion') {
         let date = new Date(ruleData.answer);
-        answer = date.getDate() + '/' + (date.getMonth() + 1)  + '/' + date.getFullYear();
+        let answer = date.getDate() + '/' + (date.getMonth() + 1)  + '/' + date.getFullYear();
       }
 
       return {
