@@ -211,23 +211,17 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function createRule(when, operator, answer, isMetadata, isCustom) {
+    function createRule(when, operator, answer, isCustom) {
       var ruleData = {};
       ruleData.when = when;
+      ruleData.isMetadata = answer.isMetadata || false;
       ruleData.operator = operator;
-      ruleData.isMetadata = answer.isMetadata;
       ruleData.isCustom = isCustom;
       if (isCustom) {
-        if (ruleData.type === 'CalendarQuestion') {
-          let date = answer.split('/');
-          ruleData.answer = new Date(date[2] + '/' + date[1] + '/' + date[0]).toISOString();
-        } else {
-          ruleData.answer = answer;
-        }
+        ruleData.answer = answer;
       } else {
         ruleData.answer = answer.option.value ;
       }
-
       _selectedCondition.rules.push(ruleData);
     }
 
@@ -248,21 +242,19 @@
       return itemList.map(RuleWhenBuilderService.build);
     }
 
-    function updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom) {
+    function updateRule(ruleIndex, when, operator, answer, isCustom) {
       var ruleData = _selectedCondition.rules[ruleIndex];
       ruleData.when = when;
       ruleData.operator = operator;
-      if (isCustom) {
-        if (_survey.SurveyItemManager.getItemByID(when.customID).objectType === 'CalendarQuestion') {
-          let date = answer.split('/');
-          ruleData.answer = new Date(date[2] + '/' + date[1] + '/' + date[0]).toISOString();
-        } else {
-          ruleData.answer = answer;
-        }
+      if (isCustom || typeof answer === 'string') {
+        ruleData.answer = answer;
+        ruleData.isMetadata = false;
+        ruleData.isCustom = true;
       } else {
         ruleData.answer = answer.option.value ;
+        ruleData.isMetadata = answer.isMetadata;
+        ruleData.isCustom = false;
       }
-      ruleData.isMetadata = isMetadata;
     }
   }
 })();

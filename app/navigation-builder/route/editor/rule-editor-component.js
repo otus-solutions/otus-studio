@@ -23,7 +23,7 @@
 
   function component($element, RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
-    var _customAnswer;
+    var _isCustomAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -105,10 +105,10 @@
     function answerInputChange() {
       if (self.answerSearchText) {
         if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
-          _customAnswer = false;
+          _isCustomAnswer = false;
           self.readyToSave = false;
         } else {
-          _customAnswer = true;
+          _isCustomAnswer = true;
           self.selectedAnswer = self.answerSearchText;
           updateRule();
           self.readyToSave = _readyToSave();
@@ -117,8 +117,8 @@
     }
 
     function answerChange(answer) {
-      if (!_customAnswer) {
-        _customAnswer = false;
+      if (!_isCustomAnswer || !answer) {
+        _isCustomAnswer = false;
         self.selectedAnswer = answer;
         updateRule();
       }
@@ -172,9 +172,8 @@
 
     function updateRule() {
       if (self.ruleData && self.selectedAnswer) {
-        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, _isCustomAnswer);
       }
-      _customAnswer = false;
     }
 
     function deleteRule() {
@@ -213,7 +212,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (_customAnswer || self.selectedAnswer) {
+      if (_isCustomAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;
