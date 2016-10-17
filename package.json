@@ -24,7 +24,7 @@
         "build": "gulp compress"
     },
     "dependencies": {
-        "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#NAV-66",
+        "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
         "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
         "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#dev",
         "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev",

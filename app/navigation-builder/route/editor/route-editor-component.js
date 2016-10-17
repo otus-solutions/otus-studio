@@ -117,8 +117,8 @@
     }
 
     self.deleteRule = function(ruleEditor) {
-      let condition = RouteBuilderService.selectedCondition();
-      let editorToDelete = _childs[condition.name].indexOf(ruleEditor);
+      var condition = RouteBuilderService.selectedCondition();
+      var editorToDelete = _childs[condition.name].indexOf(ruleEditor);
 
       condition.rules.forEach(function(rule, index) {
         _childs[condition.name][index].ruleData.index = index;

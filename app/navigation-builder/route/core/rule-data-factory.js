@@ -6,7 +6,7 @@
     .factory('otusjs.studio.navigationBuilder.RuleDataFactory', Factory);
 
   function Factory() {
-    let self = this;
+    var self = this;
 
     /* Public methods */
     self.createNew = createNew;
@@ -24,6 +24,6 @@
   }
 
   function RuleData() {
-    let self = this;
+    var self = this;
   }
 }());

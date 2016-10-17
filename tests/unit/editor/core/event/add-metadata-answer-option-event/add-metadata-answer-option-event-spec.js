@@ -21,7 +21,7 @@ describe('AddMetadataAnswerEvent', function() {
 
     describe('execute method', function() {
 
-        it('should return an instance of MetadataAnswer', function() {
+        xit('should return an instance of MetadataAnswer', function() {
             var option = event.execute(Mock.itemWidget);
 
             expect(option.constructor.name).toBe('MetadataAnswer');

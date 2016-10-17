@@ -22,8 +22,7 @@ describe('DistinctValidatorWidgetFactory', function() {
         });
 
         it('should start the data field as false', function() {
-            expect(widget.data).toBeUndefined();
-            expect(widget.data).toEqual(undefined);
+            expect(widget.data).toEqual(null);
         });
     });
 
