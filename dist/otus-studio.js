@@ -114,128 +114,129 @@
 
 (function() {
 
-    angular
-        .module('studio')
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
-        .constant('APP_STATE', {
-            'HOME': 'home',
-            'SURVEY_TEMPLATES': 'survey-templates',
-            'EDITOR': 'editor',
-            'LOGIN': 'login'
-        });
+  angular
+    .module('studio')
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
+    .constant('APP_STATE', {
+      'HOME': 'home',
+      'SURVEY_TEMPLATES': 'survey-templates',
+      'EDITOR': 'editor',
+      'PREVIEW': 'preview',
+      'LOGIN': 'login'
+    });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
+  function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
 
-        var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
+    var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
 
-        $stateProvider
-            .state('login', {
-                url: '/login',
-                views: {
-                    'system-wrap': {
-                        templateUrl: 'app/authenticator/login.html',
-                        controller: 'LoginController as loginController'
-                    }
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/authenticator/login.html',
+            controller: 'LoginController as loginController'
+          }
+        }
+      })
+      .state('home', {
+        url: '/home',
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/main-dashboard-content-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@home': {
+            templateUrl: dashboardMenu,
+          },
+          'system-content@home': {
+            templateUrl: 'app/dashboard/home/layout-template.html'
+          },
+          'section-info@home': {
+            templateUrl: 'app/dashboard/home/home-info-section.html'
+          },
+          'section-view@home': {
+            templateUrl: 'app/dashboard/home/home-view-section.html'
+          },
+          'section-commands@home': {
+            templateUrl: 'app/dashboard/home/home-commands-section.html'
+          }
+        }
+      })
+      .state('survey-templates', {
+        url: '/survey-templates',
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/main-dashboard-content-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@survey-templates': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@survey-templates': {
+            templateUrl: 'app/dashboard/survey-templates/layout-template.html',
+            controller: 'SurveyFormDashboardController as surveyFormDashboard'
+          },
+          'section-view@survey-templates': {
+            templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html',
+            controller: 'SurveyFormDashboardController as surveyFormDashboard'
+          },
+          'template-menu@survey-templates': {
+            templateUrl: 'app/dashboard/survey-templates/menu/md-fab.html'
+          }
+        }
+      })
+      .state('editor', {
+        url: '/editor',
+        params: {
+          template: null
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/main-dashboard-content-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@editor': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@editor': {
+            templateUrl: 'app/editor/ui/main/main-container.html',
+            controller: 'MainContainerController as mainContainer',
+            resolve: {
+              editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
+                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
+
+                if ($stateParams.template) {
+                  _startEditor($stateParams.template);
+                } else if (surveyTemplate_OID) {
+                  var deferred = $q.defer();
+                  _loadFromIndexedDB();
+                  return deferred.promise;
                 }
-            })
-            .state('home', {
-                url: '/home',
-                views: {
-                    'system-wrap': {
-                        templateUrl: 'app/dashboard/main-dashboard-content-template.html',
-                        controller: 'DashboardMenuController as dashboardMenu'
-                    },
-                    'dashboard-menu@home': {
-                        templateUrl: dashboardMenu,
-                    },
-                    'system-content@home': {
-                        templateUrl: 'app/dashboard/home/layout-template.html'
-                    },
-                    'section-info@home': {
-                        templateUrl: 'app/dashboard/home/home-info-section.html'
-                    },
-                    'section-view@home': {
-                        templateUrl: 'app/dashboard/home/home-view-section.html'
-                    },
-                    'section-commands@home': {
-                        templateUrl: 'app/dashboard/home/home-commands-section.html'
-                    }
+
+                function _loadFromIndexedDB() {
+                  var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
+                  promise.then(function(result) {
+                    $stateParams.template = result.template;
+                    _startEditor($stateParams.template);
+                    deferred.resolve(true);
+                  });
                 }
-            })
-            .state('survey-templates', {
-                url: '/survey-templates',
-                views: {
-                    'system-wrap': {
-                        templateUrl: 'app/dashboard/main-dashboard-content-template.html',
-                        controller: 'DashboardMenuController as dashboardMenu'
-                    },
-                    'dashboard-menu@survey-templates': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/layout-template.html',
-                        controller: 'SurveyFormDashboardController as surveyFormDashboard'
-                    },
-                    'section-view@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/survey-form-view-section.html',
-                        controller: 'SurveyFormDashboardController as surveyFormDashboard'
-                    },
-                    'template-menu@survey-templates': {
-                        templateUrl: 'app/dashboard/survey-templates/menu/md-fab.html'
-                    }
+
+                function _startEditor(surveyTemplate) {
+                  SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
                 }
-            })
-            .state('editor', {
-                url: '/editor',
-                params: {
-                    template: null
-                },
-                views: {
-                    'system-wrap': {
-                        templateUrl: 'app/dashboard/main-dashboard-content-template.html',
-                        controller: 'DashboardMenuController as dashboardMenu'
-                    },
-                    'dashboard-menu@editor': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content@editor': {
-                        templateUrl: 'app/editor/ui/main/main-container.html',
-                        controller: 'MainContainerController as mainContainer',
-                        resolve: {
-                            editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
-                                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
+              }
+            }
+          }
+        }
+      });
 
-                                if ($stateParams.template) {
-                                    _startEditor($stateParams.template);
-                                } else if (surveyTemplate_OID) {
-                                    var deferred = $q.defer();
-                                    _loadFromIndexedDB();
-                                    return deferred.promise;
-                                }
-
-                                function _loadFromIndexedDB() {
-                                    var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
-                                    promise.then(function(result) {
-                                        $stateParams.template = result.template;
-                                        _startEditor($stateParams.template);
-                                        deferred.resolve(true);
-                                    });
-                                }
-
-                                function _startEditor(surveyTemplate) {
-                                    SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-        /* Default state (route)
-         * $locationProvider.html5Mode(true);
-         */
-        $urlRouterProvider.otherwise('/login');
-    }
+    /* Default state (route)
+     * $locationProvider.html5Mode(true);
+     */
+    $urlRouterProvider.otherwise('/login');
+  }
 
 }());
 
@@ -364,6 +365,44 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .controller('PreviewMenuController', Controller);
+
+  Controller.$inject = [
+    'DashboardStateService',
+    'EditionPreviewService',
+    'WorkspaceService',
+    'SurveyEditorService',
+    '$window'
+  ];
+
+  function Controller(DashboardStateService, EditionPreviewService, WorkspaceService, SurveyEditorService, $window) {
+    var self = this;
+
+    /* Public interface */
+    self.backToEditor = backToEditor;
+
+    function backToEditor() {
+      if (EditionPreviewService.isLoadingMode()) {
+        EditionPreviewService.setScope($scope);
+        EditionPreviewService.loadSurveyTemplate().then(function(template) {
+          SurveyEditorService.startEditorWithSurveyTemplate(template);
+          EditionPreviewService.isLoading = false;
+          WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
+          DashboardStateService.goToEditor();
+        });
+      } else {
+        $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
+      }
+
+    }
+  }
+}());
+
+(function() {
     'use strict';
 
     angular.module('preview', []);
@@ -461,6 +500,7 @@
         self.goToHome = goToHome;
         self.goToFormTemplates = goToFormTemplates;
         self.goToEditor = goToEditor;
+        self.goToPreview = goToPreview;
         self.logout = logout;
         self.goToEditorWithSurveyTemplate = goToEditorWithSurveyTemplate;
 
@@ -488,6 +528,11 @@
         function goToEditor() {
             self.currentState = 'Edição de Formulário';
             $state.go(APP_STATE.EDITOR);
+        }
+
+        function goToPreview() {
+            self.currentState = 'Preview de Formulário';
+            $state.go(APP_STATE.PREVIEW);
         }
 
         function goToEditorWithSurveyTemplate(surveyTemplate) {
@@ -972,14 +1017,20 @@
     return ddo;
   }
 
-  Controller.$inject = ['$scope', '$element', '$compile', 'WorkspaceService'];
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'otusjs.model.activity.ActivityFacadeService'
+  ];
 
-  function Controller($scope, $element, $compile, WorkspaceService) {
-    var OTUS_SHEET_COMPONENT = '<otus-sheet md-theme="layoutTheme" survey-template="surveyTemplate" layout="column" flex="80"></otus-sheet>';
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
 
     $element.on('click', function() {
-      var otusSheetDOMElement = $('otus-sheet');
+      var otusSheetDOMElement = $('otus-player');
 
       if (otusSheetDOMElement[0]) {
         otusSheetDOMElement.remove();
@@ -992,7 +1043,8 @@
 
     function _generateOtusPreview() {
       _newScope = $scope.$new(true);
-      _newScope.surveyTemplate = _getSurveyTemplateObject();
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
       var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
       $('#survey-preview').append(content);
     }
@@ -2642,17 +2694,21 @@
     'MainContainerContentService',
     'UiBindingService',
     '$mdBottomSheet',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService',
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'WorkspaceService',
-    'NBEVENTS'
+    'NBEVENTS',
+    'otusjs.player.core.player.PlayerService'
   ];
 
-  function MainContainerController($scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet, NavigationBuilderService, NavigationBuilderScopeService, WorkspaceService, NBEVENTS) {
+  function MainContainerController(
+    $scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet,
+    NavigationBuilderScopeService, WorkspaceService, NBEVENTS, PlayerService) {
+
     var self = this;
 
     self.showQuestionsMenu = showQuestionsMenu;
     self.startNavigationBuilder = startNavigationBuilder;
+    self.startPreview = startPreview;
 
     init();
 
@@ -2680,6 +2736,10 @@
 
       NavigationBuilderScopeService.broadcast(NBEVENTS.NAVIGATION_BUILDER_ON, WorkspaceService.getSurvey());
       NavigationBuilderScopeService.onEvent(NBEVENTS.NAVIGATION_UPDATED, WorkspaceService.saveWork);
+    }
+
+    function startPreview() {
+      PlayerService.setup();
     }
   }
 }());
@@ -2845,10 +2905,11 @@
     'SheetContentService',
     'EditionPreviewService',
     'WorkspaceService',
-    '$window'
+    '$window',
+    'otusjs.model.activity.ActivityFacadeService'
   ];
 
-  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window) {
+  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window, ActivityFacadeService) {
     var self = this;
     self.EditionPreviewService = EditionPreviewService;
 
@@ -2862,6 +2923,7 @@
         EditionPreviewService.loadSurveyTemplate().then(function(template) {
           EditionPreviewService.isLoading = false;
           WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
+          ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
         });
       } else {
         $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
@@ -4816,8 +4878,8 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function createRule(when, operator, answer, isMetadata, isCustom) {
-      DataService.createRule(when, operator, answer, isMetadata, isCustom);
+    function createRule(when, operator, answer, isCustom) {
+      DataService.createRule(when, operator, answer, isCustom);
     }
 
     function deleteRule(ruleIndex) {
@@ -4836,8 +4898,8 @@
       return DataService.listAvailableWhen();
     }
 
-    function updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom) {
-      DataService.updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom);
+    function updateRule(ruleIndex, when, operator, answer, isCustom) {
+      DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
     }
   }
 })();
@@ -4978,7 +5040,7 @@
 
     function createCondition() {
       var newConditionData = {};
-      newConditionData.name = 'ROUTE_CONDITION';
+      newConditionData.name = 'ROUTE_CONDITION' + '_' + _routeData.conditions.length;
       newConditionData.rules = [];
       _routeData.conditions.push(newConditionData);
     }
@@ -5055,20 +5117,17 @@
     // Rule editor
     //-----------------------------------------------------
 
-    function createRule(when, operator, answer, isMetadata, isCustom) {
+    function createRule(when, operator, answer, isCustom) {
       var ruleData = {};
       ruleData.when = when;
+      ruleData.isMetadata = answer.isMetadata || false;
       ruleData.operator = operator;
-      ruleData.answer = answer;
-      ruleData.getAnswer = function() {
-        if (isCustom) {
-          return answer.option.label.ptBR.plainText;
-        } else {
-          return ruleData.answer;
-        }
-      };
       ruleData.isCustom = isCustom;
-      ruleData.isMetadata = isMetadata;
+      if (isCustom) {
+        ruleData.answer = answer;
+      } else {
+        ruleData.answer = answer.option.value ;
+      }
       _selectedCondition.rules.push(ruleData);
     }
 
@@ -5089,12 +5148,19 @@
       return itemList.map(RuleWhenBuilderService.build);
     }
 
-    function updateRule(ruleIndex, when, operator, answer, isMetadata, isCustom) {
+    function updateRule(ruleIndex, when, operator, answer, isCustom) {
       var ruleData = _selectedCondition.rules[ruleIndex];
       ruleData.when = when;
       ruleData.operator = operator;
-      ruleData.answer = answer;
-      ruleData.isMetadata = isMetadata;
+      if (isCustom || typeof answer === 'string') {
+        ruleData.answer = answer;
+        ruleData.isMetadata = false;
+        ruleData.isCustom = true;
+      } else {
+        ruleData.answer = answer.option.value ;
+        ruleData.isMetadata = answer.isMetadata;
+        ruleData.isCustom = false;
+      }
     }
   }
 })();
@@ -5236,12 +5302,15 @@
 
     /* Public methods */
     self.build = build;
+    self.buildCustomAnswer = buildCustomAnswer;
 
     function build(item) {
       var answers = [];
 
       if (item.objectType !== 'SingleSelectionQuestion' && item.objectType !== 'CheckboxQuestion') {
-        answers = answers.concat(getCustomAnswer());
+        answers = answers.concat(_getCustomAnswer());
+      } else if (item.options) {
+        answers = answers.concat(item.options.map(getAnswerOption));
       } else if (item.options) {
         answers = answers.concat(item.options.map(getAnswerOption));
       }
@@ -5252,17 +5321,37 @@
       return answers;
     }
 
-    function getCustomAnswer() {
+    function _getCustomAnswer() {
       return [{
         isMetadata: false,
         option: {
           label: {
             ptBR: {
               plainText: ''
-            }
+            },
+            value: null
           }
         }
       }];
+    }
+
+    function buildCustomAnswer(ruleData) {
+      if (ruleData.when.type === 'CalendarQuestion') {
+        var date = new Date(ruleData.answer);
+        var answer = date.getDate() + '/' + (date.getMonth() + 1)  + '/' + date.getFullYear();
+      }
+
+      return {
+        isMetadata: false,
+        option: {
+          label: {
+            ptBR: {
+              plainText: ruleData.answer
+            },
+            value: null
+          }
+        }
+      };
     }
 
     function getAnswerOption(option) {
@@ -5280,6 +5369,36 @@
     }
   }
 })();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .factory('otusjs.studio.navigationBuilder.RuleDataFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public methods */
+    self.createNew = createNew;
+    self.createFromRuleModel = createFromRuleModel;
+
+    function createNew() {
+      return new RuleData();
+    }
+
+    function createFromRuleModel() {
+      return new RuleData();
+    }
+
+    return self;
+  }
+
+  function RuleData() {
+    var self = this;
+  }
+}());
 
 (function() {
   'use strict';
@@ -5426,20 +5545,69 @@
 
   function service() {
     var self = this;
+    var _mapping = {};
 
     /* Public methods */
     self.build = build;
+
+    _initializeIconList();
 
     function build(item) {
       var builded = {};
 
       builded.type = item.objectType;
-      builded.icon = item.objectType;
+      builded.icon = _mapping[item.objectType];
       builded.customID = item.customID;
       builded.label = item.label;
       builded.item = item;
 
       return builded;
+    }
+
+    function _initializeIconList() {
+      _mapping.CalendarQuestion = {};
+      _mapping.CalendarQuestion.image = 'date_range';
+      _mapping.CalendarQuestion.tooltip = 'Data';
+
+      _mapping.IntegerQuestion = {};
+      _mapping.IntegerQuestion.image = 'looks_one';
+      _mapping.IntegerQuestion.tooltip = 'Número Inteiro';
+
+      _mapping.DecimalQuestion = {};
+      _mapping.DecimalQuestion.image = 'exposure_zero';
+      _mapping.DecimalQuestion.tooltip = 'Número Decimal';
+
+      _mapping.SingleSelectionQuestion = {};
+      _mapping.SingleSelectionQuestion.image = 'radio_button_checked';
+      _mapping.SingleSelectionQuestion.tooltip = 'Seleção Única';
+
+      _mapping.CheckboxQuestion = {};
+      _mapping.CheckboxQuestion.image = 'check_box';
+      _mapping.CheckboxQuestion.tooltip = 'Checkbox';
+
+      _mapping.TextQuestion = {};
+      _mapping.TextQuestion.image = 'text_format';
+      _mapping.TextQuestion.tooltip = 'Texto';
+
+      _mapping.EmailQuestion = {};
+      _mapping.EmailQuestion.image = 'email';
+      _mapping.EmailQuestion.tooltip = 'Email';
+
+      _mapping.TimeQuestion = {};
+      _mapping.TimeQuestion.image = 'access_time';
+      _mapping.TimeQuestion.tooltip = 'Hora';
+
+      _mapping.PhoneQuestion = {};
+      _mapping.PhoneQuestion.image = 'phone';
+      _mapping.PhoneQuestion.tooltip = 'Telefone';
+
+      _mapping.TextItem = {};
+      _mapping.TextItem.image = 'message';
+      _mapping.TextItem.tooltip = 'Texto';
+
+      _mapping.ImageItem = {};
+      _mapping.ImageItem.image = 'image';
+      _mapping.ImageItem.tooltip = 'Imagem';
     }
  }
 })();
@@ -5585,6 +5753,7 @@
 
   function component(RouteBuilderService) {
     var self = this;
+    var _childs = {};
 
     self.selectedRoute = [];
     self.conditions = [];
@@ -5598,13 +5767,20 @@
     self.selectCondition = selectCondition;
     self.deleteCondition = deleteCondition;
     self.readyToSave = readyToSave;
+    self.childRules = childRules;
 
     function onInit() {
+      _childs = {};
       _initializeLabels();
       RouteBuilderService.startRouteBuilding(self.originNode, self.destinationNode);
       self.isNewRoute = RouteBuilderService.isNewRoute();
       self.selectedRoute = RouteBuilderService.selectedRoute();
       self.conditions = RouteBuilderService.selectedRoute().conditions;
+
+      self.conditions.forEach(function(condition) {
+        _childs[condition.name] = [];
+      });
+
       readyToSave();
     }
 
@@ -5622,9 +5798,11 @@
 
     function createCondition() {
       RouteBuilderService.createCondition();
+      _childs[self.conditions[self.conditions.length - 1].name] = [];
     }
 
-    function deleteCondition(index) {
+    function deleteCondition(index, condition) {
+      delete _childs[condition.name];
       RouteBuilderService.deleteCondition(index);
     }
 
@@ -5639,7 +5817,9 @@
         if (!self.selectedRoute.conditions.length) {
           createCondition();
         }
-        return !!self.selectedRoute.conditions[0].rules.length;
+        return self.selectedRoute.conditions.every(function(condition) {
+          return condition.rules.length > 0;
+        });
       }
     }
 
@@ -5665,6 +5845,22 @@
         }
       };
     }
+
+    function childRules(condition) {
+      return _childs[condition.name];
+    }
+
+    self.deleteRule = function(ruleEditor) {
+      var condition = RouteBuilderService.selectedCondition();
+      var editorToDelete = _childs[condition.name].indexOf(ruleEditor);
+
+      condition.rules.forEach(function(rule, index) {
+        _childs[condition.name][index].ruleData.index = index;
+      });
+
+      RouteBuilderService.deleteRule(ruleEditor.ruleData.index);
+      _childs[condition.name].splice(ruleEditor.ruleData.index, 1);
+    }
   }
 })();
 
@@ -5675,7 +5871,11 @@
     .module('otusjs.studio.navigationBuilder.routeBuilder')
     .component('otusRuleCreator', {
       templateUrl: 'app/navigation-builder/route/editor/rule-creator-template.html',
-      controller: component
+      controller: component,
+      bindings: {
+        condition: '<',
+        conditionIndex: '<'
+      }
     });
 
   component.$inject = [
@@ -5685,7 +5885,7 @@
 
   function component(RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
-    var _customAnswer;
+    var isCustomAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -5700,7 +5900,7 @@
     function onInit() {
       _initializeWhenList();
 
-      self.isOperatorDisable = true;
+      self.isDisable = true;
       self.isAnswerDisable = true;
       self.showSaveRuleButton = true;
       self.readyToSave = _readyToSave();
@@ -5708,34 +5908,42 @@
 
     function answers(filterValue) {
       if (!filterValue) {
-        return self.answerList;
+        return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
           return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
-        return filterResult;
+        return filterResult.filter(_filter);
+      }
+    }
+
+    function _filter(element, index) {
+      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+        return true;
+      } else {
+        return index > 0;
       }
     }
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        _customAnswer = true;
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.isCustom = true;
-        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          isCustomAnswer = false;
+          self.readyToSave = false;
+        } else {
+          isCustomAnswer = true;
+          self.selectedAnswer = self.answerSearchText;
+          self.readyToSave = _readyToSave();
+        }
       }
-      console.log("_customAnswer");
-      console.log(_customAnswer);
     }
 
     function answerChange(answer) {
-      // if (!self.selectedAnswer.isCustom) {
-        _customAnswer = false;
-        console.log("passei aqui!");
+      if (!isCustomAnswer) {
+        isCustomAnswer = false;
         self.selectedAnswer = answer;
-        self.readyToSave = _readyToSave();
-      // }
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function _createAnswerItem(answerData) {
@@ -5764,14 +5972,24 @@
       self.answerList = [];
 
       if (self.selectedWhen) {
-        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();
+    }
+
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
+    function _returnFilteredOperatorList(when) {
+      var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
+        if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
+          return true;
+        }
+      });
+      return list;
     }
 
     function _initializeWhenList() {
@@ -5784,17 +6002,12 @@
       self.readyToSave = _readyToSave();
     }
 
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
-    }
-
     function saveRule() {
+      RouteBuilderService.selectCondition(self.conditionIndex);
       if (_readyToSave()) {
-        console.log("_customAnswer");
-        console.log(_customAnswer);
-        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
+        RouteBuilderService.createRule(self.selectedWhen, self.selectedOperator, self.selectedAnswer, isCustomAnswer);
       }
+      isCustomAnswer = false;
       self.whenSearchText = '';
       self.operatorSearchText = '';
       self.answerSearchText = '';
@@ -5825,7 +6038,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (isCustomAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;
@@ -5844,19 +6057,24 @@
       controller: component,
       bindings: {
         ruleData: '<',
-        ruleItemIndex: '<',
+        condition: '<',
+        conditionIndex: '<',
         onUpdate: '&'
+      },
+      require: {
+        otusRouteEditor: '^otusRouteEditor'
       }
     });
 
   component.$inject = [
+    '$element',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
     'otusjs.studio.navigationBuilder.routeBuilder.RuleAnswerBuilderService'
   ];
 
-  function component(RouteBuilderService, RuleAnswerBuilderService) {
+  function component($element, RouteBuilderService, RuleAnswerBuilderService) {
     var self = this;
-    var _customAnswer;
+    var _isCustomAnswer;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -5870,15 +6088,18 @@
     self.deleteRule = deleteRule;
 
     function onInit() {
-      _initializeWhenList();
+      self.isDisable = false;
+      self.isAnswerDisable = false;
+      self.showDeleteRuleButton = true;
 
-      self.ruleData.index = self.ruleItemIndex;
+      _initializeWhenList();
       _applyRuleDataWhen();
       _applyRuleDataOperator();
       _applyRuleDataAnswer();
-      self.isOperatorDisable = false;
-      self.isAnswerDisable = false;
-      self.showDeleteRuleButton = true;
+
+      self.$element = $element;
+      self.ruleData.index = self.otusRouteEditor.childRules(self.condition).length;
+      self.otusRouteEditor.childRules(self.condition).push(self);
     }
 
     function _applyRuleDataWhen() {
@@ -5902,45 +6123,59 @@
       });
     }
 
-    // É chamado mesmo quando é uma edição de rota
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-      console.log("self.answerList: ");
-      console.log(self.answerList);
-      console.log("self.ruleData: ");
-      console.log(self.ruleData);
       if (self.ruleData.isCustom) {
-        console.log("é custom");
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.ruleData.answer.option.label.ptBR.plainText;
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData);
       } else {
-        self.answerList.some(function(answer, index) {
-          if (answer.option.label.ptBR.plainText == self.ruleData.answer.option.label.ptBR.plainText) {
-            self.selectedAnswer = answer.option.label.ptBR.plainText;
-            return true;
-          }
-        });
+        self.selectedAnswer = self.answerList.filter(function(answer) {
+          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
+        })[0];
       }
     }
 
     function answers(filterValue) {
       if (!filterValue) {
-        return self.answerList;
+        return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
           return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
         });
-        return filterResult;
+        return filterResult.filter(_filter);
+      }
+    }
+
+    function _filter(element, index) {
+      if (self.selectedWhen) {
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          return true;
+        } else {
+          return index > 0;
+        }
       }
     }
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        _customAnswer = true;
-        self.selectedAnswer = self.answerList[0];
-        self.selectedAnswer.option.label.ptBR.plainText = self.answerSearchText;
-        self.readyToSave = _readyToSave();
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          _isCustomAnswer = false;
+          self.readyToSave = false;
+        } else {
+          _isCustomAnswer = true;
+          self.selectedAnswer = self.answerSearchText;
+          updateRule();
+          self.readyToSave = _readyToSave();
+        }
       }
+    }
+
+    function answerChange(answer) {
+      if (!_isCustomAnswer || !answer) {
+        _isCustomAnswer = false;
+        self.selectedAnswer = answer;
+        updateRule();
+      }
+      self.readyToSave = _readyToSave();
     }
 
     function whens(filterValue) {
@@ -5954,18 +6189,6 @@
       }
     }
 
-    function answerChange(answer) {
-      _customAnswer = false;
-      self.selectedAnswer = answer;
-      updateRule();
-      self.readyToSave = _readyToSave();
-    }
-
-    function parseAnswer(answer) {
-      self.answerList[0].option.label.ptBR.plainText = answer;
-      return self.answerList[0];
-    }
-
     function operatorChange(operator) {
       self.selectedOperator = operator;
       self.readyToSave = _readyToSave();
@@ -5975,31 +6198,43 @@
     function whenChange(when) {
       self.selectedWhen = when;
 
-      self.operatorList = [];
-      self.answerList = [];
+      self.answerSearchText = '';
+      self.operatorSearchText = '';
 
       if (self.selectedWhen) {
-        self.operatorList = RouteBuilderService.getOperatorListForRule(self.selectedWhen.type);
+        self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
         self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
-        self.isOperatorDisable = false;
+        self.isDisable = false;
       } else {
-        self.isOperatorDisable = true;
+        self.isDisable = true;
       }
 
       self.readyToSave = _readyToSave();
       updateRule();
     }
 
+    //TODO: Quando implementado recurso dos operadores retirados, esse método deve ser removido!
+    function _returnFilteredOperatorList(when) {
+      var list = RouteBuilderService.getOperatorListForRule(when).filter(function(element, index) {
+        if (element.label.ptBR.plainText !== 'Intervalo de valores' && element.label.ptBR.plainText !== 'Está dentro do intervalo' && element.label.ptBR.plainText !== 'Está entre os valores') {
+          return true;
+        }
+      });
+      return list;
+    }
+
     function updateRule() {
-      if (self.ruleData) {
-        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, self.selectedAnswer.isMetadata, _customAnswer);
-        self.onUpdate();
+      RouteBuilderService.selectCondition(self.conditionIndex);
+      if (self.ruleData && self.selectedAnswer) {
+        RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, _isCustomAnswer);
       }
     }
 
     function deleteRule() {
-      RouteBuilderService.deleteRule(self.ruleData.index);
-      self.onUpdate();
+      RouteBuilderService.selectCondition(self.conditionIndex);
+      self.onUpdate({
+        'ruleEditor': self
+      });
     }
 
     function _initializeWhenList() {
@@ -6032,7 +6267,7 @@
     }
 
     function _resolveRuleAnswer() {
-      if (!_customAnswer && self.selectedAnswer) {
+      if (_isCustomAnswer || self.selectedAnswer) {
         return true;
       } else {
         return false;
@@ -6286,7 +6521,7 @@
         '$window'
     ];
 
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window, ActivityFacadeService) {
         var self = this;
 
         self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
@@ -7045,46 +7280,79 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .directive('otusItemIcon', otusItemIcon);
+  angular
+    .module('editor.ui')
+    .directive('otusItemIcon', otusItemIcon);
 
-    otusItemIcon.$inject = [];
+  otusItemIcon.$inject = [];
 
-    function otusItemIcon() {
-        var ddo = {
-            scope: {
-                item: '@item',
-            },
-            templateUrl: 'app/editor/ui/survey-item-editor/item-icon/otus-item-icon-template.html',
-            retrict: 'E',
-            link: function linkFunc(scope, element, attrs) {
-                scope.type = getItemIcon(scope.item);
-            }
-        };
+  function otusItemIcon() {
+    var ddo = {
+      scope: {
+        item: '@item',
+      },
+      templateUrl: 'app/editor/ui/survey-item-editor/item-icon/otus-item-icon-template.html',
+      retrict: 'E',
+      link: function linkFunc(scope, element, attrs) {
+        scope.type = getItemIcon(scope.item);
+      }
+    };
 
-        return ddo;
-    }
+    return ddo;
+  }
 
-    function getItemIcon(objectType){
-        var mapping = {
-            CalendarQuestion : {icon : 'date_range', tooltip : 'Data'},
-            IntegerQuestion : {icon : 'looks_one', tooltip : 'Número Inteiro'},
-            DecimalQuestion : {icon : 'exposure_zero', tooltip : 'Número Decimal'},
-            SingleSelectionQuestion : {icon : 'radio_button_checked', tooltip : 'Seleção Única'},
-            CheckboxQuestion : {icon : 'check_box', tooltip : 'Checkbox'},
-            TextQuestion : {icon : 'text_format', tooltip : 'Texto'},
-            EmailQuestion : {icon : 'email', tooltip : 'Email'},
-            TimeQuestion : {icon : 'access_time', tooltip : 'Hora'},
-            PhoneQuestion : {icon : 'phone', tooltip : 'Telefone'},
-            TextItem : {icon : 'message', tooltip : 'Texto'},
-            ImageItem : {icon : 'image', tooltip : 'Imagem'}
-        };
+  function getItemIcon(objectType) {
+    var mapping = {
+      CalendarQuestion: {
+        icon: 'date_range',
+        tooltip: 'Data'
+      },
+      IntegerQuestion: {
+        icon: 'looks_one',
+        tooltip: 'Número Inteiro'
+      },
+      DecimalQuestion: {
+        icon: 'exposure_zero',
+        tooltip: 'Número Decimal'
+      },
+      SingleSelectionQuestion: {
+        icon: 'radio_button_checked',
+        tooltip: 'Seleção Única'
+      },
+      CheckboxQuestion: {
+        icon: 'check_box',
+        tooltip: 'Checkbox'
+      },
+      TextQuestion: {
+        icon: 'text_format',
+        tooltip: 'Texto'
+      },
+      EmailQuestion: {
+        icon: 'email',
+        tooltip: 'Email'
+      },
+      TimeQuestion: {
+        icon: 'access_time',
+        tooltip: 'Hora'
+      },
+      PhoneQuestion: {
+        icon: 'phone',
+        tooltip: 'Telefone'
+      },
+      TextItem: {
+        icon: 'message',
+        tooltip: 'Texto'
+      },
+      ImageItem: {
+        icon: 'image',
+        tooltip: 'Imagem'
+      }
+    };
 
-       return mapping[objectType];
-    }
+    return mapping[objectType];
+  }
 
 }());
 

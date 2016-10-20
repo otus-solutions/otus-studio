@@ -1,16 +1,16 @@
-describe('RuleDataFactory', () => {
+describe('RuleDataFactory', function() {
 
-  let UNIT_NAME = '';
-  let Mock = {};
-  let factory = {};
+  var UNIT_NAME = '';
+  var Mock = {};
+  var factory = {};
 
-  beforeEach(() => {
+  beforeEach(function() {
 
   });
 
-  describe('', () => {
+  describe('', function() {
 
-    it('', () => {
+    it('', function() {
 
     });
 

@@ -11,10 +11,16 @@
     md-item-text="when.customID"
     md-min-length="0"
     placeholder="Quando..."
-    md-menu-class="autocomplete-custom-template">
+    md-menu-class="autocomplete-custom-template"
+    ng-disabled="true">
     <md-item-template>
       <span class="item-title">
-        <otus:item-icon item="{{ when.icon }}">
+        <md-icon md-font-set="material-icons" class="material-icons">
+            {{ when.icon.image }}
+            <md-tooltip md-direction="left">
+                {{ when.icon.tooltip }}
+            </md-tooltip>
+        </md-icon>
       </span>
       <span class="item-metadata">
         <span class="item-metastat">

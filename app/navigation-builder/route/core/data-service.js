@@ -134,7 +134,7 @@
 
     function createCondition() {
       var newConditionData = {};
-      newConditionData.name = 'ROUTE_CONDITION';
+      newConditionData.name = 'ROUTE_CONDITION' + '_' + _routeData.conditions.length;
       newConditionData.rules = [];
       _routeData.conditions.push(newConditionData);
     }

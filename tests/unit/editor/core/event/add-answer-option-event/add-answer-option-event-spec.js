@@ -39,7 +39,7 @@ describe('AddAnswerOptionEventFactory', function() {
             expect(Mock.WorkspaceService.saveWork).toHaveBeenCalledWith();
         });
 
-        it('should return an instance of AnswerOption', function() {
+        xit('should return an instance of AnswerOption', function() {
             var option = event.execute(Mock.itemWidget);
 
             expect(option.constructor.name).toBe('AnswerOption');

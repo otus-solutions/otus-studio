@@ -8,6 +8,8 @@
       controller: component,
       bindings: {
         ruleData: '<',
+        condition: '<',
+        conditionIndex: '<',
         onUpdate: '&'
       },
       require: {
@@ -47,8 +49,8 @@
       _applyRuleDataAnswer();
 
       self.$element = $element;
-      self.ruleData.index = self.otusRouteEditor.childRules.length;
-      self.otusRouteEditor.childRules.push(self);
+      self.ruleData.index = self.otusRouteEditor.childRules(self.condition).length;
+      self.otusRouteEditor.childRules(self.condition).push(self);
     }
 
     function _applyRuleDataWhen() {
@@ -95,10 +97,12 @@
     }
 
     function _filter(element, index) {
-      if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
-        return true;
-      } else {
-        return index > 0;
+      if (self.selectedWhen) {
+        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+          return true;
+        } else {
+          return index > 0;
+        }
       }
     }
 
@@ -145,8 +149,8 @@
     function whenChange(when) {
       self.selectedWhen = when;
 
-      self.operatorList = [];
-      self.answerList = [];
+      self.answerSearchText = '';
+      self.operatorSearchText = '';
 
       if (self.selectedWhen) {
         self.operatorList = _returnFilteredOperatorList(self.selectedWhen.type);
@@ -171,12 +175,14 @@
     }
 
     function updateRule() {
+      RouteBuilderService.selectCondition(self.conditionIndex);
       if (self.ruleData && self.selectedAnswer) {
         RouteBuilderService.updateRule(self.ruleData.index, self.selectedWhen, self.selectedOperator, self.selectedAnswer, _isCustomAnswer);
       }
     }
 
     function deleteRule() {
+      RouteBuilderService.selectCondition(self.conditionIndex);
       self.onUpdate({
         'ruleEditor': self
       });
