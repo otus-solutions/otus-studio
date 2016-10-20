@@ -100,7 +100,7 @@
                   return deferred.promise;
                 }
 
-                function _loadFromIndexedDB() {
+                function _loadFromIndexedDB() {                   
                   var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
                   promise.then(function(result) {
                     $stateParams.template = result.template;

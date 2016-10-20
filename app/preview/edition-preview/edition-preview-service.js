@@ -26,26 +26,31 @@
       _surveyToLoad = $stateParams.template;
       if (_surveyToLoad.itemContainer.length > 0) {
         self.isLoading = true;
-        return _renderSurveyTemplate();
       }
+      return _renderSurveyTemplate();
     }
 
     function _renderSurveyTemplate() {
       var deferred = $q.defer();
-      if (_scope.$$phase) {
-        AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
-        _surveyToLoad.itemContainer.splice(0, 1);
-        if (_surveyToLoad.itemContainer.length > 0) {
-          $timeout(function() {
-            _surveyToLoad.itemContainer.forEach(function(item) {
-              AddSurveyItemEventFactory.create().load(item);
-              _scope.$digest();
-            });
+      if (!self.isLoading) {
+        deferred.reject(true);
+      } else {
+        if (_scope.$$phase) {
+          AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
+          _surveyToLoad.itemContainer.splice(0, 1);
+          if (_surveyToLoad.itemContainer.length > 0) {
+            $timeout(function() {
+              _surveyToLoad.itemContainer.forEach(function(item) {
+                AddSurveyItemEventFactory.create().load(item);
+                _scope.$digest();
+              });
+              deferred.resolve($stateParams.template);
+            }, 1000);
+          } else {
             deferred.resolve($stateParams.template);
-          }, 1000);
-        } else {
-          deferred.resolve($stateParams.template);
+          }
         }
+
       }
       return deferred.promise;
     }
