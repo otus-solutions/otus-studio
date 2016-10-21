@@ -17,7 +17,6 @@
             templateUrl: 'app/editor/ui/validation/editor/validation-editor.html',
             link: function linkFunc(scope, element) {
                 scope.widget = FillingRulesEditorWidgetFactory.create(scope, element);
-
             }
         };
 

@@ -33,8 +33,11 @@
                 scale: '<otus:scale-validator></otus:scale-validator>',
                 specials: '<otus:specials-validator></otus:specials-validator>',
                 upperCase: '<otus:upper-case-validator></otus:upper-case-validator>',
-                upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>'
-            }
+                upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>',
+                minSelected: '<otus:min-selected-validator></otus:min-selected-validator>',
+                maxSelected: '<otus:max-selected-validator></otus:max-selected-validator>',
+                quantity: '<otus:quantity-validator></otus:quantity-validator>'
+            };
 
         function create(validator) {
             return validatorsTemplates[validator];

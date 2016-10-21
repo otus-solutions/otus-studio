@@ -110,6 +110,22 @@
 
                         <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('in')">
                             <md-button ng-click="widget.addValidator('in')">Intervalo de valores</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
+
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minSelected')">
+                            <md-button ng-click="widget.addValidator('minSelected')">Mínimo de respostas</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
+
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('maxSelected')">
+                            <md-button ng-click="widget.addValidator('maxSelected')">Máximo de respostas</md-button>
+                            <md-menu-divider></md-menu-divider>
+                        </md-menu-item>
+
+                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('quantity')">
+                            <md-button ng-click="widget.addValidator('quantity')">Quantidade exata</md-button>
+                            <md-menu-divider></md-menu-divider>
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
