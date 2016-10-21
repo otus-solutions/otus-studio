@@ -28,7 +28,6 @@
         EditionPreviewService.setScope($scope);
         EditionPreviewService.loadSurveyTemplate().then(function(template) {
           EditionPreviewService.isLoading = false;
-          WorkspaceService.getSurvey().NavigationManager.generateNavigation();
           WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
           ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
         });

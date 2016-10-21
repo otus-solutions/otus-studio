@@ -50,6 +50,7 @@
         $navContainer.css('height', ($tabContainer.height() - 10) + 'px');
       });
 
+      console.log(WorkspaceService.getSurvey().NavigationManager.getNavigationList());
       NavigationBuilderScopeService.broadcast(NBEVENTS.NAVIGATION_BUILDER_ON, WorkspaceService.getSurvey());
       NavigationBuilderScopeService.onEvent(NBEVENTS.NAVIGATION_UPDATED, WorkspaceService.saveWork);
     }

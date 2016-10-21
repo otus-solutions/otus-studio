@@ -63,6 +63,7 @@
     }
 
     function _loadTemplateNavigations(templateNavigations) {
+      console.log(templateNavigations);
       _navigationMap = MapFactory.create();
       _addNodes(templateNavigations);
       _addEdges(templateNavigations);
@@ -70,7 +71,9 @@
     }
 
     function _addNodes(templateNavigations) {
+      console.log(templateNavigations);
       templateNavigations.forEach(function(navigation, index) {
+        console.log(navigation);
         var options = {};
         options.id = navigation.origin;
         options.label = navigation.origin;
@@ -80,8 +83,6 @@
         _navigationMap.createNode(options);
       });
     }
-
-
 
     function _addEdges(templateNavigations) {
       templateNavigations.forEach(function(navigation) {
