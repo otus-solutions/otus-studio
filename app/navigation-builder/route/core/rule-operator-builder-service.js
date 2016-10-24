@@ -113,11 +113,11 @@
       _lowerEqual.label.ptBR = {};
       _lowerEqual.label.ptBR.plainText = 'É menor ou igual a';
 
-      var _quantitySelected = {};
-      _quantitySelected.type = 'quantitySelected';
-      _quantitySelected.label = {};
-      _quantitySelected.label.ptBR = {};
-      _quantitySelected.label.ptBR.plainText = 'Quantidade selecionada igual a';
+      var _quantity = {};
+      _quantity.type = 'quantity';
+      _quantity.label = {};
+      _quantity.label.ptBR = {};
+      _quantity.label.ptBR.plainText = 'Quantidade selecionada igual a';
 
       var _minSelected = {};
       _minSelected.type = 'minSelected';
@@ -147,7 +147,7 @@
       _operatorMap.time = _operatorMap.date;
 
       // Multiple choice operators
-      _operatorMap.multipleChoice = Array.prototype.concat(_operatorMap.text, [_quantitySelected, _minSelected, _maxSelected]);
+      _operatorMap.multipleChoice = Array.prototype.concat(_operatorMap.text, [_quantity, _minSelected, _maxSelected]);
     }
   }
 })();

@@ -242,7 +242,7 @@ describe('RuleOperatorBuilderService', function() {
       });
 
       it('should return an array with quantitySelected opeartor', function() {
-        expect(builded[3].type).toBe('quantitySelected');
+        expect(builded[3].type).toBe('quantity');
       });
 
       it('should return an array with minSelected opeartor', function() {
