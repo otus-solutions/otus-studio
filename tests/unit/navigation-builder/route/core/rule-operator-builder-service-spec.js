@@ -241,6 +241,18 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[2].type).toBe('contains');
       });
 
+      it('should return an array with quantitySelected opeartor', function() {
+        expect(builded[3].type).toBe('quantitySelected');
+      });
+
+      it('should return an array with minSelected opeartor', function() {
+        expect(builded[4].type).toBe('minSelected');
+      });
+
+      it('should return an array with maxSelected opeartor', function() {
+        expect(builded[5].type).toBe('maxSelected');
+      });
+
     });
 
   });

@@ -113,6 +113,24 @@
       _lowerEqual.label.ptBR = {};
       _lowerEqual.label.ptBR.plainText = 'É menor ou igual a';
 
+      var _quantitySelected = {};
+      _quantitySelected.type = 'quantitySelected';
+      _quantitySelected.label = {};
+      _quantitySelected.label.ptBR = {};
+      _quantitySelected.label.ptBR.plainText = 'Quantidade selecionada igual a';
+
+      var _minSelected = {};
+      _minSelected.type = 'minSelected';
+      _minSelected.label = {};
+      _minSelected.label.ptBR = {};
+      _minSelected.label.ptBR.plainText = 'Quantidade mínima selecionada de';
+
+      var _maxSelected = {};
+      _maxSelected.type = 'maxSelected';
+      _maxSelected.label = {};
+      _maxSelected.label.ptBR = {};
+      _maxSelected.label.ptBR.plainText = 'Quantidade máxima selecionada de';
+
       // Single choice operators
       _operatorMap.singleChoice = [_notEqual, _equal];
 
@@ -129,7 +147,7 @@
       _operatorMap.time = _operatorMap.date;
 
       // Multiple choice operators
-      _operatorMap.multipleChoice = _operatorMap.text;
+      _operatorMap.multipleChoice = Array.prototype.concat(_operatorMap.text, [_quantitySelected, _minSelected, _maxSelected]);
     }
   }
 })();

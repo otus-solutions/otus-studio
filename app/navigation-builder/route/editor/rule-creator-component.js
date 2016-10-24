@@ -61,7 +61,7 @@
 
     function answerInputChange() {
       if (self.answerSearchText) {
-        if (self.selectedWhen.type == 'SingleSelectionQuestion' || self.selectedWhen.type == 'CheckboxQuestion') {
+        if (self.selectedWhen.type == 'SingleSelectionQuestion') {
           isCustomAnswer = false;
           self.readyToSave = false;
         } else {
