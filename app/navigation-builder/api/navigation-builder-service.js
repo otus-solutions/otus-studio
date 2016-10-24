@@ -63,7 +63,6 @@
     }
 
     function _loadTemplateNavigations(templateNavigations) {
-      console.log(templateNavigations);
       _navigationMap = MapFactory.create();
       _addNodes(templateNavigations);
       _addEdges(templateNavigations);
@@ -71,9 +70,12 @@
     }
 
     function _addNodes(templateNavigations) {
-      console.log(templateNavigations);
+   //    console.log(templateNavigations);
+   //    var newList = templateNavigations;
+   //    newList.push(newList.splice(1, 1)[0]);
+   //    newList.forEach(function(navigation, index) {
+      console.log(templateNavigations)
       templateNavigations.forEach(function(navigation, index) {
-        console.log(navigation);
         var options = {};
         options.id = navigation.origin;
         options.label = navigation.origin;
