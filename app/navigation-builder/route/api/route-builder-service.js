@@ -116,6 +116,10 @@
     //-----------------------------------------------------
 
     function createRule(when, operator, answer, isCustom) {
+      if (when.type == 'CheckboxQuestion') {
+        isCustom = true;
+        answer = answer.option.customOptionID;
+      }
       DataService.createRule(when, operator, answer, isCustom);
     }
 
