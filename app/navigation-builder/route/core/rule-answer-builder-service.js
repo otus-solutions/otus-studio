@@ -43,10 +43,12 @@
       }];
     }
 
-    function buildCustomAnswer(ruleData) {
+    function buildCustomAnswer(ruleData, answerList) {
       if (ruleData.when.type === 'CalendarQuestion') {
         var date = new Date(ruleData.answer);
-        var answer = date.getDate() + '/' + (date.getMonth() + 1)  + '/' + date.getFullYear();
+        var answer = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+      } else if (ruleData.when.type === 'CheckboxQuestion') {
+        return _filterAnswerCheckboxQuestion(ruleData, answerList);
       }
 
       return {
@@ -55,6 +57,26 @@
           label: {
             ptBR: {
               plainText: ruleData.answer
+            },
+            value: null
+          }
+        }
+      };
+    }
+
+    function _filterAnswerCheckboxQuestion(ruleData, answerList) {
+      var resultFilter = answerList.filter(function(element) {
+        if (element.option.customOptionID == ruleData.answer) {
+          return element;
+        }
+      });
+
+      return {
+        isMetadata: false,
+        option: {
+          label: {
+            ptBR: {
+              plainText: resultFilter[0].option.label.ptBR.plainText
             },
             value: null
           }

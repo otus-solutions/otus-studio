@@ -77,7 +77,7 @@
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
       if (self.ruleData.isCustom) {
-        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData);
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData, self.answerList);
       } else {
         self.selectedAnswer = self.answerList.filter(function(answer) {
           return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
