@@ -76,7 +76,7 @@
         option: {
           label: {
             ptBR: {
-              plainText: resultFilter[0].option.label.ptBR.plainText
+              plainText: resultFilter.length > 0 ? resultFilter[0].option.label.ptBR.plainText : ruleData.answer
             },
             value: null
           }
