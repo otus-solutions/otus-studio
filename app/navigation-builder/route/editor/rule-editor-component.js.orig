@@ -77,7 +77,11 @@
     function _applyRuleDataAnswer() {
       self.answerList = RouteBuilderService.getAnswerListForRule(self.selectedWhen.item);
       if (self.ruleData.isCustom) {
+<<<<<<< HEAD
+        self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.ruleData, self.answerList);
+=======
         self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.selectedWhen, self.ruleData, self.answerList);
+>>>>>>> 02febf936c823eedf660c309aca47d4e61ba311e
       } else {
         self.selectedAnswer = self.answerList.filter(function(answer) {
           return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);

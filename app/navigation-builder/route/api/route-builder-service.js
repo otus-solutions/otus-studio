@@ -116,11 +116,13 @@
     //-----------------------------------------------------
 
     function createRule(when, operator, answer, isCustom) {
-      if (when.type == 'CheckboxQuestion') {
+      if (when.type == 'CheckboxQuestion' && answer instanceof Object) {
         isCustom = true;
         answer = answer.option.customOptionID;
+        DataService.createRule(when, operator, answer, isCustom);
+      } else {
+        DataService.createRule(when, operator, answer, isCustom);
       }
-      DataService.createRule(when, operator, answer, isCustom);
     }
 
     function deleteRule(ruleIndex) {

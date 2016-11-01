@@ -43,11 +43,19 @@
       }];
     }
 
+<<<<<<< HEAD
+    function buildCustomAnswer(ruleData, answerList) {
+      if (ruleData.when.type === 'CalendarQuestion') {
+        var date = new Date(ruleData.answer);
+        var answer = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+      } else if (ruleData.when.type === 'CheckboxQuestion') {
+=======
     function buildCustomAnswer(when, ruleData, answerList) {
       if (when.type === 'CalendarQuestion') {
         var date = new Date(ruleData.answer);
         var answer = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
       } else if (when.type === 'CheckboxQuestion') {
+>>>>>>> 02febf936c823eedf660c309aca47d4e61ba311e
         return _filterAnswerCheckboxQuestion(ruleData, answerList);
       }
 
@@ -76,7 +84,11 @@
         option: {
           label: {
             ptBR: {
+<<<<<<< HEAD
+              plainText: resultFilter[0].option.label.ptBR.plainText
+=======
               plainText: resultFilter.length > 0 ? resultFilter[0].option.label.ptBR.plainText : ruleData.answer
+>>>>>>> 02febf936c823eedf660c309aca47d4e61ba311e
             },
             value: null
           }
