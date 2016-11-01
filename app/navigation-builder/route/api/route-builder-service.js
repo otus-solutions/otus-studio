@@ -116,7 +116,7 @@
     //-----------------------------------------------------
 
     function createRule(when, operator, answer, isCustom) {
-      if (when.type == 'CheckboxQuestion' && answer instanceof Object) {
+      if (when.type == 'CheckboxQuestion' && answer instanceof Object && !answer.isMetadata) {
         isCustom = true;
         answer = answer.option.customOptionID;
         DataService.createRule(when, operator, answer, isCustom);
