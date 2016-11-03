@@ -116,6 +116,11 @@ Page Anchor.css
   background-color: #FAFAFA;
   color: #1976D2
 }
+
+.extraction-value-frame {
+  background-color: #FAFAFA;
+  color: #e88023
+}
 .toolbar-icon {
   float: right;
   height: 45px;

@@ -63,7 +63,7 @@
                 return '<misc-item></misc-item>';
             }
         }
-
+        // TODO: Destroy the $scope of item
         function deleteSurveyItem() {
             RemoveSurveyItemEventFactory.create().execute(item);
             element.remove();

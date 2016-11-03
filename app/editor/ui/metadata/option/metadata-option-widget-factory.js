@@ -1,29 +1,29 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('MetadataOptionWidgetFactory', MetadataOptionWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('MetadataOptionWidgetFactory', MetadataOptionWidgetFactory);
 
-    function MetadataOptionWidgetFactory() {
-        var self = this;
+  function MetadataOptionWidgetFactory() {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(option, parentGroup) {
-            return new MetadataAnswerOptionWidget(option, parentGroup);
-        }
-
-        return self;
+    function create(option, parentGroup) {
+      return new MetadataAnswerOptionWidget(option, parentGroup);
     }
 
-    function MetadataAnswerOptionWidget(option, parentGroup) {
-        var self = this;
+    return self;
+  }
 
-        self.name = 'MetadataAnswerOption';
-        self.parentGroup = parentGroup;
-        self.option = option;
-    }
+  function MetadataAnswerOptionWidget(option, parentGroup) {
+    var self = this;
+
+    self.name = 'MetadataAnswerOption';
+    self.parentGroup = parentGroup;
+    self.option = option;
+  }
 
 }());
