@@ -1,11 +1,11 @@
 <md-content layout-padding>
   <md-radio-group>
-    <md-content ng-repeat="optionWidget in widget.options" layout="row" layout-align="start center">
+    <md-content ng-repeat="optionWidget in widget.options track by optionWidget.option.value" layout="row" layout-align="start center">
       <md-card>
         <md-tooltip md-direction="left">
           Valores para extração
         </md-tooltip>
-        <otus-extraction-value check-function="widget.isAvailableValue($event)" option="optionWidget.option"></otus-extraction-value>
+        <otus-extraction-value check-function="widget.isAvailableExtractionValue($event)" option="optionWidget.option"></otus-extraction-value>
       </md-card>
       <md-radio-button ng-disabled="true" value="{{optionWidget.option.value}}" aria-label="{{optionWidget.option.value}}"></md-radio-button>
       <otus:text-editor ng-model="optionWidget.option.label" placeholder="Clique para inserir o texto da opção de metadado" flex></otus:text-editor>

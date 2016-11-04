@@ -36,7 +36,7 @@
     self.getTemplate = getTemplate;
     self.addOption = addOption;
     self.removeLastOption = removeLastOption;
-    self.isAvailableValue = isAvailableValue;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
 
     _init();
 
@@ -89,8 +89,8 @@
       RemoveAnswerOptionEventFactory.create().execute(self);
     }
 
-    function isAvailableValue($event) {
-      return self.getItem().isAvailableValue($event.newValue);
+    function isAvailableExtractionValue($event) {
+      return self.getItem().isAvailableExtractionValue($event.newValue);
     }
   }
 

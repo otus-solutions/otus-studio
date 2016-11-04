@@ -39,7 +39,7 @@
     self.addOption = addOption;
     self.removeLastOption = removeLastOption;
     self.removeLastOption = removeLastOption;
-    self.isAvailableValue = isAvailableValue;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
 
     _init();
 
@@ -92,8 +92,8 @@
       self.options.splice(-1);
     }
 
-    function isAvailableValue($event) {
-      return self.getItem().metadata.isAvailableValue($event.newValue);
+    function isAvailableExtractionValue($event) {
+      return self.getItem().metadata.isAvailableExtractionValue($event.newValue);
     }
   }
 
