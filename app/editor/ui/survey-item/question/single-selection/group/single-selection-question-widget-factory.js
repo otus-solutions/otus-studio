@@ -1,93 +1,97 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('SingleSelectionQuestionWidgetFactory', SingleSelectionQuestionWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('SingleSelectionQuestionWidgetFactory', SingleSelectionQuestionWidgetFactory);
 
-    SingleSelectionQuestionWidgetFactory.$inject = [
-        'AnswerOptionWidgetFactory',
-        'AddAnswerOptionEventFactory',
-        'RemoveAnswerOptionEventFactory',
-    ];
+  SingleSelectionQuestionWidgetFactory.$inject = [
+    'AddAnswerOptionEventFactory',
+    'RemoveAnswerOptionEventFactory',
+    'AnswerOptionFactory'
+  ];
 
-    function SingleSelectionQuestionWidgetFactory(AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
-        var self = this;
+  function SingleSelectionQuestionWidgetFactory(AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory, AnswerOptionFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(scope, element) {
-            return new SingleSelectionQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory);
-        }
-
-        return self;
+    function create(scope, element) {
+      return new SingleSelectionQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory, AnswerOptionFactory);
     }
 
-    function SingleSelectionQuestionWidget(scope, element, AnswerOptionWidgetFactory, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory) {
-        var self = this;
+    return self;
+  }
 
-        self.options = [];
+  function SingleSelectionQuestionWidget(scope, element, AddAnswerOptionEventFactory, RemoveAnswerOptionEventFactory, AnswerOptionFactory) {
+    var self = this;
 
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-        self.addOption = addOption;
-        self.removeLastOption = removeLastOption;
+    /* Public methods */
+    self.getClassName = getClassName;
+    self.getUUID = getUUID;
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.getTemplate = getTemplate;
+    self.addOption = addOption;
+    self.removeLastOption = removeLastOption;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
 
-        _init();
+    _init();
 
-        function _init() {
-            if (self.getItem().options.length > 0) {
-                _loadAnswerOptions();
-            }
-        }
-
-        function getClassName() {
-            return 'SingleSelectionQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<single-selection-question></single-selection-question>';
-        }
-
-        function addOption() {
-            var newOption = AddAnswerOptionEventFactory.create().execute(self);
-            var optionWidget = AnswerOptionWidgetFactory.create(newOption, self);
-            self.options.push(optionWidget);
-        }
-
-        function _loadAnswerOptions() {
-            self.getItem().options.forEach(function(awswerOption) {
-                var optionWidget = AnswerOptionWidgetFactory.create(awswerOption, self);
-                self.options.push(optionWidget);
-            });
-        }
-
-        function removeLastOption() {
-            RemoveAnswerOptionEventFactory.create().execute(self);
-            self.options.splice(-1);
-        }
+    function _init() {
+      if (self.getItem().options.length > 0) {
+        _loadAnswerOptions();
+      }
     }
+
+    function getClassName() {
+      return 'SingleSelectionQuestionWidget';
+    }
+
+    function getUUID() {
+      return scope.uuid;
+    }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return getParent().getItem();
+    }
+
+    function getTemplate() {
+      return '<single-selection-question></single-selection-question>';
+    }
+
+    function addOption() {
+      var newOption = AddAnswerOptionEventFactory.create().execute(self);
+    }
+
+    // TODO: This method won't be necessary when the loading mode be refactored!
+    function _loadAnswerOptions() {
+      var clonedArray = angular.copy(self.getItem().options);
+      self.getItem().options = [];
+
+      clonedArray.forEach(function(answerOption) {
+        var loadedAnswerOption = AnswerOptionFactory.fromJsonObject(answerOption);
+        self.getItem().options.push(loadedAnswerOption);
+      });
+    }
+
+    function removeLastOption() {
+      RemoveAnswerOptionEventFactory.create().execute(self);
+    }
+
+    function isAvailableExtractionValue($event) {
+      return self.getItem().isAvailableExtractionValue($event.newValue);
+    }
+  }
 
 }());

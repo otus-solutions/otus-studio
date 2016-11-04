@@ -1,12 +1,18 @@
 <md-content layout-padding>
-    <md-radio-group>
-        <md-content ng-repeat="optionWidget in widget.options" layout="row" style="margin: 10px">
-            <md-radio-button value="{{optionWidget.option.value}}" aria-label="{{optionWidget.id}}" flex></md-radio-button>
-            <otus:text-editor flex="95" ng-model="optionWidget.option.label" placeholder="Clique para inserir o texto da opção de resposta"></otus:text-editor>
-        </md-content>
-    </md-radio-group>
-    <md-content>
-        <otus:button click="widget.addOption" label="Adicionar"/>
-        <otus:button click="widget.removeLastOption" label="Remover última"/>
+  <md-radio-group>
+    <md-content ng-repeat="option in widget.getItem().options track by option.value" layout="row" layout-align="start center">
+      <md-card>
+        <md-tooltip md-direction="left">
+          Valores para extração
+        </md-tooltip>
+        <otus-extraction-value check-function="widget.isAvailableExtractionValue($event)" option="option"></otus-extraction-value>
+      </md-card>
+      <md-radio-button ng-disabled="true" value="{{option.value}}" aria-label="{{option.value}}"></md-radio-button>
+      <otus:text-editor ng-model="option.label" placeholder="Clique para inserir o texto da opção de resposta" flex></otus:text-editor>
     </md-content>
+  </md-radio-group>
+  <md-content>
+    <otus:button click="widget.addOption" label="Adicionar" />
+    <otus:button click="widget.removeLastOption" label="Remover última" />
+  </md-content>
 </md-content>

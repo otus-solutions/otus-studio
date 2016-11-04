@@ -1,103 +1,107 @@
 describe('MetadataGroupWidgetFactory', function() {
-    var Mock = {};
-    var factory, metadataGroup;
+  var Mock = {};
+  var factory, metadataGroup;
 
-    beforeEach(function() {
-        module('studio');
+  beforeEach(function() {
+    module('studio');
 
-        mockElement();
+    mockElement();
 
-        inject(function(_$injector_) {
-            mockWidgetScope(_$injector_);
+    inject(function(_$injector_) {
+      mockWidgetScope(_$injector_);
 
-            factory = _$injector_.get('MetadataGroupWidgetFactory', {
-                MetadataOptionWidgetFactory: mockMetadataOptionWidgetFactory(_$injector_),
-                AddMetadataAnswerEventFactory: mockAddMetadataAnswerEventFactory(_$injector_),
-                RemoveMetadataOptionEventFactory: mockRemoveMetadataOptionEventFactory(_$injector_)
-            });
-        });
-
-        widget = factory.create(Mock.scope, Mock.element);
+      factory = _$injector_.get('MetadataGroupWidgetFactory', {
+        MetadataOptionWidgetFactory: mockMetadataOptionWidgetFactory(_$injector_),
+        AddMetadataAnswerEventFactory: mockAddMetadataAnswerEventFactory(_$injector_),
+        RemoveMetadataOptionEventFactory: mockRemoveMetadataOptionEventFactory(_$injector_)
+      });
     });
 
-    describe('Interface definition', function() {
+    widget = factory.create(Mock.scope, Mock.element);
+  });
 
-        it('should create an object with getClassName method defined', function() {
-            expect(widget.getClassName()).toEqual('MetadataGroupWidget');
-            expect(widget.getClassName).toBeDefined();
-        });
+  describe('Interface definition', function() {
 
-        it('should create an object with getUUID method defined', function() {
-            expect(widget.getUUID()).toEqual(Mock.scope.uuid);
-            expect(widget.getUUID).toBeDefined();
-        });
-
-        it('should create an object with getElement method defined', function() {
-            expect(widget.getElement()).toEqual(Mock.element);
-            expect(widget.getElement).toBeDefined();
-        });
-
-        it('should create an object with getParent method defined', function() {
-            expect(widget.getParent()).toEqual(Mock.parentWidget);
-            expect(widget.getParent).toBeDefined();
-        });
-
-        it('should create an object with getItem() method defined', function() {
-            expect(widget.getItem()).toEqual(Mock.item);
-            expect(widget.getItem).toBeDefined();
-        });
-
+    it('should create an object with getClassName method defined', function() {
+      expect(widget.getClassName()).toEqual('MetadataGroupWidget');
+      expect(widget.getClassName).toBeDefined();
     });
 
-    function mockElement() {
-        Mock.element = {};
-    }
+    it('should create an object with getUUID method defined', function() {
+      expect(widget.getUUID()).toEqual(Mock.scope.uuid);
+      expect(widget.getUUID).toBeDefined();
+    });
 
-    function mockWidgetScope($injector) {
-        Mock.scope = {
-            class: '',
-            uuid: 'uuid',
-            $parent: {
-                widget: mockParentWidget($injector)
-            },
-            $on: function() {}
-        };
+    it('should create an object with getElement method defined', function() {
+      expect(widget.getElement()).toEqual(Mock.element);
+      expect(widget.getElement).toBeDefined();
+    });
 
-        spyOn(Mock.scope, '$on');
+    it('should create an object with getParent method defined', function() {
+      expect(widget.getParent()).toEqual(Mock.parentWidget);
+      expect(widget.getParent).toBeDefined();
+    });
 
-        return Mock.scope;
-    }
+    it('should create an object with getItem() method defined', function() {
+      expect(widget.getItem()).toEqual(Mock.item);
+      expect(widget.getItem).toBeDefined();
+    });
 
-    function mockParentWidget($injector) {
-        mockItem($injector);
+    it('should create an object with isAvailableExtractionValue() method defined', function() {
+      expect(widget.isAvailableExtractionValue).toBeDefined();
+    });
 
-        Mock.parentWidget = {
-            getItem: function() {
-                return Mock.item;
-            }
-        };
+  });
 
-        return Mock.parentWidget;
-    }
+  function mockElement() {
+    Mock.element = {};
+  }
 
-    function mockMetadataOptionWidgetFactory($injector) {
-        Mock.MetadataOptionWidgetFactory = $injector.get('MetadataOptionWidgetFactory');
-        return Mock.MetadataOptionWidgetFactory;
-    }
+  function mockWidgetScope($injector) {
+    Mock.scope = {
+      class: '',
+      uuid: 'uuid',
+      $parent: {
+        widget: mockParentWidget($injector)
+      },
+      $on: function() {}
+    };
 
-    function mockAddMetadataAnswerEventFactory($injector) {
-        Mock.AddMetadataAnswerEventFactory = $injector.get('AddMetadataAnswerEventFactory');
-        return Mock.AddMetadataAnswerEventFactory;
-    }
+    spyOn(Mock.scope, '$on');
 
-    function mockRemoveMetadataOptionEventFactory($injector) {
-        Mock.RemoveMetadataOptionEventFactory = $injector.get('RemoveMetadataOptionEventFactory');
-        return Mock.RemoveMetadataOptionEventFactory;
-    }
+    return Mock.scope;
+  }
 
-    function mockItem($injector) {
-        Mock.item = $injector.get('SurveyItemFactory').create('DecimalQuestion', 'Q1');
+  function mockParentWidget($injector) {
+    mockItem($injector);
+
+    Mock.parentWidget = {
+      getItem: function() {
         return Mock.item;
-    }
+      }
+    };
+
+    return Mock.parentWidget;
+  }
+
+  function mockMetadataOptionWidgetFactory($injector) {
+    Mock.MetadataOptionWidgetFactory = $injector.get('MetadataOptionWidgetFactory');
+    return Mock.MetadataOptionWidgetFactory;
+  }
+
+  function mockAddMetadataAnswerEventFactory($injector) {
+    Mock.AddMetadataAnswerEventFactory = $injector.get('AddMetadataAnswerEventFactory');
+    return Mock.AddMetadataAnswerEventFactory;
+  }
+
+  function mockRemoveMetadataOptionEventFactory($injector) {
+    Mock.RemoveMetadataOptionEventFactory = $injector.get('RemoveMetadataOptionEventFactory');
+    return Mock.RemoveMetadataOptionEventFactory;
+  }
+
+  function mockItem($injector) {
+    Mock.item = $injector.get('SurveyItemFactory').create('DecimalQuestion', 'Q1');
+    return Mock.item;
+  }
 
 });
