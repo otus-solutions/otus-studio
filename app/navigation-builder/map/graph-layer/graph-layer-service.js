@@ -40,12 +40,11 @@
          orderedNodes.map(function(node, index) {
             node.x = index;
          });
-         console.log(orderedNodes);
          _graphLayer.loadData(orderedNodes, edges);
-      }
+      };
       self.render = _graphLayer.render;
 
-      GraphLayerEventService.setMapView(_graphLayer.mapView());
+      GraphLayerEventService.setMapView(_graphLayer.mapView());      
     }
 
     function lockPreviousNodeOf(node) {

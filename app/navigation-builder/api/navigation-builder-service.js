@@ -70,11 +70,6 @@
     }
 
     function _addNodes(templateNavigations) {
-   //    console.log(templateNavigations);
-   //    var newList = templateNavigations;
-   //    newList.push(newList.splice(1, 1)[0]);
-   //    newList.forEach(function(navigation, index) {
-      console.log(templateNavigations)
       templateNavigations.forEach(function(navigation, index) {
         var options = {};
         options.id = navigation.origin;

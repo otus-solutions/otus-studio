@@ -62,11 +62,11 @@
     function _initializeEventListeners() {
       _mapView.bind(CLICK_NODE, function(event) {
         var clickedNode = event.data.node;
-
+        console.log(clickedNode);
         if (!clickedNode.isDisabled) {
           _clickNodeListeners.forEach(function(listener) {
             listener(event);
-          })
+          });
         }
       });
 
