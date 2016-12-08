@@ -21,9 +21,9 @@ describe('MandatoryValidatorWidgetFactory', function() {
             pending();
         });
 
-        it('should start the data field as false', function() {
+        it('should start the data field as true', function() {
             expect(widget.data).toBeDefined();
-            expect(widget.data).toEqual(false);
+            expect(widget.data).toEqual(true);
         });
     });
 
