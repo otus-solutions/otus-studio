@@ -28,7 +28,7 @@
       options.color = '#A30';
       options.y = 0;
       options.label = options.id === 'BEGIN NODE' ? 'Início' : 'Fim';
-      options.isDisabled = true;
+      options.isDisabled = options.id === 'BEGIN NODE' ? true : false;
       return new Node(options);
     }
 
