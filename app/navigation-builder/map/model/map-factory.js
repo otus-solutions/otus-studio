@@ -13,7 +13,7 @@
   var Inject = {
     NodeFactory: {},
     EdgeFactory: {}
-  }
+  };
 
   function factory(NodeFactory, EdgeFactory) {
     var self = this;

@@ -34,10 +34,17 @@
     function initialize() {
       _graphLayer = GraphLayerFactory.create('map-view');
 
-      self.loadData = _graphLayer.loadData;
+      self.loadData = function(nodes, edges) {
+         var orderedNodes = [].concat(nodes);
+         orderedNodes.push(orderedNodes.splice(1, 1)[0]);
+         orderedNodes.map(function(node, index) {
+            node.x = index;
+         });
+         _graphLayer.loadData(orderedNodes, edges);
+      };
       self.render = _graphLayer.render;
 
-      GraphLayerEventService.setMapView(_graphLayer.mapView());
+      GraphLayerEventService.setMapView(_graphLayer.mapView());      
     }
 
     function lockPreviousNodeOf(node) {

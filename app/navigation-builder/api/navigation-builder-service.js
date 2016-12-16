@@ -59,7 +59,7 @@
     }
 
     function reloadMapData() {
-      _loadTemplateNavigations(_survey.NavigationManager.getNavigationList())
+      _loadTemplateNavigations(_survey.NavigationManager.getNavigationList());
     }
 
     function _loadTemplateNavigations(templateNavigations) {

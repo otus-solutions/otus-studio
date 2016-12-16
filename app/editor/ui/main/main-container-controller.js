@@ -36,7 +36,6 @@
     function showQuestionsMenu() {
       $mdBottomSheet.show({
         templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
-        //disableBackdrop: true,
         disableParentScroll: false
       });
     }

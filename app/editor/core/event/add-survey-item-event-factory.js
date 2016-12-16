@@ -11,24 +11,25 @@
         'WidgetService',
         'SheetContentService',
         'AddSurveyItemService',
+        'LoadSurveyItemService',
         'PageAnchorService',
         '$timeout'
     ];
 
-    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
+    function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout);
+            return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout);
         }
 
         return self;
     }
 
-    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, PageAnchorService, $timeout) {
+    function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
         var self = this;
 
         self.execute = execute;
@@ -44,7 +45,7 @@
         }
 
         function load(itemToLoad) {
-            var newItem = AddSurveyItemService.execute(itemToLoad.objectType, WorkspaceService.getSurvey());
+            var newItem = LoadSurveyItemService.execute(itemToLoad, WorkspaceService.getSurvey());
             //copy data from itemToLoad to newItem
             if (itemToLoad.customID) {
                 newItem.customID = itemToLoad.customID;

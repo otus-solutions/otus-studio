@@ -13,7 +13,22 @@
     self.createForAlterantivePath = createForAlterantivePath;
 
     function create(options) {
-      options.color = options.isOrphan ? '#571616' : '#616161';
+      var initialNodes = ['BEGIN NODE', 'END NODE'];
+      var node;
+      if (initialNodes.indexOf(options.id) > -1) {
+        node = _createInitialNode(options);
+      } else {
+        options.color = options.isOrphan ? '#571616' : '#616161';
+        node = new Node(options);
+      }
+      return node;
+    }
+
+    function _createInitialNode(options) {
+      options.color = '#A30';
+      options.y = 0;
+      options.label = options.id === 'BEGIN NODE' ? 'Início' : 'Fim';
+      options.isDisabled = options.id === 'BEGIN NODE' ? true : false;
       return new Node(options);
     }
 
@@ -38,6 +53,7 @@
     this.inNeighbors = [];
     this.outNeighbors = [];
 
+    this.isDisabled = options.isDisabled || false;
     this.index = options.index;
     this.id = options.id;
     this.label = options.label;
@@ -94,7 +110,7 @@
         this.y = myDefaultParentY;
       } else {
         var inCount = this.inNeighbors.length;
-        this.y = ( (inCount) / ( !(inCount % 2) ? 1 : 2) ) * ( -1 );
+        this.y = ((inCount) / (!(inCount % 2) ? 1 : 2)) * (-1);
       }
     }
 
