@@ -355,3 +355,18 @@ survey-template md-card:focus {
     min-height: 12vh;
     max-height: 24vh !important;
 }
+
+/* Player Integration */
+
+.player-cover, .player-back-cover, .cover-content{
+  background-color: #f9f9f9 !important;
+}
+
+.player-cover .cover-content, .player-back-cover .cover-content{
+  margin-top:15%;
+}
+
+#survey-preview{
+  margin-top:10px;
+}
+
