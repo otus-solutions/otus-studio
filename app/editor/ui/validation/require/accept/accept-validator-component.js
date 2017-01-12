@@ -3,7 +3,7 @@
 
   angular
     .module('editor.ui')
-    .component('acceptValidator', {
+    .component('otusAcceptValidator', {
       controller: Controller,
       templateUrl: 'app/editor/ui/validation/require/accept/accept-validator.html'
     });
