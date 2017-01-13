@@ -5,7 +5,7 @@
     .module('editor.ui')
     .component('otusAcceptValidator', {
       controller: Controller,
-      templateUrl: 'app/editor/ui/validation/require/accept/accept-validator.html'
+      templateUrl: 'app/editor/ui/flag/accept/accept-validator.html'
     });
 
   Controller.$inject = [];

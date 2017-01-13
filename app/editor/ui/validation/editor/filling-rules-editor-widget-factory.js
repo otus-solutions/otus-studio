@@ -50,7 +50,6 @@
                 _loadOptions();
             } else {
                 addValidator('mandatory');
-                addValidator('accept');
             }
         }
         var showList;
@@ -79,7 +78,6 @@
         }
 
         function addValidator(validator) {
-          console.log(validator);
             AddFillingRulesEventFactory.create().execute(getItem(), validator);
             appendFillingRules(validator);
         }

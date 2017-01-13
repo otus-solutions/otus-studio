@@ -36,8 +36,7 @@
                 upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>',
                 minSelected: '<otus:min-selected-validator></otus:min-selected-validator>',
                 maxSelected: '<otus:max-selected-validator></otus:max-selected-validator>',
-                quantity: '<otus:quantity-validator></otus:quantity-validator>',
-                accept: '<otus:accept-validator></otus:accept-validator>'
+                quantity: '<otus:quantity-validator></otus:quantity-validator>'
             };
 
         function create(validator) {
