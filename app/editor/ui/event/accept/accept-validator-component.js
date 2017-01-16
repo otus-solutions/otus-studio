@@ -4,7 +4,7 @@
   angular
     .module('editor.ui')
     .component('otusAcceptValidator', {
-      templateUrl: 'app/editor/ui/flag/accept/accept-validator.html',
+      templateUrl: 'app/editor/ui/event/accept/accept-validator.html',
       controller: Controller,
       bindings: {
         item: '<'
@@ -27,7 +27,6 @@
       } else {
         delete self.item.fillingRules.options.accept;
       }
-      console.log(self.item);
     }
 
   }
