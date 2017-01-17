@@ -11,24 +11,31 @@
       }
     });
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'AddFillingRulesEventFactory'
+  ];
 
-  function Controller(scope) {
+  function Controller(AddFillingRulesEventFactory) {
 
     var self = this;
-    self.isDisabled = false;
+    self.whoAmI = 'accept';
+    self.data;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.updateData = updateData;
 
-    function updateData() {
-      if (self.isDisabled) {
-        self.item.fillingRules.options.accept = true;
-      } else {
-        delete self.item.fillingRules.options.accept;
-      }
+    function onInit() {
+      self.data = self.item.fillingRules.options.accept.data.reference;
     }
 
+    function updateData() {
+      if (self.data) {
+        AddFillingRulesEventFactory.create().execute(self.item, self.whoAmI);
+      } else {
+        //RemoveFillingRulesEventFactory.create().execute(self, self.whoAmI);
+      }
+    }
   }
 
 }());

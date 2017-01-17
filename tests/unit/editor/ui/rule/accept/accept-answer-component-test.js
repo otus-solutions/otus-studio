@@ -10,14 +10,14 @@ describe('otusAcceptAnswer', function() {
 
   describe('updateData method', function() {
 
-    it('should add object accept in options of fillingRules when isDisabled is true', function() {
+    xit('should add object accept in options of fillingRules when isDisabled is true', function() {
 
       var component = $componentController('otusAcceptAnswer', null, mockBinding());
       component.isDisabled = true;
       expect(self.item.fillingRules.options.accept).toEqual(true);
     });
 
-    it('should removed object accept in options of fillingRules when isDisabled is true', function() {
+    xit('should removed object accept in options of fillingRules when isDisabled is true', function() {
 
       var component = $componentController('otusAcceptAnswer', null, mockBinding());
       component.isDisabled = false;
