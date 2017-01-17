@@ -3,8 +3,8 @@
 
   angular
     .module('editor.ui')
-    .component('otusAcceptValidator', {
-      templateUrl: 'app/editor/ui/event/accept/accept-validator.html',
+    .component('otusAcceptAnswer', {
+      templateUrl: 'app/editor/ui/rule/accept/accept-answer.html',
       controller: Controller,
       bindings: {
         item: '<'

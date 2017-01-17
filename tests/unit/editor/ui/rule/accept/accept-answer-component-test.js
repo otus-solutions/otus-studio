@@ -1,4 +1,4 @@
-describe('otusAcceptValidator', function() {
+describe('otusAcceptAnswer', function() {
 
   var $componentController;
   var Mock = {};
@@ -12,14 +12,14 @@ describe('otusAcceptValidator', function() {
 
     it('should add object accept in options of fillingRules when isDisabled is true', function() {
 
-      var component = $componentController('otusAcceptValidator', null, mockBinding());
+      var component = $componentController('otusAcceptAnswer', null, mockBinding());
       component.isDisabled = true;
       expect(self.item.fillingRules.options.accept).toEqual(true);
     });
 
     it('should removed object accept in options of fillingRules when isDisabled is true', function() {
 
-      var component = $componentController('otusAcceptValidator', null, mockBinding());
+      var component = $componentController('otusAcceptAnswer', null, mockBinding());
       component.isDisabled = false;
       expect(self.item.fillingRules.options.accept).toEqual(false);
     });
