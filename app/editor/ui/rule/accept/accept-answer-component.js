@@ -12,30 +12,50 @@
     });
 
   Controller.$inject = [
-    'AddFillingRulesEventFactory'
+    'AddFillingRulesEventFactory',
+    'RemoveFillingRulesEventFactory',
+    'UpdateFillingRulesEventFactory'
   ];
 
-  function Controller(AddFillingRulesEventFactory) {
+  function Controller(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, UpdateFillingRulesEventFactory) {
 
     var self = this;
-    self.whoAmI = 'accept';
-    self.data;
+    var whoAmI = 'accept';
 
     /* Public methods */
+    self.data;
     self.$onInit = onInit;
     self.updateData = updateData;
+    self.getItem = getItem;
 
     function onInit() {
-      self.data = self.item.fillingRules.options.accept.data.reference;
+      console.log(self.item);
+      if (self.item.fillingRules.options.accept == undefined) {
+        self.data = false;
+      } else {
+        self.data = self.item.fillingRules.options.accept.data.reference;
+        updateData();
+      }
     }
 
     function updateData() {
       if (self.data) {
-        AddFillingRulesEventFactory.create().execute(self.item, self.whoAmI);
+        AddFillingRulesEventFactory.create().execute(self.item, whoAmI);
+        _getRuleType().data.reference = self.data;
+        UpdateFillingRulesEventFactory.create().execute();
       } else {
-        //RemoveFillingRulesEventFactory.create().execute(self, self.whoAmI);
+        RemoveFillingRulesEventFactory.create().execute(self, whoAmI);
       }
     }
+
+    function _getRuleType() {
+      return self.item.fillingRules.options.accept;
+    }
+
+    function getItem() {
+      return self.item;
+    }
+
   }
 
 }());

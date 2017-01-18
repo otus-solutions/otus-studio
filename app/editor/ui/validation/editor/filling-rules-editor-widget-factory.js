@@ -92,7 +92,6 @@
 
         function deleteValidator(validator) {
             showList.push(validator);
-            console.log(self);
             RemoveFillingRulesEventFactory.create().execute(self, validator);
         }
 
