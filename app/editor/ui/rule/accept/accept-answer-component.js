@@ -29,7 +29,6 @@
     self.getItem = getItem;
 
     function onInit() {
-      console.log(self.item);
       if (self.item.fillingRules.options.accept == undefined) {
         self.data = false;
       } else {
