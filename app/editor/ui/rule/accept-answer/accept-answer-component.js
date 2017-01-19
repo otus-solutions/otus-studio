@@ -4,7 +4,7 @@
   angular
     .module('editor.ui')
     .component('otusAcceptAnswer', {
-      templateUrl: 'app/editor/ui/rule/accept/accept-answer.html',
+      templateUrl: 'app/editor/ui/rule/accept-answer/accept-answer.html',
       controller: Controller,
       bindings: {
         item: '<'

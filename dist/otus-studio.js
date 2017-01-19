@@ -26,7 +26,32 @@
 (function() {
     'use strict';
 
-    angular.module('studio.dashboard', []);
+    angular.module('studio.authenticator', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
+
+    function LoginController($scope, DashboardStateService, AuthenticationService) {
+        var self = this;
+        self.authenticate = authenticate;
+        self.visitAccess = visitAccess;
+
+        function authenticate(user) {
+            AuthenticationService.login(user);
+        }
+
+        function visitAccess() {
+            DashboardStateService.goToHome();
+        }
+    }
 
 }());
 
@@ -246,6 +271,13 @@
 (function() {
     'use strict';
 
+    angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
+    'use strict';
+
     angular
         .module('editor', [
             'editor.core',
@@ -333,38 +365,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular.module('studio.authenticator', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .controller('LoginController', LoginController);
-
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
-
-    function LoginController($scope, DashboardStateService, AuthenticationService) {
-        var self = this;
-        self.authenticate = authenticate;
-        self.visitAccess = visitAccess;
-
-        function authenticate(user) {
-            AuthenticationService.login(user);
-        }
-
-        function visitAccess() {
-            DashboardStateService.goToHome();
-        }
-    }
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -406,6 +406,76 @@
     'use strict';
 
     angular.module('preview', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .service('AuthenticationService', AuthenticationService);
+
+    AuthenticationService.$inject = ['LogoutDialogService',
+        'DashboardStateService',
+        'RestResourceService',
+        '$mdToast',
+        '$window'
+    ];
+
+    function AuthenticationService(LogoutDialogService, DashboardStateService, RestResourceService, $mdToast, $window) {
+        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
+        var self = this;
+        self.logout = logout;
+        self.login = login;
+
+        function logout() {
+            LogoutDialogService.showDialog()
+                .onConfirm(function() {
+                    invalidateSession(RestResourceService);
+                });
+        }
+
+        function invalidateSession(domainRestResourceService) {
+            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
+
+            if (!domainRestResourceService.isLogged()) {
+                invalidateSessionVisitant();
+            } else {
+                invalidateSessionLoggedUser(authenticatorResource);
+            }
+        }
+
+        function invalidateSessionLoggedUser(authenticatorResource) {
+            authenticatorResource.invalidate(function(response) {
+                DashboardStateService.logout();
+                $window.sessionStorage.clear();
+            });
+        }
+
+        function invalidateSessionVisitant() {
+            $window.sessionStorage.clear();
+            DashboardStateService.logout();
+        }
+
+        function login(user) {
+            RestResourceService.setUrl(user.domain);
+            var authenticatorResource = RestResourceService.getAuthenticatorResource();
+
+            authenticatorResource.authenticate(user, function(response) {
+                RestResourceService.setSecurityToken(response.data);
+
+                if (!response.hasErrors) {
+                    DashboardStateService.goToHome();
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(LOGIN_ERROR_MESSAGE)
+                    );
+                }
+            });
+        }
+    }
 
 }());
 
@@ -866,76 +936,6 @@
     'use strict';
 
     angular.module('otusjs.studio.navigationBuilder.routeBuilder', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .service('AuthenticationService', AuthenticationService);
-
-    AuthenticationService.$inject = ['LogoutDialogService',
-        'DashboardStateService',
-        'RestResourceService',
-        '$mdToast',
-        '$window'
-    ];
-
-    function AuthenticationService(LogoutDialogService, DashboardStateService, RestResourceService, $mdToast, $window) {
-        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
-        var self = this;
-        self.logout = logout;
-        self.login = login;
-
-        function logout() {
-            LogoutDialogService.showDialog()
-                .onConfirm(function() {
-                    invalidateSession(RestResourceService);
-                });
-        }
-
-        function invalidateSession(domainRestResourceService) {
-            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
-
-            if (!domainRestResourceService.isLogged()) {
-                invalidateSessionVisitant();
-            } else {
-                invalidateSessionLoggedUser(authenticatorResource);
-            }
-        }
-
-        function invalidateSessionLoggedUser(authenticatorResource) {
-            authenticatorResource.invalidate(function(response) {
-                DashboardStateService.logout();
-                $window.sessionStorage.clear();
-            });
-        }
-
-        function invalidateSessionVisitant() {
-            $window.sessionStorage.clear();
-            DashboardStateService.logout();
-        }
-
-        function login(user) {
-            RestResourceService.setUrl(user.domain);
-            var authenticatorResource = RestResourceService.getAuthenticatorResource();
-
-            authenticatorResource.authenticate(user, function(response) {
-                RestResourceService.setSecurityToken(response.data);
-
-                if (!response.hasErrors) {
-                    DashboardStateService.goToHome();
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(LOGIN_ERROR_MESSAGE)
-                    );
-                }
-            });
-        }
-    }
 
 }());
 
@@ -3919,71 +3919,6 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .component('otusMessengerInstructor', {
-      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    '$scope',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function component($scope, scopeService) {
-    var self = this;
-
-    self.message = {};
-    self.isVisible = false
-
-    /* Component cicle methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
-        self.isVisible = true;
-        self.message = message;
-      });
-
-      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
-        self.isVisible = false;
-      });
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function service(scopeService) {
-    var self = this;
-
-    /* Public methods */
-    self.showMessenger = showMessenger;
-    self.clearMessenger = clearMessenger;
-
-    function showMessenger(message) {
-      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
-    }
-
-    function clearMessenger() {
-      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
     .module('otusjs.studio.navigationBuilder')
     .component('otusNavigationMap', {
       templateUrl: 'app/navigation-builder/map/component/map-template.html',
@@ -4468,155 +4403,6 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.routeBuilder')
-    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.routeBuilder.DataService',
-    'otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService',
-    'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
-  ];
-
-  function service(moduleScope, DataService, ModuleEventService, UiEventsService) {
-    var self = this;
-    var _isNewRoute;
-
-    /* Public methods */
-    // Service management
-    self.activate = activate;
-    self.deactivate = deactivate;
-    // Route editor
-    self.createCondition = createCondition;
-    self.deleteCondition = deleteCondition;
-    self.isNewRoute = isNewRoute;
-    self.saveRouteBuilding = saveRouteBuilding;
-    self.selectCondition = selectCondition;
-    self.selectedCondition = selectedCondition;
-    self.selectedRoute = selectedRoute;
-    self.startRouteBuilding = startRouteBuilding;
-    self.cancelRouteBuilding = cancelRouteBuilding;
-    self.deleteRoute = deleteRoute;
-    // Rule editor
-    self.createRule = createRule;
-    self.deleteRule = deleteRule;
-    self.getAnswerListForRule = getAnswerListForRule;
-    self.getOperatorListForRule = getOperatorListForRule;
-    self.getWhenListForRule = getWhenListForRule;
-    self.updateRule = updateRule;
-
-    //-----------------------------------------------------
-    // Service management
-    //-----------------------------------------------------
-
-    function activate(survey) {
-      DataService.activate(survey);
-      UiEventsService.activate();
-      ModuleEventService.activate();
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_ON);
-    }
-
-    function deactivate() {
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
-      DataService.deactivate();
-      ModuleEventService.deactivate();
-      UiEventsService.deactivate();
-    }
-
-    //-----------------------------------------------------
-    // Route editor
-    //-----------------------------------------------------
-
-    function createCondition() {
-      DataService.createCondition();
-    }
-
-    function isNewRoute() {
-      return _isNewRoute;
-    }
-
-    function deleteCondition(index) {
-      DataService.deleteCondition(index);
-    }
-
-    function saveRouteBuilding() {
-      DataService.apply();
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED);
-    }
-
-    function deleteRoute() {
-      DataService.deleteRoute();
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_DELETED);
-    }
-
-    function selectCondition(index) {
-      DataService.selectCondition(index);
-    }
-
-    function selectedCondition() {
-      return DataService.selectedCondition();
-    }
-
-    function selectedRoute() {
-      return DataService.selectedRoute();
-    }
-
-    function startRouteBuilding(origin, destination) {
-      if (DataService.routeExists(origin, destination)) {
-        DataService.useCurrentRouteData();
-        _isNewRoute = false;
-      } else {
-        DataService.initializeRouteData();
-        DataService.createCondition();
-        _isNewRoute = true;
-      }
-      DataService.selectCondition(0);
-    }
-
-    function cancelRouteBuilding() {
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED);
-    }
-
-    //-----------------------------------------------------
-    // Rule editor
-    //-----------------------------------------------------
-
-    function createRule(when, operator, answer, isCustom) {
-      if (when.type == 'CheckboxQuestion' && answer instanceof Object && !answer.isMetadata) {
-        isCustom = true;
-        answer = answer.option.customOptionID;
-        DataService.createRule(when, operator, answer, isCustom);
-      } else {
-        DataService.createRule(when, operator, answer, isCustom);
-      }
-    }
-
-    function deleteRule(ruleIndex) {
-      DataService.deleteRule(ruleIndex);
-    }
-
-    function getAnswerListForRule(question) {
-      return DataService.listAvailableAnswer(question);
-    }
-
-    function getOperatorListForRule(itemType) {
-      return DataService.listAvailableOperator(itemType);
-    }
-
-    function getWhenListForRule() {
-      return DataService.listAvailableWhen();
-    }
-
-    function updateRule(ruleIndex, when, operator, answer, isCustom) {
-      DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
     .module('otusjs.studio.navigationBuilder')
     .factory('otusjs.studio.navigationBuilder.EdgeFactory', factory);
 
@@ -4938,6 +4724,220 @@
     }
   }
 }());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function component($scope, scopeService) {
+    var self = this;
+
+    self.message = {};
+    self.isVisible = false
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
+
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service(scopeService) {
+    var self = this;
+
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
+    }
+
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.routeBuilder')
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.routeBuilder.DataService',
+    'otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService',
+    'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService'
+  ];
+
+  function service(moduleScope, DataService, ModuleEventService, UiEventsService) {
+    var self = this;
+    var _isNewRoute;
+
+    /* Public methods */
+    // Service management
+    self.activate = activate;
+    self.deactivate = deactivate;
+    // Route editor
+    self.createCondition = createCondition;
+    self.deleteCondition = deleteCondition;
+    self.isNewRoute = isNewRoute;
+    self.saveRouteBuilding = saveRouteBuilding;
+    self.selectCondition = selectCondition;
+    self.selectedCondition = selectedCondition;
+    self.selectedRoute = selectedRoute;
+    self.startRouteBuilding = startRouteBuilding;
+    self.cancelRouteBuilding = cancelRouteBuilding;
+    self.deleteRoute = deleteRoute;
+    // Rule editor
+    self.createRule = createRule;
+    self.deleteRule = deleteRule;
+    self.getAnswerListForRule = getAnswerListForRule;
+    self.getOperatorListForRule = getOperatorListForRule;
+    self.getWhenListForRule = getWhenListForRule;
+    self.updateRule = updateRule;
+
+    //-----------------------------------------------------
+    // Service management
+    //-----------------------------------------------------
+
+    function activate(survey) {
+      DataService.activate(survey);
+      UiEventsService.activate();
+      ModuleEventService.activate();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_ON);
+    }
+
+    function deactivate() {
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+      DataService.deactivate();
+      ModuleEventService.deactivate();
+      UiEventsService.deactivate();
+    }
+
+    //-----------------------------------------------------
+    // Route editor
+    //-----------------------------------------------------
+
+    function createCondition() {
+      DataService.createCondition();
+    }
+
+    function isNewRoute() {
+      return _isNewRoute;
+    }
+
+    function deleteCondition(index) {
+      DataService.deleteCondition(index);
+    }
+
+    function saveRouteBuilding() {
+      DataService.apply();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_SAVED);
+    }
+
+    function deleteRoute() {
+      DataService.deleteRoute();
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_DELETED);
+    }
+
+    function selectCondition(index) {
+      DataService.selectCondition(index);
+    }
+
+    function selectedCondition() {
+      return DataService.selectedCondition();
+    }
+
+    function selectedRoute() {
+      return DataService.selectedRoute();
+    }
+
+    function startRouteBuilding(origin, destination) {
+      if (DataService.routeExists(origin, destination)) {
+        DataService.useCurrentRouteData();
+        _isNewRoute = false;
+      } else {
+        DataService.initializeRouteData();
+        DataService.createCondition();
+        _isNewRoute = true;
+      }
+      DataService.selectCondition(0);
+    }
+
+    function cancelRouteBuilding() {
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED);
+    }
+
+    //-----------------------------------------------------
+    // Rule editor
+    //-----------------------------------------------------
+
+    function createRule(when, operator, answer, isCustom) {
+      if (when.type == 'CheckboxQuestion' && answer instanceof Object && !answer.isMetadata) {
+        isCustom = true;
+        answer = answer.option.customOptionID;
+        DataService.createRule(when, operator, answer, isCustom);
+      } else {
+        DataService.createRule(when, operator, answer, isCustom);
+      }
+    }
+
+    function deleteRule(ruleIndex) {
+      DataService.deleteRule(ruleIndex);
+    }
+
+    function getAnswerListForRule(question) {
+      return DataService.listAvailableAnswer(question);
+    }
+
+    function getOperatorListForRule(itemType) {
+      return DataService.listAvailableOperator(itemType);
+    }
+
+    function getWhenListForRule() {
+      return DataService.listAvailableWhen();
+    }
+
+    function updateRule(ruleIndex, when, operator, answer, isCustom) {
+      DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
+    }
+  }
+})();
 
 (function() {
   'use strict';
@@ -6490,6 +6490,79 @@
     'use strict';
 
     angular
+        .module('studio.dashboard')
+        .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
+
+    NewSurveyFormDialogService.$inject = ['$mdDialog'];
+
+    function NewSurveyFormDialogService($mdDialog) {
+        var self = this;
+
+        /* Public interface */
+        self.showDialog = showDialog;
+
+        init();
+
+        function init() {
+            self.dialogSettings = {
+                parent: angular.element(document.body),
+                templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
+                controller: DialogController,
+                controllerAs: 'controller',
+                openFrom: '#system-toolbar',
+                closeTo: {
+                    bottom: 0
+                }
+            };
+        }
+
+        function showDialog() {
+            $mdDialog
+                .show(self.dialogSettings)
+                .then(
+                    forwardSuccessfulExecution,
+                    forwardUnsuccessfulExecution
+                );
+
+            return {
+                onConfirm: function (callback) {
+                    self.callback = callback;
+                }
+            };
+        }
+
+        function forwardSuccessfulExecution(response) {
+            if (response.action == 'create') {
+                if (self.callback) self.callback(response.data);
+            }
+        }
+
+        function forwardUnsuccessfulExecution(error) {
+        }
+    }
+
+    function DialogController($mdDialog) {
+        var self = this;
+
+        /* Public interface */
+        self.cancel = cancel;
+        self.createSurveyForm = createSurveyForm;
+
+        function cancel(response) {
+            $mdDialog.hide(response);
+        }
+
+        function createSurveyForm(response) {
+            $mdDialog.hide(response);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('surveyTemplates')
         .component('surveyTemplate', {
             templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
@@ -6623,79 +6696,6 @@
     }
 
 })();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
-
-    NewSurveyFormDialogService.$inject = ['$mdDialog'];
-
-    function NewSurveyFormDialogService($mdDialog) {
-        var self = this;
-
-        /* Public interface */
-        self.showDialog = showDialog;
-
-        init();
-
-        function init() {
-            self.dialogSettings = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
-                controller: DialogController,
-                controllerAs: 'controller',
-                openFrom: '#system-toolbar',
-                closeTo: {
-                    bottom: 0
-                }
-            };
-        }
-
-        function showDialog() {
-            $mdDialog
-                .show(self.dialogSettings)
-                .then(
-                    forwardSuccessfulExecution,
-                    forwardUnsuccessfulExecution
-                );
-
-            return {
-                onConfirm: function (callback) {
-                    self.callback = callback;
-                }
-            };
-        }
-
-        function forwardSuccessfulExecution(response) {
-            if (response.action == 'create') {
-                if (self.callback) self.callback(response.data);
-            }
-        }
-
-        function forwardUnsuccessfulExecution(error) {
-        }
-    }
-
-    function DialogController($mdDialog) {
-        var self = this;
-
-        /* Public interface */
-        self.cancel = cancel;
-        self.createSurveyForm = createSurveyForm;
-
-        function cancel(response) {
-            $mdDialog.hide(response);
-        }
-
-        function createSurveyForm(response) {
-            $mdDialog.hide(response);
-        }
-    }
-
-}());
 
 (function() {
     'use strict';
@@ -7453,6 +7453,67 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('otusAcceptAnswer', {
+      templateUrl: 'app/editor/ui/rule/accept-answer/accept-answer.html',
+      controller: Controller,
+      bindings: {
+        item: '<'
+      }
+    });
+
+  Controller.$inject = [
+    'AddFillingRulesEventFactory',
+    'RemoveFillingRulesEventFactory',
+    'UpdateFillingRulesEventFactory'
+  ];
+
+  function Controller(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, UpdateFillingRulesEventFactory) {
+
+    var self = this;
+    var whoAmI = 'accept';
+
+    /* Public methods */
+    self.data;
+    self.$onInit = onInit;
+    self.updateData = updateData;
+    self.getItem = getItem;
+
+    function onInit() {
+      if (self.item.fillingRules.options.accept == undefined) {
+        self.data = false;
+      } else {
+        self.data = self.item.fillingRules.options.accept.data.reference;
+        updateData();
+      }
+    }
+
+    function updateData() {
+      if (self.data) {
+        AddFillingRulesEventFactory.create().execute(self.item, whoAmI);
+        _getRuleType().data.reference = self.data;
+        UpdateFillingRulesEventFactory.create().execute();
+      } else {
+        RemoveFillingRulesEventFactory.create().execute(self, whoAmI);
+      }
+    }
+
+    function _getRuleType() {
+      return self.item.fillingRules.options.accept;
+    }
+
+    function getItem() {
+      return self.item;
+    }
+
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -8154,6 +8215,84 @@
 
     angular
         .module('editor.ui')
+        .directive('calendarQuestion', directive);
+
+    function directive() {
+        var ddo = {
+            scope: {},
+            templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('CalendarQuestionWidgetFactory', CalendarQuestionWidgetFactory);
+
+    function CalendarQuestionWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new CalendarQuestionWidget(scope, element);
+        }
+
+        return self;
+    }
+
+    function CalendarQuestionWidget(scope, element) {
+        var self = this;
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+
+        function getClassName() {
+            return 'CalendarQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<calendar-question></calendar-question>';
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('checkboxQuestion', checkboxQuestion);
 
     checkboxQuestion.$inject = [
@@ -8274,84 +8413,6 @@
             return checkboxID;
         }
 
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('calendarQuestion', directive);
-
-    function directive() {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('CalendarQuestionWidgetFactory', CalendarQuestionWidgetFactory);
-
-    function CalendarQuestionWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new CalendarQuestionWidget(scope, element);
-        }
-
-        return self;
-    }
-
-    function CalendarQuestionWidget(scope, element) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-
-
-        function getClassName() {
-            return 'CalendarQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<calendar-question></calendar-question>';
-        }
     }
 
 }());
@@ -8503,6 +8564,83 @@
 
     angular
         .module('editor.ui')
+        .directive('emailQuestion', directive);
+
+    function directive() {
+        var ddo = {
+            scope: {},
+            templateUrl: 'app/editor/ui/survey-item/question/email/email-question.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('EmailQuestionWidgetFactory', EmailQuestionWidgetFactory);
+
+    function EmailQuestionWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new EmailQuestionWidget(scope, element);
+        }
+
+        return self;
+    }
+
+    function EmailQuestionWidget(scope, element) {
+        var self = this;
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+        function getClassName() {
+            return 'EmailQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<email-question></email-question>';
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('integerQuestion', directive);
 
     directive.$inject = ['IntegerQuestionWidgetFactory'];
@@ -8634,83 +8772,6 @@
             }
         };
     });
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('emailQuestion', directive);
-
-    function directive() {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/email/email-question.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('EmailQuestionWidgetFactory', EmailQuestionWidgetFactory);
-
-    function EmailQuestionWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new EmailQuestionWidget(scope, element);
-        }
-
-        return self;
-    }
-
-    function EmailQuestionWidget(scope, element) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-
-        function getClassName() {
-            return 'EmailQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<email-question></email-question>';
-        }
-    }
 
 }());
 
@@ -9211,6 +9272,88 @@
 
     angular
         .module('editor.ui')
+        .directive('otusLowerCaseValidator', otusLowerCaseValidator);
+
+    otusLowerCaseValidator.$inject = [
+        'LowerCaseValidatorWidgetFactory'
+    ];
+
+    function otusLowerCaseValidator(LowerCaseValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/lower-case/lower-case-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = LowerCaseValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('LowerCaseValidatorWidgetFactory', LowerCaseValidatorWidgetFactory);
+
+    function LowerCaseValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new LowerCaseValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function LowerCaseValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'lowerCase';
+
+
+        /* Public Methods */
+        self.data = true;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            self.data = question.fillingRules.options[whoAmI].data.reference;
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusInValidator', otusInValidator);
 
     otusInValidator.$inject = [
@@ -9262,88 +9405,6 @@
             'initial': null,
             'end': null
         };
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            self.data = question.fillingRules.options[whoAmI].data.reference;
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusLowerCaseValidator', otusLowerCaseValidator);
-
-    otusLowerCaseValidator.$inject = [
-        'LowerCaseValidatorWidgetFactory'
-    ];
-
-    function otusLowerCaseValidator(LowerCaseValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/lower-case/lower-case-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = LowerCaseValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('LowerCaseValidatorWidgetFactory', LowerCaseValidatorWidgetFactory);
-
-    function LowerCaseValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new LowerCaseValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function LowerCaseValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'lowerCase';
-
-
-        /* Public Methods */
-        self.data = true;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -9619,6 +9680,88 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .directive('otusMaxSelectedValidator', Directive);
+
+  Directive.$inject = [
+    'otusjs.studio.editor.ui.validation.MaxSelectedValidatorWidgetFactory'
+  ];
+
+  function Directive(MaxSelectedValidatorWidgetFactory) {
+    var ddo = {
+      scope: {},
+      restrict: 'E',
+      templateUrl: 'app/editor/ui/validation/require/max-selected/max-selected-validator.html',
+      link: function linkFunc(scope, element) {
+        scope.widget = MaxSelectedValidatorWidgetFactory.create(scope, element);
+      }
+    };
+
+    return ddo;
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('otusjs.studio.editor.ui.validation.MaxSelectedValidatorWidgetFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new MaxSelectedValidator(scope, element);
+    }
+
+    return self;
+  }
+
+  function MaxSelectedValidator(scope, element) {
+    var self = this;
+    var whoAmI = 'maxSelected';
+
+    /* Public Methods */
+    self.data = null;
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      self.data = question.fillingRules.options[whoAmI].data.reference;
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data;
+      scope.$parent.widget.updateFillingRules();
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -9699,88 +9842,6 @@
         }
 
     }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .directive('otusMaxSelectedValidator', Directive);
-
-  Directive.$inject = [
-    'otusjs.studio.editor.ui.validation.MaxSelectedValidatorWidgetFactory'
-  ];
-
-  function Directive(MaxSelectedValidatorWidgetFactory) {
-    var ddo = {
-      scope: {},
-      restrict: 'E',
-      templateUrl: 'app/editor/ui/validation/require/max-selected/max-selected-validator.html',
-      link: function linkFunc(scope, element) {
-        scope.widget = MaxSelectedValidatorWidgetFactory.create(scope, element);
-      }
-    };
-
-    return ddo;
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .factory('otusjs.studio.editor.ui.validation.MaxSelectedValidatorWidgetFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-
-    function create(scope, element) {
-      return new MaxSelectedValidator(scope, element);
-    }
-
-    return self;
-  }
-
-  function MaxSelectedValidator(scope, element) {
-    var self = this;
-    var whoAmI = 'maxSelected';
-
-    /* Public Methods */
-    self.data = null;
-    self.updateData = updateData;
-    self.deleteValidator = deleteValidator;
-
-    var question = scope.$parent.widget.getItem();
-
-    _init();
-
-    function _init() {
-      self.data = question.fillingRules.options[whoAmI].data.reference;
-    }
-
-    function updateData() {
-      getRuleType().data.reference = self.data;
-      scope.$parent.widget.updateFillingRules();
-    }
-
-    function getRuleType() {
-      return question.fillingRules.options[whoAmI];
-    }
-
-    function deleteValidator() {
-      scope.$parent.widget.deleteValidator(whoAmI);
-      element.remove();
-      scope.$destroy();
-    }
-
-  }
 
 }());
 
