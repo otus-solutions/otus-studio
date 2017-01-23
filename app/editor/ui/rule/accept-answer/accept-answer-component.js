@@ -29,11 +29,13 @@
     self.getItem = getItem;
 
     function onInit() {
-      if (self.item.fillingRules.options.accept == undefined) {
-        self.data = false;
-      } else {
-        self.data = self.item.fillingRules.options.accept.data.reference;
-        updateData();
+      if (self.item.isQuestion()) {
+        if (self.item.fillingRules.options.accept == undefined) {
+          self.data = false;
+        } else {
+          self.data = self.item.fillingRules.options.accept.data.reference;
+          updateData();
+        }
       }
     }
 
