@@ -60,7 +60,7 @@ describe('otusAcceptAnswer', function() {
     });
 
     it('when object accept exists data attribute must receive the reference value', function() {
-      
+
     });
 
   });

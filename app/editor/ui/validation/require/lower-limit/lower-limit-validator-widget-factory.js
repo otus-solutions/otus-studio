@@ -25,6 +25,7 @@
 
         /* Public Methods */
         self.data = null;
+        self.canBeIgnored = null;
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
 
@@ -34,10 +35,12 @@
 
         function _init() {
             self.data = question.fillingRules.options[whoAmI].data.reference;
+            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
         }
 
         function updateData() {
             getRuleType().data.reference = self.data;
+            getRuleType().data.canBeIgnored = self.canBeIgnored;
             scope.$parent.widget.updateFillingRules();
         }
 
