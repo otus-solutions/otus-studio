@@ -36,6 +36,7 @@
             var avaiableRules = question.fillingRules.options;
             if (avaiableRules.hasOwnProperty(whoAmI)) {
                 self.data = avaiableRules[whoAmI].data.reference;
+                self.canBeIgnored = avaiableRules[whoAmI].data.canBeIgnored;
             }
         }
 

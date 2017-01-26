@@ -35,6 +35,7 @@
         function _init() {
             var avaiableRules = question.fillingRules.options;
             self.data = new Date(avaiableRules[whoAmI].data.reference);
+            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored
             self.updateData();
         }
 

@@ -34,6 +34,7 @@
 
         function _init() {
             var referenceValue = question.fillingRules.options[whoAmI].data.reference;
+            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
             if (referenceValue !== '') {
               self.data = new Date(referenceValue);
             }
