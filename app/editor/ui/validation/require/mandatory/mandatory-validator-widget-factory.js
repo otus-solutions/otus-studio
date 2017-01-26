@@ -31,9 +31,6 @@
         _init();
 
         function _init() {
-            console.log("question.fillingRules.options");
-            console.log(question.fillingRules.options);
-
             self.data = question.fillingRules.options[whoAmI].data.reference;
             self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
         }
