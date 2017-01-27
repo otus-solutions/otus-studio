@@ -1,16 +1,24 @@
 <md-fab-speed-dial count="0" md-direction="up" class="md-fab-bottom-right md-fling">
-    <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab md-primary">
-            <md-icon md-svg-icon="plus"></md-icon>
-        </md-button>
-    </md-fab-trigger>
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-primary">
+      <md-icon md-svg-icon="plus"></md-icon>
+    </md-button>
+  </md-fab-trigger>
 
-    <md-fab-actions>
-        <md-button aria-label="upload" survey-template-upload>
-            Upload
-        </md-button>
-        <md-button aria-label="novo" ng-click="surveyFormDashboard.startNewSurveyForm()">
-            Novo
-        </md-button>
-    </md-fab-actions>
+  <md-fab-actions>
+    <md-button class="md-fab md-mini md-primary" aria-label="upload" survey-template-upload>
+      <md-icon md-font-set="material-icons">file_upload</md-icon>
+      <md-tooltip md-direction="left">
+        Upload
+      </md-tooltip>
+
+    </md-button>
+    <md-button class="md-fab md-mini md-primary" aria-label="novo" ng-click="surveyFormDashboard.startNewSurveyForm()">
+      <md-icon md-font-set="material-icons">create</md-icon>
+      <md-tooltip md-direction="left">
+        Criar
+      </md-tooltip>
+    </md-button>
+  </md-fab-actions>
 </md-fab-speed-dial>
+
