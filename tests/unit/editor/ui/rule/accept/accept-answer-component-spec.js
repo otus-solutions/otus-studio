@@ -1,4 +1,4 @@
-describe('otusAcceptAnswer', function() {
+describe('otusAcceptAnswer component', function() {
 
   var UNIT_NAME = 'otusAcceptAnswer';
   var QUESTION_ID = 'TEST1';
@@ -59,8 +59,14 @@ describe('otusAcceptAnswer', function() {
       expect(component.data).toEqual(false);
     });
 
-    it('when object accept exists data attribute must receive the reference value', function() {
+    xit('when object accept exists data attribute must receive the reference value', function() {
+      var question = Mock.IntegerQuestionFactory.create('IntegerQuestion', jasmine.any(String));
+      var bindings = {
+        item: question
+      };
+      var component = $componentController(UNIT_NAME, Injections, bindings);
 
+      component.updateData();
     });
 
   });
