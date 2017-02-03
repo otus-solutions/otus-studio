@@ -16,7 +16,7 @@
         '$window'
     ];
 
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window, ActivityFacadeService) {
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
         var self = this;
 
         self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
