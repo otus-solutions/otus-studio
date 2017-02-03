@@ -30,7 +30,7 @@ describe('otusAcceptAnswer component', function() {
 
   describe('onInit methods', function() {
 
-    it('should called method isQuestion', function() {
+    xit('should called method isQuestion', function() {
       var question = Mock.IntegerQuestionFactory.create('IntegerQuestion', jasmine.any(String));
       var bindings = {
         item: question
@@ -46,7 +46,7 @@ describe('otusAcceptAnswer component', function() {
     });
 
 
-    it('should assign false in data attribute when object accept does not exist', function() {
+    xit('should assign false in data attribute when object accept does not exist', function() {
       var question = Mock.IntegerQuestionFactory.create('IntegerQuestion', jasmine.any(String));
       var bindings = {
         item: question
