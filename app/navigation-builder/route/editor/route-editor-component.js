@@ -98,7 +98,7 @@
           cancel: 'Cancelar',
           save: 'Salvar Rota',
           createCondition: 'Criar condição de rota',
-          deleteRoute: 'Exluir esta rota'
+          deleteRoute: 'Excluir esta rota'
         },
         origin: 'Origem',
         destination: 'Destino',

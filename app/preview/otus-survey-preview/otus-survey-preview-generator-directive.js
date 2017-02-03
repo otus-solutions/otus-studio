@@ -18,10 +18,11 @@
     '$element',
     '$compile',
     'WorkspaceService',
-    'otusjs.model.activity.ActivityFacadeService'
+    'otusjs.model.activity.ActivityFacadeService',
+    'otusjs.player.core.player.PlayerService'
   ];
 
-  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService) {
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
     var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
 
@@ -35,6 +36,7 @@
         }
       }
       _generateOtusPreview();
+      PlayerService.setup();
     });
 
     function _generateOtusPreview() {
@@ -46,7 +48,7 @@
     }
 
     function _getSurveyTemplateObject() {
-      return JSON.parse(WorkspaceService.getSurvey().toJson());
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
     }
   }
 

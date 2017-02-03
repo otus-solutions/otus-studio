@@ -1,4 +1,4 @@
-describe("component: surveyTemplateList", function() {
+xdescribe("component: surveyTemplateList", function() {
 
     var ctrl,
         scope,

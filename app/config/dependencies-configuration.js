@@ -9,7 +9,6 @@
         'ui.router',
         'lokijs',
         'indexedDB',
-        'immutable',
         'ui.utils.masks',
         'otus.domain.client',
         'otus.textEdition'
