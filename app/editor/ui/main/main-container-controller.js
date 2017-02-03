@@ -7,24 +7,28 @@
   MainContainerController.$inject = [
     '$scope',
     '$window',
-    'MainContainerContentService',
-    'UiBindingService',
     '$mdBottomSheet',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'WorkspaceService',
     'NBEVENTS',
-    'otusjs.player.core.player.PlayerService'
+    'UiBindingService',
+    'MainContainerContentService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'WorkspaceService'
   ];
 
   function MainContainerController(
-    $scope, $window, MainContainerContentService, UiBindingService, $mdBottomSheet,
-    NavigationBuilderScopeService, WorkspaceService, NBEVENTS, PlayerService) {
-
+    $scope,
+    $window,
+    $mdBottomSheet,
+    NBEVENTS,
+    UiBindingService,
+    MainContainerContentService,
+    NavigationBuilderScopeService,
+    WorkspaceService
+  ) {
     var self = this;
 
     self.showQuestionsMenu = showQuestionsMenu;
     self.startNavigationBuilder = startNavigationBuilder;
-    self.startPreview = startPreview;
 
     init();
 
@@ -51,10 +55,6 @@
 
       NavigationBuilderScopeService.broadcast(NBEVENTS.NAVIGATION_BUILDER_ON, WorkspaceService.getSurvey());
       NavigationBuilderScopeService.onEvent(NBEVENTS.NAVIGATION_UPDATED, WorkspaceService.saveWork);
-    }
-
-    function startPreview() {
-      PlayerService.setup();
     }
   }
 }());

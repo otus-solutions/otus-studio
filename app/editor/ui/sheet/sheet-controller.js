@@ -8,14 +8,20 @@
   SheetController.$inject = [
     '$scope',
     '$element',
+    '$window',
     'SheetContentService',
     'EditionPreviewService',
-    'WorkspaceService',
-    '$window',
-    'otusjs.model.activity.ActivityFacadeService'
+    'WorkspaceService'
   ];
 
-  function SheetController($scope, $element, SheetContentService, EditionPreviewService, WorkspaceService, $window, ActivityFacadeService) {
+  function SheetController(
+    $scope,
+    $element,
+    $window,
+    SheetContentService,
+    EditionPreviewService,
+    WorkspaceService
+  ) {
     var self = this;
     self.EditionPreviewService = EditionPreviewService;
 
@@ -29,7 +35,6 @@
         EditionPreviewService.loadSurveyTemplate().then(function(template) {
           EditionPreviewService.isLoading = false;
           WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
-          ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
         });
       } else {
         $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
