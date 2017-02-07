@@ -19,7 +19,7 @@
 
       builded.type = item.objectType;
       builded.icon = _mapping[item.objectType];
-      builded.customID = item.customID;
+      builded.templateID = item.templateID;
       builded.label = item.label;
       builded.item = item;
 

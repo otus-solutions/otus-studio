@@ -45,7 +45,7 @@
         return self.answerList.filter(_filter);
       } else {
         var filterResult = self.answerList.filter(function(answer) {
-          return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.customID.search(filterValue) != -1;
+          return answer.option.label.ptBR.plainText.search(filterValue) != -1 || self.selectedWhen.templateID.search(filterValue) != -1;
         });
         return filterResult.filter(_filter);
       }
@@ -93,7 +93,7 @@
         return self.whenList;
       } else {
         var filterResult = self.whenList.filter(function(when) {
-          return when.label.ptBR.plainText.search(filterValue) != -1 || when.customID.search(filterValue) != -1;
+          return when.label.ptBR.plainText.search(filterValue) != -1 || when.templateID.search(filterValue) != -1;
         });
         return filterResult;
       }
