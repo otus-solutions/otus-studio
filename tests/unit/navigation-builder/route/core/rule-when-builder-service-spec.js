@@ -29,8 +29,8 @@ describe('RuleWhenBuilderService', function() {
       expect(builded.icon).toBeDefined();
     });
 
-    it('should return an object with customID property', function() {
-      expect(builded.customID).toBeDefined();
+    it('should return an object with templateID property', function() {
+      expect(builded.templateID).toBeDefined();
     });
 
     it('should return an object with label property', function() {
