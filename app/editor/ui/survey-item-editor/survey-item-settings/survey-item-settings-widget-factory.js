@@ -58,7 +58,7 @@
             self.showNavigationEditor = !self.showNavigationEditor;
         }
 
-        function validationButton() {          
+        function validationButton() {
             self.ngClass.open = !self.ngClass.open;
             self.showValidationEditor = !self.showValidationEditor;
         }
