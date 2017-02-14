@@ -32,7 +32,7 @@ describe('FillingRulesEditorWidgetFactory', function() {
 
         it('should return a defined parent', function() {
             expect(widget.getParent()).toBeDefined();
-        })
+        });
 
         it('should return a defined item', function() {
             expect(widget.getItem()).toBeDefined();
@@ -57,8 +57,8 @@ describe('FillingRulesEditorWidgetFactory', function() {
             $compile(template)(scope);
         }));
 
-        it('template should be false with checkIfShow mandatory', function() {
-            expect(widget.checkIfShow(validator)).toBe(false);
+        it('template should be true with checkIfShow mandatory', function() {
+            expect(widget.checkIfShow(validator)).toBe(true);
         });
 
         it('test if variable mandatory validator should be equal Element', function() {
@@ -70,7 +70,7 @@ describe('FillingRulesEditorWidgetFactory', function() {
     function mockElement() {
         Mock.element = {
             find: function() {
-                return angular.element(document.createElement('li'))
+                return angular.element(document.createElement('li'));
             }
         };
     }
@@ -109,7 +109,7 @@ describe('FillingRulesEditorWidgetFactory', function() {
     function mockAddFillingRulesEvent() {
         return {
             execute: function() {}
-        }
+        };
     }
 
     function mockRemoveFillingRulesEventFactory($injector) {
