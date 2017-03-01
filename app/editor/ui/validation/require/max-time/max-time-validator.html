@@ -3,7 +3,7 @@
         <md-content layout="column" layout-align="start" flex="90">
             <md-input-container layout="row" layout-align="start center">
                 <span class="md-body-1">Hora máxima esperada:</span>
-                <input name="maxTime" type="time" flex="50" flex-offset="5" aria-label="Tempo" ng-model="widget.data" ng-change="widget.updateData()" required>
+                <input name="maxTime" type="time" flex="50" flex-offset="5" aria-label="Tempo" ng-model="widget.data.date" ng-blur="widget.updateData()" required>
 
                 <div ng-messages="maxTimeValidator.maxTime.$error">
                     <div ng-message="required">Adicione a hora</div>

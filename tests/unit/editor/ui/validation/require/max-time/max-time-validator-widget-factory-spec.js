@@ -1,4 +1,4 @@
-describe('MaxTimeValidatorWidgetFactory', function() {
+xdescribe('MaxTimeValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;

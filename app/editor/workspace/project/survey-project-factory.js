@@ -30,7 +30,7 @@
         });
 
         Object.defineProperty(this, 'creationDateTime', {
-            value: Date.now(),
+            value: new Date().toISOString(),
             writable: false
         });
 

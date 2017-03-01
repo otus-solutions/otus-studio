@@ -1,69 +1,72 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
 
-    function MinTimeValidatorWidgetFactory() {
-        var self = this;
+  MinTimeValidatorWidgetFactory.$inject = [
+            'otusjs.utils.ImmutableDate'
+                 ];
 
-        /* Public interface */
-        self.create = create;
+  function MinTimeValidatorWidgetFactory(ImmutableDate) {
+    var self = this;
 
-        function create(scope, element) {
-            return new MinTimeValidator(scope, element);
-        }
+    /* Public interface */
+    self.create = create;
 
-        return self;
+    function create(scope, element) {
+      return new MinTimeValidator(scope, element, ImmutableDate);
     }
 
-    function MinTimeValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'minTime';
+    return self;
+  }
+
+  function MinTimeValidator(scope, element, ImmutableDate) {
+    var self = this;
+    var whoAmI = 'minTime';
 
 
-        /* Public Methods */
-        self.data = new Date("Fri Mar 25 2015 09:56:24 GMT+0100 (Tokyo Time)");
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
+    /* Public Methods */
+    self.data = '';
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
 
-        var question = scope.$parent.widget.getItem();
+    var question = scope.$parent.widget.getItem();
 
-        _init();
+    _init();
 
-        function _init() {
-            var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-            if (referenceValue !== '') {
-              self.data = new Date(referenceValue);
-            }
-            else {
-              self.data.setHours('01');
-              self.data.setMinutes('00');
-              self.data.setSeconds('00');
-              self.data.setMilliseconds('00');
-            }
-            self.updateData();
-        }
-
-        function updateData() {
-            if (self.data) {
-                getRuleType().data.reference = self.data.toString();
-                scope.$parent.widget.updateFillingRules();
-            }
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
+    function _init() {
+      var referenceValue = question.fillingRules.options[whoAmI].data.reference.value;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+      if (referenceValue !== '') {
+        self.data = new ImmutableDate(referenceValue);
+      } else {
+        self.data = new ImmutableDate();
+        self.data.resetTime();
+        self.data.setHours(1);
+      }
+      self.data.resetDate();
+      self.updateData();
     }
+
+    function updateData() {
+      if (self.data) {
+        getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+        scope.$parent.widget.updateFillingRules();
+      }
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());

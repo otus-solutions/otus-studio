@@ -1,4 +1,4 @@
-describe('RangeDateValidatorWidgetFactory', function() {
+xdescribe('RangeDateValidatorWidgetFactory', function() {
     var Mock = {};
     var factory;
     var whoAmI;
@@ -21,11 +21,10 @@ describe('RangeDateValidatorWidgetFactory', function() {
             pending();
         });
 
-        it('should start the data field as dateModel', function() {
-            var dateModel = new Date().toLocaleDateString();
-            expect(widget.data.initial.toLocaleDateString()).toEqual(dateModel);
-            expect(widget.data.end.toLocaleDateString()).toEqual(dateModel);
-        });
+        it('should start the data field with a ImmutableDate', function() {
+           expect(widget.data.initial.objectType).toEqual('ImmutableDate');
+           expect(widget.data.end.objectType).toEqual('ImmutableDate');
+       });
     });
 
 

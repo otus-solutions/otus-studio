@@ -4,8 +4,8 @@
             <span class="md-body-1">Intervalo permitido:</span>
         </md-content>
         <md-content layout="row" layout-align="space-between center">
-            <md-datepicker ng-model="widget.data.initial" md-placeholder="Insira uma data mínima" md-min-date="minDate" ng-change="widget.updateData()"></md-datepicker>
-            <md-datepicker ng-model="widget.data.end" md-placeholder="Insira uma data máxima" md-max-date="maxDate" ng-change="widget.updateData()"></md-datepicker>
+            <md-datepicker ng-model="widget.data.initial.date" md-placeholder="Data mínima" md-min-date="minDate" ng-blur="widget.updateData()"></md-datepicker>
+            <md-datepicker ng-model="widget.data.end.date" md-placeholder="Data máxima" md-max-date="maxDate" ng-blur="widget.updateData()"></md-datepicker>
             <span></span>
         </md-content>
     </md-content>
