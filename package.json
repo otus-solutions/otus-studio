@@ -51,7 +51,7 @@
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.9",
+    "angular-mocks": "1.4.9",
     "browser-sync": "2.11.2",
     "browser-sync-middleware-spa": "^1.0.0",
     "concurrently": "^1.0.0",

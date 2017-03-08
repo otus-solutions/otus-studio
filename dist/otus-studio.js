@@ -24,38 +24,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular.module('studio.authenticator', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .controller('LoginController', LoginController);
-
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
-
-    function LoginController($scope, DashboardStateService, AuthenticationService) {
-        var self = this;
-        self.authenticate = authenticate;
-        self.visitAccess = visitAccess;
-
-        function authenticate(user) {
-            AuthenticationService.login(user);
-        }
-
-        function visitAccess() {
-            DashboardStateService.goToHome();
-        }
-    }
-
-}());
-
-(function() {
 
     angular.module('dependencies', [
         /* Angular modules */
@@ -75,39 +43,46 @@
 
 (function() {
 
-    angular
-        .module('studio')
-        .config(['$mdDateLocaleProvider', localeConfiguration]);
+  angular
+    .module('studio')
+    .config(['$mdDateLocaleProvider', localeConfiguration]);
 
-    function localeConfiguration($mdDateLocaleProvider) {
+  function localeConfiguration($mdDateLocaleProvider) {
 
-        $mdDateLocaleProvider.formatDate = function(date) {
-            if (Object.prototype.toString.call(date) !== '[object Date]') {
-                return null;
-            }
-            var day = date.getDate();
-            var monthIndex = date.getMonth();
-            var year = date.getFullYear();
+    $mdDateLocaleProvider.formatDate = function(date) {
+      if (!date) { //check if date is a valid date
+        return '';
+      }
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
 
-            return day + '/' + (monthIndex + 1) + '/' + year;
-        };
+      return _pad(day,2) + '/' + _pad(monthIndex + 1, 2) + '/' + year;
+    };
 
-        $mdDateLocaleProvider.parseDate = function(dateString) {
-            date = new Date(dateString);
-            if (Object.prototype.toString.call(date) !== '[object Date]') {
-                return date;
-            } else {
-                newDateString = dateString.split('/');
-                if (newDateString.length === 3) {
-                  var day = newDateString[0];
-                  var monthIndex = newDateString[1]-1;
-                  var year = newDateString[2];
-                    date = new Date(year, monthIndex, day);
-                    return date;
-                }
-            }
-        };
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+      date = new Date(dateString);
+      if (Object.prototype.toString.call(date) !== '[object Date]') {
+        return date;
+      } else {
+        newDateString = dateString.split('/');
+        if (newDateString.length === 3) {
+          var day = newDateString[0];
+          var monthIndex = newDateString[1] - 1;
+          var year = newDateString[2];
+          date = new Date(year, monthIndex, day);
+          return date;
+        }
+      }
+    };
+
+    function _pad(n, width, z) {
+      z = z || '0';
+      n = n + '';
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
+
+  }
 
 }());
 
@@ -263,6 +238,38 @@
         /*Configuration icons*/
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('app/assets/img/icons/mdi.svg', 24);
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('studio.authenticator', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
+
+    function LoginController($scope, DashboardStateService, AuthenticationService) {
+        var self = this;
+        self.authenticate = authenticate;
+        self.visitAccess = visitAccess;
+
+        function authenticate(user) {
+            AuthenticationService.login(user);
+        }
+
+        function visitAccess() {
+            DashboardStateService.goToHome();
+        }
     }
 
 }());
@@ -679,6 +686,14 @@
     'use strict';
 
     angular
+        .module('editor.core', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('editor')
         .service('SurveyEditorService', SurveyEditorService);
 
@@ -712,14 +727,6 @@
     'use strict';
 
     angular
-        .module('editor.core', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('editor.database', [])
         .config(function($indexedDBProvider) {
             $indexedDBProvider
@@ -738,13 +745,6 @@
     angular.module('editor.ui', [
         'angular-bind-html-compile'
     ]);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('editor.workspace', []);
 
 }());
 
@@ -849,6 +849,13 @@
     }
   }
 })();
+
+(function() {
+    'use strict';
+
+    angular.module('editor.workspace', []);
+
+}());
 
 (function() {
   'use strict';
@@ -2376,6 +2383,122 @@
     'use strict';
 
     angular
+        .module('editor.database')
+        .factory('InSessionDatabaseFactory', InSessionDatabaseFactory);
+
+    InSessionDatabaseFactory.$inject = ['Loki'];
+
+    function InSessionDatabaseFactory(Loki) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new InSessionDatabase(Loki);
+        }
+
+        return self;
+    }
+
+    function InSessionDatabase(Loki) {
+        var self = this;
+        var instance = null;
+
+        var USER_EDITS_COLLECTION = 'userEdits';
+        var DATA_POOL_COLLECTION = 'dataPool';
+
+        init();
+
+        function init() {
+            instance = new Loki('in-session-db.json');
+            self[USER_EDITS_COLLECTION] = new CollectionFacade(instance.addCollection(USER_EDITS_COLLECTION));
+            self[DATA_POOL_COLLECTION] = new CollectionFacade(instance.addCollection(DATA_POOL_COLLECTION));
+        }
+    }
+
+    function CollectionFacade(collectionReference) {
+        var self = this;
+
+        /* Public interface */
+        self.store = store;
+        self.fetchEventBy = fetchEventBy;
+        self.fetchLastSelectEvent = fetchLastSelectEvent;
+        self.fetchLastAddedData = fetchLastAddedData;
+        self.storeUnique = storeUnique;
+
+        init();
+
+        function init() {
+            Object.defineProperty(self, 'collection', {
+                value: collectionReference,
+                writable: false
+            });
+        }
+
+        function store(data) {
+            self.collection.insert(data);
+        }
+
+        function storeUnique(data) {
+            var event = fetchEventBy('id', data.source.id);
+
+            if (!event) {
+                self.collection.insert(data);
+
+            } else {
+                remove(event);
+                store(data);
+            }
+        }
+
+        function fetchEventBy(attribute, value) {
+            var data = self.collection.chain()
+                        .where(function(obj) {
+                            return getModelValue(attribute, obj) === value;
+                        })
+                        .simplesort('$loki', 'isdesc').data();
+
+            return data;
+        }
+
+        function fetchLastSelectEvent() {
+            var data = self.collection.chain()
+                        .where(function(event) {
+                            return event.type.isSelectData();
+                        })
+                        .simplesort('$loki', 'isdesc').data();
+
+            return data[0];
+        }
+
+        function fetchLastAddedData() {
+            var data = self.collection.chain().simplesort('$loki', 'isdesc').data();
+            return data[0];
+        }
+
+        function remove(data) {
+            self.collection.remove(data);
+        }
+
+        function getModelValue(modelpath, model) {
+            var pathArray = modelpath.split('.');
+            var modelValue = model;
+
+            pathArray.forEach(function(path) {
+                modelValue = modelValue[path];
+            });
+
+            return modelValue;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
         .module('editor.ui')
         .service('editor.ui.mpath', mpath);
 
@@ -2516,122 +2639,6 @@
 
         function getDirectiveTemplate(directive) {
             return directiveTemplates[directive];
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database')
-        .factory('InSessionDatabaseFactory', InSessionDatabaseFactory);
-
-    InSessionDatabaseFactory.$inject = ['Loki'];
-
-    function InSessionDatabaseFactory(Loki) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new InSessionDatabase(Loki);
-        }
-
-        return self;
-    }
-
-    function InSessionDatabase(Loki) {
-        var self = this;
-        var instance = null;
-
-        var USER_EDITS_COLLECTION = 'userEdits';
-        var DATA_POOL_COLLECTION = 'dataPool';
-
-        init();
-
-        function init() {
-            instance = new Loki('in-session-db.json');
-            self[USER_EDITS_COLLECTION] = new CollectionFacade(instance.addCollection(USER_EDITS_COLLECTION));
-            self[DATA_POOL_COLLECTION] = new CollectionFacade(instance.addCollection(DATA_POOL_COLLECTION));
-        }
-    }
-
-    function CollectionFacade(collectionReference) {
-        var self = this;
-
-        /* Public interface */
-        self.store = store;
-        self.fetchEventBy = fetchEventBy;
-        self.fetchLastSelectEvent = fetchLastSelectEvent;
-        self.fetchLastAddedData = fetchLastAddedData;
-        self.storeUnique = storeUnique;
-
-        init();
-
-        function init() {
-            Object.defineProperty(self, 'collection', {
-                value: collectionReference,
-                writable: false
-            });
-        }
-
-        function store(data) {
-            self.collection.insert(data);
-        }
-
-        function storeUnique(data) {
-            var event = fetchEventBy('id', data.source.id);
-
-            if (!event) {
-                self.collection.insert(data);
-
-            } else {
-                remove(event);
-                store(data);
-            }
-        }
-
-        function fetchEventBy(attribute, value) {
-            var data = self.collection.chain()
-                        .where(function(obj) {
-                            return getModelValue(attribute, obj) === value;
-                        })
-                        .simplesort('$loki', 'isdesc').data();
-
-            return data;
-        }
-
-        function fetchLastSelectEvent() {
-            var data = self.collection.chain()
-                        .where(function(event) {
-                            return event.type.isSelectData();
-                        })
-                        .simplesort('$loki', 'isdesc').data();
-
-            return data[0];
-        }
-
-        function fetchLastAddedData() {
-            var data = self.collection.chain().simplesort('$loki', 'isdesc').data();
-            return data[0];
-        }
-
-        function remove(data) {
-            self.collection.remove(data);
-        }
-
-        function getModelValue(modelpath, model) {
-            var pathArray = modelpath.split('.');
-            var modelValue = model;
-
-            pathArray.forEach(function(path) {
-                modelValue = modelValue[path];
-            });
-
-            return modelValue;
         }
     }
 
@@ -3123,6 +3130,7 @@
     }
 
 }());
+
 (function() {
     'use strict';
 
@@ -3368,54 +3376,6 @@
 
     angular
         .module('editor.workspace')
-        .directive('surveyTemplateExport', surveyTemplateExport);
-
-    surveyTemplateExport.$inject = ['WorkspaceService'];
-
-    function surveyTemplateExport(WorkspaceService) {
-        var ddo = {
-            restrict: 'A',
-            link: function(scope, element) {
-                element.on('click', function() {
-                    var downloadElement = document.createElement('a');
-                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
-                    downloadElement.setAttribute('download', 'surveyTemplate.json');
-                    downloadElement.setAttribute('target', '_blank');
-                    downloadElement.click();
-                });
-            }
-        };
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .service('SurveyExportService', SurveyExportService);
-
-
-    function SurveyExportService() {
-        var self = this;
-
-        /* Public interface */
-        self.exportSurvey = exportSurvey;
-
-        function exportSurvey(JsonTemplate) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
         .service('SurveyLoaderService', SurveyLoaderService);
 
     SurveyLoaderService.$inject = ['ModelFacadeService'];
@@ -3603,6 +3563,54 @@
 
     angular
         .module('editor.workspace')
+        .directive('surveyTemplateExport', surveyTemplateExport);
+
+    surveyTemplateExport.$inject = ['WorkspaceService'];
+
+    function surveyTemplateExport(WorkspaceService) {
+        var ddo = {
+            restrict: 'A',
+            link: function(scope, element) {
+                element.on('click', function() {
+                    var downloadElement = document.createElement('a');
+                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
+                    downloadElement.setAttribute('download', 'surveyTemplate.json');
+                    downloadElement.setAttribute('target', '_blank');
+                    downloadElement.click();
+                });
+            }
+        };
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .service('SurveyExportService', SurveyExportService);
+
+
+    function SurveyExportService() {
+        var self = this;
+
+        /* Public interface */
+        self.exportSurvey = exportSurvey;
+
+        function exportSurvey(JsonTemplate) {
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
         .factory('SurveyProjectFactory', SurveyProjectFactory);
 
     function SurveyProjectFactory() {
@@ -3630,7 +3638,7 @@
         });
 
         Object.defineProperty(this, 'creationDateTime', {
-            value: Date.now(),
+            value: new Date().toISOString(),
             writable: false
         });
 
@@ -3759,72 +3767,6 @@
       DataService.deactivate();
       ModuleEventService.deactivate();
       UiEventsService.deactivate();
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder')
-    .component('otusNavigationMap', {
-      templateUrl: 'app/navigation-builder/map/component/map-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
-  ];
-
-  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
-    var self = this;
-    // var _messageLayer = null;
-
-    /* Publi methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      self.toolsCtrl = new ToolsController(NavigationBuilderService);
-      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
-    }
-
-    function _renderMap() {
-      var nodes = NavigationBuilderService.nodes();
-      var edges = NavigationBuilderService.edges();
-
-      GraphLayerService.initialize();
-      GraphLayerService.loadData(nodes, edges);
-      GraphLayerService.render();
-    }
-  }
-
-  function ToolsController(NavigationBuilderService) {
-    var self = this;
-
-    _init();
-
-    /* Public methods */
-    self.click = click;
-    self.addRoute = addRoute;
-    self.inspect = inspect;
-
-    function click() {
-      self.isOpen = !self.isOpen;
-    }
-
-    function addRoute() {
-      NavigationBuilderService.activateRouteCreatorMode();
-    }
-
-    function inspect() {
-      NavigationBuilderService.activateNavigationInspectorMode();
-    }
-
-    function _init() {
-      self.isOpen = false;
     }
   }
 })();
@@ -3990,6 +3932,137 @@
 
     function _selectRouteNode(event) {
       DataService.selectNode(event.data.node);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function component($scope, scopeService) {
+    var self = this;
+
+    self.message = {};
+    self.isVisible = false
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
+
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service(scopeService) {
+    var self = this;
+
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
+    }
+
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .component('otusNavigationMap', {
+      templateUrl: 'app/navigation-builder/map/component/map-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.GraphLayerService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+  ];
+
+  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
+    var self = this;
+    // var _messageLayer = null;
+
+    /* Publi methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      self.toolsCtrl = new ToolsController(NavigationBuilderService);
+      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
+    }
+
+    function _renderMap() {
+      var nodes = NavigationBuilderService.nodes();
+      var edges = NavigationBuilderService.edges();
+
+      GraphLayerService.initialize();
+      GraphLayerService.loadData(nodes, edges);
+      GraphLayerService.render();
+    }
+  }
+
+  function ToolsController(NavigationBuilderService) {
+    var self = this;
+
+    _init();
+
+    /* Public methods */
+    self.click = click;
+    self.addRoute = addRoute;
+    self.inspect = inspect;
+
+    function click() {
+      self.isOpen = !self.isOpen;
+    }
+
+    function addRoute() {
+      NavigationBuilderService.activateRouteCreatorMode();
+    }
+
+    function inspect() {
+      NavigationBuilderService.activateNavigationInspectorMode();
+    }
+
+    function _init() {
+      self.isOpen = false;
     }
   }
 })();
@@ -4883,71 +4956,6 @@
 
     function updateRule(ruleIndex, when, operator, answer, isCustom) {
       DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .component('otusMessengerInstructor', {
-      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    '$scope',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function component($scope, scopeService) {
-    var self = this;
-
-    self.message = {};
-    self.isVisible = false
-
-    /* Component cicle methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
-        self.isVisible = true;
-        self.message = message;
-      });
-
-      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
-        self.isVisible = false;
-      });
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function service(scopeService) {
-    var self = this;
-
-    /* Public methods */
-    self.showMessenger = showMessenger;
-    self.clearMessenger = clearMessenger;
-
-    function showMessenger(message) {
-      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
-    }
-
-    function clearMessenger() {
-      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
     }
   }
 })();
@@ -7558,6 +7566,33 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusQuestionItem', directive);
+
+    directive.$inject = [
+        'SurveyItemWidgetFactory',
+        'SheetContentService'
+    ];
+
+    function directive(SurveyItemWidgetFactory, SheetContentService) {
+        var ddo = {
+            scope: {},
+            templateUrl: 'app/editor/ui/survey-item/question/question.html',
+            retrict: 'E',
+            link: function linkFunc(scope, element) {
+                scope.widget = SurveyItemWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
   'use strict';
 
   angular
@@ -7631,33 +7666,6 @@
 
     return mapping[objectType];
   }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusQuestionItem', directive);
-
-    directive.$inject = [
-        'SurveyItemWidgetFactory',
-        'SheetContentService'
-    ];
-
-    function directive(SurveyItemWidgetFactory, SheetContentService) {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/question.html',
-            retrict: 'E',
-            link: function linkFunc(scope, element) {
-                scope.widget = SurveyItemWidgetFactory.create(scope, element, SheetContentService.lastLoadedQuestion);
-            }
-        };
-
-        return ddo;
-    }
 
 }());
 
@@ -7811,7 +7819,7 @@
             self.showNavigationEditor = !self.showNavigationEditor;
         }
 
-        function validationButton() {          
+        function validationButton() {
             self.ngClass.open = !self.ngClass.open;
             self.showValidationEditor = !self.showValidationEditor;
         }
@@ -7847,125 +7855,145 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('FillingRulesEditorWidgetFactory', FillingRulesEditorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('FillingRulesEditorWidgetFactory', FillingRulesEditorWidgetFactory);
 
-    FillingRulesEditorWidgetFactory.$inject = [
-        'AddFillingRulesEventFactory',
-        'RemoveFillingRulesEventFactory',
-        'OtusFillingRulesWidgetFactory',
-        '$compile',
-        'UpdateFillingRulesEventFactory'
+  FillingRulesEditorWidgetFactory.$inject = [
+    'AddFillingRulesEventFactory',
+    'RemoveFillingRulesEventFactory',
+    'OtusFillingRulesWidgetFactory',
+    '$compile',
+    'UpdateFillingRulesEventFactory'
 
-    ];
+  ];
 
-    function FillingRulesEditorWidgetFactory(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
-        var self = this;
+  function FillingRulesEditorWidgetFactory(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
+    var self = this;
 
-        /*Public interface*/
-        self.create = create;
+    /*Public interface*/
+    self.create = create;
 
-        function create(scope, element) {
-            return new FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory);
-        }
-
-        return self;
-
+    function create(scope, element) {
+      return new FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory);
     }
 
-    function FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
-        var self = this;
-        self.ngModel = scope.ngModel;
+    return self;
 
-        /* Public methods */
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.addValidator = addValidator;
-        self.checkIfShow = checkIfShow;
-        self.deleteValidator = deleteValidator;
-        self.updateFillingRules = updateFillingRules;
-        self.menuDisabler = menuDisabler;
+  }
 
-        _init();
+  function FillingRulesEditorWidget(scope, element, AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, OtusFillingRulesWidgetFactory, $compile, UpdateFillingRulesEventFactory) {
+    var self = this;
+    var showList;
 
-        function _init() {
-            showList = showListFeeder();
-            if (Object.keys(self.getItem().fillingRules.options).length > 0) {
-                _loadOptions();
-            } else {
-                addValidator('mandatory');
-            }
-        }
-        var showList;
+    self.ngModel = scope.ngModel;
+    /* Public methods */
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.addValidator = addValidator;
+    self.checkIfShow = checkIfShow;
+    self.deleteValidator = deleteValidator;
+    self.updateFillingRules = updateFillingRules;
+    self.menuDisabler = menuDisabler;
 
-        function showListFeeder() {
-            var showList = getItem().validators();
-            return showList;
-        }
+    _init();
 
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function _loadOptions() {
-            Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
-                appendFillingRules(validatorToLoad);
-            });
-        }
-
-        function addValidator(validator) {
-            AddFillingRulesEventFactory.create().execute(getItem(), validator);
-            appendFillingRules(validator);
-        }
-
-        function appendFillingRules(validator) {
-            showList.splice(showList.indexOf(validator), 1);
-            var template = OtusFillingRulesWidgetFactory.create(validator);
-            var validatorsColumn = element.find('#validators-column');
-            var validatorTemplate = $compile(template)(scope);
-            validatorsColumn.append(validatorTemplate);
-        }
-
-        function deleteValidator(validator) {
-            showList.push(validator);
-            RemoveFillingRulesEventFactory.create().execute(self, validator);
-        }
-
-
-        function updateFillingRules() {
-            UpdateFillingRulesEventFactory.create().execute();
-        }
-
-
-        function checkIfShow(fillingRule) {
-            if (showList.indexOf(fillingRule) > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function menuDisabler() {
-            if (showList.length > 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
+    function _init() {
+      showList = showListFeeder();
+      if (_isLoadingMode()) {
+        _loadOptions();
+      } else {
+        addValidator('mandatory');
+      }
     }
+
+    function _isLoadingMode() {
+      return Object.keys(self.getItem().fillingRules.options).length > 0;
+    }
+
+    function showListFeeder() {
+      var showList = getItem().validators();
+      return showList;
+    }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return getParent().getItem();
+    }
+
+    function _loadOptions() {
+      Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
+        appendFillingRules(validatorToLoad);
+      });
+      if (self.getItem().fillingRules.options.mandatory === undefined) {
+        addValidator('mandatory');
+      }
+    }
+
+    function addValidator(validator) {
+      AddFillingRulesEventFactory.create().execute(getItem(), validator);
+      appendFillingRules(validator);
+    }
+
+    function appendFillingRules(validator) {
+      var template = OtusFillingRulesWidgetFactory.create(validator);
+      var validatorsColumn = element.find('#validators-column');
+      var validatorTemplate = $compile(template)(scope);
+      validatorsColumn.append(validatorTemplate);
+      _removeOfShowList(validator);
+    }
+
+    /*
+     * For each validator added, it must be removed of showList to avoid that
+     * the added validator can added again.
+     * The validators 'accept' and 'mandatory' are always visible on screen
+     * then they don't need to be removed of showList.
+     */
+    function _removeOfShowList(validator) {
+      if (validator === 'accept' || validator === 'mandatory') {
+        return;
+      }
+      showList.splice(showList.indexOf(validator), 1);
+    }
+
+    function deleteValidator(validator) {
+      showList.push(validator);
+      RemoveFillingRulesEventFactory.create().execute(self, validator);
+    }
+
+
+    function updateFillingRules() {
+      UpdateFillingRulesEventFactory.create().execute();
+    }
+
+
+    function checkIfShow(fillingRule) {
+      if (showList.indexOf(fillingRule) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function menuDisabler() {
+      if (showList.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+  }
 
 }());
 
@@ -9119,89 +9147,6 @@
 
     angular
         .module('editor.ui')
-        .directive('otusDistinctValidator', otusDistinctValidator);
-
-    otusDistinctValidator.$inject = [
-        'DistinctValidatorWidgetFactory'
-    ];
-
-    function otusDistinctValidator(DistinctValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = DistinctValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .factory('DistinctValidatorWidgetFactory', DistinctValidatorWidgetFactory);
-
-  function DistinctValidatorWidgetFactory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-
-    function create(scope, element) {
-      return new DistinctValidator(scope, element);
-    }
-
-    return self;
-  }
-
-  function DistinctValidator(scope, element) {
-    var self = this;
-    var whoAmI = 'distinct';
-
-
-    /* Public Methods */
-    self.data;
-    self.updateData = updateData;
-    self.deleteValidator = deleteValidator;
-
-    var question = scope.$parent.widget.getItem();
-
-    _init();
-
-    function _init() {
-      self.data = question.fillingRules.options[whoAmI].data.reference;
-      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-    }
-
-    function updateData() {
-      getRuleType().data.reference = self.data;
-      scope.$parent.widget.updateFillingRules();
-    }
-
-    function getRuleType() {
-      return question.fillingRules.options[whoAmI];
-    }
-
-    function deleteValidator() {
-      scope.$parent.widget.deleteValidator(whoAmI);
-      element.remove();
-      scope.$destroy();
-    }
-
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('otusFutureDateValidator', otusFutureDateValidator);
 
     otusFutureDateValidator.$inject = [
@@ -9283,6 +9228,89 @@
         }
 
     }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusDistinctValidator', otusDistinctValidator);
+
+    otusDistinctValidator.$inject = [
+        'DistinctValidatorWidgetFactory'
+    ];
+
+    function otusDistinctValidator(DistinctValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = DistinctValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('DistinctValidatorWidgetFactory', DistinctValidatorWidgetFactory);
+
+  function DistinctValidatorWidgetFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new DistinctValidator(scope, element);
+    }
+
+    return self;
+  }
+
+  function DistinctValidator(scope, element) {
+    var self = this;
+    var whoAmI = 'distinct';
+
+
+    /* Public Methods */
+    self.data;
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      self.data = question.fillingRules.options[whoAmI].data.reference;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data;
+      scope.$parent.widget.updateFillingRules();
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
@@ -9548,6 +9576,95 @@
 
     angular
         .module('editor.ui')
+        .directive('otusMaxDateValidator', otusMaxDateValidator);
+
+    otusMaxDateValidator.$inject = [
+        'MaxDateValidatorWidgetFactory'
+    ];
+
+    function otusMaxDateValidator(MaxDateValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/max-date/max-date-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MaxDateValidatorWidgetFactory.create(scope, element);
+            }
+
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MaxDateValidatorWidgetFactory', MaxDateValidatorWidgetFactory);
+
+        MaxDateValidatorWidgetFactory.$inject = [
+            'otusjs.utils.ImmutableDate'
+        ];
+
+    function MaxDateValidatorWidgetFactory(ImmutableDate) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new MaxDateValidator(scope, element, ImmutableDate);
+        }
+
+        return self;
+    }
+
+    function MaxDateValidator(scope, element, ImmutableDate) {
+        var self = this;
+        var whoAmI = 'maxDate';
+
+
+        /* Public Methods */
+        self.data = '';
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            self.data = new ImmutableDate(question.fillingRules.options[whoAmI].data.reference.value);
+            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+            updateData();
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
         .directive('otusMandatoryValidator', otusMandatoryValidator);
 
     otusMandatoryValidator.$inject = [
@@ -9614,91 +9731,6 @@
 
         function getRuleType() {
             return question.fillingRules.options[whoAmI];
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusMaxDateValidator', otusMaxDateValidator);
-
-    otusMaxDateValidator.$inject = [
-        'MaxDateValidatorWidgetFactory'
-    ];
-
-    function otusMaxDateValidator(MaxDateValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/max-date/max-date-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MaxDateValidatorWidgetFactory.create(scope, element);
-            }
-
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('MaxDateValidatorWidgetFactory', MaxDateValidatorWidgetFactory);
-
-    function MaxDateValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new MaxDateValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function MaxDateValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'maxDate';
-
-
-        /* Public Methods */
-        self.data = new Date();
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            self.data = new Date(question.fillingRules.options[whoAmI].data.reference);
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-            updateData();
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
         }
 
     }
@@ -9899,157 +9931,75 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('MaxTimeValidatorWidgetFactory', MaxTimeValidatorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('MaxTimeValidatorWidgetFactory', MaxTimeValidatorWidgetFactory);
 
-    function MaxTimeValidatorWidgetFactory() {
-        var self = this;
+  MaxTimeValidatorWidgetFactory.$inject = [
+            'otusjs.utils.ImmutableDate'
+        ];
 
-        /* Public interface */
-        self.create = create;
+  function MaxTimeValidatorWidgetFactory(ImmutableDate) {
+    var self = this;
 
-        function create(scope, element) {
-            return new MaxTimeValidator(scope, element);
-        }
+    /* Public interface */
+    self.create = create;
 
-        return self;
+    function create(scope, element) {
+      return new MaxTimeValidator(scope, element, ImmutableDate);
     }
 
-    function MaxTimeValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'maxTime';
+    return self;
+  }
+
+  function MaxTimeValidator(scope, element, ImmutableDate) {
+    var self = this;
+    var whoAmI = 'maxTime';
 
 
-        /* Public Methods */
-        self.data = new Date();
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
+    /* Public Methods */
+    self.data = '';
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
 
-        var question = scope.$parent.widget.getItem();
+    var question = scope.$parent.widget.getItem();
 
-        _init();
+    _init();
 
-        function _init() {
-            var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-            if (referenceValue !== '') {
-              self.data = new Date(referenceValue);
-            }
-            else {
-              self.data.setHours('01');
-              self.data.setMinutes('00');
-              self.data.setSeconds('00');
-              self.data.setMilliseconds('00');
-            }
-            self.updateData();
-        }
-
-        function updateData() {
-            if (self.data) {
-                getRuleType().data.reference = self.data.toString();
-                scope.$parent.widget.updateFillingRules();
-            }
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
+    function _init() {
+      var referenceValue = question.fillingRules.options[whoAmI].data.reference.value;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+      if (referenceValue !== '') {
+        self.data = new ImmutableDate(referenceValue);
+      } else {
+        self.data = new ImmutableDate();
+        self.data.resetTime();
+        self.data.setHours(1);
+      }
+      self.data.resetDate();
+      self.updateData();
     }
 
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusMinDateValidator', otusMinDateValidator);
-
-    otusMinDateValidator.$inject = [
-        'MinDateValidatorWidgetFactory'
-    ];
-
-    function otusMinDateValidator(MinDateValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/min-date/min-date-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MinDateValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
-
-    function MinDateValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new MinDateValidator(scope, element);
-        }
-
-        return self;
+    function updateData() {
+      if (self.data) {
+        getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+        scope.$parent.widget.updateFillingRules();
+      }
     }
 
-    function MinDateValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'minDate';
-
-        /* Public Methods */
-        self.data = new Date().toLocaleDateString();
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            var avaiableRules = question.fillingRules.options;
-            self.data = new Date(avaiableRules[whoAmI].data.reference);
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored
-            self.updateData();
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
     }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
@@ -10135,6 +10085,95 @@
         }
 
     }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMinDateValidator', otusMinDateValidator);
+
+    otusMinDateValidator.$inject = [
+        'MinDateValidatorWidgetFactory'
+    ];
+
+    function otusMinDateValidator(MinDateValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-date/min-date-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MinDateValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
+
+  MinDateValidatorWidgetFactory.$inject = [
+          'otusjs.utils.ImmutableDate'
+      ];
+
+  function MinDateValidatorWidgetFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new MinDateValidator(scope, element, ImmutableDate);
+    }
+
+    return self;
+  }
+
+  function MinDateValidator(scope, element, ImmutableDate) {
+    var self = this;
+    var whoAmI = 'minDate';
+
+    /* Public Methods */
+    self.data = '';
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      var avaiableRules = question.fillingRules.options;
+      self.data = new ImmutableDate(avaiableRules[whoAmI].data.reference.value);
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+      self.updateData();
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+      scope.$parent.widget.updateFillingRules();
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
@@ -10247,72 +10286,75 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('MinTimeValidatorWidgetFactory', MinTimeValidatorWidgetFactory);
 
-    function MinTimeValidatorWidgetFactory() {
-        var self = this;
+  MinTimeValidatorWidgetFactory.$inject = [
+            'otusjs.utils.ImmutableDate'
+                 ];
 
-        /* Public interface */
-        self.create = create;
+  function MinTimeValidatorWidgetFactory(ImmutableDate) {
+    var self = this;
 
-        function create(scope, element) {
-            return new MinTimeValidator(scope, element);
-        }
+    /* Public interface */
+    self.create = create;
 
-        return self;
+    function create(scope, element) {
+      return new MinTimeValidator(scope, element, ImmutableDate);
     }
 
-    function MinTimeValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'minTime';
+    return self;
+  }
+
+  function MinTimeValidator(scope, element, ImmutableDate) {
+    var self = this;
+    var whoAmI = 'minTime';
 
 
-        /* Public Methods */
-        self.data = new Date("Fri Mar 25 2015 09:56:24 GMT+0100 (Tokyo Time)");
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
+    /* Public Methods */
+    self.data = '';
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
 
-        var question = scope.$parent.widget.getItem();
+    var question = scope.$parent.widget.getItem();
 
-        _init();
+    _init();
 
-        function _init() {
-            var referenceValue = question.fillingRules.options[whoAmI].data.reference;
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-            if (referenceValue !== '') {
-              self.data = new Date(referenceValue);
-            }
-            else {
-              self.data.setHours('01');
-              self.data.setMinutes('00');
-              self.data.setSeconds('00');
-              self.data.setMilliseconds('00');
-            }
-            self.updateData();
-        }
-
-        function updateData() {
-            if (self.data) {
-                getRuleType().data.reference = self.data.toString();
-                scope.$parent.widget.updateFillingRules();
-            }
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
+    function _init() {
+      var referenceValue = question.fillingRules.options[whoAmI].data.reference.value;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+      if (referenceValue !== '') {
+        self.data = new ImmutableDate(referenceValue);
+      } else {
+        self.data = new ImmutableDate();
+        self.data.resetTime();
+        self.data.setHours(1);
+      }
+      self.data.resetDate();
+      self.updateData();
     }
+
+    function updateData() {
+      if (self.data) {
+        getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+        scope.$parent.widget.updateFillingRules();
+      }
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
@@ -10687,28 +10729,31 @@
         .module('editor.ui')
         .factory('RangeDateValidatorWidgetFactory', RangeDateValidatorWidgetFactory);
 
-    function RangeDateValidatorWidgetFactory() {
+        RangeDateValidatorWidgetFactory.$inject = [
+            'otusjs.utils.ImmutableDate'
+        ];
+
+    function RangeDateValidatorWidgetFactory(ImmutableDate) {
         var self = this;
 
         /* Public interface */
         self.create = create;
-
         function create(scope, element) {
-            return new RangeDateValidator(scope, element);
+            return new RangeDateValidator(scope, element, ImmutableDate);
         }
 
         return self;
     }
 
-    function RangeDateValidator(scope, element) {
+    function RangeDateValidator(scope, element, ImmutableDate) {
         var self = this;
         var whoAmI = 'rangeDate';
 
 
         /* Public Methods */
         self.data = {
-            'initial': new Date(),
-            'end': new Date()
+            'initial': '',
+            'end': ''
         };
         self.updateData = updateData;
         self.deleteValidator = deleteValidator;
@@ -10719,15 +10764,16 @@
 
         function _init() {
             var avaiableRules = question.fillingRules.options;
-            self.data['initial'] = new Date(avaiableRules[whoAmI].data.reference['initial']);
-            self.data['end'] = new Date(avaiableRules[whoAmI].data.reference['end']);
+            var reference = avaiableRules[whoAmI].data.reference;
+            self.data.initial = new ImmutableDate(reference.initial.value);
+            self.data.end = new ImmutableDate(reference.end.value);
             self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
             self.updateData();
         }
 
         function updateData() {
-            getRuleType().data.reference['initial'] = self.data['initial'];
-            getRuleType().data.reference['end'] = self.data['end'];
+            getRuleType().data.reference.initial = self.data.initial.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+            getRuleType().data.reference.end = self.data.end.toJSON();
             scope.$parent.widget.updateFillingRules();
         }
 
