@@ -60,6 +60,10 @@
         icon: 'phone',
         tooltip: 'Telefone'
       },
+      AutocompleteQuestion: {
+        icon: 'youtube_searched_for',
+        tooltip: 'Autocompletar'
+      },
       TextItem: {
         icon: 'message',
         tooltip: 'Texto'

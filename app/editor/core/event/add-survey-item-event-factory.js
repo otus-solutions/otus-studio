@@ -63,6 +63,10 @@
           newItem.options = itemToLoad.options;
         }
 
+        if(itemToLoad.objectType === 'AutocompleteQuestion') {
+          newItem.dataSources = itemToLoad.dataSources;
+        }
+
         if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
           newItem.unit = itemToLoad.unit;
         }

@@ -16,12 +16,25 @@
         'TimeQuestionWidgetFactory',
         'EmailQuestionWidgetFactory',
         'PhoneQuestionWidgetFactory',
+        'AutocompleteQuestionWidgetFactory',
         /* Miscelaneous items */
         'TextItemWidgetFactory',
         'ImageItemWidgetFactory'
     ];
 
-    function SurveyItemWidgetFactory(CalendarQuestionWidgetFactory, IntegerQuestionWidgetFactory, DecimalQuestionWidgetFactory, SingleSelectionQuestionWidgetFactory, CheckboxQuestionWidgetFactory, TextQuestionWidgetFactory, TimeQuestionWidgetFactory, EmailQuestionWidgetFactory, PhoneQuestionWidgetFactory, TextItemWidgetFactory, ImageItemWidgetFactory) {
+    function SurveyItemWidgetFactory(
+      CalendarQuestionWidgetFactory,
+      IntegerQuestionWidgetFactory,
+      DecimalQuestionWidgetFactory,
+      SingleSelectionQuestionWidgetFactory,
+      CheckboxQuestionWidgetFactory,
+      TextQuestionWidgetFactory,
+      TimeQuestionWidgetFactory,
+      EmailQuestionWidgetFactory,
+      PhoneQuestionWidgetFactory,
+      AutocompleteQuestionWidgetFactory,
+      TextItemWidgetFactory,
+      ImageItemWidgetFactory) {
         var self = this;
 
         var widgetFactories = {
@@ -34,6 +47,7 @@
             'TimeQuestion': TimeQuestionWidgetFactory,
             'EmailQuestion': EmailQuestionWidgetFactory,
             'PhoneQuestion': PhoneQuestionWidgetFactory,
+            'AutocompleteQuestion': AutocompleteQuestionWidgetFactory,
             'TextItem': TextItemWidgetFactory,
             'ImageItem': ImageItemWidgetFactory
         };

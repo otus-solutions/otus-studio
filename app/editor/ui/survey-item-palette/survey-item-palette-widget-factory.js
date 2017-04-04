@@ -43,8 +43,13 @@
         self.addImageItem = addImageItem;
         self.addPhoneQuestion = addPhoneQuestion;
         self.addCheckboxQuestion = addCheckboxQuestion;
+        self.addAutocompleteQuestion = addAutocompleteQuestion;
+
 
         /* Actions */
+        function addAutocompleteQuestion() {
+            AddSurveyItemEventFactory.create().execute('AutocompleteQuestion');
+        }
         function addCalendarQuestion() {
             AddSurveyItemEventFactory.create().execute('CalendarQuestion');
         }
