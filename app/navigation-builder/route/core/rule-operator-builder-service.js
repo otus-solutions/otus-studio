@@ -33,7 +33,7 @@
     }
 
     function _isTextItem(itemType) {
-      return (itemType === 'TextQuestion' || itemType === 'EmailQuestion' || itemType === 'PhoneQuestion');
+      return (itemType === 'TextQuestion' || itemType === 'EmailQuestion' || itemType === 'PhoneQuestion' || itemType === 'AutocompleteQuestion');
     }
 
     function _isNumberItem(itemType) {

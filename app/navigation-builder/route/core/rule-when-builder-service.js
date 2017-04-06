@@ -63,6 +63,10 @@
       _mapping.PhoneQuestion.image = 'phone';
       _mapping.PhoneQuestion.tooltip = 'Telefone';
 
+      _mapping.AutocompleteQuestion = {};
+      _mapping.AutocompleteQuestion.image = 'youtube_searched_for';
+      _mapping.AutocompleteQuestion.tooltip = 'Auto Completar';
+
       _mapping.TextItem = {};
       _mapping.TextItem.image = 'message';
       _mapping.TextItem.tooltip = 'Texto';
@@ -71,5 +75,5 @@
       _mapping.ImageItem.image = 'image';
       _mapping.ImageItem.tooltip = 'Imagem';
     }
- }
+  }
 })();
