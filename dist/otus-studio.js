@@ -371,6 +371,51 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .controller('PreviewMenuController', Controller);
+
+  Controller.$inject = [
+    'DashboardStateService',
+    'EditionPreviewService',
+    'WorkspaceService',
+    'SurveyEditorService',
+    '$window'
+  ];
+
+  function Controller(DashboardStateService, EditionPreviewService, WorkspaceService, SurveyEditorService, $window) {
+    var self = this;
+
+    /* Public interface */
+    self.backToEditor = backToEditor;
+
+    function backToEditor() {
+      if (EditionPreviewService.isLoadingMode()) {
+        EditionPreviewService.setScope($scope);
+        EditionPreviewService.loadSurveyTemplate().then(function(template) {
+          SurveyEditorService.startEditorWithSurveyTemplate(template);
+          EditionPreviewService.isLoading = false;
+          WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
+          DashboardStateService.goToEditor();
+        });
+      } else {
+        $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
+      }
+
+    }
+  }
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('preview', []);
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -671,47 +716,10 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .controller('PreviewMenuController', Controller);
-
-  Controller.$inject = [
-    'DashboardStateService',
-    'EditionPreviewService',
-    'WorkspaceService',
-    'SurveyEditorService',
-    '$window'
-  ];
-
-  function Controller(DashboardStateService, EditionPreviewService, WorkspaceService, SurveyEditorService, $window) {
-    var self = this;
-
-    /* Public interface */
-    self.backToEditor = backToEditor;
-
-    function backToEditor() {
-      if (EditionPreviewService.isLoadingMode()) {
-        EditionPreviewService.setScope($scope);
-        EditionPreviewService.loadSurveyTemplate().then(function(template) {
-          SurveyEditorService.startEditorWithSurveyTemplate(template);
-          EditionPreviewService.isLoading = false;
-          WorkspaceService.getSurvey().NavigationManager.loadJsonData(template.navigationList);
-          DashboardStateService.goToEditor();
-        });
-      } else {
-        $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
-      }
-
-    }
-  }
-}());
-
-(function() {
     'use strict';
 
-    angular.module('preview', []);
+    angular
+        .module('editor.core', []);
 
 }());
 
@@ -734,8 +742,9 @@
 (function() {
     'use strict';
 
-    angular
-        .module('editor.core', []);
+    angular.module('editor.ui', [
+        'angular-bind-html-compile'
+    ]);
 
 }());
 
@@ -743,15 +752,6 @@
     'use strict';
 
     angular.module('editor.workspace', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('editor.ui', [
-        'angular-bind-html-compile'
-    ]);
 
 }());
 
@@ -858,14 +858,6 @@
 })();
 
 (function() {
-    'use strict';
-
-    angular
-      .module('otusjs.studio.navigationBuilder.navigationInspector', []);
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -934,6 +926,14 @@
 (function() {
     'use strict';
 
+    angular
+      .module('otusjs.studio.navigationBuilder.navigationInspector', []);
+
+}());
+
+(function() {
+    'use strict';
+
     angular.module('otusjs.studio.navigationBuilder.messenger', []);
 
 }());
@@ -944,6 +944,261 @@
     angular.module('otusjs.studio.navigationBuilder.routeBuilder', []);
 
 }());
+
+(function(){"use strict";var __slice=[].slice;angular.module("indexedDB",[]).provider("$indexedDB",function(){var IDBKeyRange,allTransactions,apiDirection,appendResultsToPromise,applyNeededUpgrades,cursorDirection,db,dbMode,dbName,dbPromise,dbVersion,defaultQueryOptions,errorMessageFor,indexedDB,readyState,upgradesByVersion;indexedDB=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB,IDBKeyRange=window.IDBKeyRange||window.mozIDBKeyRange||window.webkitIDBKeyRange||window.msIDBKeyRange,dbMode={readonly:"readonly",readwrite:"readwrite"},readyState={pending:"pending"},cursorDirection={next:"next",nextunique:"nextunique",prev:"prev",prevunique:"prevunique"},apiDirection={ascending:cursorDirection.next,descending:cursorDirection.prev},dbName="",dbVersion=1,db=null,upgradesByVersion={},dbPromise=null,allTransactions=[],defaultQueryOptions={useIndex:void 0,keyRange:null,direction:cursorDirection.next},applyNeededUpgrades=function(oldVersion,event,db,tx,$log){var version;for(version in upgradesByVersion)!upgradesByVersion.hasOwnProperty(version)||oldVersion>=version||($log.log("$indexedDB: Running upgrade : "+version+" from "+oldVersion),upgradesByVersion[version](event,db,tx))},errorMessageFor=function(e){return e.target.readyState===readyState.pending?"Error: Operation pending":e.target.webkitErrorMessage||e.target.error.message||e.target.errorCode},appendResultsToPromise=function(promise,results){return void 0!==results?promise.then(function(){return results}):promise},this.connection=function(databaseName){return dbName=databaseName,this},this.upgradeDatabase=function(newVersion,callback){return upgradesByVersion[newVersion]=callback,dbVersion=Math.max.apply(null,Object.keys(upgradesByVersion)),this},this.$get=["$q","$rootScope","$log",function($q,$rootScope,$log){var DbQ,ObjectStore,Query,Transaction,addTransaction,closeDatabase,createDatabaseConnection,keyRangeForOptions,openDatabase,openTransaction,rejectWithError,validateStoreNames;return rejectWithError=function(deferred){return function(error){return $rootScope.$apply(function(){return deferred.reject(errorMessageFor(error))})}},createDatabaseConnection=function(){var dbReq,deferred;return deferred=$q.defer(),dbReq=indexedDB.open(dbName,parseInt(dbVersion)||1),dbReq.onsuccess=function(){db=dbReq.result,$rootScope.$apply(function(){deferred.resolve(db)})},dbReq.onblocked=dbReq.onerror=rejectWithError(deferred),dbReq.onupgradeneeded=function(event){var tx;db=event.target.result,tx=event.target.transaction,$log.log("$indexedDB: Upgrading database '"+db.name+"' from version "+event.oldVersion+" to version "+event.newVersion+" ..."),applyNeededUpgrades(event.oldVersion,event,db,tx,$log)},deferred.promise},openDatabase=function(){return dbPromise||(dbPromise=createDatabaseConnection())},closeDatabase=function(){return openDatabase().then(function(){return db.close(),db=null,dbPromise=null})},validateStoreNames=function(storeNames){var found,storeName,_i,_len;for(found=!0,_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],found&=db.objectStoreNames.contains(storeName);return found},openTransaction=function(storeNames,mode){return null==mode&&(mode=dbMode.readonly),openDatabase().then(function(){return validateStoreNames(storeNames)?new Transaction(storeNames,mode):$q.reject("Object stores "+storeNames+" do not exist.")})},keyRangeForOptions=function(options){return options.beginKey&&options.endKey?IDBKeyRange.bound(options.beginKey,options.endKey):void 0},addTransaction=function(transaction){return allTransactions.push(transaction.promise),transaction.promise["finally"](function(){var index;return index=allTransactions.indexOf(transaction.promise),index>-1?allTransactions.splice(index,1):void 0})},Transaction=function(){function Transaction(storeNames,mode){null==mode&&(mode=dbMode.readonly),this.transaction=db.transaction(storeNames,mode),this.defer=$q.defer(),this.promise=this.defer.promise,this.setupCallbacks()}return Transaction.prototype.setupCallbacks=function(){return this.transaction.oncomplete=function(_this){return function(){return $rootScope.$apply(function(){return _this.defer.resolve("Transaction Completed")})}}(this),this.transaction.onabort=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Aborted",error)})}}(this),this.transaction.onerror=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Error",error)})}}(this),addTransaction(this)},Transaction.prototype.objectStore=function(storeName){return this.transaction.objectStore(storeName)},Transaction.prototype.abort=function(){return this.transaction.abort()},Transaction}(),DbQ=function(){function DbQ(){this.q=$q.defer(),this.promise=this.q.promise}return DbQ.prototype.reject=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).reject.apply(_ref,args)}}(this))},DbQ.prototype.rejectWith=function(req){return req.onerror=req.onblocked=function(_this){return function(e){return _this.reject(errorMessageFor(e))}}(this)},DbQ.prototype.resolve=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).resolve.apply(_ref,args)}}(this))},DbQ.prototype.notify=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).notify.apply(_ref,args)}}(this))},DbQ.prototype.dbErrorFunction=function(){return function(_this){return function(error){return $rootScope.$apply(function(){return _this.q.reject(errorMessageFor(error))})}}(this)},DbQ.prototype.resolveWith=function(req){return this.rejectWith(req),req.onsuccess=function(_this){return function(e){return _this.resolve(e.target.result)}}(this)},DbQ}(),ObjectStore=function(){function ObjectStore(storeName,transaction){this.storeName=storeName,this.store=transaction.objectStore(storeName),this.transaction=transaction}return ObjectStore.prototype.defer=function(){return new DbQ},ObjectStore.prototype._mapCursor=function(defer,mapFunc,req){var results;return null==req&&(req=this.store.openCursor()),results=[],defer.rejectWith(req),req.onsuccess=function(e){var cursor;return(cursor=e.target.result)?(results.push(mapFunc(cursor)),defer.notify(mapFunc(cursor)),cursor["continue"]()):defer.resolve(results)}},ObjectStore.prototype._arrayOperation=function(data,mapFunc){var defer,item,req,results,_i,_len;for(defer=this.defer(),angular.isArray(data)||(data=[data]),_i=0,_len=data.length;_len>_i;_i++)item=data[_i],req=mapFunc(item),results=[],defer.rejectWith(req),req.onsuccess=function(e){return results.push(e.target.result),defer.notify(e.target.result),results.length>=data.length?defer.resolve(results):void 0};return 0===data.length?$q.when([]):defer.promise},ObjectStore.prototype.getAllKeys=function(){var defer,req;return defer=this.defer(),this.store.getAllKeys?(req=this.store.getAllKeys(),defer.resolveWith(req)):this._mapCursor(defer,function(cursor){return cursor.key}),defer.promise},ObjectStore.prototype.clear=function(){var defer,req;return defer=this.defer(),req=this.store.clear(),defer.resolveWith(req),defer.promise},ObjectStore.prototype["delete"]=function(key){var defer;return defer=this.defer(),defer.resolveWith(this.store["delete"](key)),defer.promise},ObjectStore.prototype.upsert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.put(item)}}(this))},ObjectStore.prototype.insert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.add(item)}}(this))},ObjectStore.prototype.getAll=function(){var defer;return defer=this.defer(),this.store.getAll?defer.resolveWith(this.store.getAll()):this._mapCursor(defer,function(cursor){return cursor.value}),defer.promise},ObjectStore.prototype.eachWhere=function(query){var defer,direction,indexName,keyRange,req;return defer=this.defer(),indexName=query.indexName,keyRange=query.keyRange,direction=query.direction,req=indexName?this.store.index(indexName).openCursor(keyRange,direction):this.store.openCursor(keyRange,direction),this._mapCursor(defer,function(cursor){return cursor.value},req),defer.promise},ObjectStore.prototype.findWhere=function(query){return this.eachWhere(query)},ObjectStore.prototype.each=function(options){return null==options&&(options={}),this.eachBy(void 0,options)},ObjectStore.prototype.eachBy=function(indexName,options){var q;return null==indexName&&(indexName=void 0),null==options&&(options={}),q=new Query,q.indexName=indexName,q.keyRange=keyRangeForOptions(options),q.direction=options.direction||defaultQueryOptions.direction,this.eachWhere(q)},ObjectStore.prototype.count=function(){var defer;return defer=this.defer(),defer.resolveWith(this.store.count()),defer.promise},ObjectStore.prototype.find=function(key){var defer,req;return defer=this.defer(),req=this.store.get(key),defer.rejectWith(req),req.onsuccess=function(_this){return function(e){return e.target.result?defer.resolve(e.target.result):defer.reject(""+_this.storeName+":"+key+" not found.")}}(this),defer.promise},ObjectStore.prototype.findBy=function(index,key){var defer;return defer=this.defer(),defer.resolveWith(this.store.index(index).get(key)),defer.promise},ObjectStore.prototype.query=function(){return new Query},ObjectStore}(),Query=function(){function Query(){this.indexName=void 0,this.keyRange=void 0,this.direction=cursorDirection.next}return Query.prototype.$lt=function(value){return this.keyRange=IDBKeyRange.upperBound(value,!0),this},Query.prototype.$gt=function(value){return this.keyRange=IDBKeyRange.lowerBound(value,!0),this},Query.prototype.$lte=function(value){return this.keyRange=IDBKeyRange.upperBound(value),this},Query.prototype.$gte=function(value){return this.keyRange=IDBKeyRange.lowerBound(value),this},Query.prototype.$eq=function(value){return this.keyRange=IDBKeyRange.only(value),this},Query.prototype.$between=function(low,hi,exLow,exHi){return null==exLow&&(exLow=!1),null==exHi&&(exHi=!1),this.keyRange=IDBKeyRange.bound(low,hi,exLow,exHi),this},Query.prototype.$desc=function(unique){return this.direction=unique?cursorDirection.prevunique:cursorDirection.prev,this},Query.prototype.$asc=function(unique){return this.direction=unique?cursorDirection.nextunique:cursorDirection.next,this},Query.prototype.$index=function(indexName){return this.indexName=indexName,this},Query}(),{openStore:function(storeName,callBack,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction([storeName],mode).then(function(transaction){var results;return results=callBack(new ObjectStore(storeName,transaction)),appendResultsToPromise(transaction.promise,results)})},openStores:function(storeNames,callback,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction(storeNames,mode).then(function(transaction){var objectStores,results,storeName;return objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)})},openAllStores:function(callback,mode){return null==mode&&(mode=dbMode.readwrite),openDatabase().then(function(_this){return function(){var objectStores,results,storeName,storeNames,transaction;return storeNames=Array.prototype.slice.apply(db.objectStoreNames),transaction=new Transaction(storeNames,mode),objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)}}(this))},closeDatabase:function(){return closeDatabase()},deleteDatabase:function(){return closeDatabase().then(function(){var defer;return defer=new DbQ,defer.resolveWith(indexedDB.deleteDatabase(dbName)),defer.promise})["finally"](function(){return $log.log("$indexedDB: "+dbName+" database deleted.")})},queryDirection:apiDirection,flush:function(){return allTransactions.length>0?$q.all(allTransactions):$q.when([])},databaseInfo:function(){return openDatabase().then(function(){var storeNames,transaction;return transaction=null,storeNames=Array.prototype.slice.apply(db.objectStoreNames),openTransaction(storeNames,dbMode.readonly).then(function(transaction){var store,storeName,stores;return stores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],store=transaction.objectStore(storeName),_results.push({name:storeName,keyPath:store.keyPath,autoIncrement:store.autoIncrement,indices:Array.prototype.slice.apply(store.indexNames)});return _results}(),transaction.promise.then(function(){return{name:db.name,version:db.version,objectStores:stores}})})})}}}]})}).call(this);
+//# sourceMappingURL=angular-indexed-db.min.js.map
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition')
+        .controller('otus.textEdition.TextEditionMenuController', controller);
+
+    controller.$inject = ['$scope', '$mdDialog', 'otus.textEdition.ColorContext'];
+
+    function controller($scope, $mdDialog, ColorContext) {
+        var self = this;
+
+        self.bold = bold;
+        self.italic = italic;
+        self.underlined = underlined;
+        self.strikeThrough = strikeThrough;
+        self.openColors = openColors;
+        self.foreColor = foreColor;
+        self.hiliteColor = hiliteColor;
+        self.justifyCenter = justifyCenter;
+        self.justifyLeft = justifyLeft;
+        self.justifyRight = justifyRight;
+        self.justifyFull = justifyFull;
+        self.removeFormat = removeFormat;
+
+        function bold() {
+            document.execCommand('bold', false, null);
+            return false;
+        }
+
+        function italic() {
+            document.execCommand('italic', false, null);
+            return false;
+        }
+
+        function underlined() {
+            document.execCommand('underline', false, null);
+            return false;
+        }
+
+        function strikeThrough() {
+            document.execCommand('strikeThrough', false, null);
+            return false;
+        }
+
+        function foreColor() {
+            var textColor = ColorContext.textColor;
+            document.execCommand('ForeColor', false, textColor);
+            return false;
+        }
+
+        function hiliteColor() {
+            var backgroundColor = ColorContext.backgroundColor;
+            document.execCommand('HiliteColor', false, backgroundColor);
+            return false;
+        }
+
+        function justifyCenter() {
+            document.execCommand('justifyCenter', false, null);
+            return false;
+        }
+
+        function justifyFull() {
+            document.execCommand('justifyFull', false, null);
+            return false;
+        }
+
+        function justifyLeft() {
+            document.execCommand('justifyLeft', false, null);
+            return false;
+        }
+
+        function justifyRight() {
+            document.execCommand('justifyRight', false, null);
+            return false;
+        }
+
+        function removeFormat() {
+            document.execCommand('removeFormat', false, null);
+            return false;
+        }
+
+        function openColors() {
+            $mdDialog.show({
+                templateUrl: 'app/shared/text-edition-menu/color/color-picker-template.html',
+                controller: 'otus.textEdition.ColorController as controller',
+                clickOutsideToClose: true
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition')
+        .directive('otusTextEditionMenu', directive);
+
+    function directive() {
+        var ddo = {
+            templateUrl: 'app/shared/text-edition-menu/text-edition-menu-template.html',
+            retrict: 'E',
+            controller: 'otus.textEdition.TextEditionMenuController as controller'
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.textEdition', [
+            'mdColorPicker'
+        ]);
+
+}());
+
+(function() {
+
+    angular
+        .module('ui.components', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .service('EditionPreviewService', EditionPreviewService);
+
+  EditionPreviewService.$inject = [
+    '$stateParams',
+    'AddSurveyItemEventFactory',
+    '$timeout',
+    '$q'
+  ];
+
+  function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
+    var self = this;
+    var _surveyToLoad;
+    var _scope;
+
+    self.isLoading = false;
+    self.setScope = setScope;
+    self.isLoadingMode = isLoadingMode;
+    self.loadSurveyTemplate = loadSurveyTemplate;
+
+    function loadSurveyTemplate() {
+      _surveyToLoad = $stateParams.template;
+      if (_surveyToLoad.itemContainer.length > 0) {
+        self.isLoading = true;
+      }
+      return _renderSurveyTemplate();
+    }
+
+    function _renderSurveyTemplate() {
+      var deferred = $q.defer();
+      if (!self.isLoading) {
+        deferred.reject(true);
+      } else {
+        if (_scope.$$phase) {
+          AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
+          _surveyToLoad.itemContainer.splice(0, 1);
+          if (_surveyToLoad.itemContainer.length > 0) {
+            $timeout(function() {
+              _surveyToLoad.itemContainer.forEach(function(item) {
+                AddSurveyItemEventFactory.create().load(item);
+                _scope.$digest();
+              });
+              deferred.resolve($stateParams.template);
+            }, 1000);
+          } else {
+            deferred.resolve($stateParams.template);
+          }
+        }
+
+      }
+      return deferred.promise;
+    }
+
+    function isLoadingMode() {
+      return $stateParams.template;
+    }
+
+    function setScope(scope) {
+      _scope = scope;
+    }
+  }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
+
+  function otusSurveyPreviewGenerator() {
+    var ddo = {
+      restrict: 'A',
+      controller: Controller
+    };
+    return ddo;
+  }
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'otusjs.model.activity.ActivityFacadeService',
+    'otusjs.player.core.player.PlayerService'
+  ];
+
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
+    var _newScope;
+
+    $element.on('click', function() {
+      var otusSheetDOMElement = $('otus-player');
+
+      if (otusSheetDOMElement[0]) {
+        otusSheetDOMElement.remove();
+        if (_newScope) {
+          _newScope.$destroy();
+        }
+      }
+      _generateOtusPreview();
+      PlayerService.setup();
+    });
+
+    function _generateOtusPreview() {
+      _newScope = $scope.$new(true);
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
+      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
+      $('#survey-preview').append(content);
+    }
+
+    function _getSurveyTemplateObject() {
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
+    }
+  }
+
+})();
 
 (function() {
     'use strict';
@@ -1264,514 +1519,6 @@
             }
         };
         return ddo;
-    }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .service('EditionPreviewService', EditionPreviewService);
-
-  EditionPreviewService.$inject = [
-    '$stateParams',
-    'AddSurveyItemEventFactory',
-    '$timeout',
-    '$q'
-  ];
-
-  function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
-    var self = this;
-    var _surveyToLoad;
-    var _scope;
-
-    self.isLoading = false;
-    self.setScope = setScope;
-    self.isLoadingMode = isLoadingMode;
-    self.loadSurveyTemplate = loadSurveyTemplate;
-
-    function loadSurveyTemplate() {
-      _surveyToLoad = $stateParams.template;
-      if (_surveyToLoad.itemContainer.length > 0) {
-        self.isLoading = true;
-      }
-      return _renderSurveyTemplate();
-    }
-
-    function _renderSurveyTemplate() {
-      var deferred = $q.defer();
-      if (!self.isLoading) {
-        deferred.reject(true);
-      } else {
-        if (_scope.$$phase) {
-          AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
-          _surveyToLoad.itemContainer.splice(0, 1);
-          if (_surveyToLoad.itemContainer.length > 0) {
-            $timeout(function() {
-              _surveyToLoad.itemContainer.forEach(function(item) {
-                AddSurveyItemEventFactory.create().load(item);
-                _scope.$digest();
-              });
-              deferred.resolve($stateParams.template);
-            }, 1000);
-          } else {
-            deferred.resolve($stateParams.template);
-          }
-        }
-
-      }
-      return deferred.promise;
-    }
-
-    function isLoadingMode() {
-      return $stateParams.template;
-    }
-
-    function setScope(scope) {
-      _scope = scope;
-    }
-  }
-
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
-
-  function otusSurveyPreviewGenerator() {
-    var ddo = {
-      restrict: 'A',
-      controller: Controller
-    };
-    return ddo;
-  }
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    '$compile',
-    'WorkspaceService',
-    'otusjs.model.activity.ActivityFacadeService',
-    'otusjs.player.core.player.PlayerService'
-  ];
-
-  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
-    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
-    var _newScope;
-
-    $element.on('click', function() {
-      var otusSheetDOMElement = $('otus-player');
-
-      if (otusSheetDOMElement[0]) {
-        otusSheetDOMElement.remove();
-        if (_newScope) {
-          _newScope.$destroy();
-        }
-      }
-      _generateOtusPreview();
-      PlayerService.setup();
-    });
-
-    function _generateOtusPreview() {
-      _newScope = $scope.$new(true);
-      _newScope.surveyActivity = {};
-      _newScope.surveyActivity.template = _getSurveyTemplateObject();
-      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
-      $('#survey-preview').append(content);
-    }
-
-    function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
-    }
-  }
-
-})();
-
-(function(){"use strict";var __slice=[].slice;angular.module("indexedDB",[]).provider("$indexedDB",function(){var IDBKeyRange,allTransactions,apiDirection,appendResultsToPromise,applyNeededUpgrades,cursorDirection,db,dbMode,dbName,dbPromise,dbVersion,defaultQueryOptions,errorMessageFor,indexedDB,readyState,upgradesByVersion;indexedDB=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB,IDBKeyRange=window.IDBKeyRange||window.mozIDBKeyRange||window.webkitIDBKeyRange||window.msIDBKeyRange,dbMode={readonly:"readonly",readwrite:"readwrite"},readyState={pending:"pending"},cursorDirection={next:"next",nextunique:"nextunique",prev:"prev",prevunique:"prevunique"},apiDirection={ascending:cursorDirection.next,descending:cursorDirection.prev},dbName="",dbVersion=1,db=null,upgradesByVersion={},dbPromise=null,allTransactions=[],defaultQueryOptions={useIndex:void 0,keyRange:null,direction:cursorDirection.next},applyNeededUpgrades=function(oldVersion,event,db,tx,$log){var version;for(version in upgradesByVersion)!upgradesByVersion.hasOwnProperty(version)||oldVersion>=version||($log.log("$indexedDB: Running upgrade : "+version+" from "+oldVersion),upgradesByVersion[version](event,db,tx))},errorMessageFor=function(e){return e.target.readyState===readyState.pending?"Error: Operation pending":e.target.webkitErrorMessage||e.target.error.message||e.target.errorCode},appendResultsToPromise=function(promise,results){return void 0!==results?promise.then(function(){return results}):promise},this.connection=function(databaseName){return dbName=databaseName,this},this.upgradeDatabase=function(newVersion,callback){return upgradesByVersion[newVersion]=callback,dbVersion=Math.max.apply(null,Object.keys(upgradesByVersion)),this},this.$get=["$q","$rootScope","$log",function($q,$rootScope,$log){var DbQ,ObjectStore,Query,Transaction,addTransaction,closeDatabase,createDatabaseConnection,keyRangeForOptions,openDatabase,openTransaction,rejectWithError,validateStoreNames;return rejectWithError=function(deferred){return function(error){return $rootScope.$apply(function(){return deferred.reject(errorMessageFor(error))})}},createDatabaseConnection=function(){var dbReq,deferred;return deferred=$q.defer(),dbReq=indexedDB.open(dbName,parseInt(dbVersion)||1),dbReq.onsuccess=function(){db=dbReq.result,$rootScope.$apply(function(){deferred.resolve(db)})},dbReq.onblocked=dbReq.onerror=rejectWithError(deferred),dbReq.onupgradeneeded=function(event){var tx;db=event.target.result,tx=event.target.transaction,$log.log("$indexedDB: Upgrading database '"+db.name+"' from version "+event.oldVersion+" to version "+event.newVersion+" ..."),applyNeededUpgrades(event.oldVersion,event,db,tx,$log)},deferred.promise},openDatabase=function(){return dbPromise||(dbPromise=createDatabaseConnection())},closeDatabase=function(){return openDatabase().then(function(){return db.close(),db=null,dbPromise=null})},validateStoreNames=function(storeNames){var found,storeName,_i,_len;for(found=!0,_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],found&=db.objectStoreNames.contains(storeName);return found},openTransaction=function(storeNames,mode){return null==mode&&(mode=dbMode.readonly),openDatabase().then(function(){return validateStoreNames(storeNames)?new Transaction(storeNames,mode):$q.reject("Object stores "+storeNames+" do not exist.")})},keyRangeForOptions=function(options){return options.beginKey&&options.endKey?IDBKeyRange.bound(options.beginKey,options.endKey):void 0},addTransaction=function(transaction){return allTransactions.push(transaction.promise),transaction.promise["finally"](function(){var index;return index=allTransactions.indexOf(transaction.promise),index>-1?allTransactions.splice(index,1):void 0})},Transaction=function(){function Transaction(storeNames,mode){null==mode&&(mode=dbMode.readonly),this.transaction=db.transaction(storeNames,mode),this.defer=$q.defer(),this.promise=this.defer.promise,this.setupCallbacks()}return Transaction.prototype.setupCallbacks=function(){return this.transaction.oncomplete=function(_this){return function(){return $rootScope.$apply(function(){return _this.defer.resolve("Transaction Completed")})}}(this),this.transaction.onabort=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Aborted",error)})}}(this),this.transaction.onerror=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Error",error)})}}(this),addTransaction(this)},Transaction.prototype.objectStore=function(storeName){return this.transaction.objectStore(storeName)},Transaction.prototype.abort=function(){return this.transaction.abort()},Transaction}(),DbQ=function(){function DbQ(){this.q=$q.defer(),this.promise=this.q.promise}return DbQ.prototype.reject=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).reject.apply(_ref,args)}}(this))},DbQ.prototype.rejectWith=function(req){return req.onerror=req.onblocked=function(_this){return function(e){return _this.reject(errorMessageFor(e))}}(this)},DbQ.prototype.resolve=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).resolve.apply(_ref,args)}}(this))},DbQ.prototype.notify=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).notify.apply(_ref,args)}}(this))},DbQ.prototype.dbErrorFunction=function(){return function(_this){return function(error){return $rootScope.$apply(function(){return _this.q.reject(errorMessageFor(error))})}}(this)},DbQ.prototype.resolveWith=function(req){return this.rejectWith(req),req.onsuccess=function(_this){return function(e){return _this.resolve(e.target.result)}}(this)},DbQ}(),ObjectStore=function(){function ObjectStore(storeName,transaction){this.storeName=storeName,this.store=transaction.objectStore(storeName),this.transaction=transaction}return ObjectStore.prototype.defer=function(){return new DbQ},ObjectStore.prototype._mapCursor=function(defer,mapFunc,req){var results;return null==req&&(req=this.store.openCursor()),results=[],defer.rejectWith(req),req.onsuccess=function(e){var cursor;return(cursor=e.target.result)?(results.push(mapFunc(cursor)),defer.notify(mapFunc(cursor)),cursor["continue"]()):defer.resolve(results)}},ObjectStore.prototype._arrayOperation=function(data,mapFunc){var defer,item,req,results,_i,_len;for(defer=this.defer(),angular.isArray(data)||(data=[data]),_i=0,_len=data.length;_len>_i;_i++)item=data[_i],req=mapFunc(item),results=[],defer.rejectWith(req),req.onsuccess=function(e){return results.push(e.target.result),defer.notify(e.target.result),results.length>=data.length?defer.resolve(results):void 0};return 0===data.length?$q.when([]):defer.promise},ObjectStore.prototype.getAllKeys=function(){var defer,req;return defer=this.defer(),this.store.getAllKeys?(req=this.store.getAllKeys(),defer.resolveWith(req)):this._mapCursor(defer,function(cursor){return cursor.key}),defer.promise},ObjectStore.prototype.clear=function(){var defer,req;return defer=this.defer(),req=this.store.clear(),defer.resolveWith(req),defer.promise},ObjectStore.prototype["delete"]=function(key){var defer;return defer=this.defer(),defer.resolveWith(this.store["delete"](key)),defer.promise},ObjectStore.prototype.upsert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.put(item)}}(this))},ObjectStore.prototype.insert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.add(item)}}(this))},ObjectStore.prototype.getAll=function(){var defer;return defer=this.defer(),this.store.getAll?defer.resolveWith(this.store.getAll()):this._mapCursor(defer,function(cursor){return cursor.value}),defer.promise},ObjectStore.prototype.eachWhere=function(query){var defer,direction,indexName,keyRange,req;return defer=this.defer(),indexName=query.indexName,keyRange=query.keyRange,direction=query.direction,req=indexName?this.store.index(indexName).openCursor(keyRange,direction):this.store.openCursor(keyRange,direction),this._mapCursor(defer,function(cursor){return cursor.value},req),defer.promise},ObjectStore.prototype.findWhere=function(query){return this.eachWhere(query)},ObjectStore.prototype.each=function(options){return null==options&&(options={}),this.eachBy(void 0,options)},ObjectStore.prototype.eachBy=function(indexName,options){var q;return null==indexName&&(indexName=void 0),null==options&&(options={}),q=new Query,q.indexName=indexName,q.keyRange=keyRangeForOptions(options),q.direction=options.direction||defaultQueryOptions.direction,this.eachWhere(q)},ObjectStore.prototype.count=function(){var defer;return defer=this.defer(),defer.resolveWith(this.store.count()),defer.promise},ObjectStore.prototype.find=function(key){var defer,req;return defer=this.defer(),req=this.store.get(key),defer.rejectWith(req),req.onsuccess=function(_this){return function(e){return e.target.result?defer.resolve(e.target.result):defer.reject(""+_this.storeName+":"+key+" not found.")}}(this),defer.promise},ObjectStore.prototype.findBy=function(index,key){var defer;return defer=this.defer(),defer.resolveWith(this.store.index(index).get(key)),defer.promise},ObjectStore.prototype.query=function(){return new Query},ObjectStore}(),Query=function(){function Query(){this.indexName=void 0,this.keyRange=void 0,this.direction=cursorDirection.next}return Query.prototype.$lt=function(value){return this.keyRange=IDBKeyRange.upperBound(value,!0),this},Query.prototype.$gt=function(value){return this.keyRange=IDBKeyRange.lowerBound(value,!0),this},Query.prototype.$lte=function(value){return this.keyRange=IDBKeyRange.upperBound(value),this},Query.prototype.$gte=function(value){return this.keyRange=IDBKeyRange.lowerBound(value),this},Query.prototype.$eq=function(value){return this.keyRange=IDBKeyRange.only(value),this},Query.prototype.$between=function(low,hi,exLow,exHi){return null==exLow&&(exLow=!1),null==exHi&&(exHi=!1),this.keyRange=IDBKeyRange.bound(low,hi,exLow,exHi),this},Query.prototype.$desc=function(unique){return this.direction=unique?cursorDirection.prevunique:cursorDirection.prev,this},Query.prototype.$asc=function(unique){return this.direction=unique?cursorDirection.nextunique:cursorDirection.next,this},Query.prototype.$index=function(indexName){return this.indexName=indexName,this},Query}(),{openStore:function(storeName,callBack,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction([storeName],mode).then(function(transaction){var results;return results=callBack(new ObjectStore(storeName,transaction)),appendResultsToPromise(transaction.promise,results)})},openStores:function(storeNames,callback,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction(storeNames,mode).then(function(transaction){var objectStores,results,storeName;return objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)})},openAllStores:function(callback,mode){return null==mode&&(mode=dbMode.readwrite),openDatabase().then(function(_this){return function(){var objectStores,results,storeName,storeNames,transaction;return storeNames=Array.prototype.slice.apply(db.objectStoreNames),transaction=new Transaction(storeNames,mode),objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)}}(this))},closeDatabase:function(){return closeDatabase()},deleteDatabase:function(){return closeDatabase().then(function(){var defer;return defer=new DbQ,defer.resolveWith(indexedDB.deleteDatabase(dbName)),defer.promise})["finally"](function(){return $log.log("$indexedDB: "+dbName+" database deleted.")})},queryDirection:apiDirection,flush:function(){return allTransactions.length>0?$q.all(allTransactions):$q.when([])},databaseInfo:function(){return openDatabase().then(function(){var storeNames,transaction;return transaction=null,storeNames=Array.prototype.slice.apply(db.objectStoreNames),openTransaction(storeNames,dbMode.readonly).then(function(transaction){var store,storeName,stores;return stores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],store=transaction.objectStore(storeName),_results.push({name:storeName,keyPath:store.keyPath,autoIncrement:store.autoIncrement,indices:Array.prototype.slice.apply(store.indexNames)});return _results}(),transaction.promise.then(function(){return{name:db.name,version:db.version,objectStores:stores}})})})}}}]})}).call(this);
-//# sourceMappingURL=angular-indexed-db.min.js.map
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.textEdition')
-        .controller('otus.textEdition.TextEditionMenuController', controller);
-
-    controller.$inject = ['$scope', '$mdDialog', 'otus.textEdition.ColorContext'];
-
-    function controller($scope, $mdDialog, ColorContext) {
-        var self = this;
-
-        self.bold = bold;
-        self.italic = italic;
-        self.underlined = underlined;
-        self.strikeThrough = strikeThrough;
-        self.openColors = openColors;
-        self.foreColor = foreColor;
-        self.hiliteColor = hiliteColor;
-        self.justifyCenter = justifyCenter;
-        self.justifyLeft = justifyLeft;
-        self.justifyRight = justifyRight;
-        self.justifyFull = justifyFull;
-        self.removeFormat = removeFormat;
-
-        function bold() {
-            document.execCommand('bold', false, null);
-            return false;
-        }
-
-        function italic() {
-            document.execCommand('italic', false, null);
-            return false;
-        }
-
-        function underlined() {
-            document.execCommand('underline', false, null);
-            return false;
-        }
-
-        function strikeThrough() {
-            document.execCommand('strikeThrough', false, null);
-            return false;
-        }
-
-        function foreColor() {
-            var textColor = ColorContext.textColor;
-            document.execCommand('ForeColor', false, textColor);
-            return false;
-        }
-
-        function hiliteColor() {
-            var backgroundColor = ColorContext.backgroundColor;
-            document.execCommand('HiliteColor', false, backgroundColor);
-            return false;
-        }
-
-        function justifyCenter() {
-            document.execCommand('justifyCenter', false, null);
-            return false;
-        }
-
-        function justifyFull() {
-            document.execCommand('justifyFull', false, null);
-            return false;
-        }
-
-        function justifyLeft() {
-            document.execCommand('justifyLeft', false, null);
-            return false;
-        }
-
-        function justifyRight() {
-            document.execCommand('justifyRight', false, null);
-            return false;
-        }
-
-        function removeFormat() {
-            document.execCommand('removeFormat', false, null);
-            return false;
-        }
-
-        function openColors() {
-            $mdDialog.show({
-                templateUrl: 'app/shared/text-edition-menu/color/color-picker-template.html',
-                controller: 'otus.textEdition.ColorController as controller',
-                clickOutsideToClose: true
-            });
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.textEdition')
-        .directive('otusTextEditionMenu', directive);
-
-    function directive() {
-        var ddo = {
-            templateUrl: 'app/shared/text-edition-menu/text-edition-menu-template.html',
-            retrict: 'E',
-            controller: 'otus.textEdition.TextEditionMenuController as controller'
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.textEdition', [
-            'mdColorPicker'
-        ]);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database')
-        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
-
-    CrossSessionDatabaseService.$inject = [
-        '$q',
-        '$indexedDB',
-        'InsertHelperService'
-    ];
-
-    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
-        var self = this,
-            STORE_NAME = 'survey_template',
-            INDEX = 'contributor_idx';
-
-        /* Public interface */
-        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllSurveyTemplates = getAllSurveyTemplates;
-        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.insertSurveyTemplate = insertSurveyTemplate;
-        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
-
-        function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var entry = {};
-                entry.template_oid = template.oid;
-                entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());                
-                store.upsert(entry).then(function(e) {});
-
-            });
-        }
-
-        function insertSurveyTemplate(template, session) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var parsedTemplate = JSON.parse(template);
-                var entry = {};
-                entry.template_oid = parsedTemplate.oid;
-                entry.contributor = session.owner;
-                entry.template = parsedTemplate;
-                store.insert(entry).then(function(success) {
-                    defer.resolve(success);
-                }, function(error) {
-                    defer.reject(error);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplates() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAll().then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplatesByContributor() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-
-                var criteria = store.query();
-                criteria = criteria.$eq('visitor');
-                criteria = criteria.$index(INDEX);
-
-                store.eachWhere(criteria).then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function deleteSurveyTemplate(templateOID) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.delete(templateOID).then(function() {
-                    defer.resolve(true);
-                });
-            });
-            return defer.promise;
-        }
-
-        /**
-         * Returns a User + UUID Template + Repository in Base64
-         */
-        function getAllKeys() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAllKeys().then(function(e) {
-                    defer.resolve(e);
-                });
-            });
-            return defer.promise;
-        }
-
-        function findSurveyTemplateByOID(oid) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.find(oid).then(function(template) {
-                    defer.resolve(template);
-                });
-            });
-            return defer.promise;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database')
-        .service('InsertHelperService', InsertHelperService);
-
-    function InsertHelperService() {
-        var self = this;
-
-        /* Public interface */
-        self.cloneObject = cloneObject;
-
-        function cloneObject(object) {
-            var clone = {};
-
-            Object.keys(object).forEach(function filterProperties(key) {
-                var property = object[key];
-                if (property instanceof Function) {
-                    clone[key] = property;
-                }
-            });
-
-            return clone;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database')
-        .factory('InSessionDatabaseFactory', InSessionDatabaseFactory);
-
-    InSessionDatabaseFactory.$inject = ['Loki'];
-
-    function InSessionDatabaseFactory(Loki) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create() {
-            return new InSessionDatabase(Loki);
-        }
-
-        return self;
-    }
-
-    function InSessionDatabase(Loki) {
-        var self = this;
-        var instance = null;
-
-        var USER_EDITS_COLLECTION = 'userEdits';
-        var DATA_POOL_COLLECTION = 'dataPool';
-
-        init();
-
-        function init() {
-            instance = new Loki('in-session-db.json');
-            self[USER_EDITS_COLLECTION] = new CollectionFacade(instance.addCollection(USER_EDITS_COLLECTION));
-            self[DATA_POOL_COLLECTION] = new CollectionFacade(instance.addCollection(DATA_POOL_COLLECTION));
-        }
-    }
-
-    function CollectionFacade(collectionReference) {
-        var self = this;
-
-        /* Public interface */
-        self.store = store;
-        self.fetchEventBy = fetchEventBy;
-        self.fetchLastSelectEvent = fetchLastSelectEvent;
-        self.fetchLastAddedData = fetchLastAddedData;
-        self.storeUnique = storeUnique;
-
-        init();
-
-        function init() {
-            Object.defineProperty(self, 'collection', {
-                value: collectionReference,
-                writable: false
-            });
-        }
-
-        function store(data) {
-            self.collection.insert(data);
-        }
-
-        function storeUnique(data) {
-            var event = fetchEventBy('id', data.source.id);
-
-            if (!event) {
-                self.collection.insert(data);
-
-            } else {
-                remove(event);
-                store(data);
-            }
-        }
-
-        function fetchEventBy(attribute, value) {
-            var data = self.collection.chain()
-                        .where(function(obj) {
-                            return getModelValue(attribute, obj) === value;
-                        })
-                        .simplesort('$loki', 'isdesc').data();
-
-            return data;
-        }
-
-        function fetchLastSelectEvent() {
-            var data = self.collection.chain()
-                        .where(function(event) {
-                            return event.type.isSelectData();
-                        })
-                        .simplesort('$loki', 'isdesc').data();
-
-            return data[0];
-        }
-
-        function fetchLastAddedData() {
-            var data = self.collection.chain().simplesort('$loki', 'isdesc').data();
-            return data[0];
-        }
-
-        function remove(data) {
-            self.collection.remove(data);
-        }
-
-        function getModelValue(modelpath, model) {
-            var pathArray = modelpath.split('.');
-            var modelValue = model;
-
-            pathArray.forEach(function(path) {
-                modelValue = modelValue[path];
-            });
-
-            return modelValue;
-        }
     }
 
 }());
@@ -2496,302 +2243,112 @@
     'use strict';
 
     angular
-        .module('editor.workspace')
-        .service('SurveyLoaderService', SurveyLoaderService);
+        .module('editor.database')
+        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
 
-    SurveyLoaderService.$inject = ['ModelFacadeService'];
+    CrossSessionDatabaseService.$inject = [
+        '$q',
+        '$indexedDB',
+        'InsertHelperService'
+    ];
 
-    function SurveyLoaderService(ModelFacadeService) {
-        var self = this;
-
-        /* Public interface */
-        self.newSurvey = newSurvey;
-        self.loadSurvey = loadSurvey;
-
-        /* Public interface implementation */
-        function newSurvey(name, acronym, version) {
-            return ModelFacadeService.getSurveyFactory().create(name, acronym);
-        }
-
-        function loadSurvey(surveyTemplate) {
-            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .factory('WorkspaceFactory', WorkspaceFactory);
-
-    WorkspaceFactory.$inject = ['InSessionDatabaseFactory'];
-
-    function WorkspaceFactory(InSessionDatabaseFactory) {
-        var self = this;
+    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
 
         /* Public interface */
-        self.create = create;
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
 
-        function create(workSession) {
-            var inSessionDatabase = InSessionDatabaseFactory.create();
-            return new Workspace(workSession, inSessionDatabase);
-        }
+        function saveSurveyTemplateRevision(template, session) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = JSON.parse(template.toJson());                
+                store.upsert(entry).then(function(e) {});
 
-        return self;
-    }
-
-    function Workspace(workSession, inSessionDatabase) {
-        var self = this;
-
-        /* Public interface */
-        self.importProject = importProject;
-        self.attachWorkeSession = attachWorkeSession;
-        self.loadProjectConfiguration = loadProjectConfiguration;
-
-        init();
-
-        function init() {
-            self.isdb = inSessionDatabase;
-            self.sessions = {
-                workspaceOwner: workSession
-            };
-        }
-
-        function importProject(projectToImport) {
-            Object.defineProperty(self, 'project', {
-                value: projectToImport,
-                writable: false
             });
         }
 
-        function attachWorkeSession(workSession) {
-            self.sessions[workSession.owner.username] = workSession;
-        }
-
-        function loadProjectConfiguration() {
-
-        }
-    }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.workspace')
-    .service('WorkspaceService', WorkspaceService);
-
-  WorkspaceService.$inject = [
-    'WorkspaceFactory',
-    'SurveyProjectFactory',
-    'SurveyLoaderService',
-    'CrossSessionDatabaseService',
-    'SurveyExportService'
-  ];
-
-  function WorkspaceService(
-    WorkspaceFactory,
-    SurveyProjectFactory,
-    SurveyLoaderService,
-    CrossSessionDatabaseService,
-    SurveyExportService
-  ) {
-    var self = this,
-      workspace,
-      questionIdCounter = -1,
-      observers = [];
-
-    /* Public interface */
-    self.initializeWorkspace = initializeWorkspace;
-    self.startNewWork = startNewWork;
-    self.loadWork = loadWork;
-    self.closeWork = closeWork;
-    self.saveWork = saveWork;
-    self.getQuestionId = getQuestionId;
-    self.exportWork = exportWork;
-    self.getSurvey = getSurvey;
-
-    /* Observable interface */
-    self.registerObserver = registerObserver;
-
-    function initializeWorkspace(ownerWorkSession) {
-      self.workspace = WorkspaceFactory.create(ownerWorkSession);
-      questionIdCounter = -1;
-      notifyObservers({
-        type: 'NEW_PROJECT'
-      });
-    }
-
-    function startNewWork(initializationData) {
-      var survey = SurveyLoaderService.newSurvey(initializationData.name, initializationData.acronym.toUpperCase(), initializationData.version);
-      importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
-    }
-
-    function loadWork(surveyTemplate) {
-      var survey = SurveyLoaderService.loadSurvey(surveyTemplate);
-      importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
-    }
-
-    function closeWork() {
-      saveWork();
-      self.workspace.project.close('now');
-      questionIdCounter = -1;
-      observers = [];
-      self.workspace = undefined;
-    }
-
-    function saveWork() {
-      CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
-    }
-
-    function exportWork() {
-      return SurveyExportService.exportSurvey(self.workspace.project.survey.toJson());
-    }
-
-    function getQuestionId() {
-      return ++questionIdCounter;
-    }
-
-    function getSurvey() {
-      return self.workspace.project.survey;
-    }
-
-    function importProject(project) {
-      self.workspace.importProject(project);
-      self.workspace.loadProjectConfiguration();
-    }
-
-    /* Observable interface */
-    function notifyObservers(update) {
-      observers.forEach(function(observer) {
-        observer.update(update);
-      });
-    }
-
-    function registerObserver(observer) {
-      observers.push(observer);
-    }
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .directive('surveyTemplateExport', surveyTemplateExport);
-
-    surveyTemplateExport.$inject = ['WorkspaceService'];
-
-    function surveyTemplateExport(WorkspaceService) {
-        var ddo = {
-            restrict: 'A',
-            link: function(scope, element) {
-                element.on('click', function() {
-                    var downloadElement = document.createElement('a');
-                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
-                    downloadElement.setAttribute('download', 'surveyTemplate.json');
-                    downloadElement.setAttribute('target', '_blank');
-                    downloadElement.click();
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function(success) {
+                    defer.resolve(success);
+                }, function(error) {
+                    defer.reject(error);
                 });
-            }
-        };
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .service('SurveyExportService', SurveyExportService);
-
-
-    function SurveyExportService() {
-        var self = this;
-
-        /* Public interface */
-        self.exportSurvey = exportSurvey;
-
-        function exportSurvey(JsonTemplate) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .factory('SurveyProjectFactory', SurveyProjectFactory);
-
-    function SurveyProjectFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(survey, author) {
-            return new SurveyProject(survey, author);
-        }
-
-        return self;
-    }
-
-    function SurveyProject(survey, author) {
-        var self = this;
-
-        self.configuration = {};
-        var contributors = [];
-
-        Object.defineProperty(this, 'survey', {
-            value: survey,
-            writable: false
-        });
-
-        Object.defineProperty(this, 'creationDateTime', {
-            value: new Date().toISOString(),
-            writable: false
-        });
-
-        Object.defineProperty(this, 'author', {
-            value: author,
-            writable: false
-        });
-
-        /* Public interface */
-        self.addContributor = addContributor;
-        self.removeContributor = removeContributor;
-        self.listContributors = listContributors;
-        self.close = close;
-
-        function addContributor(contributor) {
-            contributors.push(contributor);
-        }
-
-        function removeContributor(contributor) {
-            var indexToRemove = contributors.indexOf(contributor);
-            contributors = contributors.slice(indexToRemove, 1);
-        }
-
-        function listContributors() {
-            return contributors;
-        }
-
-        function close(lastSaveDateTime) {
-            Object.defineProperty(self, 'lastSaveDateTime', {
-                value: lastSaveDateTime,
-                writable: false
             });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAll().then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.delete(templateOID).then(function() {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAllKeys().then(function(e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.find(oid).then(function(template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
         }
     }
 
@@ -2801,33 +2358,143 @@
     'use strict';
 
     angular
-        .module('editor.workspace')
-        .factory('EditingWorkFactory', EditingWorkFactory);
+        .module('editor.database')
+        .service('InsertHelperService', InsertHelperService);
 
-    function EditingWorkFactory() {
+    function InsertHelperService() {
+        var self = this;
+
+        /* Public interface */
+        self.cloneObject = cloneObject;
+
+        function cloneObject(object) {
+            var clone = {};
+
+            Object.keys(object).forEach(function filterProperties(key) {
+                var property = object[key];
+                if (property instanceof Function) {
+                    clone[key] = property;
+                }
+            });
+
+            return clone;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.database')
+        .factory('InSessionDatabaseFactory', InSessionDatabaseFactory);
+
+    InSessionDatabaseFactory.$inject = ['Loki'];
+
+    function InSessionDatabaseFactory(Loki) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create() {
-            return new EditingWork();
+            return new InSessionDatabase(Loki);
         }
 
         return self;
     }
 
-    function EditingWork() {
+    function InSessionDatabase(Loki) {
+        var self = this;
+        var instance = null;
+
+        var USER_EDITS_COLLECTION = 'userEdits';
+        var DATA_POOL_COLLECTION = 'dataPool';
+
+        init();
+
+        function init() {
+            instance = new Loki('in-session-db.json');
+            self[USER_EDITS_COLLECTION] = new CollectionFacade(instance.addCollection(USER_EDITS_COLLECTION));
+            self[DATA_POOL_COLLECTION] = new CollectionFacade(instance.addCollection(DATA_POOL_COLLECTION));
+        }
+    }
+
+    function CollectionFacade(collectionReference) {
         var self = this;
 
-        self.survey = null;
-        self.creationDateTime = null;
-        self.author = null;
-        self.contributors = null;
-        self.isPublished = null;
-        self.isSincronized = null;
-        self.isLocallyPersisted = null;
+        /* Public interface */
+        self.store = store;
+        self.fetchEventBy = fetchEventBy;
+        self.fetchLastSelectEvent = fetchLastSelectEvent;
+        self.fetchLastAddedData = fetchLastAddedData;
+        self.storeUnique = storeUnique;
 
+        init();
+
+        function init() {
+            Object.defineProperty(self, 'collection', {
+                value: collectionReference,
+                writable: false
+            });
+        }
+
+        function store(data) {
+            self.collection.insert(data);
+        }
+
+        function storeUnique(data) {
+            var event = fetchEventBy('id', data.source.id);
+
+            if (!event) {
+                self.collection.insert(data);
+
+            } else {
+                remove(event);
+                store(data);
+            }
+        }
+
+        function fetchEventBy(attribute, value) {
+            var data = self.collection.chain()
+                        .where(function(obj) {
+                            return getModelValue(attribute, obj) === value;
+                        })
+                        .simplesort('$loki', 'isdesc').data();
+
+            return data;
+        }
+
+        function fetchLastSelectEvent() {
+            var data = self.collection.chain()
+                        .where(function(event) {
+                            return event.type.isSelectData();
+                        })
+                        .simplesort('$loki', 'isdesc').data();
+
+            return data[0];
+        }
+
+        function fetchLastAddedData() {
+            var data = self.collection.chain().simplesort('$loki', 'isdesc').data();
+            return data[0];
+        }
+
+        function remove(data) {
+            self.collection.remove(data);
+        }
+
+        function getModelValue(modelpath, model) {
+            var pathArray = modelpath.split('.');
+            var modelValue = model;
+
+            pathArray.forEach(function(path) {
+                modelValue = modelValue[path];
+            });
+
+            return modelValue;
+        }
     }
 
 }());
@@ -2836,16 +2503,147 @@
     'use strict';
 
     angular
-        .module('editor.workspace')
-        .factory('EditingWorkService', EditingWorkService);
+        .module('editor.ui')
+        .service('editor.ui.mpath', mpath);
 
-    function EditingWorkService() {
+    function mpath() {
+        var self = this;
+
+        var MODULE = 'app/editor/ui/';
+        var QUESTION_EDITOR_TEMPLATE = 'app/editor/ui/core/survey-item-editor/survey-item-editor.html';
+        var METADATA_TEMPLATE = 'app/editor/ui/core/metadata/metadata-question-template.html';
+
+        /* Public interface */
+        self.getWidgetPath = getWidgetPath;
+        self.getQuestionEditorWidgetPath = getQuestionEditorWidgetPath;
+        self.getMetadataWidgetPath = getMetadataWidgetPath;
+
+        function getWidgetPath(directive) {
+            return MODULE.concat('core/question/'.concat(directive).concat('/'.concat(directive.concat('-question-template.html'))));
+        }
+
+        function getQuestionEditorWidgetPath() {
+            return QUESTION_EDITOR_TEMPLATE;
+        }
+
+        function getMetadataWidgetPath() {
+            return METADATA_TEMPLATE;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .service('UiBindingService', UiBindingService);
+
+    function UiBindingService() {
         var self = this;
 
         /* Public interface */
-        self.startNewWork = startNewWork;
-        self.loadWork = loadWork;
+        self.setScope = setScope;
 
+        function setScope(scope) {
+            scope.$on('otusWidgetPreLoad', function(event) {
+                //TODO
+            });
+
+            scope.$on('otusWidgetBinding', function(event) {
+                //TODO
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .service('WidgetService', WidgetService);
+
+    WidgetService.$inject = [
+        'WidgetTemplateService',
+        'SurveyItemWidgetFactory',
+        'SurveyItemEditorWidgetFactory',
+        'AnswerOptionWidgetFactory',
+        'MetadataGroupWidgetFactory',
+        'MetadataOptionWidgetFactory'
+    ];
+
+    function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, AnswerOptionWidgetFactory,
+        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory) {
+
+        var self = this;
+
+        self.widgetMap = {};
+
+        /* Public interface */
+        self.getWidgetForModel = getWidgetForModel;
+        self.getMetadataWidget = getMetadataWidget;
+        self.getSurveyItemEditorWidget = getSurveyItemEditorWidget;
+        self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
+        self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
+
+        function getWidgetForModel(model) {
+            var widget = SurveyItemWidgetFactory.create(model);
+            widget.template = WidgetTemplateService.getDirectiveTemplate(model.objectType);
+            return widget;
+        }
+
+        function getMetadataWidget(model) {
+            var widget = MetadataGroupWidgetFactory.create(model);
+            widget.template = WidgetTemplateService.getDirectiveTemplate('MetadataGroup');
+            return widget;
+        }
+
+        function getSurveyItemEditorWidget(question) {
+            return SurveyItemEditorWidgetFactory.create(question);
+        }
+
+        function getQuestionAnswerOptionWidget(model) {
+            return AnswerOptionWidgetFactory.create(model);
+        }
+
+        function getMetadataAnswerOptionWidget(model) {
+            return MetadataOptionWidgetFactory.create(model);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .service('WidgetTemplateService', WidgetTemplateService);
+
+    function WidgetTemplateService() {
+        var self = this,
+
+            directiveTemplates = {
+                'CalendarQuestion': '<calendar-question></calendar-question>',
+                'IntegerQuestion': '<integer-question></integer-question>',
+                'SingleSelectionQuestion': '<single-selection-question></single-selection-question>',
+                'TextQuestion': '<text-question></text-question>',
+                'TimeQuestion': '<time-question></time-question>',
+                'PhoneQuestion': '<phone-question></phone-question>',
+                'CheckboxQuestion': '<checkbox-question></checkbox-question>',
+                'MetadataGroup' : '<metadata-question></metadata-question>',
+
+            };
+
+        /* Public interface */
+        self.getDirectiveTemplate = getDirectiveTemplate;
+
+        function getDirectiveTemplate(directive) {
+            return directiveTemplates[directive];
+        }
     }
 
 }());
@@ -3484,32 +3282,6 @@
 
     angular
         .module('editor.ui')
-        .component('otusSurveyTemplateHeader', {
-            templateUrl: 'app/editor/ui/survey-template-header/survey-template-header-template.html',
-
-            controller: function(WorkspaceService) {
-                var self = this;
-
-                self.name = '';
-                self.acronym = '';
-                self.identity = {};
-
-                self.$onInit = function() {
-                    self.identity = WorkspaceService.getSurvey().identity;
-                    self.name = self.identity.name;
-                    self.acronym = self.identity.acronym;
-                };
-
-            }
-
-        });
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .service('TemplateLoaderService', TemplateLoaderService);
 
     TemplateLoaderService.$inject = [
@@ -3541,6 +3313,32 @@
         }
     }
 
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .component('otusSurveyTemplateHeader', {
+            templateUrl: 'app/editor/ui/survey-template-header/survey-template-header-template.html',
+
+            controller: function(WorkspaceService) {
+                var self = this;
+
+                self.name = '';
+                self.acronym = '';
+                self.identity = {};
+
+                self.$onInit = function() {
+                    self.identity = WorkspaceService.getSurvey().identity;
+                    self.name = self.identity.name;
+                    self.acronym = self.identity.acronym;
+                };
+
+            }
+
+        });
 }());
 
 (function() {
@@ -3593,6 +3391,364 @@
 
     }
 
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .service('SurveyLoaderService', SurveyLoaderService);
+
+    SurveyLoaderService.$inject = ['ModelFacadeService'];
+
+    function SurveyLoaderService(ModelFacadeService) {
+        var self = this;
+
+        /* Public interface */
+        self.newSurvey = newSurvey;
+        self.loadSurvey = loadSurvey;
+
+        /* Public interface implementation */
+        function newSurvey(name, acronym, version) {
+            return ModelFacadeService.getSurveyFactory().create(name, acronym);
+        }
+
+        function loadSurvey(surveyTemplate) {
+            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .factory('WorkspaceFactory', WorkspaceFactory);
+
+    WorkspaceFactory.$inject = ['InSessionDatabaseFactory'];
+
+    function WorkspaceFactory(InSessionDatabaseFactory) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(workSession) {
+            var inSessionDatabase = InSessionDatabaseFactory.create();
+            return new Workspace(workSession, inSessionDatabase);
+        }
+
+        return self;
+    }
+
+    function Workspace(workSession, inSessionDatabase) {
+        var self = this;
+
+        /* Public interface */
+        self.importProject = importProject;
+        self.attachWorkeSession = attachWorkeSession;
+        self.loadProjectConfiguration = loadProjectConfiguration;
+
+        init();
+
+        function init() {
+            self.isdb = inSessionDatabase;
+            self.sessions = {
+                workspaceOwner: workSession
+            };
+        }
+
+        function importProject(projectToImport) {
+            Object.defineProperty(self, 'project', {
+                value: projectToImport,
+                writable: false
+            });
+        }
+
+        function attachWorkeSession(workSession) {
+            self.sessions[workSession.owner.username] = workSession;
+        }
+
+        function loadProjectConfiguration() {
+
+        }
+    }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.workspace')
+    .service('WorkspaceService', WorkspaceService);
+
+  WorkspaceService.$inject = [
+    'WorkspaceFactory',
+    'SurveyProjectFactory',
+    'SurveyLoaderService',
+    'CrossSessionDatabaseService',
+    'SurveyExportService'
+  ];
+
+  function WorkspaceService(
+    WorkspaceFactory,
+    SurveyProjectFactory,
+    SurveyLoaderService,
+    CrossSessionDatabaseService,
+    SurveyExportService
+  ) {
+    var self = this,
+      workspace,
+      questionIdCounter = -1,
+      observers = [];
+
+    /* Public interface */
+    self.initializeWorkspace = initializeWorkspace;
+    self.startNewWork = startNewWork;
+    self.loadWork = loadWork;
+    self.closeWork = closeWork;
+    self.saveWork = saveWork;
+    self.getQuestionId = getQuestionId;
+    self.exportWork = exportWork;
+    self.getSurvey = getSurvey;
+
+    /* Observable interface */
+    self.registerObserver = registerObserver;
+
+    function initializeWorkspace(ownerWorkSession) {
+      self.workspace = WorkspaceFactory.create(ownerWorkSession);
+      questionIdCounter = -1;
+      notifyObservers({
+        type: 'NEW_PROJECT'
+      });
+    }
+
+    function startNewWork(initializationData) {
+      var survey = SurveyLoaderService.newSurvey(initializationData.name, initializationData.acronym.toUpperCase(), initializationData.version);
+      importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
+    }
+
+    function loadWork(surveyTemplate) {
+      var survey = SurveyLoaderService.loadSurvey(surveyTemplate);
+      importProject(SurveyProjectFactory.create(survey, self.workspace.sessions.workspaceOwner));
+    }
+
+    function closeWork() {
+      saveWork();
+      self.workspace.project.close('now');
+      questionIdCounter = -1;
+      observers = [];
+      self.workspace = undefined;
+    }
+
+    function saveWork() {
+      CrossSessionDatabaseService.saveSurveyTemplateRevision(self.workspace.project.survey, self.workspace.sessions.workspaceOwner);
+    }
+
+    function exportWork() {
+      return SurveyExportService.exportSurvey(self.workspace.project.survey.toJson());
+    }
+
+    function getQuestionId() {
+      return ++questionIdCounter;
+    }
+
+    function getSurvey() {
+      return self.workspace.project.survey;
+    }
+
+    function importProject(project) {
+      self.workspace.importProject(project);
+      self.workspace.loadProjectConfiguration();
+    }
+
+    /* Observable interface */
+    function notifyObservers(update) {
+      observers.forEach(function(observer) {
+        observer.update(update);
+      });
+    }
+
+    function registerObserver(observer) {
+      observers.push(observer);
+    }
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .directive('surveyTemplateExport', surveyTemplateExport);
+
+    surveyTemplateExport.$inject = ['WorkspaceService'];
+
+    function surveyTemplateExport(WorkspaceService) {
+        var ddo = {
+            restrict: 'A',
+            link: function(scope, element) {
+                element.on('click', function() {
+                    var downloadElement = document.createElement('a');
+                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
+                    downloadElement.setAttribute('download', 'surveyTemplate.json');
+                    downloadElement.setAttribute('target', '_blank');
+                    downloadElement.click();
+                });
+            }
+        };
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .service('SurveyExportService', SurveyExportService);
+
+
+    function SurveyExportService() {
+        var self = this;
+
+        /* Public interface */
+        self.exportSurvey = exportSurvey;
+
+        function exportSurvey(JsonTemplate) {
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .factory('SurveyProjectFactory', SurveyProjectFactory);
+
+    function SurveyProjectFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(survey, author) {
+            return new SurveyProject(survey, author);
+        }
+
+        return self;
+    }
+
+    function SurveyProject(survey, author) {
+        var self = this;
+
+        self.configuration = {};
+        var contributors = [];
+
+        Object.defineProperty(this, 'survey', {
+            value: survey,
+            writable: false
+        });
+
+        Object.defineProperty(this, 'creationDateTime', {
+            value: new Date().toISOString(),
+            writable: false
+        });
+
+        Object.defineProperty(this, 'author', {
+            value: author,
+            writable: false
+        });
+
+        /* Public interface */
+        self.addContributor = addContributor;
+        self.removeContributor = removeContributor;
+        self.listContributors = listContributors;
+        self.close = close;
+
+        function addContributor(contributor) {
+            contributors.push(contributor);
+        }
+
+        function removeContributor(contributor) {
+            var indexToRemove = contributors.indexOf(contributor);
+            contributors = contributors.slice(indexToRemove, 1);
+        }
+
+        function listContributors() {
+            return contributors;
+        }
+
+        function close(lastSaveDateTime) {
+            Object.defineProperty(self, 'lastSaveDateTime', {
+                value: lastSaveDateTime,
+                writable: false
+            });
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .factory('EditingWorkFactory', EditingWorkFactory);
+
+    function EditingWorkFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new EditingWork();
+        }
+
+        return self;
+    }
+
+    function EditingWork() {
+        var self = this;
+
+        self.survey = null;
+        self.creationDateTime = null;
+        self.author = null;
+        self.contributors = null;
+        self.isPublished = null;
+        self.isSincronized = null;
+        self.isLocallyPersisted = null;
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .factory('EditingWorkService', EditingWorkService);
+
+    function EditingWorkService() {
+        var self = this;
+
+        /* Public interface */
+        self.startNewWork = startNewWork;
+        self.loadWork = loadWork;
+
+    }
 
 }());
 
@@ -4617,71 +4773,6 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .component('otusMessengerInstructor', {
-      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    '$scope',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function component($scope, scopeService) {
-    var self = this;
-
-    self.message = {};
-    self.isVisible = false
-
-    /* Component cicle methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
-        self.isVisible = true;
-        self.message = message;
-      });
-
-      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
-        self.isVisible = false;
-      });
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function service(scopeService) {
-    var self = this;
-
-    /* Public methods */
-    self.showMessenger = showMessenger;
-    self.clearMessenger = clearMessenger;
-
-    function showMessenger(message) {
-      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
-    }
-
-    function clearMessenger() {
-      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
     .module('otusjs.studio.navigationBuilder.routeBuilder')
     .service('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', service);
 
@@ -4823,6 +4914,71 @@
 
     function updateRule(ruleIndex, when, operator, answer, isCustom) {
       DataService.updateRule(ruleIndex, when, operator, answer, isCustom);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function component($scope, scopeService) {
+    var self = this;
+
+    self.message = {};
+    self.isVisible = false
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
+
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service(scopeService) {
+    var self = this;
+
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
+    }
+
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
     }
   }
 })();
@@ -6247,32 +6403,15 @@
     'use strict';
 
     angular
-        .module('editor.ui')
-        .service('editor.ui.mpath', mpath);
+        .module('otus.textEdition')
+        .service('otus.textEdition.ColorContext', service);
 
-    function mpath() {
+    function service() {
         var self = this;
 
-        var MODULE = 'app/editor/ui/';
-        var QUESTION_EDITOR_TEMPLATE = 'app/editor/ui/core/survey-item-editor/survey-item-editor.html';
-        var METADATA_TEMPLATE = 'app/editor/ui/core/metadata/metadata-question-template.html';
+        self.backgroundColor = '#448aff';
+        self.textColor = '#737373';
 
-        /* Public interface */
-        self.getWidgetPath = getWidgetPath;
-        self.getQuestionEditorWidgetPath = getQuestionEditorWidgetPath;
-        self.getMetadataWidgetPath = getMetadataWidgetPath;
-
-        function getWidgetPath(directive) {
-            return MODULE.concat('core/question/'.concat(directive).concat('/'.concat(directive.concat('-question-template.html'))));
-        }
-
-        function getQuestionEditorWidgetPath() {
-            return QUESTION_EDITOR_TEMPLATE;
-        }
-
-        function getMetadataWidgetPath() {
-            return METADATA_TEMPLATE;
-        }
     }
 
 }());
@@ -6281,24 +6420,68 @@
     'use strict';
 
     angular
-        .module('editor.ui')
-        .service('UiBindingService', UiBindingService);
+        .module('otus.textEdition')
+        .controller('otus.textEdition.ColorController', controller);
 
-    function UiBindingService() {
+    controller.$inject = ['otus.textEdition.ColorContext', '$mdDialog'];
+
+    function controller(ColorContext, $mdDialog) {
         var self = this;
+        self.select = select;
+        self.cancel = cancel;
 
-        /* Public interface */
-        self.setScope = setScope;
+        _init();
 
-        function setScope(scope) {
-            scope.$on('otusWidgetPreLoad', function(event) {
-                //TODO
-            });
-
-            scope.$on('otusWidgetBinding', function(event) {
-                //TODO
-            });
+        function _init() {
+            self.currentBackgroundColor = ColorContext.backgroundColor;
+            self.currentTextColor = ColorContext.textColor;
         }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+
+        function select() {
+            ColorContext.backgroundColor = self.currentBackgroundColor;
+            ColorContext.textColor = self.currentTextColor;
+            $mdDialog.hide();
+        }
+    }
+
+}());
+
+(function() {
+
+    angular
+        .module('ui.components')
+        .directive('otusAccordion', otusAccordion);
+
+    otusAccordion.$inject = ['OtusAccordionWidgetFactory'];
+
+    function otusAccordion(OtusAccordionWidgetFactory) {
+        var directive = {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'app/shared/ui-components/accordion/accordion-template.html',
+            scope: {},
+            link: function(scope, template, attrs, controller, transclude) {
+                var userHeader, userContent;
+                var templateHeader = angular.element(template.children()[0]);
+                var templateContent = angular.element(template.children()[1]);
+
+                transclude(function(clone, cloneScope) {
+                    userHeader = angular.element(clone[1]);
+                    userContent = angular.element(clone[3]);
+                });
+
+                userHeader.children().insertBefore(templateHeader.children());
+                templateContent.append(userContent.children());
+
+                scope.widget = OtusAccordionWidgetFactory.create(scope, attrs, scope.$parent);
+            }
+        };
+
+        return directive;
     }
 
 }());
@@ -6307,95 +6490,47 @@
     'use strict';
 
     angular
-        .module('editor.ui')
-        .service('WidgetService', WidgetService);
+        .module('ui.components')
+        .factory('OtusAccordionWidgetFactory', OtusAccordionWidgetFactory);
 
-    WidgetService.$inject = [
-        'WidgetTemplateService',
-        'SurveyItemWidgetFactory',
-        'SurveyItemEditorWidgetFactory',
-        'AnswerOptionWidgetFactory',
-        'MetadataGroupWidgetFactory',
-        'MetadataOptionWidgetFactory'
-    ];
-
-    function WidgetService(WidgetTemplateService, SurveyItemWidgetFactory, SurveyItemEditorWidgetFactory, AnswerOptionWidgetFactory,
-        MetadataGroupWidgetFactory, MetadataOptionWidgetFactory) {
-
+    function OtusAccordionWidgetFactory() {
         var self = this;
 
-        self.widgetMap = {};
-
         /* Public interface */
-        self.getWidgetForModel = getWidgetForModel;
-        self.getMetadataWidget = getMetadataWidget;
-        self.getSurveyItemEditorWidget = getSurveyItemEditorWidget;
-        self.getQuestionAnswerOptionWidget = getQuestionAnswerOptionWidget;
-        self.getMetadataAnswerOptionWidget = getMetadataAnswerOptionWidget;
+        self.create = create;
 
-        function getWidgetForModel(model) {
-            var widget = SurveyItemWidgetFactory.create(model);
-            widget.template = WidgetTemplateService.getDirectiveTemplate(model.objectType);
-            return widget;
+        function create(templateData, templateConfig, parentWidget) {
+            return new OtusAccordionWidget(templateData, templateConfig, parentWidget);
         }
 
-        function getMetadataWidget(model) {
-            var widget = MetadataGroupWidgetFactory.create(model);
-            widget.template = WidgetTemplateService.getDirectiveTemplate('MetadataGroup');
-            return widget;
-        }
-
-        function getSurveyItemEditorWidget(question) {
-            return SurveyItemEditorWidgetFactory.create(question);
-        }
-
-        function getQuestionAnswerOptionWidget(model) {
-            return AnswerOptionWidgetFactory.create(model);
-        }
-
-        function getMetadataAnswerOptionWidget(model) {
-            return MetadataOptionWidgetFactory.create(model);
-        }
+        return self;
     }
 
-}());
+    function OtusAccordionWidget(templateData, templateConfig, parentWidget) {
+        var self = this;
 
-(function() {
-    'use strict';
+        /* Type definitions */
+        self.className = self.constructor.name;
+        self.css = {};
+        self.template = {};
+        self.event = {};
 
-    angular
-        .module('editor.ui')
-        .service('WidgetTemplateService', WidgetTemplateService);
+        /* Template definitions */
+        self.template.icon = 'expand_more';
 
-    function WidgetTemplateService() {
-        var self = this,
+        /* CSS definitions */
 
-            directiveTemplates = {
-                'CalendarQuestion': '<calendar-question></calendar-question>',
-                'IntegerQuestion': '<integer-question></integer-question>',
-                'SingleSelectionQuestion': '<single-selection-question></single-selection-question>',
-                'TextQuestion': '<text-question></text-question>',
-                'TimeQuestion': '<time-question></time-question>',
-                'PhoneQuestion': '<phone-question></phone-question>',
-                'CheckboxQuestion': '<checkbox-question></checkbox-question>',
-                'MetadataGroup' : '<metadata-question></metadata-question>',
+        /* Instance definitions */
+        self.parent = parentWidget;
+        self.isToShow = false;
 
-            };
+        self.changeState = changeState;
 
-        /* Public interface */
-        self.getDirectiveTemplate = getDirectiveTemplate;
-
-        function getDirectiveTemplate(directive) {
-            return directiveTemplates[directive];
+        function changeState() {
+            self.isToShow = !self.isToShow;
+            self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
         }
     }
-
-}());
-
-(function() {
-
-    angular
-        .module('ui.components', []);
 
 }());
 
@@ -6468,6 +6603,34 @@
 
     angular
         .module('surveyTemplates')
+        .component('surveyTemplatesList', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
+            controller: SurveyTemplateControllerList,
+        });
+
+    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
+
+    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
+        var self = this;
+
+        self.getSurveyTemplatesList = getSurveyTemplatesList;
+
+        function getSurveyTemplatesList() {
+            return SurveyTemplateManagerService.surveyTemplates;
+        }
+
+        self.$onInit = function() {
+            SurveyTemplateManagerService.initializeSurveyTemplateList();
+        };
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
         .component('surveyTemplatesToolbar', {
             templateUrl: 'app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-template.html',
             controller: SurveyTemplatesToolbarController,
@@ -6510,53 +6673,74 @@
 })();
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otus.textEdition')
-        .service('otus.textEdition.ColorContext', service);
+  angular
+    .module('studio.dashboard')
+    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
 
-    function service() {
-        var self = this;
+  NewSurveyFormDialogService.$inject = ['$mdDialog'];
 
-        self.backgroundColor = '#448aff';
-        self.textColor = '#737373';
+  function NewSurveyFormDialogService($mdDialog) {
+    var self = this;
 
+    /* Public interface */
+    self.showDialog = showDialog;
+
+    init();
+
+    function init() {
+      self.dialogSettings = {
+        parent: angular.element(document.body),
+        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
+        controller: DialogController,
+        controllerAs: 'controller',
+        openFrom: '#system-toolbar',
+        closeTo: {
+          bottom: 0
+        }
+      };
     }
 
-}());
+    function showDialog() {
+      $mdDialog
+        .show(self.dialogSettings)
+        .then(
+          forwardSuccessfulExecution,
+          forwardUnsuccessfulExecution
+        );
 
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.textEdition')
-        .controller('otus.textEdition.ColorController', controller);
-
-    controller.$inject = ['otus.textEdition.ColorContext', '$mdDialog'];
-
-    function controller(ColorContext, $mdDialog) {
-        var self = this;
-        self.select = select;
-        self.cancel = cancel;
-
-        _init();
-
-        function _init() {
-            self.currentBackgroundColor = ColorContext.backgroundColor;
-            self.currentTextColor = ColorContext.textColor;
+      return {
+        onConfirm: function(callback) {
+          self.callback = callback;
         }
-
-        function cancel() {
-            $mdDialog.cancel();
-        }
-
-        function select() {
-            ColorContext.backgroundColor = self.currentBackgroundColor;
-            ColorContext.textColor = self.currentTextColor;
-            $mdDialog.hide();
-        }
+      };
     }
+
+    function forwardSuccessfulExecution(response) {
+      if (response.action == 'create') {
+        if (self.callback) self.callback(response.data);
+      }
+    }
+
+    function forwardUnsuccessfulExecution(error) {}
+  }
+
+  function DialogController($mdDialog) {
+    var self = this;
+
+    /* Public interface */
+    self.cancel = cancel;
+    self.createSurveyForm = createSurveyForm;
+
+    function cancel(response) {
+      $mdDialog.hide(response);
+    }
+
+    function createSurveyForm(response) {
+      $mdDialog.hide(response);
+    }
+  }
 
 }());
 
@@ -7395,6 +7579,69 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('otusAcceptAnswer', {
+      templateUrl: 'app/editor/ui/rule/accept-answer/accept-answer.html',
+      controller: Controller,
+      bindings: {
+        item: '<'
+      }
+    });
+
+  Controller.$inject = [
+    'AddFillingRulesEventFactory',
+    'RemoveFillingRulesEventFactory',
+    'UpdateFillingRulesEventFactory'
+  ];
+
+  function Controller(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, UpdateFillingRulesEventFactory) {
+
+    var self = this;
+    var whoAmI = 'accept';
+
+    /* Public methods */
+    self.data;
+    self.$onInit = onInit;
+    self.updateData = updateData;
+    self.getItem = getItem;
+
+    function onInit() {
+      if (self.item.isQuestion()) {
+        if (self.item.fillingRules.options.accept == undefined) {
+          self.data = false;
+        } else {
+          self.data = self.item.fillingRules.options.accept.data.reference;
+          updateData();
+        }
+      }
+    }
+
+    function updateData() {
+      if (self.data) {
+        AddFillingRulesEventFactory.create().execute(self.item, whoAmI);
+        _getRuleType().data.reference = self.data;
+        UpdateFillingRulesEventFactory.create().execute();
+      } else {
+        RemoveFillingRulesEventFactory.create().execute(self, whoAmI);
+      }
+    }
+
+    function _getRuleType() {
+      return self.item.fillingRules.options.accept;
+    }
+
+    function getItem() {
+      return self.item;
+    }
+
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -7984,37 +8231,25 @@
 })();
 
 (function() {
+    'use strict';
 
     angular
-        .module('ui.components')
-        .directive('otusAccordion', otusAccordion);
+        .module('editor.ui')
+        .directive('textItem', textItem);
 
-    otusAccordion.$inject = ['OtusAccordionWidgetFactory'];
+    textItem.$inject = ['TextItemWidgetFactory'];
 
-    function otusAccordion(OtusAccordionWidgetFactory) {
-        var directive = {
-            restrict: 'E',
-            transclude: true,
-            templateUrl: 'app/shared/ui-components/accordion/accordion-template.html',
+    function textItem(TextItemWidgetFactory) {
+        var ddo = {
             scope: {},
-            link: function(scope, template, attrs, controller, transclude) {
-                var userHeader, userContent;
-                var templateHeader = angular.element(template.children()[0]);
-                var templateContent = angular.element(template.children()[1]);
-
-                transclude(function(clone, cloneScope) {
-                    userHeader = angular.element(clone[1]);
-                    userContent = angular.element(clone[3]);
-                });
-
-                userHeader.children().insertBefore(templateHeader.children());
-                templateContent.append(userContent.children());
-
-                scope.widget = OtusAccordionWidgetFactory.create(scope, attrs, scope.$parent);
+            templateUrl: 'app/editor/ui/survey-item/misc/text/text-item.html',
+            retrict: 'E',
+            link: function(scope, element) {
+                scope.widget = scope.$parent.widget;
             }
         };
 
-        return directive;
+        return ddo;
     }
 
 }());
@@ -8023,210 +8258,42 @@
     'use strict';
 
     angular
-        .module('ui.components')
-        .factory('OtusAccordionWidgetFactory', OtusAccordionWidgetFactory);
+        .module('editor.ui')
+        .factory('TextItemWidgetFactory', TextItemWidgetFactory);
 
-    function OtusAccordionWidgetFactory() {
+    function TextItemWidgetFactory() {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
-        function create(templateData, templateConfig, parentWidget) {
-            return new OtusAccordionWidget(templateData, templateConfig, parentWidget);
+        function create(scope) {
+            return new TextItemWidget(scope);
         }
 
         return self;
     }
 
-    function OtusAccordionWidget(templateData, templateConfig, parentWidget) {
+    function TextItemWidget(scope) {
         var self = this;
 
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.css = {};
-        self.template = {};
-        self.event = {};
+        self.name = 'TextItem';
+        self.getParent = getParent;
+        self.item = getItem();
+        self.getTemplate = getTemplate;
 
-        /* Template definitions */
-        self.template.icon = 'expand_more';
-
-        /* CSS definitions */
-
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.isToShow = false;
-
-        self.changeState = changeState;
-
-        function changeState() {
-            self.isToShow = !self.isToShow;
-            self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .component('surveyTemplatesList', {
-            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
-            controller: SurveyTemplateControllerList,
-        });
-
-    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
-
-    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
-        var self = this;
-
-        self.getSurveyTemplatesList = getSurveyTemplatesList;
-
-        function getSurveyTemplatesList() {
-            return SurveyTemplateManagerService.surveyTemplates;
+        function getParent() {
+            return scope.$parent.widget;
         }
 
-        self.$onInit = function() {
-            SurveyTemplateManagerService.initializeSurveyTemplateList();
-        };
-    }
-
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('studio.dashboard')
-    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
-
-  NewSurveyFormDialogService.$inject = ['$mdDialog'];
-
-  function NewSurveyFormDialogService($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.showDialog = showDialog;
-
-    init();
-
-    function init() {
-      self.dialogSettings = {
-        parent: angular.element(document.body),
-        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
-        controller: DialogController,
-        controllerAs: 'controller',
-        openFrom: '#system-toolbar',
-        closeTo: {
-          bottom: 0
+        function getItem() {
+            return getParent().getItem();
         }
-      };
-    }
 
-    function showDialog() {
-      $mdDialog
-        .show(self.dialogSettings)
-        .then(
-          forwardSuccessfulExecution,
-          forwardUnsuccessfulExecution
-        );
-
-      return {
-        onConfirm: function(callback) {
-          self.callback = callback;
+        function getTemplate() {
+            return '<text-item></text-item>';
         }
-      };
     }
-
-    function forwardSuccessfulExecution(response) {
-      if (response.action == 'create') {
-        if (self.callback) self.callback(response.data);
-      }
-    }
-
-    function forwardUnsuccessfulExecution(error) {}
-  }
-
-  function DialogController($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.cancel = cancel;
-    self.createSurveyForm = createSurveyForm;
-
-    function cancel(response) {
-      $mdDialog.hide(response);
-    }
-
-    function createSurveyForm(response) {
-      $mdDialog.hide(response);
-    }
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('otusAcceptAnswer', {
-      templateUrl: 'app/editor/ui/rule/accept-answer/accept-answer.html',
-      controller: Controller,
-      bindings: {
-        item: '<'
-      }
-    });
-
-  Controller.$inject = [
-    'AddFillingRulesEventFactory',
-    'RemoveFillingRulesEventFactory',
-    'UpdateFillingRulesEventFactory'
-  ];
-
-  function Controller(AddFillingRulesEventFactory, RemoveFillingRulesEventFactory, UpdateFillingRulesEventFactory) {
-
-    var self = this;
-    var whoAmI = 'accept';
-
-    /* Public methods */
-    self.data;
-    self.$onInit = onInit;
-    self.updateData = updateData;
-    self.getItem = getItem;
-
-    function onInit() {
-      if (self.item.isQuestion()) {
-        if (self.item.fillingRules.options.accept == undefined) {
-          self.data = false;
-        } else {
-          self.data = self.item.fillingRules.options.accept.data.reference;
-          updateData();
-        }
-      }
-    }
-
-    function updateData() {
-      if (self.data) {
-        AddFillingRulesEventFactory.create().execute(self.item, whoAmI);
-        _getRuleType().data.reference = self.data;
-        UpdateFillingRulesEventFactory.create().execute();
-      } else {
-        RemoveFillingRulesEventFactory.create().execute(self, whoAmI);
-      }
-    }
-
-    function _getRuleType() {
-      return self.item.fillingRules.options.accept;
-    }
-
-    function getItem() {
-      return self.item;
-    }
-
-  }
 
 }());
 
@@ -8290,73 +8357,6 @@
 
         function getTemplate() {
             return '<image-item></image-item>';
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('textItem', textItem);
-
-    textItem.$inject = ['TextItemWidgetFactory'];
-
-    function textItem(TextItemWidgetFactory) {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/misc/text/text-item.html',
-            retrict: 'E',
-            link: function(scope, element) {
-                scope.widget = scope.$parent.widget;
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('TextItemWidgetFactory', TextItemWidgetFactory);
-
-    function TextItemWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope) {
-            return new TextItemWidget(scope);
-        }
-
-        return self;
-    }
-
-    function TextItemWidget(scope) {
-        var self = this;
-
-        self.name = 'TextItem';
-        self.getParent = getParent;
-        self.item = getItem();
-        self.getTemplate = getTemplate;
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<text-item></text-item>';
         }
     }
 
@@ -8506,84 +8506,6 @@
 
     angular
         .module('editor.ui')
-        .directive('calendarQuestion', directive);
-
-    function directive() {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('CalendarQuestionWidgetFactory', CalendarQuestionWidgetFactory);
-
-    function CalendarQuestionWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new CalendarQuestionWidget(scope, element);
-        }
-
-        return self;
-    }
-
-    function CalendarQuestionWidget(scope, element) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-
-
-        function getClassName() {
-            return 'CalendarQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<calendar-question></calendar-question>';
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('checkboxQuestion', checkboxQuestion);
 
     checkboxQuestion.$inject = [
@@ -8704,6 +8626,161 @@
             return checkboxID;
         }
 
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('calendarQuestion', directive);
+
+    function directive() {
+        var ddo = {
+            scope: {},
+            templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('CalendarQuestionWidgetFactory', CalendarQuestionWidgetFactory);
+
+    function CalendarQuestionWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new CalendarQuestionWidget(scope, element);
+        }
+
+        return self;
+    }
+
+    function CalendarQuestionWidget(scope, element) {
+        var self = this;
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+
+        function getClassName() {
+            return 'CalendarQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<calendar-question></calendar-question>';
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('emailQuestion', directive);
+
+    function directive() {
+        var ddo = {
+            scope: {},
+            templateUrl: 'app/editor/ui/survey-item/question/email/email-question.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('EmailQuestionWidgetFactory', EmailQuestionWidgetFactory);
+
+    function EmailQuestionWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new EmailQuestionWidget(scope, element);
+        }
+
+        return self;
+    }
+
+    function EmailQuestionWidget(scope, element) {
+        var self = this;
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+
+        function getClassName() {
+            return 'EmailQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<email-question></email-question>';
+        }
     }
 
 }());
@@ -8848,83 +8925,6 @@
             }
         };
     });
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('emailQuestion', directive);
-
-    function directive() {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/email/email-question.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('EmailQuestionWidgetFactory', EmailQuestionWidgetFactory);
-
-    function EmailQuestionWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new EmailQuestionWidget(scope, element);
-        }
-
-        return self;
-    }
-
-    function EmailQuestionWidget(scope, element) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-
-        function getClassName() {
-            return 'EmailQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<email-question></email-question>';
-        }
-    }
-
 }());
 
 (function() {
@@ -9151,83 +9151,6 @@
 
     angular
         .module('editor.ui')
-        .directive('timeQuestion', directive);
-
-    function directive() {
-        var ddo = {
-            scope: {},
-            templateUrl: 'app/editor/ui/survey-item/question/time/time-question.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('TimeQuestionWidgetFactory', TimeQuestionWidgetFactory);
-
-    function TimeQuestionWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new TimeQuestionWidget(scope, element);
-        }
-
-        return self;
-    }
-
-    function TimeQuestionWidget(scope, element) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-
-        function getClassName() {
-            return 'TimeQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<time-question></time-question>';
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('textQuestion', directive);
 
     function directive() {
@@ -9305,81 +9228,75 @@
 
     angular
         .module('editor.ui')
-        .directive('otusDistinctValidator', otusDistinctValidator);
+        .directive('timeQuestion', directive);
 
-    otusDistinctValidator.$inject = [
-        'DistinctValidatorWidgetFactory'
-    ];
-
-    function otusDistinctValidator(DistinctValidatorWidgetFactory) {
+    function directive() {
         var ddo = {
             scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = DistinctValidatorWidgetFactory.create(scope, element);
-            }
+            templateUrl: 'app/editor/ui/survey-item/question/time/time-question.html',
+            retrict: 'E'
         };
 
         return ddo;
     }
+
 }());
 
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('editor.ui')
-    .factory('DistinctValidatorWidgetFactory', DistinctValidatorWidgetFactory);
+    angular
+        .module('editor.ui')
+        .factory('TimeQuestionWidgetFactory', TimeQuestionWidgetFactory);
 
-  function DistinctValidatorWidgetFactory() {
-    var self = this;
+    function TimeQuestionWidgetFactory() {
+        var self = this;
 
-    /* Public interface */
-    self.create = create;
+        /* Public interface */
+        self.create = create;
 
-    function create(scope, element) {
-      return new DistinctValidator(scope, element);
+        function create(scope, element) {
+            return new TimeQuestionWidget(scope, element);
+        }
+
+        return self;
     }
 
-    return self;
-  }
+    function TimeQuestionWidget(scope, element) {
+        var self = this;
 
-  function DistinctValidator(scope, element) {
-    var self = this;
-    var whoAmI = 'distinct';
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
 
+        function getClassName() {
+            return 'TimeQuestionWidget';
+        }
 
-    /* Public Methods */
-    self.data;
-    self.updateData = updateData;
-    self.deleteValidator = deleteValidator;
+        function getUUID() {
+            return scope.uuid;
+        }
 
-    var question = scope.$parent.widget.getItem();
+        function getElement() {
+            return element;
+        }
 
-    _init();
+        function getParent() {
+            return scope.$parent.widget;
+        }
 
-    function _init() {
-      self.data = question.fillingRules.options[whoAmI].data.reference;
-      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<time-question></time-question>';
+        }
     }
-
-    function updateData() {
-      getRuleType().data.reference = self.data;
-      scope.$parent.widget.updateFillingRules();
-    }
-
-    function getRuleType() {
-      return question.fillingRules.options[whoAmI];
-    }
-
-    function deleteValidator() {
-      scope.$parent.widget.deleteValidator(whoAmI);
-      element.remove();
-      scope.$destroy();
-    }
-
-  }
 
 }());
 
@@ -9468,6 +9385,89 @@
         }
 
     }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusDistinctValidator', otusDistinctValidator);
+
+    otusDistinctValidator.$inject = [
+        'DistinctValidatorWidgetFactory'
+    ];
+
+    function otusDistinctValidator(DistinctValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/distinct/distinct-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = DistinctValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('DistinctValidatorWidgetFactory', DistinctValidatorWidgetFactory);
+
+  function DistinctValidatorWidgetFactory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new DistinctValidator(scope, element);
+    }
+
+    return self;
+  }
+
+  function DistinctValidator(scope, element) {
+    var self = this;
+    var whoAmI = 'distinct';
+
+
+    /* Public Methods */
+    self.data;
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      self.data = question.fillingRules.options[whoAmI].data.reference;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data;
+      scope.$parent.widget.updateFillingRules();
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
@@ -10860,89 +10860,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .directive('otusQuantityValidator', Directive);
-
-  Directive.$inject = [
-    'otusjs.studio.editor.ui.validation.QuantityValidatorWidgetFactory'
-  ];
-
-  function Directive(QuantityValidatorWidgetFactory) {
-    var ddo = {
-      scope: {},
-      restrict: 'E',
-      templateUrl: 'app/editor/ui/validation/require/quantity/quantity-validator.html',
-      link: function linkFunc(scope, element) {
-        scope.widget = QuantityValidatorWidgetFactory.create(scope, element);
-      }
-    };
-
-    return ddo;
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .factory('otusjs.studio.editor.ui.validation.QuantityValidatorWidgetFactory', Factory);
-
-  function Factory() {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-
-    function create(scope, element) {
-      return new QuantityValidator(scope, element);
-    }
-
-    return self;
-  }
-
-  function QuantityValidator(scope, element) {
-    var self = this;
-    var whoAmI = 'quantity';
-
-    /* Public Methods */
-    self.data = null;
-    self.updateData = updateData;
-    self.deleteValidator = deleteValidator;
-
-    var question = scope.$parent.widget.getItem();
-
-    _init();
-
-    function _init() {
-      self.data = question.fillingRules.options[whoAmI].data.reference;
-      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-    }
-
-    function updateData() {
-      getRuleType().data.reference = self.data;
-      scope.$parent.widget.updateFillingRules();
-    }
-
-    function getRuleType() {
-      return question.fillingRules.options[whoAmI];
-    }
-
-    function deleteValidator() {
-      scope.$parent.widget.deleteValidator(whoAmI);
-      element.remove();
-      scope.$destroy();
-    }
-
-  }
-
-}());
-
-(function() {
     'use strict';
 
     angular
@@ -11034,6 +10951,89 @@
         }
 
     }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .directive('otusQuantityValidator', Directive);
+
+  Directive.$inject = [
+    'otusjs.studio.editor.ui.validation.QuantityValidatorWidgetFactory'
+  ];
+
+  function Directive(QuantityValidatorWidgetFactory) {
+    var ddo = {
+      scope: {},
+      restrict: 'E',
+      templateUrl: 'app/editor/ui/validation/require/quantity/quantity-validator.html',
+      link: function linkFunc(scope, element) {
+        scope.widget = QuantityValidatorWidgetFactory.create(scope, element);
+      }
+    };
+
+    return ddo;
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('otusjs.studio.editor.ui.validation.QuantityValidatorWidgetFactory', Factory);
+
+  function Factory() {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new QuantityValidator(scope, element);
+    }
+
+    return self;
+  }
+
+  function QuantityValidator(scope, element) {
+    var self = this;
+    var whoAmI = 'quantity';
+
+    /* Public Methods */
+    self.data = null;
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      self.data = question.fillingRules.options[whoAmI].data.reference;
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data;
+      scope.$parent.widget.updateFillingRules();
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
 
 }());
 
