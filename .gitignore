@@ -1,0 +1,15 @@
+**/target/
+**/.settings
+**/.project
+**/.classpath
+*.jsfdia
+*.metadata
+**/.idea
+*.iml
+*.swp
+npm-debug.log
+**/unit-result.report.html
+/node_modules/
+**/env.properties
+dist/otus-studio.war
+**/.sonar

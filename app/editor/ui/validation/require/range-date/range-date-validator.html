@@ -1,0 +1,17 @@
+<md-list-item layout-padding layout-align="space-between">
+    <md-content layout="column" flex="90">
+        <md-content layout="row">
+            <span class="md-body-1">Intervalo permitido:</span>
+        </md-content>
+        <md-content layout="row" layout-align="space-between center">
+            <md-datepicker ng-model="widget.data.initial.date" md-placeholder="Data mínima" md-min-date="minDate" ng-blur="widget.updateData()"></md-datepicker>
+            <md-datepicker ng-model="widget.data.end.date" md-placeholder="Data máxima" md-max-date="maxDate" ng-blur="widget.updateData()"></md-datepicker>
+            <span></span>
+        </md-content>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="end center">
+        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
+            <i class="material-icons">close</i>
+        </md-button>
+    </md-content>
+</md-list-item>

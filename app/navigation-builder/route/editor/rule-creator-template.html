@@ -1,0 +1,91 @@
+<div layout="row" layout-align="space-between center" layout-margin>
+
+  <!-- WHEN PARAMETER -->
+  <md-autocomplete
+    flex="30"
+    md-no-cache="true"
+    md-selected-item="$ctrl.selectedWhen"
+    md-selected-item-change="$ctrl.whenChange($ctrl.selectedWhen)"
+    md-search-text="$ctrl.whenSearchText"
+    md-items="when in $ctrl.whens($ctrl.whenSearchText)"
+    md-item-text="when.templateID"
+    md-min-length="0"
+    placeholder="Quando..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <md-icon md-font-set="material-icons" class="material-icons">
+            {{ when.icon.image }}
+            <md-tooltip md-direction="left">
+                {{ when.icon.tooltip }}
+            </md-tooltip>
+        </md-icon>
+      </span>
+      <span class="item-metadata">
+        <span class="item-metastat">
+          <strong>{{ when.templateID }}</strong>
+        </span>
+        <span class="item-metastat">
+          <span>{{ when.label.ptBR.plainText }}</span>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /WHEN PARAMETER -->
+
+  <!-- OPERATOR PARAMETER -->
+  <md-autocomplete
+    flex="30"
+    md-no-cache="true"
+    ng-disabled="$ctrl.isDisable"
+    md-selected-item="$ctrl.selectedOperator"
+    md-selected-item-change="$ctrl.operatorChange($ctrl.selectedOperator)"
+    md-search-text="$ctrl.operatorSearchText"
+    md-items="operator in $ctrl.operatorList"
+    md-item-text="operator.label.ptBR.plainText"
+    md-min-length="0"
+    placeholder="Comparador..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <span>
+          <strong>{{ operator.label.ptBR.plainText }}</strong>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /OPERATOR PARAMETER -->
+
+  <!-- ANSWER PARAMETER -->
+  <md-autocomplete
+    flex="30"
+    md-no-cache="true"
+    ng-disabled="$ctrl.isDisable"
+    md-selected-item="$ctrl.selectedAnswer"
+    md-selected-item-change="$ctrl.answerChange($ctrl.selectedAnswer)"
+    md-search-text="$ctrl.answerSearchText"
+    md-search-text-change="$ctrl.answerInputChange()"
+    md-items="answer in $ctrl.answers($ctrl.answerSearchText)"
+    md-item-text="answer.option.label.ptBR.plainText"
+    md-min-length="0"
+    placeholder="Valor..."
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span class="item-title">
+        <span>
+          <strong>{{ answer.option.label.ptBR.plainText }}</strong>
+        </span>
+      </span>
+    </md-item-template>
+  </md-autocomplete>
+  <!-- /ANSWER PARAMETER -->
+
+  <!-- ACTIONS -->
+  <div layout="column" flex="10">
+    <div layout="row" flex>
+      <md-button layout="column" aria-label="Nova regra" ng-click="$ctrl.saveRule()" class="md-mini md-icon-button" ng-show="$ctrl.showSaveRuleButton" ng-disabled="!$ctrl.readyToSave">
+        <md-icon md-svg-icon="check"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</div>

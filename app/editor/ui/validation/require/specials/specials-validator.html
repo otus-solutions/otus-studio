@@ -1,0 +1,12 @@
+<md-list-item class="specialsValidation" layout-padding flex="100">
+    <md-content layout="column" flex="90">
+        <md-switch class="md-primary" ng-model="widget.data" ng-change="widget.updateData()" ng-model="setting.enabled" layout-align="start start">
+            <span class="md-body-1">Não permite caracteres Especiais</span>
+        </md-switch>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="center center">
+        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
+            <i class="material-icons">close</i>
+        </md-button>
+    </md-content>
+</md-list-item>

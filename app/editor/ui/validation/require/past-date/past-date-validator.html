@@ -1,0 +1,12 @@
+<md-list-item layout-padding layout-align flex="100">
+    <md-content layout="column" flex="90">
+        <md-switch class="md-primary" ng-model="widget.data" md-primary md-no-ink ng-change="widget.updateData()" layout-align="start start">
+            <span class="md-body-1">Somente data passada</span>
+        </md-switch>
+    </md-content>
+    <md-content layout="column" flex="10" layout-padding layout-align="end center">
+        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
+            <i class="material-icons">close</i>
+        </md-button>
+    </md-content>
+</md-list-item>

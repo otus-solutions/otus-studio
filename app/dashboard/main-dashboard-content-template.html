@@ -1,0 +1,12 @@
+<!-- HiddenLeftMenu -->
+<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
+    <md-content ui-view="dashboard-menu"></md-content>
+</md-sidenav>
+
+<md-content layout="column" flex ng-cloak>
+    <otus:toolbar></otus:toolbar>
+
+    <!-- MainContent -->
+    <md-content id="system-content" ui-view="system-content" layout="row" flex></md-content>
+
+</md-content>

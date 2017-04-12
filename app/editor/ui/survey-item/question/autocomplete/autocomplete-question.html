@@ -1,0 +1,9 @@
+<md-content class="md-padding">
+  <md-autocomplete md-search-text="widget.autoCompleteSettings.searchText" md-items="something in widget.dummyQuery(widget.autoCompleteSettings.searchText)" placeholder="Inicie a digitação">
+    <md-item-template>
+      <span md-highlight-text="widget.autoCompleteSettings.searchText" md-highlight-flags="^i">{{something}}</span>
+    </md-item-template>
+  </md-autocomplete>
+
+  <md-chips ng-model="widget.getItem().dataSources" readonly="false" md-add-on-blur="true"  md-removable="true" placeholder="Informe a fonte de dados" md-on-add="widget.addDataSource($chip)" md-on-remove="widget.removeDataSource($chip)"></md-chips>
+</md-content>

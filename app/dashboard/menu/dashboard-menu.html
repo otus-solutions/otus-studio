@@ -1,0 +1,36 @@
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row">
+            <md-button ng-click="dashboardMenu.open()">
+                <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+                Otus Studio
+            </md-button>
+
+            <span flex></span>
+
+            <div>
+                <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
+                    <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <md-list>
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+                <md-button id="home-menu" ng-click="dashboardMenu.openHome()">
+                    Home
+                </md-button>
+            </div>
+        </md-list-item>
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-svg-icon="file-document-box" aria-label="Formulários"></md-icon>
+                <md-button id="surveyforms-menu" ng-click="dashboardMenu.openFormTemplates()">
+                    Templates
+                </md-button>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

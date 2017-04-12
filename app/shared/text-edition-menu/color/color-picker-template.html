@@ -1,0 +1,33 @@
+<md-dialog>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+            <h2>Cores</h2>
+        </div>
+    </md-toolbar>
+    <form>
+        <md-dialog-content>
+            <md-content>
+                <div class="md-dialog-content" flex>
+                    <div class="md-body-1">
+                        <p>Selecione as cores que você deseja aplicar em seu formulário.</p>
+                    </div>
+                    <br />
+                    <br />
+                    <div layout="column">
+                        <div label="Background" icon="format_color_fill" open-on-input="true" md-color-picker
+                        ng-model="controller.currentBackgroundColor"></div>
+                        <div label="Texto" icon="brush" open-on-input="true" md-color-picker ng-model="controller.currentTextColor"></div>
+                    </div>
+                    <div layout="row" layout-align="end">
+                        <md-button ng-click="controller.cancel()" class="md-button">
+                            Cancelar
+                        </md-button>
+                        <md-button ng-click="controller.select()" class="md-primary md-button">
+                            Salvar
+                        </md-button>
+                    </div>
+                </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>
