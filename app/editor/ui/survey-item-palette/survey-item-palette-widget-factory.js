@@ -1,98 +1,103 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('OtusSurveyItemPaletteWidgetFactory', OtusSurveyItemPaletteWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('OtusSurveyItemPaletteWidgetFactory', OtusSurveyItemPaletteWidgetFactory);
 
-    OtusSurveyItemPaletteWidgetFactory.$inject = [
-        'AddSurveyItemEventFactory',
-    ];
+  OtusSurveyItemPaletteWidgetFactory.$inject = [
+    'AddSurveyItemEventFactory',
+  ];
 
-    function OtusSurveyItemPaletteWidgetFactory(AddSurveyItemEventFactory) {
-        var self = this;
+  function OtusSurveyItemPaletteWidgetFactory(AddSurveyItemEventFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(parentWidget) {
-            return new OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory);
-        }
-
-        return self;
+    function create(parentWidget) {
+      return new OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory);
     }
 
-    function OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory) {
-        var self = this;
+    return self;
+  }
 
-        /* Type definitions */
-        self.className = self.constructor.name;
+  function OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory) {
+    var self = this;
 
-        /* Instance definitions */
-        self.parent = parentWidget;
+    /* Type definitions */
+    self.className = self.constructor.name;
 
-        /* Public methods */
-        self.addCalendarQuestion = addCalendarQuestion;
-        self.addIntegerQuestion = addIntegerQuestion;
-        self.addDecimalQuestion = addDecimalQuestion;
-        self.addSingleSelectionQuestion = addSingleSelectionQuestion;
-        self.addTextQuestion = addTextQuestion;
-        self.addTimeQuestion = addTimeQuestion;
-        self.addEmailQuestion = addEmailQuestion;
-        self.addTextItem = addTextItem;
-        self.addImageItem = addImageItem;
-        self.addPhoneQuestion = addPhoneQuestion;
-        self.addCheckboxQuestion = addCheckboxQuestion;
-        self.addAutocompleteQuestion = addAutocompleteQuestion;
+    /* Instance definitions */
+    self.parent = parentWidget;
 
+    /* Public methods */
+    self.addCalendarQuestion = addCalendarQuestion;
+    self.addIntegerQuestion = addIntegerQuestion;
+    self.addDecimalQuestion = addDecimalQuestion;
+    self.addSingleSelectionQuestion = addSingleSelectionQuestion;
+    self.addTextQuestion = addTextQuestion;
+    self.addTimeQuestion = addTimeQuestion;
+    self.addEmailQuestion = addEmailQuestion;
+    self.addTextItem = addTextItem;
+    self.addImageItem = addImageItem;
+    self.addPhoneQuestion = addPhoneQuestion;
+    self.addCheckboxQuestion = addCheckboxQuestion;
+    self.addAutocompleteQuestion = addAutocompleteQuestion;
+    self.addFileUploadQuestion = addFileUploadQuestion;
 
-        /* Actions */
-        function addAutocompleteQuestion() {
-            AddSurveyItemEventFactory.create().execute('AutocompleteQuestion');
-        }
-        function addCalendarQuestion() {
-            AddSurveyItemEventFactory.create().execute('CalendarQuestion');
-        }
-
-        function addIntegerQuestion() {
-            AddSurveyItemEventFactory.create().execute('IntegerQuestion');
-        }
-
-        function addDecimalQuestion() {
-            AddSurveyItemEventFactory.create().execute('DecimalQuestion');
-        }
-
-        function addSingleSelectionQuestion() {
-            AddSurveyItemEventFactory.create().execute('SingleSelectionQuestion');
-        }
-
-        function addTextQuestion() {
-            AddSurveyItemEventFactory.create().execute('TextQuestion');
-        }
-
-        function addTimeQuestion() {
-            AddSurveyItemEventFactory.create().execute('TimeQuestion');
-        }
-
-        function addEmailQuestion() {
-            AddSurveyItemEventFactory.create().execute('EmailQuestion');
-        }
-
-        function addTextItem() {
-            AddSurveyItemEventFactory.create().execute('TextItem');
-        }
-
-        function addImageItem() {
-            AddSurveyItemEventFactory.create().execute('ImageItem');
-        }
-
-        function addPhoneQuestion() {
-            AddSurveyItemEventFactory.create().execute('PhoneQuestion');
-        }
-
-        function addCheckboxQuestion() {
-            AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
-        }
+    /* Actions */
+    function addFileUploadQuestion() {
+      AddSurveyItemEventFactory.create().execute('FileUploadQuestion');
     }
+
+    function addAutocompleteQuestion() {
+      AddSurveyItemEventFactory.create().execute('AutocompleteQuestion');
+    }
+
+    function addCalendarQuestion() {
+      AddSurveyItemEventFactory.create().execute('CalendarQuestion');
+    }
+
+    function addIntegerQuestion() {
+      AddSurveyItemEventFactory.create().execute('IntegerQuestion');
+    }
+
+    function addDecimalQuestion() {
+      AddSurveyItemEventFactory.create().execute('DecimalQuestion');
+    }
+
+    function addSingleSelectionQuestion() {
+      AddSurveyItemEventFactory.create().execute('SingleSelectionQuestion');
+    }
+
+    function addTextQuestion() {
+      AddSurveyItemEventFactory.create().execute('TextQuestion');
+    }
+
+    function addTimeQuestion() {
+      AddSurveyItemEventFactory.create().execute('TimeQuestion');
+    }
+
+    function addEmailQuestion() {
+      AddSurveyItemEventFactory.create().execute('EmailQuestion');
+    }
+
+    function addTextItem() {
+      AddSurveyItemEventFactory.create().execute('TextItem');
+    }
+
+    function addImageItem() {
+      AddSurveyItemEventFactory.create().execute('ImageItem');
+    }
+
+    function addPhoneQuestion() {
+      AddSurveyItemEventFactory.create().execute('PhoneQuestion');
+    }
+
+    function addCheckboxQuestion() {
+      AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
+    }
+  }
 
 }());
