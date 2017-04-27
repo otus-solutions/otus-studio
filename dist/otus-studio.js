@@ -24,38 +24,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular.module('studio.authenticator', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .controller('LoginController', LoginController);
-
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
-
-    function LoginController($scope, DashboardStateService, AuthenticationService) {
-        var self = this;
-        self.authenticate = authenticate;
-        self.visitAccess = visitAccess;
-
-        function authenticate(user) {
-            AuthenticationService.login(user);
-        }
-
-        function visitAccess() {
-            DashboardStateService.goToHome();
-        }
-    }
-
-}());
-
-(function() {
 
     angular.module('dependencies', [
         /* Angular modules */
@@ -270,6 +238,38 @@
         /*Configuration icons*/
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('app/assets/img/icons/mdi.svg', 24);
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('studio.authenticator', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
+
+    function LoginController($scope, DashboardStateService, AuthenticationService) {
+        var self = this;
+        self.authenticate = authenticate;
+        self.visitAccess = visitAccess;
+
+        function authenticate(user) {
+            AuthenticationService.login(user);
+        }
+
+        function visitAccess() {
+            DashboardStateService.goToHome();
+        }
     }
 
 }());
@@ -760,72 +760,6 @@
 
   angular
     .module('otusjs.studio.navigationBuilder')
-    .service('otusjs.studio.navigationBuilder.NavigationBuilderScopeService', service);
-
-  service.$injects = [
-    'NBEVENTS',
-    'NBMESSAGES'
-  ]
-
-  function service(NBEVENTS, NBMESSAGES) {
-    var self = this;
-    var _scope = null;
-    var _moduleData = {};
-
-    self.NBEVENTS = NBEVENTS;
-    self.NBMESSAGES = NBMESSAGES;
-
-    /* Public methods */
-    self.initialize = initialize;
-    self.store = store;
-    self.getData = getData;
-    self.onEvent = onEvent;
-    self.broadcast = broadcast;
-    self.emit = emit;
-    self.digest = digest;
-    self.apply = apply;
-
-    function initialize(scope) {
-      scope.events = NBEVENTS;
-      scope.messages = NBMESSAGES;
-      _scope = scope;
-    }
-
-    function store(key, value) {
-      _moduleData[key] = value;
-    }
-
-    function getData(key) {
-      return _moduleData[key];
-    }
-
-    function onEvent(event, listener) {
-      return _scope.$on(event, listener);
-    }
-
-    function broadcast(event, data) {
-      _scope.$broadcast(event, data);
-    }
-
-    function emit(event, data) {
-      _scope.$emit(event, data);
-    }
-
-    function digest() {
-      _scope.$digest();
-    }
-
-    function apply() {
-      _scope.$apply();
-    }
-  }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder')
     .service('otusjs.studio.navigationBuilder.NavigationBuilderService', service);
 
   service.$inject = [
@@ -924,6 +858,72 @@
 })();
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .service('otusjs.studio.navigationBuilder.NavigationBuilderScopeService', service);
+
+  service.$injects = [
+    'NBEVENTS',
+    'NBMESSAGES'
+  ]
+
+  function service(NBEVENTS, NBMESSAGES) {
+    var self = this;
+    var _scope = null;
+    var _moduleData = {};
+
+    self.NBEVENTS = NBEVENTS;
+    self.NBMESSAGES = NBMESSAGES;
+
+    /* Public methods */
+    self.initialize = initialize;
+    self.store = store;
+    self.getData = getData;
+    self.onEvent = onEvent;
+    self.broadcast = broadcast;
+    self.emit = emit;
+    self.digest = digest;
+    self.apply = apply;
+
+    function initialize(scope) {
+      scope.events = NBEVENTS;
+      scope.messages = NBMESSAGES;
+      _scope = scope;
+    }
+
+    function store(key, value) {
+      _moduleData[key] = value;
+    }
+
+    function getData(key) {
+      return _moduleData[key];
+    }
+
+    function onEvent(event, listener) {
+      return _scope.$on(event, listener);
+    }
+
+    function broadcast(event, data) {
+      _scope.$broadcast(event, data);
+    }
+
+    function emit(event, data) {
+      _scope.$emit(event, data);
+    }
+
+    function digest() {
+      _scope.$digest();
+    }
+
+    function apply() {
+      _scope.$apply();
+    }
+  }
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -939,135 +939,11 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .service('EditionPreviewService', EditionPreviewService);
-
-  EditionPreviewService.$inject = [
-    '$stateParams',
-    'AddSurveyItemEventFactory',
-    '$timeout',
-    '$q'
-  ];
-
-  function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
-    var self = this;
-    var _surveyToLoad;
-    var _scope;
-
-    self.isLoading = false;
-    self.setScope = setScope;
-    self.isLoadingMode = isLoadingMode;
-    self.loadSurveyTemplate = loadSurveyTemplate;
-
-    function loadSurveyTemplate() {
-      _surveyToLoad = $stateParams.template;
-      if (_surveyToLoad.itemContainer.length > 0) {
-        self.isLoading = true;
-      }
-      return _renderSurveyTemplate();
-    }
-
-    function _renderSurveyTemplate() {
-      var deferred = $q.defer();
-      if (!self.isLoading) {
-        deferred.reject(true);
-      } else {
-        if (_scope.$$phase) {
-          AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
-          _surveyToLoad.itemContainer.splice(0, 1);
-          if (_surveyToLoad.itemContainer.length > 0) {
-            $timeout(function() {
-              _surveyToLoad.itemContainer.forEach(function(item) {
-                AddSurveyItemEventFactory.create().load(item);
-                _scope.$digest();
-              });
-              deferred.resolve($stateParams.template);
-            }, 1000);
-          } else {
-            deferred.resolve($stateParams.template);
-          }
-        }
-
-      }
-      return deferred.promise;
-    }
-
-    function isLoadingMode() {
-      return $stateParams.template;
-    }
-
-    function setScope(scope) {
-      _scope = scope;
-    }
-  }
-
-})();
-
-(function() {
     'use strict';
 
     angular.module('otusjs.studio.navigationBuilder.routeBuilder', []);
 
 }());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
-
-  function otusSurveyPreviewGenerator() {
-    var ddo = {
-      restrict: 'A',
-      controller: Controller
-    };
-    return ddo;
-  }
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    '$compile',
-    'WorkspaceService',
-    'otusjs.model.activity.ActivityFacadeService',
-    'otusjs.player.core.player.PlayerService'
-  ];
-
-  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
-    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
-    var _newScope;
-
-    $element.on('click', function() {
-      var otusSheetDOMElement = $('otus-player');
-
-      if (otusSheetDOMElement[0]) {
-        otusSheetDOMElement.remove();
-        if (_newScope) {
-          _newScope.$destroy();
-        }
-      }
-      _generateOtusPreview();
-      PlayerService.setup();
-    });
-
-    function _generateOtusPreview() {
-      _newScope = $scope.$new(true);
-      _newScope.surveyActivity = {};
-      _newScope.surveyActivity.template = _getSurveyTemplateObject();
-      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
-      $('#survey-preview').append(content);
-    }
-
-    function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
-    }
-  }
-
-})();
 
 (function(){"use strict";var __slice=[].slice;angular.module("indexedDB",[]).provider("$indexedDB",function(){var IDBKeyRange,allTransactions,apiDirection,appendResultsToPromise,applyNeededUpgrades,cursorDirection,db,dbMode,dbName,dbPromise,dbVersion,defaultQueryOptions,errorMessageFor,indexedDB,readyState,upgradesByVersion;indexedDB=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB,IDBKeyRange=window.IDBKeyRange||window.mozIDBKeyRange||window.webkitIDBKeyRange||window.msIDBKeyRange,dbMode={readonly:"readonly",readwrite:"readwrite"},readyState={pending:"pending"},cursorDirection={next:"next",nextunique:"nextunique",prev:"prev",prevunique:"prevunique"},apiDirection={ascending:cursorDirection.next,descending:cursorDirection.prev},dbName="",dbVersion=1,db=null,upgradesByVersion={},dbPromise=null,allTransactions=[],defaultQueryOptions={useIndex:void 0,keyRange:null,direction:cursorDirection.next},applyNeededUpgrades=function(oldVersion,event,db,tx,$log){var version;for(version in upgradesByVersion)!upgradesByVersion.hasOwnProperty(version)||oldVersion>=version||($log.log("$indexedDB: Running upgrade : "+version+" from "+oldVersion),upgradesByVersion[version](event,db,tx))},errorMessageFor=function(e){return e.target.readyState===readyState.pending?"Error: Operation pending":e.target.webkitErrorMessage||e.target.error.message||e.target.errorCode},appendResultsToPromise=function(promise,results){return void 0!==results?promise.then(function(){return results}):promise},this.connection=function(databaseName){return dbName=databaseName,this},this.upgradeDatabase=function(newVersion,callback){return upgradesByVersion[newVersion]=callback,dbVersion=Math.max.apply(null,Object.keys(upgradesByVersion)),this},this.$get=["$q","$rootScope","$log",function($q,$rootScope,$log){var DbQ,ObjectStore,Query,Transaction,addTransaction,closeDatabase,createDatabaseConnection,keyRangeForOptions,openDatabase,openTransaction,rejectWithError,validateStoreNames;return rejectWithError=function(deferred){return function(error){return $rootScope.$apply(function(){return deferred.reject(errorMessageFor(error))})}},createDatabaseConnection=function(){var dbReq,deferred;return deferred=$q.defer(),dbReq=indexedDB.open(dbName,parseInt(dbVersion)||1),dbReq.onsuccess=function(){db=dbReq.result,$rootScope.$apply(function(){deferred.resolve(db)})},dbReq.onblocked=dbReq.onerror=rejectWithError(deferred),dbReq.onupgradeneeded=function(event){var tx;db=event.target.result,tx=event.target.transaction,$log.log("$indexedDB: Upgrading database '"+db.name+"' from version "+event.oldVersion+" to version "+event.newVersion+" ..."),applyNeededUpgrades(event.oldVersion,event,db,tx,$log)},deferred.promise},openDatabase=function(){return dbPromise||(dbPromise=createDatabaseConnection())},closeDatabase=function(){return openDatabase().then(function(){return db.close(),db=null,dbPromise=null})},validateStoreNames=function(storeNames){var found,storeName,_i,_len;for(found=!0,_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],found&=db.objectStoreNames.contains(storeName);return found},openTransaction=function(storeNames,mode){return null==mode&&(mode=dbMode.readonly),openDatabase().then(function(){return validateStoreNames(storeNames)?new Transaction(storeNames,mode):$q.reject("Object stores "+storeNames+" do not exist.")})},keyRangeForOptions=function(options){return options.beginKey&&options.endKey?IDBKeyRange.bound(options.beginKey,options.endKey):void 0},addTransaction=function(transaction){return allTransactions.push(transaction.promise),transaction.promise["finally"](function(){var index;return index=allTransactions.indexOf(transaction.promise),index>-1?allTransactions.splice(index,1):void 0})},Transaction=function(){function Transaction(storeNames,mode){null==mode&&(mode=dbMode.readonly),this.transaction=db.transaction(storeNames,mode),this.defer=$q.defer(),this.promise=this.defer.promise,this.setupCallbacks()}return Transaction.prototype.setupCallbacks=function(){return this.transaction.oncomplete=function(_this){return function(){return $rootScope.$apply(function(){return _this.defer.resolve("Transaction Completed")})}}(this),this.transaction.onabort=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Aborted",error)})}}(this),this.transaction.onerror=function(_this){return function(error){return $rootScope.$apply(function(){return _this.defer.reject("Transaction Error",error)})}}(this),addTransaction(this)},Transaction.prototype.objectStore=function(storeName){return this.transaction.objectStore(storeName)},Transaction.prototype.abort=function(){return this.transaction.abort()},Transaction}(),DbQ=function(){function DbQ(){this.q=$q.defer(),this.promise=this.q.promise}return DbQ.prototype.reject=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).reject.apply(_ref,args)}}(this))},DbQ.prototype.rejectWith=function(req){return req.onerror=req.onblocked=function(_this){return function(e){return _this.reject(errorMessageFor(e))}}(this)},DbQ.prototype.resolve=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).resolve.apply(_ref,args)}}(this))},DbQ.prototype.notify=function(){var args;return args=1<=arguments.length?__slice.call(arguments,0):[],$rootScope.$apply(function(_this){return function(){var _ref;return(_ref=_this.q).notify.apply(_ref,args)}}(this))},DbQ.prototype.dbErrorFunction=function(){return function(_this){return function(error){return $rootScope.$apply(function(){return _this.q.reject(errorMessageFor(error))})}}(this)},DbQ.prototype.resolveWith=function(req){return this.rejectWith(req),req.onsuccess=function(_this){return function(e){return _this.resolve(e.target.result)}}(this)},DbQ}(),ObjectStore=function(){function ObjectStore(storeName,transaction){this.storeName=storeName,this.store=transaction.objectStore(storeName),this.transaction=transaction}return ObjectStore.prototype.defer=function(){return new DbQ},ObjectStore.prototype._mapCursor=function(defer,mapFunc,req){var results;return null==req&&(req=this.store.openCursor()),results=[],defer.rejectWith(req),req.onsuccess=function(e){var cursor;return(cursor=e.target.result)?(results.push(mapFunc(cursor)),defer.notify(mapFunc(cursor)),cursor["continue"]()):defer.resolve(results)}},ObjectStore.prototype._arrayOperation=function(data,mapFunc){var defer,item,req,results,_i,_len;for(defer=this.defer(),angular.isArray(data)||(data=[data]),_i=0,_len=data.length;_len>_i;_i++)item=data[_i],req=mapFunc(item),results=[],defer.rejectWith(req),req.onsuccess=function(e){return results.push(e.target.result),defer.notify(e.target.result),results.length>=data.length?defer.resolve(results):void 0};return 0===data.length?$q.when([]):defer.promise},ObjectStore.prototype.getAllKeys=function(){var defer,req;return defer=this.defer(),this.store.getAllKeys?(req=this.store.getAllKeys(),defer.resolveWith(req)):this._mapCursor(defer,function(cursor){return cursor.key}),defer.promise},ObjectStore.prototype.clear=function(){var defer,req;return defer=this.defer(),req=this.store.clear(),defer.resolveWith(req),defer.promise},ObjectStore.prototype["delete"]=function(key){var defer;return defer=this.defer(),defer.resolveWith(this.store["delete"](key)),defer.promise},ObjectStore.prototype.upsert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.put(item)}}(this))},ObjectStore.prototype.insert=function(data){return this._arrayOperation(data,function(_this){return function(item){return _this.store.add(item)}}(this))},ObjectStore.prototype.getAll=function(){var defer;return defer=this.defer(),this.store.getAll?defer.resolveWith(this.store.getAll()):this._mapCursor(defer,function(cursor){return cursor.value}),defer.promise},ObjectStore.prototype.eachWhere=function(query){var defer,direction,indexName,keyRange,req;return defer=this.defer(),indexName=query.indexName,keyRange=query.keyRange,direction=query.direction,req=indexName?this.store.index(indexName).openCursor(keyRange,direction):this.store.openCursor(keyRange,direction),this._mapCursor(defer,function(cursor){return cursor.value},req),defer.promise},ObjectStore.prototype.findWhere=function(query){return this.eachWhere(query)},ObjectStore.prototype.each=function(options){return null==options&&(options={}),this.eachBy(void 0,options)},ObjectStore.prototype.eachBy=function(indexName,options){var q;return null==indexName&&(indexName=void 0),null==options&&(options={}),q=new Query,q.indexName=indexName,q.keyRange=keyRangeForOptions(options),q.direction=options.direction||defaultQueryOptions.direction,this.eachWhere(q)},ObjectStore.prototype.count=function(){var defer;return defer=this.defer(),defer.resolveWith(this.store.count()),defer.promise},ObjectStore.prototype.find=function(key){var defer,req;return defer=this.defer(),req=this.store.get(key),defer.rejectWith(req),req.onsuccess=function(_this){return function(e){return e.target.result?defer.resolve(e.target.result):defer.reject(""+_this.storeName+":"+key+" not found.")}}(this),defer.promise},ObjectStore.prototype.findBy=function(index,key){var defer;return defer=this.defer(),defer.resolveWith(this.store.index(index).get(key)),defer.promise},ObjectStore.prototype.query=function(){return new Query},ObjectStore}(),Query=function(){function Query(){this.indexName=void 0,this.keyRange=void 0,this.direction=cursorDirection.next}return Query.prototype.$lt=function(value){return this.keyRange=IDBKeyRange.upperBound(value,!0),this},Query.prototype.$gt=function(value){return this.keyRange=IDBKeyRange.lowerBound(value,!0),this},Query.prototype.$lte=function(value){return this.keyRange=IDBKeyRange.upperBound(value),this},Query.prototype.$gte=function(value){return this.keyRange=IDBKeyRange.lowerBound(value),this},Query.prototype.$eq=function(value){return this.keyRange=IDBKeyRange.only(value),this},Query.prototype.$between=function(low,hi,exLow,exHi){return null==exLow&&(exLow=!1),null==exHi&&(exHi=!1),this.keyRange=IDBKeyRange.bound(low,hi,exLow,exHi),this},Query.prototype.$desc=function(unique){return this.direction=unique?cursorDirection.prevunique:cursorDirection.prev,this},Query.prototype.$asc=function(unique){return this.direction=unique?cursorDirection.nextunique:cursorDirection.next,this},Query.prototype.$index=function(indexName){return this.indexName=indexName,this},Query}(),{openStore:function(storeName,callBack,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction([storeName],mode).then(function(transaction){var results;return results=callBack(new ObjectStore(storeName,transaction)),appendResultsToPromise(transaction.promise,results)})},openStores:function(storeNames,callback,mode){return null==mode&&(mode=dbMode.readwrite),openTransaction(storeNames,mode).then(function(transaction){var objectStores,results,storeName;return objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)})},openAllStores:function(callback,mode){return null==mode&&(mode=dbMode.readwrite),openDatabase().then(function(_this){return function(){var objectStores,results,storeName,storeNames,transaction;return storeNames=Array.prototype.slice.apply(db.objectStoreNames),transaction=new Transaction(storeNames,mode),objectStores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],_results.push(new ObjectStore(storeName,transaction));return _results}(),results=callback.apply(null,objectStores),appendResultsToPromise(transaction.promise,results)}}(this))},closeDatabase:function(){return closeDatabase()},deleteDatabase:function(){return closeDatabase().then(function(){var defer;return defer=new DbQ,defer.resolveWith(indexedDB.deleteDatabase(dbName)),defer.promise})["finally"](function(){return $log.log("$indexedDB: "+dbName+" database deleted.")})},queryDirection:apiDirection,flush:function(){return allTransactions.length>0?$q.all(allTransactions):$q.when([])},databaseInfo:function(){return openDatabase().then(function(){var storeNames,transaction;return transaction=null,storeNames=Array.prototype.slice.apply(db.objectStoreNames),openTransaction(storeNames,dbMode.readonly).then(function(transaction){var store,storeName,stores;return stores=function(){var _i,_len,_results;for(_results=[],_i=0,_len=storeNames.length;_len>_i;_i++)storeName=storeNames[_i],store=transaction.objectStore(storeName),_results.push({name:storeName,keyPath:store.keyPath,autoIncrement:store.autoIncrement,indices:Array.prototype.slice.apply(store.indexNames)});return _results}(),transaction.promise.then(function(){return{name:db.name,version:db.version,objectStores:stores}})})})}}}]})}).call(this);
 //# sourceMappingURL=angular-indexed-db.min.js.map
@@ -1201,6 +1077,130 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .service('EditionPreviewService', EditionPreviewService);
+
+  EditionPreviewService.$inject = [
+    '$stateParams',
+    'AddSurveyItemEventFactory',
+    '$timeout',
+    '$q'
+  ];
+
+  function EditionPreviewService($stateParams, AddSurveyItemEventFactory, $timeout, $q) {
+    var self = this;
+    var _surveyToLoad;
+    var _scope;
+
+    self.isLoading = false;
+    self.setScope = setScope;
+    self.isLoadingMode = isLoadingMode;
+    self.loadSurveyTemplate = loadSurveyTemplate;
+
+    function loadSurveyTemplate() {
+      _surveyToLoad = $stateParams.template;
+      if (_surveyToLoad.itemContainer.length > 0) {
+        self.isLoading = true;
+      }
+      return _renderSurveyTemplate();
+    }
+
+    function _renderSurveyTemplate() {
+      var deferred = $q.defer();
+      if (!self.isLoading) {
+        deferred.reject(true);
+      } else {
+        if (_scope.$$phase) {
+          AddSurveyItemEventFactory.create().load(_surveyToLoad.itemContainer[0]);
+          _surveyToLoad.itemContainer.splice(0, 1);
+          if (_surveyToLoad.itemContainer.length > 0) {
+            $timeout(function() {
+              _surveyToLoad.itemContainer.forEach(function(item) {
+                AddSurveyItemEventFactory.create().load(item);
+                _scope.$digest();
+              });
+              deferred.resolve($stateParams.template);
+            }, 1000);
+          } else {
+            deferred.resolve($stateParams.template);
+          }
+        }
+
+      }
+      return deferred.promise;
+    }
+
+    function isLoadingMode() {
+      return $stateParams.template;
+    }
+
+    function setScope(scope) {
+      _scope = scope;
+    }
+  }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
+
+  function otusSurveyPreviewGenerator() {
+    var ddo = {
+      restrict: 'A',
+      controller: Controller
+    };
+    return ddo;
+  }
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'otusjs.model.activity.ActivityFacadeService',
+    'otusjs.player.core.player.PlayerService'
+  ];
+
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
+    var _newScope;
+
+    $element.on('click', function() {
+      var otusSheetDOMElement = $('otus-player');
+
+      if (otusSheetDOMElement[0]) {
+        otusSheetDOMElement.remove();
+        if (_newScope) {
+          _newScope.$destroy();
+        }
+      }
+      _generateOtusPreview();
+      PlayerService.setup();
+    });
+
+    function _generateOtusPreview() {
+      _newScope = $scope.$new(true);
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
+      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
+      $('#survey-preview').append(content);
+    }
+
+    function _getSurveyTemplateObject() {
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
+    }
+  }
+
+})();
+
+(function() {
     'use strict';
 
     angular
@@ -1269,24 +1269,6 @@
         function confirm(response) {
             $mdDialog.hide(response);
         }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .directive('otusToolbar', otusToolbar);
-
-    function otusToolbar() {
-        var ddo = {
-            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
-            retrict: 'E'
-        };
-
-        return ddo;
     }
 
 }());
@@ -1383,6 +1365,24 @@
     }
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
+        .directive('otusToolbar', otusToolbar);
+
+    function otusToolbar() {
+        var ddo = {
+            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
 
 (function() {
     'use strict';
@@ -6554,6 +6554,34 @@
 
     angular
         .module('surveyTemplates')
+        .component('surveyTemplatesList', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
+            controller: SurveyTemplateControllerList,
+        });
+
+    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
+
+    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
+        var self = this;
+
+        self.getSurveyTemplatesList = getSurveyTemplatesList;
+
+        function getSurveyTemplatesList() {
+            return SurveyTemplateManagerService.surveyTemplates;
+        }
+
+        self.$onInit = function() {
+            SurveyTemplateManagerService.initializeSurveyTemplateList();
+        };
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
         .component('surveyTemplate', {
             templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
             controller: SurveyTemplateController,
@@ -6609,34 +6637,6 @@
         function _scopeApply() {
             $scope.$apply();
         }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .component('surveyTemplatesList', {
-            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
-            controller: SurveyTemplateControllerList,
-        });
-
-    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
-
-    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
-        var self = this;
-
-        self.getSurveyTemplatesList = getSurveyTemplatesList;
-
-        function getSurveyTemplatesList() {
-            return SurveyTemplateManagerService.surveyTemplates;
-        }
-
-        self.$onInit = function() {
-            SurveyTemplateManagerService.initializeSurveyTemplateList();
-        };
     }
 
 })();
@@ -7206,92 +7206,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .directive('otusInputText', otusInputText);
-
-    otusInputText.$inject = ['OtusInputTextWidgetFactory'];
-
-    function otusInputText(OtusInputTextWidgetFactory) {
-        var ddo = {
-            scope: {
-                model: '=',
-                disabled: '@'
-            },
-            templateUrl: 'app/editor/ui/base/input-text/input-text.html',
-            retrict: 'E',
-            link: function linkFunc(scope, element, attrs) {
-                scope.widget = OtusInputTextWidgetFactory.create(scope, attrs, element, scope.$parent.widget || scope.$parent.$parent.childWidget);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('OtusInputTextWidgetFactory', OtusInputTextWidgetFactory);
-
-    function OtusInputTextWidgetFactory() {
-        var self = this;
-
-        self.create = create;
-
-        function create(templateData, templateConfig, element, parentWidget) {
-            return new OtusInputTextWidget(templateData, templateConfig, element, parentWidget);
-        }
-
-        return self;
-    }
-
-    function OtusInputTextWidget(templateData, templateConfig, element, parentWidget) {
-        var self = this;
-
-        /* Type definitions */
-        self.className = self.constructor.name;
-        self.css = {};
-        self.template = {};
-        self.event = {};
-
-        /* Template definitions */
-        self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
-        self.template.label = templateConfig.label;
-        self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
-        self.template.rightIcon = templateConfig.rightIcon;
-
-        self.template.hasLeftIcon = self.template.leftIcon !== undefined;
-        self.template.hasRightIcon = (templateConfig.iconButton === undefined && self.template.rightIcon !== undefined);
-
-        /* Instance definitions */
-        self.parent = parentWidget;
-        self.modelReference = templateData.model;
-
-        /* CSS definitions */
-        self.style = templateData.style;
-
-        if (templateData.model instanceof Function)
-            self.model = templateData.model();
-        else
-            self.model = templateData.model;
-
-        element.on('change', function() {
-            if (self.modelReference instanceof Function)
-                self.modelReference(self.model);
-            else
-                self.modelReference = self.model;
-        });
-    }
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -7388,6 +7302,92 @@
       return newValue !== option.extractionValue;
     }
   }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusInputText', otusInputText);
+
+    otusInputText.$inject = ['OtusInputTextWidgetFactory'];
+
+    function otusInputText(OtusInputTextWidgetFactory) {
+        var ddo = {
+            scope: {
+                model: '=',
+                disabled: '@'
+            },
+            templateUrl: 'app/editor/ui/base/input-text/input-text.html',
+            retrict: 'E',
+            link: function linkFunc(scope, element, attrs) {
+                scope.widget = OtusInputTextWidgetFactory.create(scope, attrs, element, scope.$parent.widget || scope.$parent.$parent.childWidget);
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('OtusInputTextWidgetFactory', OtusInputTextWidgetFactory);
+
+    function OtusInputTextWidgetFactory() {
+        var self = this;
+
+        self.create = create;
+
+        function create(templateData, templateConfig, element, parentWidget) {
+            return new OtusInputTextWidget(templateData, templateConfig, element, parentWidget);
+        }
+
+        return self;
+    }
+
+    function OtusInputTextWidget(templateData, templateConfig, element, parentWidget) {
+        var self = this;
+
+        /* Type definitions */
+        self.className = self.constructor.name;
+        self.css = {};
+        self.template = {};
+        self.event = {};
+
+        /* Template definitions */
+        self.template.ariaLabel = templateConfig.ariaLabel || templateConfig.label;
+        self.template.label = templateConfig.label;
+        self.template.leftIcon = templateConfig.iconButton || templateConfig.leftIcon;
+        self.template.rightIcon = templateConfig.rightIcon;
+
+        self.template.hasLeftIcon = self.template.leftIcon !== undefined;
+        self.template.hasRightIcon = (templateConfig.iconButton === undefined && self.template.rightIcon !== undefined);
+
+        /* Instance definitions */
+        self.parent = parentWidget;
+        self.modelReference = templateData.model;
+
+        /* CSS definitions */
+        self.style = templateData.style;
+
+        if (templateData.model instanceof Function)
+            self.model = templateData.model();
+        else
+            self.model = templateData.model;
+
+        element.on('change', function() {
+            if (self.modelReference instanceof Function)
+                self.modelReference(self.model);
+            else
+                self.modelReference = self.model;
+        });
+    }
 
 }());
 
