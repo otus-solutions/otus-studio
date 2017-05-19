@@ -67,6 +67,10 @@
       _mapping.AutocompleteQuestion.image = 'youtube_searched_for';
       _mapping.AutocompleteQuestion.tooltip = 'Auto Completar';
 
+      _mapping.FileUploadQuestion = {};
+      _mapping.FileUploadQuestion.image = 'attach_file';
+      _mapping.FileUploadQuestion.tooltip = 'Upload de Arquivo';
+
       _mapping.TextItem = {};
       _mapping.TextItem.image = 'message';
       _mapping.TextItem.tooltip = 'Texto';

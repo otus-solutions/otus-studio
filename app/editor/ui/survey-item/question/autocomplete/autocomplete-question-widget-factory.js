@@ -55,6 +55,8 @@
     }
 
     function addDataSource(dataSourceName) {
+      console.log("self.getItem()");
+      console.log(self.getItem().dataSources);
       AddDataSourceEventFactory.create().execute(self.getItem(), dataSourceName);
     }
 

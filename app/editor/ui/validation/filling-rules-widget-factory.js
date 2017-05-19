@@ -31,7 +31,6 @@
                 precision: '<otus:precision-validator></otus:precision-validator>',
                 rangeDate: '<otus:range-date-validator></otus:range-date-validator>',
                 scale: '<otus:scale-validator></otus:scale-validator>',
-                specials: '<otus:specials-validator></otus:specials-validator>',
                 upperCase: '<otus:upper-case-validator></otus:upper-case-validator>',
                 upperLimit: '<otus:upper-limit-validator></otus:upper-limit-validator>',
                 minSelected: '<otus:min-selected-validator></otus:min-selected-validator>',

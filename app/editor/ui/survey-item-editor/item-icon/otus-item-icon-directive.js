@@ -64,6 +64,10 @@
         icon: 'youtube_searched_for',
         tooltip: 'Autocompletar'
       },
+      FileUploadQuestion: {
+        icon: 'attach_file',
+        tooltip: 'Upload de Arquivo'
+      },
       TextItem: {
         icon: 'message',
         tooltip: 'Texto'

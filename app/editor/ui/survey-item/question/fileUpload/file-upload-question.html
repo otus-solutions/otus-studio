@@ -1,0 +1,13 @@
+<md-content class="md-padding">
+  <choose-file layout="row">
+    <input id="fileInput" type="file" class="ng-hide">
+    <md-input-container flex class="md-block">
+      <input id="textInput" type="text" ng-model="fileName" aria-label="Selecione o arquivo utilizando o botão para realizar o upload" disabled="disabled">​​​​​​​​​​​​
+    </md-input-container>
+    <div>
+      <md-button id="uploadButton" class="md-fab md-mini md-primary md-button md-layoutTheme-theme">
+        <md-icon class="material-icons">file_upload</md-icon>
+      </md-button>
+    </div>
+  </choose-file>
+</md-content>

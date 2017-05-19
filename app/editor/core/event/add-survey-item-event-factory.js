@@ -63,8 +63,12 @@
           newItem.options = itemToLoad.options;
         }
 
-        if(itemToLoad.objectType === 'AutocompleteQuestion') {
+        if (itemToLoad.objectType === 'AutocompleteQuestion') {
           newItem.dataSources = itemToLoad.dataSources;
+        }
+
+        if (itemToLoad.objectType === 'FileUploadQuestion') {
+          newItem.fileUpload = itemToLoad.fileUpload;
         }
 
         if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
