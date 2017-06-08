@@ -68,6 +68,10 @@
         icon: 'attach_file',
         tooltip: 'Upload de Arquivo'
       },
+      GridTextQuestion: {
+        icon: 'grid_on',
+        tooltip: 'Questão Grade de Texto'
+      },
       TextItem: {
         icon: 'message',
         tooltip: 'Texto'

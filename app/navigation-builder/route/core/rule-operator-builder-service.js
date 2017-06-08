@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -49,7 +49,7 @@
     }
 
     function _isSingleChoiceItem(itemType) {
-      return (itemType === 'SingleSelectionQuestion');
+      return (itemType === 'SingleSelectionQuestion' || itemType === 'FileUploadQuestion' || itemType === 'GridTextQuestion');
     }
 
     function _isMultipleChoiceItem(itemType) {

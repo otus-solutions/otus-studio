@@ -23,7 +23,6 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
             NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
-            NODE_MODULES_ROOT_PATH + 'angular-immutable/dist/immutable.min.js',
             DEPENDENCIES_ROOT_PATH + 'angular-indexed-db/angular-indexed-db.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
@@ -36,9 +35,6 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
             NODE_MODULES_ROOT_PATH + 'sigma/build/sigma.min.js',
-            NODE_MODULES_ROOT_PATH + 'graphdracula/js/raphael-min.js',
-            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graffle.js',
-            NODE_MODULES_ROOT_PATH + 'graphdracula/js/dracula_graph.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks-dependencies.js',
             NODE_MODULES_ROOT_PATH + 'angular-input-masks/releases/angular-input-masks.js',
             NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
@@ -71,24 +67,22 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/**/*.js': ['coverage']
+            'app/**/*.js': ['coverage'],
+            'app/**/*.js': ['babel'],
+            // 'tests/**/*-spec.js': ['babel']
         },
         // optionally, configure the reporter
         coverageReporter: {
             reporters: [{
                 type: 'html',
                 dir: 'target/test-coverage/'
-            }, {
-                type: 'lcov',
-                dir: 'target/test-coverage/',
-                subdir: 'report-lcov'
             }]
         },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'html', 'coverage', 'lcov'],
+        reporters: ['progress', 'html', 'coverage'],
 
         htmlReporter: {
             outputFile: 'target/unit-result.report.html',

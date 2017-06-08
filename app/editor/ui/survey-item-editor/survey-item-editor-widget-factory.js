@@ -1,73 +1,74 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('SurveyItemEditorWidgetFactory', SurveyItemEditorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('SurveyItemEditorWidgetFactory', SurveyItemEditorWidgetFactory);
 
-    SurveyItemEditorWidgetFactory.$inject = [
-        'RemoveSurveyItemEventFactory'
-    ];
+  SurveyItemEditorWidgetFactory.$inject = [
+    'RemoveSurveyItemEventFactory'
+  ];
 
-    function SurveyItemEditorWidgetFactory(RemoveSurveyItemEventFactory) {
-        var self = this;
+  function SurveyItemEditorWidgetFactory(RemoveSurveyItemEventFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(scope, element, item) {
-            return new SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
-        }
-
-        return self;
+    function create(scope, element, item) {
+      return new SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
     }
 
-    function SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
-        var self = this;
+    return self;
+  }
 
-        self.className = 'SurveyItemEditorWidget';
+  function SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
+    var self = this;
 
-        /* Public methods */
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getContainer = getContainer;
-        self.deleteSurveyItem = deleteSurveyItem;
-        self.getQuestionId = getQuestionId;
+    self.className = 'SurveyItemEditorWidget';
 
-        function getUUID() {
-            return scope.uuid;
-        }
+    /* Public methods */
+    self.getUUID = getUUID;
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.getContainer = getContainer;
+    self.deleteSurveyItem = deleteSurveyItem;
+    self.getQuestionId = getQuestionId;
 
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return item;
-        }
-
-        function getQuestionId(){
-            return getItem().templateID;
-        }
-
-        function getContainer() {
-            if(item.isQuestion()) {
-                return '<otus:question-item></otus:question-item>';
-            } else {
-                return '<misc-item></misc-item>';
-            }
-        }
-        // TODO: Destroy the $scope of item
-        function deleteSurveyItem() {
-            RemoveSurveyItemEventFactory.create().execute(item);
-            element.remove();
-        }
+    function getUUID() {
+      return scope.uuid;
     }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return item;
+    }
+
+    function getQuestionId() {
+      return getItem().templateID;
+    }
+
+    function getContainer() {
+      if (item.isQuestion()) {
+        return '<otus:question-item></otus:question-item>';
+      } else {
+        return '<misc-item></misc-item>';
+      }
+    }
+
+    function deleteSurveyItem() {
+      scope.$destroy();
+      RemoveSurveyItemEventFactory.create().execute(item);
+      element.remove();
+    }
+  }
 
 }());

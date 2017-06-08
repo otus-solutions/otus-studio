@@ -1527,121 +1527,6 @@
     'use strict';
 
     angular
-        .module('editor.database')
-        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
-
-    CrossSessionDatabaseService.$inject = [
-        '$q',
-        '$indexedDB',
-        'InsertHelperService'
-    ];
-
-    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
-        var self = this,
-            STORE_NAME = 'survey_template',
-            INDEX = 'contributor_idx';
-
-        /* Public interface */
-        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllSurveyTemplates = getAllSurveyTemplates;
-        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.insertSurveyTemplate = insertSurveyTemplate;
-        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
-
-        function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var entry = {};
-                entry.template_oid = template.oid;
-                entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());                
-                store.upsert(entry).then(function(e) {});
-
-            });
-        }
-
-        function insertSurveyTemplate(template, session) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var parsedTemplate = JSON.parse(template);
-                var entry = {};
-                entry.template_oid = parsedTemplate.oid;
-                entry.contributor = session.owner;
-                entry.template = parsedTemplate;
-                store.insert(entry).then(function(success) {
-                    defer.resolve(success);
-                }, function(error) {
-                    defer.reject(error);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplates() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAll().then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplatesByContributor() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-
-                var criteria = store.query();
-                criteria = criteria.$eq('visitor');
-                criteria = criteria.$index(INDEX);
-
-                store.eachWhere(criteria).then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function deleteSurveyTemplate(templateOID) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.delete(templateOID).then(function() {
-                    defer.resolve(true);
-                });
-            });
-            return defer.promise;
-        }
-
-        /**
-         * Returns a User + UUID Template + Repository in Base64
-         */
-        function getAllKeys() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAllKeys().then(function(e) {
-                    defer.resolve(e);
-                });
-            });
-            return defer.promise;
-        }
-
-        function findSurveyTemplateByOID(oid) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.find(oid).then(function(template) {
-                    defer.resolve(template);
-                });
-            });
-            return defer.promise;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('editor.core')
         .factory('AddAnswerOptionEventFactory', AddAnswerOptionEventFactory);
 
@@ -1881,7 +1766,7 @@
 
 }());
 
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -1896,23 +1781,24 @@
     'AddSurveyItemService',
     'LoadSurveyItemService',
     'PageAnchorService',
-    '$timeout'
+    '$timeout',
+    'otusjs.model.question.GridTextLineFactory'
   ];
 
-  function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
+  function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory) {
     var self = this;
 
     /* Public interface */
     self.create = create;
 
     function create() {
-      return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout);
+      return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory);
     }
 
     return self;
   }
 
-  function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
+  function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory) {
     var self = this;
 
     self.execute = execute;
@@ -1929,6 +1815,7 @@
 
     function load(itemToLoad) {
       var newItem = LoadSurveyItemService.execute(itemToLoad, WorkspaceService.getSurvey());
+
       //copy data from itemToLoad to newItem
       if (itemToLoad.customID) {
         newItem.customID = itemToLoad.customID;
@@ -1956,6 +1843,9 @@
 
         if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
           newItem.unit = itemToLoad.unit;
+        }
+        if (itemToLoad.objectType === 'GridTextQuestion') {
+          newItem.loadFromJsonLinesObject(itemToLoad.lines);
         }
       } else {
         if (itemToLoad.objectType === 'ImageItem') {
@@ -2363,6 +2253,121 @@
 
     angular
         .module('editor.database')
+        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
+
+    CrossSessionDatabaseService.$inject = [
+        '$q',
+        '$indexedDB',
+        'InsertHelperService'
+    ];
+
+    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
+
+        /* Public interface */
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
+
+        function saveSurveyTemplateRevision(template, session) {
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = JSON.parse(template.toJson());                
+                store.upsert(entry).then(function(e) {});
+
+            });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function(success) {
+                    defer.resolve(success);
+                }, function(error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAll().then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function(templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.delete(templateOID).then(function() {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.getAllKeys().then(function(e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function(store) {
+                store.find(oid).then(function(template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.database')
         .service('InsertHelperService', InsertHelperService);
 
     function InsertHelperService() {
@@ -2638,6 +2643,8 @@
                 'TimeQuestion': '<time-question></time-question>',
                 'PhoneQuestion': '<phone-question></phone-question>',
                 'CheckboxQuestion': '<checkbox-question></checkbox-question>',
+                'FileUploadQuestion': '<file-upload-question></file-upload-question>',
+                'GridTextQuestion': '<grid-text-question></grid-text-question>',
                 'MetadataGroup' : '<metadata-question></metadata-question>',
 
             };
@@ -2939,8 +2946,8 @@
     WorkspaceService
   ) {
     var self = this;
-    self.EditionPreviewService = EditionPreviewService;
 
+    self.EditionPreviewService = EditionPreviewService;
     SheetContentService.init($scope, $element);
 
     _init();
@@ -3003,6 +3010,7 @@
     'PhoneQuestionWidgetFactory',
     'AutocompleteQuestionWidgetFactory',
     'FileUploadQuestionWidgetFactory',
+    'GridTextQuestionWidgetFactory',
     /* Miscelaneous items */
     'TextItemWidgetFactory',
     'ImageItemWidgetFactory'
@@ -3020,6 +3028,7 @@
     PhoneQuestionWidgetFactory,
     AutocompleteQuestionWidgetFactory,
     FileUploadQuestionWidgetFactory,
+    GridTextQuestionWidgetFactory,
     TextItemWidgetFactory,
     ImageItemWidgetFactory) {
     var self = this;
@@ -3036,6 +3045,7 @@
       'PhoneQuestion': PhoneQuestionWidgetFactory,
       'AutocompleteQuestion': AutocompleteQuestionWidgetFactory,
       'FileUploadQuestion': FileUploadQuestionWidgetFactory,
+      'GridTextQuestion': GridTextQuestionWidgetFactory,
       'TextItem': TextItemWidgetFactory,
       'ImageItem': ImageItemWidgetFactory
     };
@@ -3083,76 +3093,77 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('SurveyItemEditorWidgetFactory', SurveyItemEditorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('SurveyItemEditorWidgetFactory', SurveyItemEditorWidgetFactory);
 
-    SurveyItemEditorWidgetFactory.$inject = [
-        'RemoveSurveyItemEventFactory'
-    ];
+  SurveyItemEditorWidgetFactory.$inject = [
+    'RemoveSurveyItemEventFactory'
+  ];
 
-    function SurveyItemEditorWidgetFactory(RemoveSurveyItemEventFactory) {
-        var self = this;
+  function SurveyItemEditorWidgetFactory(RemoveSurveyItemEventFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create(scope, element, item) {
-            return new SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
-        }
-
-        return self;
+    function create(scope, element, item) {
+      return new SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory);
     }
 
-    function SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
-        var self = this;
+    return self;
+  }
 
-        self.className = 'SurveyItemEditorWidget';
+  function SurveyItemEditorWidget(scope, element, item, RemoveSurveyItemEventFactory) {
+    var self = this;
 
-        /* Public methods */
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getContainer = getContainer;
-        self.deleteSurveyItem = deleteSurveyItem;
-        self.getQuestionId = getQuestionId;
+    self.className = 'SurveyItemEditorWidget';
 
-        function getUUID() {
-            return scope.uuid;
-        }
+    /* Public methods */
+    self.getUUID = getUUID;
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.getContainer = getContainer;
+    self.deleteSurveyItem = deleteSurveyItem;
+    self.getQuestionId = getQuestionId;
 
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return item;
-        }
-
-        function getQuestionId(){
-            return getItem().templateID;
-        }
-
-        function getContainer() {
-            if(item.isQuestion()) {
-                return '<otus:question-item></otus:question-item>';
-            } else {
-                return '<misc-item></misc-item>';
-            }
-        }
-        // TODO: Destroy the $scope of item
-        function deleteSurveyItem() {
-            RemoveSurveyItemEventFactory.create().execute(item);
-            element.remove();
-        }
+    function getUUID() {
+      return scope.uuid;
     }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return item;
+    }
+
+    function getQuestionId() {
+      return getItem().templateID;
+    }
+
+    function getContainer() {
+      if (item.isQuestion()) {
+        return '<otus:question-item></otus:question-item>';
+      } else {
+        return '<misc-item></misc-item>';
+      }
+    }
+
+    function deleteSurveyItem() {
+      scope.$destroy();
+      RemoveSurveyItemEventFactory.create().execute(item);
+      element.remove();
+    }
+  }
 
 }());
 
@@ -3232,6 +3243,7 @@
     self.addCheckboxQuestion = addCheckboxQuestion;
     self.addAutocompleteQuestion = addAutocompleteQuestion;
     self.addFileUploadQuestion = addFileUploadQuestion;
+    self.addGridTextQuestion = addGridTextQuestion;
 
     /* Actions */
     function addFileUploadQuestion() {
@@ -3285,6 +3297,11 @@
     function addCheckboxQuestion() {
       AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
     }
+
+    function addGridTextQuestion() {
+      AddSurveyItemEventFactory.create().execute('GridTextQuestion');
+    }
+
   }
 
 }());
@@ -5512,7 +5529,7 @@
   }
 }());
 
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -5563,7 +5580,7 @@
     }
 
     function _isSingleChoiceItem(itemType) {
-      return (itemType === 'SingleSelectionQuestion');
+      return (itemType === 'SingleSelectionQuestion' || itemType === 'FileUploadQuestion' || itemType === 'GridTextQuestion');
     }
 
     function _isMultipleChoiceItem(itemType) {
@@ -5666,7 +5683,7 @@
   }
 })();
 
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -5746,6 +5763,10 @@
       _mapping.ImageItem = {};
       _mapping.ImageItem.image = 'image';
       _mapping.ImageItem.tooltip = 'Imagem';
+
+      _mapping.GridTextQuestion = {};
+      _mapping.GridTextQuestion.image = 'grid_on';
+      _mapping.GridTextQuestion.tooltip = 'Grade de Texto';
     }
   }
 })();
@@ -7206,6 +7227,106 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('otusExtractionValue', {
+      templateUrl: 'app/editor/ui/base/extraction-value/extraction-value.html',
+      controller: Controller,
+      bindings: {
+        option: '<',
+        checkFunction: '&'
+      }
+    });
+
+  Controller.$inject = ['$element', 'otusjs.studio.editor.ui.ExtractionValueService'];
+
+  function Controller($element, ExtractionValueService) {
+    var _checkFunction;
+    var _option;
+
+    self = this;
+    self.$onInit = onInit;
+    self.$postLink = postLink;
+
+    function onInit() {
+      _checkFunction = self.checkFunction;
+      _option = self.option;
+    }
+
+    function postLink() {
+      $element.children()[0].innerText = _option.extractionValue;
+      $element.on('focusout', _execute);
+    }
+
+    function _execute(event) {
+      ExtractionValueService.execute(event, _option, _checkFunction);
+    }
+  }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .service('otusjs.studio.editor.ui.ExtractionValueService', Service);
+
+  Service.$inject = [
+    'UpdateQuestionEventFactory',
+    '$mdToast'
+  ];
+
+  function Service(UpdateQuestionEventFactory, $mdToast) {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(event, option, checkFunction) {
+      var newValue = removeAllBlankSpaces(event.target.innerText);
+
+      if (newValue === option.extractionValue.toString() || isEmpty(newValue)) {
+        updateView(event, option);
+      } else {
+        if (hasChanges(newValue, option)) {
+          if (checkFunction({
+              $event: {
+                newValue: newValue
+              }
+            })) {
+            option.setExtractionValue(newValue);
+            UpdateQuestionEventFactory.create().execute(self);
+            updateView(event, option);
+          } else {
+            $mdToast.show($mdToast.simple().textContent('O valor não pode ser repetido.'));
+            updateView(event, option);
+          }
+        }
+      }
+    }
+
+    function isEmpty(newValue) {
+      return newValue === '';
+    }
+
+    function removeAllBlankSpaces(newValue) {
+      return newValue.replace(/\s/g, '');
+    }
+
+    function updateView(event, option) {
+      event.target.innerText = option.extractionValue;
+    }
+
+    function hasChanges(newValue, option) {
+      return newValue !== option.extractionValue;
+    }
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -7409,106 +7530,6 @@
             self.getElement().children()[0].innerHTML = self.getLabel();
         }
     }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('otusExtractionValue', {
-      templateUrl: 'app/editor/ui/base/extraction-value/extraction-value.html',
-      controller: Controller,
-      bindings: {
-        option: '<',
-        checkFunction: '&'
-      }
-    });
-
-  Controller.$inject = ['$element', 'otusjs.studio.editor.ui.ExtractionValueService'];
-
-  function Controller($element, ExtractionValueService) {
-    var _checkFunction;
-    var _option;
-
-    self = this;
-    self.$onInit = onInit;
-    self.$postLink = postLink;
-
-    function onInit() {
-      _checkFunction = self.checkFunction;
-      _option = self.option;
-    }
-
-    function postLink() {
-      $element.children()[0].innerText = _option.extractionValue;
-      $element.on('focusout', _execute);
-    }
-
-    function _execute(event) {
-      ExtractionValueService.execute(event, _option, _checkFunction);
-    }
-  }
-
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .service('otusjs.studio.editor.ui.ExtractionValueService', Service);
-
-  Service.$inject = [
-    'UpdateQuestionEventFactory',
-    '$mdToast'
-  ];
-
-  function Service(UpdateQuestionEventFactory, $mdToast) {
-    var self = this;
-
-    self.execute = execute;
-
-    function execute(event, option, checkFunction) {
-      var newValue = removeAllBlankSpaces(event.target.innerText);
-
-      if (newValue === option.extractionValue.toString() || isEmpty(newValue)) {
-        updateView(event, option);
-      } else {
-        if (hasChanges(newValue, option)) {
-          if (checkFunction({
-              $event: {
-                newValue: newValue
-              }
-            })) {
-            option.setExtractionValue(newValue);
-            UpdateQuestionEventFactory.create().execute(self);
-            updateView(event, option);
-          } else {
-            $mdToast.show($mdToast.simple().textContent('O valor não pode ser repetido.'));
-            updateView(event, option);
-          }
-        }
-      }
-    }
-
-    function isEmpty(newValue) {
-      return newValue === '';
-    }
-
-    function removeAllBlankSpaces(newValue) {
-      return newValue.replace(/\s/g, '');
-    }
-
-    function updateView(event, option) {
-      event.target.innerText = option.extractionValue;
-    }
-
-    function hasChanges(newValue, option) {
-      return newValue !== option.extractionValue;
-    }
-  }
 
 }());
 
@@ -7855,6 +7876,10 @@
       FileUploadQuestion: {
         icon: 'attach_file',
         tooltip: 'Upload de Arquivo'
+      },
+      GridTextQuestion: {
+        icon: 'grid_on',
+        tooltip: 'Questão Grade de Texto'
       },
       TextItem: {
         icon: 'message',
@@ -8603,135 +8628,6 @@
 
     angular
         .module('editor.ui')
-        .directive('checkboxQuestion', checkboxQuestion);
-
-    checkboxQuestion.$inject = [
-        'CheckboxQuestionWidgetFactory'
-    ];
-
-    function checkboxQuestion(CheckboxQuestionWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question.html',
-            link: function(scope, element) {
-                scope.widget = CheckboxQuestionWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
-
-    CheckboxQuestionWidgetFactory.$inject = [
-        'UpdateQuestionEventFactory',
-        'CheckboxSuffixIDGenerator',
-        'WorkspaceService'
-    ];
-
-    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService);
-        }
-
-        return self;
-    }
-
-    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
-        var self = this;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getTemplate = getTemplate;
-        self.addOption = addOption;
-        self.removeLastOption = removeLastOption;
-
-        _init();
-
-        function _init() {
-            if (self.getItem().options.length > 0) {
-                _loadAnswerOptions();
-            }
-        }
-
-        function getClassName() {
-            return 'CheckboxQuestionWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-        function getTemplate() {
-            return '<checkbox-question></checkbox-question>';
-        }
-
-        function addOption() {
-            self.getItem().createOption(_generateOptionId());
-            UpdateQuestionEventFactory.create().execute(self.getItem());
-        }
-
-        function _loadAnswerOptions() {
-            var clonedArray = angular.copy(self.getItem().options);
-            self.getItem().options = [];
-
-            clonedArray.forEach(function(checkboxAnswerOption) {
-                self.getItem().loadJsonOption(JSON.stringify(checkboxAnswerOption));
-            });
-        }
-
-        function removeLastOption() {
-            self.getItem().removeLastOption();
-            UpdateQuestionEventFactory.create().execute(self.getItem());
-        }
-
-        function _generateOptionId() {
-            var checkboxID;
-            var quantity = self.getItem().options.length;
-            do {
-                checkboxID = self.getItem().customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
-            } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
-            return checkboxID;
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('calendarQuestion', directive);
 
     function directive() {
@@ -8801,6 +8697,135 @@
         function getTemplate() {
             return '<calendar-question></calendar-question>';
         }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('checkboxQuestion', checkboxQuestion);
+
+    checkboxQuestion.$inject = [
+        'CheckboxQuestionWidgetFactory'
+    ];
+
+    function checkboxQuestion(CheckboxQuestionWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question.html',
+            link: function(scope, element) {
+                scope.widget = CheckboxQuestionWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('CheckboxQuestionWidgetFactory', CheckboxQuestionWidgetFactory);
+
+    CheckboxQuestionWidgetFactory.$inject = [
+        'UpdateQuestionEventFactory',
+        'otusjs.model.utils.AlphabetSuffixIDGenerator',
+        'WorkspaceService'
+    ];
+
+    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService);
+        }
+
+        return self;
+    }
+
+    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService) {
+        var self = this;
+
+        /* Public methods */
+        self.getClassName = getClassName;
+        self.getUUID = getUUID;
+        self.getElement = getElement;
+        self.getParent = getParent;
+        self.getItem = getItem;
+        self.getTemplate = getTemplate;
+        self.addOption = addOption;
+        self.removeLastOption = removeLastOption;
+
+        _init();
+
+        function _init() {
+            if (self.getItem().options.length > 0) {
+                _loadAnswerOptions();
+            }
+        }
+
+        function getClassName() {
+            return 'CheckboxQuestionWidget';
+        }
+
+        function getUUID() {
+            return scope.uuid;
+        }
+
+        function getElement() {
+            return element;
+        }
+
+        function getParent() {
+            return scope.$parent.widget;
+        }
+
+        function getItem() {
+            return getParent().getItem();
+        }
+
+        function getTemplate() {
+            return '<checkbox-question></checkbox-question>';
+        }
+
+        function addOption() {
+            self.getItem().createOption(_generateOptionId());
+            UpdateQuestionEventFactory.create().execute(self.getItem());
+        }
+
+        function _loadAnswerOptions() {
+            var clonedArray = angular.copy(self.getItem().options);
+            self.getItem().options = [];
+
+            clonedArray.forEach(function(checkboxAnswerOption) {
+                self.getItem().loadJsonOption(JSON.stringify(checkboxAnswerOption));
+            });
+        }
+
+        function removeLastOption() {
+            self.getItem().removeLastOption();
+            UpdateQuestionEventFactory.create().execute(self.getItem());
+        }
+
+        function _generateOptionId() {
+            var checkboxID;
+            var quantity = self.getItem().options.length;
+            do {
+                checkboxID = self.getItem().customID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+            } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
+            return checkboxID;
+        }
+
     }
 
 }());
@@ -9130,6 +9155,116 @@
 
     function getTemplate() {
       return '<file-upload-question></file-upload-question>';
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('gridTextQuestion', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-text-question/grid-text-question-template.html'
+    });
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    'GridTextQuestionWidgetFactory',
+    'UpdateQuestionEventFactory'
+  ];
+
+  function Controller($scope, $element, GridTextQuestionWidgetFactory, UpdateQuestionEventFactory) {
+    var self = this;
+    var _item;
+
+    self.$onInit = onInit;
+    self.addGridLine = addGridLine;
+    self.removeGridLine = removeGridLine;
+    self.save = save;
+
+    function onInit() {
+      self.widget = GridTextQuestionWidgetFactory.create($scope, $element);
+      _item = self.widget.getItem();
+    };
+
+    function addGridLine() {
+      _item.createLine();
+      self.save();
+    }
+
+    function removeGridLine(gridLineIndex) {
+      _item.removeLine(gridLineIndex);
+      self.save();
+    }
+
+    function save() {
+      UpdateQuestionEventFactory.create().execute(self);
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('GridTextQuestionWidgetFactory', GridTextQuestionWidgetFactory);
+
+  GridTextQuestionWidgetFactory.$inject = [
+    'otusjs.model.question.GridTextQuestionFactory'
+  ];
+
+  function GridTextQuestionWidgetFactory(GridTextQuestionFactory) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new GridTextQuestionWidget(scope, element, GridTextQuestionFactory);
+    }
+
+    return self;
+  }
+
+  function GridTextQuestionWidget(scope, element, GridTextQuestionFactory) {
+    var self = this;
+
+    /* Public methods */
+    self.getClassName = getClassName;
+    self.getUUID = getUUID;
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.getTemplate = getTemplate;
+
+    function getClassName() {
+      return 'GridTextQuestionWidget';
+    }
+
+    function getUUID() {
+      return scope.uuid;
+    }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return getParent().getItem();
+    }
+
+    function getTemplate() {
+      return '<grid-text-question></grid-text-question>';
     }
   }
 
@@ -9943,83 +10078,6 @@
 
     angular
         .module('editor.ui')
-        .directive('otusMandatoryValidator', otusMandatoryValidator);
-
-    otusMandatoryValidator.$inject = [
-        'MandatoryValidatorWidgetFactory'
-    ];
-
-    function otusMandatoryValidator(MandatoryValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MandatoryValidatorWidgetFactory.create(scope, element);
-            }
-
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('MandatoryValidatorWidgetFactory', MandatoryValidatorWidgetFactory);
-
-    function MandatoryValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new MandatoryValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function MandatoryValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'mandatory';
-
-        /* Public Methods */
-        self.data;
-        self.updateData = updateData;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            self.data = question.fillingRules.options[whoAmI].data.reference;
-            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('otusLowerLimitValidator', otusLowerLimitValidator);
 
         otusLowerLimitValidator.$inject=[
@@ -10096,6 +10154,83 @@
             scope.$parent.widget.deleteValidator(whoAmI);
             element.remove();
             scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMandatoryValidator', otusMandatoryValidator);
+
+    otusMandatoryValidator.$inject = [
+        'MandatoryValidatorWidgetFactory'
+    ];
+
+    function otusMandatoryValidator(MandatoryValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/mandatory/mandatory-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MandatoryValidatorWidgetFactory.create(scope, element);
+            }
+
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('MandatoryValidatorWidgetFactory', MandatoryValidatorWidgetFactory);
+
+    function MandatoryValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new MandatoryValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function MandatoryValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'mandatory';
+
+        /* Public Methods */
+        self.data;
+        self.updateData = updateData;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            self.data = question.fillingRules.options[whoAmI].data.reference;
+            self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
         }
 
     }
@@ -11335,90 +11470,6 @@
 
     angular
         .module('editor.ui')
-        .directive('otusSpecialsValidator', otusSpecialsValidator);
-
-    otusSpecialsValidator.$inject = [
-        'SpecialsValidatorWidgetFactory'
-    ];
-
-    function otusSpecialsValidator(SpecialsValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/specials/specials-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = SpecialsValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
-        .factory('SpecialsValidatorWidgetFactory', SpecialsValidatorWidgetFactory);
-
-    function SpecialsValidatorWidgetFactory() {
-        var self = this;
-
-        /* Public interface */
-        self.create = create;
-
-        function create(scope, element) {
-            return new SpecialsValidator(scope, element);
-        }
-
-        return self;
-    }
-
-    function SpecialsValidator(scope, element) {
-        var self = this;
-        var whoAmI = 'specials';
-
-
-        /* Public Methods */
-        self.data = true;
-        self.updateData = updateData;
-        self.deleteValidator = deleteValidator;
-
-        var question = scope.$parent.widget.getItem();
-
-        _init();
-
-        function _init() {
-            var avaiableRules = question.fillingRules.options;
-            self.data = avaiableRules[whoAmI].data.reference;
-            self.canBeIgnored = avaiableRules[whoAmI].data.canBeIgnored;
-        }
-
-        function updateData() {
-            getRuleType().data.reference = self.data;
-            scope.$parent.widget.updateFillingRules();
-        }
-
-        function getRuleType() {
-            return question.fillingRules.options[whoAmI];
-        }
-
-        function deleteValidator() {
-            scope.$parent.widget.deleteValidator(whoAmI);
-            element.remove();
-            scope.$destroy();
-        }
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('otusUpperCaseValidator', otusUpperCaseValidator);
 
     otusUpperCaseValidator.$inject = [
@@ -11462,6 +11513,90 @@
     function UpperCaseValidator(scope, element) {
         var self = this;
         var whoAmI = 'upperCase';
+
+
+        /* Public Methods */
+        self.data = true;
+        self.updateData = updateData;
+        self.deleteValidator = deleteValidator;
+
+        var question = scope.$parent.widget.getItem();
+
+        _init();
+
+        function _init() {
+            var avaiableRules = question.fillingRules.options;
+            self.data = avaiableRules[whoAmI].data.reference;
+            self.canBeIgnored = avaiableRules[whoAmI].data.canBeIgnored;
+        }
+
+        function updateData() {
+            getRuleType().data.reference = self.data;
+            scope.$parent.widget.updateFillingRules();
+        }
+
+        function getRuleType() {
+            return question.fillingRules.options[whoAmI];
+        }
+
+        function deleteValidator() {
+            scope.$parent.widget.deleteValidator(whoAmI);
+            element.remove();
+            scope.$destroy();
+        }
+
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusSpecialsValidator', otusSpecialsValidator);
+
+    otusSpecialsValidator.$inject = [
+        'SpecialsValidatorWidgetFactory'
+    ];
+
+    function otusSpecialsValidator(SpecialsValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/specials/specials-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = SpecialsValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .factory('SpecialsValidatorWidgetFactory', SpecialsValidatorWidgetFactory);
+
+    function SpecialsValidatorWidgetFactory() {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create(scope, element) {
+            return new SpecialsValidator(scope, element);
+        }
+
+        return self;
+    }
+
+    function SpecialsValidator(scope, element) {
+        var self = this;
+        var whoAmI = 'specials';
 
 
         /* Public Methods */
@@ -11580,6 +11715,96 @@
         }
 
     }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('gridLine', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-text-question/grid-line/grid-line-template.html',
+      bindings: {
+        gridLine: '<',
+      },
+      require: {
+        parentCtrl: '^gridTextQuestion'
+      }
+    });
+
+  Controller.$inject = [
+    'WorkspaceService',
+    'otusjs.model.utils.AlphabetSuffixIDGenerator'
+  ];
+
+  function Controller(WorkspaceService, AlphabetSuffixIDGenerator) {
+    var self = this;
+    var _questionID;
+
+    self.$onInit = onInit;
+    self.addGridText = addGridText;
+    self.removeLastGridText = removeLastGridText;
+    self.removeGridLine = removeGridLine;
+    self.isEmpty = isEmpty;
+
+    function onInit() {
+      _questionID = self.parentCtrl.widget.getItem().customID;
+    }
+
+    function addGridText() {
+      self.gridLine.addGridText(_generateGridTextID());
+      self.parentCtrl.save();
+    }
+
+    function removeLastGridText() {
+      self.gridLine.removeLastGridText();
+      self.parentCtrl.save();
+    }
+
+    function removeGridLine(index) {
+      self.parentCtrl.removeGridLine(index);
+    }
+
+    function isEmpty() {
+      return self.gridLine.getGridTextListSize() > 0 ? false : true;
+    }
+
+    function _generateGridTextID() {
+      var gridID;
+      var quantity = self.gridLine.getGridTextListSize();
+      do {
+        gridID = _questionID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+      } while (!WorkspaceService.getSurvey().isAvailableCustomID(gridID));
+      return gridID;
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('gridText', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-text-question/grid-text/grid-text-component.html',
+      bindings: {
+        gridText: '<',
+      }
+    });
+
+  Controller.$inject = [];
+
+  function Controller() {
+    var self = this;
+
+    self.$onInit = function() {
+
+    };
+  }
 
 }());
 

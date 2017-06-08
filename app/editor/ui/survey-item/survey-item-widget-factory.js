@@ -18,6 +18,7 @@
     'PhoneQuestionWidgetFactory',
     'AutocompleteQuestionWidgetFactory',
     'FileUploadQuestionWidgetFactory',
+    'GridTextQuestionWidgetFactory',
     /* Miscelaneous items */
     'TextItemWidgetFactory',
     'ImageItemWidgetFactory'
@@ -35,6 +36,7 @@
     PhoneQuestionWidgetFactory,
     AutocompleteQuestionWidgetFactory,
     FileUploadQuestionWidgetFactory,
+    GridTextQuestionWidgetFactory,
     TextItemWidgetFactory,
     ImageItemWidgetFactory) {
     var self = this;
@@ -51,6 +53,7 @@
       'PhoneQuestion': PhoneQuestionWidgetFactory,
       'AutocompleteQuestion': AutocompleteQuestionWidgetFactory,
       'FileUploadQuestion': FileUploadQuestionWidgetFactory,
+      'GridTextQuestion': GridTextQuestionWidgetFactory,
       'TextItem': TextItemWidgetFactory,
       'ImageItem': ImageItemWidgetFactory
     };

@@ -370,3 +370,10 @@ survey-template md-card:focus {
   margin-top:10px;
 }
 
+
+/* GRID_QUESTION */
+
+.grid-line-bar {
+  border-bottom: dotted 1px gray;
+  /*background-color: gray;*/
+}
