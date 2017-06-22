@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -78,6 +78,10 @@
       _mapping.ImageItem = {};
       _mapping.ImageItem.image = 'image';
       _mapping.ImageItem.tooltip = 'Imagem';
+
+      _mapping.GridTextQuestion = {};
+      _mapping.GridTextQuestion.image = 'grid_on';
+      _mapping.GridTextQuestion.tooltip = 'Grade de Texto';
     }
   }
 })();

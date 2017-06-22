@@ -45,6 +45,7 @@
     self.addCheckboxQuestion = addCheckboxQuestion;
     self.addAutocompleteQuestion = addAutocompleteQuestion;
     self.addFileUploadQuestion = addFileUploadQuestion;
+    self.addGridTextQuestion = addGridTextQuestion;
 
     /* Actions */
     function addFileUploadQuestion() {
@@ -98,6 +99,11 @@
     function addCheckboxQuestion() {
       AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
     }
+
+    function addGridTextQuestion() {
+      AddSurveyItemEventFactory.create().execute('GridTextQuestion');
+    }
+
   }
 
 }());

@@ -16,6 +16,8 @@
                 'TimeQuestion': '<time-question></time-question>',
                 'PhoneQuestion': '<phone-question></phone-question>',
                 'CheckboxQuestion': '<checkbox-question></checkbox-question>',
+                'FileUploadQuestion': '<file-upload-question></file-upload-question>',
+                'GridTextQuestion': '<grid-text-question></grid-text-question>',
                 'MetadataGroup' : '<metadata-question></metadata-question>',
 
             };

@@ -23,8 +23,8 @@
     WorkspaceService
   ) {
     var self = this;
-    self.EditionPreviewService = EditionPreviewService;
 
+    self.EditionPreviewService = EditionPreviewService;
     SheetContentService.init($scope, $element);
 
     _init();

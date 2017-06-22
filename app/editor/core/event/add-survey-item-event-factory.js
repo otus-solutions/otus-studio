@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,23 +13,24 @@
     'AddSurveyItemService',
     'LoadSurveyItemService',
     'PageAnchorService',
-    '$timeout'
+    '$timeout',
+    'otusjs.model.question.GridTextLineFactory'
   ];
 
-  function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
+  function AddSurveyItemEventFactory($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory) {
     var self = this;
 
     /* Public interface */
     self.create = create;
 
     function create() {
-      return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout);
+      return new AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory);
     }
 
     return self;
   }
 
-  function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout) {
+  function AddSurveyItemEvent($rootScope, WorkspaceService, WidgetService, SheetContentService, AddSurveyItemService, LoadSurveyItemService, PageAnchorService, $timeout, GridTextLineFactory) {
     var self = this;
 
     self.execute = execute;
@@ -46,6 +47,7 @@
 
     function load(itemToLoad) {
       var newItem = LoadSurveyItemService.execute(itemToLoad, WorkspaceService.getSurvey());
+
       //copy data from itemToLoad to newItem
       if (itemToLoad.customID) {
         newItem.customID = itemToLoad.customID;
@@ -73,6 +75,9 @@
 
         if (itemToLoad.objectType === 'DecimalQuestion' || itemToLoad.objectType === 'IntegerQuestion') {
           newItem.unit = itemToLoad.unit;
+        }
+        if (itemToLoad.objectType === 'GridTextQuestion') {
+          newItem.loadFromJsonLinesObject(itemToLoad.lines);
         }
       } else {
         if (itemToLoad.objectType === 'ImageItem') {

@@ -7,24 +7,24 @@
 
     CheckboxQuestionWidgetFactory.$inject = [
         'UpdateQuestionEventFactory',
-        'CheckboxSuffixIDGenerator',
+        'otusjs.model.utils.AlphabetSuffixIDGenerator',
         'WorkspaceService'
     ];
 
-    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
+    function CheckboxQuestionWidgetFactory(UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService) {
         var self = this;
 
         /* Public interface */
         self.create = create;
 
         function create(scope, element) {
-            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService);
+            return new CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService);
         }
 
         return self;
     }
 
-    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, CheckboxSuffixIDGenerator, WorkspaceService) {
+    function CheckboxQuestionWidget(scope, element, UpdateQuestionEventFactory, AlphabetSuffixIDGenerator, WorkspaceService) {
         var self = this;
 
         /* Public methods */
@@ -92,7 +92,7 @@
             var checkboxID;
             var quantity = self.getItem().options.length;
             do {
-                checkboxID = self.getItem().customID + CheckboxSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+                checkboxID = self.getItem().customID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
             } while (!WorkspaceService.getSurvey().isAvailableCustomID(checkboxID));
             return checkboxID;
         }
