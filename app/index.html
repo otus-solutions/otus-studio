@@ -66,8 +66,7 @@
 
     <!-- ************************************* UI Components ************************************* -->
     <script src="app/shared/ui-components/ui-components-module.js"></script>
-    <script src="app/shared/ui-components/accordion/accordion-directive.js"></script>
-    <script src="app/shared/ui-components/accordion/accordion-widget-factory.js"></script>
+    <script src="app/shared/ui-components/item-container/item-container-component.js"></script>
 
     <!-- ************************************** OtusJS ************************************** -->
     <script src="node_modules/otus-model-js/dist/otus-model.js"></script>
@@ -173,9 +172,6 @@
     <!-- CROSS-SESSION -->
     <script src="app/editor/database/cross-session/cross-session-database-service.js"></script>
 
-    <!-- HELPER -->
-    <script src="app/editor/database/helper/insert-helper-service.js"></script>
-
     <!-- IN-SESSION -->
     <script src="app/editor/database/in-session/in-session-database-factory.js"></script>
 
@@ -186,30 +182,14 @@
     <script src="app/editor/ui/page-anchor-item/page-anchor-component.js"></script>
     <script src="app/editor/ui/page-anchor-item/page-anchor-service.js"></script>
 
-    <!-- API -->
-    <script src="app/editor/ui/api/mpath-service.js"></script>
-    <script src="app/editor/ui/api/ui-binding-service.js"></script>
-    <script src="app/editor/ui/api/widget-service.js"></script>
-    <script src="app/editor/ui/api/widget-template-service.js"></script>
-
     <!-- Template Header -->
-    <script src="app/editor/ui/survey-template-header/survey-template-header.js"></script>
+    <script src="app/editor/ui/survey-template-header/survey-template-header-component.js"></script>
 
     <!-- CORE.SHEET -->
-    <script src="app/editor/ui/sheet/sheet-content-service.js"></script>
-    <script src="app/editor/ui/sheet/sheet-controller.js"></script>
-    <script src="app/editor/ui/sheet/edition-sheet-directive.js"></script>
-
-    <!-- CORE.TEMPLATE -->
-    <script src="app/editor/ui/template/template-loader-service.js"></script>
-
-    <!-- WIDGET.BASE.INPUT-TEXT -->
-    <script src="app/editor/ui/base/input-text/input-text-directive.js"></script>
-    <script src="app/editor/ui/base/input-text/input-text-widget-factory.js"></script>
+    <script src="app/editor/ui/sheet/sheet-component.js"></script>
 
     <!-- WIDGET.BASE.BUTTON -->
-    <script src="app/editor/ui/base/button/button-directive.js"></script>
-    <script src="app/editor/ui/base/button/button-widget-factory.js"></script>
+    <script src="app/editor/ui/base/button/button-component.js"></script>
 
     <!-- WIDGET.BASE.INPUT-TEXT -->
     <script src="app/editor/ui/base/text-editor/text-editor-directive.js"></script>
@@ -227,9 +207,6 @@
     <!-- WIDGET.METADATA.GROUP -->
     <script src="app/editor/ui/metadata/group/metadata-group-directive.js"></script>
     <script src="app/editor/ui/metadata/group/metadata-group-widget-factory.js"></script>
-
-    <!-- WIDGET.METADATA.OPTION -->
-    <script src="app/editor/ui/metadata/option/metadata-option-widget-factory.js"></script>
 
     <!-- WIDGET.VALIDATION.EDITOR -->
     <script src="app/editor/ui/validation/editor/filling-rules-editor-directive.js"></script>
@@ -336,8 +313,8 @@
     <script src="app/editor/ui/rule/accept-answer/accept-answer-component.js"></script>
 
     <!-- WIDGET.SURVEY-ITEM -->
-    <script src="app/editor/ui/survey-item/misc/misc-item-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/question-item-directive.js"></script>
+    <script src="app/editor/ui/survey-item/misc/misc-item-component.js"></script>
+    <script src="app/editor/ui/survey-item/question/question-item-component.js"></script>
     <script src="app/editor/ui/survey-item/survey-item-widget-factory.js"></script>
 
     <!-- WIDGET.ITEM.TEXT -->
@@ -408,7 +385,7 @@
     <script src="app/editor/ui/survey-item/question/phone/phone-question-widget-factory.js"></script>
 
     <!-- WIDGET.QUESTION-EDITOR -->
-    <script src="app/editor/ui/survey-item-editor/survey-item-editor-directive.js"></script>
+    <script src="app/editor/ui/survey-item-editor/survey-item-editor-component.js"></script>
     <script src="app/editor/ui/survey-item-editor/survey-item-editor-widget-factory.js"></script>
 
     <!-- WIDGET.QUESTION-EDITOR.SETTINGS -->
@@ -423,7 +400,7 @@
     <script src="app/editor/ui/main/main-container-controller.js"></script>
 
     <!-- STAGE -->
-    <script src="app/editor/ui/stage/stage-directive.js"></script>
+    <script src="app/editor/ui/stage/stage-component.js"></script>
 
     <!-- QUESTION-ICON -->
     <script src="app/editor/ui/survey-item-editor/item-icon/otus-item-icon-directive.js"></script>
@@ -492,12 +469,8 @@
     <script src="app/navigation-builder/route/editor/rule-creator-component.js"></script>
     <script src="app/navigation-builder/route/editor/rule-editor-component.js"></script>
 
-    <!-- EDITION-PREVIEW -->
-    <script src="app/preview/preview-controller.js"></script>
-    <script src="app/preview/edition-preview/edition-preview-service.js"></script>
-
     <!-- OTUS-SURVEY-PREVIEW -->
-    <script src="app/preview/otus-survey-preview/otus-survey-preview-generator-directive.js"></script>
+    <script src="app/preview/otus-survey-preview-generator-directive.js"></script>
 
     <!-- ************************************** Studio Login ************************************** -->
     <!-- app.login -->

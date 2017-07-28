@@ -11,8 +11,6 @@ describe('QuestionService', function() {
             service = _$injector_.get('QuestionService', {
                 $rootScope: _$rootScope_,
                 WorkspaceService: mockWorkspaceService(_$injector_),
-                WidgetService: mockWidgetService(_$injector_),
-                SheetContentService: mockSheetContentService(_$injector_),
                 AddQuestionService: mockAddQuestionService(_$injector_)
             });
         });
@@ -26,10 +24,6 @@ describe('QuestionService', function() {
 
         xit('should call AddQuestionService.execute with questionType parameter', function() {
             expect(Mock.AddQuestionService.execute).toHaveBeenCalledWith(Mock.question.objectType);
-        });
-
-        xit('should call SheetContentService.loadQuestion with question parameter', function() {
-            expect(Mock.SheetContentService.loadQuestion).toHaveBeenCalledWith(Mock.question);
         });
 
         xit('should store yourself in userEdits', function() {
@@ -49,12 +43,6 @@ describe('QuestionService', function() {
         return Mock.AddQuestionService;
     }
 
-    function mockSheetContentService($injector) {
-        Mock.SheetContentService = $injector.get('SheetContentService');
-        spyOn(Mock.SheetContentService, 'loadQuestion');
-        return Mock.SheetContentService;
-    }
-
     function mockWorkspaceService($injector) {
         Mock.WorkspaceService = $injector.get('WorkspaceService');
         Mock.WorkspaceService.workspace = {
@@ -69,11 +57,6 @@ describe('QuestionService', function() {
         spyOn(Mock.WorkspaceService.workspace.isdb.userEdits, 'store');
 
         return Mock.WorkspaceService;
-    }
-
-    function mockWidgetService($injector) {
-        Mock.WidgetService = $injector.get('WidgetService');
-        return Mock.WidgetService;
     }
 
 });

@@ -1,10 +1,12 @@
-<md-toolbar layout="row" class="md-accent md-hue-1">
+<md-content layout-padding>
+<md-toolbar class="md-accent md-hue-1">
   <div class="md-toolbar-tools">
-    <otus:button click="widget.navigationButton" tooltip="Navegação" icon-button="directions_boat" />
-    <otus:button click="widget.validationButton" tooltip="Validação" icon-button="verified_user" ng-show="widget.getItem().isQuestion()" />
+    <otus:button click="widget.navigationButton()" tooltip="Navegação" icon-button="directions_boat" />
+    <otus:button click="widget.validationButton()" tooltip="Validação" icon-button="verified_user" ng-show="widget.getItem().isQuestion()" />
     <otus:accept-answer item="widget.getItem()" ng-show="widget.getItem().isQuestion()"></otus:accept-answer>
   </div>
 </md-toolbar>
 <!-- <otus:navigation-editor layout="row" flex ng-show="widget.showNavigationEditor" layout-padding></otus:navigation-editor> -->
 <otus:filling-rules-editor layout="row" flex ng-show="widget.showValidationEditor" layout-padding></otus:filling-rules-editor>
 <!-- <otus:navigation-editor layout="row" flex ng-show="widget.showNavigationEditor"></otus:navigation-editor> -->
+</md-content>

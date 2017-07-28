@@ -1,28 +1,31 @@
-<md-whiteframe id={{widget.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
-    <otus:accordion flex>
-        <otus:accordion-header>
-            <md-content  flex>
-                <md-content layout="row">
-                    <md-card class="item-id-frame" layout-padding style="padding: 0" layout-align="center center">
-                        <otus:item-icon item="{{widget.getItem().objectType}}">
-                    </md-card>
+<md-whiteframe id={{::widget.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
+  <item-container>
+    <item-container-header flex>
 
-                    <md-card layout-align="center">
-                        <editable-id item="widget.getItem()"></editable-id>
-                    </md-card>
-                    <md-content layout-padding flex>
-                        <div layout-align="center center" class="clipped">
-                            <span class="md-body-1">{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</span>
-                        </div>
-                    </md-content>
-                </md-content>
-            </md-content>
-            <otus:button click="widget.deleteSurveyItem" tooltip="Excluir item" icon-button="delete"/>
-        </otus:accordion-header>
-        <otus:accordion-content>
-            <md-content bind-html-compile="widget.getContainer()"></md-content>
-            <otus:survey-item-settings></otus:survey-item-settings>
-        </otus:accordion-content>
-    </otus:accordion>
+      <md-content layout="row" layout-align="center center" flex>
+        <md-card class="item-id-frame" layout-padding layout-align="center center">
+          <otus:item-icon item="{{widget.getItem().objectType}}">
+        </md-card>
+
+        <md-card layout-align="center">
+          <editable-id item="widget.getItem()"></editable-id>
+        </md-card>
+
+        <md-content layout-padding flex>
+          <div layout-align="center center" class="clipped" flex>
+            <span class="md-body-1">{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</span>
+          </div>
+        </md-content>
+
+        <otus:button click="widget.deleteSurveyItem()" tooltip="Excluir item" icon-button="delete" />
+      </md-content>
+
+    </item-container-header>
+
+    <item-container-body>
+      <otus:question-item ng-if="::$ctrl.item.isQuestion()" item="$ctrl.item"></otus:question-item>
+      <misc-item ng-if="::!$ctrl.item.isQuestion()" item="$ctrl.item"></misc-item>
+    </item-container-body>
+  </item-container>
 </md-whiteframe>
-<br/>
+<br />

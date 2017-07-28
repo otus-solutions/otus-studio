@@ -20,7 +20,7 @@
         }
 
         function loadSurvey(surveyTemplate) {
-            return ModelFacadeService.getSurveyFactory().load(surveyTemplate);
+            return ModelFacadeService.getSurveyFactory().fromJsonObject(surveyTemplate);
         }
     }
 

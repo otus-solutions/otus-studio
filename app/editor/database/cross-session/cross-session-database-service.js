@@ -7,11 +7,10 @@
 
     CrossSessionDatabaseService.$inject = [
         '$q',
-        '$indexedDB',
-        'InsertHelperService'
+        '$indexedDB'
     ];
 
-    function CrossSessionDatabaseService($q, $indexedDB, InsertHelperService) {
+    function CrossSessionDatabaseService($q, $indexedDB) {
         var self = this,
             STORE_NAME = 'survey_template',
             INDEX = 'contributor_idx';
@@ -29,7 +28,7 @@
                 var entry = {};
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());                
+                entry.template = JSON.parse(template.toJson());
                 store.upsert(entry).then(function(e) {});
 
             });

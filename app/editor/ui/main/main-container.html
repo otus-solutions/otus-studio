@@ -32,7 +32,7 @@
     <md-content layout="column" layout-padding flex class="stage">
       <md-tabs id="stage-mode-selector" flex>
         <md-tab id="editing-tab" label="Edição">
-          <otus:stage></otus:stage>
+          <otus:stage template="mainContainer.template"></otus:stage>
         </md-tab>
         <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
           <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>

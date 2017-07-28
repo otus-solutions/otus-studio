@@ -6,26 +6,24 @@
     .factory('MetadataGroupWidgetFactory', MetadataGroupWidgetFactory);
 
   MetadataGroupWidgetFactory.$inject = [
-    'MetadataOptionWidgetFactory',
     'AddMetadataAnswerEventFactory',
     'RemoveMetadataOptionEventFactory',
-    'MetadataAnswerFactory'
   ];
 
-  function MetadataGroupWidgetFactory(MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory, MetadataAnswerFactory) {
+  function MetadataGroupWidgetFactory(AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
     var self = this;
 
     /*Public interface*/
     self.create = create;
 
     function create(scope, element) {
-      return new MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory, MetadataAnswerFactory);
+      return new MetadataGroupWidget(scope, element, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory);
     }
 
     return self;
   }
 
-  function MetadataGroupWidget(scope, element, MetadataOptionWidgetFactory, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory, MetadataAnswerFactory) {
+  function MetadataGroupWidget(scope, element, AddMetadataAnswerEventFactory, RemoveMetadataOptionEventFactory) {
     var self = this;
     self.ngModel = scope.ngModel;
     self.options = [];
@@ -38,16 +36,7 @@
     self.getItem = getItem;
     self.addOption = addOption;
     self.removeLastOption = removeLastOption;
-    self.removeLastOption = removeLastOption;
     self.isAvailableExtractionValue = isAvailableExtractionValue;
-
-    _init();
-
-    function _init() {
-      if (self.getItem().metadata.options.length > 0) {
-        _loadOptions();
-      }
-    }
 
     function getClassName() {
       return 'MetadataGroupWidget';
@@ -69,27 +58,12 @@
       return getParent().getItem();
     }
 
-    function _loadOptions() {
-      var clonedArray = angular.copy(self.getItem().metadata.options);
-      self.getItem().metadata.options = [];
-
-      clonedArray.forEach(function(option) {
-        var optionInstance = MetadataAnswerFactory.fromJsonObject(option);
-        self.getItem().metadata.options.push(optionInstance);
-        var optionWidget = MetadataOptionWidgetFactory.create(optionInstance, self);
-        self.options.push(optionWidget);
-      });
-    }
-
     function addOption() {
-      var newOption = AddMetadataAnswerEventFactory.create().execute(self);
-      var optionWidget = MetadataOptionWidgetFactory.create(newOption, self);
-      self.options.push(optionWidget);
+      AddMetadataAnswerEventFactory.create().execute(self);
     }
 
     function removeLastOption() {
       RemoveMetadataOptionEventFactory.create().execute(self);
-      self.options.splice(-1);
     }
 
     function isAvailableExtractionValue($event) {

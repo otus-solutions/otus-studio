@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, element) {
-            return new SurveyItemSettingsWidget(scope, element);
+        function create(scope, element, item) {
+            return new SurveyItemSettingsWidget(scope, element, item);
         }
 
         return self;
     }
 
-    function SurveyItemSettingsWidget(scope, element) {
+    function SurveyItemSettingsWidget(scope, element, item) {
         var self = this;
 
         self.className = 'SurveyItemSettingsWidget';
@@ -50,7 +50,7 @@
         }
 
         function getItem() {
-            return getParent().getItem();
+            return item;
         }
 
         function navigationButton() {
