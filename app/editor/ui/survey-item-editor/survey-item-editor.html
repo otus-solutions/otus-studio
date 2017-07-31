@@ -1,23 +1,23 @@
-<md-whiteframe id={{::widget.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
+<md-whiteframe id={{::$ctrl.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
   <item-container>
     <item-container-header flex>
 
       <md-content layout="row" layout-align="center center" flex>
         <md-card class="item-id-frame" layout-padding layout-align="center center">
-          <otus:item-icon item="{{widget.getItem().objectType}}">
+          <otus:item-icon item="{{$ctrl.getItem().objectType}}">
         </md-card>
 
         <md-card layout-align="center">
-          <editable-id item="widget.getItem()"></editable-id>
+          <editable-id item="$ctrl.getItem()"></editable-id>
         </md-card>
 
         <md-content layout-padding flex>
           <div layout-align="center center" class="clipped" flex>
-            <span class="md-body-1">{{widget.getItem().label.ptBR.plainText || widget.getItem().value.ptBR.plainText}}</span>
+            <span class="md-body-1">{{$ctrl.getItem().label.ptBR.plainText || $ctrl.getItem().value.ptBR.plainText}}</span>
           </div>
         </md-content>
 
-        <otus:button click="widget.deleteSurveyItem()" tooltip="Excluir item" icon-button="delete" />
+        <otus:button click="$ctrl.deleteSurveyItem()" tooltip="Excluir item" icon-button="delete" />
       </md-content>
 
     </item-container-header>
