@@ -13,13 +13,15 @@
 
   Controller.$inject = [
     'WorkspaceService',
-    '$window'
+    '$window',
+    'PageAnchorService'
   ];
 
-  function Controller(WorkspaceService, $window) {
+  function Controller(WorkspaceService, $window, PageAnchorService) {
     var self = this;
 
     self.$onInit = function () {
+      PageAnchorService.setUp(self.template.SurveyItemManager);
       $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
     }
 
