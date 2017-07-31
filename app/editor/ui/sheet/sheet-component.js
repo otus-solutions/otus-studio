@@ -27,6 +27,7 @@
       WorkspaceService.closeWork();
       $window.sessionStorage.removeItem('surveyTemplate_OID');
     }
+
   }
 
 })();
