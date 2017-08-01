@@ -12,14 +12,10 @@
     });
 
   Controller.$inject = [
-    'SurveyItemEditorWidgetFactory',
-    'UUIDService',
-    '$scope',
-    '$element',
     'RemoveSurveyItemEventFactory'
   ];
 
-  function Controller(SurveyItemEditorWidgetFactory, UUIDService, $scope, $element, RemoveSurveyItemEventFactory) {
+  function Controller(RemoveSurveyItemEventFactory) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
@@ -27,6 +23,8 @@
     self.getItem = getItem;
     self.deleteSurveyItem = deleteSurveyItem;
     self.getQuestionId = getQuestionId;
+
+    function onInit() {}
 
     function getItem() {
       return self.item;
@@ -39,13 +37,6 @@
     function deleteSurveyItem() {
       RemoveSurveyItemEventFactory.create().execute(self.item);
     }
-
-
-    function onInit() {
-      // $scope.uuid = UUIDService.generateUUID();
-      // $scope.widget = SurveyItemEditorWidgetFactory.create($scope, $element, self.item);
-    }
-
   }
 
 }());

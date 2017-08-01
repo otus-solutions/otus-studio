@@ -30,7 +30,7 @@
     self.isEmpty = isEmpty;
 
     function onInit() {
-      _questionID = self.parentCtrl.widget.getItem().customID;
+      _questionID = self.parentCtrl.item.customID;
     }
 
     function addGridText() {

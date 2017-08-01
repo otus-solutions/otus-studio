@@ -4,7 +4,7 @@
   angular
     .module('editor.ui')
     .component('miscItem', {
-      templateUrl: 'app/editor/ui/survey-item/misc/misc.html',
+      templateUrl: 'app/editor/ui/survey-item/misc/misc-item-template.html',
       controller: Controller,
       bindings: {
         item: '<'
@@ -12,16 +12,16 @@
     });
 
   Controller.$inject = [
-    '$scope',
-    '$element',
-    'SurveyItemWidgetFactory',
+    'SurveyItemMapFactory'
   ];
 
-  function Controller($scope, $element, SurveyItemWidgetFactory) {
+  function Controller(SurveyItemMapFactory) {
     var self = this;
 
-    self.$onInit = function() {
-      $scope.widget = SurveyItemWidgetFactory.create($scope, $element, self.item);
+    self.getTemplate = getTemplate;
+
+    function getTemplate() {
+      return SurveyItemMapFactory[self.item.objectType];
     }
   }
 
