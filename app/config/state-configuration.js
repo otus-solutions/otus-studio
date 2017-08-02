@@ -89,29 +89,36 @@
             templateUrl: 'app/editor/ui/main/main-container.html',
             controller: 'MainContainerController as mainContainer',
             resolve: {
-              editor: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q) {
+              contextTemplate: function load($stateParams, SurveyEditorService, CrossSessionDatabaseService, $window, $q, WorkspaceService) {
+
+                var editorStatePromisse = $q.defer();
+
                 var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
 
                 if ($stateParams.template) {
+                  // Edition Mode
                   _startEditor($stateParams.template);
                 } else if (surveyTemplate_OID) {
-                  var deferred = $q.defer();
+                  // Refresh
                   _loadFromIndexedDB();
-                  return deferred.promise;
+                } else {
+                  // New Template
+                  editorStatePromisse.resolve(WorkspaceService.getSurvey());
                 }
 
-                function _loadFromIndexedDB() {                   
+                function _loadFromIndexedDB() {
                   var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
                   promise.then(function(result) {
                     $stateParams.template = result.template;
                     _startEditor($stateParams.template);
-                    deferred.resolve(true);
                   });
                 }
 
                 function _startEditor(surveyTemplate) {
                   SurveyEditorService.startEditorWithSurveyTemplate(surveyTemplate);
+                  editorStatePromisse.resolve(WorkspaceService.getSurvey());
                 }
+                return editorStatePromisse.promise;
               }
             }
           }

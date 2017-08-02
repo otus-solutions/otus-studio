@@ -5,25 +5,23 @@
     .controller('MainContainerController', MainContainerController);
 
   MainContainerController.$inject = [
-    '$scope',
     '$window',
     '$mdBottomSheet',
     'NBEVENTS',
-    'UiBindingService',
     'MainContainerContentService',
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'WorkspaceService'
+    'WorkspaceService',
+    'contextTemplate'
   ];
 
   function MainContainerController(
-    $scope,
     $window,
     $mdBottomSheet,
     NBEVENTS,
-    UiBindingService,
     MainContainerContentService,
     NavigationBuilderScopeService,
-    WorkspaceService
+    WorkspaceService,
+    contextTemplate
   ) {
     var self = this;
 
@@ -34,7 +32,7 @@
 
     function init() {
       MainContainerContentService.init(self);
-      UiBindingService.setScope($scope);
+      self.template = contextTemplate;
     }
 
     function showQuestionsMenu() {

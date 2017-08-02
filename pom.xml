@@ -102,10 +102,6 @@
               <targetPath>node_modules</targetPath>
             </resource>
             <resource>
-              <directory>${project.basedir}/WEB-INF</directory>
-              <targetPath>WEB-INF</targetPath>
-            </resource>
-            <resource>
               <directory>${project.basedir}/app</directory>
               <targetPath>app</targetPath>
             </resource>
@@ -178,7 +174,6 @@
                   <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
                   <versionTagPrefix>v</versionTagPrefix>
                 </flowInitContext>
-                <squash>true</squash>
                 <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
               </configuration>
             </plugin>

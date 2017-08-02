@@ -1,28 +1,31 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .directive('otusSurveyItemSettings', directive);
+  angular
+    .module('editor.ui')
+    .component('otusSurveyItemSettings', {
+      templateUrl: 'app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings.html',
+      controller: Controller,
+      bindings: {
+        item: '<'
+      }
+    });
 
-    directive.$inject = [
-        'SurveyItemSettingsWidgetFactory',
-        'UUIDService'
-    ];
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    'SurveyItemSettingsWidgetFactory',
+    'UUIDService'
+  ];
 
-    function directive(SurveyItemSettingsWidgetFactory, UUIDService) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            controller: 'SurveyItemSettingsController',
-            templateUrl: 'app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings.html',
-            link: function(scope, element, attrs) {
-                scope.uuid = UUIDService.generateUUID();
-                scope.widget = SurveyItemSettingsWidgetFactory.create(scope, element);
-            }
-        };
+  function Controller($scope, $element, SurveyItemSettingsWidgetFactory, UUIDService) {
+    var self = this;
 
-        return ddo;
+    self.$onInit = function() {
+      $scope.uuid = UUIDService.generateUUID();
+      $scope.widget = SurveyItemSettingsWidgetFactory.create($scope, $element, self.item);
     }
+
+  }
 
 }());
