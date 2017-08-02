@@ -20,6 +20,7 @@
     // public methods
     self.addOption = addOption;
     self.removeLastOption = removeLastOption;
+    self.isAvailableExtractionValue = isAvailableExtractionValue;
 
     function onInit() {}
 
