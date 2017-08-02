@@ -8,7 +8,7 @@
     md-selected-item-change="$ctrl.whenChange($ctrl.selectedWhen)"
     md-search-text="$ctrl.whenSearchText"
     md-items="when in $ctrl.whens($ctrl.whenSearchText)"
-    md-item-text="when.templateID"
+    md-item-text="when.customID"
     md-min-length="0"
     placeholder="Quando..."
     md-menu-class="autocomplete-custom-template">
@@ -23,7 +23,7 @@
       </span>
       <span class="item-metadata">
         <span class="item-metastat">
-          <strong>{{ when.templateID }}</strong>
+          <strong>{{ when.customID }}</strong>
         </span>
         <span class="item-metastat">
           <span>{{ when.label.ptBR.plainText }}</span>

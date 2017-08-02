@@ -13,3 +13,4 @@ npm-debug.log
 **/env.properties
 dist/otus-studio.war
 **/.sonar
+package-lock.json
