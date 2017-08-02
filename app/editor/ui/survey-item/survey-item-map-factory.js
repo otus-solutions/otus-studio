@@ -22,7 +22,7 @@
       'TimeQuestion': '<time-question></time-question>',
       'TextQuestion': '<text-question></text-question>',
 
-      'TextItem': '<text-question item="$ctrl.item"></text-question>',
+      'TextItem': '<text-item item="$ctrl.item"></text-item>',
       'ImageItem': '<image-item item="$ctrl.item"></image-item>'
     };
 
