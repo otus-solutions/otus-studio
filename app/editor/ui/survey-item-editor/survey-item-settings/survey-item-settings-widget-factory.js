@@ -34,7 +34,6 @@
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
-        self.navigationButton = navigationButton;
         self.validationButton = validationButton;
 
         function getUUID() {
@@ -51,11 +50,6 @@
 
         function getItem() {
             return item;
-        }
-
-        function navigationButton() {
-            self.ngClass.open = !self.ngClass.open;
-            self.showNavigationEditor = !self.showNavigationEditor;
         }
 
         function validationButton() {
