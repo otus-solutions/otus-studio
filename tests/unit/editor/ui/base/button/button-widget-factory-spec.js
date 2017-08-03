@@ -1,4 +1,4 @@
-describe('OtusButtonWidgetFactory', function() {
+xdescribe('OtusButtonWidgetFactory', function() {
     var factory;
     var widget;
 

@@ -1,19 +1,19 @@
-<md-whiteframe id={{::$ctrl.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
+<md-whiteframe id={{$ctrl.getQuestionId()}} class="custom-whiteframe" layout="column" tabindex="-1">
   <item-container>
     <item-container-header flex>
 
       <md-content layout="row" layout-align="center center" flex>
         <md-card class="item-id-frame" layout-padding layout-align="center center">
-          <otus:item-icon item="{{$ctrl.getItem().objectType}}">
+          <otus:item-icon item="{{::$ctrl.item.objectType}}">
         </md-card>
 
         <md-card layout-align="center">
-          <editable-id item="$ctrl.getItem()"></editable-id>
+          <editable-id item="::$ctrl.item"></editable-id>
         </md-card>
 
         <md-content layout-padding flex>
           <div layout-align="center center" class="clipped" flex>
-            <span class="md-body-1">{{$ctrl.getItem().label.ptBR.plainText || $ctrl.getItem().value.ptBR.plainText}}</span>
+            <span class="md-body-1">{{$ctrl.item.label.ptBR.plainText || $ctrl.item.value.ptBR.plainText}}</span>
           </div>
         </md-content>
 

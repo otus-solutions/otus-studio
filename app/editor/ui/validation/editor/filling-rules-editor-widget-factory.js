@@ -47,11 +47,7 @@
 
     function _init() {
       showList = showListFeeder();
-      if (_isLoadingMode()) {
-        _loadOptions();
-      } else {
-        addValidator('mandatory');
-      }
+      _loadOptions();
     }
 
     function _isLoadingMode() {
@@ -79,9 +75,6 @@
       Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
         appendFillingRules(validatorToLoad);
       });
-      if (self.getItem().fillingRules.options.mandatory === undefined) {
-        addValidator('mandatory');
-      }
     }
 
     function addValidator(validator) {
