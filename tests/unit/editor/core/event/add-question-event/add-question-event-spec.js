@@ -1,4 +1,4 @@
-describe('AddSurveyItemEvent', function() {
+xdescribe('AddSurveyItemEvent', function() {
     var Mock = {};
     var event;
 
