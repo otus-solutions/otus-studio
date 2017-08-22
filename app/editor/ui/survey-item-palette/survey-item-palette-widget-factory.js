@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -46,6 +46,7 @@
     self.addAutocompleteQuestion = addAutocompleteQuestion;
     self.addFileUploadQuestion = addFileUploadQuestion;
     self.addGridTextQuestion = addGridTextQuestion;
+    self.addGridNumericQuestion = addGridNumericQuestion;
 
     /* Actions */
     function addFileUploadQuestion() {
@@ -102,6 +103,10 @@
 
     function addGridTextQuestion() {
       AddSurveyItemEventFactory.create().execute('GridTextQuestion');
+    }
+
+    function addGridNumericQuestion() {
+      AddSurveyItemEventFactory.create().execute('GridNumericQuestion');
     }
 
   }

@@ -1,0 +1,9 @@
+<md-card layout="row">
+  <editable-id item="$ctrl.gridNumeric" flex></editable-id>
+</md-card>
+
+<md-card>
+  <otus:text-editor ng-model="$ctrl.gridNumeric.label" placeholder="Clique para editar a label" flex></otus:text-editor>
+  <md-divider></md-divider>
+  <otus:text-editor ng-model="$ctrl.gridNumeric.unit" placeholder="Unidade" flex></otus:text-editor>
+</md-card>

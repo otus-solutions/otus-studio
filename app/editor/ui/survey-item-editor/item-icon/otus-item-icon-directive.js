@@ -72,6 +72,10 @@
         icon: 'grid_on',
         tooltip: 'Questão Grade de Texto'
       },
+      GridNumericQuestion: {
+        icon: 'grid_on',
+        tooltip: 'Questão Grade de Número'
+      },
       TextItem: {
         icon: 'message',
         tooltip: 'Texto'

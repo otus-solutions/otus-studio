@@ -1,0 +1,12 @@
+<div layout="row" class="grid-line-bar" layout-align="space-between end">
+  <div>
+    <otus:button click="$ctrl.addGridNumeric()" tooltip="Adicionar caixa" icon-button="add" />
+    <otus:button click="$ctrl.removeLastGridNumeric()" ng-show="!$ctrl.isEmpty()" tooltip="Remover última caixa" icon-button="remove" />
+  </div>
+  <div>
+    <otus:button layout-align="end center" ng-click="::$ctrl.removeGridLine($parent.$index)" tooltip="Remover Linha" icon-button="delete" />
+  </div>
+</div>
+<div layout="row">
+  <grid-numeric ng-repeat="gridNumeric in $ctrl.gridLine.getGridNumericList() track by $index" grid-numeric="gridnumeric" flex></grid-numeric>
+</div>
