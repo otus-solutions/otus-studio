@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -72,9 +72,12 @@
     }
 
     function _loadOptions() {
-      Object.keys(self.getItem().fillingRules.options).forEach(function(validatorToLoad) {
+      Object.keys(self.getItem().fillingRules.options).forEach(function (validatorToLoad) {
         appendFillingRules(validatorToLoad);
       });
+      if (self.getItem().fillingRules.options.mandatory === undefined) {
+        addValidator('mandatory');
+      }
     }
 
     function addValidator(validator) {
