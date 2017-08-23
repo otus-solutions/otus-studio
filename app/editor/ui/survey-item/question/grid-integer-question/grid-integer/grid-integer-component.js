@@ -3,11 +3,11 @@
 
   angular
     .module('editor.ui')
-    .component('gridNumeric', {
+    .component('gridInteger', {
       controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-numeric-question/grid-numeric/grid-numeric-template.html',
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-template.html',
       bindings: {
-        gridNumeric: '<',
+        gridInteger: '<',
       }
     });
 

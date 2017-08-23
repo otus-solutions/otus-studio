@@ -72,7 +72,7 @@
         icon: 'filter_none',
         tooltip: 'Questão Grade de Texto'
       },
-      GridNumericQuestion: {
+      GridIntegerQuestion: {
         icon: 'filter_1',
         tooltip: 'Questão Grade de Número'
       },

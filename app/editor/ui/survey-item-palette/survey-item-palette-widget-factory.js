@@ -46,7 +46,7 @@
     self.addAutocompleteQuestion = addAutocompleteQuestion;
     self.addFileUploadQuestion = addFileUploadQuestion;
     self.addGridTextQuestion = addGridTextQuestion;
-    self.addGridNumericQuestion = addGridNumericQuestion;
+    self.addGridIntegerQuestion = addGridIntegerQuestion;
 
     /* Actions */
     function addFileUploadQuestion() {
@@ -105,8 +105,8 @@
       AddSurveyItemEventFactory.create().execute('GridTextQuestion');
     }
 
-    function addGridNumericQuestion() {
-      AddSurveyItemEventFactory.create().execute('GridNumericQuestion');
+    function addGridIntegerQuestion() {
+      AddSurveyItemEventFactory.create().execute('GridIntegerQuestion');
     }
 
   }

@@ -49,7 +49,7 @@
     }
 
     function _isSingleChoiceItem(itemType) {
-      return (itemType === 'SingleSelectionQuestion' || itemType === 'FileUploadQuestion' || itemType === 'GridTextQuestion' || itemType === 'GridNumericQuestion');
+      return (itemType === 'SingleSelectionQuestion' || itemType === 'FileUploadQuestion' || itemType === 'GridTextQuestion' || itemType === 'GridIntegerQuestion');
     }
 
     function _isMultipleChoiceItem(itemType) {

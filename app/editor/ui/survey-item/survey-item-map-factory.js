@@ -16,7 +16,7 @@
       'AutocompleteQuestion': '<autocomplete-question item="$ctrl.item"></autocomplete-question>',
       'FileUploadQuestion': '<file-upload-question item="$ctrl.item"></file-upload-question>',
       'GridTextQuestion': '<grid-text-question item="$ctrl.item"></grid-text-question>',
-      'GridNumericQuestion': '<grid-numeric-question item="$ctrl.item"></grid-numeric-question>',
+      'GridIntegerQuestion': '<grid-integer-question item="$ctrl.item"></grid-integer-question>',
 
       'PhoneQuestion': '<phone-question></phone-question>',
       'EmailQuestion': '<email-question></email-question>',

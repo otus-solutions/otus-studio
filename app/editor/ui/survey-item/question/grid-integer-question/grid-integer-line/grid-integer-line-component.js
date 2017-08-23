@@ -3,14 +3,14 @@
 
   angular
     .module('editor.ui')
-    .component('gridNumericLine', {
+    .component('gridIntegerLine', {
       controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-numeric-question/grid-numeric-line/grid-numeric-line-template.html',
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-template.html',
       bindings: {
         gridLine: '<',
       },
       require: {
-        parentCtrl: '^gridNumericQuestion'
+        parentCtrl: '^gridIntegerQuestion'
       }
     });
 
@@ -24,8 +24,8 @@
     var _questionID;
 
     self.$onInit = onInit;
-    self.addGridNumeric = addGridNumeric;
-    self.removeLastGridNumeric = removeLastGridNumeric;
+    self.addGridInteger = addGridInteger;
+    self.removeLastGridInteger = removeLastGridInteger;
     self.removeGridLine = removeGridLine;
     self.isEmpty = isEmpty;
 
@@ -33,13 +33,13 @@
       _questionID = self.parentCtrl.item.customID;
     }
 
-    function addGridNumeric() {
-      self.gridLine.addGridNumeric(_generateGridNumericID());
+    function addGridInteger() {
+      self.gridLine.addGridInteger(_generateGridIntegerID());
       self.parentCtrl.save();
     }
 
-    function removeLastGridNumeric() {
-      self.gridLine.removeLastGridNumeric();
+    function removeLastGridInteger() {
+      self.gridLine.removeLastGridInteger();
       self.parentCtrl.save();
     }
 
@@ -48,12 +48,12 @@
     }
 
     function isEmpty() {
-      return self.gridLine.getGridNumericListSize() > 0 ? false : true;
+      return self.gridLine.getGridIntegerListSize() > 0 ? false : true;
     }
 
-    function _generateGridNumericID() {
+    function _generateGridIntegerID() {
       var gridID;
-      var quantity = self.gridLine.getGridNumericListSize();
+      var quantity = self.gridLine.getGridIntegerListSize();
       do {
         gridID = _questionID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
       } while (!WorkspaceService.getSurvey().isAvailableCustomID(gridID));

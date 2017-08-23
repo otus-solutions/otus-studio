@@ -3,9 +3,9 @@
 
   angular
     .module('editor.ui')
-    .component('gridNumericQuestion', {
+    .component('gridIntegerQuestion', {
       controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-numeric-question/grid-numeric-question-template.html',
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-template.html',
       bindings: {
         item: '<'
       }
