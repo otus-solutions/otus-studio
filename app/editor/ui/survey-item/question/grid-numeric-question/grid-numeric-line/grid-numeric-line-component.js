@@ -3,9 +3,9 @@
 
   angular
     .module('editor.ui')
-    .component('gridLine', {
+    .component('gridNumericLine', {
       controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-numeric-question/grid-line/grid-line-template.html',
+      templateUrl: 'app/editor/ui/survey-item/question/grid-numeric-question/grid-numeric-line/grid-numeric-line-template.html',
       bindings: {
         gridLine: '<',
       },
@@ -25,7 +25,7 @@
 
     self.$onInit = onInit;
     self.addGridNumeric = addGridNumeric;
-    self.removeLastGridText = removeLastGridText;
+    self.removeLastGridNumeric = removeLastGridNumeric;
     self.removeGridLine = removeGridLine;
     self.isEmpty = isEmpty;
 
