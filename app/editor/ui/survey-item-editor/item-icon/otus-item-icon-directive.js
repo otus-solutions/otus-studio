@@ -69,8 +69,12 @@
         tooltip: 'Upload de Arquivo'
       },
       GridTextQuestion: {
-        icon: 'grid_on',
+        icon: 'filter_none',
         tooltip: 'Questão Grade de Texto'
+      },
+      GridIntegerQuestion: {
+        icon: 'filter_1',
+        tooltip: 'Questão Grade de Número'
       },
       TextItem: {
         icon: 'message',

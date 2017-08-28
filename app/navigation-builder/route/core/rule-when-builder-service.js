@@ -83,6 +83,10 @@
       _mapping.GridTextQuestion = {};
       _mapping.GridTextQuestion.image = 'grid_on';
       _mapping.GridTextQuestion.tooltip = 'Grade de Texto';
+
+      _mapping.GridIntegerQuestion = {};
+      _mapping.GridIntegerQuestion.image = 'grid_on';
+      _mapping.GridIntegerQuestion.tooltip = 'Grade de Número';
     }
   }
 })();
