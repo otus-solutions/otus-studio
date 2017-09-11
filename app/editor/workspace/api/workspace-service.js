@@ -81,8 +81,18 @@
     }
 
     function importProject(project) {
+      if (project.survey.SurveyItemManager.getItemListSize()) {
+        _setLastTemplateIdValue(project)
+      }
       self.workspace.importProject(project);
       self.workspace.loadProjectConfiguration();
+    }
+
+    function _setLastTemplateIdValue(project) {
+        var projectAcronym = project.survey.identity.acronym;
+        var lastItemTemplateID = project.survey.SurveyItemManager.getLastItem().templateID;
+        var lastID = project.survey.SurveyItemManager.getLastItem().templateID.slice(projectAcronym.length,lastItemTemplateID.length);
+        project.survey.SurveyItemManager.setIncrementalIDValue(lastID);
     }
 
     /* Observable interface */
