@@ -11,14 +11,14 @@
         /* Public interface */
         self.create = create;
 
-        function create(scope, element) {
-            return new SurveyItemSettingsWidget(scope, element);
+        function create(scope, element, item) {
+            return new SurveyItemSettingsWidget(scope, element, item);
         }
 
         return self;
     }
 
-    function SurveyItemSettingsWidget(scope, element) {
+    function SurveyItemSettingsWidget(scope, element, item) {
         var self = this;
 
         self.className = 'SurveyItemSettingsWidget';
@@ -34,7 +34,6 @@
         self.getElement = getElement;
         self.getParent = getParent;
         self.getItem = getItem;
-        self.navigationButton = navigationButton;
         self.validationButton = validationButton;
 
         function getUUID() {
@@ -50,12 +49,7 @@
         }
 
         function getItem() {
-            return getParent().getItem();
-        }
-
-        function navigationButton() {
-            self.ngClass.open = !self.ngClass.open;
-            self.showNavigationEditor = !self.showNavigationEditor;
+            return item;
         }
 
         function validationButton() {

@@ -1,4 +1,4 @@
-<md-progress-linear ng-show="sheetController.EditionPreviewService.isLoading" md-mode="indeterminate">
-</md-progress-linear>
 <md-content id="sheet" layout="column" flex>
+  <otus:survey-item-editor item="item" ng-repeat="item in $ctrl.template.getItems() track by item.templateID">
+  </otus:survey-item-editor>
 </md-content>

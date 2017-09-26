@@ -1,21 +1,22 @@
 <md-bottom-sheet class="md-list" layout-align="center center" layout="column">
     <md-list layout="row"  layout-align="center center" ng-show="isOpened">
-        <md-list-item><otus:button click="widget.addTextItem" tooltip="Inserir item de Texto" left-icon="message"/></md-list-item>
-        <md-list-item><otus:button click="widget.addImageItem" tooltip="Inserir item de Imagem" left-icon="image"/></md-list-item>
-        <md-list-item><otus:button click="widget.addAutocompleteQuestion" tooltip="Questão Autocompletar" left-icon="youtube_searched_for"/></md-list-item>
-        <md-list-item><otus:button click="widget.addFileUploadQuestion"  tooltip="Questão Upload de Arquivo" left-icon="attach_file"/></md-list-item>
-        <md-list-item><otus:button click="widget.addGridTextQuestion"  tooltip="Questão Grade de Texto" left-icon="grid_on"/></md-list-item>
+        <md-list-item><otus:button click="widget.addTextItem()" tooltip="Inserir item de Texto" left-icon="message"/></md-list-item>
+        <md-list-item><otus:button click="widget.addImageItem()" tooltip="Inserir item de Imagem" left-icon="image"/></md-list-item>
+        <md-list-item><otus:button click="widget.addAutocompleteQuestion()" tooltip="Questão Autocompletar" left-icon="youtube_searched_for"/></md-list-item>
+        <md-list-item><otus:button click="widget.addFileUploadQuestion()"  tooltip="Questão Upload de Arquivo" left-icon="attach_file"/></md-list-item>
+        <md-list-item><otus:button click="widget.addGridTextQuestion()"  tooltip="Questão Grade de Texto" left-icon="filter_none"/></md-list-item>
+        <md-list-item><otus:button click="widget.addGridIntegerQuestion()"  tooltip="Questão Grade de Número Inteiro" left-icon="filter_1"/></md-list-item>
     </md-list>
     <md-list layout="row" layout-align="center center">
-        <md-list-item><otus:button click="widget.addCalendarQuestion" tooltip="Questão Data" left-icon="date_range"/></md-list-item>
-        <md-list-item><otus:button click="widget.addIntegerQuestion" tooltip="Questão Número Inteiro" left-icon="looks_one"/></md-list-item>
-        <md-list-item><otus:button click="widget.addDecimalQuestion" tooltip="Questão Número Decimal" left-icon="exposure_zero"/></md-list-item>
-        <md-list-item><otus:button click="widget.addSingleSelectionQuestion" tooltip="Questão Seleção Única" left-icon="radio_button_checked"/></md-list-item>
-        <md-list-item><otus:button click="widget.addCheckboxQuestion" tooltip="Questão Checkbox" left-icon="check_box"/></md-list-item>
-        <md-list-item><otus:button click="widget.addTextQuestion" tooltip="Questão Texto" left-icon="text_format"/></md-list-item>
-        <md-list-item><otus:button click="widget.addEmailQuestion" tooltip="Questão Email" left-icon="email"/></md-list-item>
-        <md-list-item><otus:button click="widget.addTimeQuestion" tooltip="Questão Hora" left-icon="access_time"/></md-list-item>
-        <md-list-item><otus:button click="widget.addPhoneQuestion" tooltip="Questão Telefone" left-icon="phone"/></md-list-item>
+        <md-list-item><otus:button click="widget.addCalendarQuestion()" tooltip="Questão Data" left-icon="date_range"/></md-list-item>
+        <md-list-item><otus:button click="widget.addIntegerQuestion()" tooltip="Questão Número Inteiro" left-icon="looks_one"/></md-list-item>
+        <md-list-item><otus:button click="widget.addDecimalQuestion()" tooltip="Questão Número Decimal" left-icon="exposure_zero"/></md-list-item>
+        <md-list-item><otus:button click="widget.addSingleSelectionQuestion()" tooltip="Questão Seleção Única" left-icon="radio_button_checked"/></md-list-item>
+        <md-list-item><otus:button click="widget.addCheckboxQuestion()" tooltip="Questão Checkbox" left-icon="check_box"/></md-list-item>
+        <md-list-item><otus:button click="widget.addTextQuestion()" tooltip="Questão Texto" left-icon="text_format"/></md-list-item>
+        <md-list-item><otus:button click="widget.addEmailQuestion()" tooltip="Questão Email" left-icon="email"/></md-list-item>
+        <md-list-item><otus:button click="widget.addTimeQuestion()" tooltip="Questão Hora" left-icon="access_time"/></md-list-item>
+        <md-list-item><otus:button click="widget.addPhoneQuestion()" tooltip="Questão Telefone" left-icon="phone"/></md-list-item>
         <md-button class="md-fab md-mini md-primary" ng-click="isOpened=!isOpened">+</md-button>
     </md-list>
 </md-bottom-sheet>

@@ -1,7 +1,7 @@
 <div layout="row" class="grid-line-bar" layout-align="space-between end">
   <div>
-    <otus:button click="$ctrl.addGridText" tooltip="Adicionar caixa" icon-button="add" />
-    <otus:button click="$ctrl.removeLastGridText" ng-show="!$ctrl.isEmpty()" tooltip="Remover última caixa" icon-button="remove" />
+    <otus:button click="$ctrl.addGridText()" tooltip="Adicionar caixa" icon-button="add" />
+    <otus:button click="$ctrl.removeLastGridText()" ng-show="!$ctrl.isEmpty()" tooltip="Remover última caixa" icon-button="remove" />
   </div>
   <div>
     <otus:button layout-align="end center" ng-click="::$ctrl.removeGridLine($parent.$index)" tooltip="Remover Linha" icon-button="delete" />

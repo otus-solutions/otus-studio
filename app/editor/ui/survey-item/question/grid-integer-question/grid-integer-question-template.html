@@ -1,0 +1,4 @@
+<otus:button click="$ctrl.addGridLine()" label="Adicionar linha" />
+<div layout-padding>
+  <grid-integer-line ng-repeat="gridLine in $ctrl.item.getLinesList() track by $index" grid-line="gridLine"></grid-integer-line>
+</div>

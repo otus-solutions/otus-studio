@@ -69,11 +69,18 @@
       moduleScope.store('map', _navigationMap);
     }
 
+    function getCustomIDs() {
+      return _survey.SurveyItemManager.getItemList();
+    }
+
     function _addNodes(templateNavigations) {
+      var items = getCustomIDs();
       templateNavigations.forEach(function(navigation, index) {
         var options = {};
         options.id = navigation.origin;
-        options.label = navigation.origin;
+        if(index>1 && index<(items.length+2)){
+            options.label = items[index-2].customID;
+        }
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
         options.isMyRootOrphan = navigation.hasOrphanRoot();

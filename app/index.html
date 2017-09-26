@@ -66,8 +66,7 @@
 
     <!-- ************************************* UI Components ************************************* -->
     <script src="app/shared/ui-components/ui-components-module.js"></script>
-    <script src="app/shared/ui-components/accordion/accordion-directive.js"></script>
-    <script src="app/shared/ui-components/accordion/accordion-widget-factory.js"></script>
+    <script src="app/shared/ui-components/item-container/item-container-component.js"></script>
 
     <!-- ************************************** OtusJS ************************************** -->
     <script src="node_modules/otus-model-js/dist/otus-model.js"></script>
@@ -143,16 +142,12 @@
     <script src="app/editor/core/editor-core-module.js"></script>
 
     <!-- EVENT -->
-    <script src="app/editor/core/event/add-answer-option-event-factory.js"></script>
-    <script src="app/editor/core/event/add-metadata-answer-event-factory.js"></script>
     <script src="app/editor/core/event/add-route-event-factory.js"></script>
     <script src="app/editor/core/event/add-route-condition-event-factory.js"></script>
     <script src="app/editor/core/event/add-rule-event-factory.js"></script>
     <script src="app/editor/core/event/add-survey-item-event-factory.js"></script>
     <script src="app/editor/core/event/add-filling-rules-event-factory.js"></script>
-    <script src="app/editor/core/event/remove-answer-option-event-factory.js"></script>
     <script src="app/editor/core/event/remove-filling-rules-event-factory.js"></script>
-    <script src="app/editor/core/event/remove-metadata-option-event-factory.js"></script>
     <script src="app/editor/core/event/remove-route-event-factory.js"></script>
     <script src="app/editor/core/event/remove-rule-event-factory.js"></script>
     <script src="app/editor/core/event/remove-survey-item-event-factory.js"></script>
@@ -173,9 +168,6 @@
     <!-- CROSS-SESSION -->
     <script src="app/editor/database/cross-session/cross-session-database-service.js"></script>
 
-    <!-- HELPER -->
-    <script src="app/editor/database/helper/insert-helper-service.js"></script>
-
     <!-- IN-SESSION -->
     <script src="app/editor/database/in-session/in-session-database-factory.js"></script>
 
@@ -186,30 +178,14 @@
     <script src="app/editor/ui/page-anchor-item/page-anchor-component.js"></script>
     <script src="app/editor/ui/page-anchor-item/page-anchor-service.js"></script>
 
-    <!-- API -->
-    <script src="app/editor/ui/api/mpath-service.js"></script>
-    <script src="app/editor/ui/api/ui-binding-service.js"></script>
-    <script src="app/editor/ui/api/widget-service.js"></script>
-    <script src="app/editor/ui/api/widget-template-service.js"></script>
-
     <!-- Template Header -->
-    <script src="app/editor/ui/survey-template-header/survey-template-header.js"></script>
+    <script src="app/editor/ui/survey-template-header/survey-template-header-component.js"></script>
 
     <!-- CORE.SHEET -->
-    <script src="app/editor/ui/sheet/sheet-content-service.js"></script>
-    <script src="app/editor/ui/sheet/sheet-controller.js"></script>
-    <script src="app/editor/ui/sheet/edition-sheet-directive.js"></script>
-
-    <!-- CORE.TEMPLATE -->
-    <script src="app/editor/ui/template/template-loader-service.js"></script>
-
-    <!-- WIDGET.BASE.INPUT-TEXT -->
-    <script src="app/editor/ui/base/input-text/input-text-directive.js"></script>
-    <script src="app/editor/ui/base/input-text/input-text-widget-factory.js"></script>
+    <script src="app/editor/ui/sheet/sheet-component.js"></script>
 
     <!-- WIDGET.BASE.BUTTON -->
-    <script src="app/editor/ui/base/button/button-directive.js"></script>
-    <script src="app/editor/ui/base/button/button-widget-factory.js"></script>
+    <script src="app/editor/ui/base/button/button-component.js"></script>
 
     <!-- WIDGET.BASE.INPUT-TEXT -->
     <script src="app/editor/ui/base/text-editor/text-editor-directive.js"></script>
@@ -225,11 +201,7 @@
     <script src="app/editor/ui/base/extraction-value/extraction-value-service.js"></script>
 
     <!-- WIDGET.METADATA.GROUP -->
-    <script src="app/editor/ui/metadata/group/metadata-group-directive.js"></script>
-    <script src="app/editor/ui/metadata/group/metadata-group-widget-factory.js"></script>
-
-    <!-- WIDGET.METADATA.OPTION -->
-    <script src="app/editor/ui/metadata/option/metadata-option-widget-factory.js"></script>
+    <script src="app/editor/ui/metadata/group/metadata-group-component.js"></script>
 
     <!-- WIDGET.VALIDATION.EDITOR -->
     <script src="app/editor/ui/validation/editor/filling-rules-editor-directive.js"></script>
@@ -336,25 +308,21 @@
     <script src="app/editor/ui/rule/accept-answer/accept-answer-component.js"></script>
 
     <!-- WIDGET.SURVEY-ITEM -->
-    <script src="app/editor/ui/survey-item/misc/misc-item-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/question-item-directive.js"></script>
-    <script src="app/editor/ui/survey-item/survey-item-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/misc/misc-item-component.js"></script>
+    <script src="app/editor/ui/survey-item/question/question-component.js"></script>
+    <script src="app/editor/ui/survey-item/survey-item-map-factory.js"></script>
 
     <!-- WIDGET.ITEM.TEXT -->
-    <script src="app/editor/ui/survey-item/misc/text/text-item-directive.js"></script>
-    <script src="app/editor/ui/survey-item/misc/text/text-item-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/misc/text/text-item-component.js"></script>
 
     <!-- WIDGET.ITEM.IMAGE -->
-    <script src="app/editor/ui/survey-item/misc/image/image-item-directive.js"></script>
-    <script src="app/editor/ui/survey-item/misc/image/image-item-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/misc/image/image-item-component.js"></script>
 
     <!-- WIDGET.QUESTION.CALENDAR -->
-    <script src="app/editor/ui/survey-item/question/calendar/calendar-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/calendar/calendar-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/calendar/calendar-question-component.js"></script>
 
     <!-- WIDGET.QUESTION.AUTOCOMPLETE -->
-    <script src="app/editor/ui/survey-item/question/autocomplete/autocomplete-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/autocomplete/autocomplete-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/autocomplete/autocomplete-question-component.js"></script>
 
     <!-- WIDGET.QUESTION.FILE.UPLOAD -->
     <script src="app/editor/ui/survey-item/question/fileUpload/file-upload-directive.js"></script>
@@ -362,7 +330,6 @@
 
     <!-- WIDGET.QUESTION.GRID-TEXT-QUESTION -->
     <script src="app/editor/ui/survey-item/question/grid-text-question/grid-text-question-component.js"></script>
-    <script src="app/editor/ui/survey-item/question/grid-text-question/grid-text-question-widget-factory.js"></script>
 
     <!-- WIDGET.GRID-LINE-QUESTION -->
     <script src="app/editor/ui/survey-item/question/grid-text-question/grid-line/grid-line-component.js"></script>
@@ -370,50 +337,45 @@
     <!-- WIDGET.GRID-TEXT-QUESTION -->
     <script src="app/editor/ui/survey-item/question/grid-text-question/grid-text/grid-text-component.js"></script>
 
+    <!-- WIDGET.QUESTION.GRID-INTEGER-QUESTION -->
+    <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-component.js"></script>
+
+    <!-- WIDGET.GRID-LINE-QUESTION -->
+    <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-component.js"></script>
+
+    <!-- WIDGET.GRID-INTEGER-QUESTION -->
+    <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-component.js"></script>
+
     <!-- WIDGET.QUESTION.INTEGER -->
-    <script src="app/editor/ui/survey-item/question/integer/integer-directive.js"></script>
+    <script src="app/editor/ui/survey-item/question/integer/integer-question-component.js"></script>
     <script src="app/editor/ui/survey-item/question/integer/ui-integer-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/integer/integer-question-widget-factory.js"></script>
 
     <!-- WIDGET.QUESTION.DECIMAL -->
-    <script src="app/editor/ui/survey-item/question/decimal/decimal-directive.js"></script>
+    <script src="app/editor/ui/survey-item/question/decimal/decimal-question-component.js"></script>
     <script src="app/editor/ui/survey-item/question/decimal/ui-decimal-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/decimal/decimal-question-widget-factory.js"></script>
 
     <!-- WIDGET.QUESTION.CHECKBOX -->
-    <script src="app/editor/ui/survey-item/question/checkbox/checkbox-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/checkbox/checkbox-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/checkbox/checkbox-question-component.js"></script>
 
-    <!-- WIDGET.QUESTION.SINGLE-SELECTION.GROUP -->
-    <script src="app/editor/ui/survey-item/question/single-selection/group/single-selection-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/single-selection/group/single-selection-question-widget-factory.js"></script>
-
-    <!-- WIDGET.QUESTION.SINGLE-SELECTION.OPTION -->
-    <script src="app/editor/ui/survey-item/question/single-selection/option/answer-option-widget-factory.js"></script>
+    <!-- WIDGET.QUESTION.SINGLE-SELECTION -->
+    <script src="app/editor/ui/survey-item/question/single-selection/single-selection-question-component.js"></script>
 
     <!--WIDGET.QUESTION.TEXT -->
-    <script src="app/editor/ui/survey-item/question/text/text-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/text/text-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/text/text-question-component.js"></script>
 
     <!--WIDGET.QUESTION.TEXT -->
-    <script src="app/editor/ui/survey-item/question/email/email-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/email/email-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/email/email-question-component.js"></script>
 
     <!-- WIDGET.QUESTION.TIME -->
-    <script src="app/editor/ui/survey-item/question/time/time-question-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/time/time-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/time/time-question-component.js"></script>
 
     <!-- WIDGET.QUESTION.PHONE -->
-    <script src="app/editor/ui/survey-item/question/phone/phone-directive.js"></script>
-    <script src="app/editor/ui/survey-item/question/phone/phone-question-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item/question/phone/phone-question-component.js"></script>
 
     <!-- WIDGET.QUESTION-EDITOR -->
-    <script src="app/editor/ui/survey-item-editor/survey-item-editor-directive.js"></script>
-    <script src="app/editor/ui/survey-item-editor/survey-item-editor-widget-factory.js"></script>
+    <script src="app/editor/ui/survey-item-editor/survey-item-editor-component.js"></script>
 
     <!-- WIDGET.QUESTION-EDITOR.SETTINGS -->
-    <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-content-service.js"></script>
-    <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-controller.js"></script>
     <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-directive.js"></script>
     <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-widget-factory.js"></script>
 
@@ -423,7 +385,7 @@
     <script src="app/editor/ui/main/main-container-controller.js"></script>
 
     <!-- STAGE -->
-    <script src="app/editor/ui/stage/stage-directive.js"></script>
+    <script src="app/editor/ui/stage/stage-component.js"></script>
 
     <!-- QUESTION-ICON -->
     <script src="app/editor/ui/survey-item-editor/item-icon/otus-item-icon-directive.js"></script>
@@ -492,12 +454,8 @@
     <script src="app/navigation-builder/route/editor/rule-creator-component.js"></script>
     <script src="app/navigation-builder/route/editor/rule-editor-component.js"></script>
 
-    <!-- EDITION-PREVIEW -->
-    <script src="app/preview/preview-controller.js"></script>
-    <script src="app/preview/edition-preview/edition-preview-service.js"></script>
-
     <!-- OTUS-SURVEY-PREVIEW -->
-    <script src="app/preview/otus-survey-preview/otus-survey-preview-generator-directive.js"></script>
+    <script src="app/preview/otus-survey-preview-generator-directive.js"></script>
 
     <!-- ************************************** Studio Login ************************************** -->
     <!-- app.login -->

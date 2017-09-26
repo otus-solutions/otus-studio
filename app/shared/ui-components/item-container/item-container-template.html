@@ -1,0 +1,7 @@
+<md-content layout="row" layout-padding layout-align="space-between center" flex>
+  <md-content ng-transclude="headerSlot" flex></md-content>
+  <otus:button click="$ctrl.changeState()" tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"/>
+</md-content>
+<md-content ng-if="$ctrl.isToShow" layout="column" flex>
+  <md-content ng-transclude="bodySlot"></md-content>
+</md-content>

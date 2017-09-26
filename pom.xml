@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>otus-studio</artifactId>
   <groupId>org.ccem.studio</groupId>
-  <version>1.2</version>
+  <version>1.3</version>
   <packaging>war</packaging>
   <name>Otus Studio</name>
 
@@ -102,10 +102,6 @@
               <targetPath>node_modules</targetPath>
             </resource>
             <resource>
-              <directory>${project.basedir}/WEB-INF</directory>
-              <targetPath>WEB-INF</targetPath>
-            </resource>
-            <resource>
               <directory>${project.basedir}/app</directory>
               <targetPath>app</targetPath>
             </resource>
@@ -178,7 +174,6 @@
                   <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
                   <versionTagPrefix>v</versionTagPrefix>
                 </flowInitContext>
-                <squash>true</squash>
                 <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
               </configuration>
             </plugin>

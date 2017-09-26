@@ -1,4 +1,4 @@
-describe('SurveyItemEditorWidgetFactory', function() {
+xdescribe('SurveyItemEditorWidgetFactory', function() {
     var Mock = {};
     var factory;
 
