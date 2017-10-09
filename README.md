@@ -36,4 +36,4 @@ O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus-stu
 
 ### Contato
 Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
-Email: ccem-projects@gmail.com <br />
+Email: contato@outs-solutions.com.br <br />
