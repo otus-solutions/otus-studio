@@ -4,6 +4,7 @@ pipeline {
      maven 'maven 3.5.0'
      jdk 'Java8'
      ant 'ant 1.10.1'
+     nodejs 'node 8.2.1'
    }
   stages{
     stage('Build') {
