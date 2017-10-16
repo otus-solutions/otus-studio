@@ -1,23 +1,12 @@
-pipeline {
-  agent any
-  tools {
-     maven 'maven 3.5.0'
-     jdk 'Java8'
-     ant 'ant 1.10.1'
-     node 'node'
-
-   }
+node('node') {
 
 
-    stages {
-      // stage('Clean workspace') {
-      //   deleteDir()
-      // }
-      // stage('Checkout'){
-      //   checkout scm
-      // }
+       stage('Checkout'){
+         checkout scm
+       }
 
       stage('Build') {
+        checkout scm
         echo "Build"
         // withNPM(npmrcConfig:'my-npmrc-config'){
         //   sh "rm -rf node_modules/"
@@ -63,7 +52,7 @@ pipeline {
       //   sh 'rm node_modules -rf'
       // }
 
-    }
+    
 
 
 }
