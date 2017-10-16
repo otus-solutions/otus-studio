@@ -3,8 +3,11 @@ pipeline {
   tools {
      maven 'maven 3.5.0'
      jdk 'Java8'
+     ant 'ant 1.10.1'
+     node 'node'
+
    }
-   node('node'){
+
 
     stages {
       // stage('Clean workspace') {
@@ -55,6 +58,6 @@ pipeline {
       }
 
     }
-  }
+
 
 }
