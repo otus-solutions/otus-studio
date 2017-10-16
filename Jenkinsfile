@@ -3,7 +3,6 @@ pipeline {
   tools {
      maven 'maven 3.5.0'
      jdk 'Java8'
-     node 'node'
      ant 'ant 1.10.1'
    }
   stages{
