@@ -1,16 +1,16 @@
 pipeline {
   agent any
+  tools {
+     maven 'maven 3.5.0'
+     jdk 'Java8'
+     node 'node'
+     ant 'ant 1.10.1'
+   }
   stages{
-
-    //  stage('Checkout'){
-    //    checkout scm
-    //  }
-
     stage('Build') {
-
       steps{
-        checkout scm
-        echo "Build"
+        // checkout scm
+        echo 'Build'
         // withNPM(npmrcConfig:'my-npmrc-config'){
         //   sh "rm -rf node_modules/"
         //   sh "npm install"
@@ -22,10 +22,9 @@ pipeline {
     }
 
     stage('Update Docs') {
-
       steps {
         // sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
-        echo "update docs step"
+        echo 'update docs step'
       }
     }
 
@@ -36,7 +35,7 @@ pipeline {
         // sh "rm -rf node_modules/"
         // sh "npm install --production"
         // sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
-        echo "Deploy"
+        echo 'Deploy'
       }
     }
 
