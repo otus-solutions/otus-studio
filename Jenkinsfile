@@ -9,30 +9,21 @@ pipeline {
   stages{
     stage('Build') {
       steps{
-        // checkout scm
-        echo 'Build'
-        sh 'npm install'
-        sh 'npm run build'
-        // withNPM(npmrcConfig:'my-npmrc-config'){
-        //   sh "rm -rf node_modules/"
-        //   sh "npm install"
-        //   sh "npm run build"
-        //   sh "npm run test"
-        //
-        // }
+          sh "rm -rf node_modules/"
+          sh "npm install"
+          sh "npm run build"
+          sh "npm run test"
       }
     }
 
     stage('Update Docs') {
       steps {
-        // sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
-        echo 'update docs step'
+        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
       }
     }
 
 
     stage('Development Deploy') {
-
       steps {
         // sh "rm -rf node_modules/"
         // sh "npm install --production"
