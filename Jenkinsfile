@@ -4,6 +4,8 @@ pipeline {
      maven 'maven 3.5.0'
      jdk 'Java8'
    }
+   node('node'){
+
     stages {
       // stage('Clean workspace') {
       //   deleteDir()
@@ -53,5 +55,6 @@ pipeline {
       }
 
     }
+  }
 
 }
