@@ -19,13 +19,13 @@ pipeline {
 
       stage('Build') {
         echo "Build"
-        withNPM(npmrcConfig:'my-npmrc-config'){
-          sh "rm -rf node_modules/"
-          sh "npm install"
-          sh "npm run build"
-          sh "npm run test"
-
-        }
+        // withNPM(npmrcConfig:'my-npmrc-config'){
+        //   sh "rm -rf node_modules/"
+        //   sh "npm install"
+        //   sh "npm run build"
+        //   sh "npm run test"
+        //
+        // }
       }
 
       stage('Update Docs') {
