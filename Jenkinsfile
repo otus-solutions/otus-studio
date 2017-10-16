@@ -18,7 +18,8 @@ pipeline {
       // }
 
       stage('Build') {
-        withNPM(npmrcConfig:'MyNpmrcConfig'){
+        echo "Build"
+        withNPM(npmrcConfig:'my-npmrc-config'){
           sh "rm -rf node_modules/"
           sh "npm install"
           sh "npm run build"
