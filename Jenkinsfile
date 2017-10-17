@@ -12,7 +12,7 @@ pipeline {
           sh "npm install"
           sh "npm run build"
           sh "npm run test"
-          sh "npm publish"
+          //sh "npm publish --registry=http://146.148.79.9/repository/npm-private/:_authToken=YWRtaW46YWRtaW4xMjM="
       }
     }
 
