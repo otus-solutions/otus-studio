@@ -12,12 +12,14 @@ pipeline {
           sh "npm install"
           sh "npm run build"
           sh "npm run test"
+          sh "npm publish"
       }
     }
 
     stage('Update Docs') {
       steps {
-        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
+        echo 'UPDATE'
+        //sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
       }
     }
 
