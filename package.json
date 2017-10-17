@@ -75,5 +75,8 @@
     "karma-phantomjs-launcher": "^0.2.3",
     "phantomjs": ">=1.9",
     "phantomjs-prebuilt": "^2.1.2"
+  },
+  "publishConfig": {
+    "registry": "http://146.148.79.9/repository/npm-private/"
   }
 }
