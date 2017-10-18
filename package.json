@@ -48,6 +48,7 @@
     "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#v1.5",
     "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#v1.3",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#v1.0",
+    "registry-url": "^3.1.0",
     "sigma": "1.2.0",
     "tinycolor2": "1.4.1"
   },

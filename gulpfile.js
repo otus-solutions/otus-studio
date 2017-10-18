@@ -12,6 +12,7 @@
   var zip = require('gulp-zip');
   var packageJson = require('./package.json');
   var baseDir = __dirname + '/app/index.html';
+  const registryUrl = require('registry-url');
 
   /* Task registry */
   gulp.task('browser-sync', function() {
@@ -24,6 +25,7 @@
           function(req, res, next) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Access-Control-Allow-Headers', '*');
+            console.log(registryUrl());
             next();
           }
         ]

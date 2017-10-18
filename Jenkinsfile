@@ -16,10 +16,15 @@ pipeline {
       }
     }
 
+    stage('Publish Project') {
+      steps {
+        sh "npm publish --registry ${repository_npm}"
+      }
+    }
+
     stage('Update Docs') {
       steps {
-        echo 'UPDATE'
-        //sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
+        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
       }
     }
 
@@ -49,11 +54,11 @@ pipeline {
     //   sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
     // }
 
-    // stage('Cleanup'){
-    //   echo 'prune and cleanup'
-    //   sh 'npm prune'
-    //   sh 'rm node_modules -rf'
-    // }
+     stage('Cleanup'){
+       echo 'prune and cleanup'
+       sh 'npm prune'
+       sh 'rm node_modules -rf'
+     }
 
 
 
