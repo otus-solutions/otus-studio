@@ -3,7 +3,7 @@ pipeline {
   tools {
      maven 'maven 3.5.0'
      jdk 'Java8'
-     nodejs 'node 8.2.1'
+     nodejs 'node 8.4.0'
    }
   stages{
     stage('Build') {
@@ -16,7 +16,7 @@ pipeline {
       }
     }
 
-    stage('Publish Project') {
+    stage('Publish Nexus') {
       steps {
         sh "npm publish --registry ${repository_npm}"
       }
