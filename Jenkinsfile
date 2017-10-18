@@ -10,12 +10,12 @@ pipeline {
   stages{
     stage('Npm Config') {
       steps {
-        sh "${author_user}"
-        sh "${author_email}"
-        sh "${author_url}"
-        sh "${email_user}"
-        sh "${always_auth}"
-        sh "${auth}"
+        sh "npm config set init.author.name '${author_user}'"
+        sh "npm config set init.author.email '${author_email}'"
+        sh "npm config set init.author.url '${author_url}'"
+        sh "npm config set email ${author_email}"
+        sh "npm config set always-auth true"
+        sh "npm config set _auth '${auth}'"
       }
     }
     stage('Build') {
@@ -36,8 +36,7 @@ pipeline {
 
     stage('Update Docs') {
       steps {
-        echo "Update Sonar"
-        //sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
+        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
       }
     }
 
