@@ -5,7 +5,19 @@ pipeline {
      jdk 'Java8'
      nodejs 'node 8.4.0'
    }
+
+
   stages{
+    stage('Npm Config') {
+      steps {
+        sh "${author_user}"
+        sh "${author_email}"
+        sh "${author_url}"
+        sh "${email_user}"
+        sh "${always_auth}"
+        sh "${auth}"
+      }
+    }
     stage('Build') {
       steps{
           sh "rm -rf node_modules/"
@@ -24,7 +36,7 @@ pipeline {
 
     stage('Update Docs') {
       steps {
-        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
+        //sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUrl='${DATABASE_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}'"
       }
     }
 
