@@ -13,7 +13,7 @@
   var packageJson = require('./package.json');
   var baseDir = __dirname + '/app/index.html';
   const registryUrl = require('registry-url');
-  var downAll = require("down-all")
+
 
   /* Task registry */
   gulp.task('browser-sync', function() {
