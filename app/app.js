@@ -20,5 +20,5 @@
       'otusjs.player.component',
       'otus.validation'
     ]);
-  module.exports = require('export-files')(__dirname);
+
 }());
