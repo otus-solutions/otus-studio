@@ -13,6 +13,7 @@
   var packageJson = require('./package.json');
   var baseDir = __dirname + '/app/index.html';
   const registryUrl = require('registry-url');
+  var downAll = require("down-all")
 
   /* Task registry */
   gulp.task('browser-sync', function() {
@@ -25,7 +26,6 @@
           function(req, res, next) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Access-Control-Allow-Headers', '*');
-            console.log(registryUrl());
             next();
           }
         ]
@@ -54,7 +54,7 @@
       .pipe(minify({
         'mangle': false
       }))
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest('./dist'));
   });
 
   gulp.task('sonar', function() {
