@@ -26,6 +26,7 @@ pipeline {
           sh "npm run test"
 
     }
+  }
 
     stage('Publish Nexus') {
       steps {
