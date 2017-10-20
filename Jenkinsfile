@@ -41,30 +41,16 @@ pipeline {
     }
 
 
-    stage('Development Deploy') {
+    stage('Deploy') {
       steps {
+        // sh "npm install"
+        // sh "npm run build"
         // sh "rm -rf node_modules/"
         // sh "npm install --production"
         // sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
         echo 'Deploy'
       }
     }
-
-    // stage('Homologation Deploy') {
-    //   sh "npm install"
-    //   sh "npm run build"
-    //   sh "rm -rf node_modules/"
-    //   sh "npm install --production"
-    //   sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
-    // }
-    //
-    // stage('Production Deploy') {
-    //   sh "npm install"
-    //   sh "npm run build"
-    //   sh "rm -rf node_modules/"
-    //   sh "npm install --production"
-    //   sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
-    // }
 
      stage('Cleanup'){
        steps {
