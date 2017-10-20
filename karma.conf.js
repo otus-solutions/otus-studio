@@ -70,13 +70,12 @@ module.exports = function(config) {
         pattern: 'tests/**/*-spec.js',
         included: true
       },
-      'tests/utils/data/**/*.js'
     ],
 
     // list of files to exclude
-    // exclude: [
-    //   'tests/unit/**/*-spec-ignore.js',
-    // ],
+    exclude: [
+      'tests/unit/**/*-spec-ignore.js'
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -87,8 +86,15 @@ module.exports = function(config) {
 
     browserify: {
       debug: true,
-      transform: ['babelify', 'stringify']
+      transform: ['babelify']
     },
+    plugins: [
+      'karma-jasmine',
+      'karma-coverage',
+      'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
+      'karma-browserify'
+    ],
     coverageReporter: {
       type: 'lcov',
       dir: 'target/test-coverage/'
@@ -104,7 +110,7 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'html', 'coverage', 'lcov'],
     // web server port
-    port: 9876,
+    port: 9176,
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,

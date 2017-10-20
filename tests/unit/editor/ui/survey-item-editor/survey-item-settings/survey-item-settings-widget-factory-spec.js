@@ -3,7 +3,7 @@ xdescribe('SurveyItemSettingsWidgetFactory', function() {
     var factory;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         inject(function(_$injector_) {
             mockElement();

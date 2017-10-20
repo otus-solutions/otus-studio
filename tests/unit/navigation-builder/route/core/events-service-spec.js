@@ -5,7 +5,7 @@ describe('UiEventsService', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
       mockNavigationMessengerService(_$injector_);
@@ -14,7 +14,9 @@ describe('UiEventsService', function() {
       mockDataService(_$injector_);
       mockRouteDialogService(_$injector_);
 
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.EventsService', injections);
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.EventsService',
+        injections);
     });
   });
 
@@ -33,33 +35,38 @@ describe('UiEventsService', function() {
   });
 
   function mockNavigationMessengerService($injector) {
-    Mock.NavigationMessengerService = $injector.get('otusjs.studio.navigationBuilder.NavigationMessengerService');
+    Mock.NavigationMessengerService = $injector.get(
+      'otusjs.studio.navigationBuilder.NavigationMessengerService');
     injections.NavigationMessengerService = Mock.NavigationMessengerService;
     spyOn(Mock.NavigationMessengerService, 'showMessenger');
     spyOn(Mock.NavigationMessengerService, 'clearMessenger');
   }
 
   function mockMapVisualHandlerService($injector) {
-    Mock.MapVisualHandlerService = $injector.get('otusjs.studio.navigationBuilder.MapVisualHandlerService');
+    Mock.MapVisualHandlerService = $injector.get(
+      'otusjs.studio.navigationBuilder.MapVisualHandlerService');
     injections.MapVisualHandlerService = Mock.MapVisualHandlerService;
     spyOn(Mock.MapVisualHandlerService, 'mapView');
   }
 
   function mockMapEventsHandlerService($injector) {
-    Mock.MapEventsHandlerService = $injector.get('otusjs.studio.navigationBuilder.MapEventsHandlerService');
+    Mock.MapEventsHandlerService = $injector.get(
+      'otusjs.studio.navigationBuilder.MapEventsHandlerService');
     injections.MapEventsHandlerService = Mock.MapEventsHandlerService;
     spyOn(Mock.MapEventsHandlerService, 'loadMapView');
     spyOn(Mock.MapEventsHandlerService, 'onClickNode');
   }
 
   function mockDataService($injector) {
-    Mock.DataService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.DataService');
+    Mock.DataService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.DataService');
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'selectNode');
   }
 
   function mockRouteDialogService($injector) {
-    Mock.RouteDialogService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService');
+    Mock.RouteDialogService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService');
     injections.RouteDialogService = Mock.RouteDialogService;
     spyOn(Mock.RouteDialogService, 'showDialog');
   }

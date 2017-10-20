@@ -1,26 +1,26 @@
 describe('AddSurveyItemEventFactory', function() {
-    var factory, event;
+  var factory, event;
 
-    beforeEach(function() {
-        module('studio');
+  beforeEach(function() {
+    angular.mock.module('studio');
 
-        inject(function(_$injector_) {
-            factory = _$injector_.get('AddSurveyItemEventFactory');
-        });
-
-        event = factory.create();
+    inject(function(_$injector_) {
+      factory = _$injector_.get('AddSurveyItemEventFactory');
     });
 
-    describe('create method', function() {
+    event = factory.create();
+  });
 
-        it('should return an instance of AddSurveyItemEvent', function() {
-            expect(event.constructor.name).toBe('AddSurveyItemEvent');
-        });
+  describe('create method', function() {
 
-        it('should return an object with execute method', function() {
-            expect(event.execute).toBeDefined();
-        });
-
+    it('should return an instance of AddSurveyItemEvent', function() {
+      expect(event.constructor.name).toBe('AddSurveyItemEvent');
     });
+
+    it('should return an object with execute method', function() {
+      expect(event.execute).toBeDefined();
+    });
+
+  });
 
 });

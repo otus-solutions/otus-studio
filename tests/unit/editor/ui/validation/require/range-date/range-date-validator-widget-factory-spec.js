@@ -4,7 +4,7 @@ xdescribe('RangeDateValidatorWidgetFactory', function() {
     var whoAmI;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         mockElement();
 

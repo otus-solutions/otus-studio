@@ -5,12 +5,16 @@ xdescribe('component: otusRuleEditor', function() {
     $componentController,
     Mock = {};
 
-  beforeEach(module('otusjs.studio.navigationBuilder.routeBuilder'));
+  beforeEach(
+    angular.mock.module('otusjs.studio.navigationBuilder.routeBuilder'));
 
-  beforeEach(inject(function($rootScope, _$componentController_, _$injector_) {
+  beforeEach(inject(function($rootScope, _$componentController_,
+    _$injector_) {
     scope = $rootScope.$new();
     $componentController = _$componentController_;
-    Mock.RouteBuilderService = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService');
+    Mock.RouteBuilderService = _$injector_.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+    );
   }));
 
   describe('answerChange method', function() {

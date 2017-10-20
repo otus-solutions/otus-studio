@@ -4,12 +4,13 @@ describe('NodeFactory', function() {
   var factory = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     mockNodeOptions();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.studio.navigationBuilder.NodeFactory');
+      factory = _$injector_.get(
+        'otusjs.studio.navigationBuilder.NodeFactory');
     });
   });
 

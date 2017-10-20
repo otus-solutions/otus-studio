@@ -3,7 +3,7 @@ describe('OtusTextEditorWidgetFactory', function() {
     var factory, widget;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         mockElement();
 

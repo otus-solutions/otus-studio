@@ -7,16 +7,19 @@ xdescribe('otusNavigationMap', function() {
   var bindings = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
-    inject(function(_$componentController_, $rootScope, _$injector_, _$compile_) {
+    inject(function(_$componentController_, $rootScope, _$injector_,
+      _$compile_) {
       $compile = _$compile_;
       injections.$scope = mockScope($rootScope);
       injections.NBEVENTS = mockModuleConstants(_$injector_);
-      injections.NavigationBuilderService = mockNavigationBuilderService(_$injector_);
+      injections.NavigationBuilderService =
+        mockNavigationBuilderService(_$injector_);
       injections.MessageService = mockMessageService(_$injector_);
 
-      component = _$componentController_('otusNavigationMap', injections, bindings);
+      component = _$componentController_('otusNavigationMap',
+        injections, bindings);
     });
   });
 
@@ -59,12 +62,14 @@ xdescribe('otusNavigationMap', function() {
   }
 
   function mockNavigationBuilderService($injector) {
-    Mock.NavigationBuilderService = $injector.get('otusjs.studio.navigationBuilder.NavigationBuilderService');
+    Mock.NavigationBuilderService = $injector.get(
+      'otusjs.studio.navigationBuilder.NavigationBuilderService');
     return Mock.NavigationBuilderService;
   }
 
   function mockMessageService($injector) {
-    Mock.MessageService = $injector.get('otusjs.studio.navigationBuilder.MessageService');
+    Mock.MessageService = $injector.get(
+      'otusjs.studio.navigationBuilder.MessageService');
     return Mock.NavigationDataDialogService;
   }
 

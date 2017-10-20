@@ -1,66 +1,72 @@
 xdescribe('AddSurveyItemEvent', function() {
-    var Mock = {};
-    var event;
+  var Mock = {};
+  var event;
 
-    beforeEach(function() {
-        module('studio');
+  beforeEach(function() {
+    angular.mock.module('studio');
 
-        var factory;
+    var factory;
 
-        inject(function(_$injector_) {
-            factory = _$injector_.get('AddSurveyItemEventFactory', {
-                AddSurveyItemService: mockAddSurveyItemService(_$injector_),
-                WorkspaceService: mockWorkspaceService(_$injector_)
-            });
-        });
-
-        event = factory.create();
+    inject(function(_$injector_) {
+      factory = _$injector_.get('AddSurveyItemEventFactory', {
+        AddSurveyItemService: mockAddSurveyItemService(
+          _$injector_),
+        WorkspaceService: mockWorkspaceService(_$injector_)
+      });
     });
 
-    describe('execute method', function() {
+    event = factory.create();
+  });
 
-        it('should call AddSurveyItemService.execute with questionType parameter', function() {
-            event.execute(Mock.item.objectType);
+  describe('execute method', function() {
 
-            expect(Mock.AddSurveyItemService.execute).toHaveBeenCalledWith(Mock.item.objectType, Mock.WorkspaceService.getSurvey());
-        });
+    it(
+      'should call AddSurveyItemService.execute with questionType parameter',
+      function() {
+        event.execute(Mock.item.objectType);
 
-        it('should store yourself in userEdits', function() {
-            event.execute(Mock.item.objectType);
+        expect(Mock.AddSurveyItemService.execute).toHaveBeenCalledWith(
+          Mock.item.objectType, Mock.WorkspaceService.getSurvey());
+      });
 
-            expect(Mock.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledWith(event);
-        });
+    it('should store yourself in userEdits', function() {
+      event.execute(Mock.item.objectType);
 
-        it('should call Workspace.saveWork()', function() {
-            event.execute(Mock.item.objectType);
-
-            expect(Mock.WorkspaceService.saveWork).toHaveBeenCalledWith();
-        });
-
+      expect(Mock.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledWith(
+        event);
     });
 
-    function mockAddSurveyItemService($injector) {
-        Mock.item = $injector.get('SurveyItemFactory').create('SingleSelectionQuestion', 'SSQ');
-        Mock.AddSurveyItemService = $injector.get('AddSurveyItemService');
-        spyOn(Mock.AddSurveyItemService, 'execute');
-        return Mock.AddSurveyItemService;
-    }
+    it('should call Workspace.saveWork()', function() {
+      event.execute(Mock.item.objectType);
 
-    function mockWorkspaceService($injector) {
-        Mock.WorkspaceService = $injector.get('WorkspaceService');
-        Mock.WorkspaceService.workspace = {
-            isdb: {
-                userEdits: {
-                    store: function(object) {}
-                }
-            }
-        };
+      expect(Mock.WorkspaceService.saveWork).toHaveBeenCalledWith();
+    });
 
-        spyOn(Mock.WorkspaceService, 'getSurvey');
-        spyOn(Mock.WorkspaceService, 'saveWork');
-        spyOn(Mock.WorkspaceService.workspace.isdb.userEdits, 'store');
+  });
 
-        return Mock.WorkspaceService;
-    }
+  function mockAddSurveyItemService($injector) {
+    Mock.item = $injector.get('SurveyItemFactory').create(
+      'SingleSelectionQuestion', 'SSQ');
+    Mock.AddSurveyItemService = $injector.get('AddSurveyItemService');
+    spyOn(Mock.AddSurveyItemService, 'execute');
+    return Mock.AddSurveyItemService;
+  }
+
+  function mockWorkspaceService($injector) {
+    Mock.WorkspaceService = $injector.get('WorkspaceService');
+    Mock.WorkspaceService.workspace = {
+      isdb: {
+        userEdits: {
+          store: function(object) {}
+        }
+      }
+    };
+
+    spyOn(Mock.WorkspaceService, 'getSurvey');
+    spyOn(Mock.WorkspaceService, 'saveWork');
+    spyOn(Mock.WorkspaceService.workspace.isdb.userEdits, 'store');
+
+    return Mock.WorkspaceService;
+  }
 
 });

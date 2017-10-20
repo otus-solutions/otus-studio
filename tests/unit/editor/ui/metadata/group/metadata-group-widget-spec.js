@@ -3,7 +3,7 @@ xdescribe('MetadataGroupWidgetFactory', function() {
   var factory, metadataGroup;
 
   beforeEach(function() {
-    module('studio');
+    angular.mock.module('studio');
 
     mockElement();
 
