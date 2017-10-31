@@ -17,7 +17,7 @@
 
   function Controller(SurveyItemMapFactory) {
     var self = this;
-    let widgetFactories;
+    var widgetFactories;
     // lifecycle hooks
     self.$onInit = onInit;
     // public methods

@@ -4,12 +4,13 @@ describe('EdgeFactory', function() {
   var factory = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     mockEdgeOptions();
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.studio.navigationBuilder.EdgeFactory');
+      factory = _$injector_.get(
+        'otusjs.studio.navigationBuilder.EdgeFactory');
     });
   });
 

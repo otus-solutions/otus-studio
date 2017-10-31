@@ -1,23 +1,23 @@
 describe('AddFillingRulesEventFactory', function() {
-    var factory, event;
+  var factory, event;
 
-    beforeEach(function() {
-        module('studio');
+  beforeEach(function() {
+    angular.mock.module('studio');
 
-        inject(function(_$injector_) {
-            factory = _$injector_.get('AddFillingRulesEventFactory');
-        });
-
-        event = factory.create();
+    inject(function(_$injector_) {
+      factory = _$injector_.get('AddFillingRulesEventFactory');
     });
 
-    describe('create method', function() {
-        it('should return an instance of AddFillingRulesEvent', function() {
-            expect(event.constructor.name).toBe('AddFillingRulesEvent');
-        });
+    event = factory.create();
+  });
 
-        it('should return an object with execute method', function() {
-            expect(event.execute).toBeDefined();
-        });
+  describe('create method', function() {
+    it('should return an instance of AddFillingRulesEvent', function() {
+      expect(event.constructor.name).toBe('AddFillingRulesEvent');
     });
+
+    it('should return an object with execute method', function() {
+      expect(event.execute).toBeDefined();
+    });
+  });
 });

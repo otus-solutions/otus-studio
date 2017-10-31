@@ -4,10 +4,12 @@ describe('RuleOperatorBuilderService', function() {
   var service = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService');
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService'
+      );
     });
   });
 
@@ -15,11 +17,12 @@ describe('RuleOperatorBuilderService', function() {
 
     var builded = {};
 
-    it('should return an array not empty if item type is valid', function() {
-      builded = service.build('TextQuestion');
-      expect(builded).toEqual(jasmine.any(Array));
-      expect(builded.length > 0).toBe(true);
-    });
+    it('should return an array not empty if item type is valid',
+      function() {
+        builded = service.build('TextQuestion');
+        expect(builded).toEqual(jasmine.any(Array));
+        expect(builded.length > 0).toBe(true);
+      });
 
     it('should return an array empty if item type is invalid', function() {
       builded = service.build('InvalidType');
@@ -89,17 +92,19 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[4].type).toBe('greater');
       });
 
-      it('should return an array with greaterEqual opeartor', function() {
-        expect(builded[5].type).toBe('greaterEqual');
-      });
+      it('should return an array with greaterEqual opeartor',
+        function() {
+          expect(builded[5].type).toBe('greaterEqual');
+        });
 
       it('should return an array with lower opeartor', function() {
         expect(builded[6].type).toBe('lower');
       });
 
-      it('should return an array with lowerEqual opeartor', function() {
-        expect(builded[7].type).toBe('lowerEqual');
-      });
+      it('should return an array with lowerEqual opeartor',
+        function() {
+          expect(builded[7].type).toBe('lowerEqual');
+        });
 
     });
 
@@ -129,17 +134,19 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[4].type).toBe('greater');
       });
 
-      it('should return an array with greaterEqual opeartor', function() {
-        expect(builded[5].type).toBe('greaterEqual');
-      });
+      it('should return an array with greaterEqual opeartor',
+        function() {
+          expect(builded[5].type).toBe('greaterEqual');
+        });
 
       it('should return an array with lower opeartor', function() {
         expect(builded[6].type).toBe('lower');
       });
 
-      it('should return an array with lowerEqual opeartor', function() {
-        expect(builded[7].type).toBe('lowerEqual');
-      });
+      it('should return an array with lowerEqual opeartor',
+        function() {
+          expect(builded[7].type).toBe('lowerEqual');
+        });
 
     });
 
@@ -169,17 +176,19 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[4].type).toBe('greater');
       });
 
-      it('should return an array with greaterEqual opeartor', function() {
-        expect(builded[5].type).toBe('greaterEqual');
-      });
+      it('should return an array with greaterEqual opeartor',
+        function() {
+          expect(builded[5].type).toBe('greaterEqual');
+        });
 
       it('should return an array with lower opeartor', function() {
         expect(builded[6].type).toBe('lower');
       });
 
-      it('should return an array with lowerEqual opeartor', function() {
-        expect(builded[7].type).toBe('lowerEqual');
-      });
+      it('should return an array with lowerEqual opeartor',
+        function() {
+          expect(builded[7].type).toBe('lowerEqual');
+        });
 
     });
 
@@ -209,17 +218,19 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[4].type).toBe('greater');
       });
 
-      it('should return an array with greaterEqual opeartor', function() {
-        expect(builded[5].type).toBe('greaterEqual');
-      });
+      it('should return an array with greaterEqual opeartor',
+        function() {
+          expect(builded[5].type).toBe('greaterEqual');
+        });
 
       it('should return an array with lower opeartor', function() {
         expect(builded[6].type).toBe('lower');
       });
 
-      it('should return an array with lowerEqual opeartor', function() {
-        expect(builded[7].type).toBe('lowerEqual');
-      });
+      it('should return an array with lowerEqual opeartor',
+        function() {
+          expect(builded[7].type).toBe('lowerEqual');
+        });
 
     });
 
@@ -241,17 +252,20 @@ describe('RuleOperatorBuilderService', function() {
         expect(builded[2].type).toBe('contains');
       });
 
-      it('should return an array with quantitySelected opeartor', function() {
-        expect(builded[3].type).toBe('quantity');
-      });
+      it('should return an array with quantitySelected opeartor',
+        function() {
+          expect(builded[3].type).toBe('quantity');
+        });
 
-      it('should return an array with minSelected opeartor', function() {
-        expect(builded[4].type).toBe('minSelected');
-      });
+      it('should return an array with minSelected opeartor',
+        function() {
+          expect(builded[4].type).toBe('minSelected');
+        });
 
-      it('should return an array with maxSelected opeartor', function() {
-        expect(builded[5].type).toBe('maxSelected');
-      });
+      it('should return an array with maxSelected opeartor',
+        function() {
+          expect(builded[5].type).toBe('maxSelected');
+        });
 
     });
 

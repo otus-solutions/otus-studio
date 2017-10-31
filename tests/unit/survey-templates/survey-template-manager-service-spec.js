@@ -6,7 +6,7 @@ xdescribe("SurveyTemplateManagerService", function() {
     var $rootScope;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
         mockSurveyTemplates();
 
         inject(function(_$injector_, $q, _$rootScope_) {

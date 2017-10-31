@@ -4,12 +4,14 @@ describe('RuleWhenBuilderService', function() {
   var service = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     mockQuestionItem();
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService');
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService'
+      );
     });
   });
 
@@ -45,137 +47,137 @@ describe('RuleWhenBuilderService', function() {
 
   function mockQuestionItem() {
     Mock.questionItem = {
-        extents: 'SurveyItem',
-        objectType: 'TextQuestion',
-        templateID: 'CAD4',
-        customID: 'CAD4',
-        dataType: 'String',
-        label: {
+      extents: 'SurveyItem',
+      objectType: 'TextQuestion',
+      templateID: 'CAD4',
+      customID: 'CAD4',
+      dataType: 'String',
+      label: {
+        ptBR: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '4. Qual outro?',
+          formattedText: '4. Qual outro?'
+        },
+        enUS: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '',
+          formattedText: ''
+        },
+        esES: {
+          extends: 'StudioObject',
+          objectType: 'Label',
+          oid: '',
+          plainText: '',
+          formattedText: ''
+        }
+      },
+      metadata: {
+        extents: 'StudioObject',
+        objectType: 'MetadataGroup',
+        options: [{
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 1,
+          label: {
             ptBR: {
-                extends: 'StudioObject',
-                objectType: 'Label',
-                oid: '',
-                plainText: '4. Qual outro?',
-                formattedText: '4. Qual outro?'
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não se aplica',
+              formattedText: 'Não se aplica'
             },
             enUS: {
-                extends: 'StudioObject',
-                objectType: 'Label',
-                oid: '',
-                plainText: '',
-                formattedText: ''
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
             },
             esES: {
-                extends: 'StudioObject',
-                objectType: 'Label',
-                oid: '',
-                plainText: '',
-                formattedText: ''
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
             }
-        },
-        metadata: {
-            extents: 'StudioObject',
-            objectType: 'MetadataGroup',
-            options: [{
-                extends: 'StudioObject',
-                objectType: 'MetadataAnswer',
-                dataType: 'Integer',
-                value: 1,
-                label: {
-                    ptBR: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: 'Não se aplica',
-                        formattedText: 'Não se aplica'
-                    },
-                    enUS: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    },
-                    esES: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    }
-                }
-            }, {
-                extends: 'StudioObject',
-                objectType: 'MetadataAnswer',
-                dataType: 'Integer',
-                value: 2,
-                label: {
-                    ptBR: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: 'Não quer responder',
-                        formattedText: 'Não quer responder'
-                    },
-                    enUS: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    },
-                    esES: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    }
-                }
-            }, {
-                extends: 'StudioObject',
-                objectType: 'MetadataAnswer',
-                dataType: 'Integer',
-                value: 3,
-                label: {
-                    ptBR: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: 'Não sabe responder',
-                        formattedText: 'Não sabe responder'
-                    },
-                    enUS: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    },
-                    esES: {
-                        extends: 'StudioObject',
-                        objectType: 'Label',
-                        oid: '',
-                        plainText: '',
-                        formattedText: ''
-                    }
-                }
-            }]
-        },
-        fillingRules: {
+          }
+        }, {
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 2,
+          label: {
+            ptBR: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não quer responder',
+              formattedText: 'Não quer responder'
+            },
+            enUS: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            },
+            esES: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            }
+          }
+        }, {
+          extends: 'StudioObject',
+          objectType: 'MetadataAnswer',
+          dataType: 'Integer',
+          value: 3,
+          label: {
+            ptBR: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: 'Não sabe responder',
+              formattedText: 'Não sabe responder'
+            },
+            enUS: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            },
+            esES: {
+              extends: 'StudioObject',
+              objectType: 'Label',
+              oid: '',
+              plainText: '',
+              formattedText: ''
+            }
+          }
+        }]
+      },
+      fillingRules: {
+        extends: 'StudioObject',
+        objectType: 'FillingRules',
+        options: {
+          mandatory: {
             extends: 'StudioObject',
-            objectType: 'FillingRules',
-            options: {
-                mandatory: {
-                    extends: 'StudioObject',
-                    objectType: 'Rule',
-                    validatorType: 'mandatory',
-                    data: {
-                        reference: true
-                    }
-                }
+            objectType: 'Rule',
+            validatorType: 'mandatory',
+            data: {
+              reference: true
             }
+          }
         }
+      }
     };
   }
 

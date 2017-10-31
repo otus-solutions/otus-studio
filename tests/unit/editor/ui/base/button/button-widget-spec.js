@@ -4,7 +4,7 @@ xdescribe('OtusButtonWidget', function() {
     var Mock = {};
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         inject(function(_$injector_) {
             factory = _$injector_.get('OtusButtonWidgetFactory');

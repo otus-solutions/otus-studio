@@ -5,7 +5,7 @@ xdescribe('RouteBuilderService', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_, $rootScope) {
       mockScope($rootScope, _$injector_);
@@ -15,7 +15,9 @@ xdescribe('RouteBuilderService', function() {
       mockModuleEventsService(_$injector_);
       mockUiEventsService(_$injector_);
 
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService', injections);
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
+        injections);
     });
   });
 
@@ -107,18 +109,20 @@ xdescribe('RouteBuilderService', function() {
         expect(Mock.DataService.routeExists).toHaveBeenCalled();
       });
 
-      it('should always to select the first condition of route', function() {
-        spyOn(Mock.DataService, 'routeExists');
+      it('should always to select the first condition of route',
+        function() {
+          spyOn(Mock.DataService, 'routeExists');
 
-        service.startRouteBuilding(Mock.n1, Mock.n2);
+          service.startRouteBuilding(Mock.n1, Mock.n2);
 
-        expect(Mock.DataService.routeExists).toHaveBeenCalled();
-      });
+          expect(Mock.DataService.routeExists).toHaveBeenCalled();
+        });
 
       describe('when exists', function() {
 
         beforeEach(function() {
-          spyOn(Mock.DataService, 'routeExists').and.returnValue(true);
+          spyOn(Mock.DataService, 'routeExists').and.returnValue(
+            true);
         });
 
         it('should use the current route data', function() {
@@ -132,7 +136,8 @@ xdescribe('RouteBuilderService', function() {
       describe('when does not exists', function() {
 
         beforeEach(function() {
-          spyOn(Mock.DataService, 'routeExists').and.returnValue(false);
+          spyOn(Mock.DataService, 'routeExists').and.returnValue(
+            false);
         });
 
         it('should initialize the route data', function() {
@@ -330,7 +335,8 @@ xdescribe('RouteBuilderService', function() {
   }
 
   function mockDataService($injector) {
-    Mock.DataService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.DataService');
+    Mock.DataService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.DataService');
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'activate');
     spyOn(Mock.DataService, 'apply');
@@ -352,14 +358,16 @@ xdescribe('RouteBuilderService', function() {
   }
 
   function mockModuleEventsService($injector) {
-    Mock.EventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService');
+    Mock.EventsService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.ModuleEventService');
     injections.EventsService = Mock.EventsService;
     spyOn(Mock.EventsService, 'activate');
     spyOn(Mock.EventsService, 'deactivate');
   }
 
   function mockUiEventsService($injector) {
-    Mock.UiEventsService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService');
+    Mock.UiEventsService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService');
     injections.UiEventsService = Mock.UiEventsService;
     spyOn(Mock.UiEventsService, 'activate');
     spyOn(Mock.UiEventsService, 'deactivate');

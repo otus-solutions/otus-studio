@@ -5,13 +5,15 @@ describe('UiEventsService', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_) {
       mockGraphLayerService(_$injector_);
       mockDataService(_$injector_);
 
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.UiEventsService', injections);
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.UiEventsService',
+        injections);
     });
   });
 
@@ -28,7 +30,8 @@ describe('UiEventsService', function() {
   });
 
   function mockMapGraphLayerService($injector) {
-    Mock.GraphLayerService = $injector.get('otusjs.studio.navigationBuilder.GraphLayerService');
+    Mock.GraphLayerService = $injector.get(
+      'otusjs.studio.navigationBuilder.GraphLayerService');
     injections.GraphLayerService = Mock.GraphLayerService;
     spyOn(Mock.GraphLayerService, 'initialize');
     spyOn(Mock.GraphLayerService, 'lockPreviousNodeOf');
@@ -39,7 +42,8 @@ describe('UiEventsService', function() {
   }
 
   function mockDataService($injector) {
-    Mock.DataService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.DataService');
+    Mock.DataService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.DataService');
     injections.DataService = Mock.DataService;
     spyOn(Mock.DataService, 'selectNode');
   }
