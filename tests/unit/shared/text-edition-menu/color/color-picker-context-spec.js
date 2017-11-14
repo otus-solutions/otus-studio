@@ -2,7 +2,7 @@ describe('color-picker-context', function() {
     var service;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         inject(function(_$injector_) {
             service = _$injector_.get('otus.textEdition.ColorContext');

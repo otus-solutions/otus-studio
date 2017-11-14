@@ -11,7 +11,7 @@ describe('otusAcceptAnswer component', function() {
   var component = {};
 
   beforeEach(function() {
-    module('studio');
+    angular.mock.module('studio');
 
     inject(function(_$componentController_, _$injector_) {
 

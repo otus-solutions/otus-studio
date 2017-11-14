@@ -12,6 +12,8 @@
   var zip = require('gulp-zip');
   var packageJson = require('./package.json');
   var baseDir = __dirname + '/app/index.html';
+  const registryUrl = require('registry-url');
+
 
   /* Task registry */
   gulp.task('browser-sync', function() {
@@ -52,7 +54,7 @@
       .pipe(minify({
         'mangle': false
       }))
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest('./dist'));
   });
 
   gulp.task('sonar', function() {
@@ -61,11 +63,8 @@
         host: {
           url: process.env.npm_config_sonarUrl,
         },
-        jdbc: {
-          url: process.env.npm_config_sonarDatabaseUrl,
-          username: process.env.npm_config_sonarDatabaseUsername,
-          password: process.env.npm_config_sonarDatabasePassword
-        },
+        login: process.env.npm_config_sonarDatabaseUsername,
+        password: process.env.npm_config_sonarDatabasePassword,
         projectKey: 'sonar:' + packageJson.name,
         projectName: packageJson.name,
         projectVersion: packageJson.version,

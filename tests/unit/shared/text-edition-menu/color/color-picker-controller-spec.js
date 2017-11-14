@@ -3,7 +3,7 @@ describe('color-picker-controller', function() {
     var controller;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         inject(function(_$controller_, _$injector_) {
             controller = _$controller_('otus.textEdition.ColorController', {

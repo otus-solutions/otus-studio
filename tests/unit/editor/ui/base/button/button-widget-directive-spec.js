@@ -4,7 +4,7 @@ describe('OtusButtonWidget directive', function() {
     var rootScope;
 
     beforeEach(function() {
-        module('studio');
+        angular.mock.module('studio');
 
         inject(function(_$injector_, $rootScope, $compile) {
             rootScope = $rootScope;

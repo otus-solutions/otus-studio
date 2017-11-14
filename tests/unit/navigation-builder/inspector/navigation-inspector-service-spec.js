@@ -4,16 +4,17 @@ xdescribe('NavigationBuilderService', function() {
   var service = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     mockTemplateNavigations();
     mockNodes();
     mockEdges();
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderService', {
-        MapFactory: mockMapFactory(_$injector_)
-      });
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.NavigationBuilderService', {
+          MapFactory: mockMapFactory(_$injector_)
+        });
     });
   });
 
@@ -25,12 +26,13 @@ xdescribe('NavigationBuilderService', function() {
       expect(service.navigationMap()).toBeDefined();
     });
 
-    it('should convert each navigation from template to Nodes', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
+    it('should convert each navigation from template to Nodes',
+      function() {
+        service.loadTemplateNavigations(Mock.templateNavigations);
 
-      expect(service.nodes().length).not.toBe(0);
-      expect(service.navigationMap().nodes().length).not.toBe(0);
-    });
+        expect(service.nodes().length).not.toBe(0);
+        expect(service.navigationMap().nodes().length).not.toBe(0);
+      });
 
     it('should create edges to each navigation route case', function() {
       service.loadTemplateNavigations(Mock.templateNavigations);
@@ -56,48 +58,54 @@ xdescribe('NavigationBuilderService', function() {
 
   describe('selectedNavigation method', function() {
 
-    it('should return a navigation that corresponds to selected node', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
-      service.selectNode(Mock.nodes[0]);
+    it('should return a navigation that corresponds to selected node',
+      function() {
+        service.loadTemplateNavigations(Mock.templateNavigations);
+        service.selectNode(Mock.nodes[0]);
 
-      var node = service.selectedNode();
+        var node = service.selectedNode();
 
-      expect(node.navigation.origin).toEqual(Mock.nodes[0].navigation.origin);
-    });
+        expect(node.navigation.origin).toEqual(Mock.nodes[0].navigation
+          .origin);
+      });
 
   });
 
   describe('selectedNodeFamily method', function() {
 
-    it('should return the selected node and nodes that are your routes', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
-      service.selectNode(Mock.nodes[0]);
+    it('should return the selected node and nodes that are your routes',
+      function() {
+        service.loadTemplateNavigations(Mock.templateNavigations);
+        service.selectNode(Mock.nodes[0]);
 
-      var nodes = service.selectedNodeFamily();
+        var nodes = service.selectedNodeFamily();
 
-      expect(nodes[0].id).toEqual(Mock.nodes[0].id);
-      expect(nodes[1].id).toEqual(Mock.nodes[1].id);
-      expect(nodes.length).toBe(2);
-    });
+        expect(nodes[0].id).toEqual(Mock.nodes[0].id);
+        expect(nodes[1].id).toEqual(Mock.nodes[1].id);
+        expect(nodes.length).toBe(2);
+      });
 
   });
 
   describe('selectedEdges method', function() {
 
-    it('should return the selected edges that connect the nodes of family', function() {
-      service.loadTemplateNavigations(Mock.templateNavigations);
-      service.selectNode(Mock.nodes[0]);
+    it(
+      'should return the selected edges that connect the nodes of family',
+      function() {
+        service.loadTemplateNavigations(Mock.templateNavigations);
+        service.selectNode(Mock.nodes[0]);
 
-      var edges = service.selectedEdges();
+        var edges = service.selectedEdges();
 
-      expect(edges[0].id).toEqual(Mock.edges[0].id);
-      expect(edges.length).toBe(1);
-    });
+        expect(edges[0].id).toEqual(Mock.edges[0].id);
+        expect(edges.length).toBe(1);
+      });
 
   });
 
   function mockMapFactory($injector) {
-    Mock.MapFactory = $injector.get('otusjs.studio.navigationBuilder.MapFactory');
+    Mock.MapFactory = $injector.get(
+      'otusjs.studio.navigationBuilder.MapFactory');
     return Mock.MapFactory;
   }
 

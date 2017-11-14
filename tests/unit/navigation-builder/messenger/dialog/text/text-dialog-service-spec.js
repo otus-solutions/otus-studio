@@ -5,11 +5,13 @@ describe('TextDialogService', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_, _$mdDialog_) {
       injections.$mdDialog = _$mdDialog_;
-      service = _$injector_.get('otusjs.studio.navigationBuilder.TextDialogService', injections);
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.TextDialogService',
+        injections);
     });
   });
 

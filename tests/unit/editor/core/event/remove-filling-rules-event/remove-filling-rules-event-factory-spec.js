@@ -1,23 +1,23 @@
 describe('RemoveFillingRulesEventFactory', function() {
-    var factory, event;
+  var factory, event;
 
-    beforeEach(function() {
-        module('studio');
+  beforeEach(function() {
+    angular.mock.module('studio');
 
-        inject(function(_$injector_) {
-            factory = _$injector_.get('RemoveFillingRulesEventFactory');
-        });
-
-        event = factory.create();
+    inject(function(_$injector_) {
+      factory = _$injector_.get('RemoveFillingRulesEventFactory');
     });
 
-    describe('create method', function() {
-        it('should return an instance of RemoveFillingRulesEvent', function() {
-            expect(event.constructor.name).toBe('RemoveFillingRulesEvent');
-        });
+    event = factory.create();
+  });
 
-        it('should return an object with execute method', function() {
-            expect(event.execute).toBeDefined();
-        });
+  describe('create method', function() {
+    it('should return an instance of RemoveFillingRulesEvent', function() {
+      expect(event.constructor.name).toBe('RemoveFillingRulesEvent');
     });
+
+    it('should return an object with execute method', function() {
+      expect(event.execute).toBeDefined();
+    });
+  });
 });

@@ -5,7 +5,7 @@ xdescribe('DataService', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otusjs.studio.navigationBuilder');
+    angular.mock.module('otusjs.studio.navigationBuilder');
 
     inject(function(_$injector_, $rootScope) {
       mockSurvey();
@@ -15,7 +15,9 @@ xdescribe('DataService', function() {
       mockRuleWhenBuilderService(_$injector_);
       mockRuleOperatorBuilderService(_$injector_);
 
-      service = _$injector_.get('otusjs.studio.navigationBuilder.routeBuilder.DataService', injections);
+      service = _$injector_.get(
+        'otusjs.studio.navigationBuilder.routeBuilder.DataService',
+        injections);
     });
 
     service.activate(Mock.survey);
@@ -30,13 +32,14 @@ xdescribe('DataService', function() {
         service.selectNode(Mock.n2);
       });
 
-      xit('should reset origin and destination node references', function() {
-        service.deactivate();
+      xit('should reset origin and destination node references',
+        function() {
+          service.deactivate();
 
-        expect(service.selectNode()[0]).toBe(null);
-        expect(service.selectNode()[1]).toBe(null);
-        expect(service.currentRoute()).toBe(null);
-      });
+          expect(service.selectNode()[0]).toBe(null);
+          expect(service.selectNode()[1]).toBe(null);
+          expect(service.currentRoute()).toBe(null);
+        });
 
     });
 
@@ -52,75 +55,106 @@ xdescribe('DataService', function() {
 
       describe('when origin node is not selected', function() {
 
-        it('then should store a reference to selected node as the origin node', function() {
-          expect(service.hasOriginNode()).toBe(true);
-        });
+        it(
+          'then should store a reference to selected node as the origin node',
+          function() {
+            expect(service.hasOriginNode()).toBe(true);
+          });
 
-        it('then should emit ORIGIN_NODE_SELECTED event', function() {
-          var selectedNode = service.selectedNode()[0];
+        it('then should emit ORIGIN_NODE_SELECTED event',
+          function() {
+            var selectedNode = service.selectedNode()[0];
 
-          expect(Mock.NavigationBuilderScopeService.emit).toHaveBeenCalledWith(Mock.scope.events.ORIGIN_NODE_SELECTED, selectedNode);
-        });
+            expect(Mock.NavigationBuilderScopeService.emit).toHaveBeenCalledWith(
+              Mock.scope.events.ORIGIN_NODE_SELECTED,
+              selectedNode);
+          });
 
       });
 
       describe('when origin node is selected', function() {
 
-        describe('and the selected node is equal to origin node', function() {
+        describe(
+          'and the selected node is equal to origin node',
+          function() {
 
-          it('should unselect the origin node', function() {
-            service.selectNode(Mock.n1);
+            it('should unselect the origin node', function() {
+              service.selectNode(Mock.n1);
 
-            expect(service.hasOriginNode()).toBe(false);
-          });
-
-          it('should emit ORIGIN_NODE_UNSELECTED event', function() {
-            service.selectNode(Mock.n1);
-
-            expect(Mock.NavigationBuilderScopeService.emit).toHaveBeenCalledWith(Mock.scope.events.ORIGIN_NODE_UNSELECTED, Mock.n1);
-          });
-
-        });
-
-        describe('and the selected node is not equal to origin node', function() {
-
-          beforeEach(function() {
-            service.selectNode(Mock.n2);
-          });
-
-          describe('and destination node is not selected', function() {
-
-            it('then should store a reference to selected node as the destination node', function() {
-              expect(service.hasDestinationNode()).toBe(true);
+              expect(service.hasOriginNode()).toBe(false);
             });
 
-            it('then should emit DESTINATION_NODE_SELECTED event', function() {
-              expect(Mock.NavigationBuilderScopeService.emit).toHaveBeenCalledWith(Mock.scope.events.DESTINATION_NODE_SELECTED, service.selectedNode());
-            });
+            it('should emit ORIGIN_NODE_UNSELECTED event',
+              function() {
+                service.selectNode(Mock.n1);
 
-          });
-
-          describe('and destination node is selected', function() {
-
-            describe('and the selected node is equal to destination node', function() {
-
-              it('should unselect the origin node', function() {
-                service.selectNode(Mock.n2);
-
-                expect(service.hasDestinationNode()).toBe(false);
+                expect(Mock.NavigationBuilderScopeService.emit)
+                  .toHaveBeenCalledWith(Mock.scope.events.ORIGIN_NODE_UNSELECTED,
+                    Mock.n1);
               });
 
-              it('should emit DESTINATION_NODE_UNSELECTED event', function() {
-                service.selectNode(Mock.n2);
-
-                expect(Mock.NavigationBuilderScopeService.emit).toHaveBeenCalledWith(Mock.scope.events.DESTINATION_NODE_UNSELECTED, Mock.n2);
-              });
-
-            });
-
           });
 
-        });
+        describe(
+          'and the selected node is not equal to origin node',
+          function() {
+
+            beforeEach(function() {
+              service.selectNode(Mock.n2);
+            });
+
+            describe('and destination node is not selected',
+              function() {
+
+                it(
+                  'then should store a reference to selected node as the destination node',
+                  function() {
+                    expect(service.hasDestinationNode()).toBe(
+                      true);
+                  });
+
+                it(
+                  'then should emit DESTINATION_NODE_SELECTED event',
+                  function() {
+                    expect(Mock.NavigationBuilderScopeService
+                      .emit).toHaveBeenCalledWith(Mock.scope
+                      .events.DESTINATION_NODE_SELECTED,
+                      service.selectedNode());
+                  });
+
+              });
+
+            describe('and destination node is selected',
+              function() {
+
+                describe(
+                  'and the selected node is equal to destination node',
+                  function() {
+
+                    it('should unselect the origin node',
+                      function() {
+                        service.selectNode(Mock.n2);
+
+                        expect(service.hasDestinationNode())
+                          .toBe(false);
+                      });
+
+                    it(
+                      'should emit DESTINATION_NODE_UNSELECTED event',
+                      function() {
+                        service.selectNode(Mock.n2);
+
+                        expect(Mock.NavigationBuilderScopeService
+                          .emit).toHaveBeenCalledWith(
+                          Mock.scope.events.DESTINATION_NODE_UNSELECTED,
+                          Mock.n2);
+                      });
+
+                  });
+
+              });
+
+          });
 
       });
 
@@ -133,58 +167,65 @@ xdescribe('DataService', function() {
         service.selectNode(Mock.n2);
       });
 
-      it('should return an array with origin and destination nodes', function() {
-        var nodes = service.selectedNode();
-        var n1 = nodes[0];
-        var n2 = nodes[1];
+      it('should return an array with origin and destination nodes',
+        function() {
+          var nodes = service.selectedNode();
+          var n1 = nodes[0];
+          var n2 = nodes[1];
 
-        expect(n1.id).toEqual(Mock.n1.id);
-        expect(n2.id).toEqual(Mock.n2.id);
-      });
+          expect(n1.id).toEqual(Mock.n1.id);
+          expect(n2.id).toEqual(Mock.n2.id);
+        });
 
     });
 
     describe('hasOriginNode method', function() {
 
-      it('should return true when origin node was selected', function() {
-        service.selectNode(Mock.n1);
+      it('should return true when origin node was selected',
+        function() {
+          service.selectNode(Mock.n1);
 
-        expect(service.hasOriginNode()).toBeTruthy();
-      });
+          expect(service.hasOriginNode()).toBeTruthy();
+        });
 
-      it('should return true when origin node was not selected', function() {
-        expect(service.hasOriginNode()).toBeFalsy();
-      });
-
-    });
-
-    describe('hasDestinationNode method', function() {
-
-      it('should return true when origin node was selected', function() {
-        service.selectNode(Mock.n1);
-        service.selectNode(Mock.n2);
-
-        expect(service.hasDestinationNode()).toBeTruthy();
-      });
-
-      it('should return true when origin node was not selected', function() {
-        expect(service.hasDestinationNode()).toBeFalsy();
-      });
+      it('should return true when origin node was not selected',
+        function() {
+          expect(service.hasOriginNode()).toBeFalsy();
+        });
 
     });
 
     describe('hasDestinationNode method', function() {
 
-      it('should return true when origin node was selected', function() {
-        service.selectNode(Mock.n1);
-        service.selectNode(Mock.n2);
+      it('should return true when origin node was selected',
+        function() {
+          service.selectNode(Mock.n1);
+          service.selectNode(Mock.n2);
 
-        expect(service.hasDestinationNode()).toBeTruthy();
-      });
+          expect(service.hasDestinationNode()).toBeTruthy();
+        });
 
-      it('should return true when origin node was not selected', function() {
-        expect(service.hasDestinationNode()).toBeFalsy();
-      });
+      it('should return true when origin node was not selected',
+        function() {
+          expect(service.hasDestinationNode()).toBeFalsy();
+        });
+
+    });
+
+    describe('hasDestinationNode method', function() {
+
+      it('should return true when origin node was selected',
+        function() {
+          service.selectNode(Mock.n1);
+          service.selectNode(Mock.n2);
+
+          expect(service.hasDestinationNode()).toBeTruthy();
+        });
+
+      it('should return true when origin node was not selected',
+        function() {
+          expect(service.hasDestinationNode()).toBeFalsy();
+        });
 
     });
 
@@ -232,12 +273,14 @@ xdescribe('DataService', function() {
         service.initializeRouteData();
       });
 
-      it('should set a reference to condition set identified by the index', function() {
-        service.createCondition();
-        service.selectCondition(0);
+      it(
+        'should set a reference to condition set identified by the index',
+        function() {
+          service.createCondition();
+          service.selectCondition(0);
 
-        expect(service.selectedCondition()).toBeDefined();
-      });
+          expect(service.selectedCondition()).toBeDefined();
+        });
 
     });
 
@@ -246,40 +289,47 @@ xdescribe('DataService', function() {
       var routeList = [];
 
       beforeEach(function() {
-        var listRoutes = jasmine.createSpy('listRoutes').and.returnValue(routeList);
+        var listRoutes = jasmine.createSpy('listRoutes').and.returnValue(
+          routeList);
         Mock.navigation.listRoutes = listRoutes;
       });
 
-      it('should call survey.NavigationManager.selectNavigationByOrigin', function() {
-        service.isSimpleNavigation(Mock.n1.id);
+      it(
+        'should call survey.NavigationManager.selectNavigationByOrigin',
+        function() {
+          service.isSimpleNavigation(Mock.n1.id);
 
-        expect(Mock.survey.NavigationManager.selectNavigationByOrigin).toHaveBeenCalled();
-      });
-
-      describe('when navigation of origin has only one route', function() {
-
-        beforeEach(function() {
-          routeList.push({});
+          expect(Mock.survey.NavigationManager.selectNavigationByOrigin)
+            .toHaveBeenCalled();
         });
 
-        it('should return true', function() {
-          expect(service.isSimpleNavigation(Mock.n1.id)).toBeTruthy();
+      describe('when navigation of origin has only one route',
+        function() {
+
+          beforeEach(function() {
+            routeList.push({});
+          });
+
+          it('should return true', function() {
+            expect(service.isSimpleNavigation(Mock.n1.id)).toBeTruthy();
+          });
+
         });
 
-      });
+      describe('when navigation of origin has more than one route',
+        function() {
 
-      describe('when navigation of origin has more than one route', function() {
+          beforeEach(function() {
+            routeList.push({});
+            routeList.push({});
+          });
 
-        beforeEach(function() {
-          routeList.push({});
-          routeList.push({});
+          it('should return false', function() {
+            expect(service.isSimpleNavigation(Mock.n1.id)).toBe(
+              false);
+          });
+
         });
-
-        it('should return false', function() {
-          expect(service.isSimpleNavigation(Mock.n1.id)).toBe(false);
-        });
-
-      });
 
     });
 
@@ -303,8 +353,10 @@ xdescribe('DataService', function() {
 
       beforeEach(function() {
         Mock.route = {};
-        Mock.route.toJson = jasmine.createSpy('toJson').and.returnValue('{}');
-        Mock.navigation.getRoute = jasmine.createSpy('getRoute').and.returnValue(Mock.route);
+        Mock.route.toJson = jasmine.createSpy('toJson').and.returnValue(
+          '{}');
+        Mock.navigation.getRoute = jasmine.createSpy('getRoute')
+          .and.returnValue(Mock.route);
       });
 
       it('should call getRoute method from navigation', function() {
@@ -327,11 +379,13 @@ xdescribe('DataService', function() {
         expect(JSON.parse).toHaveBeenCalledWith(Mock.route.toJson());
       });
 
-      it('should set the json parse result to current route data reference', function() {
-        service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
+      it(
+        'should set the json parse result to current route data reference',
+        function() {
+          service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
 
-        expect(service.selectedRoute()).not.toBe(null);
-      });
+          expect(service.selectedRoute()).not.toBe(null);
+        });
 
     });
 
@@ -345,39 +399,51 @@ xdescribe('DataService', function() {
 
     describe('listAvailableWhen method', function() {
 
-      it('should call NavigationManagerService.getAvaiableRuleCriterionTargets', function() {
-        service.listAvailableWhen();
+      it(
+        'should call NavigationManagerService.getAvaiableRuleCriterionTargets',
+        function() {
+          service.listAvailableWhen();
 
-        expect(Mock.survey.NavigationManager.getAvaiableRuleCriterionTargets).toHaveBeenCalled();
-      });
+          expect(Mock.survey.NavigationManager.getAvaiableRuleCriterionTargets)
+            .toHaveBeenCalled();
+        });
 
-      it('should call itemList.map with RuleWhenBuilderService.build', function() {
-        spyOn(Mock.itemList, 'map');
+      it(
+        'should call itemList.map with RuleWhenBuilderService.build',
+        function() {
+          spyOn(Mock.itemList, 'map');
 
-        service.listAvailableWhen();
+          service.listAvailableWhen();
 
-        expect(Mock.itemList.map).toHaveBeenCalledWith(Mock.RuleWhenBuilderService.build);
-      });
+          expect(Mock.itemList.map).toHaveBeenCalledWith(Mock.RuleWhenBuilderService
+            .build);
+        });
 
-      it('should return a list of available items to define a rule criterion', function() {
-        var expectedItems = Mock.itemList.map(Mock.RuleWhenBuilderService.build);
-        var availableItems = service.listAvailableWhen();
+      it(
+        'should return a list of available items to define a rule criterion',
+        function() {
+          var expectedItems = Mock.itemList.map(Mock.RuleWhenBuilderService
+            .build);
+          var availableItems = service.listAvailableWhen();
 
-        expect(availableItems).toEqual(expectedItems);
-      });
+          expect(availableItems).toEqual(expectedItems);
+        });
 
     });
 
     describe('listAvailableOperator method', function() {
 
-      it('should call itemList.map with RuleOperatorBuilderService.build', function() {
-        service.listAvailableOperator();
+      it(
+        'should call itemList.map with RuleOperatorBuilderService.build',
+        function() {
+          service.listAvailableOperator();
 
-        expect(Mock.RuleOperatorBuilderService.build).toHaveBeenCalled();
-      });
+          expect(Mock.RuleOperatorBuilderService.build).toHaveBeenCalled();
+        });
 
       it('should return a list of available operators', function() {
-        expect(service.listAvailableOperator('TextQuestion')).toEqual(jasmine.any(Array));
+        expect(service.listAvailableOperator('TextQuestion')).toEqual(
+          jasmine.any(Array));
       });
 
     });
@@ -405,19 +471,24 @@ xdescribe('DataService', function() {
   }
 
   function mockNavigationBuilderScopeService($injector) {
-    Mock.NavigationBuilderScopeService = $injector.get('otusjs.studio.navigationBuilder.NavigationBuilderScopeService');
+    Mock.NavigationBuilderScopeService = $injector.get(
+      'otusjs.studio.navigationBuilder.NavigationBuilderScopeService');
     injections.NavigationBuilderScopeService = Mock.NavigationBuilderScopeService;
     spyOn(Mock.NavigationBuilderScopeService, 'emit');
   }
 
   function mockRuleWhenBuilderService($injector) {
-    Mock.RuleWhenBuilderService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService');
+    Mock.RuleWhenBuilderService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService'
+    );
     injections.RuleWhenBuilderService = Mock.RuleWhenBuilderService;
     spyOn(Mock.RuleWhenBuilderService, 'build').and.callThrough();
   }
 
   function mockRuleOperatorBuilderService($injector) {
-    Mock.RuleOperatorBuilderService = $injector.get('otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService');
+    Mock.RuleOperatorBuilderService = $injector.get(
+      'otusjs.studio.navigationBuilder.routeBuilder.RuleOperatorBuilderService'
+    );
     injections.RuleOperatorBuilderService = Mock.RuleOperatorBuilderService;
     spyOn(Mock.RuleOperatorBuilderService, 'build').and.callThrough();
   }
@@ -428,11 +499,13 @@ xdescribe('DataService', function() {
     Mock.survey = {};
     Mock.survey.NavigationManager = {};
 
-    var spy = jasmine.createSpy('getAvaiableRuleCriterionTargets').and.returnValue(Mock.itemList);
+    var spy = jasmine.createSpy('getAvaiableRuleCriterionTargets').and.returnValue(
+      Mock.itemList);
     Mock.survey.NavigationManager.getAvaiableRuleCriterionTargets = spy;
 
     Mock.navigation = {};
-    spy = jasmine.createSpy('selectNavigationByOrigin').and.returnValue(Mock.navigation);
+    spy = jasmine.createSpy('selectNavigationByOrigin').and.returnValue(
+      Mock.navigation);
     Mock.survey.NavigationManager.selectNavigationByOrigin = spy;
   }
 
