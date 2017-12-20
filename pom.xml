@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>otus-studio</artifactId>
   <groupId>org.ccem.studio</groupId>
-  <version>1.5</version>
+  <version>1.5.1</version>
   <packaging>war</packaging>
   <name>Otus Studio</name>
 
