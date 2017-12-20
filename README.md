@@ -1,6 +1,3 @@
-# Servidor Testes
-Para realizar testes e homologações, disponibilizamos um [a  servidor](http://studio.hmg.ccem.ufrgs.br/otus-studio) aberto ao publico.
-
 # Configuração de Ambiente
 
 ### Versões de ferramentas necessárias
@@ -39,7 +36,4 @@ O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus-stu
 
 ### Contato
 Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
-Email: ccem-projects@gmail.com <br />
-Chat : https://www.hipchat.com/gWD3zStLw
-
-
+Email: contato@outs-solutions.com.br <br />
