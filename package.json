@@ -45,7 +45,7 @@
     "moment": "2.12.0",
     "node-uuid": "^1.4.7",
     "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#v1.0",
-    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#v1.9",
+    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#v1.10",
     "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#v1.7",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#v1.0",
     "registry-url": "^3.1.0",
