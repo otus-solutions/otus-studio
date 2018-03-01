@@ -25,6 +25,9 @@
   function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
     var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
+    var _user = undefined;
+    var _participant = undefined;
+    var _activityConfigurationName = "C0";
 
     $element.on('click', function() {
       var otusSheetDOMElement = $('otus-player');
@@ -48,7 +51,7 @@
     }
 
     function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
     }
   }
 
