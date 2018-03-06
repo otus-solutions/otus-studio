@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>otus-studio</artifactId>
   <groupId>org.ccem.studio</groupId>
-  <version>1.5.1</version>
+  <version>1.6</version>
   <packaging>war</packaging>
   <name>Otus Studio</name>
 
@@ -176,6 +176,13 @@
                 </flowInitContext>
                 <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
               </configuration>
+              <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.12</version>
+              </dependency>
+            </dependencies>
             </plugin>
           </plugins>
         </build>
