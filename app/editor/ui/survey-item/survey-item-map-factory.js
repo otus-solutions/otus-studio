@@ -20,7 +20,7 @@
 
       'PhoneQuestion': '<phone-question></phone-question>',
       'EmailQuestion': '<email-question></email-question>',
-      'TimeQuestion': '<time-question></time-question>',
+      'TimeQuestion': '<time-question item="$ctrl.item"></time-question>',
       'TextQuestion': '<text-question></text-question>',
 
       'TextItem': '<text-item item="$ctrl.item"></text-item>',
