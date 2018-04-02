@@ -109,6 +109,7 @@ describe('timeQuestion component', function() {
   function mockController(_$controller_, injections) {
     $controller = _$controller_('TimeQuestionController');
     $controller.item = question;
+    // $controller.item.options.data.disabledButton.value = true;
     $controller.$onInit();
     $controller.item.options.data = undefined;
     $controller.$onInit();

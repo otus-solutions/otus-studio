@@ -6,7 +6,7 @@
         .factory('AddOptionItemEventFactory', AddOptionItemEventFactory);
 
     AddOptionItemEventFactory.$inject = [
-        'AddOptionItemService',//TODO ALTERAR MODEL
+        'AddOptionItemService',
         'WorkspaceService'
     ];
 

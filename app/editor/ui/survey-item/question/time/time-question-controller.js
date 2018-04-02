@@ -20,10 +20,11 @@
 
     function onInit() {
       self.item = self.getItem();
-      self.button = true;
+
       self.disabledButton = 'disabledButton';
       if (self.item.isQuestion()) {
         if (self.item.options.data == undefined) {
+          self.button = true;
           self.questionOptions = false;
         } else {
           self.questionOptions = self.item.options;
@@ -36,7 +37,7 @@
     }
 
     function updateOption(name, value) {
-      if (self.questionOptions) {
+      if (!self.button) {
         AddOptionItemEventFactory.create().execute(self.item, name, value);
         getItem().options.data = self.questionOptions.data;
         UpdateOptionItemEventFactory.create().execute();
