@@ -28,8 +28,8 @@
 
         self.execute = execute;
 
-        function execute(questionSource, optionName) {
-            RemoveOptionItemService.execute(questionSource.getItem(), optionName);
+        function execute(questionReference, optionName) {
+            RemoveOptionItemService.execute(questionReference, optionName);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

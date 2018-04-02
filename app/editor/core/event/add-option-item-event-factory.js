@@ -28,7 +28,7 @@
         self.execute = execute;
 
         function execute(questionReference, optionName, optionValue) {
-            var option = AddOptionItemService.execute(questionReference, optionName, optionValue);//TODO ALTERAR
+            var option = AddOptionItemService.execute(questionReference, optionName, optionValue);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
             return option;

@@ -41,7 +41,7 @@
         getItem().options.data = self.questionOptions.data;
         UpdateOptionItemEventFactory.create().execute();
       } else {
-        RemoveOptionItemEventFactory.create().execute(self, name);
+        RemoveOptionItemEventFactory.create().execute(self.item, name);
       }
     }
 
