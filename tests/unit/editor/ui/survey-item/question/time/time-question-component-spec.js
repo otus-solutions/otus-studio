@@ -23,27 +23,65 @@ describe('timeQuestion component', function() {
   var element, scope;
   var component = {};
   var $controller;
+  var mockAddOption;
+  var mockRemoveOption;
+  var mockUpdateOption;
   beforeEach(function() {
     angular.mock.module('studio');
   });
 
+  beforeEach(function() {
+    mockAddOption = {
+      create: function() {
+        return {
+          execute: function(item, name, value) {
+            return new Object();
+          }
+        };
+      }
+    }
+    mockRemoveOption = {
+      create: function() {
+        return {
+          execute: function(item, name) {
+            return new Object();
+          }
+        };
+      }
+    }
+    mockUpdateOption = {
+      create: function() {
+        return {
+          execute: function() {
+            return new Object();
+          }
+        };
+      }
+    }
+
+    angular.mock.module(function($provide) {
+      $provide.value('AddOptionItemEventFactory', mockAddOption);
+      $provide.value('UpdateOptionItemEventFactory', mockUpdateOption);
+      $provide.value('RemoveOptionItemEventFactory', mockRemoveOption);
+    });
+  });
+
   beforeEach(
     angular.mock.inject(function(_$injector_, _$rootScope_, _$compile_, _$controller_, $templateCache) {
-
       /* Injectable mocks */
       var injections = {
-        AddOptionItemEventFactory : _$injector_.get('AddOptionItemEventFactory'),
-        UpdateOptionItemEventFactory : _$injector_.get('UpdateOptionItemEventFactory'),
-        RemoveOptionItemEventFactory :_$injector_.get('RemoveOptionItemEventFactory')
+        AddOptionItemEventFactory: _$injector_.get('AddOptionItemEventFactory'),
+        UpdateOptionItemEventFactory: _$injector_.get('UpdateOptionItemEventFactory'),
+        RemoveOptionItemEventFactory: _$injector_.get('RemoveOptionItemEventFactory')
       }
       $templateCache.put('app/editor/ui/survey-item/question/time/time-question-template.html', TEMPLATE);
 
-      mockController(_$controller_,injections);
       mockTimeQuestionFactory(_$injector_);
+      mockController(_$controller_, injections);
 
       scope = _$rootScope_.$new();
-      scope.item = {name: "Tiago"};
-      element = angular.element('<time-question item="$ctrl.item"></time-question>');
+      scope.item = question;
+      element = angular.element('<time-question item="item"></time-question>');
       component = _$compile_(element)(scope);
       scope.$digest();
     }));
@@ -51,22 +89,15 @@ describe('timeQuestion component', function() {
 
   describe('tests component', function() {
     it('should render component', function() {
-
       expect(component[0]).not.toBeNull();
       expect(component[0]).toEqual(element[0]);
-
     });
-
   });
 
   describe('tests controller', function() {
-    var item;
-    beforeEach(function() {
-      spyOn($controller, 'updateOption');
-      item = $controller.updateOption(jasmine.any(String), jasmine.any(Boolean));
-    });
-    it('should test the functions controller', function() {
-        expect($controller.updateOption).toHaveBeenCalledWith(jasmine.any(String), jasmine.any(Boolean));
+    it('should render component', function() {
+      expect($controller.item).not.toBeNull();
+      expect($controller.item).toEqual(question);
     });
   });
 
@@ -76,14 +107,12 @@ describe('timeQuestion component', function() {
   }
 
   function mockController(_$controller_, injections) {
-    $controller = _$controller_('TimeQuestionController', injections);
+    $controller = _$controller_('TimeQuestionController');
     $controller.item = question;
     $controller.$onInit();
-    $controller.updateOption(jasmine.any(String), jasmine.any(Boolean));
-    // $controller._getRuleType();
-    $controller.getItem();
-    // console.log($controller.getItem());
-
+    $controller.item.options.data = undefined;
+    $controller.$onInit();
+    $controller.updateOption(jasmine.any(String), jasmine.any(String));
   }
 
 
