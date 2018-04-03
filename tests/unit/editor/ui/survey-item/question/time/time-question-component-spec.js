@@ -110,6 +110,7 @@ describe('timeQuestion component', function() {
     $controller = _$controller_('TimeQuestionController');
     $controller.item = question;
 
+    $controller.item.options.createOption("disabledButton", true);
     $controller.$onInit();
     $controller.item.options.data = undefined;
     $controller.$onInit();

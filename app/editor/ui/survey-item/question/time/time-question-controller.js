@@ -21,14 +21,15 @@
     function onInit() {
       self.item = self.getItem();
 
+      self.button = true;
       self.disabledButton = 'disabledButton';
       if (self.item.isQuestion()) {
         if (self.item.options.data == undefined) {
-          self.button = true;
           self.questionOptions = false;
         } else {
           self.questionOptions = self.item.options;
-          if (!self.questionOptions.data.disabledButton) {
+          self.button = self.item.options.data.disabledButton.value ? false : true;
+          if (!self.questionOptions.data.disabledButton.value) {
             updateOption(self.disabledButton, !self.button);
 
           }
