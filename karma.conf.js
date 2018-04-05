@@ -12,7 +12,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify', 'jasmine'],
+    frameworks: ['jasmine', 'browserify'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -20,6 +20,7 @@ module.exports = function(config) {
       NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
       NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
       NODE_MODULES_ROOT_PATH +
@@ -30,7 +31,6 @@ module.exports = function(config) {
       'angular-indexed-db/angular-indexed-db.min.js',
       NODE_MODULES_ROOT_PATH +
       'angular-messages/angular-messages.min.js',
-      NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'angular-mousewheel/mousewheel.js',
       NODE_MODULES_ROOT_PATH +
       'angular-resource/angular-resource.min.js',
@@ -86,7 +86,7 @@ module.exports = function(config) {
 
     browserify: {
       debug: true,
-      transform: ['babelify']
+      transform: ['babelify', 'stringify']
     },
     plugins: [
       'karma-jasmine',
