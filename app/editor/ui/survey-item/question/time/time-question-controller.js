@@ -17,6 +17,7 @@
     self.$onInit = onInit;
     self.updateOption = updateOption;
     self.getItem = getItem;
+    self.getDisabledButton = getDisabledButton;
 
     function onInit() {
       self.item = self.getItem();
@@ -24,12 +25,12 @@
       self.button = true;
       self.disabledButton = 'disabledButton';
       if (self.item.isQuestion()) {
-        if (self.item.options.data == undefined) {
+        if (self.item.options == undefined) {
           self.questionOptions = false;
         } else {
           self.questionOptions = self.item.options;
-          self.button = self.item.options.data.disabledButton.value ? false : true;
-          if (!self.questionOptions.data.disabledButton.value) {
+          self.button = getDisabledButton();
+          if (!self.button) {
             updateOption(self.disabledButton, !self.button);
 
           }
@@ -49,6 +50,17 @@
 
     function getItem() {
       return self.item;
+    }
+
+    function getDisabledButton() {
+      if(self.item.options !== undefined){
+        if(self.item.options.data.disabledButton !== undefined){
+          return false;
+        }else {
+          return true;
+        }
+      }
+
     }
 
   }
