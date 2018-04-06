@@ -19,7 +19,7 @@ describe('timeQuestion component', function() {
 
   var Mock = {};
   var Injections = {};
-  var question;
+  var question = {};
   var element, scope;
   var component = {};
   var $controller;
@@ -69,15 +69,11 @@ describe('timeQuestion component', function() {
   beforeEach(
     angular.mock.inject(function(_$injector_, _$rootScope_, _$compile_, _$controller_, $templateCache) {
       /* Injectable mocks */
-      var injections = {
-        AddOptionItemEventFactory: _$injector_.get('AddOptionItemEventFactory'),
-        UpdateOptionItemEventFactory: _$injector_.get('UpdateOptionItemEventFactory'),
-        RemoveOptionItemEventFactory: _$injector_.get('RemoveOptionItemEventFactory')
-      }
+
       $templateCache.put('app/editor/ui/survey-item/question/time/time-question-template.html', TEMPLATE);
 
       mockTimeQuestionFactory(_$injector_);
-      mockController(_$controller_, injections);
+      mockController(_$controller_);
 
       scope = _$rootScope_.$new();
       scope.item = question;
@@ -95,26 +91,36 @@ describe('timeQuestion component', function() {
   });
 
   describe('tests controller', function() {
-    it('should render component', function() {
+    it('should get item', function() {
       expect($controller.item).not.toBeNull();
       expect($controller.item).toEqual(question);
     });
   });
 
+  describe('tests controller', function() {
+    beforeEach(function() {
+
+    })
+
+  });
+
   function mockTimeQuestionFactory($injector) {
     Mock.TimeQuestionFactory = $injector.get('TimeQuestionFactory');
     question = Mock.TimeQuestionFactory.create('TimeQuestion', jasmine.any(String));
+    return question;
   }
 
-  function mockController(_$controller_, injections) {
+  function mockController(_$controller_) {
     $controller = _$controller_('TimeQuestionController');
     $controller.item = question;
-
+    $controller.getDisabledButton();
     $controller.item.options.createOption("disabledButton", true);
     $controller.$onInit();
-    $controller.item.options.data = undefined;
+    $controller.item.options = undefined;
     $controller.$onInit();
-    $controller.updateOption(jasmine.any(String), jasmine.any(String));
+    $controller.getDisabledButton();
+    $controller.updateOption("disabledButton", true);
+
   }
 
 
