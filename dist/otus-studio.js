@@ -404,6 +404,9 @@
   function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
     var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
+    var _user = undefined;
+    var _participant = undefined;
+    var _activityConfigurationName = "C0";
 
     $element.on('click', function() {
       var otusSheetDOMElement = $('otus-player');
@@ -427,7 +430,7 @@
     }
 
     function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey());
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
     }
   }
 
@@ -1266,6 +1269,45 @@
 
     angular
         .module('editor.core')
+        .factory('AddOptionItemEventFactory', AddOptionItemEventFactory);
+
+    AddOptionItemEventFactory.$inject = [
+        'AddOptionItemService',
+        'WorkspaceService'
+    ];
+
+    function AddOptionItemEventFactory(AddOptionItemService, WorkspaceService) {
+        var self = this;
+
+        self.create = create;
+
+        function create() {
+            return new AddOptionItemEvent(AddOptionItemService, WorkspaceService);
+        }
+
+        return self;
+    }
+
+    function AddOptionItemEvent(AddOptionItemService, WorkspaceService) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(questionReference, optionName, optionValue) {
+            var option = AddOptionItemService.execute(questionReference, optionName, optionValue);
+            WorkspaceService.workspace.isdb.userEdits.store(self);
+            WorkspaceService.saveWork();
+            return option;
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core')
         .factory('AddRouteConditionEventFactory', AddRouteConditionEventFactory);
 
     AddRouteConditionEventFactory.$inject = [
@@ -1473,6 +1515,45 @@
 
     angular
         .module('editor.core')
+        .factory('RemoveOptionItemEventFactory', RemoveOptionItemEventFactory);
+
+    RemoveOptionItemEventFactory.$inject = [
+        'RemoveOptionItemService',
+        'WorkspaceService'
+    ];
+
+    function RemoveOptionItemEventFactory(RemoveOptionItemService, WorkspaceService) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new RemoveOptionItemEvent(RemoveOptionItemService, WorkspaceService);
+        }
+
+        return self;
+    }
+
+    function RemoveOptionItemEvent(RemoveOptionItemService, WorkspaceService) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(questionReference, optionName) {
+            RemoveOptionItemService.execute(questionReference, optionName);
+            WorkspaceService.workspace.isdb.userEdits.store(self);
+            WorkspaceService.saveWork();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core')
         .factory('RemoveRouteEventFactory', RemoveRouteEventFactory);
 
     RemoveRouteEventFactory.$inject = [
@@ -1612,6 +1693,43 @@
     }
 
     function UpdateFillingRulesEvent(WorkspaceService) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute() {
+            WorkspaceService.workspace.isdb.userEdits.store(self);
+            WorkspaceService.saveWork();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core')
+        .factory('UpdateOptionItemEventFactory', UpdateOptionItemEventFactory);
+
+    UpdateOptionItemEventFactory.$inject = [
+        'WorkspaceService'
+    ];
+
+    function UpdateOptionItemEventFactory(WorkspaceService) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new UpdateOptionItemEvent(WorkspaceService);
+        }
+
+        return self;
+    }
+
+    function UpdateOptionItemEvent(WorkspaceService) {
         var self = this;
 
         self.execute = execute;
@@ -1964,42 +2082,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('studioSheet', {
-      templateUrl: 'app/editor/ui/sheet/sheet.html',
-      controller: Controller,
-      bindings: {
-        template: '<'
-      }
-    });
-
-  Controller.$inject = [
-    'WorkspaceService',
-    '$window',
-    'PageAnchorService'
-  ];
-
-  function Controller(WorkspaceService, $window, PageAnchorService) {
-    var self = this;
-
-    self.$onInit = function () {
-      PageAnchorService.setUp(self.template.SurveyItemManager);
-      $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
-    }
-
-    self.$onDestroy = function() {
-      WorkspaceService.closeWork();
-      $window.sessionStorage.removeItem('surveyTemplate_OID');
-    }
-
-  }
-
-})();
-
-(function() {
     'use strict';
 
     angular
@@ -2079,6 +2161,42 @@
 
   angular
     .module('editor.ui')
+    .component('studioSheet', {
+      templateUrl: 'app/editor/ui/sheet/sheet.html',
+      controller: Controller,
+      bindings: {
+        template: '<'
+      }
+    });
+
+  Controller.$inject = [
+    'WorkspaceService',
+    '$window',
+    'PageAnchorService'
+  ];
+
+  function Controller(WorkspaceService, $window, PageAnchorService) {
+    var self = this;
+
+    self.$onInit = function () {
+      PageAnchorService.setUp(self.template.SurveyItemManager);
+      $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
+    }
+
+    self.$onDestroy = function() {
+      WorkspaceService.closeWork();
+      $window.sessionStorage.removeItem('surveyTemplate_OID');
+    }
+
+  }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .component('otusStage', {
       templateUrl: 'app/editor/ui/stage/stage.html',
       bindings: {
@@ -2110,7 +2228,7 @@
 
       'PhoneQuestion': '<phone-question></phone-question>',
       'EmailQuestion': '<email-question></email-question>',
-      'TimeQuestion': '<time-question></time-question>',
+      'TimeQuestion': '<time-question item="$ctrl.item"></time-question>',
       'TextQuestion': '<text-question></text-question>',
 
       'TextItem': '<text-item item="$ctrl.item"></text-item>',
@@ -2587,6 +2705,54 @@
 
     angular
         .module('editor.workspace')
+        .directive('surveyTemplateExport', surveyTemplateExport);
+
+    surveyTemplateExport.$inject = ['WorkspaceService'];
+
+    function surveyTemplateExport(WorkspaceService) {
+        var ddo = {
+            restrict: 'A',
+            link: function(scope, element) {
+                element.on('click', function() {
+                    var downloadElement = document.createElement('a');
+                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
+                    downloadElement.setAttribute('download', 'surveyTemplate.json');
+                    downloadElement.setAttribute('target', '_blank');
+                    downloadElement.click();
+                });
+            }
+        };
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
+        .service('SurveyExportService', SurveyExportService);
+
+
+    function SurveyExportService() {
+        var self = this;
+
+        /* Public interface */
+        self.exportSurvey = exportSurvey;
+
+        function exportSurvey(JsonTemplate) {
+            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.workspace')
         .factory('SurveyProjectFactory', SurveyProjectFactory);
 
     function SurveyProjectFactory() {
@@ -2647,54 +2813,6 @@
                 value: lastSaveDateTime,
                 writable: false
             });
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .directive('surveyTemplateExport', surveyTemplateExport);
-
-    surveyTemplateExport.$inject = ['WorkspaceService'];
-
-    function surveyTemplateExport(WorkspaceService) {
-        var ddo = {
-            restrict: 'A',
-            link: function(scope, element) {
-                element.on('click', function() {
-                    var downloadElement = document.createElement('a');
-                    downloadElement.setAttribute('href', WorkspaceService.exportWork());
-                    downloadElement.setAttribute('download', 'surveyTemplate.json');
-                    downloadElement.setAttribute('target', '_blank');
-                    downloadElement.click();
-                });
-            }
-        };
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.workspace')
-        .service('SurveyExportService', SurveyExportService);
-
-
-    function SurveyExportService() {
-        var self = this;
-
-        /* Public interface */
-        self.exportSurvey = exportSurvey;
-
-        function exportSurvey(JsonTemplate) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
         }
     }
 
@@ -3235,72 +3353,6 @@
 
   angular
     .module('otusjs.studio.navigationBuilder')
-    .component('otusNavigationMap', {
-      templateUrl: 'app/navigation-builder/map/component/map-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
-  ];
-
-  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
-    var self = this;
-    // var _messageLayer = null;
-
-    /* Publi methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      self.toolsCtrl = new ToolsController(NavigationBuilderService);
-      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
-    }
-
-    function _renderMap() {
-      var nodes = NavigationBuilderService.nodes();
-      var edges = NavigationBuilderService.edges();
-
-      GraphLayerService.initialize();
-      GraphLayerService.loadData(nodes, edges);
-      GraphLayerService.render();
-    }
-  }
-
-  function ToolsController(NavigationBuilderService) {
-    var self = this;
-
-    _init();
-
-    /* Public methods */
-    self.click = click;
-    self.addRoute = addRoute;
-    self.inspect = inspect;
-
-    function click() {
-      self.isOpen = !self.isOpen;
-    }
-
-    function addRoute() {
-      NavigationBuilderService.activateRouteCreatorMode();
-    }
-
-    function inspect() {
-      NavigationBuilderService.activateNavigationInspectorMode();
-    }
-
-    function _init() {
-      self.isOpen = false;
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder')
     .service('otusjs.studio.navigationBuilder.GraphLayerEventService', service);
 
   function service() {
@@ -3709,6 +3761,72 @@
       var style = { color: '#CCC' };
       _graphLayer.updateAllNodesStyle(style);
       _graphLayer.updateAllEdgesStyle(style);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .component('otusNavigationMap', {
+      templateUrl: 'app/navigation-builder/map/component/map-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.GraphLayerService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+  ];
+
+  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
+    var self = this;
+    // var _messageLayer = null;
+
+    /* Publi methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      self.toolsCtrl = new ToolsController(NavigationBuilderService);
+      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
+    }
+
+    function _renderMap() {
+      var nodes = NavigationBuilderService.nodes();
+      var edges = NavigationBuilderService.edges();
+
+      GraphLayerService.initialize();
+      GraphLayerService.loadData(nodes, edges);
+      GraphLayerService.render();
+    }
+  }
+
+  function ToolsController(NavigationBuilderService) {
+    var self = this;
+
+    _init();
+
+    /* Public methods */
+    self.click = click;
+    self.addRoute = addRoute;
+    self.inspect = inspect;
+
+    function click() {
+      self.isOpen = !self.isOpen;
+    }
+
+    function addRoute() {
+      NavigationBuilderService.activateRouteCreatorMode();
+    }
+
+    function inspect() {
+      NavigationBuilderService.activateNavigationInspectorMode();
+    }
+
+    function _init() {
+      self.isOpen = false;
     }
   }
 })();
@@ -7298,20 +7416,6 @@
 
   angular
     .module('editor.ui')
-    .component('textItem', {
-      templateUrl: 'app/editor/ui/survey-item/misc/text/text-item-template.html',
-      bindings: {
-        item: '<'
-      }
-    });
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
     .component('autocompleteQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/autocomplete/autocomplete-question-template.html',
       controller: Controller,
@@ -7387,6 +7491,20 @@
       "Tocantins"
     ];
   }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('textItem', {
+      templateUrl: 'app/editor/ui/survey-item/misc/text/text-item-template.html',
+      bindings: {
+        item: '<'
+      }
+    });
 
 }());
 
@@ -7533,17 +7651,6 @@
 
   angular
     .module('editor.ui')
-    .component('emailQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/email/email-question-template.html',
-    });
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
     .directive('fileUploadQuestion', directive);
 
   function directive(FileUploadQuestionWidgetFactory) {
@@ -7647,6 +7754,17 @@
       return '<file-upload-question></file-upload-question>';
     }
   }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('emailQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/email/email-question-template.html',
+    });
 
 }());
 
@@ -7886,8 +8004,82 @@
   angular
     .module('editor.ui')
     .component('timeQuestion', {
+      controller: 'TimeQuestionController as $ctrl',
       templateUrl: 'app/editor/ui/survey-item/question/time/time-question-template.html',
+      bindings: {
+        item: '<'
+      }
     });
+
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .controller('TimeQuestionController', Controller);
+
+  Controller.$inject = [
+    'AddOptionItemEventFactory',
+    'UpdateOptionItemEventFactory',
+    'RemoveOptionItemEventFactory'
+  ]
+
+  function Controller(AddOptionItemEventFactory, UpdateOptionItemEventFactory, RemoveOptionItemEventFactory) {
+    var self = this;
+
+    self.$onInit = onInit;
+    self.updateOption = updateOption;
+    self.getItem = getItem;
+    self.getDisabledButton = getDisabledButton;
+
+    function onInit() {
+      self.item = self.getItem();
+
+      self.button = true;
+      self.disabledButton = 'disabledButton';
+      if (self.item.isQuestion()) {
+        if (self.item.options == undefined) {
+          self.questionOptions = false;
+        } else {
+          self.questionOptions = self.item.options;
+          self.button = getDisabledButton();
+          if (!self.button) {
+            updateOption(self.disabledButton, !self.button);
+
+          }
+        }
+      }
+    }
+
+    function updateOption(name, value) {
+      if (!self.button) {
+        AddOptionItemEventFactory.create().execute(self.item, name, value);
+        getItem().options.data = self.questionOptions.data;
+        UpdateOptionItemEventFactory.create().execute();
+      } else {
+        RemoveOptionItemEventFactory.create().execute(self.item, name);
+      }
+    }
+
+    function getItem() {
+      return self.item;
+    }
+
+    function getDisabledButton() {
+      if(self.item.options !== undefined){
+        if(self.item.options.data.disabledButton !== undefined){
+          return false;
+        }else {
+          return true;
+        }
+      }
+
+    }
+
+  }
 
 }());
 
