@@ -24,11 +24,11 @@
   <repositories>
     <repository>
       <id>releases</id>
-      <url>http://ccem.ufrgs.br:8081/nexus/content/repositories/releases</url>
+      <url>http://nexus.inf.otus-solutions.com.br/repository/maven-releases/</url>
     </repository>
     <repository>
       <id>snapshots</id>
-      <url>http://ccem.ufrgs.br:8081/nexus/content/repositories/snapshots</url>
+      <url>http://nexus.inf.otus-solutions.com.br/repository/maven-snapshots/</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -38,11 +38,11 @@
   <distributionManagement>
     <repository>
       <id>releases</id>
-      <url>http://ccem.ufrgs.br:8081/nexus/content/repositories/releases</url>
+      <url>http://nexus.inf.otus-solutions.com.br/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
       <id>snapshots</id>
-      <url>http://ccem.ufrgs.br:8081/nexus/content/repositories/snapshots</url>
+      <url>http://nexus.inf.otus-solutions.com.br/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -165,6 +165,7 @@
               <artifactId>jgitflow-maven-plugin</artifactId>
               <version>1.0-m5.1</version>
               <configuration>
+                <noDeploy>true</noDeploy>
                 <autoVersionSubmodules>true</autoVersionSubmodules>
                 <flowInitContext>
                   <masterBranchName>master</masterBranchName>
