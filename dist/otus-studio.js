@@ -282,6 +282,13 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
   'use strict';
 
   angular
@@ -291,13 +298,6 @@
       'editor.ui',
       'editor.workspace'
     ]);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('studio.dashboard', []);
 
 }());
 
@@ -517,79 +517,6 @@
     'use strict';
 
     angular
-        .module('editor')
-        .service('SurveyEditorService', SurveyEditorService);
-
-    SurveyEditorService.$inject = ['WorkspaceService'];
-
-    function SurveyEditorService(WorkspaceService) {
-        var self = this;
-
-        /* Public interface */
-        self.startEditor = startEditor;
-        self.startEditorWithSurveyTemplate = startEditorWithSurveyTemplate;
-
-        function startEditor(initializationData) {
-            WorkspaceService.initializeWorkspace({
-                owner: 'visitor'
-            });
-            WorkspaceService.startNewWork(initializationData);
-        }
-
-        function startEditorWithSurveyTemplate(surveyTemplate) {
-            WorkspaceService.initializeWorkspace({
-                owner: 'visitor'
-            });
-            WorkspaceService.loadWork(surveyTemplate);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.core', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.database', [])
-        .config(function($indexedDBProvider) {
-            $indexedDBProvider
-                .connection('otus-studio')
-                .upgradeDatabase(1, function(event, db, tx) {
-                    var store = db.createObjectStore('survey_template', { keyPath: 'template_oid'});
-                    store.createIndex('contributor_idx', 'contributor', { unique: false });
-                });
-        });
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('editor.ui', [
-        'angular-bind-html-compile'
-    ]);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('editor.workspace', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('studio.dashboard')
         .service('DashboardStateService', DashboardStateService);
 
@@ -782,6 +709,79 @@
         .module('surveyTemplates', []);
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor')
+        .service('SurveyEditorService', SurveyEditorService);
+
+    SurveyEditorService.$inject = ['WorkspaceService'];
+
+    function SurveyEditorService(WorkspaceService) {
+        var self = this;
+
+        /* Public interface */
+        self.startEditor = startEditor;
+        self.startEditorWithSurveyTemplate = startEditorWithSurveyTemplate;
+
+        function startEditor(initializationData) {
+            WorkspaceService.initializeWorkspace({
+                owner: 'visitor'
+            });
+            WorkspaceService.startNewWork(initializationData);
+        }
+
+        function startEditorWithSurveyTemplate(surveyTemplate) {
+            WorkspaceService.initializeWorkspace({
+                owner: 'visitor'
+            });
+            WorkspaceService.loadWork(surveyTemplate);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.database', [])
+        .config(function($indexedDBProvider) {
+            $indexedDBProvider
+                .connection('otus-studio')
+                .upgradeDatabase(1, function(event, db, tx) {
+                    var store = db.createObjectStore('survey_template', { keyPath: 'template_oid'});
+                    store.createIndex('contributor_idx', 'contributor', { unique: false });
+                });
+        });
+
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('editor.ui', [
+        'angular-bind-html-compile'
+    ]);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('editor.workspace', []);
+
+}());
 
 (function() {
   'use strict';
@@ -1108,6 +1108,329 @@
 
     angular
         .module('ui.components', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
+        .service('LogoutDialogService', LogoutDialogService);
+
+    LogoutDialogService.$inject = ['$mdDialog'];
+
+    function LogoutDialogService($mdDialog) {
+        var self = this;
+
+        /* Public interface */
+        self.showDialog = showDialog;
+
+        init();
+
+        function init() {
+            self.dialogSettings = {
+                parent: angular.element(document.body),
+                templateUrl: 'app/dashboard/dialog/logout/logout-dialog.html',
+                controller: DialogController,
+                controllerAs: 'controller',
+                openFrom: '#system-toolbar',
+                closeTo: {
+                    bottom: 0
+                }
+            };
+        }
+
+        function showDialog() {
+            $mdDialog
+                .show(self.dialogSettings)
+                .then(
+                    forwardSuccessfulExecution,
+                    forwardUnsuccessfulExecution
+                );
+
+            return {
+                onConfirm: function (callback) {
+                    self.callback = callback;
+                }
+            };
+        }
+
+        function forwardSuccessfulExecution(response) {
+            if (response.action == 'confirm') {
+                if (self.callback) self.callback(response.data);
+            }
+        }
+
+        function forwardUnsuccessfulExecution() {
+        }
+    }
+
+    function DialogController($mdDialog) {
+        var self = this;
+
+        /* Public interface */
+        self.cancel = cancel;
+        self.confirm = confirm;
+
+        function cancel(response) {
+            $mdDialog.hide(response);
+        }
+
+        function confirm(response) {
+            $mdDialog.hide(response);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
+        .directive('otusToolbar', otusToolbar);
+
+    function otusToolbar() {
+        var ddo = {
+            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SelectedSurveyTemplatesManagementService', SelectedSurveyTemplatesManagementService);
+
+    function SelectedSurveyTemplatesManagementService() {
+        var self = this;
+        self.selectedSurveyTemplates = [];
+
+        self.selectSurveyTemplate = selectSurveyTemplate;
+        self.removeSurveyTemplate = removeSurveyTemplate;
+        self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
+        self.hasOnlyOneSelectedSurveyTemplate = hasOnlyOneSelectedSurveyTemplate;
+
+        function selectSurveyTemplate(template) {
+            self.selectedSurveyTemplates.push(template);
+        }
+
+        function removeSurveyTemplate(template) {
+            self.selectedSurveyTemplates.splice(_getSelectedTemplateIndex(template), 1);
+        }
+
+        function hasSelectedSurveyTemplate() {
+            return self.selectedSurveyTemplates.length !== 0;
+        }
+
+        function hasOnlyOneSelectedSurveyTemplate() {
+            return self.selectedSurveyTemplates.length === 1;
+        }
+
+        /* Private methods */
+        function _getSelectedTemplateIndex(template) {
+            return self.selectedSurveyTemplates.indexOf(template);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SurveyTemplateManagerService', SurveyTemplateManagerService);
+
+    SurveyTemplateManagerService.$inject = [
+        'CrossSessionDatabaseService',
+        'SurveyExportService'
+    ];
+
+    function SurveyTemplateManagerService(CrossSessionDatabaseService, SurveyExportService) {
+        var self = this;
+        self.surveyTemplates = [];
+
+        self.initializeSurveyTemplateList = initializeSurveyTemplateList;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.exportSurveyTemplate = exportSurveyTemplate;
+        self.editSurveyTemplate = editSurveyTemplate;
+
+        function initializeSurveyTemplateList() {
+            var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
+            promise.then(function(value) {
+                self.surveyTemplates = value;
+            });
+        }
+
+        function deleteSurveyTemplate(template) {
+            CrossSessionDatabaseService.deleteSurveyTemplate(template.template_oid);
+            _removeOfSurveyTemplatesList(template);
+        }
+
+        function exportSurveyTemplate(template) {
+            return SurveyExportService.exportSurvey(JSON.stringify(template.template));
+        }
+
+        function editSurveyTemplate(template) {
+                
+        }
+
+        /* Private methods */
+        function _getTemplateIndex(template) {
+            return self.surveyTemplates.indexOf(template);
+        }
+
+        function _removeOfSurveyTemplatesList(template) {
+            self.surveyTemplates.splice(_getTemplateIndex(template), 1);
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .directive('surveyTemplateUpload', SurveyTemplateUpload);
+
+    SurveyTemplateUpload.$inject = ['SurveyTemplateUploadService'];
+
+    function SurveyTemplateUpload(SurveyTemplateUploadService) {
+        var ddo = {
+            restrict: 'A',
+            link: linkFunction
+        };
+        return ddo;
+
+        function linkFunction($scope, $element, $attrs) {
+            var fileUploadElement;
+
+            $element.on('click', function() {
+                fileUploadElement = _createInput();
+                fileUploadElement.click();
+                fileUploadElement.addEventListener('change', function() {
+                    var fileToUpload = this.files[0];
+                    _uploadSurveyTemplate(fileToUpload);
+                });
+            });
+
+            function _uploadSurveyTemplate(fileToUpload) {
+                SurveyTemplateUploadService.upload(fileToUpload);
+            }
+
+            function _createInput() {
+                fileUploadElement = document.createElement('input');
+                fileUploadElement.setAttribute('type', 'file');
+                fileUploadElement.setAttribute('accept', '.json');
+                return fileUploadElement;
+            }
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .service('SurveyTemplateUploadService', SurveyTemplateUploadService);
+
+    SurveyTemplateUploadService.$inject = [
+        'CrossSessionDatabaseService',
+        'SurveyTemplateManagerService',
+        '$mdToast'
+    ];
+
+    function SurveyTemplateUploadService(CrossSessionDatabaseService, SurveyTemplateManagerService, $mdToast) {
+        var self = this;
+        var jsonReaded;
+
+        self.upload = upload;
+
+        function upload(fileSurveyTemplate) {
+            var reader = new FileReader();
+            reader.readAsText(fileSurveyTemplate);
+
+            reader.onload = function() {
+                jsonReaded = reader.result;
+
+                var promise = CrossSessionDatabaseService.insertSurveyTemplate(jsonReaded, {
+                    owner: 'visitor'
+                });
+
+                promise.then(function(value) {
+                    if (value) {
+                        $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso!'));
+                    }
+                }, function(error) {
+                    $mdToast.show($mdToast.simple().textContent(_getErrorMessage(error)));
+                });
+
+                /** Reload list of Survey Templates */
+                SurveyTemplateManagerService.initializeSurveyTemplateList();
+            };
+        }
+
+        function _getErrorMessage(error) {
+            var message;
+            switch (error) {
+                case 'Key already exists in the object store.':
+                    message = 'Esse template já existe.';
+                    break;
+                default:
+                    message = 'Ocorreu um erro ao realizar o upload';
+            }
+            return message;
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .directive('surveyTemplatesExport', surveyTemplatesExport);
+
+    surveyTemplatesExport.$inject = [
+        'SurveyTemplateManagerService',
+        '$mdToast',
+        '$timeout',
+        'SelectedSurveyTemplatesManagementService'
+    ];
+
+    function surveyTemplatesExport(SurveyTemplateManagerService, $mdToast, $timeout, SelectedSurveyTemplatesManagementService) {
+        var ddo = {
+            restrict: 'A',
+            link: function(scope, element) {
+                element.on('click', function() {
+                    SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
+                        var downloadElement = document.createElement('a');
+                        downloadElement.setAttribute('href', SurveyTemplateManagerService.exportSurveyTemplate(template));
+                        downloadElement.setAttribute('download', 'surveyTemplate.json');
+                        downloadElement.setAttribute('target', '_blank');
+                        downloadElement.click();
+                    });
+                    $timeout(function() {
+                        $mdToast.show($mdToast.simple().textContent('Template(s) exportado(s) com sucesso!'));
+                    }, 1000);
+
+                });
+            }
+        };
+        return ddo;
+    }
 
 }());
 
@@ -2819,329 +3142,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .service('LogoutDialogService', LogoutDialogService);
-
-    LogoutDialogService.$inject = ['$mdDialog'];
-
-    function LogoutDialogService($mdDialog) {
-        var self = this;
-
-        /* Public interface */
-        self.showDialog = showDialog;
-
-        init();
-
-        function init() {
-            self.dialogSettings = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/dashboard/dialog/logout/logout-dialog.html',
-                controller: DialogController,
-                controllerAs: 'controller',
-                openFrom: '#system-toolbar',
-                closeTo: {
-                    bottom: 0
-                }
-            };
-        }
-
-        function showDialog() {
-            $mdDialog
-                .show(self.dialogSettings)
-                .then(
-                    forwardSuccessfulExecution,
-                    forwardUnsuccessfulExecution
-                );
-
-            return {
-                onConfirm: function (callback) {
-                    self.callback = callback;
-                }
-            };
-        }
-
-        function forwardSuccessfulExecution(response) {
-            if (response.action == 'confirm') {
-                if (self.callback) self.callback(response.data);
-            }
-        }
-
-        function forwardUnsuccessfulExecution() {
-        }
-    }
-
-    function DialogController($mdDialog) {
-        var self = this;
-
-        /* Public interface */
-        self.cancel = cancel;
-        self.confirm = confirm;
-
-        function cancel(response) {
-            $mdDialog.hide(response);
-        }
-
-        function confirm(response) {
-            $mdDialog.hide(response);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .directive('otusToolbar', otusToolbar);
-
-    function otusToolbar() {
-        var ddo = {
-            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
-            retrict: 'E'
-        };
-
-        return ddo;
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .service('SelectedSurveyTemplatesManagementService', SelectedSurveyTemplatesManagementService);
-
-    function SelectedSurveyTemplatesManagementService() {
-        var self = this;
-        self.selectedSurveyTemplates = [];
-
-        self.selectSurveyTemplate = selectSurveyTemplate;
-        self.removeSurveyTemplate = removeSurveyTemplate;
-        self.hasSelectedSurveyTemplate = hasSelectedSurveyTemplate;
-        self.hasOnlyOneSelectedSurveyTemplate = hasOnlyOneSelectedSurveyTemplate;
-
-        function selectSurveyTemplate(template) {
-            self.selectedSurveyTemplates.push(template);
-        }
-
-        function removeSurveyTemplate(template) {
-            self.selectedSurveyTemplates.splice(_getSelectedTemplateIndex(template), 1);
-        }
-
-        function hasSelectedSurveyTemplate() {
-            return self.selectedSurveyTemplates.length !== 0;
-        }
-
-        function hasOnlyOneSelectedSurveyTemplate() {
-            return self.selectedSurveyTemplates.length === 1;
-        }
-
-        /* Private methods */
-        function _getSelectedTemplateIndex(template) {
-            return self.selectedSurveyTemplates.indexOf(template);
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .service('SurveyTemplateManagerService', SurveyTemplateManagerService);
-
-    SurveyTemplateManagerService.$inject = [
-        'CrossSessionDatabaseService',
-        'SurveyExportService'
-    ];
-
-    function SurveyTemplateManagerService(CrossSessionDatabaseService, SurveyExportService) {
-        var self = this;
-        self.surveyTemplates = [];
-
-        self.initializeSurveyTemplateList = initializeSurveyTemplateList;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.exportSurveyTemplate = exportSurveyTemplate;
-        self.editSurveyTemplate = editSurveyTemplate;
-
-        function initializeSurveyTemplateList() {
-            var promise = CrossSessionDatabaseService.getAllSurveyTemplatesByContributor();
-            promise.then(function(value) {
-                self.surveyTemplates = value;
-            });
-        }
-
-        function deleteSurveyTemplate(template) {
-            CrossSessionDatabaseService.deleteSurveyTemplate(template.template_oid);
-            _removeOfSurveyTemplatesList(template);
-        }
-
-        function exportSurveyTemplate(template) {
-            return SurveyExportService.exportSurvey(JSON.stringify(template.template));
-        }
-
-        function editSurveyTemplate(template) {
-                
-        }
-
-        /* Private methods */
-        function _getTemplateIndex(template) {
-            return self.surveyTemplates.indexOf(template);
-        }
-
-        function _removeOfSurveyTemplatesList(template) {
-            self.surveyTemplates.splice(_getTemplateIndex(template), 1);
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .directive('surveyTemplateUpload', SurveyTemplateUpload);
-
-    SurveyTemplateUpload.$inject = ['SurveyTemplateUploadService'];
-
-    function SurveyTemplateUpload(SurveyTemplateUploadService) {
-        var ddo = {
-            restrict: 'A',
-            link: linkFunction
-        };
-        return ddo;
-
-        function linkFunction($scope, $element, $attrs) {
-            var fileUploadElement;
-
-            $element.on('click', function() {
-                fileUploadElement = _createInput();
-                fileUploadElement.click();
-                fileUploadElement.addEventListener('change', function() {
-                    var fileToUpload = this.files[0];
-                    _uploadSurveyTemplate(fileToUpload);
-                });
-            });
-
-            function _uploadSurveyTemplate(fileToUpload) {
-                SurveyTemplateUploadService.upload(fileToUpload);
-            }
-
-            function _createInput() {
-                fileUploadElement = document.createElement('input');
-                fileUploadElement.setAttribute('type', 'file');
-                fileUploadElement.setAttribute('accept', '.json');
-                return fileUploadElement;
-            }
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .service('SurveyTemplateUploadService', SurveyTemplateUploadService);
-
-    SurveyTemplateUploadService.$inject = [
-        'CrossSessionDatabaseService',
-        'SurveyTemplateManagerService',
-        '$mdToast'
-    ];
-
-    function SurveyTemplateUploadService(CrossSessionDatabaseService, SurveyTemplateManagerService, $mdToast) {
-        var self = this;
-        var jsonReaded;
-
-        self.upload = upload;
-
-        function upload(fileSurveyTemplate) {
-            var reader = new FileReader();
-            reader.readAsText(fileSurveyTemplate);
-
-            reader.onload = function() {
-                jsonReaded = reader.result;
-
-                var promise = CrossSessionDatabaseService.insertSurveyTemplate(jsonReaded, {
-                    owner: 'visitor'
-                });
-
-                promise.then(function(value) {
-                    if (value) {
-                        $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso!'));
-                    }
-                }, function(error) {
-                    $mdToast.show($mdToast.simple().textContent(_getErrorMessage(error)));
-                });
-
-                /** Reload list of Survey Templates */
-                SurveyTemplateManagerService.initializeSurveyTemplateList();
-            };
-        }
-
-        function _getErrorMessage(error) {
-            var message;
-            switch (error) {
-                case 'Key already exists in the object store.':
-                    message = 'Esse template já existe.';
-                    break;
-                default:
-                    message = 'Ocorreu um erro ao realizar o upload';
-            }
-            return message;
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .directive('surveyTemplatesExport', surveyTemplatesExport);
-
-    surveyTemplatesExport.$inject = [
-        'SurveyTemplateManagerService',
-        '$mdToast',
-        '$timeout',
-        'SelectedSurveyTemplatesManagementService'
-    ];
-
-    function surveyTemplatesExport(SurveyTemplateManagerService, $mdToast, $timeout, SelectedSurveyTemplatesManagementService) {
-        var ddo = {
-            restrict: 'A',
-            link: function(scope, element) {
-                element.on('click', function() {
-                    SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
-                        var downloadElement = document.createElement('a');
-                        downloadElement.setAttribute('href', SurveyTemplateManagerService.exportSurveyTemplate(template));
-                        downloadElement.setAttribute('download', 'surveyTemplate.json');
-                        downloadElement.setAttribute('target', '_blank');
-                        downloadElement.click();
-                    });
-                    $timeout(function() {
-                        $mdToast.show($mdToast.simple().textContent('Template(s) exportado(s) com sucesso!'));
-                    }, 1000);
-
-                });
-            }
-        };
-        return ddo;
-    }
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -3344,6 +3344,72 @@
 
     function _selectRouteNode(event) {
       DataService.selectNode(event.data.node);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder')
+    .component('otusNavigationMap', {
+      templateUrl: 'app/navigation-builder/map/component/map-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
+    'otusjs.studio.navigationBuilder.GraphLayerService',
+    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+  ];
+
+  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
+    var self = this;
+    // var _messageLayer = null;
+
+    /* Publi methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      self.toolsCtrl = new ToolsController(NavigationBuilderService);
+      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
+    }
+
+    function _renderMap() {
+      var nodes = NavigationBuilderService.nodes();
+      var edges = NavigationBuilderService.edges();
+
+      GraphLayerService.initialize();
+      GraphLayerService.loadData(nodes, edges);
+      GraphLayerService.render();
+    }
+  }
+
+  function ToolsController(NavigationBuilderService) {
+    var self = this;
+
+    _init();
+
+    /* Public methods */
+    self.click = click;
+    self.addRoute = addRoute;
+    self.inspect = inspect;
+
+    function click() {
+      self.isOpen = !self.isOpen;
+    }
+
+    function addRoute() {
+      NavigationBuilderService.activateRouteCreatorMode();
+    }
+
+    function inspect() {
+      NavigationBuilderService.activateNavigationInspectorMode();
+    }
+
+    function _init() {
+      self.isOpen = false;
     }
   }
 })();
@@ -3761,72 +3827,6 @@
       var style = { color: '#CCC' };
       _graphLayer.updateAllNodesStyle(style);
       _graphLayer.updateAllEdgesStyle(style);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder')
-    .component('otusNavigationMap', {
-      templateUrl: 'app/navigation-builder/map/component/map-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
-  ];
-
-  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
-    var self = this;
-    // var _messageLayer = null;
-
-    /* Publi methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      self.toolsCtrl = new ToolsController(NavigationBuilderService);
-      moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
-    }
-
-    function _renderMap() {
-      var nodes = NavigationBuilderService.nodes();
-      var edges = NavigationBuilderService.edges();
-
-      GraphLayerService.initialize();
-      GraphLayerService.loadData(nodes, edges);
-      GraphLayerService.render();
-    }
-  }
-
-  function ToolsController(NavigationBuilderService) {
-    var self = this;
-
-    _init();
-
-    /* Public methods */
-    self.click = click;
-    self.addRoute = addRoute;
-    self.inspect = inspect;
-
-    function click() {
-      self.isOpen = !self.isOpen;
-    }
-
-    function addRoute() {
-      NavigationBuilderService.activateRouteCreatorMode();
-    }
-
-    function inspect() {
-      NavigationBuilderService.activateNavigationInspectorMode();
-    }
-
-    function _init() {
-      self.isOpen = false;
     }
   }
 })();
@@ -5892,6 +5892,216 @@
   'use strict';
 
   angular
+    .module('studio.dashboard')
+    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
+
+  NewSurveyFormDialogService.$inject = ['$mdDialog'];
+
+  function NewSurveyFormDialogService($mdDialog) {
+    var self = this;
+
+    /* Public interface */
+    self.showDialog = showDialog;
+
+    init();
+
+    function init() {
+      self.dialogSettings = {
+        parent: angular.element(document.body),
+        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
+        controller: DialogController,
+        controllerAs: 'controller',
+        openFrom: '#system-toolbar',
+        closeTo: {
+          bottom: 0
+        }
+      };
+    }
+
+    function showDialog() {
+      $mdDialog
+        .show(self.dialogSettings)
+        .then(
+          forwardSuccessfulExecution,
+          forwardUnsuccessfulExecution
+        );
+
+      return {
+        onConfirm: function(callback) {
+          self.callback = callback;
+        }
+      };
+    }
+
+    function forwardSuccessfulExecution(response) {
+      if (response.action == 'create') {
+        if (self.callback) self.callback(response.data);
+      }
+    }
+
+    function forwardUnsuccessfulExecution(error) {}
+  }
+
+  function DialogController($mdDialog) {
+    var self = this;
+
+    /* Public interface */
+    self.cancel = cancel;
+    self.createSurveyForm = createSurveyForm;
+
+    function cancel(response) {
+      $mdDialog.hide(response);
+    }
+
+    function createSurveyForm(response) {
+      $mdDialog.hide(response);
+    }
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .component('surveyTemplate', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
+            controller: SurveyTemplateController,
+            bindings: {
+                surveyTemplate: '<'
+            }
+        });
+
+    SurveyTemplateController.$inject = [
+        '$element',
+        '$scope',
+        'SelectedSurveyTemplatesManagementService'
+    ];
+
+    function SurveyTemplateController($element, $scope, SelectedSurveyTemplatesManagementService) {
+        var mdCard;
+        var self = this;
+        self.isSelected = false;
+
+        self.$onDestroy = function() {
+            if (self.isSelected) {
+                SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+            }
+        };
+
+        $element.on('click', function() {
+            mdCard = $element.children();
+            if (!self.isSelected) {
+                _select();
+            } else {
+                _remove();
+            }
+
+            _scopeApply();
+        });
+
+        function _select() {
+            self.isSelected = true;
+            mdCard.addClass('selected-template');
+            SelectedSurveyTemplatesManagementService.selectSurveyTemplate(self.surveyTemplate);
+        }
+
+        function _remove() {
+            self.isSelected = false;
+            mdCard.removeClass('selected-template');
+            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
+        }
+
+        /**
+         * This method calls the AngularJS Digest Cycle
+         * It updates all watchers
+         */
+        function _scopeApply() {
+            $scope.$apply();
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .component('surveyTemplatesList', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
+            controller: SurveyTemplateControllerList,
+        });
+
+    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
+
+    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
+        var self = this;
+
+        self.getSurveyTemplatesList = getSurveyTemplatesList;
+
+        function getSurveyTemplatesList() {
+            return SurveyTemplateManagerService.surveyTemplates;
+        }
+
+        self.$onInit = function() {
+            SurveyTemplateManagerService.initializeSurveyTemplateList();
+        };
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates')
+        .component('surveyTemplatesToolbar', {
+            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-template.html',
+            controller: SurveyTemplatesToolbarController,
+        });
+
+    SurveyTemplatesToolbarController.$inject = [
+        'SurveyTemplateManagerService',
+        'SelectedSurveyTemplatesManagementService',
+        '$mdToast',
+        'DashboardStateService',
+        '$window'
+    ];
+
+    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
+        var self = this;
+
+        self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
+        self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
+        self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
+
+        function deleteSelectedSurveyTemplate() {
+            SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
+                SurveyTemplateManagerService.deleteSurveyTemplate(template);
+            });
+            $mdToast.show($mdToast.simple().textContent('Template(s) removido(s) com sucesso!'));
+        }
+
+        function openEditorForSelectedSurveyTemplate() {
+            var selectedSurveyTemplate = _getSelectedSurveyTemplate();
+
+            $window.sessionStorage.setItem('surveyTemplate_OID', selectedSurveyTemplate.oid);
+            DashboardStateService.goToEditorWithSurveyTemplate(selectedSurveyTemplate);
+        }
+
+        function _getSelectedSurveyTemplate() {
+            return SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template;
+        }
+    }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
     .module('editor.core')
     .factory('AddDataSourceEventFactory', AddDataSourceEventFactory);
 
@@ -7061,216 +7271,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .component('surveyTemplate', {
-            templateUrl: 'app/dashboard/survey-templates/components/survey-template/survey-template.html',
-            controller: SurveyTemplateController,
-            bindings: {
-                surveyTemplate: '<'
-            }
-        });
-
-    SurveyTemplateController.$inject = [
-        '$element',
-        '$scope',
-        'SelectedSurveyTemplatesManagementService'
-    ];
-
-    function SurveyTemplateController($element, $scope, SelectedSurveyTemplatesManagementService) {
-        var mdCard;
-        var self = this;
-        self.isSelected = false;
-
-        self.$onDestroy = function() {
-            if (self.isSelected) {
-                SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
-            }
-        };
-
-        $element.on('click', function() {
-            mdCard = $element.children();
-            if (!self.isSelected) {
-                _select();
-            } else {
-                _remove();
-            }
-
-            _scopeApply();
-        });
-
-        function _select() {
-            self.isSelected = true;
-            mdCard.addClass('selected-template');
-            SelectedSurveyTemplatesManagementService.selectSurveyTemplate(self.surveyTemplate);
-        }
-
-        function _remove() {
-            self.isSelected = false;
-            mdCard.removeClass('selected-template');
-            SelectedSurveyTemplatesManagementService.removeSurveyTemplate(self.surveyTemplate);
-        }
-
-        /**
-         * This method calls the AngularJS Digest Cycle
-         * It updates all watchers
-         */
-        function _scopeApply() {
-            $scope.$apply();
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .component('surveyTemplatesList', {
-            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list.html',
-            controller: SurveyTemplateControllerList,
-        });
-
-    SurveyTemplateControllerList.$inject = ['SurveyTemplateManagerService'];
-
-    function SurveyTemplateControllerList(SurveyTemplateManagerService) {
-        var self = this;
-
-        self.getSurveyTemplatesList = getSurveyTemplatesList;
-
-        function getSurveyTemplatesList() {
-            return SurveyTemplateManagerService.surveyTemplates;
-        }
-
-        self.$onInit = function() {
-            SurveyTemplateManagerService.initializeSurveyTemplateList();
-        };
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates')
-        .component('surveyTemplatesToolbar', {
-            templateUrl: 'app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-template.html',
-            controller: SurveyTemplatesToolbarController,
-        });
-
-    SurveyTemplatesToolbarController.$inject = [
-        'SurveyTemplateManagerService',
-        'SelectedSurveyTemplatesManagementService',
-        '$mdToast',
-        'DashboardStateService',
-        '$window'
-    ];
-
-    function SurveyTemplatesToolbarController(SurveyTemplateManagerService, SelectedSurveyTemplatesManagementService, $mdToast, DashboardStateService, $window) {
-        var self = this;
-
-        self.SelectedSurveyTemplatesManagementService = SelectedSurveyTemplatesManagementService;
-        self.deleteSelectedSurveyTemplate = deleteSelectedSurveyTemplate;
-        self.openEditorForSelectedSurveyTemplate = openEditorForSelectedSurveyTemplate;
-
-        function deleteSelectedSurveyTemplate() {
-            SelectedSurveyTemplatesManagementService.selectedSurveyTemplates.forEach(function(template) {
-                SurveyTemplateManagerService.deleteSurveyTemplate(template);
-            });
-            $mdToast.show($mdToast.simple().textContent('Template(s) removido(s) com sucesso!'));
-        }
-
-        function openEditorForSelectedSurveyTemplate() {
-            var selectedSurveyTemplate = _getSelectedSurveyTemplate();
-
-            $window.sessionStorage.setItem('surveyTemplate_OID', selectedSurveyTemplate.oid);
-            DashboardStateService.goToEditorWithSurveyTemplate(selectedSurveyTemplate);
-        }
-
-        function _getSelectedSurveyTemplate() {
-            return SelectedSurveyTemplatesManagementService.selectedSurveyTemplates[0].template;
-        }
-    }
-
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('studio.dashboard')
-    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
-
-  NewSurveyFormDialogService.$inject = ['$mdDialog'];
-
-  function NewSurveyFormDialogService($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.showDialog = showDialog;
-
-    init();
-
-    function init() {
-      self.dialogSettings = {
-        parent: angular.element(document.body),
-        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
-        controller: DialogController,
-        controllerAs: 'controller',
-        openFrom: '#system-toolbar',
-        closeTo: {
-          bottom: 0
-        }
-      };
-    }
-
-    function showDialog() {
-      $mdDialog
-        .show(self.dialogSettings)
-        .then(
-          forwardSuccessfulExecution,
-          forwardUnsuccessfulExecution
-        );
-
-      return {
-        onConfirm: function(callback) {
-          self.callback = callback;
-        }
-      };
-    }
-
-    function forwardSuccessfulExecution(response) {
-      if (response.action == 'create') {
-        if (self.callback) self.callback(response.data);
-      }
-    }
-
-    function forwardUnsuccessfulExecution(error) {}
-  }
-
-  function DialogController($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.cancel = cancel;
-    self.createSurveyForm = createSurveyForm;
-
-    function cancel(response) {
-      $mdDialog.hide(response);
-    }
-
-    function createSurveyForm(response) {
-      $mdDialog.hide(response);
-    }
-  }
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -7416,6 +7416,20 @@
 
   angular
     .module('editor.ui')
+    .component('textItem', {
+      templateUrl: 'app/editor/ui/survey-item/misc/text/text-item-template.html',
+      bindings: {
+        item: '<'
+      }
+    });
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .component('autocompleteQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/autocomplete/autocomplete-question-template.html',
       controller: Controller,
@@ -7491,20 +7505,6 @@
       "Tocantins"
     ];
   }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('textItem', {
-      templateUrl: 'app/editor/ui/survey-item/misc/text/text-item-template.html',
-      bindings: {
-        item: '<'
-      }
-    });
 
 }());
 
@@ -7651,6 +7651,17 @@
 
   angular
     .module('editor.ui')
+    .component('emailQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/email/email-question-template.html',
+    });
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .directive('fileUploadQuestion', directive);
 
   function directive(FileUploadQuestionWidgetFactory) {
@@ -7754,17 +7765,6 @@
       return '<file-upload-question></file-upload-question>';
     }
   }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('emailQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/email/email-question-template.html',
-    });
 
 }());
 
