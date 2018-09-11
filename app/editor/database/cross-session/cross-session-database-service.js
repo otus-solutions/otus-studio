@@ -28,9 +28,9 @@
                 var entry = {};
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());
+                // TODO: 
+                entry.template = JSON.parse(JSON.stringify(template.toJson()));
                 store.upsert(entry).then(function(e) {});
-
             });
         }
 
