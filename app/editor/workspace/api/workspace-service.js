@@ -69,7 +69,7 @@
     }
 
     function exportWork() {
-      return SurveyExportService.exportSurvey(self.workspace.project.survey);
+      return SurveyExportService.exportSurvey(JSON.stringify(self.workspace.project.survey.toJSON()));
     }
 
     function getQuestionId() {
