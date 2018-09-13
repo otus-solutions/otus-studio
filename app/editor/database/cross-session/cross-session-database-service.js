@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -24,27 +24,26 @@
         self.findSurveyTemplateByOID = findSurveyTemplateByOID;
 
         function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function(store) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
                 var entry = {};
                 entry.template_oid = template.oid;
                 entry.contributor = session.owner;
-                // TODO: 
-                entry.template = JSON.parse(JSON.stringify(template.toJSON()));
-                store.upsert(entry).then(function(e) {});
+                entry.template = _removeInternalFunctions(template);
+                store.upsert(entry).then(function (e) { });
             });
         }
 
         function insertSurveyTemplate(template, session) {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
                 var parsedTemplate = JSON.parse(template);
                 var entry = {};
                 entry.template_oid = parsedTemplate.oid;
                 entry.contributor = session.owner;
                 entry.template = parsedTemplate;
-                store.insert(entry).then(function(success) {
+                store.insert(entry).then(function (success) {
                     defer.resolve(success);
-                }, function(error) {
+                }, function (error) {
                     defer.reject(error);
                 });
             });
@@ -53,8 +52,8 @@
 
         function getAllSurveyTemplates() {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAll().then(function(templates) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAll().then(function (templates) {
                     defer.resolve(templates);
                 });
             });
@@ -63,13 +62,13 @@
 
         function getAllSurveyTemplatesByContributor() {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
 
                 var criteria = store.query();
                 criteria = criteria.$eq('visitor');
                 criteria = criteria.$index(INDEX);
 
-                store.eachWhere(criteria).then(function(templates) {
+                store.eachWhere(criteria).then(function (templates) {
                     defer.resolve(templates);
                 });
             });
@@ -78,8 +77,8 @@
 
         function deleteSurveyTemplate(templateOID) {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.delete(templateOID).then(function() {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.delete(templateOID).then(function () {
                     defer.resolve(true);
                 });
             });
@@ -91,8 +90,8 @@
          */
         function getAllKeys() {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAllKeys().then(function(e) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAllKeys().then(function (e) {
                     defer.resolve(e);
                 });
             });
@@ -101,13 +100,16 @@
 
         function findSurveyTemplateByOID(oid) {
             var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.find(oid).then(function(template) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.find(oid).then(function (template) {
                     defer.resolve(template);
                 });
             });
             return defer.promise;
         }
-    }
 
+        function _removeInternalFunctions(template) {
+            return JSON.parse(JSON.stringify(template));
+        }
+    }
 }());
