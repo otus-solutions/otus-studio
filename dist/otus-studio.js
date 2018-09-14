@@ -26,6 +26,13 @@
 (function() {
     'use strict';
 
+    angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
+    'use strict';
+
     angular.module('studio.authenticator', []);
 
 }());
@@ -282,13 +289,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular.module('studio.dashboard', []);
-
-}());
-
-(function() {
   'use strict';
 
   angular
@@ -440,76 +440,6 @@
     'use strict';
 
     angular.module('preview', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .service('AuthenticationService', AuthenticationService);
-
-    AuthenticationService.$inject = ['LogoutDialogService',
-        'DashboardStateService',
-        'RestResourceService',
-        '$mdToast',
-        '$window'
-    ];
-
-    function AuthenticationService(LogoutDialogService, DashboardStateService, RestResourceService, $mdToast, $window) {
-        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
-        var self = this;
-        self.logout = logout;
-        self.login = login;
-
-        function logout() {
-            LogoutDialogService.showDialog()
-                .onConfirm(function() {
-                    invalidateSession(RestResourceService);
-                });
-        }
-
-        function invalidateSession(domainRestResourceService) {
-            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
-
-            if (!domainRestResourceService.isLogged()) {
-                invalidateSessionVisitant();
-            } else {
-                invalidateSessionLoggedUser(authenticatorResource);
-            }
-        }
-
-        function invalidateSessionLoggedUser(authenticatorResource) {
-            authenticatorResource.invalidate(function(response) {
-                DashboardStateService.logout();
-                $window.sessionStorage.clear();
-            });
-        }
-
-        function invalidateSessionVisitant() {
-            $window.sessionStorage.clear();
-            DashboardStateService.logout();
-        }
-
-        function login(user) {
-            RestResourceService.setUrl(user.domain);
-            var authenticatorResource = RestResourceService.getAuthenticatorResource();
-
-            authenticatorResource.authenticate(user, function(response) {
-                RestResourceService.setSecurityToken(response.data);
-
-                if (!response.hasErrors) {
-                    DashboardStateService.goToHome();
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(LOGIN_ERROR_MESSAGE)
-                    );
-                }
-            });
-        }
-    }
 
 }());
 
@@ -709,6 +639,76 @@
         .module('surveyTemplates', []);
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .service('AuthenticationService', AuthenticationService);
+
+    AuthenticationService.$inject = ['LogoutDialogService',
+        'DashboardStateService',
+        'RestResourceService',
+        '$mdToast',
+        '$window'
+    ];
+
+    function AuthenticationService(LogoutDialogService, DashboardStateService, RestResourceService, $mdToast, $window) {
+        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
+        var self = this;
+        self.logout = logout;
+        self.login = login;
+
+        function logout() {
+            LogoutDialogService.showDialog()
+                .onConfirm(function() {
+                    invalidateSession(RestResourceService);
+                });
+        }
+
+        function invalidateSession(domainRestResourceService) {
+            var authenticatorResource = domainRestResourceService.getAuthenticatorResource();
+
+            if (!domainRestResourceService.isLogged()) {
+                invalidateSessionVisitant();
+            } else {
+                invalidateSessionLoggedUser(authenticatorResource);
+            }
+        }
+
+        function invalidateSessionLoggedUser(authenticatorResource) {
+            authenticatorResource.invalidate(function(response) {
+                DashboardStateService.logout();
+                $window.sessionStorage.clear();
+            });
+        }
+
+        function invalidateSessionVisitant() {
+            $window.sessionStorage.clear();
+            DashboardStateService.logout();
+        }
+
+        function login(user) {
+            RestResourceService.setUrl(user.domain);
+            var authenticatorResource = RestResourceService.getAuthenticatorResource();
+
+            authenticatorResource.authenticate(user, function(response) {
+                RestResourceService.setSecurityToken(response.data);
+
+                if (!response.hasErrors) {
+                    DashboardStateService.goToHome();
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(LOGIN_ERROR_MESSAGE)
+                    );
+                }
+            });
+        }
+    }
+
+}());
 
 (function() {
     'use strict';
@@ -1438,120 +1438,6 @@
     'use strict';
 
     angular
-        .module('editor.database')
-        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
-
-    CrossSessionDatabaseService.$inject = [
-        '$q',
-        '$indexedDB'
-    ];
-
-    function CrossSessionDatabaseService($q, $indexedDB) {
-        var self = this,
-            STORE_NAME = 'survey_template',
-            INDEX = 'contributor_idx';
-
-        /* Public interface */
-        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllSurveyTemplates = getAllSurveyTemplates;
-        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.insertSurveyTemplate = insertSurveyTemplate;
-        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
-
-        function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var entry = {};
-                entry.template_oid = template.oid;
-                entry.contributor = session.owner;
-                entry.template = JSON.parse(template.toJson());
-                store.upsert(entry).then(function(e) {});
-
-            });
-        }
-
-        function insertSurveyTemplate(template, session) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                var parsedTemplate = JSON.parse(template);
-                var entry = {};
-                entry.template_oid = parsedTemplate.oid;
-                entry.contributor = session.owner;
-                entry.template = parsedTemplate;
-                store.insert(entry).then(function(success) {
-                    defer.resolve(success);
-                }, function(error) {
-                    defer.reject(error);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplates() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAll().then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplatesByContributor() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-
-                var criteria = store.query();
-                criteria = criteria.$eq('visitor');
-                criteria = criteria.$index(INDEX);
-
-                store.eachWhere(criteria).then(function(templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function deleteSurveyTemplate(templateOID) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.delete(templateOID).then(function() {
-                    defer.resolve(true);
-                });
-            });
-            return defer.promise;
-        }
-
-        /**
-         * Returns a User + UUID Template + Repository in Base64
-         */
-        function getAllKeys() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.getAllKeys().then(function(e) {
-                    defer.resolve(e);
-                });
-            });
-            return defer.promise;
-        }
-
-        function findSurveyTemplateByOID(oid) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function(store) {
-                store.find(oid).then(function(template) {
-                    defer.resolve(template);
-                });
-            });
-            return defer.promise;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
         .module('editor.core')
         .factory('AddFillingRulesEventFactory', AddFillingRulesEventFactory);
 
@@ -2174,6 +2060,122 @@
         }
     }
 
+}());
+
+(function () {
+    'use strict';
+
+    angular
+        .module('editor.database')
+        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
+
+    CrossSessionDatabaseService.$inject = [
+        '$q',
+        '$indexedDB'
+    ];
+
+    function CrossSessionDatabaseService($q, $indexedDB) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
+
+        /* Public interface */
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
+
+        function saveSurveyTemplateRevision(template, session) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = _removeInternalFunctions(template);
+                store.upsert(entry).then(function (e) { });
+            });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function (success) {
+                    defer.resolve(success);
+                }, function (error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAll().then(function (templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function (templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.delete(templateOID).then(function () {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAllKeys().then(function (e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.find(oid).then(function (template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
+        }
+
+        function _removeInternalFunctions(template) {
+            return JSON.parse(JSON.stringify(template));
+        }
+    }
 }());
 
 (function() {
@@ -2983,7 +2985,7 @@
     }
 
     function exportWork() {
-      return SurveyExportService.exportSurvey(self.workspace.project.survey.toJson());
+      return SurveyExportService.exportSurvey(JSON.stringify(self.workspace.project.survey.toJSON()));
     }
 
     function getQuestionId() {
@@ -3051,23 +3053,23 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.workspace')
-        .service('SurveyExportService', SurveyExportService);
+  angular
+    .module('editor.workspace')
+    .service('SurveyExportService', SurveyExportService);
 
 
-    function SurveyExportService() {
-        var self = this;
+  function SurveyExportService() {
+    var self = this;
 
-        /* Public interface */
-        self.exportSurvey = exportSurvey;
+    /* Public interface */
+    self.exportSurvey = exportSurvey;
 
-        function exportSurvey(JsonTemplate) {
-            return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
-        }
+    function exportSurvey(JsonTemplate) {
+      return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
+  }
 
 }());
 
@@ -3344,6 +3346,71 @@
 
     function _selectRouteNode(event) {
       DataService.selectNode(event.data.node);
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function component($scope, scopeService) {
+    var self = this;
+
+    self.message = {};
+    self.isVisible = false
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
+
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service(scopeService) {
+    var self = this;
+
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
+    }
+
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
     }
   }
 })();
@@ -4156,71 +4223,6 @@
     }
   }
 }());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .component('otusMessengerInstructor', {
-      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    '$scope',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function component($scope, scopeService) {
-    var self = this;
-
-    self.message = {};
-    self.isVisible = false
-
-    /* Component cicle methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
-        self.isVisible = true;
-        self.message = message;
-      });
-
-      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
-        self.isVisible = false;
-      });
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function service(scopeService) {
-    var self = this;
-
-    /* Public methods */
-    self.showMessenger = showMessenger;
-    self.clearMessenger = clearMessenger;
-
-    function showMessenger(message) {
-      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
-    }
-
-    function clearMessenger() {
-      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
-    }
-  }
-})();
 
 (function() {
   'use strict';
@@ -5889,78 +5891,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('studio.dashboard')
-    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
-
-  NewSurveyFormDialogService.$inject = ['$mdDialog'];
-
-  function NewSurveyFormDialogService($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.showDialog = showDialog;
-
-    init();
-
-    function init() {
-      self.dialogSettings = {
-        parent: angular.element(document.body),
-        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
-        controller: DialogController,
-        controllerAs: 'controller',
-        openFrom: '#system-toolbar',
-        closeTo: {
-          bottom: 0
-        }
-      };
-    }
-
-    function showDialog() {
-      $mdDialog
-        .show(self.dialogSettings)
-        .then(
-          forwardSuccessfulExecution,
-          forwardUnsuccessfulExecution
-        );
-
-      return {
-        onConfirm: function(callback) {
-          self.callback = callback;
-        }
-      };
-    }
-
-    function forwardSuccessfulExecution(response) {
-      if (response.action == 'create') {
-        if (self.callback) self.callback(response.data);
-      }
-    }
-
-    function forwardUnsuccessfulExecution(error) {}
-  }
-
-  function DialogController($mdDialog) {
-    var self = this;
-
-    /* Public interface */
-    self.cancel = cancel;
-    self.createSurveyForm = createSurveyForm;
-
-    function cancel(response) {
-      $mdDialog.hide(response);
-    }
-
-    function createSurveyForm(response) {
-      $mdDialog.hide(response);
-    }
-  }
-
-}());
-
-(function() {
     'use strict';
 
     angular
@@ -6097,6 +6027,78 @@
     }
 
 })();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('studio.dashboard')
+    .service('NewSurveyFormDialogService', NewSurveyFormDialogService);
+
+  NewSurveyFormDialogService.$inject = ['$mdDialog'];
+
+  function NewSurveyFormDialogService($mdDialog) {
+    var self = this;
+
+    /* Public interface */
+    self.showDialog = showDialog;
+
+    init();
+
+    function init() {
+      self.dialogSettings = {
+        parent: angular.element(document.body),
+        templateUrl: 'app/dashboard/survey-templates/dialog/new-survey-form/new-survey-form-dialog.html',
+        controller: DialogController,
+        controllerAs: 'controller',
+        openFrom: '#system-toolbar',
+        closeTo: {
+          bottom: 0
+        }
+      };
+    }
+
+    function showDialog() {
+      $mdDialog
+        .show(self.dialogSettings)
+        .then(
+          forwardSuccessfulExecution,
+          forwardUnsuccessfulExecution
+        );
+
+      return {
+        onConfirm: function(callback) {
+          self.callback = callback;
+        }
+      };
+    }
+
+    function forwardSuccessfulExecution(response) {
+      if (response.action == 'create') {
+        if (self.callback) self.callback(response.data);
+      }
+    }
+
+    function forwardUnsuccessfulExecution(error) {}
+  }
+
+  function DialogController($mdDialog) {
+    var self = this;
+
+    /* Public interface */
+    self.cancel = cancel;
+    self.createSurveyForm = createSurveyForm;
+
+    function cancel(response) {
+      $mdDialog.hide(response);
+    }
+
+    function createSurveyForm(response) {
+      $mdDialog.hide(response);
+    }
+  }
+
+}());
 
 (function() {
   'use strict';
@@ -6653,93 +6655,89 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.ui')
-        .factory('OtusTextEditorWidgetFactory', OtusTextEditorWidgetFactory);
+  angular
+    .module('editor.ui')
+    .factory('OtusTextEditorWidgetFactory', OtusTextEditorWidgetFactory);
 
-    OtusTextEditorWidgetFactory.$inject = [
-        'UpdateQuestionEventFactory'
-    ];
+  OtusTextEditorWidgetFactory.$inject = [
+    'UpdateQuestionEventFactory'
+  ];
 
-    function OtusTextEditorWidgetFactory(UpdateQuestionEventFactory) {
-        var self = this;
+  function OtusTextEditorWidgetFactory(UpdateQuestionEventFactory) {
+    var self = this;
 
-        self.create = create;
+    self.create = create;
 
-        function create(scope, element) {
-            return new OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory);
-        }
-        return self;
+    function create(scope, element) {
+      return new OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory);
+    }
+    return self;
+  }
+
+  function OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory) {
+    var self = this;
+
+    self.input = angular.element(element.children()[0]);
+    self.ngModel = scope.ngModel;
+    self.placeholder = scope.placeholder;
+
+    /* Public methods */
+    self.getClassName = getClassName;
+    self.getUUID = getUUID;
+    self.getElement = getElement;
+    self.getParent = getParent;
+    self.getItem = getItem;
+    self.getLabel = getLabel;
+
+    _init();
+
+    function _init() {
+      if (self.ngModel) {
+        _loadLabel();
+      }
     }
 
-    function OtusTextEditorWidget(scope, element, UpdateQuestionEventFactory) {
-        var self = this;
-
-        self.input = angular.element(element.children()[0]);
-        self.ngModel = scope.ngModel;
-        self.placeholder = scope.placeholder;
-
-        /* Public methods */
-        self.getClassName = getClassName;
-        self.getUUID = getUUID;
-        self.getElement = getElement;
-        self.getParent = getParent;
-        self.getItem = getItem;
-        self.getLabel = getLabel;
-
-        _init();
-
-        function _init() {
-            if (self.ngModel) {
-                _loadLabel();
-            }
-        }
-
-        function getClassName() {
-            return 'OtusTextEditorWidget';
-        }
-
-        function getUUID() {
-            return scope.uuid;
-        }
-
-        function getLabel() {
-            return self.ngModel.ptBR.formattedText;
-        }
-
-        function getElement() {
-            return element;
-        }
-
-        function getParent() {
-            return scope.$parent.widget;
-        }
-
-        function getItem() {
-            return getParent().getItem();
-        }
-
-
-        element.on('focusout', function(event) {
-            _saveLabel();
-            UpdateQuestionEventFactory.create().execute(self);
-        });
-
-        function _saveLabel() {
-            self.ngModel.ptBR.formattedText = _removeSpecialCharacters(event.target.innerHTML);
-            self.ngModel.ptBR.plainText = event.target.innerText;
-        }
-
-        function _removeSpecialCharacters(value) {
-            return value.replace(/"/g, '\'');
-        }
-
-        function _loadLabel() {
-            self.getElement().children()[0].innerHTML = self.getLabel();
-        }
+    function getClassName() {
+      return 'OtusTextEditorWidget';
     }
+
+    function getUUID() {
+      return scope.uuid;
+    }
+
+    function getLabel() {
+      return self.ngModel.ptBR.formattedText;
+    }
+
+    function getElement() {
+      return element;
+    }
+
+    function getParent() {
+      return scope.$parent.widget;
+    }
+
+    function getItem() {
+      return getParent().getItem();
+    }
+
+
+    element.on('focusout', function(event) {
+      _saveLabel();
+      UpdateQuestionEventFactory.create().execute(self);
+    });
+
+    function _saveLabel() {
+      self.ngModel.ptBR.formattedText = event.target.innerHTML;
+      self.ngModel.ptBR.plainText = event.target.innerText;
+    }
+
+    function _loadLabel() {
+      self.getElement().children()[0].innerHTML = self.getLabel();
+    }
+  }
 
 }());
 
@@ -7513,17 +7511,6 @@
 
   angular
     .module('editor.ui')
-    .component('calendarQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question-template.html'
-    });
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
     .component('checkboxQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question-template.html',
       controller: Controller,
@@ -7571,6 +7558,17 @@
         return checkboxID;
     }
   }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('calendarQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question-template.html'
+    });
 
 }());
 
@@ -7865,6 +7863,17 @@
 
   angular
     .module('editor.ui')
+    .component('phoneQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/phone/phone-question-template.html'
+    });
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .component('integerQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/integer/integer-question-template.html',
       bindings: {
@@ -7924,17 +7933,6 @@
                 }
             }
         };
-    });
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('phoneQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/phone/phone-question-template.html'
     });
 
 }());
