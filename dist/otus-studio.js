@@ -24,45 +24,6 @@
 }());
 
 (function() {
-    'use strict';
-
-    angular.module('studio.dashboard', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('studio.authenticator', []);
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.authenticator')
-        .controller('LoginController', LoginController);
-
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
-
-    function LoginController($scope, DashboardStateService, AuthenticationService) {
-        var self = this;
-        self.authenticate = authenticate;
-        self.visitAccess = visitAccess;
-
-        function authenticate(user) {
-            AuthenticationService.login(user);
-        }
-
-        function visitAccess() {
-            DashboardStateService.goToHome();
-        }
-    }
-
-}());
-
-(function() {
 
     angular.module('dependencies', [
         /* Angular modules */
@@ -289,6 +250,45 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular.module('studio.authenticator', []);
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.authenticator')
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'AuthenticationService'];
+
+    function LoginController($scope, DashboardStateService, AuthenticationService) {
+        var self = this;
+        self.authenticate = authenticate;
+        self.visitAccess = visitAccess;
+
+        function authenticate(user) {
+            AuthenticationService.login(user);
+        }
+
+        function visitAccess() {
+            DashboardStateService.goToHome();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
   'use strict';
 
   angular
@@ -298,6 +298,72 @@
       'editor.ui',
       'editor.workspace'
     ]);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
+
+  function otusSurveyPreviewGenerator() {
+    var ddo = {
+      restrict: 'A',
+      controller: Controller
+    };
+    return ddo;
+  }
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'otusjs.model.activity.ActivityFacadeService',
+    'otusjs.player.core.player.PlayerService'
+  ];
+
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
+    var _newScope;
+    var _user = undefined;
+    var _participant = undefined;
+    var _activityConfigurationName = "C0";
+
+    $element.on('click', function() {
+      var otusSheetDOMElement = $('otus-player');
+
+      if (otusSheetDOMElement[0]) {
+        otusSheetDOMElement.remove();
+        if (_newScope) {
+          _newScope.$destroy();
+        }
+      }
+      _generateOtusPreview();
+      PlayerService.setup();
+    });
+
+    function _generateOtusPreview() {
+      _newScope = $scope.$new(true);
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
+      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
+      $('#survey-preview').append(content);
+    }
+
+    function _getSurveyTemplateObject() {
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
+    }
+  }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('preview', []);
 
 }());
 
@@ -378,72 +444,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('preview')
-    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
-
-  function otusSurveyPreviewGenerator() {
-    var ddo = {
-      restrict: 'A',
-      controller: Controller
-    };
-    return ddo;
-  }
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    '$compile',
-    'WorkspaceService',
-    'otusjs.model.activity.ActivityFacadeService',
-    'otusjs.player.core.player.PlayerService'
-  ];
-
-  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
-    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
-    var _newScope;
-    var _user = undefined;
-    var _participant = undefined;
-    var _activityConfigurationName = "C0";
-
-    $element.on('click', function() {
-      var otusSheetDOMElement = $('otus-player');
-
-      if (otusSheetDOMElement[0]) {
-        otusSheetDOMElement.remove();
-        if (_newScope) {
-          _newScope.$destroy();
-        }
-      }
-      _generateOtusPreview();
-      PlayerService.setup();
-    });
-
-    function _generateOtusPreview() {
-      _newScope = $scope.$new(true);
-      _newScope.surveyActivity = {};
-      _newScope.surveyActivity.template = _getSurveyTemplateObject();
-      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
-      $('#survey-preview').append(content);
-    }
-
-    function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
-    }
-  }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular.module('preview', []);
-
-}());
-
-(function() {
     'use strict';
 
     angular
@@ -517,133 +517,6 @@
     'use strict';
 
     angular
-        .module('studio.dashboard')
-        .controller('HomeController', HomeController);
-
-    HomeController.$inject = ['$http', '$scope', '$rootScope'];
-
-    function HomeController($http, $scope, $rootScope) {
-        var $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/otus-domain-rest/session/rest/register/loggedUser';
-
-        $scope.loggedUser = {};
-
-        $http.get($HTTP_GET_URL_LOGGED_USER).then(function(response) {
-            $scope.loggedUser = response.data.data;
-        });
-
-        $scope.isAdmin = function(loggedUser) {
-            return loggedUser.admin;
-        };
-
-        $scope.isNotAdmin = function(loggedUser) {
-            return !(loggedUser.admin);
-        };
-
-        $scope.doesNotHasRepository = function() {
-            if ($rootScope.repositories) {
-                return $rootScope.repositories.length;
-            }
-        };
-
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .controller('DashboardMenuController', DashboardMenuController);
-
-    DashboardMenuController.$inject = [
-        'DashboardStateService',
-        '$mdSidenav',
-        'AuthenticationService'
-    ];
-
-    function DashboardMenuController(DashboardStateService, $mdSidenav, AuthenticationService) {
-        var self = this;
-
-        /* Public interface */
-        self.getSelectedSystemArea = getSelectedSystemArea;
-        self.open = open;
-        self.close = close;
-        self.openHome = openHome;
-        self.openFormTemplates = openFormTemplates;
-        self.logout = logout;
-
-        function getSelectedSystemArea() {
-            return DashboardStateService.currentState;
-        }
-
-        function open() {
-            $mdSidenav('left').toggle();
-        }
-
-        function close() {
-            $mdSidenav('left').close();
-        }
-
-        function openHome() {
-            DashboardStateService.goToHome();
-            close();
-        }
-
-        function openFormTemplates() {
-            DashboardStateService.goToFormTemplates();
-            close();
-        }
-
-        function logout() {
-            AuthenticationService.logout();
-        }
-    }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('studio.dashboard')
-    .controller('SurveyFormDashboardController', SurveyFormDashboardController);
-
-  SurveyFormDashboardController.$inject = [
-    'NewSurveyFormDialogService',
-    'DashboardStateService',
-    'SurveyEditorService'
-  ];
-
-  function SurveyFormDashboardController(NewSurveyFormDialogService, DashboardStateService, SurveyEditorService) {
-    var self = this;
-
-    /* Public interface */
-    self.startNewSurveyForm = startNewSurveyForm;
-
-    function startNewSurveyForm() {
-      NewSurveyFormDialogService.showDialog()
-        .onConfirm(function onConfirm(workInitializationData) {
-          SurveyEditorService.startEditor(workInitializationData);
-          DashboardStateService.goToEditor();
-        });
-    }
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('surveyTemplates', []);
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
         .module('studio.authenticator')
         .service('AuthenticationService', AuthenticationService);
 
@@ -709,6 +582,133 @@
     }
 
 }());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
+        .controller('DashboardMenuController', DashboardMenuController);
+
+    DashboardMenuController.$inject = [
+        'DashboardStateService',
+        '$mdSidenav',
+        'AuthenticationService'
+    ];
+
+    function DashboardMenuController(DashboardStateService, $mdSidenav, AuthenticationService) {
+        var self = this;
+
+        /* Public interface */
+        self.getSelectedSystemArea = getSelectedSystemArea;
+        self.open = open;
+        self.close = close;
+        self.openHome = openHome;
+        self.openFormTemplates = openFormTemplates;
+        self.logout = logout;
+
+        function getSelectedSystemArea() {
+            return DashboardStateService.currentState;
+        }
+
+        function open() {
+            $mdSidenav('left').toggle();
+        }
+
+        function close() {
+            $mdSidenav('left').close();
+        }
+
+        function openHome() {
+            DashboardStateService.goToHome();
+            close();
+        }
+
+        function openFormTemplates() {
+            DashboardStateService.goToFormTemplates();
+            close();
+        }
+
+        function logout() {
+            AuthenticationService.logout();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
+        .controller('HomeController', HomeController);
+
+    HomeController.$inject = ['$http', '$scope', '$rootScope'];
+
+    function HomeController($http, $scope, $rootScope) {
+        var $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/otus-domain-rest/session/rest/register/loggedUser';
+
+        $scope.loggedUser = {};
+
+        $http.get($HTTP_GET_URL_LOGGED_USER).then(function(response) {
+            $scope.loggedUser = response.data.data;
+        });
+
+        $scope.isAdmin = function(loggedUser) {
+            return loggedUser.admin;
+        };
+
+        $scope.isNotAdmin = function(loggedUser) {
+            return !(loggedUser.admin);
+        };
+
+        $scope.doesNotHasRepository = function() {
+            if ($rootScope.repositories) {
+                return $rootScope.repositories.length;
+            }
+        };
+
+    }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('studio.dashboard')
+    .controller('SurveyFormDashboardController', SurveyFormDashboardController);
+
+  SurveyFormDashboardController.$inject = [
+    'NewSurveyFormDialogService',
+    'DashboardStateService',
+    'SurveyEditorService'
+  ];
+
+  function SurveyFormDashboardController(NewSurveyFormDialogService, DashboardStateService, SurveyEditorService) {
+    var self = this;
+
+    /* Public interface */
+    self.startNewSurveyForm = startNewSurveyForm;
+
+    function startNewSurveyForm() {
+      NewSurveyFormDialogService.showDialog()
+        .onConfirm(function onConfirm(workInitializationData) {
+          SurveyEditorService.startEditor(workInitializationData);
+          DashboardStateService.goToEditor();
+        });
+    }
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('surveyTemplates', []);
+
+})();
 
 (function() {
     'use strict';
@@ -1116,6 +1116,24 @@
 
     angular
         .module('studio.dashboard')
+        .directive('otusToolbar', otusToolbar);
+
+    function otusToolbar() {
+        var ddo = {
+            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
+            retrict: 'E'
+        };
+
+        return ddo;
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('studio.dashboard')
         .service('LogoutDialogService', LogoutDialogService);
 
     LogoutDialogService.$inject = ['$mdDialog'];
@@ -1180,24 +1198,6 @@
         function confirm(response) {
             $mdDialog.hide(response);
         }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('studio.dashboard')
-        .directive('otusToolbar', otusToolbar);
-
-    function otusToolbar() {
-        var ddo = {
-            templateUrl: 'app/dashboard/menu/toolbar/menu-toolbar.html',
-            retrict: 'E'
-        };
-
-        return ddo;
     }
 
 }());
@@ -3354,71 +3354,6 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .component('otusMessengerInstructor', {
-      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
-      controller: component
-    });
-
-  component.$inject = [
-    '$scope',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function component($scope, scopeService) {
-    var self = this;
-
-    self.message = {};
-    self.isVisible = false
-
-    /* Component cicle methods */
-    self.$onInit = onInit;
-
-    function onInit() {
-      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
-        self.isVisible = true;
-        self.message = message;
-      });
-
-      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
-        self.isVisible = false;
-      });
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('otusjs.studio.navigationBuilder.messenger')
-    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
-
-  service.$inject = [
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
-  ];
-
-  function service(scopeService) {
-    var self = this;
-
-    /* Public methods */
-    self.showMessenger = showMessenger;
-    self.clearMessenger = clearMessenger;
-
-    function showMessenger(message) {
-      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
-    }
-
-    function clearMessenger() {
-      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular
     .module('otusjs.studio.navigationBuilder')
     .component('otusNavigationMap', {
       templateUrl: 'app/navigation-builder/map/component/map-template.html',
@@ -4223,6 +4158,71 @@
     }
   }
 }());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .component('otusMessengerInstructor', {
+      templateUrl: 'app/navigation-builder/messenger/instructor/instructor-template.html',
+      controller: component
+    });
+
+  component.$inject = [
+    '$scope',
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function component($scope, scopeService) {
+    var self = this;
+
+    self.message = {};
+    self.isVisible = false
+
+    /* Component cicle methods */
+    self.$onInit = onInit;
+
+    function onInit() {
+      scopeService.onEvent(scopeService.NBEVENTS.SHOW_MESSENGER, function(event, message) {
+        self.isVisible = true;
+        self.message = message;
+      });
+
+      scopeService.onEvent(scopeService.NBEVENTS.HIDE_MESSENGER, function(event) {
+        self.isVisible = false;
+      });
+    }
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.studio.navigationBuilder.messenger')
+    .service('otusjs.studio.navigationBuilder.messenger.InstructorService', service);
+
+  service.$inject = [
+    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+  ];
+
+  function service(scopeService) {
+    var self = this;
+
+    /* Public methods */
+    self.showMessenger = showMessenger;
+    self.clearMessenger = clearMessenger;
+
+    function showMessenger(message) {
+      scopeService.broadcast(scopeService.NBEVENTS.SHOW_MESSENGER, message);
+    }
+
+    function clearMessenger() {
+      scopeService.broadcast(scopeService.NBEVENTS.HIDE_MESSENGER);
+    }
+  }
+})();
 
 (function() {
   'use strict';
@@ -7511,6 +7511,17 @@
 
   angular
     .module('editor.ui')
+    .component('calendarQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question-template.html'
+    });
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .component('checkboxQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/checkbox/checkbox-question-template.html',
       controller: Controller,
@@ -7558,17 +7569,6 @@
         return checkboxID;
     }
   }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('calendarQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/calendar/calendar-question-template.html'
-    });
 
 }());
 
@@ -7766,52 +7766,6 @@
 
 }());
 
-(function () {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('gridIntegerQuestion', {
-      controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-template.html',
-      bindings: {
-        item: '<'
-      }
-    });
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    'UpdateQuestionEventFactory'
-  ];
-
-  function Controller($scope, $element, UpdateQuestionEventFactory) {
-    var self = this;
-
-    self.$onInit = onInit;
-    self.addGridLine = addGridLine;
-    self.removeGridLine = removeGridLine;
-    self.save = save;
-
-    function onInit() { };
-
-    function addGridLine() {
-      self.item.createLine();
-      self.save();
-    }
-
-    function removeGridLine(gridLineIndex) {
-      self.item.removeLine(gridLineIndex);
-      self.save();
-    }
-
-    function save() {
-      UpdateQuestionEventFactory.create().execute(self);
-    }
-  }
-
-}());
-
 (function() {
   'use strict';
 
@@ -7858,14 +7812,49 @@
 
 }());
 
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('editor.ui')
-    .component('phoneQuestion', {
-      templateUrl: 'app/editor/ui/survey-item/question/phone/phone-question-template.html'
+    .component('gridIntegerQuestion', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-template.html',
+      bindings: {
+        item: '<'
+      }
     });
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    'UpdateQuestionEventFactory'
+  ];
+
+  function Controller($scope, $element, UpdateQuestionEventFactory) {
+    var self = this;
+
+    self.$onInit = onInit;
+    self.addGridLine = addGridLine;
+    self.removeGridLine = removeGridLine;
+    self.save = save;
+
+    function onInit() { };
+
+    function addGridLine() {
+      self.item.createLine();
+      self.save();
+    }
+
+    function removeGridLine(gridLineIndex) {
+      self.item.removeLine(gridLineIndex);
+      self.save();
+    }
+
+    function save() {
+      UpdateQuestionEventFactory.create().execute(self);
+    }
+  }
 
 }());
 
@@ -7933,6 +7922,17 @@
                 }
             }
         };
+    });
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('phoneQuestion', {
+      templateUrl: 'app/editor/ui/survey-item/question/phone/phone-question-template.html'
     });
 
 }());
@@ -10156,96 +10156,6 @@
 
 }());
 
-(function () {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('gridInteger', {
-      controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-template.html',
-      bindings: {
-        gridInteger: '<',
-      }
-    });
-
-  Controller.$inject = [];
-
-  function Controller() {
-    var self = this;
-
-    self.$onInit = function () {
-
-    };
-  }
-
-}());
-
-(function () {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('gridIntegerLine', {
-      controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-template.html',
-      bindings: {
-        gridLine: '<',
-      },
-      require: {
-        parentCtrl: '^gridIntegerQuestion'
-      }
-    });
-
-  Controller.$inject = [
-    'WorkspaceService',
-    'otusjs.model.utils.AlphabetSuffixIDGenerator'
-  ];
-
-  function Controller(WorkspaceService, AlphabetSuffixIDGenerator) {
-    var self = this;
-    var _questionID;
-
-    self.$onInit = onInit;
-    self.addGridInteger = addGridInteger;
-    self.removeLastGridInteger = removeLastGridInteger;
-    self.removeGridLine = removeGridLine;
-    self.isEmpty = isEmpty;
-
-    function onInit() {
-      _questionID = self.parentCtrl.item.customID;
-    }
-
-    function addGridInteger() {
-      self.gridLine.addGridInteger(_generateGridIntegerID());
-      self.parentCtrl.save();
-    }
-
-    function removeLastGridInteger() {
-      self.gridLine.removeLastGridInteger();
-      self.parentCtrl.save();
-    }
-
-    function removeGridLine(index) {
-      self.parentCtrl.removeGridLine(index);
-    }
-
-    function isEmpty() {
-      return self.gridLine.getGridIntegerListSize() > 0 ? false : true;
-    }
-
-    function _generateGridIntegerID() {
-      var gridID;
-      var quantity = self.gridLine.getGridIntegerListSize();
-      do {
-        gridID = _questionID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
-      } while (!WorkspaceService.getSurvey().isAvailableCustomID(gridID));
-      return gridID;
-    }
-  }
-
-}());
-
 (function() {
   'use strict';
 
@@ -10332,6 +10242,96 @@
     self.$onInit = function() {
 
     };
+  }
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('gridInteger', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-template.html',
+      bindings: {
+        gridInteger: '<',
+      }
+    });
+
+  Controller.$inject = [];
+
+  function Controller() {
+    var self = this;
+
+    self.$onInit = function () {
+
+    };
+  }
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('gridIntegerLine', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-template.html',
+      bindings: {
+        gridLine: '<',
+      },
+      require: {
+        parentCtrl: '^gridIntegerQuestion'
+      }
+    });
+
+  Controller.$inject = [
+    'WorkspaceService',
+    'otusjs.model.utils.AlphabetSuffixIDGenerator'
+  ];
+
+  function Controller(WorkspaceService, AlphabetSuffixIDGenerator) {
+    var self = this;
+    var _questionID;
+
+    self.$onInit = onInit;
+    self.addGridInteger = addGridInteger;
+    self.removeLastGridInteger = removeLastGridInteger;
+    self.removeGridLine = removeGridLine;
+    self.isEmpty = isEmpty;
+
+    function onInit() {
+      _questionID = self.parentCtrl.item.customID;
+    }
+
+    function addGridInteger() {
+      self.gridLine.addGridInteger(_generateGridIntegerID());
+      self.parentCtrl.save();
+    }
+
+    function removeLastGridInteger() {
+      self.gridLine.removeLastGridInteger();
+      self.parentCtrl.save();
+    }
+
+    function removeGridLine(index) {
+      self.parentCtrl.removeGridLine(index);
+    }
+
+    function isEmpty() {
+      return self.gridLine.getGridIntegerListSize() > 0 ? false : true;
+    }
+
+    function _generateGridIntegerID() {
+      var gridID;
+      var quantity = self.gridLine.getGridIntegerListSize();
+      do {
+        gridID = _questionID + AlphabetSuffixIDGenerator.generateSuffixByOptionsLength(quantity++);
+      } while (!WorkspaceService.getSurvey().isAvailableCustomID(gridID));
+      return gridID;
+    }
   }
 
 }());
