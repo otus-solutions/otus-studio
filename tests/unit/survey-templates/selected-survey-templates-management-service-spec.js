@@ -86,7 +86,7 @@ describe("SelectedSurveyTemplatesManagementService", function() {
       template_oid: 'survey.oid.1',
       name: 'one',
       version: 'survey.version.1',
-      toJson: function() {
+      toJSON: function() {
         return '{}';
       }
     };
@@ -96,7 +96,7 @@ describe("SelectedSurveyTemplatesManagementService", function() {
       template_oid: 'survey.oid.2',
       name: 'two',
       version: 'survey.version.2',
-      toJson: function() {
+      toJSON: function() {
         return '{}';
       }
     };
