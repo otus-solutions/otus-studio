@@ -203,8 +203,7 @@
       var routeQuery = {
         name: _originNode.id + '_' + _destinationNode.id
       };
-      _routeData = _selectedNavigation.getRouteByName(routeQuery.name).toJson();
-      _routeData = JSON.parse(_routeData);
+      _routeData = _selectedNavigation.getRouteByName(routeQuery.name).toJSON();
     }
 
     //-----------------------------------------------------

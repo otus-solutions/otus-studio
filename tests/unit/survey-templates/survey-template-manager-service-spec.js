@@ -97,7 +97,7 @@ xdescribe("SurveyTemplateManagerService", function() {
             template_oid: 'survey.oid',
             name: 'survey.name',
             version: 'survey.version',
-            toJson: function() {
+            toJSON: function() {
                 return '{}';
             }
         };

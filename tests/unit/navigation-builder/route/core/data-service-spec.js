@@ -353,7 +353,7 @@ xdescribe('DataService', function() {
 
       beforeEach(function() {
         Mock.route = {};
-        Mock.route.toJson = jasmine.createSpy('toJson').and.returnValue(
+        Mock.route.toJSON = jasmine.createSpy('toJSON').and.returnValue(
           '{}');
         Mock.navigation.getRoute = jasmine.createSpy('getRoute')
           .and.returnValue(Mock.route);
@@ -365,10 +365,10 @@ xdescribe('DataService', function() {
         expect(Mock.navigation.getRoute).toHaveBeenCalled();
       });
 
-      it('should call toJson method from route', function() {
+      it('should call toJSON method from route', function() {
         service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
 
-        expect(Mock.route.toJson).toHaveBeenCalled();
+        expect(Mock.route.toJSON).toHaveBeenCalled();
       });
 
       it('should parse route json to object type', function() {
@@ -376,7 +376,7 @@ xdescribe('DataService', function() {
 
         service.useCurrentRouteData(Mock.n1.id, Mock.n2.id);
 
-        expect(JSON.parse).toHaveBeenCalledWith(Mock.route.toJson());
+        expect(JSON.parse).toHaveBeenCalledWith(Mock.route.toJSON());
       });
 
       it(
