@@ -19,7 +19,7 @@
 //     describe('service.exportSurvey method', function functionName() {
 //
 //         it('should return correct string for download', function functionName() {
-//             var returnedJSON = service.exportSurvey(Mock.WorkspaceService.getSurvey().toJson());
+//             var returnedJSON = service.exportSurvey(Mock.WorkspaceService.getSurvey().toJSON());
 //
 //             expect(returnedJSON).toEqual(Mock.SURVEY_TEMPLATE_RESULT);
 //         });
@@ -27,7 +27,7 @@
 //         it('should call encodeURIComponent', function functionName() {
 //             spyOn(window, 'encodeURIComponent');
 //
-//             service.exportSurvey(Mock.WorkspaceService.getSurvey().toJson());
+//             service.exportSurvey(Mock.WorkspaceService.getSurvey().toJSON());
 //
 //             expect(window.encodeURIComponent).toHaveBeenCalledWith(jasmine.any(String));
 //         });
@@ -39,13 +39,13 @@
 //             oid: 'survey.oid',
 //             name: 'survey.name',
 //             version: 'survey.version',
-//             toJson: function() {
+//             toJSON: function() {
 //                 return '{}';
 //             }
 //         };
 //
 //         Mock.SURVEY_TEMPLATE_RESULT = 'data:text/json;charset=utf-8,';
-//         Mock.SURVEY_TEMPLATE_RESULT += encodeURIComponent(Mock.survey.toJson());
+//         Mock.SURVEY_TEMPLATE_RESULT += encodeURIComponent(Mock.survey.toJSON());
 //     }
 //
 //     function mockWorkspaceService($injector) {
