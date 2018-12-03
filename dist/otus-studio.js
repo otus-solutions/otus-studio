@@ -56,6 +56,13 @@
 }());
 
 (function() {
+    'use strict';
+
+    angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
 
     angular.module('dependencies', [
         /* Angular modules */
@@ -278,13 +285,6 @@
         /* 24 is the size default of icons */
         $mdIconProvider.defaultIconSet('app/assets/img/icons/mdi.svg', 24);
     }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('studio.dashboard', []);
 
 }());
 
