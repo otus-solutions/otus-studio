@@ -21,14 +21,6 @@
     var self = this;
 
     self.$onInit = function () {
-
-      //TODO montar map para escolher posição
-      var items = self.template.getItems().map(function (item) {
-        var _object = {};
-        _object[item.customID] = item.templateID;
-        return item.customID;
-        return _object;
-      });
       PageAnchorService.setUp(self.template.SurveyItemManager);
       $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
     };

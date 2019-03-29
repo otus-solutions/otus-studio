@@ -27,6 +27,7 @@ module.exports = function(config) {
       'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
       NODE_MODULES_ROOT_PATH +
       'angular-material/angular-material.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-sanitize/angular-sanitize.min.js',
       DEPENDENCIES_ROOT_PATH +
       'angular-indexed-db/angular-indexed-db.min.js',
       NODE_MODULES_ROOT_PATH +

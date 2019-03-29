@@ -16,7 +16,7 @@
     vm.ariaLabel = data.ariaLabel;
     vm.IMG = data.img;
     vm.STYLE = data.style;
-    vm.BUTTONS = data.buttons;
+    vm.BUTTONS = Array.isArray(data.buttons) ? data.buttons : [];
     vm.cancel = data.cancel;
 
     /* Public methods */

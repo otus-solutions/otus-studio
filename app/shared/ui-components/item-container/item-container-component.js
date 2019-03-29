@@ -28,8 +28,8 @@
   function Controller(RemoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect) {
     var self = this;
 
-    const DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
-    const DELETE_TITLE = 'ATENÇÃO';
+    var DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
+    var DELETE_TITLE = 'ATENÇÃO';
 
     self.changeState = changeState;
     self.deleteSurveyItem = deleteSurveyItem;
