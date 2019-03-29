@@ -9,10 +9,10 @@
     });
 
   component.$inject = [
-    'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService'
+
   ];
 
-  function component(RouteBuilderService) {
+  function component() {
 
   }
 }());

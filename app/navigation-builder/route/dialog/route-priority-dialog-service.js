@@ -6,11 +6,10 @@
     .service('otusjs.studio.navigationBuilder.routeBuilder.RoutePriorityDialogService', service);
 
   service.$inject = [
-    '$mdDialog',
-    'otusjs.studio.navigationBuilder.NavigationBuilderScopeService'
+    '$mdDialog'
   ];
 
-  function service($mdDialog, moduleScope) {
+  function service($mdDialog) {
     self = this;
 
     function closeDialog() {
