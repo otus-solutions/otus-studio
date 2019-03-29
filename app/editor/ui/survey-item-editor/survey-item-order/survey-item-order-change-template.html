@@ -1,0 +1,54 @@
+<md-dialog flex flex-gt-sm="60" flex-gt-md="50">
+  <form ng-cloak flex>
+    <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
+      <div class="md-toolbar-tools">
+        <h2>Posicionar Questão</h2>
+        <span flex></span>
+        <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
+          <md-icon>close</md-icon>
+          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content flex="100" id="dialogContent">
+      <div class="md-dialog-content md-padding"  layout="column" layout-align="start center" layout-wrap flex>
+        <div>
+          <h3>Defina o critério para posição da questão</h3>
+        </div>
+        <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center" layout-align="start center" layout-fill>
+          <span flex="15" layout-align="end end" layout="row">Mover:</span>
+          <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">
+            {{::$ctrl.item.customID}}
+          </md-card>
+          <md-input-container flex flex-gt-xs="20" style="width: 500px" md-no-backdrop>
+            <label>Critério</label>
+            <md-select ng-model="$ctrl.selectedCriteria" flex md-no-backdrop>
+              <md-option ng-repeat="criteria in $ctrl.criterias" ng-value="criteria.value" ng-selected="criteria.value==0">
+                {{::criteria.label}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container flex="25" ng-show="$ctrl.selectedCriteria == 0">
+          </md-input-container>
+          <md-input-container flex-gt-xs="25" flex ng-show="$ctrl.selectedCriteria > 0" style="width: 500px">
+            <label>Questão</label>
+            <md-select ng-model="$ctrl.selectedQuestionNeighbor" flex>
+              <md-option ng-repeat="question in $ctrl.questions" ng-value="question.templateID" ng-selected="$index == 0">
+                {{::question.customID}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <span flex="15"></span>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+      <md-button class="md-icon-button">
+        <md-icon style="color:rgb(68,138,255);">save</md-icon>
+
+        <md-tooltip md-direction="top">Salvar</md-tooltip>
+      </md-button>
+
+
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -19,10 +19,13 @@
   Controller.$inject = [
     'RemoveSurveyItemEventFactory',
     '$mdDialog',
-    'DialogService'
+    'DialogService',
+    'WorkspaceService',
+    '$window',
+    '$mdSelect'
   ];
 
-  function Controller(RemoveSurveyItemEventFactory, $mdDialog, DialogService) {
+  function Controller(RemoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect) {
     var self = this;
 
     const DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
@@ -30,6 +33,7 @@
 
     self.changeState = changeState;
     self.deleteSurveyItem = deleteSurveyItem;
+    self.offsetSurveyItem = offsetSurveyItem;
 
     self.$onInit = function() {
       self.css = {};
@@ -65,11 +69,34 @@
           {message:"SIM",class: "md-warn md-raised", action: remove}
         ]
       };
-      DialogService.show(data).then(function (answer) {
-        remove(answer);
-      })
+      DialogService.show(data);
 
     }
+
+    function offsetSurveyItem() {
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-template.html',
+        header: "Excluir Questão "+self.item.customID,
+        ctrl: 'SurveyItemOrderChangeController',
+        item: self.item,
+        questions: WorkspaceService.getSurvey().getItems(),
+        title: DELETE_TITLE,
+        text: DELETE_MSG,
+        type: 'confirm',
+        dialogDimensions: {
+          width: '800px'
+        },
+        buttons : [
+          {message:"OI",class: "md-warn md-raised", action: remove}
+        ]
+      };
+      DialogService.show(data);
+
+    }
+
+    $window.addEventListener('click',function(e){
+      $mdSelect.hide();
+    });
 
 
   }
