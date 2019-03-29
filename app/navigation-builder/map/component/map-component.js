@@ -11,7 +11,8 @@
   component.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService'
+    'otusjs.studio.navigationBuilder.NavigationBuilderService',
+
   ];
 
   function component(moduleScope, GraphLayerService, NavigationBuilderService) {
@@ -20,6 +21,18 @@
 
     /* Publi methods */
     self.$onInit = onInit;
+
+    self.topDirections = ['left', 'up'];
+    self.bottomDirections = ['down', 'right'];
+
+    self.isOpen = true;
+
+    self.availableModes = ['md-fling', 'md-scale'];
+    self.selectedMode = 'md-fling';
+
+    self.availableDirections = ['up', 'down', 'left', 'right'];
+    self.selectedDirection = 'down';
+
 
     function onInit() {
       self.toolsCtrl = new ToolsController(NavigationBuilderService);
@@ -61,5 +74,9 @@
     function _init() {
       self.isOpen = false;
     }
+
+
+
+
   }
 })();
