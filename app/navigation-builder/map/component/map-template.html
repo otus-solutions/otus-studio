@@ -1,10 +1,27 @@
-<div layout="row" flex style="margin-top: 10px">
-  <md-button aria-label="Nova rota" ng-click="$ctrl.toolsCtrl.addRoute()" class="md-fab md-raised md-mini">
-    <md-icon md-svg-icon="routes"></md-icon>
-  </md-button>
-  <md-button aria-label="Nova rota" ng-click="$ctrl.toolsCtrl.inspect()" class="md-fab md-raised md-mini">
-    <md-icon md-svg-icon="information"></md-icon>
-  </md-button>
+<div layout="row" flex style="margin-top: 10px"></div>
+
+<div class="lock-size" layout="row" layout-align="right center">
+  <md-fab-speed-dial md-open="$ctrl.isOpen" md-direction="{{$ctrl.selectedDirection}}"
+                     ng-class="$ctrl.selectedMode">
+    <md-fab-trigger>
+      <md-button aria-label="menu" class="md-fab md-raised md-mini">
+        <md-icon md-svg-icon="menu"></md-icon>
+      </md-button>
+    </md-fab-trigger>
+
+    <md-fab-actions>
+      <md-button aria-label="NovaRota" ng-click="$ctrl.toolsCtrl.addRoute()" class="md-fab md-raised md-mini">
+        <md-icon md-svg-icon="routes"></md-icon>
+      </md-button>
+      <md-button aria-label="PriorizarRotas" ng-click="$ctrl.toolsCtrl.addRoute()" class="md-fab md-raised md-mini">
+        <md-icon md-svg-icon="shuffle"></md-icon>
+      </md-button>
+      <md-button aria-label="NovaRota" ng-click="$ctrl.toolsCtrl.inspect()" class="md-fab md-raised md-mini">
+        <md-icon md-svg-icon="information"></md-icon>
+      </md-button>
+
+    </md-fab-actions>
+  </md-fab-speed-dial>
 </div>
 <div id="map-view" style="width: 100%; height: 100%"></div>
 <otus-messenger-instructor layout="row" flex style="position: absolute; top: 0; right: 0"></otus-messenger-instructor>
