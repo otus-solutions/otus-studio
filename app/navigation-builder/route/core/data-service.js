@@ -83,7 +83,7 @@
     }
 
     function selectNode(node) {
-      console.log('passou');
+      console.log(node);
       if (_areSameNode(_originNode, node)) {
         _originNode = null;
         moduleScope.emit(moduleScope.NBEVENTS.ORIGIN_NODE_UNSELECTED, node);
