@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.studio.navigationBuilder.routeBuilder')
-    .component('otusRouteEditor', {
+    .component('otusRouteEditorPriority', {
       templateUrl: 'app/navigation-builder/route/editor/route-priority-editor.html',
       controller: component
     });

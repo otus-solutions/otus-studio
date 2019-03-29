@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.studio.navigationBuilder.routeBuilder')
-    .service('otusjs.studio.navigationBuilder.routeBuilder.RouteEditorService', service);
+    .service('otusjs.studio.navigationBuilder.routeBuilder.RoutePriorityDialogService', service);
 
   service.$inject = [
     '$mdDialog',
