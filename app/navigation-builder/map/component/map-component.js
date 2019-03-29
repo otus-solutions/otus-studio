@@ -19,9 +19,6 @@
     var self = this;
     // var _messageLayer = null;
 
-    /* Publi methods */
-    self.$onInit = onInit;
-
     self.topDirections = ['left', 'up'];
     self.bottomDirections = ['down', 'right'];
 
@@ -33,6 +30,8 @@
     self.availableDirections = ['up', 'down', 'left', 'right'];
     self.selectedDirection = 'down';
 
+    /* Publi methods */
+    self.$onInit = onInit;
 
     function onInit() {
       self.toolsCtrl = new ToolsController(NavigationBuilderService);
@@ -57,7 +56,12 @@
     /* Public methods */
     self.click = click;
     self.addRoute = addRoute;
+    self.editRoutePriority = editRoutePriority;
     self.inspect = inspect;
+
+    function editRoutePriority() {
+      NavigationBuilderService.activateRouteEditMode();
+    }
 
     function click() {
       self.isOpen = !self.isOpen;
@@ -74,9 +78,6 @@
     function _init() {
       self.isOpen = false;
     }
-
-
-
 
   }
 })();

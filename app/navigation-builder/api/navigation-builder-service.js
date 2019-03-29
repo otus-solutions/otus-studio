@@ -23,6 +23,7 @@
     self.edges = edges;
     self.setSurvey = setSurvey;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
+    self.activateRouteEditMode = activateRouteEditMode;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
     self.reloadMapData = reloadMapData;
@@ -50,6 +51,11 @@
       deactiveMode();
       _activeServiceMode = NavigationInspectorService;
       _activeServiceMode.activate(_survey);
+    }
+
+    function activateRouteEditMode() {
+       deactiveMode();
+
     }
 
     function deactiveMode() {
