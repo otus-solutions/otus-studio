@@ -7,7 +7,8 @@
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-editor.html',
       controller: Controller,
       bindings: {
-        item: '<'
+        item: '<',
+        position: '<'
       }
     });
 
@@ -15,13 +16,12 @@
     'RemoveSurveyItemEventFactory'
   ];
 
-  function Controller(RemoveSurveyItemEventFactory) {
+  function Controller() {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
     // public methods
     self.getItem = getItem;
-    self.deleteSurveyItem = deleteSurveyItem;
     self.getQuestionId = getQuestionId;
 
     function onInit() {}
@@ -34,9 +34,6 @@
       return self.getItem().templateID;
     }
 
-    function deleteSurveyItem() {
-      RemoveSurveyItemEventFactory.create().execute(self.item);
-    }
   }
 
 }());
