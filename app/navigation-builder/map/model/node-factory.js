@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -69,6 +69,7 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
+    this.orderNavigationByPriority = orderNavigationByPriority;
 
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
@@ -93,7 +94,7 @@
       var defaultRouteCount = 0;
       var myDefaultParentY;
 
-      this.inNeighbors.forEach(function(neighbor) {
+      this.inNeighbors.forEach(function (neighbor) {
         if (neighbor.isMyDefaultNext(this)) {
           if (!myDefaultParentY) {
             myDefaultParentY = neighbor.y;
@@ -112,6 +113,12 @@
         var inCount = this.inNeighbors.length;
         this.y = ((inCount) / (!(inCount % 2) ? 1 : 2)) * (-1);
       }
+    }
+
+    function orderNavigationByPriority(oldPosition, newPosition) {
+      var aux = this.outNeighbors[newPosition];
+      this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
+      this.outNeighbors[oldPosition] = aux;
     }
 
     function isMyDefaultNext(node) {
