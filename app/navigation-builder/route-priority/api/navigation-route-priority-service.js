@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -37,5 +37,11 @@
       ModuleEventService.deactivate();
       UiEventsService.deactivate();
     }
+
+    //-----------------------------------------------------
+    // Priority editor
+    //-----------------------------------------------------
+
+
   }
 })();

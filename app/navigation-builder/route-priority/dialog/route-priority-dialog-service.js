@@ -1,9 +1,9 @@
-(function() {
+(function () {
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.routeBuilder')
-    .service('otusjs.studio.navigationBuilder.routeBuilder.RoutePriorityDialogService', service);
+    .module('otusjs.studio.navigationBuilder.navigationRoutePriority')
+    .service('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService', service);
 
   service.$inject = [
     '$mdDialog'
@@ -11,6 +11,8 @@
 
   function service($mdDialog) {
     self = this;
+    var _dialogSettings = {};
+    
     /* Public interface */
     self.showDialog = showDialog;
     self.closeDialog = closeDialog;
@@ -21,11 +23,9 @@
       _setupDialogConfiguration();
     }
 
-    function showDialog(originNode, destinationNode) {
+    function showDialog(node) {
       _dialogSettings.locals = {
-        origin: originNode,
-        destination: destinationNode,
-        moduleScope: moduleScope
+        node: node
       };
       $mdDialog.show(_dialogSettings);
     }
@@ -35,7 +35,7 @@
     }
 
     function _setupDialogConfiguration() {
-      _dialogSettings.templateUrl = 'app/navigation-builder/route/dialog/route-dialog-template.html';
+      _dialogSettings.templateUrl = 'app/navigation-builder/route-priority/dialog/route-priority-dialog-template.html';
       _dialogSettings.controller = DialogController;
       _dialogSettings.controllerAs = 'ctrl';
       _dialogSettings.escapeToClose = false;
@@ -43,7 +43,9 @@
       _dialogSettings.hasBackdrop = true;
     }
 
-    function DialogController($mdDialog){
+    function DialogController($mdDialog, node) {
+      var self = this;
+      self.node = node;
 
       /* Public interface */
       self.cancel = cancel;

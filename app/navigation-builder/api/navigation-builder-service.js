@@ -54,11 +54,10 @@
       _activeServiceMode.activate(_survey);
     }
 
-    // TODO:
     function activateEditRoutePriority() {
-       deactiveMode();
-       _activeServiceMode = NavigationRoutePriorityService;
-       _activeServiceMode.activate(_survey);
+      deactiveMode();
+      _activeServiceMode = NavigationRoutePriorityService;
+      _activeServiceMode.activate(_survey);
     }
 
     function deactiveMode() {
