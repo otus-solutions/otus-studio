@@ -4,7 +4,7 @@
   angular.module('studio.commons')
     .service("DialogService", Service);
 
-  Service.$inject = ['$mdDialog', '$q'];
+  Service.$inject = ['$mdDialog'];
 
   function Service($mdDialog){
     var self = this;
