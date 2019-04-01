@@ -19,6 +19,7 @@
 
   Controller.$inject = [
     'RemoveSurveyItemEventFactory',
+    'MoveSurveyItemEventFactory',
     '$mdDialog',
     'DialogService',
     'WorkspaceService',
@@ -26,7 +27,7 @@
     '$mdSelect'
   ];
 
-  function Controller(RemoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect) {
+  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect) {
     var self = this;
 
     var DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
@@ -34,7 +35,7 @@
 
     self.changeState = changeState;
     self.deleteSurveyItem = deleteSurveyItem;
-    self.scrollSurveyItem = scrollSurveyItem;
+    self.moveSurveyItem = moveSurveyItem;
 
     self.$onInit = function() {
       self.css = {};
@@ -56,8 +57,11 @@
       }
     }
 
-    function cancel() {
-      $mdDialog.cancel();
+    function move(item, position){
+      if(item){
+        MoveSurveyItemEventFactory.create().execute(item, position);
+        $mdDialog.cancel();
+      }
     }
 
     function deleteSurveyItem() {
@@ -65,7 +69,6 @@
         header: "Excluir Questão "+self.item.customID,
         title: DELETE_TITLE,
         text: DELETE_MSG,
-        type: 'confirm',
         dialogDimensions: {
           width: '800px'
         },
@@ -75,36 +78,27 @@
         ]
       };
       DialogService.show(data);
-
     }
 
-    function scrollSurveyItem() {
+    function moveSurveyItem() {
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-template.html',
         header: "Excluir Questão "+self.item.customID,
         ctrl: 'SurveyItemOrderChangeController',
         item: self.item,
+        position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
         questions: WorkspaceService.getSurvey().getItems(),
-        title: DELETE_TITLE,
-        text: DELETE_MSG,
-        type: 'confirm',
-        dialogDimensions: {
-          width: '500px'
-        },
-        // buttons : [
-        //   {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-        //   {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: remove}
-        // ]
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: move}
+        ]
       };
       DialogService.show(data);
-
     }
 
     $window.addEventListener('click',function(e){
       $mdSelect.hide();
     });
-
-
   }
 
 }());

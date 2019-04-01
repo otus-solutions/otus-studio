@@ -19,6 +19,7 @@
         self.data.url = 'app/shared/commons/dialog/component/dialog-template.html';
         self.data.ctrl = 'dialogController';
       }
+
       if ("buttons" in self.data) {
         self.data.buttons.forEach(function (button) {
           if(!button.action){
@@ -30,7 +31,6 @@
           {message:'OK',class: 'md-primary md-raised md-layoutTheme-theme', action: cancel}
         ];
       }
-
     }
 
     function show(data) {
