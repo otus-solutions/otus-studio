@@ -12,7 +12,7 @@
   function service($mdDialog) {
     self = this;
     var _dialogSettings = {};
-    
+
     /* Public interface */
     self.showDialog = showDialog;
     self.closeDialog = closeDialog;
@@ -46,17 +46,30 @@
     function DialogController($mdDialog, node) {
       var self = this;
       self.node = node;
-      console.log(node.outNeighbors);
+      self.changed = false;
 
       /* Public interface */
+      self.up = up;
+      self.down = down;
       self.cancel = cancel;
       self.confirm = confirm;
+
+      function up(originalPosition) {
+        self.node.orderNavigationByPriority(originalPosition, originalPosition - 1);
+        self.changed = true;
+      }
+
+      function down(originalPosition) {
+        self.node.orderNavigationByPriority(originalPosition, originalPosition + 1);
+        self.changed = true;
+      }
 
       function cancel(response) {
         $mdDialog.hide(response);
       }
 
       function confirm(response) {
+        self.changed = false;
         $mdDialog.hide(response);
       }
 

@@ -115,10 +115,12 @@
       }
     }
 
+    // TODO: Quais todos os cenários que podem aparecer?
     function orderNavigationByPriority(oldPosition, newPosition) {
       var aux = this.outNeighbors[newPosition];
       this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
       this.outNeighbors[oldPosition] = aux;
+      return this;
     }
 
     function isMyDefaultNext(node) {
