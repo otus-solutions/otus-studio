@@ -4,6 +4,7 @@
   angular.module('otusjs.studio.navigationBuilder', [
       'otusjs.studio.navigationBuilder.routeBuilder',
       'otusjs.studio.navigationBuilder.navigationInspector',
+      'otusjs.studio.navigationBuilder.navigationRoutePriority',
       'otusjs.studio.navigationBuilder.messenger',
       'ngMaterial'
     ])
@@ -21,7 +22,7 @@
       'ROUTE_BUILD_SAVED': 'nbevents.route.build.saved',
       'ROUTE_BUILD_CANCELED': 'nbevents.route.build.canceled',
       /* Route Node events */
-      'PRIORITY_NODE_SELECTED': 'nbevents.route.node.priority.selected',
+      'ROUTE_PRIORITY_NODE_SELECTED': 'nbevents.route.node.priority.selected',
       'ORIGIN_NODE_SELECTED': 'nbevents.route.node.origin.selected',
       'ORIGIN_NODE_UNSELECTED': 'nbevents.route.node.origin.unselected',
       'DESTINATION_NODE_SELECTED': 'nbevents.route.node.destination.selected',
@@ -29,6 +30,10 @@
       /* Messenger events */
       'SHOW_MESSENGER': 'nbevents.messenger.show',
       'HIDE_MESSENGER': 'nbevents.messenger.hide',
+
+      /* Navigation Route Priority events */
+      'ROUTE_PRIORITY_MODE_ON': 'nbevents.priority.mode.on',
+      'ROUTE_PRIORITY_MODE_OFF': 'nbevents.priority.mode.off',
 
       /* Navigation Inspector events */
       'INSPECTOR_MODE_ON': 'nbevents.inspector.mode.on',

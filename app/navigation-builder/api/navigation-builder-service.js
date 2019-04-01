@@ -9,10 +9,11 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.MapFactory',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService'
+    'otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService',
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.NavigationRoutePriorityService'
   ];
 
-  function service(moduleScope, MapFactory, RouteBuilderService, NavigationInspectorService) {
+  function service(moduleScope, MapFactory, RouteBuilderService, NavigationInspectorService, NavigationRoutePriorityService) {
     var self = this;
     var _survey = null;
     var _navigationMap = {};
@@ -55,9 +56,9 @@
 
     // TODO:
     function activateEditRoutePriority() {
-      deactiveMode();
-      _activeServiceMode = NavigationInspectorService;
-      _activeServiceMode.activate(_survey);
+       deactiveMode();
+       _activeServiceMode = NavigationRoutePriorityService;
+       _activeServiceMode.activate(_survey);
     }
 
     function deactiveMode() {
