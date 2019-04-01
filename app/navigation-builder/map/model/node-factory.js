@@ -69,7 +69,6 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
-    this.orderNavigationByPriority = orderNavigationByPriority;
 
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
@@ -113,14 +112,6 @@
         var inCount = this.inNeighbors.length;
         this.y = ((inCount) / (!(inCount % 2) ? 1 : 2)) * (-1);
       }
-    }
-
-    // TODO: Quais todos os cenários que podem aparecer?
-    function orderNavigationByPriority(oldPosition, newPosition) {
-      var aux = this.outNeighbors[newPosition];
-      this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
-      this.outNeighbors[oldPosition] = aux;
-      return this;
     }
 
     function isMyDefaultNext(node) {

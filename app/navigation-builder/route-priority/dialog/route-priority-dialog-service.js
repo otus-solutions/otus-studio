@@ -23,9 +23,11 @@
       _setupDialogConfiguration();
     }
 
-    function showDialog(node) {
+    function showDialog(node, survey) {
+      console.log(survey);
       _dialogSettings.locals = {
-        node: node
+        node: node,
+        survey: survey
       };
       $mdDialog.show(_dialogSettings);
     }
@@ -43,7 +45,7 @@
       _dialogSettings.hasBackdrop = true;
     }
 
-    function DialogController($mdDialog, node) {
+    function DialogController($mdDialog, node, survey) {
       var self = this;
       self.node = node;
       self.changed = false;
@@ -55,7 +57,13 @@
       self.confirm = confirm;
 
       function up(originalPosition) {
-        self.node.orderNavigationByPriority(originalPosition, originalPosition - 1);
+        // TODO: utilizar o model neste momento!
+        // para isso você deve saber sobre a lista de navegação qual você modificar
+        console.log(survey.NavigationManager.getNavigationList());
+        survey.NavigationManager.getNavigationList().filter(function (navigation) {
+          // TODO:
+        });
+
         self.changed = true;
       }
 
