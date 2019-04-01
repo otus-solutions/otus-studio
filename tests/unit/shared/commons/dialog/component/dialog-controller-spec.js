@@ -37,7 +37,7 @@ describe('Dialog Controller Tests', function () {
   function mockData() {
     Mock.dataEmpty = {
       dimensionsDialog: DIMENSION
-    }
+    };
     Mock.data = {
       header: "DIALOG",
       title: "DIALOG",
@@ -49,7 +49,5 @@ describe('Dialog Controller Tests', function () {
       cancel: "DIALOG",
     }
   }
-
-
 
 });

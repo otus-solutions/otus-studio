@@ -3,7 +3,6 @@
     <md-toolbar ng-if="$ctrl.HEADER" class="editor-toolbar md-primary md-layoutTheme-theme">
       <div class="md-toolbar-tools">
         <h2>{{$ctrl.HEADER}}</h2>
-        <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
           <md-icon>close</md-icon>
           <md-tooltip md-direction="bottom">Fechar</md-tooltip>
@@ -15,8 +14,8 @@
         <div layout-align="center center">
           <img ng-style="$ctrl.STYLE " ng-src="{{ $ctrl.IMG }}" ng-if="$ctrl.isAvailableImage()">
         </div>
-        <div>
-          <h2>{{$ctrl.TITLE}}</h2>
+        <div layout-fill>
+          <h2 style="margin: 0">{{$ctrl.TITLE}}</h2>
           <br><p ng-bind-html="$ctrl.TEXT"></p>
         </div>
       </div>

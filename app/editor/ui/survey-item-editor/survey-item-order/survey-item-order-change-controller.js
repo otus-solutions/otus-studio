@@ -18,7 +18,8 @@
     vm.criterias = [
       {label:"Início", value: 0},
       {label:"Após a", value: 1}
-    ]
+    ];
+    vm.BUTTONS = data.buttons || [];
     vm.cancel = data.cancel;
 
   }

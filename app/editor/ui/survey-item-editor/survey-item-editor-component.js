@@ -12,10 +12,6 @@
       }
     });
 
-  Controller.$inject = [
-    'RemoveSurveyItemEventFactory'
-  ];
-
   function Controller() {
     var self = this;
     // lifecycle hooks

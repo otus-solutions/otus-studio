@@ -1,4 +1,4 @@
-<md-dialog flex flex-gt-sm="60" flex-gt-md="50">
+<md-dialog flex flex-gt-sm="50" flex-gt-md="35">
   <form ng-cloak flex>
     <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
       <div class="md-toolbar-tools">
@@ -11,12 +11,12 @@
       </div>
     </md-toolbar>
     <md-dialog-content flex="100" id="dialogContent">
-      <div class="md-dialog-content md-padding"  layout="column" layout-align="start center" layout-wrap flex>
+      <div class="md-dialog-content md-padding"  layout="column" layout-align="start start" layout-wrap flex>
         <div>
           <h3>Defina o critério para posição da questão</h3>
         </div>
         <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center" layout-align="start center" layout-fill>
-          <span flex="15" layout-align="end end" layout="row">Mover:</span>
+          <span flex="10" layout-align="end end" layout="row">Mover:</span>
           <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">
             {{::$ctrl.item.customID}}
           </md-card>
@@ -41,13 +41,18 @@
           <span flex="15"></span>
       </div>
     </md-dialog-content>
-    <md-dialog-actions layout="row" layout-padding>
-      <md-button class="md-icon-button">
-        <md-icon style="color:rgb(68,138,255);">save</md-icon>
-
-        <md-tooltip md-direction="top">Salvar</md-tooltip>
-      </md-button>
-
+    <md-dialog-actions layout="row" >
+<!--      <md-button class="md-primary md-raised md-layoutTheme-theme">-->
+<!--        <md-icon>save</md-icon>-->
+<!--        SALVAR-->
+<!--      </md-button>-->
+      <div ng-repeat="button in $ctrl.BUTTONS">
+        <md-button  class="{{ button.class }}" ng-click="button.action(true)" aria-label="button">
+          <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
+          {{button.message}}
+        </md-button>
+        <span flex></span>
+      </div>
 
     </md-dialog-actions>
   </form>

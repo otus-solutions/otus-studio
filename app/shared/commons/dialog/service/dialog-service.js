@@ -10,7 +10,7 @@
     var self = this;
 
     self.show = show;
-
+1
     function _buildCustomDialog(data) {
       if (data.url || data.ctrl){
         self.data.url = data.url ? data.url : 'app/shared/commons/dialog/component/dialog-template.html';
@@ -19,6 +19,18 @@
         self.data.url = 'app/shared/commons/dialog/component/dialog-template.html';
         self.data.ctrl = 'dialogController';
       }
+      if ("buttons" in self.data) {
+        self.data.buttons.forEach(function (button) {
+          if(!button.action){
+            button.action = cancel;
+          }
+        });
+      } else {
+        self.data.buttons = [
+          {message:'OK',class: 'md-primary md-raised md-layoutTheme-theme', action: cancel}
+        ];
+      }
+
     }
 
     function show(data) {

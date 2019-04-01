@@ -60,7 +60,8 @@ describe('Dialog Service Tests', function () {
   });
 
   it('should cancel dialog', function () {
-    service.show({});
+    Mock.data.buttons = [{},{action:()=>{}}];
+    service.show(Mock.data);
     service.data.cancel();
     expect(Injections.$mdDialog.cancel).toHaveBeenCalledTimes(1);
   });

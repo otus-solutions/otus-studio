@@ -5,7 +5,7 @@
     .module('ui.components')
     .component('itemContainer', {
       templateUrl: 'app/shared/ui-components/item-container/item-container-template.html',
-      controller: Controller,
+      controller: 'itemContainerCtrl as $ctrl',
       bindings: {
         item: "<",
         position: "<"
@@ -14,7 +14,8 @@
         headerSlot: 'itemContainerHeader',
         bodySlot: 'itemContainerBody'
       }
-    });
+    })
+    .controller('itemContainerCtrl', Controller);
 
   Controller.$inject = [
     'RemoveSurveyItemEventFactory',
@@ -33,7 +34,7 @@
 
     self.changeState = changeState;
     self.deleteSurveyItem = deleteSurveyItem;
-    self.offsetSurveyItem = offsetSurveyItem;
+    self.scrollSurveyItem = scrollSurveyItem;
 
     self.$onInit = function() {
       self.css = {};
@@ -44,7 +45,6 @@
     }
 
     function changeState() {
-      console.log(self.position)
       self.isToShow = !self.isToShow;
       self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
     }
@@ -54,6 +54,10 @@
         RemoveSurveyItemEventFactory.create().execute(self.item);
         $mdDialog.cancel();
       }
+    }
+
+    function cancel() {
+      $mdDialog.cancel();
     }
 
     function deleteSurveyItem() {
@@ -66,14 +70,15 @@
           width: '800px'
         },
         buttons : [
-          {message:"SIM",class: "md-warn md-raised", action: remove}
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: remove}
         ]
       };
       DialogService.show(data);
 
     }
 
-    function offsetSurveyItem() {
+    function scrollSurveyItem() {
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-template.html',
         header: "Excluir Questão "+self.item.customID,
@@ -84,11 +89,12 @@
         text: DELETE_MSG,
         type: 'confirm',
         dialogDimensions: {
-          width: '800px'
+          width: '500px'
         },
-        buttons : [
-          {message:"OI",class: "md-warn md-raised", action: remove}
-        ]
+        // buttons : [
+        //   {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+        //   {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: remove}
+        // ]
       };
       DialogService.show(data);
 
