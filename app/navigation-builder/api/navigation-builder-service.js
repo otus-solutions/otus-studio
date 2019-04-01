@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -23,7 +23,7 @@
     self.edges = edges;
     self.setSurvey = setSurvey;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
-    self.activateRouteEditMode = activateRouteEditMode;
+    self.activateEditRoutePriority = activateEditRoutePriority;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
     self.reloadMapData = reloadMapData;
@@ -53,9 +53,11 @@
       _activeServiceMode.activate(_survey);
     }
 
-    function activateRouteEditMode() {
-       deactiveMode();
-
+    // TODO:
+    function activateEditRoutePriority() {
+      deactiveMode();
+      _activeServiceMode = NavigationInspectorService;
+      _activeServiceMode.activate(_survey);
     }
 
     function deactiveMode() {
@@ -81,11 +83,11 @@
 
     function _addNodes(templateNavigations) {
       var items = getCustomIDs();
-      templateNavigations.forEach(function(navigation, index) {
+      templateNavigations.forEach(function (navigation, index) {
         var options = {};
         options.id = navigation.origin;
-        if(index>1 && index<(items.length+2)){
-            options.label = items[index-2].customID;
+        if (index > 1 && index < (items.length + 2)) {
+          options.label = items[index - 2].customID;
         }
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
@@ -95,8 +97,8 @@
     }
 
     function _addEdges(templateNavigations) {
-      templateNavigations.forEach(function(navigation) {
-        navigation.routes.forEach(function(route) {
+      templateNavigations.forEach(function (navigation) {
+        navigation.routes.forEach(function (route) {
           var options = {};
           options.source = route.origin;
           options.target = route.destination;

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -11,8 +11,7 @@
   component.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService',
-
+    'otusjs.studio.navigationBuilder.NavigationBuilderService'
   ];
 
   function component(moduleScope, GraphLayerService, NavigationBuilderService) {
@@ -60,7 +59,7 @@
     self.inspect = inspect;
 
     function editRoutePriority() {
-      NavigationBuilderService.activateRouteEditMode();
+      NavigationBuilderService.activateEditRoutePriority();
     }
 
     function click() {
