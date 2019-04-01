@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -17,5 +17,5 @@
   function component() {
 
   }
-  
+
 }());

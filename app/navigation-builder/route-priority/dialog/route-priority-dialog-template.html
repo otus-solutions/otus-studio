@@ -1,7 +1,34 @@
-<md-dialog layout="row" aria-label="Editar prioridade da rota" flex>
-  <otus-router-priority-editor 
-    node="ctrl.node"
-    on-cancel="ctrl.cancel"
-    on-confirm="ctrl.confirm">
-  </otus-router-priority-editor>
+<md-dialog layout="column" aria-label="Editar prioridade da rota" flex>
+  <md-toolbar layout="row" flex>
+    <div class="md-toolbar-tools">
+      <h2>Editar prioridade das rotas</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content layout="row" layout-align="center center" flex>
+    <md-list ng-cloak flex>
+      <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="out in ctrl.node.outNeighbors">
+        <md-icon md-svg-icon="{{setting.icon}}"></md-icon>
+        <p> Origem: {{ ctrl.node.id }} - Destino: {{ out.id }}</p>
+        <div layout="row" flex="20" layout-align="end end">
+          <md-button ng-if="!group.editMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.edit(group, $index)">
+            <md-icon md-font-library="material-icons" aria-label="Editar">keyboard_arrow_up</md-icon>
+            <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+              Mover para cima
+            </md-tooltip>
+          </md-button>
+          <md-button ng-if="!group.editMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.edit(group, $index)">
+            <md-icon md-font-library="material-icons" aria-label="Editar">keyboard_arrow_down</md-icon>
+            <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+              Mover para cima
+            </md-tooltip>
+          </md-button>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-dialog-content>
+  <md-dialog-actions layout="row" flex>
+    <md-button class="md-raised" ng-click="ctrl.cancel()">Cancelar</md-button>
+    <md-button class="md-raised md-primary" ng-click="ctrl.save()" ng-disabled="!$ctrl.readyToSave()">Salvar</md-button>
+  </md-dialog-actions>
 </md-dialog>

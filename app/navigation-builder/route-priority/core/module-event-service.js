@@ -54,7 +54,7 @@
       RoutePriorityDialogService.closeDialog();
     }
 
-    function _onNavigationSelected(node) {
+    function _onNavigationSelected(event, node) {
       GraphLayerService.lockUnrelated(node);
       GraphLayerService.showInputs(node);
       GraphLayerService.showOutputs(node);

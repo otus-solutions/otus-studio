@@ -46,6 +46,7 @@
     function DialogController($mdDialog, node) {
       var self = this;
       self.node = node;
+      console.log(node.outNeighbors);
 
       /* Public interface */
       self.cancel = cancel;
