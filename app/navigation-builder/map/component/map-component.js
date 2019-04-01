@@ -11,8 +11,7 @@
   component.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
-    'otusjs.studio.navigationBuilder.NavigationBuilderService',
-
+    'otusjs.studio.navigationBuilder.NavigationBuilderService'
   ];
 
   function component(moduleScope, GraphLayerService, NavigationBuilderService) {
