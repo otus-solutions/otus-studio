@@ -1,4 +1,4 @@
-<md-dialog layout="column" aria-label="Editar prioridade da rota" flex>
+<md-dialog ng-cloak layout="column" aria-label="Editar prioridade da rota" flex="40">
   <md-toolbar layout="row" flex>
     <div class="md-toolbar-tools">
       <h2>Editar prioridade das rotas</h2>
@@ -8,7 +8,7 @@
     <md-list ng-cloak flex>
       <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="out in ctrl.node.outNeighbors">
         <md-icon md-svg-icon="{{setting.icon}}"></md-icon>
-        <p> Origem: {{ ctrl.node.id }} - Destino: {{ out.id }}</p>
+        <p> Origem: {{ ctrl.node.id }}  -  Destino: {{ out.id }}</p>
         <div layout="row" flex="20" layout-align="end end">
           <md-button ng-if="!group.editMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.edit(group, $index)">
             <md-icon md-font-library="material-icons" aria-label="Editar">keyboard_arrow_up</md-icon>
