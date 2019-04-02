@@ -50,7 +50,7 @@
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
       self.navigations = null;
-      self.navigation = null;
+      var navigationTest = {};
       self.changed = false;
 
       /* Public interface */
@@ -65,19 +65,19 @@
         self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
         self.navigations.filter(function (navigation) {
           if (navigation.origin === node.id) {
-            self.navigation = angular.copy(navigation);
+            angular.copy(navigation, navigationTest);
           }
         });
       }
 
       function up(index) {
-        self.navigation.orderNavigationByPriority(index, index - 1);
+        navigationTest.orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
       }
 
       function down(index) {
-        self.navigation.orderNavigationByPriority(index, index + 1);
+        navigationTest.orderNavigationByPriority(index, index + 1);
         self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
       }
@@ -87,13 +87,7 @@
       }
 
       function confirm(response) {
-        console.log(self.node.outNeighbors);
-        console.log(WorkspaceService.getSurvey().NavigationManager.getNavigationList());
-        self.navigations.forEach(function (navigation) {
-          if (navigation.origin === node.id) {
-            navigation.setRoutes(self.navigation.listRoutes());
-          }
-        });
+        WorkspaceService.saveWork();
         self.changed = false;
         $mdDialog.hide(response);
       }
