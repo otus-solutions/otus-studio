@@ -1,22 +1,21 @@
-<md-dialog-content layout="column" aria-label="Editar prioridade da rota">
-  <md-toolbar layout="row" flex class = "md-layoutTheme-theme layout-align-center-center layout-row _md-toolbar-transitions">
+<md-dialog layout="column" aria-label="Editar prioridade da rota" flex>
+  <md-toolbar layout="row" flex class="md-layoutTheme-theme layout-align-center-center layout-row _md-toolbar-transitions">
     <div class="md-toolbar-tools">
       <h2>Editar prioridade das rotas</h2>
     </div>
   </md-toolbar>
   <md-dialog-content layout="row" layout-align="center center" flex>
     <md-list ng-cloak flex>
-      <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="out in ctrl.node.outNeighbors track by $index">
-        <md-icon md-svg-icon="{{setting.icon}}"></md-icon>
-        <p> Prioridade {{ $index + 1 }} : {{ out.id }}</p>
+      <md-list-item ng-repeat="out in ctrl.node.outNeighbors track by $index">
+        <p> Prioridade {{ $index + 1 }} | {{ ctrl.node.id }} para {{ out.id }}</p>
         <div layout="row" flex="25" layout-align="end end">
-          <md-button class="md-icon-button" aria-label="Mover para cima" ng-click="ctrl.up($index)">
+          <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index != ctrl.beginNode" ng-click="ctrl.up($index)">
             <md-icon md-font-library="material-icons" aria-label="Mover para cima">keyboard_arrow_up</md-icon>
             <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
               Mover para cima
             </md-tooltip>
           </md-button>
-          <md-button class="md-icon-button" aria-label="Mover para baixo" ng-click="ctrl.down($index)">
+          <md-button class="md-icon-button" aria-label="Mover para baixo" ng-if="$index != ctrl.endNode" ng-click="ctrl.down($index)">
             <md-icon md-font-library="material-icons" aria-label="Mover para baixo">keyboard_arrow_down</md-icon>
             <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
               Mover para baixo
@@ -31,4 +30,4 @@
     <md-button class="md-raised" ng-click="ctrl.cancel()">Cancelar</md-button>
     <md-button class="md-raised md-primary" ng-click="ctrl.confirm()" ng-disabled="!ctrl.changed">Salvar</md-button>
   </md-dialog-actions>
-</md-dialog-content>
+</md-dialog>

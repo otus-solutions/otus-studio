@@ -40,12 +40,12 @@
     function selectNode(node) {
       if (!_selectedNode) {
         _selectedNode = node;
-        moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _selectedNode, _survey);
+        moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _selectedNode);
       } else {
-        moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UNSELECTED, _selectedNode, _survey);
+        moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_UNSELECTED, _selectedNode);
         if (node && node.id !== _selectedNode.id) {
           _selectedNode = node;
-          moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _selectedNode, _survey);
+          moduleScope.emit(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _selectedNode);
         } else {
           _selectedNode = null;
         }

@@ -69,6 +69,7 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
+    this.orderNavigationByPriority = orderNavigationByPriority;
 
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
@@ -116,6 +117,13 @@
 
     function isMyDefaultNext(node) {
       return this.defaultNextNode && this.defaultNextNode.id === node.id;
+    }
+
+    function orderNavigationByPriority(oldPosition, newPosition) {
+      var aux = this.outNeighbors[newPosition];
+      this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
+      this.outNeighbors[oldPosition] = aux;
+      return this;
     }
 
     function _calculateInitialY() {

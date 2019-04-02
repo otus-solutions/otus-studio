@@ -8,13 +8,11 @@
   service.$inject = [
     '$mdDialog',
     'WorkspaceService'
-
   ];
 
   function service($mdDialog, WorkspaceService) {
     self = this;
     var _dialogSettings = {};
-
 
     /* Public interface */
     self.showDialog = showDialog;
@@ -24,14 +22,11 @@
 
     function _init() {
       _setupDialogConfiguration();
-
     }
 
-
-    function showDialog(node, survey) {
+    function showDialog(node) {
       _dialogSettings.locals = {
-        node: node,
-        survey: survey
+        node: node
       };
       $mdDialog.show(_dialogSettings);
     }
@@ -49,11 +44,14 @@
       _dialogSettings.hasBackdrop = true;
     }
 
-    function DialogController($mdDialog, node, survey) {
+    function DialogController($mdDialog, node) {
       var self = this;
+      self.ready = true;
       self.node = node;
+      self.endNode = self.node.outNeighbors.length - 1;
+      self.beginNode = 0;
       self.changed = false;
-      self.surveys = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
+      self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
 
       /* Public interface */
       self.up = up;
@@ -61,35 +59,23 @@
       self.cancel = cancel;
       self.confirm = confirm;
 
-      // http://www.coffeegnome.net/moving-element-in-array/
-      function up($index, surveys) {
-        var oldIndex =  $index;
-        var newIndex =  oldIndex + 1;
-        var surveyUpdate = angular.copy(self.surveys);
-
-        console.log(oldIndex);
-        console.log(newIndex);
-        console.log(surveyUpdate);
-
-
-
-
-        // TODO: utilizar o model neste momento!
-        // para isso você deve saber sobre a lista de navegação qual você modificar
-
-        //console.log($index);
-
-        // self.surveys.filter(function ($index) {
-        //   console.log(navigation);
-        //
-        //   // TODO:
-        // });
-
+      function up(index) {
+        self.navigations.filter(function (navigation) {
+          if (navigation.origin === node.id) {
+            navigation.orderNavigationByPriority(index, index - 1);
+            self.node.orderNavigationByPriorityInMap(index, index - 1);
+          }
+        });
         self.changed = true;
       }
 
-      function down(originalPosition) {
-        self.node.orderNavigationByPriority(originalPosition, originalPosition + 1);
+      function down(index) {
+        self.navigations.filter(function (navigation) {
+          if (navigation.origin === node.id) {
+            navigation.orderNavigationByPriority(index, index + 1);
+            self.node.orderNavigationByPriorityInMap(index, index + 1);
+          }
+        });
         self.changed = true;
       }
 
