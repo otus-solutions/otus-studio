@@ -9,10 +9,11 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
     'otusjs.studio.navigationBuilder.messenger.InstructorService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService',
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService'
   ];
 
-  function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService) {
+  function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService, RoutePriorityDialogService) {
     var self = this;
     var _events = [];
 
@@ -25,7 +26,6 @@
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_MODE_OFF, _onRouteModeOff);
       _registerEventListener(moduleScope.NBEVENTS.ORIGIN_NODE_SELECTED, _onOriginNodeSelected);
       _registerEventListener(moduleScope.NBEVENTS.ORIGIN_NODE_UNSELECTED, _onOriginNodeUnselected);
-      _registerEventListener(moduleScope.NBEVENTS.PRIORITY_NODE_SELECTED, _onPriorityNodeSelected);
       _registerEventListener(moduleScope.NBEVENTS.DESTINATION_NODE_SELECTED, _onDestinationNodeSelected);
       _registerEventListener(moduleScope.NBEVENTS.DESTINATION_NODE_UNSELECTED, _onDestinationNodeUnselected);
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_DELETED, _onRouteDeleted);
@@ -58,18 +58,6 @@
       InstructorService.clearMessenger();
       deactivate();
       moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
-    }
-
-    function _onPriorityNodeSelected() {
-      GraphLayerService.lockPreviousNodeOf(node);
-      GraphLayerService.setNodeAsTrailhead(node);
-      GraphLayerService.applyVisualChanges();
-      // InstructorService.showMessenger(moduleScope.NBMESSAGES.ROUTE_BUILDER.SELECT_DESTINATION);
-      moduleScope.apply();
-      // GraphLayerService.setNodeAsTrailend(node);
-      // GraphLayerService.applyVisualChanges();
-      InstructorService.clearMessenger();
-      RouteDialogService.showDialog(node);
     }
 
     function _onOriginNodeSelected(event, node) {

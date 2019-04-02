@@ -55,7 +55,7 @@
       },
       'NAVIGATION_INSPECTOR': {
         'SELECT_NAVIGATION': {
-          header: 'Inpecionar navegação',
+          header: 'Inspecionar navegação',
           content: 'Escolha o item que você deseja inspecionar.'
         }
       }
