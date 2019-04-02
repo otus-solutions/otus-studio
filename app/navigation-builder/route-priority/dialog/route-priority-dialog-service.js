@@ -53,6 +53,9 @@
       self.changed = false;
       self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
 
+      console.log(self.node.outNeighbors);
+      console.log(self.navigations)
+
       /* Public interface */
       self.up = up;
       self.down = down;
@@ -62,7 +65,6 @@
       function up(index) {
         self.navigations.filter(function (navigation) {
           if (navigation.origin === node.id) {
-            navigation.orderNavigationByPriority(index, index - 1);
             self.node.orderNavigationByPriorityInMap(index, index - 1);
           }
         });
@@ -72,7 +74,6 @@
       function down(index) {
         self.navigations.filter(function (navigation) {
           if (navigation.origin === node.id) {
-            navigation.orderNavigationByPriority(index, index + 1);
             self.node.orderNavigationByPriorityInMap(index, index + 1);
           }
         });
@@ -84,6 +85,13 @@
       }
 
       function confirm(response) {
+        self.navigations.filter(function (navigation) {
+          if (navigation.origin === node.id) {
+            navigation.setRoutes(self.node.outNeighbors);
+            console.log(self.node.outNeighbors);
+            console.log(navigation.listRoutes())
+          }
+        });
         self.changed = false;
         $mdDialog.hide(response);
       }
