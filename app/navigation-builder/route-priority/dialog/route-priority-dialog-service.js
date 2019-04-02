@@ -6,12 +6,15 @@
     .service('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService', service);
 
   service.$inject = [
-    '$mdDialog'
+    '$mdDialog',
+    'WorkspaceService'
+
   ];
 
-  function service($mdDialog) {
+  function service($mdDialog, WorkspaceService) {
     self = this;
     var _dialogSettings = {};
+
 
     /* Public interface */
     self.showDialog = showDialog;
@@ -21,10 +24,11 @@
 
     function _init() {
       _setupDialogConfiguration();
+
     }
 
+
     function showDialog(node, survey) {
-      console.log(survey);
       _dialogSettings.locals = {
         node: node,
         survey: survey
@@ -49,6 +53,7 @@
       var self = this;
       self.node = node;
       self.changed = false;
+      self.surveys = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
 
       /* Public interface */
       self.up = up;
@@ -56,13 +61,29 @@
       self.cancel = cancel;
       self.confirm = confirm;
 
-      function up(originalPosition) {
+      // http://www.coffeegnome.net/moving-element-in-array/
+      function up($index, surveys) {
+        var oldIndex =  $index;
+        var newIndex =  oldIndex + 1;
+        var surveyUpdate = angular.copy(self.surveys);
+
+        console.log(oldIndex);
+        console.log(newIndex);
+        console.log(surveyUpdate);
+
+
+
+
         // TODO: utilizar o model neste momento!
         // para isso você deve saber sobre a lista de navegação qual você modificar
-        console.log(survey.NavigationManager.getNavigationList());
-        survey.NavigationManager.getNavigationList().filter(function (navigation) {
-          // TODO:
-        });
+
+        //console.log($index);
+
+        // self.surveys.filter(function ($index) {
+        //   console.log(navigation);
+        //
+        //   // TODO:
+        // });
 
         self.changed = true;
       }
