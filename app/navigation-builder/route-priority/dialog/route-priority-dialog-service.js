@@ -15,6 +15,7 @@
     self = this;
     var _dialogSettings = {};
 
+
     /* Public interface */
     self.showDialog = showDialog;
     self.closeDialog = closeDialog;
@@ -52,6 +53,7 @@
       var self = this;
       self.node = node;
       self.changed = false;
+      self.surveys = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
 
       /* Public interface */
       self.up = up;
@@ -59,13 +61,29 @@
       self.cancel = cancel;
       self.confirm = confirm;
 
-      function up(originalPosition) {
+      // http://www.coffeegnome.net/moving-element-in-array/
+      function up($index, surveys) {
+        var oldIndex =  $index;
+        var newIndex =  oldIndex + 1;
+        var surveyUpdate = angular.copy(self.surveys);
+
+        console.log(oldIndex);
+        console.log(newIndex);
+        console.log(surveyUpdate);
+
+
+
+
         // TODO: utilizar o model neste momento!
         // para isso você deve saber sobre a lista de navegação qual você modificar
-        console.log(WorkspaceService.getSurvey().NavigationManager.getNavigationList());
-        WorkspaceService.getSurvey().NavigationManager.getNavigationList().filter(function (navigation) {
-          // TODO:
-        });
+
+        //console.log($index);
+
+        // self.surveys.filter(function ($index) {
+        //   console.log(navigation);
+        //
+        //   // TODO:
+        // });
 
         self.changed = true;
       }
