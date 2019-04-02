@@ -69,7 +69,7 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
-    this.orderNavigationByPriority = orderNavigationByPriority;
+    this.orderNavigationByPriorityInMap = orderNavigationByPriorityInMap;
 
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
@@ -119,7 +119,7 @@
       return this.defaultNextNode && this.defaultNextNode.id === node.id;
     }
 
-    function orderNavigationByPriority(oldPosition, newPosition) {
+    function orderNavigationByPriorityInMap(oldPosition, newPosition) {
       var aux = this.outNeighbors[newPosition];
       this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
       this.outNeighbors[oldPosition] = aux;
