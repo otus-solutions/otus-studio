@@ -6,10 +6,12 @@
     .service('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService', service);
 
   service.$inject = [
-    '$mdDialog'
+    '$mdDialog',
+    'WorkspaceService'
+
   ];
 
-  function service($mdDialog) {
+  function service($mdDialog, WorkspaceService) {
     self = this;
     var _dialogSettings = {};
 
@@ -21,10 +23,11 @@
 
     function _init() {
       _setupDialogConfiguration();
+
     }
 
+
     function showDialog(node, survey) {
-      console.log(survey);
       _dialogSettings.locals = {
         node: node,
         survey: survey
@@ -59,8 +62,8 @@
       function up(originalPosition) {
         // TODO: utilizar o model neste momento!
         // para isso você deve saber sobre a lista de navegação qual você modificar
-        console.log(survey.NavigationManager.getNavigationList());
-        survey.NavigationManager.getNavigationList().filter(function (navigation) {
+        console.log(WorkspaceService.getSurvey().NavigationManager.getNavigationList());
+        WorkspaceService.getSurvey().NavigationManager.getNavigationList().filter(function (navigation) {
           // TODO:
         });
 

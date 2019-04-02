@@ -58,6 +58,7 @@
       deactiveMode();
       _activeServiceMode = NavigationRoutePriorityService;
       _activeServiceMode.activate(_survey);
+
     }
 
     function deactiveMode() {
