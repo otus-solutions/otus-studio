@@ -38,6 +38,7 @@
       /* Navigation Inspector events */
       'INSPECTOR_MODE_ON': 'nbevents.inspector.mode.on',
       'NAVIGATION_SELECTED': 'nbevents.inspector.navigation.selected',
+      'NAVIGATION_UNSELECTED': 'nbevents.inspector.navigation.unselected',
 
       /* Warning events */
       'ORPHANS_ENCOUNTERED': 'nbevents.warning.orphans.encountered'
@@ -55,8 +56,14 @@
       },
       'NAVIGATION_INSPECTOR': {
         'SELECT_NAVIGATION': {
-          header: 'Inpecionar navegação',
+          header: 'Inspecionar navegação',
           content: 'Escolha o item que você deseja inspecionar.'
+        }
+      },
+      'NAVIGATION_PRIORITY': {
+        'SELECT_NAVIGATION': {
+          header: 'Priorizar navegação',
+          content: 'Escolha o item que você deseja priorizar.'
         }
       }
     })

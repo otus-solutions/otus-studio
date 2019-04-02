@@ -69,7 +69,7 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
-    this.orderNavigationByPriority = orderNavigationByPriority;
+    this.orderNavigationByPriorityInMap = orderNavigationByPriorityInMap;
 
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
@@ -115,14 +115,15 @@
       }
     }
 
-    function orderNavigationByPriority(oldPosition, newPosition) {
+    function isMyDefaultNext(node) {
+      return this.defaultNextNode && this.defaultNextNode.id === node.id;
+    }
+
+    function orderNavigationByPriorityInMap(oldPosition, newPosition) {
       var aux = this.outNeighbors[newPosition];
       this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
       this.outNeighbors[oldPosition] = aux;
-    }
-
-    function isMyDefaultNext(node) {
-      return this.defaultNextNode && this.defaultNextNode.id === node.id;
+      return this;
     }
 
     function _calculateInitialY() {

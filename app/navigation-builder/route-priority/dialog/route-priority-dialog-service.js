@@ -6,13 +6,14 @@
     .service('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService', service);
 
   service.$inject = [
-    '$mdDialog'
+    '$mdDialog',
+    'WorkspaceService'
   ];
 
-  function service($mdDialog) {
+  function service($mdDialog, WorkspaceService) {
     self = this;
     var _dialogSettings = {};
-    
+
     /* Public interface */
     self.showDialog = showDialog;
     self.closeDialog = closeDialog;
@@ -46,17 +47,48 @@
     function DialogController($mdDialog, node) {
       var self = this;
       self.node = node;
-      console.log(node.outNeighbors);
+      self.endNode = self.node.outNeighbors.length - 1;
+      self.beginNode = 0;
+      self.navigations = null;
+      var navigationTest = {};
+      self.changed = false;
 
       /* Public interface */
+      self.up = up;
+      self.down = down;
       self.cancel = cancel;
       self.confirm = confirm;
+
+      _init();
+
+      function _init() {
+        self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
+        self.navigations.filter(function (navigation) {
+          if (navigation.origin === node.id) {
+            angular.copy(navigation, navigationTest);
+          }
+        });
+      }
+
+      function up(index) {
+        navigationTest.orderNavigationByPriority(index, index - 1);
+        self.node.orderNavigationByPriorityInMap(index, index - 1);
+        self.changed = true;
+      }
+
+      function down(index) {
+        navigationTest.orderNavigationByPriority(index, index + 1);
+        self.node.orderNavigationByPriorityInMap(index, index + 1);
+        self.changed = true;
+      }
 
       function cancel(response) {
         $mdDialog.hide(response);
       }
 
       function confirm(response) {
+        WorkspaceService.saveWork();
+        self.changed = false;
         $mdDialog.hide(response);
       }
 
