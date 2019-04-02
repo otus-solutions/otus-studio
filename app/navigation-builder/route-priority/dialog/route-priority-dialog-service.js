@@ -46,15 +46,12 @@
 
     function DialogController($mdDialog, node) {
       var self = this;
-      self.ready = true;
       self.node = node;
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
+      self.navigations = null;
+      self.navigation = null;
       self.changed = false;
-      self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-
-      console.log(self.node.outNeighbors);
-      console.log(self.navigations)
 
       /* Public interface */
       self.up = up;
@@ -62,21 +59,26 @@
       self.cancel = cancel;
       self.confirm = confirm;
 
-      function up(index) {
+      _init();
+
+      function _init() {
+        self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
         self.navigations.filter(function (navigation) {
           if (navigation.origin === node.id) {
-            self.node.orderNavigationByPriorityInMap(index, index - 1);
+            self.navigation = angular.copy(navigation);
           }
         });
+      }
+
+      function up(index) {
+        self.navigation.orderNavigationByPriority(index, index - 1);
+        self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
       }
 
       function down(index) {
-        self.navigations.filter(function (navigation) {
-          if (navigation.origin === node.id) {
-            self.node.orderNavigationByPriorityInMap(index, index + 1);
-          }
-        });
+        self.navigation.orderNavigationByPriority(index, index + 1);
+        self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
       }
 
@@ -85,11 +87,11 @@
       }
 
       function confirm(response) {
-        self.navigations.filter(function (navigation) {
+        console.log(self.node.outNeighbors);
+        console.log(WorkspaceService.getSurvey().NavigationManager.getNavigationList());
+        self.navigations.forEach(function (navigation) {
           if (navigation.origin === node.id) {
-            navigation.setRoutes(self.node.outNeighbors);
-            console.log(self.node.outNeighbors);
-            console.log(navigation.listRoutes())
+            navigation.setRoutes(self.navigation.listRoutes());
           }
         });
         self.changed = false;
