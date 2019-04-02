@@ -4,7 +4,7 @@
       <h2>Editar prioridade das rotas</h2>
     </div>
   </md-toolbar>
-  <md-dialog-content layout="row" layout-align="center center" flex>
+  <md-dialog-content layout="row" layout-padding layout-align="center center" flex>
     <md-list ng-cloak flex>
       <md-list-item ng-repeat="out in ctrl.node.outNeighbors">
         <p> Prioridade {{ $index + 1 }} | {{ ctrl.node.id }} para {{ out.id }}</p>

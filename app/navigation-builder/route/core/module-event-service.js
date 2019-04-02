@@ -9,11 +9,10 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
     'otusjs.studio.navigationBuilder.messenger.InstructorService',
-    'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService',
-    'otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogService'
+    'otusjs.studio.navigationBuilder.routeBuilder.RouteDialogService'
   ];
 
-  function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService, RoutePriorityDialogService) {
+  function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService) {
     var self = this;
     var _events = [];
 
