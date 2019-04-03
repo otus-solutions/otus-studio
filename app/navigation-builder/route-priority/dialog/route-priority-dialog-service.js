@@ -50,8 +50,8 @@
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
       self.navigations = null;
-      var navigationTest = {};
       self.changed = false;
+      var navigationAux = {};
 
       /* Public interface */
       self.up = up;
@@ -63,21 +63,22 @@
 
       function _init() {
         self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-        self.navigations.filter(function (navigation) {
+
+        navigationAux = self.navigations.filter(function (navigation) {
           if (navigation.origin === node.id) {
-            angular.copy(navigation, navigationTest);
+            return navigation;
           }
-        });
+        })[0];
       }
 
       function up(index) {
-        navigationTest.orderNavigationByPriority(index, index - 1);
+        navigationAux.orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
       }
 
       function down(index) {
-        navigationTest.orderNavigationByPriority(index, index + 1);
+        navigationAux.orderNavigationByPriority(index, index + 1);
         self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
       }
