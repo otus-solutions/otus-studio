@@ -6,7 +6,7 @@
   </md-toolbar>
   <md-dialog-content layout="row" layout-padding layout-align="center center" flex>
     <md-list ng-cloak flex>
-      <md-list-item ng-repeat="out in ctrl.node.outNeighbors">
+      <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-style="ctrl.style($index)">
         <p> Prioridade {{ $index + 1 }} | {{ ctrl.node.id }} para {{ out.id }}</p>
         <div layout="row" flex="25" layout-align="end end">
           <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index != ctrl.beginNode" ng-click="ctrl.up($index)">

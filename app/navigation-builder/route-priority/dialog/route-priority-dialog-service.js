@@ -7,10 +7,11 @@
 
   service.$inject = [
     '$mdDialog',
+    '$timeout',
     'WorkspaceService'
   ];
 
-  function service($mdDialog, WorkspaceService) {
+  function service($mdDialog, $timeout, WorkspaceService) {
     self = this;
     var _dialogSettings = {};
 
@@ -44,7 +45,7 @@
       _dialogSettings.hasBackdrop = true;
     }
 
-    function DialogController($mdDialog, node) {
+    function DialogController($mdDialog, $timeout, node) {
       var navigations = [];
       var navigationContext = {};
       var routes = [];
@@ -53,12 +54,14 @@
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
       self.changed = false;
+      self.lastModificationIndex = -1;
 
       /* Public interface */
       self.up = up;
       self.down = down;
       self.cancel = cancel;
       self.confirm = confirm;
+      self.style = style;
 
       _init();
 
@@ -76,12 +79,16 @@
         _orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
+        self.lastModificationIndex = index - 1;
+        _goToCleanStyle();
       }
 
       function down(index) {
         _orderNavigationByPriority(index, index + 1);
         self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
+        self.lastModificationIndex = index + 1;
+        _goToCleanStyle();
       }
 
       function cancel(response) {
@@ -93,6 +100,18 @@
         WorkspaceService.saveWork();
         self.changed = false;
         $mdDialog.hide(response);
+      }
+
+      function style(index) {
+        if (self.lastModificationIndex == index) {
+          return { "background-color": "#e5ebed" }
+        }
+      };
+
+      function _goToCleanStyle() {
+        $timeout(function () {
+          self.lastModificationIndex = -1;
+        }, 1000);
       }
 
       function _orderNavigationByPriority(oldPosition, newPosition) {
