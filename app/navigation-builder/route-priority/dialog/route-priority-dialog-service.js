@@ -74,6 +74,7 @@
         navigationTest.orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
+        self.whiteframe = "md-whiteframe-3dp";
       }
 
       function down(index) {

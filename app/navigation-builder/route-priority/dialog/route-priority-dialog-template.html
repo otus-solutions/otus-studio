@@ -6,7 +6,7 @@
   </md-toolbar>
   <md-dialog-content layout="row" layout-padding layout-align="center center" flex>
     <md-list ng-cloak flex>
-      <md-list-item ng-repeat="out in ctrl.node.outNeighbors">
+      <md-list-item class="{{ctrl.whiteframe}}" ng-repeat="out in ctrl.node.outNeighbors">
         <p> Prioridade {{ $index + 1 }} | {{ ctrl.node.id }} para {{ out.id }}</p>
         <div layout="row" flex="25" layout-align="end end">
           <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index != ctrl.beginNode" ng-click="ctrl.up($index)">
@@ -28,6 +28,6 @@
   </md-dialog-content>
   <md-dialog-actions layout="row" flex>
     <md-button class="md-raised" ng-click="ctrl.cancel()">Cancelar</md-button>
-    <md-button class="md-raised md-primary" ng-click="ctrl.confirm()" ng-disabled="!ctrl.changed">Salvar</md-button>
+    <md-button class="md-raised md-primary md-layoutTheme-theme" ng-click="ctrl.confirm()" ng-disabled="!ctrl.changed">Salvar</md-button>
   </md-dialog-actions>
 </md-dialog>
