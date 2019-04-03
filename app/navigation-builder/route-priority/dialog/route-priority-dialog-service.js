@@ -45,13 +45,14 @@
     }
 
     function DialogController($mdDialog, node) {
+      var navigations = [];
+      var navigationContext = {};
+      var routes = [];
       var self = this;
       self.node = node;
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
-      self.navigations = null;
       self.changed = false;
-      var navigationAux = {};
 
       /* Public interface */
       self.up = up;
@@ -62,23 +63,23 @@
       _init();
 
       function _init() {
-        self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-
-        navigationAux = self.navigations.filter(function (navigation) {
+        navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
+        navigationContext = navigations.find(function (navigation) {
           if (navigation.origin === node.id) {
             return navigation;
           }
-        })[0];
+        });
+        angular.copy(navigationContext.listRoutes(), routes);
       }
 
       function up(index) {
-        navigationAux.orderNavigationByPriority(index, index - 1);
+        _orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
       }
 
       function down(index) {
-        navigationAux.orderNavigationByPriority(index, index + 1);
+        _orderNavigationByPriority(index, index + 1);
         self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
       }
@@ -88,9 +89,17 @@
       }
 
       function confirm(response) {
+        navigationContext.setRoutes(routes);
         WorkspaceService.saveWork();
         self.changed = false;
         $mdDialog.hide(response);
+      }
+
+      function _orderNavigationByPriority(oldPosition, newPosition) {
+        var aux = routes[newPosition];
+        routes[newPosition] = routes[oldPosition];
+        routes[oldPosition] = aux;
+        return routes;
       }
 
     }
