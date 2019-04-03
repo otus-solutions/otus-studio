@@ -45,12 +45,13 @@
     }
 
     function DialogController($mdDialog, node) {
+      var navigations = [];
+      var navigationContext = {};
+      var routes = [];
       var self = this;
       self.node = node;
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
-      self.navigations = null;
-      var navigationTest = {};
       self.changed = false;
 
       /* Public interface */
@@ -62,23 +63,24 @@
       _init();
 
       function _init() {
-        self.navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
-        self.navigations.filter(function (navigation) {
+        navigations = WorkspaceService.getSurvey().NavigationManager.getNavigationList();
+        navigationContext = navigations.find(function (navigation) {
           if (navigation.origin === node.id) {
-            angular.copy(navigation, navigationTest);
+            return navigation;
           }
         });
+        angular.copy(navigationContext.listRoutes(), routes);
       }
 
       function up(index) {
-        navigationTest.orderNavigationByPriority(index, index - 1);
+        _orderNavigationByPriority(index, index - 1);
         self.node.orderNavigationByPriorityInMap(index, index - 1);
         self.changed = true;
         self.whiteframe = "md-whiteframe-3dp";
       }
 
       function down(index) {
-        navigationTest.orderNavigationByPriority(index, index + 1);
+        _orderNavigationByPriority(index, index + 1);
         self.node.orderNavigationByPriorityInMap(index, index + 1);
         self.changed = true;
       }
@@ -88,9 +90,17 @@
       }
 
       function confirm(response) {
+        navigationContext.setRoutes(routes);
         WorkspaceService.saveWork();
         self.changed = false;
         $mdDialog.hide(response);
+      }
+
+      function _orderNavigationByPriority(oldPosition, newPosition) {
+        var aux = routes[newPosition];
+        routes[newPosition] = routes[oldPosition];
+        routes[oldPosition] = aux;
+        return routes;
       }
 
     }
