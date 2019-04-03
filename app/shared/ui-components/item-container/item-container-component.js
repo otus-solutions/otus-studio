@@ -24,10 +24,12 @@
     'DialogService',
     'WorkspaceService',
     '$window',
-    '$mdSelect'
+    '$mdSelect',
+    '$rootScope',
+    '$timeout'
   ];
 
-  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect) {
+  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect, $rootScope, $timeout) {
     var self = this;
 
     var DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
@@ -38,6 +40,7 @@
     self.moveSurveyItem = moveSurveyItem;
 
     self.$onInit = function() {
+      _clearQuestionSelected();
       self.css = {};
       self.template = {};
       self.event = {};
@@ -53,6 +56,7 @@
     function remove(answer){
       if(answer){
         RemoveSurveyItemEventFactory.create().execute(self.item);
+        _clearQuestionSelected(0);
         $mdDialog.cancel();
       }
     }
@@ -60,8 +64,16 @@
     function move(item, position){
       if(item){
         MoveSurveyItemEventFactory.create().execute(item, position);
+        $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
+        _clearQuestionSelected(2000);
         $mdDialog.cancel();
       }
+    }
+
+    function _clearQuestionSelected(time) {
+      $timeout(function () {
+        $rootScope.$broadcast("clearSurveyItemSelected");
+      }, time);
     }
 
     function deleteSurveyItem() {
@@ -77,6 +89,7 @@
           {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: remove}
         ]
       };
+      $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
       DialogService.show(data);
     }
 
@@ -93,6 +106,7 @@
           {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: move}
         ]
       };
+      $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
       DialogService.show(data);
     }
 

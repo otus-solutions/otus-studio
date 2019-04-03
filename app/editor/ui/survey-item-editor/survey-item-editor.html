@@ -5,14 +5,14 @@
     padding: 4px 4px!important;
     text-align: center !important;
     border-radius: 0px !important;
-    background-color: rgb(68,138,255) !important;
+    background-color: rgb(68,138,255);
     color: #FAFAFA !important;
     position: fixed;
   }
 </style>
 <div layout="row" layout-margin="" flex>
   <div layout-align="center center" layout="row" style="display:inline-block;z-index: 1000; margin-right: 20px;margin-left: -20px;margin-top:24px; position: fixed;" >
-    <div layout-align="center center" layout="row" class="questionPositionChip" md-whiteframe="1dp">
+    <div layout-align="center center" layout="row" class="questionPositionChip" ng-style="$ctrl.getStyle($ctrl.position-1)" md-whiteframe="1dp">
       <span class="md-title" style="vertical-align: middle;">{{$ctrl.position}}</span>
     </div>
   </div>

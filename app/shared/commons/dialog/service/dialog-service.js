@@ -4,9 +4,9 @@
   angular.module('studio.commons')
     .service("DialogService", Service);
 
-  Service.$inject = ['$mdDialog'];
+  Service.$inject = ['$mdDialog', '$rootScope'];
 
-  function Service($mdDialog){
+  function Service($mdDialog, $rootScope){
     var self = this;
 
     self.show = show;
@@ -49,6 +49,7 @@
 
     function cancel() {
       $mdDialog.cancel();
+      $rootScope.$broadcast("clearSurveyItemSelected");
     }
   }
 }());

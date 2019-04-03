@@ -19,7 +19,9 @@ describe('Item Container Component Tests', function () {
         'DialogService': _$injector_.get('DialogService'),
         'WorkspaceService': _$injector_.get('WorkspaceService'),
         '$window': _$injector_.get('$window'),
-        '$mdSelect': _$injector_.get('$mdSelect')
+        '$mdSelect': _$injector_.get('$mdSelect'),
+        '$rootScope': _$injector_.get('$rootScope'),
+        '$timeout': _$injector_.get('$timeout'),
       };
       controller = _$controller_('itemContainerCtrl', Injections);
       controller.item = Mock.item;
@@ -30,6 +32,8 @@ describe('Item Container Component Tests', function () {
     spyOn(Mock.survey, "getItems").and.returnValue([Mock.item]);
     spyOn(Injections.MoveSurveyItemEventFactory, 'create').and.returnValue({execute:()=>{}});
     spyOn(Injections.RemoveSurveyItemEventFactory, 'create').and.returnValue({execute:()=>{}});
+    spyOn(Injections.$rootScope, "$broadcast");
+    spyOn(Injections, "$timeout");
   });
 
   it('should defined controller', function () {
@@ -63,6 +67,7 @@ describe('Item Container Component Tests', function () {
   it('should delete survey item', function () {
     controller.deleteSurveyItem();
     expect(Injections.DialogService.show).toHaveBeenCalledTimes(1);
+    expect(Injections.$rootScope.$broadcast).toHaveBeenCalledTimes(1);
     Injections.DialogService.data.buttons[1].action(true);
     expect(Injections.RemoveSurveyItemEventFactory.create).toHaveBeenCalledTimes(1);
   });
@@ -70,7 +75,7 @@ describe('Item Container Component Tests', function () {
   it('should move survey item', function () {
     controller.moveSurveyItem();
     expect(Injections.DialogService.show).toHaveBeenCalledTimes(1);
-    // console.log(Injections.DialogService.data.buttons)
+    expect(Injections.$rootScope.$broadcast).toHaveBeenCalledTimes(1);
     Injections.DialogService.data.buttons[1].action(Mock.item, 0);
     expect(Injections.MoveSurveyItemEventFactory.create).toHaveBeenCalledTimes(1);
 
@@ -79,21 +84,6 @@ describe('Item Container Component Tests', function () {
   function mockData() {
     Mock.item = {customID: 'TST1'}
     Mock.survey = {getItems:function(){}}
-    // Mock.dataDelete = {
-    //   header: "Excluir Questão TST1",
-    //   title: DELETE_TITLE,
-    //   text: DELETE_MSG,
-    //   dialogDimensions: {
-    //     width: '800px'
-    //   },
-    //   buttons : [
-    //     {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: Function},
-    //     {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: Function}
-    //   ],
-    //   cancel: Function,
-    //   url: 'app/shared/commons/dialog/component/dialog-template.html',
-    //   ctrl: 'dialogController'
-    // }
   }
 
 });
