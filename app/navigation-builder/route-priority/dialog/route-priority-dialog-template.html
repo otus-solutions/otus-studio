@@ -1,15 +1,36 @@
-<md-dialog layout="column" aria-label="Editar prioridade da rota" flex>
-  <md-toolbar layout="row" flex class="md-layoutTheme-theme layout-align-center-center layout-row _md-toolbar-transitions">
+<md-dialog layout="column" aria-label="Prioridade das rotas" flex>
+  <md-toolbar layout="row" class="md-layoutTheme-theme layout-align-center-center _md-toolbar-transitions">
     <div class="md-toolbar-tools">
-      <h2>Editar prioridade das rotas</h2>
+      <h2>Prioridade das rotas</h2>
     </div>
+    <span flex></span>
   </md-toolbar>
-  <md-dialog-content layout="row" layout-padding layout-align="center center" flex>
-    <md-list ng-cloak flex>
-      <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-style="ctrl.style($index)">
-        <md-icon md-font-library="material-icons" aria-label="Nevegação">timeline</md-icon>
-        <p> Prioridade {{ $index + 1 }} : {{ ctrl.node.id }} para {{ out.id }}</p>
-        <div layout="row" flex="25" layout-align="end end">
+  <md-dialog-content layout="row" layout-margin>
+    <md-list layout-padding flex>
+      <h4>Rota Padrão</h4>
+      <div layout="row" class="md-list-item-text" layout-align="start end">
+        <div layout-margin>
+          <md-icon flex md-svg-icon="routes"></md-icon>
+        </div>
+        <div flex="10"></div>
+        <p layout-padding>{{ ctrl.selectionFirstNode.label }}</p>
+      </div>
+      <md-divider></md-divider>
+      <h4>Rota Alternativas</h4>
+      <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-class="ctrl.ngClass($index)" ng-if="out.label != ctrl.selectionFirstNode.label">
+        <div layout="row" class="md-list-item-text" layout-align="start end">
+          <div layout-margin>
+            <md-icon flex md-svg-icon="routes"></md-icon>
+          </div>
+          <p layout-padding>{{ $index }}</p>
+        </div>
+        <div flex="5"></div>
+        <div layout="row" class="md-list-item-text">
+          <p layout-padding>{{ ctrl.node.label }}</p>
+          <md-icon md-font-library="material-icons">arrow_forward</md-icon>
+          <p layout-padding>{{ out.label }}</p>
+        </div>
+        <div layout="column" flex layout-align="end end">
           <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index != ctrl.beginNode" ng-click="ctrl.up($index)">
             <md-icon md-font-library="material-icons" aria-label="Mover para cima">keyboard_arrow_up</md-icon>
             <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
@@ -27,8 +48,8 @@
       </md-list-item>
     </md-list>
   </md-dialog-content>
-  <md-dialog-actions layout="row" flex>
+  <md-dialog-actions layout="row">
     <md-button class="md-raised" ng-click="ctrl.cancel()">Cancelar</md-button>
-    <md-button class="md-raised md-primary" ng-click="ctrl.confirm()" ng-disabled="!ctrl.changed">Salvar</md-button>
+    <md-button class="md-raised md-primary md-layoutTheme-theme" ng-click="ctrl.confirm()" ng-disabled="!ctrl.changed">Salvar</md-button>
   </md-dialog-actions>
 </md-dialog>

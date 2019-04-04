@@ -51,6 +51,7 @@
       var routes = [];
       var self = this;
       self.node = node;
+      self.selectionFirstNode = self.node.outNeighbors[0];
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
       self.changed = false;
@@ -62,7 +63,7 @@
       self.down = down;
       self.cancel = cancel;
       self.confirm = confirm;
-      self.style = style;
+      self.ngClass = ngClass;
 
       _init();
 
@@ -103,13 +104,13 @@
         $mdDialog.hide(response);
       }
 
-      function style(index) {
-        if (self.lastModificationIndex == index) {
-          return { "box-shadow": "inset 0 0 1em #bfbfbf, 0 0 1em #e0e0e0" }
-        } else if (index == self.isDefaultRoute) {
-          return { "background-color": "#e5ebed" }
-        }
-      };
+      function ngClass(index) {
+       if (self.lastModificationIndex == index) {
+         return "md-whiteframe-5dp";
+       } else if (index == self.isDefaultRoute) {
+         return { "background-color": "#e5ebed" }
+       }
+     }
 
       function _goToCleanStyle() {
         $timeout(function () {
