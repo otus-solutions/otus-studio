@@ -377,7 +377,3 @@ survey-template md-card:focus {
   border-bottom: dotted 1px gray;
   /*background-color: gray;*/
 }
-
-.sample-show-hide {
-  transition: all linear 0.6s;
-}

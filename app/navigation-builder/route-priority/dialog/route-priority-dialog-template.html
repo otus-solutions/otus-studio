@@ -8,7 +8,7 @@
   <md-dialog-content layout="row" layout-margin>
     <md-list layout-padding flex>
       <h4>Rota Padrão</h4>
-      <div layout="row" class="md-list-item-text" layout-align="start end">
+      <div layout="row" class="md-list-item-text" layout-align="start center">
         <div layout-margin>
           <md-icon flex md-svg-icon="routes"></md-icon>
         </div>
@@ -18,7 +18,7 @@
       <md-divider></md-divider>
       <h4>Rota Alternativas</h4>
       <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-class="ctrl.ngClass($index)" ng-if="out.label != ctrl.selectionFirstNode.label">
-        <div layout="row" class="md-list-item-text" layout-align="start end">
+        <div layout="row" class="md-list-item-text" layout-align="start center">
           <div layout-margin>
             <md-icon flex md-svg-icon="routes"></md-icon>
           </div>

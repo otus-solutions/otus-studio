@@ -56,7 +56,6 @@
       self.beginNode = 0;
       self.changed = false;
       self.lastModificationIndex = -1;
-      self.isDefaultRoute = 0;
 
       /* Public interface */
       self.up = up;
@@ -107,8 +106,6 @@
       function ngClass(index) {
        if (self.lastModificationIndex == index) {
          return "md-whiteframe-5dp";
-       } else if (index == self.isDefaultRoute) {
-         return { "background-color": "#e5ebed" }
        }
      }
 
