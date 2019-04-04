@@ -71,9 +71,16 @@
     this.isMyDefaultNext = isMyDefaultNext;
     this.orderNavigationByPriorityInMap = orderNavigationByPriorityInMap;
 
+    //TODO: OS-2 Rescrew bug that duplicates nodes in event - line 77
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
-      this.inNeighbors.push(newNeighbor);
+      var isFound = this.inNeighbors.filter((neighbor)=>{
+        return neighbor.id == newNeighbor.id
+      });
+
+      if (isFound.length==0) {
+        this.inNeighbors.push(newNeighbor);
+      }
       if (!this.isDefault) {
         this.isDefault = newNeighbor.isDefault && isDefaultConnection;
       }
@@ -81,7 +88,13 @@
     }
 
     function connectOut(newNeighbor, isDefaultConnection) {
-      this.outNeighbors.push(newNeighbor);
+      var isFound = this.outNeighbors.filter((neighbor)=>{
+        return neighbor.id == newNeighbor.id
+      });
+
+      if (isFound.length==0){
+        this.outNeighbors.push(newNeighbor);
+      }
 
       if (isDefaultConnection) {
         this.defaultNextNode = newNeighbor;
@@ -89,6 +102,7 @@
 
       newNeighbor.connectIn(this, isDefaultConnection);
     }
+
 
     function updatePosition(inNeighbor) {
       var defaultRouteCount = 0;
