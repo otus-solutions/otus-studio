@@ -1,7 +1,7 @@
-<md-dialog layout="column" aria-label="Prioridade das rotas" flex>
+<md-dialog layout="column" aria-label="Prioridade de Navegação" flex>
   <md-toolbar layout="row" class="md-layoutTheme-theme layout-align-center-center _md-toolbar-transitions">
     <div class="md-toolbar-tools">
-      <h2>Prioridade das rotas</h2>
+      <h2>Prioridade de Navegação</h2>
     </div>
     <span flex></span>
   </md-toolbar>
@@ -13,11 +13,15 @@
           <md-icon flex md-svg-icon="routes"></md-icon>
         </div>
         <div flex="10"></div>
-        <p layout-padding>{{ ctrl.selectionFirstNode.label }}</p>
+        <div layout="row" class="md-list-item-text">
+          <p layout-padding>{{ ctrl.node.label }}</p>
+          <md-icon md-font-library="material-icons">arrow_forward</md-icon>
+          <p layout-padding>{{ ctrl.selectedFirstNode.label }}</p>
+        </div>
       </div>
       <md-divider></md-divider>
-      <h4>Rota Alternativas</h4>
-      <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-class="ctrl.ngClass($index)" ng-if="out.label != ctrl.selectionFirstNode.label">
+      <h4 ng-if="ctrl.endNode > 0">Rotas Alternativas</h4>
+      <md-list-item ng-repeat="out in ctrl.node.outNeighbors" ng-class="ctrl.modificationClass($index)" ng-if="out.label != ctrl.selectedFirstNode.label">
         <div layout="row" class="md-list-item-text" layout-align="start center">
           <div layout-margin>
             <md-icon flex md-svg-icon="routes"></md-icon>
@@ -31,7 +35,7 @@
           <p layout-padding>{{ out.label }}</p>
         </div>
         <div layout="column" flex layout-align="end end">
-          <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index != ctrl.beginNode" ng-click="ctrl.up($index)">
+          <md-button class="md-icon-button" aria-label="Mover para cima" ng-if="$index > (ctrl.beginNode + 1)" ng-click="ctrl.up($index)">
             <md-icon md-font-library="material-icons" aria-label="Mover para cima">keyboard_arrow_up</md-icon>
             <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
               Mover para cima

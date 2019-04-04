@@ -51,7 +51,7 @@
       var routes = [];
       var self = this;
       self.node = node;
-      self.selectionFirstNode = self.node.outNeighbors[0];
+      self.selectedFirstNode = self.node.outNeighbors[0];
       self.endNode = self.node.outNeighbors.length - 1;
       self.beginNode = 0;
       self.changed = false;
@@ -62,7 +62,7 @@
       self.down = down;
       self.cancel = cancel;
       self.confirm = confirm;
-      self.ngClass = ngClass;
+      self.modificationClass = modificationClass;
 
       _init();
 
@@ -103,7 +103,7 @@
         $mdDialog.hide(response);
       }
 
-      function ngClass(index) {
+      function modificationClass(index) {
        if (self.lastModificationIndex == index) {
          return "md-whiteframe-5dp";
        }

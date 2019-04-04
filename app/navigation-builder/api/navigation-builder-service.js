@@ -24,7 +24,7 @@
     self.edges = edges;
     self.setSurvey = setSurvey;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
-    self.activateEditRoutePriority = activateEditRoutePriority;
+    self.editRoutePriorityState = editRoutePriorityState;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
     self.reloadMapData = reloadMapData;
@@ -48,17 +48,20 @@
       _activeServiceMode.activate(_survey);
     }
 
-    function activateNavigationInspectorMode() {
+    function activateNavigationInspectorMode(state) {
       deactiveMode();
-      _activeServiceMode = NavigationInspectorService;
-      _activeServiceMode.activate(_survey);
+      if(state) {
+        _activeServiceMode = NavigationInspectorService;
+        _activeServiceMode.activate(_survey);
+      }
     }
 
-    function activateEditRoutePriority() {
+    function editRoutePriorityState(state) {
       deactiveMode();
-      _activeServiceMode = NavigationRoutePriorityService;
-      _activeServiceMode.activate(_survey);
-
+      if(state) {
+        _activeServiceMode = NavigationRoutePriorityService;
+        _activeServiceMode.activate(_survey);
+      }
     }
 
     function deactiveMode() {

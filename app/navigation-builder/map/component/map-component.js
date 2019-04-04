@@ -38,14 +38,23 @@
 
   function ToolsController(NavigationBuilderService) {
     var self = this;
+    self.modificationButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.AddRouteButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.InspectButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.modificationButtonRoutePriority = false;
+    self.modificationButtonInspect = false;
 
     /* Public methods */
     self.addRoute = addRoute;
     self.editRoutePriority = editRoutePriority;
     self.inspect = inspect;
+    self.changeModificationButtonStyle = changeModificationButtonStyle;
 
     function editRoutePriority() {
-      NavigationBuilderService.activateEditRoutePriority();
+      self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
+      self.modificationButtonInspect = false;
+      setSelected();
+      NavigationBuilderService.editRoutePriorityState(self.modificationButtonRoutePriority);
     }
 
     function addRoute() {
@@ -53,7 +62,30 @@
     }
 
     function inspect() {
-      NavigationBuilderService.activateNavigationInspectorMode();
+      self.modificationButtonRoutePriority = false;
+      self.modificationButtonInspect = !self.modificationButtonInspect;
+      setSelected();
+      NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
+    }
+
+    function setSelected(){
+      self.modificationButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
+      self.InspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+      if(self.modificationButtonRoutePriority){
+        self.modificationButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
+        self.InspectButtonClass = changeModificationButtonStyle(false);
+      } else if(self.modificationButtonInspect){
+        self.modificationButtonClass = changeModificationButtonStyle(false);
+        self.InspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+      }
+    }
+
+    function changeModificationButtonStyle(selectedState) {
+      if (!selectedState) {
+        return  ['md-fab', 'md-raised', 'md-mini']
+      } else {
+        return  ['md-fab', 'md-no-focus', 'md-mini']
+      }
     }
 
   }
