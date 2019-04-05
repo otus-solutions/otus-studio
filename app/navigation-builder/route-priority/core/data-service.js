@@ -34,7 +34,7 @@
     }
 
     //-----------------------------------------------------
-    // Navigation inspector
+    // Navigation Route Priority
     //-----------------------------------------------------
 
     function selectNode(node) {

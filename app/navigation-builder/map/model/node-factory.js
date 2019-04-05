@@ -74,7 +74,7 @@
     //TODO: OS-2 Rescrew bug that duplicates nodes in event - line 77
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
-      var isFound = this.inNeighbors.filter((neighbor)=>{
+      var isFound = this.inNeighbors.filter(function(neighbor){
         return neighbor.id == newNeighbor.id
       });
 
@@ -88,7 +88,7 @@
     }
 
     function connectOut(newNeighbor, isDefaultConnection) {
-      var isFound = this.outNeighbors.filter((neighbor)=>{
+      var isFound = this.outNeighbors.filter(function(neighbor){
         return neighbor.id == newNeighbor.id
       });
 
