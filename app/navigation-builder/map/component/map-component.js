@@ -58,12 +58,17 @@
     }
 
     function addRoute() {
+      self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
+      self.modificationButtonInspect = !self.modificationButtonInspect;
+      self.modificationButtonRoutePriority = false;
+      self.modificationButtonInspect = false;
+      setSelected();
       NavigationBuilderService.activateRouteCreatorMode();
     }
 
     function inspect() {
-      self.modificationButtonRoutePriority = false;
       self.modificationButtonInspect = !self.modificationButtonInspect;
+      self.modificationButtonRoutePriority = false;
       setSelected();
       NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
     }
@@ -87,6 +92,5 @@
         return  ['md-fab', 'md-no-focus', 'md-mini']
       }
     }
-
   }
 })();
