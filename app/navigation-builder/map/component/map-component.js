@@ -38,9 +38,9 @@
 
   function ToolsController(NavigationBuilderService) {
     var self = this;
-    self.modificationButtonClass = ['md-fab', 'md-raised', 'md-mini'];
-    self.AddRouteButtonClass = ['md-fab', 'md-raised', 'md-mini'];
-    self.InspectButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.routePriorityButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.addRouteButtonClass = ['md-fab', 'md-raised', 'md-mini'];
+    self.inspectButtonClass = ['md-fab', 'md-raised', 'md-mini'];
     self.modificationButtonRoutePriority = false;
     self.modificationButtonInspect = false;
 
@@ -74,14 +74,14 @@
     }
 
     function setSelected(){
-      self.modificationButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
-      self.InspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+      self.routePriorityButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
+      self.inspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
       if(self.modificationButtonRoutePriority){
-        self.modificationButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
-        self.InspectButtonClass = changeModificationButtonStyle(false);
+        self.routePriorityButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
+        self.inspectButtonClass = changeModificationButtonStyle(false);
       } else if(self.modificationButtonInspect){
-        self.modificationButtonClass = changeModificationButtonStyle(false);
-        self.InspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+        self.routePriorityButtonClass = changeModificationButtonStyle(false);
+        self.inspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
       }
     }
 
