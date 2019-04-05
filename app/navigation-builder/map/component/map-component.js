@@ -48,7 +48,7 @@
     self.addRoute = addRoute;
     self.editRoutePriority = editRoutePriority;
     self.inspect = inspect;
-    self.changeModificationButtonStyle = changeModificationButtonStyle;
+    self.changeModificationButtonClass = changeModificationButtonClass;
 
     function editRoutePriority() {
       self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
@@ -74,22 +74,22 @@
     }
 
     function setSelected(){
-      self.routePriorityButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
-      self.inspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+      self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
+      self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
       if(self.modificationButtonRoutePriority){
-        self.routePriorityButtonClass = changeModificationButtonStyle(self.modificationButtonRoutePriority);
-        self.inspectButtonClass = changeModificationButtonStyle(false);
+        self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
+        self.inspectButtonClass = changeModificationButtonClass(false);
       } else if(self.modificationButtonInspect){
-        self.routePriorityButtonClass = changeModificationButtonStyle(false);
-        self.inspectButtonClass = changeModificationButtonStyle(self.modificationButtonInspect);
+        self.routePriorityButtonClass = changeModificationButtonClass(false);
+        self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
       }
     }
 
-    function changeModificationButtonStyle(selectedState) {
+    function changeModificationButtonClass(selectedState) {
       if (!selectedState) {
-        return  ['md-fab', 'md-raised', 'md-mini']
+        return  ['md-fab', 'md-raised', 'md-mini'];
       } else {
-        return  ['md-fab', 'md-no-focus', 'md-mini']
+        return  ['md-fab', 'md-no-focus', 'md-mini'];
       }
     }
   }
