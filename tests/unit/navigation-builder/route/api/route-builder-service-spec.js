@@ -21,7 +21,7 @@ xdescribe('RouteBuilderService', function() {
     });
   });
 
-  describe('in service management methods', function() {
+  xdescribe('in service management methods', function() {
 
     describe('activate method', function() {
 
@@ -55,7 +55,7 @@ xdescribe('RouteBuilderService', function() {
 
   });
 
-  describe('in route editor methods', function() {
+  xdescribe('in route editor methods', function() {
 
     describe('createCondition method', function() {
 
@@ -158,7 +158,7 @@ xdescribe('RouteBuilderService', function() {
 
   });
 
-  describe('in rule editor methods', function() {
+  xdescribe('in rule editor methods', function() {
 
     beforeEach(function() {
       spyOn(Mock.DataService, 'isSimpleNavigation');
