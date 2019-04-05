@@ -4,21 +4,21 @@
   angular
     .module('otusjs.studio.navigationBuilder')
     .component('otusNavigationMap', {
-      templateUrl: 'app/navigation-builder/map/component/map-template.html',
-      controller: component
-    });
+      controller: 'otusNavigationMapCtrl as $ctrl',
+      templateUrl: 'app/navigation-builder/map/component/map-template.html'
+    }).controller('otusNavigationMapCtrl', Controller);
 
-  component.$inject = [
+  Controller.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.GraphLayerService',
     'otusjs.studio.navigationBuilder.NavigationBuilderService'
   ];
 
-  function component(moduleScope, GraphLayerService, NavigationBuilderService) {
+  function Controller(moduleScope, GraphLayerService, NavigationBuilderService) {
     var self = this;
     // var _messageLayer = null;
 
-    /* Publi methods */
+    /* Public methods */
     self.$onInit = onInit;
 
     function onInit() {
@@ -53,7 +53,7 @@
     function editRoutePriority() {
       self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
       self.modificationButtonInspect = false;
-      setSelected();
+      _setSelected();
       NavigationBuilderService.editRoutePriorityState(self.modificationButtonRoutePriority);
     }
 
@@ -62,24 +62,24 @@
       self.modificationButtonInspect = !self.modificationButtonInspect;
       self.modificationButtonRoutePriority = false;
       self.modificationButtonInspect = false;
-      setSelected();
+      _setSelected();
       NavigationBuilderService.activateRouteCreatorMode();
     }
 
     function inspect() {
       self.modificationButtonInspect = !self.modificationButtonInspect;
       self.modificationButtonRoutePriority = false;
-      setSelected();
+      _setSelected();
       NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
     }
 
-    function setSelected(){
+    function _setSelected() {
       self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
       self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
-      if(self.modificationButtonRoutePriority){
+      if (self.modificationButtonRoutePriority) {
         self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
         self.inspectButtonClass = changeModificationButtonClass(false);
-      } else if(self.modificationButtonInspect){
+      } else if (self.modificationButtonInspect) {
         self.routePriorityButtonClass = changeModificationButtonClass(false);
         self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
       }
@@ -87,9 +87,9 @@
 
     function changeModificationButtonClass(selectedState) {
       if (!selectedState) {
-        return  ['md-fab', 'md-raised', 'md-mini'];
+        return ['md-fab', 'md-raised', 'md-mini'];
       } else {
-        return  ['md-fab', 'md-no-focus', 'md-mini'];
+        return ['md-fab', 'md-no-focus', 'md-mini'];
       }
     }
   }
