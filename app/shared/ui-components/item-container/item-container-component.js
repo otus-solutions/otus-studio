@@ -53,7 +53,7 @@
       self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
     }
 
-    function remove(answer){
+    function _removeQuestion(answer){
       if(answer){
         RemoveSurveyItemEventFactory.create().execute(self.item);
         _clearQuestionSelected(0);
@@ -61,7 +61,7 @@
       }
     }
 
-    function move(item, position){
+    function _moveQuestion(item, position){
       if(item){
         MoveSurveyItemEventFactory.create().execute(item, position);
         $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
@@ -86,7 +86,7 @@
         },
         buttons : [
           {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-          {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: remove}
+          {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: _removeQuestion}
         ]
       };
       $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
@@ -103,7 +103,7 @@
         questions: WorkspaceService.getSurvey().getItems(),
         buttons : [
           {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: move}
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
         ]
       };
       $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
