@@ -4,7 +4,7 @@ describe('NodeFactory', function() {
   var factory = {};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+    angular.mock.module('studio');
 
     mockNodeOptions();
 

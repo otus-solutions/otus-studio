@@ -4,7 +4,7 @@ describe('RuleAnswerBuilderService', function() {
   var service = {};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+    angular.mock.module('studio');
 
     mockSingleSelectionQuestionItem();
 
