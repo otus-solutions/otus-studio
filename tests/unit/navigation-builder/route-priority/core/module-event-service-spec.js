@@ -1,4 +1,4 @@
-describe('UiEventsService', function() {
+describe('ModuleEventService', function() {
 
   var Injections;
   var service = {};
