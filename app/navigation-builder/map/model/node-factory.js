@@ -74,11 +74,11 @@
     //TODO: OS-2 Rescrew bug that duplicates nodes in event - line 77
     function connectIn(newNeighbor, isDefaultConnection) {
       this.factor = newNeighbor.outNeighbors.length;
-      var isFound = this.inNeighbors.filter(function(neighbor){
+      var isFound = this.inNeighbors.filter(function (neighbor) {
         return neighbor.id == newNeighbor.id
       });
 
-      if (isFound.length==0) {
+      if (isFound.length == 0) {
         this.inNeighbors.push(newNeighbor);
       }
       if (!this.isDefault) {
@@ -88,11 +88,11 @@
     }
 
     function connectOut(newNeighbor, isDefaultConnection) {
-      var isFound = this.outNeighbors.filter(function(neighbor){
+      var isFound = this.outNeighbors.filter(function (neighbor) {
         return neighbor.id == newNeighbor.id
       });
 
-      if (isFound.length==0){
+      if (isFound.length == 0) {
         this.outNeighbors.push(newNeighbor);
       }
 
@@ -137,7 +137,7 @@
       var aux = this.outNeighbors[newPosition];
       this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
       this.outNeighbors[oldPosition] = aux;
-      return this;
+      return this.outNeighbors;
     }
 
     function _calculateInitialY() {
