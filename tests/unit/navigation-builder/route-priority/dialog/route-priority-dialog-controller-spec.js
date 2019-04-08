@@ -14,7 +14,7 @@ describe('dialogController', function() {
       $provide.value('locals', Mock.node);
     });
 
-    angular.mock.inject(function (_$injector_,$controller) {
+    angular.mock.inject(function (_$injector_,_$controller_) {
 
       Injections ={
         $mdDialog: _$injector_.get('$mdDialog'),
@@ -23,7 +23,7 @@ describe('dialogController', function() {
         WorkspaceService: _$injector_.get('WorkspaceService')
       };
 
-      ctrl = $controller('dialogController',Injections);
+      ctrl = _$controller_('dialogController',Injections);
 
     });
 
