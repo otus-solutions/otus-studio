@@ -25,7 +25,6 @@
       _registerEventListener(moduleScope.NBEVENTS.ROUTE_PRIORITY_MODE_OFF, _onRoutePriorityModeOff);
       _registerEventListener(moduleScope.NBEVENTS.NAVIGATION_SELECTED, _onNavigationSelected);
       _registerEventListener(moduleScope.NBEVENTS.NAVIGATION_UNSELECTED, _onNavigationUnselected);
-      _registerEventListener(moduleScope.NBEVENTS.ROUTE_BUILD_CANCELED, _onRoutePriorityBuildCanceled);
     }
 
     function deactivate() {
@@ -70,11 +69,6 @@
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
       moduleScope.emit(moduleScope.NBEVENTS.RELOAD_MAP_DATA);
-    }
-
-    function _onRoutePriorityBuildCanceled() {
-      RoutePriorityDialogService.closeDialog();
-      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_PRIORITY_MODE_OFF);
     }
   }
 })();

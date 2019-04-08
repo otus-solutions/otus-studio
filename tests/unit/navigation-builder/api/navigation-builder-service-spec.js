@@ -10,9 +10,7 @@ describe('NavigationBuilderService Suite', function () {
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('studio', function ($provide) {
-      // $provide.value('WorkspaceService');
-    });
+    angular.mock.module('studio');
 
     angular.mock.inject(function (_$injector_) {
       Injections.NavigationBuilderScopeService = _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderScopeService');
@@ -26,7 +24,7 @@ describe('NavigationBuilderService Suite', function () {
       //preparation of the survey via factory by passing context json
       Injections.SurveyLoaderService = _$injector_.get('SurveyLoaderService');
       Mock.survey = Injections.SurveyLoaderService.loadSurvey(Mock.surveyJson);
-      Mock.state = true;
+      Mock.activate = true;
 
       spyOn(Mock.survey.NavigationManager, "getNavigationList").and.callThrough();
       spyOn(Injections.RouteBuilderService, "activate").and.callThrough();
@@ -77,17 +75,17 @@ describe('NavigationBuilderService Suite', function () {
 
   it('activateNavigationInspectorMode_method_should_evoke_activate_of_activeServiceMode_internalMethod ', function () {
 
-    service.activateNavigationInspectorMode(Mock.state);
+    service.activateNavigationInspectorMode(Mock.activate);
     expect(Injections.NavigationInspectorService.activate).toHaveBeenCalledTimes(1);
   });
 
   it('editRoutePriorityState_method_should_evoke_activate_of_activeServiceMode_internalMethod ', function () {
-    service.editRoutePriorityState(Mock.state);
+    service.editRoutePriorityState(Mock.activate);
     expect(Injections.NavigationRoutePriorityService.activate).toHaveBeenCalledTimes(1);
   });
 
   it('deactiveMode_method_should_evoke_deactivate_for_the_service_that_was_activated', function () {
-    service.activateNavigationInspectorMode(Mock.state);
+    service.activateNavigationInspectorMode(Mock.activate);
     service.deactiveMode();
     expect(Injections.NavigationInspectorService.deactivate).toHaveBeenCalledTimes(1);
   });

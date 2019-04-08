@@ -58,8 +58,6 @@
     }
 
     function addRoute() {
-      self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
-      self.modificationButtonInspect = !self.modificationButtonInspect;
       self.modificationButtonRoutePriority = false;
       self.modificationButtonInspect = false;
       _setSelected();

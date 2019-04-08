@@ -48,17 +48,17 @@
       _activeServiceMode.activate(_survey);
     }
 
-    function activateNavigationInspectorMode(state) {
+    function activateNavigationInspectorMode(activate) {
       deactiveMode();
-      if(state) {
+      if(activate) {
         _activeServiceMode = NavigationInspectorService;
         _activeServiceMode.activate(_survey);
       }
     }
 
-    function editRoutePriorityState(state) {
+    function editRoutePriorityState(activate) {
       deactiveMode();
-      if(state) {
+      if(activate) {
         _activeServiceMode = NavigationRoutePriorityService;
         _activeServiceMode.activate(_survey);
       }
