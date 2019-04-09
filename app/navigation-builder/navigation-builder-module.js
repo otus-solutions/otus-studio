@@ -22,7 +22,6 @@
       'ROUTE_BUILD_SAVED': 'nbevents.route.build.saved',
       'ROUTE_BUILD_CANCELED': 'nbevents.route.build.canceled',
       /* Route Node events */
-      'ROUTE_PRIORITY_NODE_SELECTED': 'nbevents.route.node.priority.selected',
       'ORIGIN_NODE_SELECTED': 'nbevents.route.node.origin.selected',
       'ORIGIN_NODE_UNSELECTED': 'nbevents.route.node.origin.unselected',
       'DESTINATION_NODE_SELECTED': 'nbevents.route.node.destination.selected',

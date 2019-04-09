@@ -50,7 +50,7 @@
       vm.node.orderNavigationByPriorityInMap(index, index - 1);
       vm.changed = true;
       vm.lastModificationIndex = index - 1;
-      _goToCleanStyle();
+      _goToCleanClass();
     }
 
     function down(index) {
@@ -58,7 +58,7 @@
       vm.node.orderNavigationByPriorityInMap(index, index + 1);
       vm.changed = true;
       vm.lastModificationIndex = index + 1;
-      _goToCleanStyle();
+      _goToCleanClass();
     }
 
     function cancel(response) {
@@ -78,7 +78,7 @@
       }
     }
 
-    function _goToCleanStyle() {
+    function _goToCleanClass() {
       $timeout(function () {
         vm.lastModificationIndex = -1;
       }, 1000);
