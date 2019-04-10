@@ -39,42 +39,40 @@ describe('dialogController', function() {
     expect(ctrl).toBeDefined();
   });
 
-  describe('ctrlInstance', function() {
-
-    it('methodExistence check', function () {
-      expect(ctrl.up).toBeDefined();
-      expect(ctrl.down).toBeDefined();
-      expect(ctrl.cancel).toBeDefined();
-      expect(ctrl.confirm).toBeDefined();
-      expect(ctrl.modificationClass).toBeDefined();
-    });
-
-    it('should up method', function() {
-
-      ctrl.up(Mock.node.node.outNeighbors[0].index);
-      expect(ctrl.up).toHaveBeenCalledTimes(1);
-    });
-
-    it('should down method', function() {
-      ctrl.down(Mock.node.node.outNeighbors[0].index);
-      expect(ctrl.down).toHaveBeenCalledTimes(1);
-    });
-
-    it('should cancel method', function() {
-      ctrl.cancel();
-      expect(ctrl.cancel).toHaveBeenCalledTimes(1);
-    });
-
-    it('should confirm method', function() {
-      ctrl.confirm();
-      expect(ctrl.confirm).toHaveBeenCalledTimes(1);
-    });
-
-    it('should modificationClass method', function() {
-      ctrl.modificationClass(Mock.node.node.outNeighbors[0].index);
-      expect(ctrl.modificationClass).toHaveBeenCalledTimes(1);
-    });
+  it('ctrlmethodExistence check', function () {
+    expect(ctrl.up).toBeDefined();
+    expect(ctrl.down).toBeDefined();
+    expect(ctrl.cancel).toBeDefined();
+    expect(ctrl.confirm).toBeDefined();
+    expect(ctrl.modificationClass).toBeDefined();
   });
+
+  it('up method should instantiate dialogController', function() {
+
+    ctrl.up(Mock.node.node.outNeighbors[0].index);
+    expect(ctrl.up).toHaveBeenCalledTimes(1);
+  });
+
+  it('down method should instantiate dialogController', function() {
+    ctrl.down(Mock.node.node.outNeighbors[0].index);
+    expect(ctrl.down).toHaveBeenCalledTimes(1);
+  });
+
+  it('cancel method should instantiate dialogController', function() {
+    ctrl.cancel();
+    expect(ctrl.cancel).toHaveBeenCalledTimes(1);
+  });
+
+  it('confirm method should instantiate dialogController', function() {
+    ctrl.confirm();
+    expect(ctrl.confirm).toHaveBeenCalledTimes(1);
+  });
+
+  it('modificationClass method should instantiate dialogController', function() {
+    expect(ctrl.modificationClass(-Mock.node.node.outNeighbors[0].index)).toEqual('md-whiteframe-5dp');
+    expect(ctrl.modificationClass).toHaveBeenCalledTimes(1);
+  });
+
 
   function mockData() {
     Mock.routeItem = {
