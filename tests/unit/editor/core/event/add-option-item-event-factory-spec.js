@@ -1,72 +1,61 @@
 describe('AddOptionItemEventFactory suite', function () {
 
-  var factory, event;
+  var factory;
   var Mock = {};
+  var Injections = [];
+  var ITEM_TYPE = 'TimeQuestion';
 
   beforeEach(function() {
-
-    mockWorkspace();
-
-    angular.mock.module('studio',function ($provide) {
-      $provide.value('WorkspaceService',Mock.workspace);
-    });
+    angular.mock.module('studio');
 
     angular.mock.inject(function(_$injector_) {
 
-      mockTimeQuestionFactory(_$injector_);
+      Injections.AddOptionItemService = _$injector_.get('AddOptionItemService');
+      Injections.WorkspaceService = _$injector_.get('WorkspaceService');
+      Injections.WorkspaceService.workspace = mockWorkspace();
 
-      factory = _$injector_.get('AddOptionItemEventFactory');
+      factory = _$injector_.get('AddOptionItemEventFactory', Injections);
     });
 
-    spyOn(factory, 'create').and.callThrough();
+    spyOn(Injections.AddOptionItemService, "execute");
+    spyOn(Injections.WorkspaceService, "saveWork");
 
   });
 
   it('factoryExistence check', function () {
     expect(factory).toBeDefined();
   });
-  
-  describe('factoryInstance', function() {
-    beforeEach(function() {
-      event = factory.create();
-      event.execute(Mock.question, jasmine.any(String), jasmine.any(String));
-    });
 
-    it('factoryMethodExistence check', function () {
-      expect(factory.create).toBeDefined();
-    });
-
-    it('create method should ', function () {    
-      expect(factory.create).toHaveBeenCalledTimes(1);
-    });
-
-    it('should return an instance of AddOptionItemEvent', function() {
-      expect(event.constructor.name).toBe('AddOptionItemEvent');
-    });
-    
-    it('should return an object with execute method', function () {
-      expect(event.execute).toBeDefined();
-    })
+  it('factoryMethodExistence check', function () {
+    expect(factory.create).toBeDefined();
   });
-  
-  function mockTimeQuestionFactory($injector) {
-    Mock.TimeQuestionFactory = $injector.get('TimeQuestionFactory');
-    Mock.question = Mock.TimeQuestionFactory.create('TimeQuestion', jasmine.any(String));
-  }
+
+  it('create_method_should_instantiate_AddOptionItemEvent', function () {
+    expect(factory.create().execute).toBeDefined();
+  });
+
+  it('should_return_an_instance_of_AddOptionItemEvent', function() {
+    expect(factory.create().constructor.name).toBe('AddOptionItemEvent');
+  });
+
+  it('Instance_of_AddOptionItemEventFactory_shold_evoke_internalMethods', function () {
+    factory.create().execute(ITEM_TYPE,jasmine.any(String), jasmine.any(String));
+    expect(Injections.AddOptionItemService.execute).toHaveBeenCalledTimes(1);
+    expect(Injections.WorkspaceService.saveWork).toHaveBeenCalledTimes(1);
+  });
 
   function mockWorkspace() {
-    Mock.workspace = {
-      workspace: {
-        isdb: {
-          userEdits: {
-            store: function(self) {
-              return true;
-            }
-          }
+    return Mock.workspace = {
+      isdb: {
+        userEdits: {
+          store: jasmine.createSpy()
         }
       },
-      saveWork: function() {
-        return true;
+      project: {
+        survey: jasmine.createSpy()
+      },
+      sessions: {
+        workspaceOwner: jasmine.createSpy()
       }
     };
   }
