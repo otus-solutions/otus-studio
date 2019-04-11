@@ -19,7 +19,7 @@ describe('RemoveFillingRulesEventFactory_Suite', function () {
 
       factory = _$injector_.get('RemoveFillingRulesEventFactory', Injections);
       spyOn(Injections.RemoveFillingRulesWorkService, "execute").and.callThrough();
-      spyOn(Injections.WorkspaceService, "saveWork").and.callThrough();
+      spyOn(Injections.WorkspaceService, "saveWork")
     });
   });
 
