@@ -39,7 +39,7 @@ describe('AddFillingRulesEventFactory suite', function () {
     addFillingRulesEvent.execute(Mock.question, whoAmI);
   });
 
-  it('Instance_of_AddFillingRulesEventFactory_shold_evoke_internalMethods', function () {
+  it('Instance_of_AddFillingRulesEventFactory_should_evoke_internalMethods', function () {
     expect(Injections.AddFillingRulesService.execute).toHaveBeenCalledTimes(1);
     expect(Injections.WorkspaceService.saveWork).toHaveBeenCalledTimes(1);
   });
