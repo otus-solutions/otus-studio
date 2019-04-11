@@ -1,4 +1,4 @@
-describe('AddDataSourceEventFactory Suite', function () {
+describe('RemoveDataSourceEventFactory Suite', function () {
 
   var factory;
   var Mock = {};
@@ -14,7 +14,7 @@ describe('AddDataSourceEventFactory Suite', function () {
       Injections.WorkspaceService.workspace = mockWorkspace();
       Mock.item = _$injector_.get('SurveyItemFactory').create('AutocompleteQuestion');
 
-      factory = _$injector_.get('AddDataSourceEventFactory', Injections);
+      factory = _$injector_.get('RemoveDataSourceEventFactory', Injections);
 
       mockSurvey();
       spyOn(Injections.WorkspaceService, "getSurvey").and.returnValue(Mock.survey);
@@ -30,11 +30,11 @@ describe('AddDataSourceEventFactory Suite', function () {
     expect(factory.create).toBeDefined();
   });
 
-  it('create_method_should_instantiate_AddDataSourceEvent', function () {
+  it('create_method_should_instantiate_RemoveDataSourceEvent', function () {
     expect(factory.create().execute).toBeDefined();
   });
 
-  it('Instance_of_AddDataSourceEventFactory_should_evoke_internalMethods', function () {
+  it('Instance_of_RemoveDataSourceEventFactory_should_evoke_internalMethods', function () {
     factory.create().execute(Mock.item,NAME);
     expect(Injections.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledTimes(1);
     expect(Injections.WorkspaceService.saveWork).toHaveBeenCalledTimes(1);
@@ -57,12 +57,12 @@ describe('AddDataSourceEventFactory Suite', function () {
   }
 
   function mockSurvey() {
-    Mock.performBind = {
-      performBind: jasmine.createSpy("performBind").and.returnValue(Mock.item.templateID)
+    Mock.removeBind = {
+      removeBind: jasmine.createSpy("performBind").and.returnValue(Mock.item.templateID)
     };
 
     Mock.survey = {
-      getDataSource: jasmine.createSpy("getDataSource").and.returnValue(Mock.performBind)
+      getDataSource: jasmine.createSpy("getDataSource").and.returnValue(Mock.removeBind)
     }
   }
 });
