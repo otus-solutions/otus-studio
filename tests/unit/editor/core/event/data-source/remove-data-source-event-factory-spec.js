@@ -58,7 +58,7 @@ describe('RemoveDataSourceEventFactory Suite', function () {
 
   function mockSurvey() {
     Mock.removeBind = {
-      removeBind: jasmine.createSpy("performBind").and.returnValue(Mock.item.templateID)
+      removeBind: jasmine.createSpy("removeBind").and.returnValue(Mock.item.templateID)
     };
 
     Mock.survey = {
