@@ -1,8 +1,10 @@
-describe('RemoveOptionItemEventFactory', function () {
+describe('RemoveOptionItemEventFactory Suite', function () {
+
   var factory;
   var Mock = {};
   var Injections = [];
   var ITEM_TYPE = 'TimeQuestion';
+  var OPTION_NAME = 'disabledButton';
 
   beforeEach(function() {
     angular.mock.module('studio');
@@ -31,8 +33,9 @@ describe('RemoveOptionItemEventFactory', function () {
   });
 
   it('instance_of_RemoveOptionItemEventFactory_shold_evoke_internalMethods', function () {
-    factory.create().execute(ITEM_TYPE,jasmine.any(String));
+    factory.create().execute(ITEM_TYPE,OPTION_NAME);
     expect(Injections.RemoveOptionItemService.execute).toHaveBeenCalledTimes(1);
+    expect(Injections.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledTimes(1);
     expect(Injections.WorkspaceService.saveWork).toHaveBeenCalledTimes(1);
   });
 

@@ -4,7 +4,6 @@ describe('AddSurveyItemEventFactory suite',function () {
   var factory;
   var ITEM_TYPE = 'SingleSelectionQuestion';
 
-
   beforeEach(function() {
     angular.mock.module('studio');
 
@@ -39,6 +38,7 @@ describe('AddSurveyItemEventFactory suite',function () {
   it('Instance of AddSurveyItemEventFactory shold evoke internalMethods', function () {
     factory.create().execute(ITEM_TYPE);
     expect(Injections.AddSurveyItemService.execute).toHaveBeenCalledTimes(1);
+    expect(Injections.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledTimes(1);
     expect(Injections.WorkspaceService.saveWork).toHaveBeenCalledTimes(1);
   });
 
@@ -57,5 +57,4 @@ describe('AddSurveyItemEventFactory suite',function () {
       }
     }
   }
-
 });
