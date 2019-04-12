@@ -4,7 +4,7 @@ describe('RuleOperatorBuilderService', function() {
   var service = {};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+    angular.mock.module('studio');
 
     inject(function(_$injector_) {
       service = _$injector_.get(

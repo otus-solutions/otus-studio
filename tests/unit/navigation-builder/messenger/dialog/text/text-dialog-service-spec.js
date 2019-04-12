@@ -5,7 +5,7 @@ describe('TextDialogService', function() {
   var injections = {};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+    angular.mock.module('studio');
 
     inject(function(_$injector_, _$mdDialog_) {
       injections.$mdDialog = _$mdDialog_;

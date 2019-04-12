@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -9,10 +9,11 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'otusjs.studio.navigationBuilder.MapFactory',
     'otusjs.studio.navigationBuilder.routeBuilder.RouteBuilderService',
-    'otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService'
+    'otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService',
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.NavigationRoutePriorityService'
   ];
 
-  function service(moduleScope, MapFactory, RouteBuilderService, NavigationInspectorService) {
+  function service(moduleScope, MapFactory, RouteBuilderService, NavigationInspectorService, NavigationRoutePriorityService) {
     var self = this;
     var _survey = null;
     var _navigationMap = {};
@@ -23,6 +24,7 @@
     self.edges = edges;
     self.setSurvey = setSurvey;
     self.activateRouteCreatorMode = activateRouteCreatorMode;
+    self.editRoutePriorityState = editRoutePriorityState;
     self.activateNavigationInspectorMode = activateNavigationInspectorMode;
     self.deactiveMode = deactiveMode;
     self.reloadMapData = reloadMapData;
@@ -46,10 +48,20 @@
       _activeServiceMode.activate(_survey);
     }
 
-    function activateNavigationInspectorMode() {
+    function activateNavigationInspectorMode(activate) {
       deactiveMode();
-      _activeServiceMode = NavigationInspectorService;
-      _activeServiceMode.activate(_survey);
+      if(activate) {
+        _activeServiceMode = NavigationInspectorService;
+        _activeServiceMode.activate(_survey);
+      }
+    }
+
+    function editRoutePriorityState(activate) {
+      deactiveMode();
+      if(activate) {
+        _activeServiceMode = NavigationRoutePriorityService;
+        _activeServiceMode.activate(_survey);
+      }
     }
 
     function deactiveMode() {
@@ -75,11 +87,11 @@
 
     function _addNodes(templateNavigations) {
       var items = getCustomIDs();
-      templateNavigations.forEach(function(navigation, index) {
+      templateNavigations.forEach(function (navigation, index) {
         var options = {};
         options.id = navigation.origin;
-        if(index>1 && index<(items.length+2)){
-            options.label = items[index-2].customID;
+        if (index > 1 && index < (items.length + 2)) {
+          options.label = items[index - 2].customID;
         }
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
@@ -89,8 +101,8 @@
     }
 
     function _addEdges(templateNavigations) {
-      templateNavigations.forEach(function(navigation) {
-        navigation.routes.forEach(function(route) {
+      templateNavigations.forEach(function (navigation) {
+        navigation.routes.forEach(function (route) {
           var options = {};
           options.source = route.origin;
           options.target = route.destination;
