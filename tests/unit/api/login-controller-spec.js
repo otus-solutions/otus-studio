@@ -21,7 +21,6 @@ describe('LoginController_Suite', function () {
 
   it('controllerExistence check', function () {
     expect(ctrl).toBeDefined();
-    console.log(ctrl);
   });
 
   it('controllerMethodsExistence check', function () {
