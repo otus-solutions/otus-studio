@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('otusjs.studio.navigationBuilder.navigationInspector')
-    .service('otusjs.studio.navigationBuilder.navigationInspector.NavigationInspectorService', service);
+    .module('otusjs.studio.navigationBuilder.navigationRoutePriority')
+    .service('otusjs.studio.navigationBuilder.navigationRoutePriority.NavigationRoutePriorityService', service);
 
   service.$inject = [
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
-    'otusjs.studio.navigationBuilder.navigationInspector.DataService',
-    'otusjs.studio.navigationBuilder.navigationInspector.UiEventsService',
-    'otusjs.studio.navigationBuilder.navigationInspector.ModuleEventService'
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.DataService',
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.UiEventsService',
+    'otusjs.studio.navigationBuilder.navigationRoutePriority.ModuleEventService'
   ];
 
   function service(moduleScope, DataService, UiEventsService, ModuleEventService) {
@@ -28,14 +28,15 @@
       DataService.activate(survey);
       UiEventsService.activate();
       ModuleEventService.activate();
-      moduleScope.emit(moduleScope.NBEVENTS.INSPECTOR_MODE_ON);
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_PRIORITY_MODE_ON);
     }
 
     function deactivate() {
-      moduleScope.emit(moduleScope.NBEVENTS.INSPECTOR_MODE_OFF);
+      moduleScope.emit(moduleScope.NBEVENTS.ROUTE_PRIORITY_MODE_OFF);
       DataService.deactivate();
       ModuleEventService.deactivate();
       UiEventsService.deactivate();
     }
+
   }
 })();

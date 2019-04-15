@@ -4,6 +4,7 @@
   angular.module('otusjs.studio.navigationBuilder', [
       'otusjs.studio.navigationBuilder.routeBuilder',
       'otusjs.studio.navigationBuilder.navigationInspector',
+      'otusjs.studio.navigationBuilder.navigationRoutePriority',
       'otusjs.studio.navigationBuilder.messenger',
       'ngMaterial'
     ])
@@ -29,9 +30,14 @@
       'SHOW_MESSENGER': 'nbevents.messenger.show',
       'HIDE_MESSENGER': 'nbevents.messenger.hide',
 
+      /* Navigation Route Priority events */
+      'ROUTE_PRIORITY_MODE_ON': 'nbevents.priority.mode.on',
+      'ROUTE_PRIORITY_MODE_OFF': 'nbevents.priority.mode.off',
+
       /* Navigation Inspector events */
       'INSPECTOR_MODE_ON': 'nbevents.inspector.mode.on',
       'NAVIGATION_SELECTED': 'nbevents.inspector.navigation.selected',
+      'NAVIGATION_UNSELECTED': 'nbevents.inspector.navigation.unselected',
 
       /* Warning events */
       'ORPHANS_ENCOUNTERED': 'nbevents.warning.orphans.encountered'
@@ -49,8 +55,14 @@
       },
       'NAVIGATION_INSPECTOR': {
         'SELECT_NAVIGATION': {
-          header: 'Inpecionar navegação',
+          header: 'Inspecionar navegação',
           content: 'Escolha o item que você deseja inspecionar.'
+        }
+      },
+      'NAVIGATION_PRIORITY': {
+        'SELECT_NAVIGATION': {
+          header: 'Priorizar navegação',
+          content: 'Escolha o item que você deseja priorizar.'
         }
       }
     })

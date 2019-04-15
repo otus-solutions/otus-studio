@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -69,10 +69,17 @@
     this.connectOut = connectOut;
     this.updatePosition = updatePosition;
     this.isMyDefaultNext = isMyDefaultNext;
+    this.orderNavigationByPriorityInMap = orderNavigationByPriorityInMap;
 
+    //TODO: OS-2 correction for bug of duplicated node caused by multiple calls on this function - line 77 & 91
     function connectIn(newNeighbor, isDefaultConnection) {
-      this.factor = newNeighbor.outNeighbors.length;
-      this.inNeighbors.push(newNeighbor);
+      var isFound = this.inNeighbors.filter(function (neighbor) {
+        return neighbor.id == newNeighbor.id
+      });
+
+      if (isFound.length == 0) {
+        this.inNeighbors.push(newNeighbor);
+      }
       if (!this.isDefault) {
         this.isDefault = newNeighbor.isDefault && isDefaultConnection;
       }
@@ -80,7 +87,13 @@
     }
 
     function connectOut(newNeighbor, isDefaultConnection) {
-      this.outNeighbors.push(newNeighbor);
+      var isFound = this.outNeighbors.filter(function (neighbor) {
+        return neighbor.id == newNeighbor.id
+      });
+
+      if (isFound.length == 0) {
+        this.outNeighbors.push(newNeighbor);
+      }
 
       if (isDefaultConnection) {
         this.defaultNextNode = newNeighbor;
@@ -93,7 +106,7 @@
       var defaultRouteCount = 0;
       var myDefaultParentY;
 
-      this.inNeighbors.forEach(function(neighbor) {
+      this.inNeighbors.forEach(function (neighbor) {
         if (neighbor.isMyDefaultNext(this)) {
           if (!myDefaultParentY) {
             myDefaultParentY = neighbor.y;
@@ -116,6 +129,13 @@
 
     function isMyDefaultNext(node) {
       return this.defaultNextNode && this.defaultNextNode.id === node.id;
+    }
+
+    function orderNavigationByPriorityInMap(oldPosition, newPosition) {
+      var aux = this.outNeighbors[newPosition];
+      this.outNeighbors[newPosition] = this.outNeighbors[oldPosition];
+      this.outNeighbors[oldPosition] = aux;
+      return this.outNeighbors;
     }
 
     function _calculateInitialY() {
