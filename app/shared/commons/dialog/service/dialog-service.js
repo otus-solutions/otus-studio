@@ -10,7 +10,7 @@
     var self = this;
 
     self.show = show;
-1
+
     function _buildCustomDialog(data) {
       if (data.url || data.ctrl){
         self.data.url = data.url ? data.url : 'app/shared/commons/dialog/component/dialog-template.html';

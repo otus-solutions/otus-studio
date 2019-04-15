@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.studio.navigationBuilder.navigationRoutePriority')
-    .controller('dialogController', DialogController);
+    .controller('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogController', DialogController);
 
   DialogController.$inject = [
     'locals',
