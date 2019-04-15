@@ -1,4 +1,4 @@
-describe('dialogController', function() {
+describe('dialogController', function () {
 
   var Mock = {};
   var Injections;
@@ -10,20 +10,20 @@ describe('dialogController', function() {
     mockData();
 
     angular.mock.module(function ($provide) {
-      $provide.value('WorkspaceService',Mock.workspace);
+      $provide.value('WorkspaceService', Mock.workspace);
       $provide.value('locals', Mock.node);
     });
 
-    angular.mock.inject(function (_$injector_,_$controller_) {
+    angular.mock.inject(function (_$injector_, _$controller_) {
 
-      Injections ={
+      Injections = {
         $mdDialog: _$injector_.get('$mdDialog'),
         locals: _$injector_.get('locals'),
         $timeout: _$injector_.get('$timeout'),
         WorkspaceService: _$injector_.get('WorkspaceService')
       };
 
-      ctrl = _$controller_('dialogController',Injections);
+      ctrl = _$controller_('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogController', Injections);
 
     });
 
@@ -47,28 +47,28 @@ describe('dialogController', function() {
     expect(ctrl.modificationClass).toBeDefined();
   });
 
-  it('up method should instantiate dialogController', function() {
+  it('up method should instantiate dialogController', function () {
 
     ctrl.up(Mock.node.node.outNeighbors[0].index);
     expect(ctrl.up).toHaveBeenCalledTimes(1);
   });
 
-  it('down method should instantiate dialogController', function() {
+  it('down method should instantiate dialogController', function () {
     ctrl.down(Mock.node.node.outNeighbors[0].index);
     expect(ctrl.down).toHaveBeenCalledTimes(1);
   });
 
-  it('cancel method should instantiate dialogController', function() {
+  it('cancel method should instantiate dialogController', function () {
     ctrl.cancel();
     expect(ctrl.cancel).toHaveBeenCalledTimes(1);
   });
 
-  it('confirm method should instantiate dialogController', function() {
+  it('confirm method should instantiate dialogController', function () {
     ctrl.confirm();
     expect(ctrl.confirm).toHaveBeenCalledTimes(1);
   });
 
-  it('modificationClass method should instantiate dialogController', function() {
+  it('modificationClass method should instantiate dialogController', function () {
     expect(ctrl.modificationClass(-Mock.node.node.outNeighbors[0].index)).toEqual('md-whiteframe-5dp');
     expect(ctrl.modificationClass).toHaveBeenCalledTimes(1);
   });
@@ -76,11 +76,11 @@ describe('dialogController', function() {
 
   function mockData() {
     Mock.routeItem = {
-      origin :'FORM2',
-      listRoutes : function () {
+      origin: 'FORM2',
+      listRoutes: function () {
         return [Mock.route];
       },
-      setRoutes : function () {
+      setRoutes: function () {
       }
     };
 
@@ -92,16 +92,16 @@ describe('dialogController', function() {
     Mock.survey.NavigationManager.getNavigationList = spy;
 
     Mock.workspace = {
-      getSurvey : function () {
+      getSurvey: function () {
         return Mock.survey;
       },
-      saveWork : function () {
+      saveWork: function () {
       }
     };
 
     Mock.route = {
-      Route :{
-        origin :'FORM2'
+      Route: {
+        origin: 'FORM2'
       }
     };
 
@@ -115,7 +115,7 @@ describe('dialogController', function() {
             index: 1
           }
         ],
-        orderNavigationByPriorityInMap : function ( index, indexOld ) {
+        orderNavigationByPriorityInMap: function (index, indexOld) {
           return index;
         }
       }
