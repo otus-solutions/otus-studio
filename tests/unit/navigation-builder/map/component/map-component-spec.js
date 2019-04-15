@@ -1,81 +1,59 @@
-xdescribe('otusNavigationMap', function() {
+describe('otusNavigationMap', function () {
 
-  var Mock = {}
-  var component = {};
-  var $compile = {};
-  var injections = {};
-  var bindings = {};
+  var UNIT_NAME = 'otusNavigationMapCtrl';
+  var Mock = {};
+  var Injections = {};
+  var controller = {};
 
-  beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+  beforeEach(function () {
+    mockInjections();
+    angular.mock.module('studio', function ($provide) {
+      $provide.value('otusjs.studio.navigationBuilder.NavigationBuilderService', Mock.NavigationBuilderService);
+    });
 
-    inject(function(_$componentController_, $rootScope, _$injector_,
-      _$compile_) {
-      $compile = _$compile_;
-      injections.$scope = mockScope($rootScope);
-      injections.NBEVENTS = mockModuleConstants(_$injector_);
-      injections.NavigationBuilderService =
-        mockNavigationBuilderService(_$injector_);
-      injections.MessageService = mockMessageService(_$injector_);
+    inject(function (_$injector_, _$controller_) {
+      Injections = {
+        "NavigationBuilderScopeService": _$injector_.get('otusjs.studio.navigationBuilder.NavigationBuilderScopeService'),
+        "GraphLayerService": _$injector_.get('otusjs.studio.navigationBuilder.GraphLayerService'),
+      };
 
-      component = _$componentController_('otusNavigationMap',
-        injections, bindings);
+      controller = _$controller_(UNIT_NAME, Injections);
     });
   });
 
-  describe('onInit method', function() {
+  describe('editRoutePriority method', function () {
 
-    it('should create a routeMenuController within component', function() {
-      component.$onInit();
-
-      expect(component.routeMenuCtrl).toBeDefined();
+    beforeEach(function () {
+      controller.$onInit();
+      spyOn(Mock.NavigationBuilderService, "editRoutePriorityState").and.callThrough();
     });
 
-    it('should create a reference to NBEVENTS into $scope', function() {
-      component.$onInit();
+    it('should to be definition', function () {
 
-      expect(Mock.scope.events).toBeDefined();
+      expect(controller.toolsCtrl.editRoutePriority).toBeDefined();
     });
 
-    it('should create a listener to module events', function() {
-      spyOn(Mock.scope, '$on');
+    it('should definition properties with values expected', function () {
+      controller.toolsCtrl.editRoutePriority();
 
-      component.$onInit();
-
-      expect(Mock.scope.$on).toHaveBeenCalledTimes(5);
+      expect(controller.toolsCtrl.modificationButtonRoutePriority).toEqual(true);
+      expect(controller.toolsCtrl.modificationButtonInspect).toEqual(false);
     });
 
-    describe('when NBEVENTS.MAP_CONTAINER_READY is fired', function() {
+    it('should call method editRoutePriorityState', function () {
+      controller.toolsCtrl.editRoutePriority();
 
-      // TODO: but how?
-      xit('should setup map view', function() {});
-
+      expect(Mock.NavigationBuilderService.editRoutePriorityState).toHaveBeenCalledTimes(1);
     });
 
   });
 
-  function mockScope($rootScope) {
-    Mock.scope = $rootScope.$new();
-    Mock.scope.$parent = $rootScope.$new();
-    Mock.scope.$parent.$parent = $rootScope.$new();
-    return Mock.scope;
-  }
-
-  function mockNavigationBuilderService($injector) {
-    Mock.NavigationBuilderService = $injector.get(
-      'otusjs.studio.navigationBuilder.NavigationBuilderService');
-    return Mock.NavigationBuilderService;
-  }
-
-  function mockMessageService($injector) {
-    Mock.MessageService = $injector.get(
-      'otusjs.studio.navigationBuilder.MessageService');
-    return Mock.NavigationDataDialogService;
-  }
-
-  function mockModuleConstants($injector) {
-    Mock.NBEVENTS = $injector.get('NBEVENTS');
-    return Mock.NBEVENTS;
+  function mockInjections() {
+    Mock.NavigationBuilderService = {
+      editRoutePriorityState: function () {
+        return Promise.resolve();
+      }
+    }
   }
 
 });

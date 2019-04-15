@@ -1,6 +1,27 @@
 <md-content layout="row" layout-padding layout-align="space-between center" flex>
   <md-content ng-transclude="headerSlot" flex></md-content>
-  <otus:button click="$ctrl.changeState()" tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"/>
+  <otus-button click="$ctrl.changeState()" ng-if="$ctrl.isToShow"  tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"></otus-button>
+  <otus-button click="$ctrl.changeState()" ng-if="!$ctrl.isToShow"  tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"></otus-button>
+
+  <md-menu>
+  <md-button class="md-icon-button" tooltip="Opções" icon-button="more_vert"  ng-click="$mdOpenMenu()">
+    <md-icon md-menu-origin>more_vert</md-icon>
+  </md-button>
+  <md-menu-content width="4">
+    <md-menu-item>
+      <md-button ng-click="$ctrl.moveSurveyItem()" id="test">
+        <md-icon>shuffle</md-icon>
+        Mover questão
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button ng-click="$ctrl.deleteSurveyItem()">
+        <md-icon>delete</md-icon>
+        Excluir
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+  </md-menu>
 </md-content>
 <md-content ng-if="$ctrl.isToShow" layout="column" flex>
   <md-content ng-transclude="bodySlot"></md-content>

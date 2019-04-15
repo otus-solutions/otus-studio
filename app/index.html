@@ -40,6 +40,7 @@
     <!-- ************************************* Angular Material ************************************* -->
     <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
     <script src="node_modules/angular-material/angular-material.min.js"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 
     <!-- ************************************* Lokijs ************************************* -->
     <script src="node_modules/lokijs/build/lokijs.min.js"></script>
@@ -67,6 +68,11 @@
     <!-- ************************************* UI Components ************************************* -->
     <script src="app/shared/ui-components/ui-components-module.js"></script>
     <script src="app/shared/ui-components/item-container/item-container-component.js"></script>
+
+    <!-- ************************************* Commons ************************************* -->
+    <script src="app/shared/commons/studio.commons-module.js"></script>
+    <script src="app/shared/commons/dialog/service/dialog-service.js"></script>
+    <script src="app/shared/commons/dialog/component/dialog-controller.js"></script>
 
     <!-- ************************************** OtusJS ************************************** -->
     <script src="node_modules/otus-model-js/dist/otus-model.js"></script>
@@ -153,6 +159,7 @@
     <script src="app/editor/core/event/remove-route-event-factory.js"></script>
     <script src="app/editor/core/event/remove-rule-event-factory.js"></script>
     <script src="app/editor/core/event/remove-survey-item-event-factory.js"></script>
+    <script src="app/editor/core/event/move-survey-item-event-factory.js"></script>
     <script src="app/editor/core/event/update-filling-rules-event-factory.js"></script>
     <script src="app/editor/core/event/update-option-item-event-factory.js"></script>
     <script src="app/editor/core/event/update-question-event-factory.js"></script>
@@ -378,6 +385,7 @@
 
     <!-- WIDGET.QUESTION-EDITOR -->
     <script src="app/editor/ui/survey-item-editor/survey-item-editor-component.js"></script>
+    <script src="app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-controller.js"></script>
 
     <!-- WIDGET.QUESTION-EDITOR.SETTINGS -->
     <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-directive.js"></script>
@@ -416,47 +424,55 @@
     <!-- ************************************** Studio Preview ************************************** -->
     <script src="app/preview/preview-module.js"></script>
 
-    <!-- NAVIGATION-BUILDER -->
-    <script src="app/navigation-builder/navigation-builder-module.js"></script>
-    <!-- API -->
-    <script src="app/navigation-builder/api/navigation-builder-service.js"></script>
-    <!-- CORE -->
-    <script src="app/navigation-builder/core/navigation-builder-scope-service.js"></script>
-    <!-- INSPECTOR -->
-    <script src="app/navigation-builder/inspector/navigation-inspector-module.js"></script>
-    <script src="app/navigation-builder/inspector/api/navigation-inspector-service.js"></script>
-    <script src="app/navigation-builder/inspector/core/data-service.js"></script>
-    <script src="app/navigation-builder/inspector/core/module-event-service.js"></script>
-    <script src="app/navigation-builder/inspector/core/ui-events-service.js"></script>
-    <!-- MAP -->
-    <script src="app/navigation-builder/map/component/map-component.js"></script>
-    <script src="app/navigation-builder/map/graph-layer/graph-layer-event-service.js"></script>
-    <script src="app/navigation-builder/map/graph-layer/graph-layer-factory.js"></script>
-    <script src="app/navigation-builder/map/graph-layer/graph-layer-service.js"></script>
-    <script src="app/navigation-builder/map/model/edge-factory.js"></script>
-    <script src="app/navigation-builder/map/model/map-factory.js"></script>
-    <script src="app/navigation-builder/map/model/node-factory.js"></script>
-    <!-- MESSENGER -->
-    <script src="app/navigation-builder/messenger/messenger-module.js"></script>
-    <script src="app/navigation-builder/messenger/dialog/text/text-dialog-service.js"></script>
-    <script src="app/navigation-builder/messenger/dialog/text/text-panel-service.js"></script>
-    <!-- INSTRUCTOR -->
-    <script src="app/navigation-builder/messenger/instructor/instructor-component.js"></script>
-    <script src="app/navigation-builder/messenger/instructor/instructor-service.js"></script>
-    <!-- ROUTE -->
-    <script src="app/navigation-builder/route/route-builder-module.js"></script>
-    <script src="app/navigation-builder/route/api/route-builder-service.js"></script>
-    <script src="app/navigation-builder/route/core/data-service.js"></script>
-    <script src="app/navigation-builder/route/core/message-service.js"></script>
-    <script src="app/navigation-builder/route/core/module-event-service.js"></script>
-    <script src="app/navigation-builder/route/core/rule-answer-builder-service.js"></script>
-    <script src="app/navigation-builder/route/core/rule-operator-builder-service.js"></script>
-    <script src="app/navigation-builder/route/core/rule-when-builder-service.js"></script>
-    <script src="app/navigation-builder/route/core/ui-events-service.js"></script>
-    <script src="app/navigation-builder/route/dialog/route-dialog-service.js"></script>
-    <script src="app/navigation-builder/route/editor/route-editor-component.js"></script>
-    <script src="app/navigation-builder/route/editor/rule-creator-component.js"></script>
-    <script src="app/navigation-builder/route/editor/rule-editor-component.js"></script>
+<!-- NAVIGATION-BUILDER -->
+<script src="app/navigation-builder/navigation-builder-module.js"></script>
+<!-- API -->
+<script src="app/navigation-builder/api/navigation-builder-service.js"></script>
+<!-- CORE -->
+<script src="app/navigation-builder/core/navigation-builder-scope-service.js"></script>
+<!-- INSPECTOR -->
+<script src="app/navigation-builder/inspector/navigation-inspector-module.js"></script>
+<script src="app/navigation-builder/inspector/api/navigation-inspector-service.js"></script>
+<script src="app/navigation-builder/inspector/core/data-service.js"></script>
+<script src="app/navigation-builder/inspector/core/module-event-service.js"></script>
+<script src="app/navigation-builder/inspector/core/ui-events-service.js"></script>
+<!-- ROUTE PRIORITY -->
+<script src="app/navigation-builder/route-priority/navigation-route-priority-module.js"></script>
+<script src="app/navigation-builder/route-priority/api/navigation-route-priority-service.js"></script>
+<script src="app/navigation-builder/route-priority/core/data-service.js"></script>
+<script src="app/navigation-builder/route-priority/core/module-event-service.js"></script>
+<script src="app/navigation-builder/route-priority/core/ui-events-service.js"></script>
+<script src="app/navigation-builder/route-priority/dialog/route-priority-dialog-service.js"></script>
+<script src="app/navigation-builder/route-priority/dialog/route-priority-dialog-controller.js"></script>
+<!-- MAP -->
+<script src="app/navigation-builder/map/component/map-component.js"></script>
+<script src="app/navigation-builder/map/graph-layer/graph-layer-event-service.js"></script>
+<script src="app/navigation-builder/map/graph-layer/graph-layer-factory.js"></script>
+<script src="app/navigation-builder/map/graph-layer/graph-layer-service.js"></script>
+<script src="app/navigation-builder/map/model/edge-factory.js"></script>
+<script src="app/navigation-builder/map/model/map-factory.js"></script>
+<script src="app/navigation-builder/map/model/node-factory.js"></script>
+<!-- MESSENGER -->
+<script src="app/navigation-builder/messenger/messenger-module.js"></script>
+<script src="app/navigation-builder/messenger/dialog/text/text-dialog-service.js"></script>
+<script src="app/navigation-builder/messenger/dialog/text/text-panel-service.js"></script>
+<!-- INSTRUCTOR -->
+<script src="app/navigation-builder/messenger/instructor/instructor-component.js"></script>
+<script src="app/navigation-builder/messenger/instructor/instructor-service.js"></script>
+<!-- ROUTE -->
+<script src="app/navigation-builder/route/route-builder-module.js"></script>
+<script src="app/navigation-builder/route/api/route-builder-service.js"></script>
+<script src="app/navigation-builder/route/core/data-service.js"></script>
+<script src="app/navigation-builder/route/core/message-service.js"></script>
+<script src="app/navigation-builder/route/core/module-event-service.js"></script>
+<script src="app/navigation-builder/route/core/rule-answer-builder-service.js"></script>
+<script src="app/navigation-builder/route/core/rule-operator-builder-service.js"></script>
+<script src="app/navigation-builder/route/core/rule-when-builder-service.js"></script>
+<script src="app/navigation-builder/route/core/ui-events-service.js"></script>
+<script src="app/navigation-builder/route/dialog/route-dialog-service.js"></script>
+<script src="app/navigation-builder/route/editor/route-editor-component.js"></script>
+<script src="app/navigation-builder/route/editor/rule-creator-component.js"></script>
+<script src="app/navigation-builder/route/editor/rule-editor-component.js"></script>
 
     <!-- OTUS-SURVEY-PREVIEW -->
     <script src="app/preview/otus-survey-preview-generator-directive.js"></script>

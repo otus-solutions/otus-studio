@@ -23,7 +23,7 @@
     self.$onInit = function () {
       PageAnchorService.setUp(self.template.SurveyItemManager);
       $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
-    }
+    };
 
     self.$onDestroy = function() {
       WorkspaceService.closeWork();

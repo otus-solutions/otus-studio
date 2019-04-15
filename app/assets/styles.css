@@ -114,7 +114,8 @@ Page Anchor.css
 }
 .item-id-frame {
   background-color: #FAFAFA;
-  color: #1976D2
+  color: #1976D2;
+  cursor: pointer;
 }
 
 .extraction-value-frame {

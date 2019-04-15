@@ -1,45 +1,45 @@
-describe('RuleWhenBuilderService', function() {
+describe('RuleWhenBuilderService', function () {
 
   var Mock = {};
   var service = {};
 
-  beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+  beforeEach(function () {
+    angular.mock.module('studio');
 
     mockQuestionItem();
 
-    inject(function(_$injector_) {
+    inject(function (_$injector_) {
       service = _$injector_.get(
         'otusjs.studio.navigationBuilder.routeBuilder.RuleWhenBuilderService'
       );
     });
   });
 
-  describe('build method', function() {
+  describe('build method', function () {
 
     var builded = {};
 
-    beforeEach(function() {
+    beforeEach(function () {
       builded = service.build(Mock.questionItem);
     });
 
-    it('should return an object with type property', function() {
+    it('should return an object with type property', function () {
       expect(builded.type).toBeDefined();
     });
 
-    it('should return an object with icon property', function() {
+    it('should return an object with icon property', function () {
       expect(builded.icon).toBeDefined();
     });
 
-    it('should return an object with templateID property', function() {
+    it('should return an object with templateID property', function () {
       expect(builded.templateID).toBeDefined();
     });
 
-    it('should return an object with label property', function() {
+    it('should return an object with label property', function () {
       expect(builded.label).toBeDefined();
     });
 
-    it('should return an object with label property', function() {
+    it('should return an object with label property', function () {
       expect(builded.label).toBeDefined();
     });
 
@@ -179,6 +179,10 @@ describe('RuleWhenBuilderService', function() {
         }
       }
     };
+  };
+
+  function name(params) {
+
   }
 
 });
