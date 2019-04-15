@@ -21,7 +21,7 @@
       self.node = node;
 
       return $mdDialog.show({
-        controller: 'dialogController',
+        controller: 'otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogController',
         locals: { node: self.node },
         templateUrl: 'app/navigation-builder/route-priority/dialog/route-priority-dialog-template.html',
         parent: angular.element(document.body),
