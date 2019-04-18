@@ -1,72 +1,101 @@
-describe('CrossSessionDatabaseService', function () {
-  var Mock = {};
+describe('CrossSessionDatabaseService Suite', function () {
+
   var service;
+  var Mock = {};
+  var Injections = [];
 
   beforeEach(function () {
     angular.mock.module('studio');
 
-    mockTemplate();
-    mockSession();
-    mockStoreEntry();
-    mockStore();
-
     inject(function (_$injector_) {
-      service = _$injector_.get('CrossSessionDatabaseService', {
-        '$indexedDB': mockIndexedDB(_$injector_)
-      });
-    });
+
+      mockTemplate();
+      mockTemplateString();
+      mockSession();
+      mockStoreEntry();
+      mockStore();
+
+      Injections.$q = _$injector_.get('$q');
+      Injections.$indexedDB = _$injector_.get('$indexedDB');
+
+      service = _$injector_.get('CrossSessionDatabaseService', Injections);
+    })
   });
 
-  describe('saveSurveyTemplateRevision method', function () {
-
-    it('should call $indexedDB.openStore with name "survey_template"', function () {
-      spyOn(Mock.$indexedDB, 'openStore');
-
-      service.saveSurveyTemplateRevision(jasmine.any(Object),
-        jasmine.any(Object));
-
-      expect(Mock.$indexedDB.openStore).toHaveBeenCalledWith(
-        'survey_template', jasmine.any(Function));
-    });
-
-    it('should call store.upsert', function () {
-      spyOn(Mock.$indexedDB, 'openStore').and.callFake(function (
-        storeName, callback) {
-        callback(Mock.store);
-      });
-
-      service.saveSurveyTemplateRevision(Mock.template, jasmine.any(Object));
-
-      expect(Mock.store.upsert).toHaveBeenCalledWith(jasmine.any(Object));
-    });
-
-    it('should call store.upsert with correct entry format', function () {
-      spyOn(Mock.$indexedDB, 'openStore').and.callFake(function (
-        storeName, callback) {
-        callback(Mock.store);
-      });
-
-      service.saveSurveyTemplateRevision(Mock.template, Mock.session);
-
-      expect(Mock.store.upsert).toHaveBeenCalledWith(Mock.storeEntry);
-    });
-
+  it('serviceExistence check', function () {
+    expect(service).toBeDefined();
   });
 
-  describe('getTemplateRevisionByContributor method', function () {
-
-    xit("should return a correct template", function () {
-      var USER = 'user';
-      var templates = [];
-      templates = service.getAllTemplatesRevision(USER);
-      expect(templates).toBeGreaterThan(0);
-    });
+  it('serviceMethodExistence check', function () {
+    expect(service.saveSurveyTemplateRevision).toBeDefined();
+    expect(service.getAllSurveyTemplates).toBeDefined();
+    expect(service.getAllSurveyTemplatesByContributor).toBeDefined();
+    expect(service.deleteSurveyTemplate).toBeDefined();
+    expect(service.insertSurveyTemplate).toBeDefined();
+    expect(service.findSurveyTemplateByOID).toBeDefined();
   });
 
-  function mockIndexedDB($injector) {
-    Mock.$indexedDB = $injector.get('$indexedDB');
-    return Mock.$indexedDB;
-  }
+  it('saveSurveyTemplateRevision_method_should_instantiate_CrossSessionDatabaseService_call_store.upsert_with_correct_entry_format', function () {
+    spyOn(Injections.$indexedDB, 'openStore').and.callFake(function (
+      storeName, callback) {
+      callback(Mock.store);
+    });
+
+    service.saveSurveyTemplateRevision(Mock.template, Mock.session);
+
+    expect(Injections.$indexedDB.openStore).toHaveBeenCalledTimes(1);
+    expect(Mock.store.upsert).toHaveBeenCalledTimes(1);
+    expect(Mock.store.upsert).toHaveBeenCalledWith(Mock.storeEntry);
+  });
+
+  it('insertSurveyTemplate_method_should_instantiate_CrossSessionDatabaseService_call_store.insert_with_correct_entry_format', function () {
+    spyOn(Injections.$indexedDB, 'openStore').and.callFake(function (
+      storeName, callback) {
+      callback(Mock.store);
+    });
+
+    service.insertSurveyTemplate(Mock.templateString, Mock.session);
+
+    expect(Injections.$indexedDB.openStore).toHaveBeenCalledTimes(1);
+    expect(Mock.store.insert).toHaveBeenCalledTimes(1);
+    expect(Mock.store.insert).toHaveBeenCalledWith(Mock.storeEntryTwo);
+  });
+
+  it('getAllSurveyTemplates_method_should_instantiate_CrossSessionDatabaseService_call_store.getAll', function () {
+    spyOn(Injections.$indexedDB, 'openStore').and.callFake(function (
+      storeName, callback) {
+      callback(Mock.store);
+    });
+
+    service.getAllSurveyTemplates();
+
+    expect(Injections.$indexedDB.openStore).toHaveBeenCalledTimes(1);
+    expect(Mock.store.getAll).toHaveBeenCalledTimes(1);
+  });
+
+  it('deleteSurveyTemplate_method_should_instantiate_CrossSessionDatabaseService_call_store.delete', function () {
+    spyOn(Injections.$indexedDB, 'openStore').and.callFake(function (
+      storeName, callback) {
+      callback(Mock.store);
+    });
+
+    service.deleteSurveyTemplate();
+
+    expect(Injections.$indexedDB.openStore).toHaveBeenCalledTimes(1);
+    expect(Mock.store.delete).toHaveBeenCalledTimes(1);
+  });
+
+  it('findSurveyTemplateByOID_method_should_instantiate_CrossSessionDatabaseService_call_store.find', function () {
+    spyOn(Injections.$indexedDB, 'openStore').and.callFake(function (
+      storeName, callback) {
+      callback(Mock.store);
+    });
+
+    service.findSurveyTemplateByOID();
+
+    expect(Injections.$indexedDB.openStore).toHaveBeenCalledTimes(1);
+    expect(Mock.store.find).toHaveBeenCalledTimes(1);
+  });
 
   function mockTemplate() {
     Mock.template = {
@@ -77,18 +106,63 @@ describe('CrossSessionDatabaseService', function () {
     };
   }
 
+  function mockTemplateString() {
+    Mock.templateString ='{"oid": "template.oid","toJSON": ""}';
+  }
+
   function mockSession() {
     Mock.session = {
       owner: 'session.owner'
     };
   }
 
-  function mockStore($injector) {
+  function mockStore() {
     Mock.store = {
-      upsert: function (entry) { }
+      upsert: function (entry) { },
+      insert: function (entry) { },
+      getAll: function () { },
+      eachWhere: function (entry) { },
+      delete: function (entry) { },
+      find: function () { }
     };
 
     spyOn(Mock.store, 'upsert').and.callFake(function (storeName, callback) {
+      return {
+        then: function () { }
+      };
+    });
+
+    spyOn(Mock.store, 'insert').and.callFake(function (storeName, callback) {
+      return {
+        then: function () {
+          return Promise.resolve()
+        }
+      };
+    });
+
+    spyOn(Mock.store, 'getAll').and.callFake(function (storeName, callback) {
+      return {
+        then: function () {
+          return Promise.resolve()
+        }
+      };
+    });
+
+     spyOn(Mock.store, 'eachWhere').and.callFake(function (storeName, callback) {
+      return {
+        then: function () {
+          return Promise.resolve()
+        }
+      };
+    });
+
+     spyOn(Mock.store, 'delete').and.callFake(function (storeName, callback) {
+      return {
+        then: function () { }
+      };
+    });
+
+      spyOn(Mock.store, 'find').and.callFake(function (storeName, callback) {
       return {
         then: function () { }
       };
@@ -101,6 +175,11 @@ describe('CrossSessionDatabaseService', function () {
       contributor: 'session.owner',
       template: Mock.template.toJSON()
     };
-  }
 
+    Mock.storeEntryTwo = {
+      template_oid: 'template.oid',
+      contributor: 'session.owner',
+      template: JSON.parse(Mock.templateString)
+    };
+  }
 });

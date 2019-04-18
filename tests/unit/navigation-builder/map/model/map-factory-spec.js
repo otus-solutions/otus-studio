@@ -3,7 +3,7 @@ describe('MapFactory', function() {
   var factory = {};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.studio.navigationBuilder');
+    angular.mock.module('studio');
 
     inject(function(_$injector_) {
       factory = _$injector_.get(

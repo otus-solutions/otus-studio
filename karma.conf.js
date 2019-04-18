@@ -12,7 +12,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'browserify'],
+    frameworks: ['browserify', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -27,6 +27,7 @@ module.exports = function(config) {
       'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
       NODE_MODULES_ROOT_PATH +
       'angular-material/angular-material.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-sanitize/angular-sanitize.min.js',
       DEPENDENCIES_ROOT_PATH +
       'angular-indexed-db/angular-indexed-db.min.js',
       NODE_MODULES_ROOT_PATH +
@@ -96,8 +97,14 @@ module.exports = function(config) {
       'karma-browserify'
     ],
     coverageReporter: {
-      type: 'lcov',
-      dir: 'target/test-coverage/'
+      reporters: [{
+        type: 'html',
+        dir: 'target/test-coverage/'
+      }, {
+        type: 'lcov',
+        dir: 'target/test-coverage/',
+        subdir: 'report-lcov'
+      }]
     },
     htmlReporter: {
       outputFile: 'target/unit-result.report.html',

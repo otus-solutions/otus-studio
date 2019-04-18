@@ -5,26 +5,36 @@
     .module('editor.ui')
     .component('otusSurveyItemEditor', {
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-editor.html',
-      controller: Controller,
+      controller: 'otusSurveyItemEditorCtrl as $ctrl',
       bindings: {
-        item: '<'
+        item: '<',
+        position: '<'
       }
-    });
+    }).controller('otusSurveyItemEditorCtrl', Controller);
 
-  Controller.$inject = [
-    'RemoveSurveyItemEventFactory'
-  ];
+  Controller.$inject = ['$scope']
 
-  function Controller(RemoveSurveyItemEventFactory) {
+  function Controller($scope) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
     // public methods
     self.getItem = getItem;
-    self.deleteSurveyItem = deleteSurveyItem;
     self.getQuestionId = getQuestionId;
+    self.getStyle = getStyle;
 
-    function onInit() {}
+    function onInit() {
+      $scope.$on('surveyItemSelected', setIndex);
+      $scope.$on('clearSurveyItemSelected', _clearIndex);
+    }
+
+    function setIndex($event, index) {
+      self.index = index;
+    }
+
+    function _clearIndex($event) {
+      delete self.index;
+    }
 
     function getItem() {
       return self.item;
@@ -34,9 +44,13 @@
       return self.getItem().templateID;
     }
 
-    function deleteSurveyItem() {
-      RemoveSurveyItemEventFactory.create().execute(self.item);
+    function getStyle(position) {
+      if(self.index == position){
+        return {"background-color":"#E88024"}
+      }
+      return {}
     }
+
   }
 
 }());

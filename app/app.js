@@ -14,6 +14,7 @@
       'surveyTemplates',
       /* Otus platform modules */
       'ui.components',
+      'studio.commons',
       'utils',
       /* otusjs.player */
       'otusjs.player.core',

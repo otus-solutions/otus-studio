@@ -1,6 +1,6 @@
 (function() {
 
     angular
-        .module('ui.components', []);
+        .module('ui.components', ['ngSanitize']);
 
 }());
