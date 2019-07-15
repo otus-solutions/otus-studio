@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   angular
     .module('studio', [
@@ -8,6 +8,7 @@
       'studio.dashboard',
       'studio.authenticator',
       'editor',
+      'resources',
       'otusjs',
       'preview',
       'otusjs.studio.navigationBuilder',
