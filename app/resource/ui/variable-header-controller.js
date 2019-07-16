@@ -13,7 +13,7 @@
     var self = this;
     self.disabled = true;
     self.newVariable = {
-      currentWave: true,
+      lastSending: true,
       wave: -1,
       allQuestions: true,
       questions: [],
@@ -26,7 +26,6 @@
     /* Public methods */
     self.$onInit = onInit;
     self.isCurrentWave = isCurrentWave;
-    self.isAllQuestions = isAllQuestions;
 
     function onInit() {
       isCurrentWave();
@@ -34,11 +33,7 @@
     }
 
     function isCurrentWave() {
-      return self.newVariable.currentWave ? true : false
-    }
-
-    function isAllQuestions() {
-      return self.newVariable.allQuestions ? true : false
+      return self.newVariable.lastSending ? true : false
     }
 
   }

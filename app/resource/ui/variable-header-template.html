@@ -2,34 +2,32 @@
   <md-card-title>
     <md-card-title-text>
       <span class="md-headline">Informações auxiliares</span>
-      <span class="md-subhead">Adição de informações auxiliares apresentadas durante o preenchimento</span>
+      <span class="md-subhead">Aqui você pode adicionar uma nova informação auxiliar que será apresentada durante o
+        preenchimento</span>
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
     <md-card md-theme-watch>
       <md-card-content>
         <div layout="column">
-          <div layout="row" layout-align="end center">
-            <md-button class="md-icon-button md-primary" ng-click="$ctrl.updateSurveyGroups()">
-              <md-tooltip md-direction="left">
-                Atualizar grupos
-              </md-tooltip>
-              <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
-            </md-button>
-          </div>
           <div layout="column">
-            <div layout="column">
-              <md-checkbox name="currentWave" ng-model="$ctrl.newVariable.currentWave" required>
-                Variável pertence a onda atual
-              </md-checkbox>
+            <div layout="row" layout-align="start center">
+              <p class="md-subhead">A nova variável é do último envio?</p>
+              <div class="md-padding"></div>
+              <md-radio-group ng-model="$ctrl.newVariable.lastSending" layout="row">
+                <md-radio-button ng-value="true">Sim</md-radio-button>
+                <md-radio-button ng-value="false">Não</md-radio-button>
+              </md-radio-group>
+              <div class="md-padding"></div>
               <md-autocomplete flex="25" ng-if="!$ctrl.isCurrentWave()" ng-class="$ctrl.autoCompleteClass"
                 md-selected-item="$ctrl.selectedParticipant" md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)"
                 md-search-text="$ctrl.inputedText" md-items="participant in $ctrl.querySearch($ctrl.inputedText)"
-                md-min-length="1" placeholder="Informe a onda correspondente" md-menu-class="autocomplete-custom-participant-template"
+                md-min-length="1" placeholder="Informe o envio correspondente" md-menu-class="autocomplete-custom-participant-template"
                 action="$ctrl.showParticipants">
               </md-autocomplete>
             </div>
           </div>
+          <span class="md-subhead">Preencha as informações abaixo relacionadas a nova variável:</span>
           <div class="md-padding"></div>
           <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
             <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
@@ -52,6 +50,10 @@
           </section>
         </div>
       </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-raised md-warn">Cancelar</md-button>
+        <md-button class="md-raised md-primary">Salvar</md-button>
+      </md-card-actions>
     </md-card>
   </md-card-content>
   <md-card-title>
