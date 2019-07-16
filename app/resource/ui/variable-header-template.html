@@ -1,109 +1,62 @@
 <md-card md-theme-watch>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-headline">Informações Auxiliares</span>
-      <span class="md-subhead">Adição e edição de informações auxiliares apresentadas durante o preenchimento</span>
+      <span class="md-headline">Informações auxiliares</span>
+      <span class="md-subhead">Adição de informações auxiliares apresentadas durante o preenchimento</span>
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
     <md-card md-theme-watch>
       <md-card-content>
         <div layout="column">
-          <div layout="row">
-            <md-checkbox name="tos" ng-model="project.tos" required>
-              Variável pertence a onda atual
-            </md-checkbox>
-            <md-checkbox name="tos" ng-model="project.tos" required>
-              Apresentar em todas as questões
-            </md-checkbox>
-            <div layout="row" layout-align="end end">
-              <md-button class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">
-                <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
-                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-                  Editar grupos
-                </md-tooltip>
-              </md-button>
-              <md-button class="md-icon-button md-primary" ng-click="$ctrl.updateSurveyGroups()">
-                <md-tooltip md-direction="left">
-                  Atualizar grupos
-                </md-tooltip>
-                <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
-              </md-button>
+          <div layout="row" layout-align="end center">
+            <md-button class="md-icon-button md-primary" ng-click="$ctrl.updateSurveyGroups()">
+              <md-tooltip md-direction="left">
+                Atualizar grupos
+              </md-tooltip>
+              <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
+            </md-button>
+          </div>
+          <div layout="column">
+            <div layout="column">
+              <md-checkbox name="currentWave" ng-model="$ctrl.newVariable.currentWave" required>
+                Variável pertence a onda atual
+              </md-checkbox>
+              <md-autocomplete flex="25" ng-if="!$ctrl.isCurrentWave()" ng-class="$ctrl.autoCompleteClass"
+                md-selected-item="$ctrl.selectedParticipant" md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)"
+                md-search-text="$ctrl.inputedText" md-items="participant in $ctrl.querySearch($ctrl.inputedText)"
+                md-min-length="1" placeholder="Informe a onda correspondente" md-menu-class="autocomplete-custom-participant-template"
+                action="$ctrl.showParticipants">
+              </md-autocomplete>
             </div>
           </div>
-          <div layout="row">
-            <md-input-container flex="50">
-              <label>Identificador</label>
-              <input required name="clientName" ng-model="project.clientName">
-              <div ng-messages="projectForm.clientName.$error">
-                <div ng-message="required">This is required.</div>
-              </div>
-            </md-input-container>
-            <md-input-container flex="50">
-              <label>Valor de resposta</label>
-              <input name="clientName" ng-model="project.clientName">
-            </md-input-container>
-            <md-input-container flex="50">
-              <label>Apresentação da resposta</label>
-              <input name="clientName" ng-model="project.clientName">
-            </md-input-container>
-          </div>
+          <div class="md-padding"></div>
+          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Nome da variável"
+              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+            </md-autocomplete>
+            <div class="md-padding"></div>
+            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Valor da variável"
+              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+            </md-autocomplete>
+            <div class="md-padding"></div>
+            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Apresentação"
+              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+            </md-autocomplete>
+          </section>
         </div>
       </md-card-content>
     </md-card>
   </md-card-content>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-headline">Variáveis sendo utilizadas no momento</span>
+      <span class="md-subhead">Informações auxiliares sendo utilizadas no momento</span>
     </md-card-title-text>
   </md-card-title>
-  <md-card-content>
-    <div ng-repeat="variable in $ctrl.variables">
-      <md-card md-theme-watch>
-        <md-card-content>
-          <div layout="column">
-            <div layout="row">
-              <md-checkbox name="tos" ng-model="project.tos" required>
-                Variável pertence a onda atual
-              </md-checkbox>
-              <md-checkbox name="tos" ng-model="project.tos" required>
-                Apresentar em todas as questões
-              </md-checkbox>
-              <div layout="row" layout-align="end end">
-                <md-button class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">
-                  <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
-                  <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-                    Editar grupos
-                  </md-tooltip>
-                </md-button>
-                <md-button class="md-icon-button md-primary" ng-click="$ctrl.updateSurveyGroups()">
-                  <md-tooltip md-direction="left">
-                    Atualizar grupos
-                  </md-tooltip>
-                  <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
-                </md-button>
-              </div>
-            </div>
-            <div layout="row">
-              <md-input-container flex="50">
-                <label>Identificador</label>
-                <input required name="clientName" ng-model="project.clientName">
-                <div ng-messages="projectForm.clientName.$error">
-                  <div ng-message="required">This is required.</div>
-                </div>
-              </md-input-container>
-              <md-input-container flex="50">
-                <label>Valor de resposta</label>
-                <input name="clientName" ng-model="project.clientName">
-              </md-input-container>
-              <md-input-container flex="50">
-                <label>Apresentação da resposta</label>
-                <input name="clientName" ng-model="project.clientName">
-              </md-input-container>
-            </div>
-          </div>
-        </md-card-content>
-      </md-card>
-    </div>
-  </md-card-content>
 </md-card>
