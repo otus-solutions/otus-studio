@@ -12,6 +12,8 @@
   function Controller(SelectedSurveyTemplatesManagementService) {
     var self = this;
     self.disabled = true;
+    self.customize = false;
+    self.variablesListEmpty = true;
     self.newVariable = {
       lastSending: true,
       wave: -1,
@@ -26,14 +28,18 @@
     /* Public methods */
     self.$onInit = onInit;
     self.isCurrentWave = isCurrentWave;
+    self.isCustomize = isCustomize;
 
     function onInit() {
       isCurrentWave();
-      isAllQuestions();
     }
 
     function isCurrentWave() {
-      return self.newVariable.lastSending ? true : false
+      return self.newVariable.lastSending ? true : false;
+    }
+
+    function isCustomize() {
+      return self.customize ? true : false
     }
 
   }

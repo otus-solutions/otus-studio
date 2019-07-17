@@ -9,45 +9,54 @@
   <md-card-content>
     <md-card md-theme-watch>
       <md-card-content>
-        <div layout="column">
-          <div layout="column">
-            <div layout="row" layout-align="start center">
-              <p class="md-subhead">A nova variável é do último envio?</p>
-              <div class="md-padding"></div>
-              <md-radio-group ng-model="$ctrl.newVariable.lastSending" layout="row">
-                <md-radio-button ng-value="true">Sim</md-radio-button>
-                <md-radio-button ng-value="false">Não</md-radio-button>
-              </md-radio-group>
-              <div class="md-padding"></div>
-              <md-autocomplete flex="25" ng-if="!$ctrl.isCurrentWave()" ng-class="$ctrl.autoCompleteClass"
-                md-selected-item="$ctrl.selectedParticipant" md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)"
-                md-search-text="$ctrl.inputedText" md-items="participant in $ctrl.querySearch($ctrl.inputedText)"
-                md-min-length="1" placeholder="Informe o envio correspondente" md-menu-class="autocomplete-custom-participant-template"
-                action="$ctrl.showParticipants">
-              </md-autocomplete>
-            </div>
-          </div>
-          <span class="md-subhead">Preencha as informações abaixo relacionadas a nova variável:</span>
+        <p class="md-subhead">Qual é a nova variável?</p>
+        <md-autocomplete flex="25" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+          md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+          md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Informe o nome da variável"
+          md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+        </md-autocomplete>
+        <div layout="row" layout-align="start center">
+          <p class="md-subhead">A nova variável é do último envio?</p>
           <div class="md-padding"></div>
-          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
-              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
-              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Nome da variável"
-              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
-            </md-autocomplete>
-            <div class="md-padding"></div>
-            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
-              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
-              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Valor da variável"
-              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
-            </md-autocomplete>
-            <div class="md-padding"></div>
-            <md-autocomplete flex ng-disabled="$ctrl.disabled" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
-              md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
-              md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Apresentação"
-              md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
-            </md-autocomplete>
-          </section>
+          <md-radio-group ng-model="$ctrl.newVariable.lastSending" layout="row">
+            <md-radio-button ng-value="true">Sim</md-radio-button>
+            <md-radio-button ng-value="false">Não</md-radio-button>
+          </md-radio-group>
+        </div>
+        <md-autocomplete flex="25" ng-if="!$ctrl.isCurrentWave()" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+          md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+          md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Informe o envio correspondente"
+          md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+        </md-autocomplete>
+        <div layout="row" layout-align="start center">
+          <p class="md-subhead">Você deseja personalizar o texto apresentado?</p>
+          <div class="md-padding"></div>
+          <md-radio-group ng-model="$ctrl.customize" layout="row">
+            <md-radio-button ng-value="true">Sim</md-radio-button>
+            <md-radio-button ng-value="false">Não</md-radio-button>
+          </md-radio-group>
+        </div>
+        <div ng-if="$ctrl.isCustomize()" layout="row" layout-align="start center">
+          <md-autocomplete flex="25" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+            md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+            md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Informe o valor correspondente"
+            md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+          </md-autocomplete>
+          <div class="md-padding"></div>
+          <md-autocomplete flex="25" ng-class="$ctrl.autoCompleteClass" md-selected-item="$ctrl.selectedParticipant"
+            md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)" md-search-text="$ctrl.inputedText"
+            md-items="participant in $ctrl.querySearch($ctrl.inputedText)" md-min-length="1" placeholder="Informe a personalização correspondente"
+            md-menu-class="autocomplete-custom-participant-template" action="$ctrl.showParticipants">
+          </md-autocomplete>
+          <div class="md-padding"></div>
+          <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate()">
+            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#f44336">cancel</md-icon>
+            <md-tooltip md-direction="left">Cancelar</md-tooltip>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate()">
+            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#448aff">check</md-icon>
+            <md-tooltip md-direction="left">Adicionar</md-tooltip>
+          </md-button>
         </div>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
@@ -61,4 +70,14 @@
       <span class="md-subhead">Informações auxiliares sendo utilizadas no momento</span>
     </md-card-title-text>
   </md-card-title>
+  <md-card-content ng-if="!$ctrl.variablesListEmpty">
+    <md-card md-theme-watch>
+
+    </md-card>
+  </md-card-content>
+  <md-content layout="row" ng-if="$ctrl.variablesListEmpty" flex layout-align="center center">
+    <div class="md-list-item-text">
+      <p>Atualmente não há informações auxiliares para esta atividade!</p>
+    </div>
+  </md-content>
 </md-card>
