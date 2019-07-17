@@ -6,7 +6,7 @@
 <md-card md-theme-watch>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-headline">Informações auxiliares</span>
+      <span class="md-headline">Recursos auxiliares</span>
       <span class="md-subhead">Aqui você pode adicionar uma nova informação auxiliar que será apresentada durante o
         preenchimento</span>
     </md-card-title-text>
@@ -64,12 +64,34 @@
   </md-card-content>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-subhead">Informações auxiliares sendo utilizadas no momento</span>
+      <span class="md-subhead">Informações auxiliares sendo utilizadas no momento:</span>
     </md-card-title-text>
   </md-card-title>
-  <md-card-content ng-if="!$ctrl.variablesListEmpty">
+  <md-card-content ng-if="!$ctrl.variablesListIsEmpty()">
     <md-card md-theme-watch>
-
+      <md-content ng-repeat="variable in $ctrl.variablesList">
+        <md-list style="background-color: #efefef" flex>
+          <md-list-item class="md-3-line" ng-click="null">
+            <div class="md-list-item-text" layout="row">
+              <p flex="30">Nome da variável: {{ variable.name }}</p>
+              <p flex="30">Envio correspondente: {{ variable.sending }}</p>
+              <div ng-repeat="customization in variable.customizations" layout="column" flex="20">
+                <p> valor: {{ customization.valeu }}, personalização: {{ customization.label }}</p>
+              </div>
+            </div>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.addCustom()">
+                <md-icon md-font-library="material-icons" aria-label="baixar template">close</md-icon>
+                <md-tooltip md-direction="left">Adicionar</md-tooltip>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.addCustom()">
+                <md-icon md-font-library="material-icons" aria-label="baixar template">edit</md-icon>
+                <md-tooltip md-direction="left">Adicionar</md-tooltip>
+              </md-button>
+            </div>
+          </md-list-item>
+          <md-divider></md-divider>
+        </md-list>
     </md-card>
   </md-card-content>
   <md-content layout="row" ng-if="$ctrl.variablesListIsEmpty()" flex layout-align="center center">

@@ -34,6 +34,7 @@
 
     function onInit() {
       isCurrentSending();
+      variablesList();
       console.log(WorkspaceService.getSurvey());
     }
 
@@ -55,11 +56,36 @@
     }
 
     function variablesList() {
-    
+      self.variablesList = [
+        {
+          name: 'ABC13',
+          lastSending: true,
+          sending: -1,
+          customize: true,
+          customizations: [{
+            valeu: 1,
+            label: 'Perdeu o bebê'
+          }]
+        },
+        {
+          name: 'CSJ11',
+          lastSending: true,
+          sending: -1,
+          customize: true,
+          customizations: [{
+            valeu: 0,
+            label: 'Não'
+          },
+          {
+            valeu: 1,
+            label: 'Sim'
+          }]
+        }
+      ];
     }
 
     function variablesListIsEmpty() {
-
+      return !self.variablesList.length > 0;
     }
 
   }
