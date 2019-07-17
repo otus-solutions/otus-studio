@@ -5,41 +5,61 @@
     .module('resource.ui')
     .controller('studioVariableHeaderCtrl', Controller);
 
-  Controller.$inject = [
-    'SelectedSurveyTemplatesManagementService'
-  ];
+  Controller.$inject = ['WorkspaceService'];
 
-  function Controller(SelectedSurveyTemplatesManagementService) {
+  function Controller(WorkspaceService) {
     var self = this;
     self.disabled = true;
-    self.customize = false;
     self.variablesListEmpty = true;
-    self.newVariable = {
+    self.variable = {
+      name: '',
       lastSending: true,
-      wave: -1,
-      allQuestions: true,
-      questions: [],
-      identity: '',
-      variable: '',
-      label: ''
+      sending: '',
+      customize: false,
+      customizations: []
     };
-    self.variables = [1, 2];
+    self.customization = {
+      value: '',
+      label: ''
+    }
 
     /* Public methods */
     self.$onInit = onInit;
-    self.isCurrentWave = isCurrentWave;
+    self.isCurrentSending = isCurrentSending;
     self.isCustomize = isCustomize;
+    self.cancelCustom = cancelCustom;
+    self.addCustom = addCustom;
+    self.variablesList = variablesList;
+    self.variablesListIsEmpty = variablesListIsEmpty;
 
     function onInit() {
-      isCurrentWave();
+      isCurrentSending();
+      console.log(WorkspaceService.getSurvey());
     }
 
-    function isCurrentWave() {
-      return self.newVariable.lastSending ? true : false;
+    function isCurrentSending() {
+      return self.variable.lastSending ? true : false;
     }
 
     function isCustomize() {
-      return self.customize ? true : false
+      return self.variable.customize ? true : false
+    }
+
+    function cancelCustom() {
+
+    }
+
+    function addCustom() {
+      var customization = angular.copy(self.customization);
+      self.variable.customizations.push(customization);
+    }
+
+    function variablesList() {
+    
+    }
+
+    function variablesListIsEmpty() {
+
     }
 
   }
