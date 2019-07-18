@@ -3,6 +3,7 @@
 
   angular
     .module('resources', [
+      'resources.core',
       'resource.ui'
     ]);
 

@@ -3,11 +3,13 @@
 
   angular
     .module('resource.ui')
-    .controller('studioVariableHeaderCtrl', Controller);
+    .controller('studioStaticVariableCtrl', Controller);
 
-  Controller.$inject = ['WorkspaceService'];
+  Controller.$inject = [
+    'resources.core.AddStaticVariableEventFactory'
+  ];
 
-  function Controller(WorkspaceService) {
+  function Controller(AddStaticVariableEventFactory) {
     var self = this;
     self.disabled = true;
     self.variablesListEmpty = true;
@@ -15,6 +17,8 @@
       name: '',
       lastSending: true,
       sending: '',
+      hasDescription: false,
+      description: '',
       customize: false,
       customizations: []
     };
@@ -28,14 +32,12 @@
     self.isCurrentSending = isCurrentSending;
     self.isCustomize = isCustomize;
     self.cancelCustom = cancelCustom;
+    self.hasDescription = hasDescription;
     self.addCustom = addCustom;
     self.variablesList = variablesList;
     self.variablesListIsEmpty = variablesListIsEmpty;
 
     function onInit() {
-      isCurrentSending();
-      variablesList();
-      console.log(WorkspaceService.getSurvey());
     }
 
     function isCurrentSending() {
@@ -47,7 +49,11 @@
     }
 
     function cancelCustom() {
+      console.log('opa');
+    }
 
+    function hasDescription() {
+      return self.variable.hasDescription ? true : false
     }
 
     function addCustom() {
