@@ -6,10 +6,10 @@
     .controller('studioStaticVariableCtrl', Controller);
 
   Controller.$inject = [
-    'resources.core.AddStaticVariableEventFactory'
+    'resources.business.StaticVariableService'
   ];
 
-  function Controller(AddStaticVariableEventFactory) {
+  function Controller(StaticVariableService) {
     var self = this;
     self.disabled = true;
     self.variablesListEmpty = true;
@@ -31,13 +31,16 @@
     self.$onInit = onInit;
     self.isCurrentSending = isCurrentSending;
     self.isCustomize = isCustomize;
-    self.cancelCustom = cancelCustom;
     self.hasDescription = hasDescription;
     self.addCustom = addCustom;
+    self.removeCustom = removeCustom;
+    self.clearFields = clearFields;
+    self.addVariable = addVariable;
     self.variablesList = variablesList;
     self.variablesListIsEmpty = variablesListIsEmpty;
 
     function onInit() {
+      variablesList();
     }
 
     function isCurrentSending() {
@@ -45,20 +48,33 @@
     }
 
     function isCustomize() {
-      return self.variable.customize ? true : false
-    }
-
-    function cancelCustom() {
-      console.log('opa');
+      return self.variable.customize ? true : false;
     }
 
     function hasDescription() {
-      return self.variable.hasDescription ? true : false
+      return self.variable.hasDescription ? true : false;
     }
 
     function addCustom() {
       var customization = angular.copy(self.customization);
       self.variable.customizations.push(customization);
+      _clearCustomFields();
+    }
+
+    function removeCustom() {
+
+    }
+
+    function _clearCustomFields() {
+
+    }
+
+    function addVariable() {
+      StaticVariableService.create().execute(self.variable);
+    }
+
+    function clearFields() {
+
     }
 
     function variablesList() {
