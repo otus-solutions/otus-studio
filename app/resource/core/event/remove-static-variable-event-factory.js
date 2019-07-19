@@ -29,7 +29,8 @@
     self.execute = execute;
 
     function execute(variable) {
-      return RemoveStaticVariableService.execute(variable, WorkspaceService.getSurvey());
+      RemoveStaticVariableService.execute(variable, WorkspaceService.getSurvey());
+      WorkspaceService.saveWork();
     }
   }
 

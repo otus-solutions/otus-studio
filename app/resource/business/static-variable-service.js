@@ -16,10 +16,34 @@
     var self = this;
 
     /* Public methods */
-    self.$onInit = onInit;
+    self.createStructureToStaticVariable = createStructureToStaticVariable;
+    self.createVariable = createVariable;
+    self.removeVariable = removeVariable;
+    self.updateVariable = updateVariable;
+    self.getStaticVariableList = getStaticVariableList;
 
-    function onInit() {
+    function createStructureToStaticVariable() {
       WorkspaceService.getSurvey().createStaticVariable();
+    }
+
+    function createVariable(variable) {
+      AddStaticVariableEventFactory.create().execute(variable);
+      console.log(WorkspaceService.getSurvey());
+    }
+
+    function removeVariable(variable) {
+      RemoveStaticVariableEventFactory.create().execute(variable);
+    }
+
+    function updateVariable(variable) {
+      UpdateStaticVariableEventFactory.create().execute(variable);
+    }
+
+    function getStaticVariableList() {
+      if (WorkspaceService.getSurvey().StaticVariableManager)
+        return WorkspaceService.getSurvey().StaticVariableManager.getStaticVariableList();
+      else
+        return [];
     }
 
   }
