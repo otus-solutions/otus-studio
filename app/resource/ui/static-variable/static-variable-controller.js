@@ -74,6 +74,7 @@
 
     function createVariable() {
       StaticVariableService.createVariable(self.variable);
+      _getStaticVariableList();
     }
 
     function cancel() {
@@ -84,13 +85,32 @@
       self.variable.sending = '';
     }
 
+    function variablesListIsEmpty() {
+      if (self.variablesList)
+        return !self.variablesList.length > 0;
+      return false;
+    }
+
     function _getStaticVariableList() {
       self.variablesList = StaticVariableService.getStaticVariableList();
+      _buildPresentationToCustomization();
     }
 
-    function variablesListIsEmpty() {
-      return !self.variablesList.length > 0;
+    function _buildPresentationToCustomization() {
+      self.variablesList.forEach(variable => {
+        if (variable.customizations) {
+          variable.customizationPresentation = '';
+          variable.customizations.forEach(customization => {
+            if (!variable.customizationPresentation) {
+              var result = variable.customizationPresentation.concat(customization.value + ' para: ' + customization.label);
+              variable.customizationPresentation = result;
+            } else {
+              var result = variable.customizationPresentation.concat('; ' + customization.value + ' para: ' + customization.label);
+              variable.customizationPresentation = result;
+            }
+          });
+        }
+      });
     }
-
   }
 }());

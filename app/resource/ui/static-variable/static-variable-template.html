@@ -49,13 +49,14 @@
           <md-input-container md-no-float class="md-block" flex="25">
             <input ng-model="$ctrl.customization.label" placeholder="Informe a personalização">
           </md-input-container>
-          <md-button ng-if="$ctrl.customization.value && $ctrl.customization.label" class="md-icon-button" aria-label="baixar template"
-            ng-click="$ctrl.addCustom()">
+          <md-button ng-if="$ctrl.customization.value && $ctrl.customization.label" class="md-icon-button"
+            aria-label="baixar template" ng-click="$ctrl.addCustom()">
             <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#448aff">check</md-icon>
             <md-tooltip md-direction="left">Adicionar</md-tooltip>
           </md-button>
         </div>
-        <div ng-repeat="customization in $ctrl.variable.customizations track by $index" layout="row" layout-align="start start">
+        <div ng-repeat="customization in $ctrl.variable.customizations track by $index" layout="row"
+          layout-align="start start">
           <md-input-container class="md-block" flex="25">
             <label>{{customization.value}}</label>
             <input disabled>
@@ -65,7 +66,8 @@
             <input disabled>
           </md-input-container>
           <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.removeCustom($index)">
-            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#f44336">cancel</md-icon>
+            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#f44336">cancel
+            </md-icon>
             <md-tooltip md-direction="left">Remover</md-tooltip>
           </md-button>
         </div>
@@ -83,35 +85,12 @@
   </md-card-title>
   <md-card-content ng-if="!$ctrl.variablesListIsEmpty()">
     <md-card md-theme-watch>
-
-      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3"
-        md-gutter="8px" md-gutter-gt-sm="4px" ng-repeat="variable in $ctrl.variablesList">
-        <md-grid-tile md-colspan-sm="1" md-colspan-xs="1" ng-class="tile.background">
-          <div layout="column">
-            <md-grid-tile-footer>
-              <h3>{{variable.name}}</h3>
-            </md-grid-tile-footer>
-            <md-grid-tile-footer>
-              <h3>{{variable.sending}}</h3>
-            </md-grid-tile-footer>
-          </div>
-        </md-grid-tile>
-      </md-grid-list>
-
-      <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
-        <span>.md-whiteframe-1dp</span>
-      </md-whiteframe>
-
-
-      <md-content ng-repeat="variable in $ctrl.variablesList">
-        <div class="md-list-item-text" layout="row">
-          <p flex="30">Nome da variável: {{ variable.name }}</p>
-          <p flex="30">Envio correspondente: {{ variable.sending }}</p>
-          <div>
-            <div layout="row">
-              <p> valor: {{ customization.valeu }}, personalização: {{ customization.label }}</p>
-            </div>
-          </div>
+      <md-list-item class="md-3-line" ng-repeat="variable in $ctrl.variablesList">
+        <md-icon class="md-avatar" aria-label="baixar template">local_offer</md-icon>
+        <div class="md-list-item-text" layout="column">
+          <h3>Nome da variável: {{ variable.name }}</h3>
+          <h4>Envio correspondente: {{ variable.sending }}</h4>
+          <h4>Personalizações: {{variable.customizationPresentation}}</h4>
         </div>
         <div layout="row" layout-align="end center">
           <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.addCustom()">
@@ -124,7 +103,7 @@
           </md-button>
         </div>
         <md-divider></md-divider>
-      </md-content>
+      </md-list-item>
     </md-card>
   </md-card-content>
   <md-content layout="row" ng-if="$ctrl.variablesListIsEmpty()" flex layout-align="center center">
