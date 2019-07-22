@@ -28,8 +28,9 @@
 
     self.execute = execute;
 
-    function execute(variable) {
-      UpdateStaticVariableService.execute(variable, WorkspaceService.getSurvey());
+    function execute(index, variable) {
+      console.log(WorkspaceService.getSurvey());
+      UpdateStaticVariableService.execute(WorkspaceService.getSurvey(), index, variable);
       WorkspaceService.saveWork();
     }
   }

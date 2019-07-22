@@ -3,22 +3,26 @@
 
   angular
     .module('resource.ui')
+    .run(['$anchorScroll', function ($anchorScroll) {
+      $anchorScroll.yOffset = 50;
+    }])
     .controller('studioStaticVariableCtrl', Controller);
 
   Controller.$inject = [
+    '$location',
+    '$anchorScroll',
     'resources.business.StaticVariableService'
   ];
 
-  function Controller(StaticVariableService) {
+  function Controller($location, $anchorScroll, StaticVariableService) {
     var self = this;
     self.disabled = true;
+    self.isEdition = false;
     self.variablesList = [];
     self.variable = {
       name: '',
-      lastSending: true,
-      sending: '',
-      hasDescription: false,
       description: '',
+      sending: '',
       customize: false,
       customizations: []
     };
@@ -29,9 +33,7 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.isCurrentSending = isCurrentSending;
     self.isCustomize = isCustomize;
-    self.hasDescription = hasDescription;
     self.addCustom = addCustom;
     self.removeCustom = removeCustom;
     self.clearCustomFields = clearCustomFields;
@@ -39,22 +41,16 @@
     self.createVariable = createVariable;
     self.cancel = cancel;
     self.variablesListIsEmpty = variablesListIsEmpty;
+    self.removeVariable = removeVariable;
+    self.editVariable = editVariable;
 
     function onInit() {
       StaticVariableService.createStructureToStaticVariable();
       _getStaticVariableList();
     }
 
-    function isCurrentSending() {
-      return self.variable.lastSending ? true : false;
-    }
-
     function isCustomize() {
       return self.variable.customize ? true : false;
-    }
-
-    function hasDescription() {
-      return self.variable.hasDescription ? true : false;
     }
 
     function addCustom() {
@@ -72,13 +68,28 @@
       self.customization.label = '';
     }
 
-    function createVariable() {
-      StaticVariableService.createVariable(self.variable);
+    function createVariable(index) {
+      if (!self.isEdition)
+        StaticVariableService.createVariable(angular.copy(self.variable));
+      else
+        StaticVariableService.updateVariable(index, angular.copy(self.variable));
+      _clearAllFields();
       _getStaticVariableList();
     }
 
     function cancel() {
-      // TODO:
+      _clearAllFields();
+      self.isEdition = false;
+    }
+
+    function _clearCustomFieldsList() {
+      self.variable.customize = false;
+      self.variable.customizations = [];
+    }
+
+    function _clearBasicVariableFields() {
+      self.variable.name = '';
+      self.variable.description = '';
     }
 
     function clearSendingFields() {
@@ -88,8 +99,31 @@
     function variablesListIsEmpty() {
       if (self.variablesList)
         return !self.variablesList.length > 0;
-      return false;
+      return true;
     }
+
+    function removeVariable(index) {
+      StaticVariableService.removeVariable(index);
+    }
+
+    function editVariable(index) {
+      var toEdition = self.variablesList.find(function (variable, i) {
+        if (i === index)
+          return variable;
+      });
+      _buildPresentationToEdition(toEdition);
+      self.isEdition = true;
+      _scrollToTop();
+    }
+
+    function _scrollToTop() {
+      var newHash = 'inputFields';
+      if ($location.hash() !== newHash) {
+        $location.hash('inputFields');
+      } else {
+        $anchorScroll();
+      }
+    };
 
     function _getStaticVariableList() {
       self.variablesList = StaticVariableService.getStaticVariableList();
@@ -111,6 +145,21 @@
           });
         }
       });
+    }
+
+    function _buildPresentationToEdition(variable) {
+      self.variable.name = variable.name;
+      self.variable.description = variable.description;
+      self.variable.sending = variable.sending;
+      self.variable.customize = variable.customize;
+      self.variable.customizations = variable.customizations;
+    }
+
+    function _clearAllFields() {
+      _clearBasicVariableFields();
+      clearSendingFields();
+      clearCustomFields();
+      _clearCustomFieldsList();
     }
   }
 }());

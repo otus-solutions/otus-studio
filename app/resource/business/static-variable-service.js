@@ -28,11 +28,10 @@
 
     function createVariable(variable) {
       AddStaticVariableEventFactory.create().execute(variable);
-      console.log(WorkspaceService.getSurvey());
     }
 
-    function removeVariable(variable) {
-      RemoveStaticVariableEventFactory.create().execute(variable);
+    function removeVariable(index) {
+      RemoveStaticVariableEventFactory.create().execute(index);
     }
 
     function updateVariable(variable) {
