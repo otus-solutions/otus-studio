@@ -9,71 +9,61 @@
     .controller('studioStaticVariableCtrl', Controller);
 
   Controller.$inject = [
+    '$scope',
+    '$mdDialog',
     '$location',
     '$anchorScroll',
     'resources.business.StaticVariableService'
   ];
 
-  function Controller($location, $anchorScroll, StaticVariableService) {
+  function Controller($scope, $mdDialog, $location, $anchorScroll, StaticVariableService) {
+    var MESSAGE_TO_REMOVE = 'Excluir variável';
+    var MESSAGE_GENERIC = 'Você tem certeza que deseja realizar essa operação?';
     var _indexOfVariableInEdition = -1;
     var self = this;
     self.disabled = true;
     self.isEdition = false;
     self.variablesList = [];
-    self.variable = {
-      name: '',
-      description: '',
-      sending: '',
-      customize: false,
-      customizations: []
-    };
-    self.customization = {
-      value: '',
-      label: ''
-    }
 
     /* Public methods */
     self.$onInit = onInit;
     self.isCustomize = isCustomize;
     self.addCustom = addCustom;
     self.removeCustom = removeCustom;
-    self.clearCustomFields = clearCustomFields;
-    self.clearSendingFields = clearSendingFields;
     self.saveVariable = saveVariable;
     self.cancel = cancel;
     self.variablesListIsEmpty = variablesListIsEmpty;
-    self.removeVariable = removeVariable;
     self.editVariable = editVariable;
+    self.removeVariable = removeVariable;
+    self.removeCustomFields = removeCustomFields;
 
     function onInit() {
-      StaticVariableService.createStructureToStaticVariable();
+      self.variable = StaticVariableService.createStructureToStaticVariable();
+      console.log(self.variable);
       _getStaticVariableList();
     }
 
     function isCustomize() {
-      return self.variable.customize ? true : false;
+      return self.variable.customized;
     }
 
     function addCustom() {
       var customization = angular.copy(self.customization);
-      self.variable.customizations.push(customization);
-      clearCustomFields();
+      self.variable.addCustomization(customization.value, customization.label);
+      _clearCustomFields();
     }
 
     function removeCustom(index) {
       self.variable.customizations.splice(index, 1);
     }
 
-    function clearCustomFields() {
-      self.customization.value = '';
-      self.customization.label = '';
-    }
-
     function saveVariable() {
       if (!self.isEdition)
         StaticVariableService.createVariable(angular.copy(self.variable));
-      else
+      else {
         StaticVariableService.updateVariable(_indexOfVariableInEdition, angular.copy(self.variable));
+        self.isEdition = false;
+      }
       _clearAllFields();
       _getStaticVariableList();
     }
@@ -83,22 +73,10 @@
       self.isEdition = false;
     }
 
-    function clearSendingFields() {
-      self.variable.sending = '';
-    }
-
     function variablesListIsEmpty() {
       if (self.variablesList)
         return !self.variablesList.length > 0;
       return true;
-    }
-
-    function removeVariable(index) {
-      var toRemove = self.variablesList.find(function (variable, i) {
-        if (i === index)
-          return variable;
-      });
-      StaticVariableService.removeVariable(index, toRemove);
     }
 
     function editVariable(index) {
@@ -106,9 +84,62 @@
         if (i === index)
           return variable;
       });
-      _buildPresentationToEdition(toEdition, index);
+      self.variable = angular.copy(toEdition);
+      _indexOfVariableInEdition = index;
       self.isEdition = true;
       _scrollToTop();
+    }
+
+    function removeVariable(index, event) {
+      $mdDialog.show({
+        controller: _DialogController,
+        templateUrl: 'app/resource/ui/generic-dialog/generic-dialog-template.html',
+        parent: angular.element(document.body),
+        targetEvent: event,
+        clickOutsideToClose: true,
+        fullscreen: $scope.customFullscreen,
+        locals: {
+          title: MESSAGE_TO_REMOVE,
+          body: MESSAGE_GENERIC
+        }
+      }).then(function () {
+        var toRemove = self.variablesList.find(function (variable, i) {
+          if (i === index)
+            return variable;
+        });
+        StaticVariableService.removeVariable(index, toRemove);
+      }, function () { });
+    }
+
+    function removeCustomFields() {
+      self.variable.customized = false;
+      self.variable.customizations = [];
+    }
+
+    function _clearCustomFields() {
+      self.customization.value = '';
+      self.customization.label = '';
+    }
+
+    function _DialogController($scope, $mdDialog, title, body) {
+      $scope.title = '';
+      $scope.body = '';
+      /* Lifecycle hooks */
+      _onInit();
+
+      function _onInit() {
+        $scope.title = title;
+        $scope.body = body;
+      }
+
+      /* Public methods */
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function () {
+        $mdDialog.hide();
+      };
     }
 
     function _scrollToTop() {
@@ -122,50 +153,11 @@
 
     function _getStaticVariableList() {
       self.variablesList = StaticVariableService.getStaticVariableList();
-      _buildPresentationToCustomization();
-    }
-
-    function _buildPresentationToCustomization() {
-      self.variablesList.forEach(variable => {
-        if (variable.customizations) {
-          variable.customizationPresentation = '';
-          variable.customizations.forEach(customization => {
-            if (!variable.customizationPresentation) {
-              var result = variable.customizationPresentation.concat(customization.value + ' para: ' + customization.label);
-              variable.customizationPresentation = result;
-            } else {
-              var result = variable.customizationPresentation.concat('; ' + customization.value + ' para: ' + customization.label);
-              variable.customizationPresentation = result;
-            }
-          });
-        }
-      });
-    }
-
-    function _buildPresentationToEdition(variable, index) {
-      self.variable.name = angular.copy(variable.name);
-      self.variable.description = angular.copy(variable.description);
-      self.variable.sending = angular.copy(variable.sending);
-      self.variable.customize = angular.copy(variable.customize);
-      self.variable.customizations = angular.copy(variable.customizations);
-      _indexOfVariableInEdition = index;
     }
 
     function _clearAllFields() {
-      _clearBasicVariableFields();
-      clearSendingFields();
-      clearCustomFields();
-      _clearCustomFieldsList();
+      self.variable = StaticVariableService.createStructureToStaticVariable();
     }
 
-    function _clearCustomFieldsList() {
-      self.variable.customize = false;
-      self.variable.customizations = [];
-    }
-
-    function _clearBasicVariableFields() {
-      self.variable.name = '';
-      self.variable.description = '';
-    }
   }
 }());

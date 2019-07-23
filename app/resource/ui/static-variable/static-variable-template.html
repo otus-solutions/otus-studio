@@ -1,5 +1,5 @@
 <style>
-  md-input-container {
+  .inputFieldsWithMarginZero {
     margin: 0px 0 !important
   }
 
@@ -13,7 +13,7 @@
 <md-card id="inputFields" md-theme-watch>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-headline">Recursos auxiliares</span>
+      <span class="md-headline">Informações Auxiliares</span>
       <span class="md-subhead">Aqui você pode adicionar uma nova variável que será apresentada durante o
         preenchimento</span>
     </md-card-title-text>
@@ -24,30 +24,30 @@
       <md-card-content ng-if="!$ctrl.isEdition">
         <p class="md-subhead">Qual é a nova variável?</p>
         <div layout="row" layout-align="start center">
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.variable.name" placeholder="Informe o nome da variável">
           </md-input-container>
-          <md-input-container md-no-float class="md-block" flex="25">
-            <input ng-model="$ctrl.variable.description" placeholder="Informe a descrição correspondente">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
+            <input ng-model="$ctrl.variable.label" placeholder="Informe a descrição correspondente">
           </md-input-container>
         </div>
         <p class="md-subhead">A qual envio correspondente a nova variável?</p>
-        <md-input-container md-no-float class="md-block" flex="25">
+        <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
           <input ng-model="$ctrl.variable.sending" placeholder="Informe o envio correspondente">
         </md-input-container>
         <div layout="row" layout-align="start center">
           <p class="md-subhead">Você deseja personalizar o resultado apresentado?</p>
           <div class="md-padding"></div>
-          <md-radio-group ng-model="$ctrl.variable.customize" layout="row">
+          <md-radio-group ng-model="$ctrl.variable.customized" layout="row">
             <md-radio-button ng-value="true">Sim</md-radio-button>
             <md-radio-button ng-value="false" ng-click="$ctrl.clearCustomFields()">Não</md-radio-button>
           </md-radio-group>
         </div>
         <div ng-if="$ctrl.isCustomize()" layout="row" layout-align="start start">
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.customization.value" placeholder="Informe o valor">
           </md-input-container>
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.customization.label" placeholder="Informe a personalização">
           </md-input-container>
           <md-button ng-if="$ctrl.customization.value && $ctrl.customization.label" class="md-icon-button" aria-label="baixar template"
@@ -57,11 +57,11 @@
           </md-button>
         </div>
         <div ng-repeat="customization in $ctrl.variable.customizations track by $index" layout="row" layout-align="start start">
-          <md-input-container class="md-block" flex="25">
+          <md-input-container class="md-block inputFieldsWithMarginZero" flex="25">
             <label>{{customization.value}}</label>
             <input disabled>
           </md-input-container>
-          <md-input-container class="md-block" flex="25">
+          <md-input-container class="md-block inputFieldsWithMarginZero" flex="25">
             <label>{{customization.label}}</label>
             <input disabled>
           </md-input-container>
@@ -78,30 +78,30 @@
         </p>
         <p class="md-subhead">Você deseja editar o nome ou descrição da variável?</p>
         <div layout="row" layout-align="start center">
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.variable.name" placeholder="Informe o nome da variável">
           </md-input-container>
-          <md-input-container md-no-float class="md-block" flex="25">
-            <input ng-model="$ctrl.variable.description" placeholder="Informe a descrição correspondente">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
+            <input ng-model="$ctrl.variable.label" placeholder="Informe a descrição correspondente">
           </md-input-container>
         </div>
         <p class="md-subhead">O envio correspondente da variável?</p>
-        <md-input-container md-no-float class="md-block" flex="25">
+        <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
           <input ng-model="$ctrl.variable.sending" placeholder="Informe o envio correspondente">
         </md-input-container>
         <div layout="row" layout-align="start center">
           <p class="md-subhead">Personalizar o resultado apresentado?</p>
           <div class="md-padding"></div>
-          <md-radio-group ng-model="$ctrl.variable.customize" layout="row">
+          <md-radio-group ng-model="$ctrl.variable.customized" layout="row">
             <md-radio-button ng-value="true">Sim</md-radio-button>
-            <md-radio-button ng-value="false" ng-click="$ctrl.clearCustomFields()">Não</md-radio-button>
+            <md-radio-button ng-value="false" ng-click="$ctrl.removeCustomFields()">Não</md-radio-button>
           </md-radio-group>
         </div>
         <div ng-if="$ctrl.isCustomize()" layout="row" layout-align="start start">
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.customization.value" placeholder="Informe o valor">
           </md-input-container>
-          <md-input-container md-no-float class="md-block" flex="25">
+          <md-input-container md-no-float class="md-block inputFieldsWithMarginZero" flex="25">
             <input ng-model="$ctrl.customization.label" placeholder="Informe a personalização">
           </md-input-container>
           <md-button ng-if="$ctrl.customization.value && $ctrl.customization.label" class="md-icon-button" aria-label="baixar template"
@@ -111,11 +111,11 @@
           </md-button>
         </div>
         <div ng-repeat="customization in $ctrl.variable.customizations track by $index" layout="row" layout-align="start start">
-          <md-input-container class="md-block" flex="25">
+          <md-input-container class="md-block inputFieldsWithMarginZero" flex="25">
             <label>{{customization.value}}</label>
             <input disabled>
           </md-input-container>
-          <md-input-container class="md-block" flex="25">
+          <md-input-container class="md-block inputFieldsWithMarginZero" flex="25">
             <label>{{customization.label}}</label>
             <input disabled>
           </md-input-container>
@@ -147,7 +147,7 @@
           </div>
           <div class="md-list-item-text" layout-align="center start" layout-margin>
             <h3>Nome da variável: {{ variable.name }}</h3>
-            <h4>Descrição: {{ variable.name }}</h4>
+            <h4>Descrição: {{ variable.label }}</h4>
             <h4>Envio correspondente: {{ variable.sending }}</h4>
             <h4 ng-if="variable.customizations" ng-repeat="customization in variable.customizations">
               {{customization.value}} - {{customization.label}}
@@ -155,7 +155,7 @@
           </div>
         </div>
         <div layout-margin layout="row" layout-align="end center" flex="20">
-          <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.removeVariable($index)">
+          <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.removeVariable($index, $event)">
             <md-icon md-font-library="material-icons" aria-label="baixar template">close</md-icon>
             <md-tooltip md-direction="left">Remover</md-tooltip>
           </md-button>

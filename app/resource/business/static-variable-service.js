@@ -23,7 +23,7 @@
     self.getStaticVariableList = getStaticVariableList;
 
     function createStructureToStaticVariable() {
-      WorkspaceService.getSurvey().createStaticVariable();
+      return WorkspaceService.getSurvey().createStaticVariable();
     }
 
     function createVariable(variable) {
