@@ -15,6 +15,7 @@
   ];
 
   function Controller($location, $anchorScroll, StaticVariableService) {
+    var _indexOfVariableInEdition = -1;
     var self = this;
     self.disabled = true;
     self.isEdition = false;
@@ -38,7 +39,7 @@
     self.removeCustom = removeCustom;
     self.clearCustomFields = clearCustomFields;
     self.clearSendingFields = clearSendingFields;
-    self.createVariable = createVariable;
+    self.saveVariable = saveVariable;
     self.cancel = cancel;
     self.variablesListIsEmpty = variablesListIsEmpty;
     self.removeVariable = removeVariable;
@@ -68,11 +69,11 @@
       self.customization.label = '';
     }
 
-    function createVariable(index) {
+    function saveVariable() {
       if (!self.isEdition)
         StaticVariableService.createVariable(angular.copy(self.variable));
       else
-        StaticVariableService.updateVariable(index, angular.copy(self.variable));
+        StaticVariableService.updateVariable(_indexOfVariableInEdition, angular.copy(self.variable));
       _clearAllFields();
       _getStaticVariableList();
     }
@@ -80,16 +81,6 @@
     function cancel() {
       _clearAllFields();
       self.isEdition = false;
-    }
-
-    function _clearCustomFieldsList() {
-      self.variable.customize = false;
-      self.variable.customizations = [];
-    }
-
-    function _clearBasicVariableFields() {
-      self.variable.name = '';
-      self.variable.description = '';
     }
 
     function clearSendingFields() {
@@ -103,7 +94,11 @@
     }
 
     function removeVariable(index) {
-      StaticVariableService.removeVariable(index);
+      var toRemove = self.variablesList.find(function (variable, i) {
+        if (i === index)
+          return variable;
+      });
+      StaticVariableService.removeVariable(index, toRemove);
     }
 
     function editVariable(index) {
@@ -111,7 +106,7 @@
         if (i === index)
           return variable;
       });
-      _buildPresentationToEdition(toEdition);
+      _buildPresentationToEdition(toEdition, index);
       self.isEdition = true;
       _scrollToTop();
     }
@@ -147,12 +142,13 @@
       });
     }
 
-    function _buildPresentationToEdition(variable) {
-      self.variable.name = variable.name;
-      self.variable.description = variable.description;
-      self.variable.sending = variable.sending;
-      self.variable.customize = variable.customize;
-      self.variable.customizations = variable.customizations;
+    function _buildPresentationToEdition(variable, index) {
+      self.variable.name = angular.copy(variable.name);
+      self.variable.description = angular.copy(variable.description);
+      self.variable.sending = angular.copy(variable.sending);
+      self.variable.customize = angular.copy(variable.customize);
+      self.variable.customizations = angular.copy(variable.customizations);
+      _indexOfVariableInEdition = index;
     }
 
     function _clearAllFields() {
@@ -160,6 +156,16 @@
       clearSendingFields();
       clearCustomFields();
       _clearCustomFieldsList();
+    }
+
+    function _clearCustomFieldsList() {
+      self.variable.customize = false;
+      self.variable.customizations = [];
+    }
+
+    function _clearBasicVariableFields() {
+      self.variable.name = '';
+      self.variable.description = '';
     }
   }
 }());

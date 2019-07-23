@@ -66,8 +66,7 @@
             <input disabled>
           </md-input-container>
           <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.removeCustom($index)">
-            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#f44336">cancel
-            </md-icon>
+            <md-icon md-font-library="material-icons" aria-label="baixar template">close</md-icon>
             <md-tooltip md-direction="left">Remover</md-tooltip>
           </md-button>
         </div>
@@ -121,8 +120,7 @@
             <input disabled>
           </md-input-container>
           <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.removeCustom($index)">
-            <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#f44336">cancel
-            </md-icon>
+            <md-icon md-font-library="material-icons" aria-label="baixar template">close</md-icon>
             <md-tooltip md-direction="left">Remover</md-tooltip>
           </md-button>
         </div>
@@ -130,7 +128,7 @@
       <!-- actions -->
       <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="$ctrl.cancel()" class="md-raised md-warn">Cancelar</md-button>
-        <md-button ng-click="$ctrl.createVariable()" class="md-raised md-primary">Salvar</md-button>
+        <md-button ng-click="$ctrl.saveVariable()" class="md-raised md-primary">Salvar</md-button>
       </md-card-actions>
     </md-card>
   </md-card-content>
@@ -141,7 +139,7 @@
     </md-card-title-text>
   </md-card-title>
   <md-card-content ng-if="!$ctrl.variablesListIsEmpty()">
-    <md-card md-theme-watch>
+    <md-card>
       <md-list-item class="md-3-line" ng-repeat="variable in $ctrl.variablesList track by $index">
         <div flex="80" layout-margin layout="row" layout-align="start center">
           <div>
@@ -151,9 +149,9 @@
             <h3>Nome da variável: {{ variable.name }}</h3>
             <h4>Descrição: {{ variable.name }}</h4>
             <h4>Envio correspondente: {{ variable.sending }}</h4>
-            <div ng-if="variable.customizations" ng-repeat="customization in variable.customizations">
-              <h4>{{customization.value}} - {{customization.label}}</h4>
-            </div>
+            <h4 ng-if="variable.customizations" ng-repeat="customization in variable.customizations">
+              {{customization.value}} - {{customization.label}}
+            </h4>
           </div>
         </div>
         <div layout-margin layout="row" layout-align="end center" flex="20">
