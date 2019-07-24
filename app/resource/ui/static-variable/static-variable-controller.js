@@ -39,7 +39,6 @@
 
     function onInit() {
       self.variable = StaticVariableService.createStructureToStaticVariable();
-      console.log(self.variable);
       _getStaticVariableList();
     }
 
@@ -58,6 +57,8 @@
     }
 
     function saveVariable() {
+      // TODO: validar campos de entrada!
+
       if (!self.isEdition)
         StaticVariableService.createVariable(angular.copy(self.variable));
       else {
@@ -103,11 +104,7 @@
           body: MESSAGE_GENERIC
         }
       }).then(function () {
-        var toRemove = self.variablesList.find(function (variable, i) {
-          if (i === index)
-            return variable;
-        });
-        StaticVariableService.removeVariable(index, toRemove);
+        StaticVariableService.removeVariable(index);
       }, function () { });
     }
 

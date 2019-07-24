@@ -7,29 +7,29 @@
 
   AddStaticVariableEventFactory.$inject = [
     'WorkspaceService',
-    'otusjs.staticVariable.AddStaticVariableService'
+    'otusjs.staticVariable.AddStaticVariableTaskService'
   ];
 
-  function AddStaticVariableEventFactory(WorkspaceService, AddStaticVariableService) {
+  function AddStaticVariableEventFactory(WorkspaceService, AddStaticVariableTaskService) {
     var self = this;
 
     /* Public interface */
     self.create = create;
 
     function create() {
-      return new AddStaticVariableEvent(WorkspaceService, AddStaticVariableService);
+      return new AddStaticVariableEvent(WorkspaceService, AddStaticVariableTaskService);
     }
 
     return self;
   }
 
-  function AddStaticVariableEvent(WorkspaceService, AddStaticVariableService) {
+  function AddStaticVariableEvent(WorkspaceService, AddStaticVariableTaskService) {
     var self = this;
 
     self.execute = execute;
 
     function execute(variable) {
-      AddStaticVariableService.execute(WorkspaceService.getSurvey(), variable);
+      AddStaticVariableTaskService.execute(WorkspaceService.getSurvey(), variable);
       WorkspaceService.saveWork();
     }
   }

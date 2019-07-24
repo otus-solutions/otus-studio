@@ -30,8 +30,8 @@
       AddStaticVariableEventFactory.create().execute(variable);
     }
 
-    function removeVariable(index, variable) {
-      RemoveStaticVariableEventFactory.create().execute(index, variable);
+    function removeVariable(index) {
+      RemoveStaticVariableEventFactory.create().execute(index);
     }
 
     function updateVariable(index, variable) {
