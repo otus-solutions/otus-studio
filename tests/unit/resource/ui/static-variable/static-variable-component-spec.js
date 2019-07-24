@@ -18,8 +18,10 @@ describe('LoginController_Suite', function () {
 
       ctrl = $controller('studioStaticVariableCtrl', Injections);
 
-      spyOn(Injections.StaticVariableService, "createStructureToStaticVariable").and.returnValue([]);
-      spyOn(Injections.StaticVariableService, 'getStaticVariableList').and.returnValue([]);
+      spyOn(Injections.StaticVariableService, "createStructureToStaticVariable").and.returnValue(mockData());
+      spyOn(Injections.StaticVariableService, 'getStaticVariableList').and.returnValue([mockData()]);
+      spyOn(Injections.StaticVariableService, "createVariable");
+      spyOn(Injections.StaticVariableService, "updateVariable");
     });
   });
 
@@ -48,33 +50,60 @@ describe('LoginController_Suite', function () {
       ctrl.$onInit();
     });
 
-    it('should return false when does not custom', function () {
-      console.log(ctrl.variable);
-    });
-
     it('should return true when does not custom', function () {
-
+      expect(ctrl.variable.customized).toBe(true);
     });
   });
 
   describe('addCustom method', function () {
+
+    beforeEach(function () {
+      ctrl.$onInit();
+      ctrl.customization = { value: "1", label: "Sim" };
+      spyOn(ctrl.variable, "addCustomization");
+    });
+
     it('should call addCustomization method', function () {
+      ctrl.addCustom();
 
+      expect(ctrl.variable.addCustomization).toHaveBeenCalledTimes(1);
     });
 
-    it('when method is called the fields should are clean', function () {
-
-    });
   });
 
   describe('saveVariable method', function () {
-    it('when does not edition then call createVariable method', function () {
 
+    beforeEach(function () {
+      ctrl.$onInit();
+    });
+
+    it('when does not edition then call createVariable method', function () {
+      ctrl.saveVariable();
+
+      expect(Injections.StaticVariableService.createVariable).toHaveBeenCalledTimes(1);
     });
 
     it('when is edition then call updateVariable method', function () {
+      ctrl.editVariable(0);
+      ctrl.saveVariable();
 
+      expect(Injections.StaticVariableService.updateVariable).toHaveBeenCalledTimes(1);
     });
   });
+
+
+  function mockData() {
+    return {
+      label: "Participante com diabetes:",
+      name: "CSJ10",
+      sending: "1",
+      customized: true,
+      customizations: [
+        { value: "1", label: "Sim" },
+        { value: "0", label: "Não" }
+      ],
+      addCustomization: function () { }
+    };
+  }
 
 });
