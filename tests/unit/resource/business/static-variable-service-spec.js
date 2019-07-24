@@ -1,4 +1,4 @@
-describe('StaticVariableService Suite', function () {
+xdescribe('StaticVariableService Suite', function () {
 
   var service;
   var Mock = {};
@@ -34,33 +34,38 @@ describe('StaticVariableService Suite', function () {
   })
 
   describe('createStructureToStaticVariable method', function () {
-    it('', function () {
+    it('should call getSurvey method', function () {
       service.createStructureToStaticVariable();
       expect(Injections.WorkspaceService.getSurvey).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call createStaticVariable method', function () {
+      service.createStructureToStaticVariable();
+      expect(Injections.WorkspaceService.getSurvey().createStaticVariable).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('createVariable method', function () {
-    it('', function () {
+    it('should call execute method', function () {
       service.createVariable(Mock.variable);
     });
   });
 
   describe('removeVariable method', function () {
-    it('', function () {
-
+    it('should call execute method', function () {
+      service.removeVariable(Mock.variable);
     });
   });
 
   describe('updateVariable method', function () {
-    it('', function () {
-
+    it('should call execute method', function () {
+      service.updateVariable(Mock.variable);
     });
   });
 
   describe('getStaticVariableList method', function () {
-    it('', function () {
-
+    it('should call execute method', function () {
+      service.getStaticVariableList();
     });
   });
 

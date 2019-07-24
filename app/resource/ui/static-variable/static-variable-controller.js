@@ -58,7 +58,6 @@
 
     function saveVariable() {
       // TODO: validar campos de entrada!
-
       if (!self.isEdition)
         StaticVariableService.createVariable(angular.copy(self.variable));
       else {
