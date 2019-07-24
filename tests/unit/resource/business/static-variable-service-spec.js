@@ -1,4 +1,4 @@
-xdescribe('StaticVariableService Suite', function () {
+describe('StaticVariableService', function () {
 
   var service;
   var Mock = {};
@@ -16,14 +16,13 @@ xdescribe('StaticVariableService Suite', function () {
       Injections.RemoveStaticVariableEventFactory = _$injector_.get('resources.core.RemoveStaticVariableEventFactory');
       Injections.UpdateStaticVariableEventFactory = _$injector_.get('resources.core.UpdateStaticVariableEventFactory');
       Injections.WorkspaceService.workspace = mockWorkspace();
-      Mock.item = _$injector_.get('SurveyFactory').create('TEST');
 
       service = _$injector_.get('resources.business.StaticVariableService', Injections);
 
-      spyOn(Injections.WorkspaceService, "getSurvey");
-      spyOn(Injections.AddStaticVariableEventFactory, "create");
-      spyOn(Injections.RemoveStaticVariableEventFactory, "create");
-      spyOn(Injections.UpdateStaticVariableEventFactory, "create");
+      spyOn(Injections.WorkspaceService, "getSurvey").and.returnValue({ createStaticVariable: () => { } });
+      spyOn(Injections.AddStaticVariableEventFactory, 'create').and.returnValue({ execute: () => { } });
+      spyOn(Injections.RemoveStaticVariableEventFactory, 'create').and.returnValue({ execute: () => { } });
+      spyOn(Injections.UpdateStaticVariableEventFactory, 'create').and.returnValue({ execute: () => { } });
     });
   });
 
@@ -36,36 +35,32 @@ xdescribe('StaticVariableService Suite', function () {
   describe('createStructureToStaticVariable method', function () {
     it('should call getSurvey method', function () {
       service.createStructureToStaticVariable();
-      expect(Injections.WorkspaceService.getSurvey).toHaveBeenCalledTimes(1);
-    });
 
-    it('should call createStaticVariable method', function () {
-      service.createStructureToStaticVariable();
-      expect(Injections.WorkspaceService.getSurvey().createStaticVariable).toHaveBeenCalledTimes(1);
+      expect(Injections.WorkspaceService.getSurvey).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('createVariable method', function () {
-    it('should call execute method', function () {
+    it('should call create method', function () {
       service.createVariable(Mock.variable);
+
+      expect(Injections.AddStaticVariableEventFactory.create).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('removeVariable method', function () {
     it('should call execute method', function () {
-      service.removeVariable(Mock.variable);
+      service.removeVariable(0);
+
+      expect(Injections.RemoveStaticVariableEventFactory.create).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('updateVariable method', function () {
     it('should call execute method', function () {
-      service.updateVariable(Mock.variable);
-    });
-  });
+      service.updateVariable(0, Mock.variable);
 
-  describe('getStaticVariableList method', function () {
-    it('should call execute method', function () {
-      service.getStaticVariableList();
+      expect(Injections.UpdateStaticVariableEventFactory.create).toHaveBeenCalledTimes(1);
     });
   });
 

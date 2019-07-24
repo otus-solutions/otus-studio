@@ -11,12 +11,13 @@
   Controller.$inject = [
     '$scope',
     '$mdDialog',
+    '$mdToast',
     '$location',
     '$anchorScroll',
     'resources.business.StaticVariableService'
   ];
 
-  function Controller($scope, $mdDialog, $location, $anchorScroll, StaticVariableService) {
+  function Controller($scope, $mdDialog, $mdToast, $location, $anchorScroll, StaticVariableService) {
     var MESSAGE_TO_REMOVE = 'Excluir variável';
     var MESSAGE_GENERIC = 'Você tem certeza que deseja realizar essa operação?';
     var _indexOfVariableInEdition = -1;
@@ -57,15 +58,22 @@
     }
 
     function saveVariable() {
-      // TODO: validar campos de entrada!
-      if (!self.isEdition)
-        StaticVariableService.createVariable(angular.copy(self.variable));
-      else {
-        StaticVariableService.updateVariable(_indexOfVariableInEdition, angular.copy(self.variable));
-        self.isEdition = false;
+      if (_isValidInputData()) {
+        if (!self.isEdition)
+          StaticVariableService.createVariable(angular.copy(self.variable));
+        else {
+          StaticVariableService.updateVariable(_indexOfVariableInEdition, angular.copy(self.variable));
+          self.isEdition = false;
+        }
+        _clearAllFields();
+        _getStaticVariableList();
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Os campos nome, descrição e envio correspondente são de preenchimento obrigatorio')
+            .hideDelay(5000)
+        );
       }
-      _clearAllFields();
-      _getStaticVariableList();
     }
 
     function cancel() {
@@ -110,6 +118,10 @@
     function removeCustomFields() {
       self.variable.customized = false;
       self.variable.customizations = [];
+    }
+
+    function _isValidInputData() {
+      return self.variable.name && self.variable.label && self.variable.sending;
     }
 
     function _clearCustomFields() {
