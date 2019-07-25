@@ -55,22 +55,6 @@ describe('LoginController_Suite', function () {
     });
   });
 
-  describe('addCustom method', function () {
-
-    beforeEach(function () {
-      ctrl.$onInit();
-      ctrl.customization = { value: "1", label: "Sim" };
-      spyOn(ctrl.variable, "addCustomization");
-    });
-
-    it('should call addCustomization method', function () {
-      ctrl.addCustom();
-
-      expect(ctrl.variable.addCustomization).toHaveBeenCalledTimes(1);
-    });
-
-  });
-
   describe('saveVariable method', function () {
 
     beforeEach(function () {

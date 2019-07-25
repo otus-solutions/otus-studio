@@ -48,9 +48,17 @@
     }
 
     function addCustom() {
-      var customization = angular.copy(self.customization);
-      self.variable.addCustomization(customization.value, customization.label);
-      _clearCustomFields();
+      if (_isFieldValidForCustom(self.customization, self.variable)) {
+        var customization = angular.copy(self.customization);
+        self.variable.customizations.push(customization);
+        _clearCustomFields();
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Os campos de personalização não devem ser repetir.')
+            .hideDelay(5000)
+        );
+      }
     }
 
     function removeCustom(index) {
@@ -118,6 +126,15 @@
     function removeCustomFields() {
       self.variable.customized = false;
       self.variable.customizations = [];
+    }
+
+    function _isFieldValidForCustom(newCustom, variable) {
+      var isValid = true;
+      variable.customizations.forEach(function (customizatio) {
+        if (newCustom.value === customizatio.value)
+          isValid = false;
+      });
+      return isValid;
     }
 
     function _isValidInputData() {
