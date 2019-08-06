@@ -57,7 +57,20 @@
     }
 
     function createSurveyGroup() {
-      var data = {};
+
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
+        header: "Excluir Questão "+self.item.customID,
+        //ctrl: 'SurveyItemOrderChangeController',
+        //item: self.item,
+        //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
+        //questions: WorkspaceService.getSurvey().getItems(),
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme"}
+          //{message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
+        ]
+      };
 
       DialogService.show(data)
 

@@ -1,0 +1,56 @@
+<md-dialog flex flex-gt-sm="60" flex-gt-md="45" flex-gt-lg="35">
+  <form ng-cloak flex>
+    <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
+      <div class="md-toolbar-tools">
+        <h2>Criação de Grupo de Questões</h2>
+        <span flex></span>
+        <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
+          <md-icon>close</md-icon>
+          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content flex="100" id="dialogContent">
+      <div class="md-dialog-content md-padding"  layout="column" layout-align="start start" layout-wrap flex>
+        <div>
+          <h3>Informe quais questões farão parte do grupo</h3>
+        </div>
+        <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center" layout-align="start center" layout-fill>
+          <span flex="10" layout-align="end end" layout="row">Mover:</span>
+          <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">
+            {{$ctrl.position}} - {{$ctrl.item.customID}}
+          </md-card>
+          <span flex="5"></span>
+          <md-input-container flex flex-gt-xs="20" style="width: 500px">
+            <label>Critério</label>
+            <md-select ng-model="$ctrl.selectedCriteria" flex ng-change="$ctrl.isBeginQuestion()">
+              <md-option ng-repeat="criteria in $ctrl.criterias" ng-value="criteria.value">
+                {{criteria.label}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container flex="25" ng-show="$ctrl.selectedCriteria == 0">
+          </md-input-container>
+          <span flex="5"></span>
+          <md-input-container flex-gt-xs="25" flex ng-if="$ctrl.selectedCriteria > 0" style="width: 500px">
+            <label>Questão</label>
+            <md-select ng-model="$ctrl.selectedQuestionNeighbor" flex>
+              <md-option ng-repeat="question in $ctrl.questions" ng-value="question.position" ng-selected="$index == 0">
+                {{question.position + 1}} - {{question.customID}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <span flex="15"></span>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <div ng-repeat="button in $ctrl.BUTTONS">
+        <md-button  class="{{ button.class }}" ng-click="button.action($ctrl.item, $ctrl.selectedQuestionNeighbor + 1)" aria-label="button">
+          <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
+          {{button.message}}
+        </md-button>
+        <span flex></span>
+      </div>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
