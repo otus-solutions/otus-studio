@@ -12,9 +12,13 @@
       }
     }).controller('otusSurveyItemEditorCtrl', Controller);
 
-  Controller.$inject = ['$scope']
+  Controller.$inject = [
+    '$scope',
+    '$mdDialog',
+    'DialogService',
+  ]
 
-  function Controller($scope) {
+  function Controller($scope, $mdDialog, DialogService) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
@@ -22,6 +26,7 @@
     self.getItem = getItem;
     self.getQuestionId = getQuestionId;
     self.getStyle = getStyle;
+    self.createSurveyGroup = createSurveyGroup;
 
     function onInit() {
       $scope.$on('surveyItemSelected', setIndex);
@@ -51,6 +56,13 @@
       return {}
     }
 
+    function createSurveyGroup() {
+      var data = {};
+
+      DialogService.show(data)
+
+
+    }
   }
 
 }());
