@@ -26,7 +26,7 @@
     self.getItem = getItem;
     self.getQuestionId = getQuestionId;
     self.getStyle = getStyle;
-    self.createSurveyGroup = createSurveyGroup;
+    self.editorSurveyItemGroup = editorSurveyItemGroup;
 
     function onInit() {
       $scope.$on('surveyItemSelected', setIndex);
@@ -56,11 +56,11 @@
       return {}
     }
 
-    function createSurveyGroup() {
+    function editorSurveyItemGroup() {
 
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
-        header: "Excluir Questão "+self.item.customID,
+        //header: "Excluir Questão "+self.item.customID,
         //ctrl: 'SurveyItemOrderChangeController',
         //item: self.item,
         //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
@@ -71,10 +71,7 @@
           //{message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
         ]
       };
-
       DialogService.show(data)
-
-
     }
   }
 

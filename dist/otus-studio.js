@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   angular
     .module('studio', [
@@ -8,12 +8,14 @@
       'studio.dashboard',
       'studio.authenticator',
       'editor',
+      'resources',
       'otusjs',
       'preview',
       'otusjs.studio.navigationBuilder',
       'surveyTemplates',
       /* Otus platform modules */
       'ui.components',
+      'studio.commons',
       'utils',
       /* otusjs.player */
       'otusjs.player.core',
@@ -52,19 +54,6 @@
             DashboardStateService.goToHome();
         }
     }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor', [
-      'editor.core',
-      'editor.database',
-      'editor.ui',
-      'editor.workspace'
-    ]);
 
 }());
 
@@ -295,9 +284,88 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor', [
+      'editor.core',
+      'editor.database',
+      'editor.ui',
+      'editor.workspace'
+    ]);
+
+}());
+
+(function() {
     'use strict';
 
     angular.module('studio.dashboard', []);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('preview')
+    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
+
+  function otusSurveyPreviewGenerator() {
+    var ddo = {
+      restrict: 'A',
+      controller: Controller
+    };
+    return ddo;
+  }
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    '$compile',
+    'WorkspaceService',
+    'otusjs.model.activity.ActivityFacadeService',
+    'otusjs.player.core.player.PlayerService'
+  ];
+
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
+    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
+    var _newScope;
+    var _user = undefined;
+    var _participant = undefined;
+    var _activityConfigurationName = "C0";
+
+    $element.on('click', function() {
+      var otusSheetDOMElement = $('otus-player');
+
+      if (otusSheetDOMElement[0]) {
+        otusSheetDOMElement.remove();
+        if (_newScope) {
+          _newScope.$destroy();
+        }
+      }
+      _generateOtusPreview();
+      PlayerService.setup();
+    });
+
+    function _generateOtusPreview() {
+      _newScope = $scope.$new(true);
+      _newScope.surveyActivity = {};
+      _newScope.surveyActivity.template = _getSurveyTemplateObject();
+      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
+      $('#survey-preview').append(content);
+    }
+
+    function _getSurveyTemplateObject() {
+      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
+    }
+  }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('preview', []);
 
 }());
 
@@ -389,69 +457,15 @@
     ]);
 }());
 
-(function() {
+(function () {
   'use strict';
 
   angular
-    .module('preview')
-    .directive('otusSurveyPreviewGenerator', otusSurveyPreviewGenerator);
-
-  function otusSurveyPreviewGenerator() {
-    var ddo = {
-      restrict: 'A',
-      controller: Controller
-    };
-    return ddo;
-  }
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    '$compile',
-    'WorkspaceService',
-    'otusjs.model.activity.ActivityFacadeService',
-    'otusjs.player.core.player.PlayerService'
-  ];
-
-  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
-    var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
-    var _newScope;
-    var _user = undefined;
-    var _participant = undefined;
-    var _activityConfigurationName = "C0";
-
-    $element.on('click', function() {
-      var otusSheetDOMElement = $('otus-player');
-
-      if (otusSheetDOMElement[0]) {
-        otusSheetDOMElement.remove();
-        if (_newScope) {
-          _newScope.$destroy();
-        }
-      }
-      _generateOtusPreview();
-      PlayerService.setup();
-    });
-
-    function _generateOtusPreview() {
-      _newScope = $scope.$new(true);
-      _newScope.surveyActivity = {};
-      _newScope.surveyActivity.template = _getSurveyTemplateObject();
-      var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
-      $('#survey-preview').append(content);
-    }
-
-    function _getSurveyTemplateObject() {
-      ActivityFacadeService.createActivity(WorkspaceService.getSurvey(), _user, _participant,_activityConfigurationName);
-    }
-  }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular.module('preview', []);
+    .module('resources', [
+      'resources.business',
+      'resources.core',
+      'resource.ui'
+    ]);
 
 }());
 
@@ -1016,6 +1030,13 @@
 //# sourceMappingURL=angular-indexed-db.min.js.map
 
 (function() {
+
+    angular
+        .module('studio.commons', ['ngSanitize']);
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -1139,124 +1160,82 @@
 (function() {
 
     angular
-        .module('ui.components', []);
+        .module('ui.components', ['ngSanitize']);
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+      .module('resources.business', []);
 
 }());
 
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('editor.database')
-        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
+  angular
+    .module('resources.business')
+    .service('resources.business.StaticVariableService', Service);
 
-    CrossSessionDatabaseService.$inject = [
-        '$q',
-        '$indexedDB'
-    ];
+  Service.$inject = [
+    'WorkspaceService',
+    'resources.core.AddStaticVariableEventFactory',
+    'resources.core.RemoveStaticVariableEventFactory',
+    'resources.core.UpdateStaticVariableEventFactory'
+  ];
 
-    function CrossSessionDatabaseService($q, $indexedDB) {
-        var self = this,
-            STORE_NAME = 'survey_template',
-            INDEX = 'contributor_idx';
+  function Service(WorkspaceService, AddStaticVariableEventFactory, RemoveStaticVariableEventFactory, UpdateStaticVariableEventFactory) {
+    var self = this;
 
-        /* Public interface */
-        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
-        self.getAllSurveyTemplates = getAllSurveyTemplates;
-        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
-        self.deleteSurveyTemplate = deleteSurveyTemplate;
-        self.insertSurveyTemplate = insertSurveyTemplate;
-        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
+    /* Public methods */
+    self.createStructureToStaticVariable = createStructureToStaticVariable;
+    self.createVariable = createVariable;
+    self.removeVariable = removeVariable;
+    self.updateVariable = updateVariable;
+    self.getStaticVariableList = getStaticVariableList;
 
-        function saveSurveyTemplateRevision(template, session) {
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                var entry = {};
-                entry.template_oid = template.oid;
-                entry.contributor = session.owner;
-                entry.template = _removeInternalFunctions(template);
-                store.upsert(entry).then(function (e) { });
-            });
-        }
-
-        function insertSurveyTemplate(template, session) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                var parsedTemplate = JSON.parse(template);
-                var entry = {};
-                entry.template_oid = parsedTemplate.oid;
-                entry.contributor = session.owner;
-                entry.template = parsedTemplate;
-                store.insert(entry).then(function (success) {
-                    defer.resolve(success);
-                }, function (error) {
-                    defer.reject(error);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplates() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                store.getAll().then(function (templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function getAllSurveyTemplatesByContributor() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-
-                var criteria = store.query();
-                criteria = criteria.$eq('visitor');
-                criteria = criteria.$index(INDEX);
-
-                store.eachWhere(criteria).then(function (templates) {
-                    defer.resolve(templates);
-                });
-            });
-            return defer.promise;
-        }
-
-        function deleteSurveyTemplate(templateOID) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                store.delete(templateOID).then(function () {
-                    defer.resolve(true);
-                });
-            });
-            return defer.promise;
-        }
-
-        /**
-         * Returns a User + UUID Template + Repository in Base64
-         */
-        function getAllKeys() {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                store.getAllKeys().then(function (e) {
-                    defer.resolve(e);
-                });
-            });
-            return defer.promise;
-        }
-
-        function findSurveyTemplateByOID(oid) {
-            var defer = $q.defer();
-            $indexedDB.openStore(STORE_NAME, function (store) {
-                store.find(oid).then(function (template) {
-                    defer.resolve(template);
-                });
-            });
-            return defer.promise;
-        }
-
-        function _removeInternalFunctions(template) {
-            return JSON.parse(JSON.stringify(template));
-        }
+    function createStructureToStaticVariable() {
+      return WorkspaceService.getSurvey().createStaticVariable();
     }
+
+    function createVariable(variable) {
+      AddStaticVariableEventFactory.create().execute(variable);
+    }
+
+    function removeVariable(index) {
+      RemoveStaticVariableEventFactory.create().execute(index);
+    }
+
+    function updateVariable(index, variable) {
+      UpdateStaticVariableEventFactory.create().execute(index, variable);
+    }
+
+    function getStaticVariableList() {
+      if (WorkspaceService.getSurvey().StaticVariableManager)
+        return WorkspaceService.getSurvey().StaticVariableManager.getStaticVariableList();
+      else
+        return [];
+    }
+
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+      .module('resources.core', []);
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('resource.ui', []);
+
 }());
 
 (function() {
@@ -1337,6 +1316,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1379,6 +1359,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1419,6 +1400,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1510,6 +1492,47 @@
 
     angular
         .module('editor.core')
+        .factory('MoveSurveyItemEventFactory', MoveSurveyItemEventFactory);
+
+    MoveSurveyItemEventFactory.$inject = [
+        '$rootScope',
+        'WorkspaceService',
+        'MoveSurveyItemService',
+    ];
+
+    function MoveSurveyItemEventFactory($rootScope, WorkspaceService, MoveSurveyItemService) {
+        var self = this;
+
+        /* Public interface */
+        self.create = create;
+
+        function create() {
+            return new MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService);
+        }
+
+        return self;
+    }
+
+    function MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService) {
+        var self = this;
+
+        self.execute = execute;
+
+        function execute(item, position) {
+            MoveSurveyItemService.execute(WorkspaceService.getSurvey(), item, position);
+            $rootScope.$broadcast('item.move.' + item.templateID, item);
+            WorkspaceService.workspace.isdb.userEdits.store(self);
+            WorkspaceService.saveWork();
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.core')
         .factory('RemoveFillingRulesEventFactory', RemoveFillingRulesEventFactory);
 
     RemoveFillingRulesEventFactory.$inject = [
@@ -1583,6 +1606,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1622,6 +1646,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1813,6 +1838,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1850,6 +1876,7 @@
 
 }());
 
+//interation 134 - we did not find any injection of this factory
 (function() {
     'use strict';
 
@@ -1885,6 +1912,122 @@
         }
     }
 
+}());
+
+(function () {
+    'use strict';
+
+    angular
+        .module('editor.database')
+        .service('CrossSessionDatabaseService', CrossSessionDatabaseService);
+
+    CrossSessionDatabaseService.$inject = [
+        '$q',
+        '$indexedDB'
+    ];
+
+    function CrossSessionDatabaseService($q, $indexedDB) {
+        var self = this,
+            STORE_NAME = 'survey_template',
+            INDEX = 'contributor_idx';
+
+        /* Public interface */
+        self.saveSurveyTemplateRevision = saveSurveyTemplateRevision;
+        self.getAllSurveyTemplates = getAllSurveyTemplates;
+        self.getAllSurveyTemplatesByContributor = getAllSurveyTemplatesByContributor;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
+        self.insertSurveyTemplate = insertSurveyTemplate;
+        self.findSurveyTemplateByOID = findSurveyTemplateByOID;
+
+        function saveSurveyTemplateRevision(template, session) {
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                var entry = {};
+                entry.template_oid = template.oid;
+                entry.contributor = session.owner;
+                entry.template = _removeInternalFunctions(template);
+                store.upsert(entry).then(function (e) { });
+            });
+        }
+
+        function insertSurveyTemplate(template, session) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                var parsedTemplate = JSON.parse(template);
+                var entry = {};
+                entry.template_oid = parsedTemplate.oid;
+                entry.contributor = session.owner;
+                entry.template = parsedTemplate;
+                store.insert(entry).then(function (success) {
+                    defer.resolve(success);
+                }, function (error) {
+                    defer.reject(error);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplates() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAll().then(function (templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function getAllSurveyTemplatesByContributor() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+
+                var criteria = store.query();
+                criteria = criteria.$eq('visitor');
+                criteria = criteria.$index(INDEX);
+
+                store.eachWhere(criteria).then(function (templates) {
+                    defer.resolve(templates);
+                });
+            });
+            return defer.promise;
+        }
+
+        function deleteSurveyTemplate(templateOID) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.delete(templateOID).then(function () {
+                    defer.resolve(true);
+                });
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Returns a User + UUID Template + Repository in Base64
+         */
+        function getAllKeys() {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.getAllKeys().then(function (e) {
+                    defer.resolve(e);
+                });
+            });
+            return defer.promise;
+        }
+
+        function findSurveyTemplateByOID(oid) {
+            var defer = $q.defer();
+            $indexedDB.openStore(STORE_NAME, function (store) {
+                store.find(oid).then(function (template) {
+                    defer.resolve(template);
+                });
+            });
+            return defer.promise;
+        }
+
+        function _removeInternalFunctions(template) {
+            return JSON.parse(JSON.stringify(template));
+        }
+    }
 }());
 
 (function() {
@@ -2530,7 +2673,7 @@
     self.$onInit = function () {
       PageAnchorService.setUp(self.template.SurveyItemManager);
       $window.sessionStorage.setItem('surveyTemplate_OID', WorkspaceService.getSurvey().oid);
-    }
+    };
 
     self.$onDestroy = function() {
       WorkspaceService.closeWork();
@@ -2596,26 +2739,41 @@
     .module('editor.ui')
     .component('otusSurveyItemEditor', {
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-editor.html',
-      controller: Controller,
+      controller: 'otusSurveyItemEditorCtrl as $ctrl',
       bindings: {
-        item: '<'
+        item: '<',
+        position: '<'
       }
-    });
+    }).controller('otusSurveyItemEditorCtrl', Controller);
 
   Controller.$inject = [
-    'RemoveSurveyItemEventFactory'
-  ];
+    '$scope',
+    '$mdDialog',
+    'DialogService',
+  ]
 
-  function Controller(RemoveSurveyItemEventFactory) {
+  function Controller($scope, $mdDialog, DialogService) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
     // public methods
     self.getItem = getItem;
-    self.deleteSurveyItem = deleteSurveyItem;
     self.getQuestionId = getQuestionId;
+    self.getStyle = getStyle;
+    self.editorSurveyItemGroup = editorSurveyItemGroup;
 
-    function onInit() {}
+    function onInit() {
+      $scope.$on('surveyItemSelected', setIndex);
+      $scope.$on('clearSurveyItemSelected', _clearIndex);
+    }
+
+    function setIndex($event, index) {
+      self.index = index;
+    }
+
+    function _clearIndex($event) {
+      delete self.index;
+    }
 
     function getItem() {
       return self.item;
@@ -2625,8 +2783,29 @@
       return self.getItem().templateID;
     }
 
-    function deleteSurveyItem() {
-      RemoveSurveyItemEventFactory.create().execute(self.item);
+    function getStyle(position) {
+      if(self.index == position){
+        return {"background-color":"#E88024"}
+      }
+      return {}
+    }
+
+    function editorSurveyItemGroup() {
+
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
+        //header: "Excluir Questão "+self.item.customID,
+        //ctrl: 'SurveyItemOrderChangeController',
+        //item: self.item,
+        //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
+        //questions: WorkspaceService.getSurvey().getItems(),
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme"}
+          //{message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
+        ]
+      };
+      DialogService.show(data)
     }
   }
 
@@ -6099,7 +6278,7 @@
 
   angular
     .module('otusjs.studio.navigationBuilder.navigationRoutePriority')
-    .controller('dialogController', DialogController);
+    .controller('otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogController', DialogController);
 
   DialogController.$inject = [
     'locals',
@@ -6213,7 +6392,7 @@
       self.node = node;
 
       return $mdDialog.show({
-        controller: 'dialogController',
+        controller: 'otusjs.studio.navigationBuilder.navigationRoutePriority.RoutePriorityDialogController',
         locals: { node: self.node },
         templateUrl: 'app/navigation-builder/route-priority/dialog/route-priority-dialog-template.html',
         parent: angular.element(document.body),
@@ -6289,21 +6468,42 @@
     .module('ui.components')
     .component('itemContainer', {
       templateUrl: 'app/shared/ui-components/item-container/item-container-template.html',
-      controller: Controller,
+      controller: 'itemContainerCtrl as $ctrl',
+      bindings: {
+        item: "<",
+        position: "<"
+      },
       transclude: {
         headerSlot: 'itemContainerHeader',
         bodySlot: 'itemContainerBody'
       }
-    });
+    })
+    .controller('itemContainerCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'RemoveSurveyItemEventFactory',
+    'MoveSurveyItemEventFactory',
+    '$mdDialog',
+    'DialogService',
+    'WorkspaceService',
+    '$window',
+    '$mdSelect',
+    '$rootScope',
+    '$timeout'
+  ];
 
-  function Controller() {
+  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect, $rootScope, $timeout) {
     var self = this;
 
+    var DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
+    var DELETE_TITLE = 'ATENÇÃO';
+
     self.changeState = changeState;
+    self.deleteSurveyItem = deleteSurveyItem;
+    self.moveSurveyItem = moveSurveyItem;
 
     self.$onInit = function() {
+      _clearQuestionSelected();
       self.css = {};
       self.template = {};
       self.event = {};
@@ -6315,8 +6515,382 @@
       self.isToShow = !self.isToShow;
       self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
     }
+
+    function _removeQuestion(answer){
+      if(answer){
+        RemoveSurveyItemEventFactory.create().execute(self.item);
+        _clearQuestionSelected(0);
+        $mdDialog.cancel();
+      }
+    }
+
+    function _moveQuestion(item, position){
+      if(item){
+        MoveSurveyItemEventFactory.create().execute(item, position);
+        $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
+        _clearQuestionSelected(2000);
+        $mdDialog.cancel();
+      }
+    }
+
+    function _clearQuestionSelected(time) {
+      $timeout(function () {
+        $rootScope.$broadcast("clearSurveyItemSelected");
+      }, time);
+    }
+
+    function deleteSurveyItem() {
+      var data = {
+        header: "Excluir Questão "+self.item.customID,
+        title: DELETE_TITLE,
+        text: DELETE_MSG,
+        dialogDimensions: {
+          width: '800px'
+        },
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: _removeQuestion}
+        ]
+      };
+      $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
+      DialogService.show(data);
+    }
+
+    function moveSurveyItem() {
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-template.html',
+        header: "Excluir Questão "+self.item.customID,
+        ctrl: 'SurveyItemOrderChangeController',
+        item: self.item,
+        position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
+        questions: WorkspaceService.getSurvey().getItems(),
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
+        ]
+      };
+      $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
+      DialogService.show(data);
+    }
+
+    $window.addEventListener('click',function(e){
+      $mdSelect.hide();
+    });
   }
 
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('resources.core')
+    .factory('resources.core.AddStaticVariableEventFactory', AddStaticVariableEventFactory);
+
+  AddStaticVariableEventFactory.$inject = [
+    'WorkspaceService',
+    'otusjs.staticVariable.AddStaticVariableTaskService'
+  ];
+
+  function AddStaticVariableEventFactory(WorkspaceService, AddStaticVariableTaskService) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create() {
+      return new AddStaticVariableEvent(WorkspaceService, AddStaticVariableTaskService);
+    }
+
+    return self;
+  }
+
+  function AddStaticVariableEvent(WorkspaceService, AddStaticVariableTaskService) {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(variable) {
+      AddStaticVariableTaskService.execute(WorkspaceService.getSurvey(), variable);
+      WorkspaceService.saveWork();
+    }
+  }
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('resources.core')
+    .factory('resources.core.RemoveStaticVariableEventFactory', RemoveStaticVariableEventFactory);
+
+  RemoveStaticVariableEventFactory.$inject = [
+    'WorkspaceService',
+    'otusjs.staticVariable.RemoveStaticVariableTaskService'
+  ];
+
+  function RemoveStaticVariableEventFactory(WorkspaceService, RemoveStaticVariableTaskService) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create() {
+      return new RemoveStaticVariableEvent(WorkspaceService, RemoveStaticVariableTaskService);
+    }
+
+    return self;
+  }
+
+  function RemoveStaticVariableEvent(WorkspaceService, RemoveStaticVariableTaskService) {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(index) {
+      RemoveStaticVariableTaskService.execute(WorkspaceService.getSurvey(), index);
+      WorkspaceService.saveWork();
+    }
+  }
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('resources.core')
+    .factory('resources.core.UpdateStaticVariableEventFactory', UpdateStaticVariableEventFactory);
+
+  UpdateStaticVariableEventFactory.$inject = [
+    'WorkspaceService',
+    'otusjs.staticVariable.UpdateStaticVariableTaskService'
+  ];
+
+  function UpdateStaticVariableEventFactory(WorkspaceService, UpdateStaticVariableTaskService) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create() {
+      return new UpdateStaticVariableEvent(WorkspaceService, UpdateStaticVariableTaskService);
+    }
+
+    return self;
+  }
+
+  function UpdateStaticVariableEvent(WorkspaceService, UpdateStaticVariableTaskService) {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(index, variable) {
+      UpdateStaticVariableTaskService.execute(WorkspaceService.getSurvey(), index, variable);
+      WorkspaceService.saveWork();
+    }
+  }
+
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('resource.ui')
+    .component('studioStaticVariable', {
+      controller: 'studioStaticVariableCtrl as $ctrl',
+      templateUrl: 'app/resource/ui/static-variable/static-variable-template.html'
+    });
+}());
+(function () {
+  'use strict';
+
+  angular
+    .module('resource.ui')
+    .run(['$anchorScroll', function ($anchorScroll) {
+      $anchorScroll.yOffset = 50;
+    }])
+    .controller('studioStaticVariableCtrl', Controller);
+
+  Controller.$inject = [
+    '$scope',
+    '$mdDialog',
+    '$mdToast',
+    '$location',
+    '$anchorScroll',
+    'resources.business.StaticVariableService'
+  ];
+
+  function Controller($scope, $mdDialog, $mdToast, $location, $anchorScroll, StaticVariableService) {
+    var MESSAGE_TO_REMOVE = 'Excluir variável';
+    var MESSAGE_GENERIC = 'Você tem certeza que deseja realizar essa operação?';
+    var _indexOfVariableInEdition = -1;
+    var self = this;
+    self.disabled = true;
+    self.isEdition = false;
+    self.variablesList = [];
+
+    /* Public methods */
+    self.$onInit = onInit;
+    self.isCustomize = isCustomize;
+    self.addCustom = addCustom;
+    self.removeCustom = removeCustom;
+    self.saveVariable = saveVariable;
+    self.cancel = cancel;
+    self.variablesListIsEmpty = variablesListIsEmpty;
+    self.editVariable = editVariable;
+    self.removeVariable = removeVariable;
+    self.removeCustomFields = removeCustomFields;
+
+    function onInit() {
+      self.variable = StaticVariableService.createStructureToStaticVariable();
+      _getStaticVariableList();
+    }
+
+    function isCustomize() {
+      return self.variable.customized;
+    }
+
+    function addCustom() {
+      if (_isFieldValidForCustom(self.customization, self.variable)) {
+        var customization = angular.copy(self.customization);
+        self.variable.customizations.push(customization);
+        _clearCustomFields();
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Os campos de personalização não devem ser repetir.')
+            .hideDelay(5000)
+        );
+      }
+    }
+
+    function removeCustom(index) {
+      self.variable.customizations.splice(index, 1);
+    }
+
+    function saveVariable() {
+      if (_isValidInputData()) {
+        if (!self.isEdition)
+          StaticVariableService.createVariable(angular.copy(self.variable));
+        else {
+          StaticVariableService.updateVariable(_indexOfVariableInEdition, angular.copy(self.variable));
+          self.isEdition = false;
+        }
+        _clearAllFields();
+        _getStaticVariableList();
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Os campos nome, descrição e envio correspondente são de preenchimento obrigatorio')
+            .hideDelay(5000)
+        );
+      }
+    }
+
+    function cancel() {
+      _clearAllFields();
+      self.isEdition = false;
+    }
+
+    function variablesListIsEmpty() {
+      if (self.variablesList)
+        return !self.variablesList.length > 0;
+      return true;
+    }
+
+    function editVariable(index) {
+      var toEdition = self.variablesList.find(function (variable, i) {
+        if (i === index)
+          return variable;
+      });
+      self.variable = angular.copy(toEdition);
+      _indexOfVariableInEdition = index;
+      self.isEdition = true;
+      _scrollToTop();
+    }
+
+    function removeVariable(index, event) {
+      $mdDialog.show({
+        controller: _DialogController,
+        templateUrl: 'app/resource/ui/generic-dialog/generic-dialog-template.html',
+        parent: angular.element(document.body),
+        targetEvent: event,
+        clickOutsideToClose: true,
+        fullscreen: $scope.customFullscreen,
+        locals: {
+          title: MESSAGE_TO_REMOVE,
+          body: MESSAGE_GENERIC
+        }
+      }).then(function () {
+        StaticVariableService.removeVariable(index);
+      }, function () { });
+    }
+
+    function removeCustomFields() {
+      self.variable.customized = false;
+      self.variable.customizations = [];
+    }
+
+    function _isFieldValidForCustom(newCustom, variable) {
+      var isValid = true;
+      variable.customizations.forEach(function (customizatio) {
+        if (newCustom.value === customizatio.value)
+          isValid = false;
+      });
+      return isValid;
+    }
+
+    function _isValidInputData() {
+      return self.variable.name && self.variable.label && self.variable.sending;
+    }
+
+    function _clearCustomFields() {
+      self.customization.value = '';
+      self.customization.label = '';
+    }
+
+    function _DialogController($scope, $mdDialog, title, body) {
+      $scope.title = '';
+      $scope.body = '';
+      /* Lifecycle hooks */
+      _onInit();
+
+      function _onInit() {
+        $scope.title = title;
+        $scope.body = body;
+      }
+
+      /* Public methods */
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function () {
+        $mdDialog.hide();
+      };
+    }
+
+    function _scrollToTop() {
+      var newHash = 'inputFields';
+      if ($location.hash() !== newHash) {
+        $location.hash('inputFields');
+      } else {
+        $anchorScroll();
+      }
+    };
+
+    function _getStaticVariableList() {
+      self.variablesList = StaticVariableService.getStaticVariableList();
+    }
+
+    function _clearAllFields() {
+      self.variable = StaticVariableService.createStructureToStaticVariable();
+    }
+
+  }
 }());
 
 (function() {
@@ -6395,6 +6969,8 @@
 
 }());
 
+//interation 134 - is only injected into FileUploadQuestionWidgetFactory but is not being used
+
 (function() {
   'use strict';
 
@@ -6433,6 +7009,7 @@
 
 }());
 
+//interation 134 - is only injected into FileUploadQuestionWidgetFactory but is not being used
 (function() {
   'use strict';
 
@@ -6744,6 +7321,106 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .component('otusExtractionValue', {
+      templateUrl: 'app/editor/ui/base/extraction-value/extraction-value.html',
+      controller: Controller,
+      bindings: {
+        option: '<',
+        checkFunction: '&'
+      }
+    });
+
+  Controller.$inject = ['$element', 'otusjs.studio.editor.ui.ExtractionValueService'];
+
+  function Controller($element, ExtractionValueService) {
+    var _checkFunction;
+    var _option;
+
+    self = this;
+    self.$onInit = onInit;
+    self.$postLink = postLink;
+
+    function onInit() {
+      _checkFunction = self.checkFunction;
+      _option = self.option;
+    }
+
+    function postLink() {
+      $element.children()[0].innerText = _option.extractionValue;
+      $element.on('focusout', _execute);
+    }
+
+    function _execute(event) {
+      ExtractionValueService.execute(event, _option, _checkFunction);
+    }
+  }
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .service('otusjs.studio.editor.ui.ExtractionValueService', Service);
+
+  Service.$inject = [
+    'UpdateQuestionEventFactory',
+    '$mdToast'
+  ];
+
+  function Service(UpdateQuestionEventFactory, $mdToast) {
+    var self = this;
+
+    self.execute = execute;
+
+    function execute(event, option, checkFunction) {
+      var newValue = removeAllBlankSpaces(event.target.innerText);
+
+      if (newValue === option.extractionValue.toString() || isEmpty(newValue)) {
+        updateView(event, option);
+      } else {
+        if (hasChanges(newValue, option)) {
+          if (checkFunction({
+              $event: {
+                newValue: newValue
+              }
+            })) {
+            option.setExtractionValue(newValue);
+            UpdateQuestionEventFactory.create().execute(self);
+            updateView(event, option);
+          } else {
+            $mdToast.show($mdToast.simple().textContent('O valor não pode ser repetido.'));
+            updateView(event, option);
+          }
+        }
+      }
+    }
+
+    function isEmpty(newValue) {
+      return newValue === '';
+    }
+
+    function removeAllBlankSpaces(newValue) {
+      return newValue.replace(/\s/g, '');
+    }
+
+    function updateView(event, option) {
+      event.target.innerText = option.extractionValue;
+    }
+
+    function hasChanges(newValue, option) {
+      return newValue !== option.extractionValue;
+    }
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -6855,106 +7532,6 @@
 
     function _loadLabel() {
       self.getElement().children()[0].innerHTML = self.getLabel();
-    }
-  }
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('otusExtractionValue', {
-      templateUrl: 'app/editor/ui/base/extraction-value/extraction-value.html',
-      controller: Controller,
-      bindings: {
-        option: '<',
-        checkFunction: '&'
-      }
-    });
-
-  Controller.$inject = ['$element', 'otusjs.studio.editor.ui.ExtractionValueService'];
-
-  function Controller($element, ExtractionValueService) {
-    var _checkFunction;
-    var _option;
-
-    self = this;
-    self.$onInit = onInit;
-    self.$postLink = postLink;
-
-    function onInit() {
-      _checkFunction = self.checkFunction;
-      _option = self.option;
-    }
-
-    function postLink() {
-      $element.children()[0].innerText = _option.extractionValue;
-      $element.on('focusout', _execute);
-    }
-
-    function _execute(event) {
-      ExtractionValueService.execute(event, _option, _checkFunction);
-    }
-  }
-
-})();
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .service('otusjs.studio.editor.ui.ExtractionValueService', Service);
-
-  Service.$inject = [
-    'UpdateQuestionEventFactory',
-    '$mdToast'
-  ];
-
-  function Service(UpdateQuestionEventFactory, $mdToast) {
-    var self = this;
-
-    self.execute = execute;
-
-    function execute(event, option, checkFunction) {
-      var newValue = removeAllBlankSpaces(event.target.innerText);
-
-      if (newValue === option.extractionValue.toString() || isEmpty(newValue)) {
-        updateView(event, option);
-      } else {
-        if (hasChanges(newValue, option)) {
-          if (checkFunction({
-              $event: {
-                newValue: newValue
-              }
-            })) {
-            option.setExtractionValue(newValue);
-            UpdateQuestionEventFactory.create().execute(self);
-            updateView(event, option);
-          } else {
-            $mdToast.show($mdToast.simple().textContent('O valor não pode ser repetido.'));
-            updateView(event, option);
-          }
-        }
-      }
-    }
-
-    function isEmpty(newValue) {
-      return newValue === '';
-    }
-
-    function removeAllBlankSpaces(newValue) {
-      return newValue.replace(/\s/g, '');
-    }
-
-    function updateView(event, option) {
-      event.target.innerText = option.extractionValue;
-    }
-
-    function hasChanges(newValue, option) {
-      return newValue !== option.extractionValue;
     }
   }
 
@@ -7225,6 +7802,106 @@
     return mapping[objectType];
   }
 
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .controller('SurveyItemOrderChangeController', DialogController);
+
+  function DialogController(data) {
+    var vm = this;
+
+    vm.selectedQuestionNeighbor = 0;
+    vm.selectedCriteria = 1;
+    vm.item =  data.item;
+    vm.position = data.position;
+    vm.TEXT = data.text;
+    vm.questions =  angular.copy(data.questions) || [];
+
+    vm.questions.forEach(function (question, index) {
+      question.position = index;
+    });
+    vm.questions = vm.questions.filter(function (question) {
+      return question.templateID != data.item.templateID;
+    });
+
+    _buildCriteria();
+
+    vm.BUTTONS = data.buttons || [];
+    vm.cancel = data.cancel;
+
+    vm.isBeginQuestion = function () {
+      vm.selectedQuestionNeighbor = vm.selectedCriteria > 0 ? vm.selectedQuestionNeighbor : -1;
+    };
+    
+    function _buildCriteria() {
+      if (vm.position == 1){
+        vm.criterias = [
+          {label:"Após a", value: 1}
+        ];
+      } else {
+        vm.criterias = [
+          {label:"Início", value: 0},
+          {label:"Após a", value: 1}
+        ];
+      }
+
+    }
+
+  }
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .controller('SurveyItemOrderChangeController', DialogController);
+
+  function DialogController(data) {
+    var vm = this;
+
+    vm.selectedQuestionNeighbor = 0;
+    vm.selectedCriteria = 1;
+    vm.item =  data.item;
+    vm.position = data.position;
+    vm.TEXT = data.text;
+    vm.questions =  angular.copy(data.questions) || [];
+
+    vm.questions.forEach(function (question, index) {
+      question.position = index;
+    });
+    vm.questions = vm.questions.filter(function (question) {
+      return question.templateID != data.item.templateID;
+    });
+
+    _buildCriteria();
+
+    vm.BUTTONS = data.buttons || [];
+    vm.cancel = data.cancel;
+
+    vm.isBeginQuestion = function () {
+      vm.selectedQuestionNeighbor = vm.selectedCriteria > 0 ? vm.selectedQuestionNeighbor : -1;
+    };
+    
+    function _buildCriteria() {
+      if (vm.position == 1){
+        vm.criterias = [
+          {label:"Após a", value: 1}
+        ];
+      } else {
+        vm.criterias = [
+          {label:"Início", value: 0},
+          {label:"Após a", value: 1}
+        ];
+      }
+
+    }
+
+  }
 }());
 
 (function() {
@@ -7823,6 +8500,102 @@
   }
 })();
 
+(function () {
+  'use strict';
+
+  angular
+    .module('studio.commons')
+    .controller('dialogController', DialogController);
+
+
+  function DialogController(data) {
+    var vm = this;
+    var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
+
+    vm.HEADER = data.header;
+    vm.TITLE =  data.title;
+    vm.TEXT = data.text;
+    vm.ariaLabel = data.ariaLabel;
+    vm.IMG = data.img;
+    vm.STYLE = data.style;
+    vm.BUTTONS = Array.isArray(data.buttons) ? data.buttons : [];
+    vm.cancel = data.cancel;
+
+    /* Public methods */
+    vm.isAvailableImage = isAvailableImage;
+
+    useDefaultDimensions();
+
+    function isAvailableImage() {
+      return '' !== data.img;
+    }
+
+    function useDefaultDimensions() {
+      if(!data.dimensionsDialog){
+        vm.dialogDimensions = DEFAULT_DIMENSIONS;
+      } else {
+        vm.dialogDimensions = data.dimensionsDialog;
+      }
+    }
+  }
+}());
+
+(function () {
+  'use strict';
+
+  angular.module('studio.commons')
+    .service("DialogService", Service);
+
+  Service.$inject = ['$mdDialog', '$rootScope'];
+
+  function Service($mdDialog, $rootScope){
+    var self = this;
+
+    self.show = show;
+
+    function _buildCustomDialog(data) {
+      if (data.url || data.ctrl){
+        self.data.url = data.url ? data.url : 'app/shared/commons/dialog/component/dialog-template.html';
+        self.data.ctrl = data.ctrl ? data.ctrl : 'dialogController';
+      } else {
+        self.data.url = 'app/shared/commons/dialog/component/dialog-template.html';
+        self.data.ctrl = 'dialogController';
+      }
+
+      if ("buttons" in self.data) {
+        self.data.buttons.forEach(function (button) {
+          if(!button.action){
+            button.action = cancel;
+          }
+        });
+      } else {
+        self.data.buttons = [
+          {message:'OK',class: 'md-primary md-raised md-layoutTheme-theme', action: cancel}
+        ];
+      }
+    }
+
+    function show(data) {
+      self.data = data;
+      self.data.cancel = cancel;
+      _buildCustomDialog(data);
+      return $mdDialog.show({
+        controller: self.data.ctrl,
+        locals: { data: self.data },
+        templateUrl: self.data.url,
+        parent: angular.element(document.body),
+        controllerAs:"$ctrl",
+        clickOutsideToClose: true
+      });
+    }
+
+    function cancel() {
+      $mdDialog.cancel();
+      $rootScope.$broadcast("clearSurveyItemSelected");
+    }
+  }
+}());
+
 (function() {
   'use strict';
 
@@ -8246,6 +9019,52 @@
 
   angular
     .module('editor.ui')
+    .component('gridTextQuestion', {
+      controller: Controller,
+      templateUrl: 'app/editor/ui/survey-item/question/grid-text-question/grid-text-question-template.html',
+      bindings: {
+        item: '<'
+      }
+    });
+
+  Controller.$inject = [
+    '$scope',
+    '$element',
+    'UpdateQuestionEventFactory'
+  ];
+
+  function Controller($scope, $element, UpdateQuestionEventFactory) {
+    var self = this;
+
+    self.$onInit = onInit;
+    self.addGridLine = addGridLine;
+    self.removeGridLine = removeGridLine;
+    self.save = save;
+
+    function onInit() {};
+
+    function addGridLine() {
+      self.item.createLine();
+      self.save();
+    }
+
+    function removeGridLine(gridLineIndex) {
+      self.item.removeLine(gridLineIndex);
+      self.save();
+    }
+
+    function save() {
+      UpdateQuestionEventFactory.create().execute(self);
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
     .component('integerQuestion', {
       templateUrl: 'app/editor/ui/survey-item/question/integer/integer-question-template.html',
       bindings: {
@@ -8306,52 +9125,6 @@
             }
         };
     });
-
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .component('gridTextQuestion', {
-      controller: Controller,
-      templateUrl: 'app/editor/ui/survey-item/question/grid-text-question/grid-text-question-template.html',
-      bindings: {
-        item: '<'
-      }
-    });
-
-  Controller.$inject = [
-    '$scope',
-    '$element',
-    'UpdateQuestionEventFactory'
-  ];
-
-  function Controller($scope, $element, UpdateQuestionEventFactory) {
-    var self = this;
-
-    self.$onInit = onInit;
-    self.addGridLine = addGridLine;
-    self.removeGridLine = removeGridLine;
-    self.save = save;
-
-    function onInit() {};
-
-    function addGridLine() {
-      self.item.createLine();
-      self.save();
-    }
-
-    function removeGridLine(gridLineIndex) {
-      self.item.removeLine(gridLineIndex);
-      self.save();
-    }
-
-    function save() {
-      UpdateQuestionEventFactory.create().execute(self);
-    }
-  }
 
 }());
 
@@ -9366,95 +10139,6 @@
 
     angular
         .module('editor.ui')
-        .directive('otusMinDateValidator', otusMinDateValidator);
-
-    otusMinDateValidator.$inject = [
-        'MinDateValidatorWidgetFactory'
-    ];
-
-    function otusMinDateValidator(MinDateValidatorWidgetFactory) {
-        var ddo = {
-            scope: {},
-            restrict: 'E',
-            templateUrl: 'app/editor/ui/validation/require/min-date/min-date-validator.html',
-            link: function linkFunc(scope, element) {
-                scope.widget = MinDateValidatorWidgetFactory.create(scope, element);
-            }
-        };
-
-        return ddo;
-    }
-}());
-
-(function() {
-  'use strict';
-
-  angular
-    .module('editor.ui')
-    .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
-
-  MinDateValidatorWidgetFactory.$inject = [
-          'otusjs.utils.ImmutableDate'
-      ];
-
-  function MinDateValidatorWidgetFactory(ImmutableDate) {
-    var self = this;
-
-    /* Public interface */
-    self.create = create;
-
-    function create(scope, element) {
-      return new MinDateValidator(scope, element, ImmutableDate);
-    }
-
-    return self;
-  }
-
-  function MinDateValidator(scope, element, ImmutableDate) {
-    var self = this;
-    var whoAmI = 'minDate';
-
-    /* Public Methods */
-    self.data = '';
-    self.updateData = updateData;
-    self.deleteValidator = deleteValidator;
-
-
-    var question = scope.$parent.widget.getItem();
-
-    _init();
-
-    function _init() {
-      var avaiableRules = question.fillingRules.options;
-      self.data = new ImmutableDate(avaiableRules[whoAmI].data.reference.value);
-      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
-      self.updateData();
-    }
-
-    function updateData() {
-      getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
-      scope.$parent.widget.updateFillingRules();
-    }
-
-    function getRuleType() {
-      return question.fillingRules.options[whoAmI];
-    }
-
-    function deleteValidator() {
-      scope.$parent.widget.deleteValidator(whoAmI);
-      element.remove();
-      scope.$destroy();
-    }
-
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('editor.ui')
         .directive('otusMaxTimeValidator', otusMaxTimeValidator);
 
     otusMaxTimeValidator.$inject = [
@@ -9532,6 +10216,95 @@
         getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
         scope.$parent.widget.updateFillingRules();
       }
+    }
+
+    function getRuleType() {
+      return question.fillingRules.options[whoAmI];
+    }
+
+    function deleteValidator() {
+      scope.$parent.widget.deleteValidator(whoAmI);
+      element.remove();
+      scope.$destroy();
+    }
+
+  }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('editor.ui')
+        .directive('otusMinDateValidator', otusMinDateValidator);
+
+    otusMinDateValidator.$inject = [
+        'MinDateValidatorWidgetFactory'
+    ];
+
+    function otusMinDateValidator(MinDateValidatorWidgetFactory) {
+        var ddo = {
+            scope: {},
+            restrict: 'E',
+            templateUrl: 'app/editor/ui/validation/require/min-date/min-date-validator.html',
+            link: function linkFunc(scope, element) {
+                scope.widget = MinDateValidatorWidgetFactory.create(scope, element);
+            }
+        };
+
+        return ddo;
+    }
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('editor.ui')
+    .factory('MinDateValidatorWidgetFactory', MinDateValidatorWidgetFactory);
+
+  MinDateValidatorWidgetFactory.$inject = [
+          'otusjs.utils.ImmutableDate'
+      ];
+
+  function MinDateValidatorWidgetFactory(ImmutableDate) {
+    var self = this;
+
+    /* Public interface */
+    self.create = create;
+
+    function create(scope, element) {
+      return new MinDateValidator(scope, element, ImmutableDate);
+    }
+
+    return self;
+  }
+
+  function MinDateValidator(scope, element, ImmutableDate) {
+    var self = this;
+    var whoAmI = 'minDate';
+
+    /* Public Methods */
+    self.data = '';
+    self.updateData = updateData;
+    self.deleteValidator = deleteValidator;
+
+
+    var question = scope.$parent.widget.getItem();
+
+    _init();
+
+    function _init() {
+      var avaiableRules = question.fillingRules.options;
+      self.data = new ImmutableDate(avaiableRules[whoAmI].data.reference.value);
+      self.canBeIgnored = question.fillingRules.options[whoAmI].data.canBeIgnored;
+      self.updateData();
+    }
+
+    function updateData() {
+      getRuleType().data.reference = self.data.toJSON(); //TODO remover quando refatorar load de transição edição -> preview do studio. Atualmente preview é carregado com objecto em memória e não fromJSON e gera erro com o ImmutableDate. (presente em validadores de tempo e data.)
+      scope.$parent.widget.updateFillingRules();
     }
 
     function getRuleType() {

@@ -2,7 +2,7 @@
   <form ng-cloak flex>
     <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
       <div class="md-toolbar-tools">
-        <h2>Criação de Grupo de Questões</h2>
+        <h2>Editor de Grupo de Questões</h2>
         <span flex></span>
         <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
           <md-icon>close</md-icon>
@@ -12,17 +12,31 @@
     </md-toolbar>
     <md-dialog-content flex="100" id="dialogContent">
       <div class="md-dialog-content md-padding"  layout="column" layout-align="start start" layout-wrap flex>
+        <md-content layout="column" layout-align="start" flex="70">
+          <md-input-container layout="row" layout-align="start center">
+            <span class="md-body-1">Nome do Grupo:</span>
+            <input name="surveyItemGroupName" type="text" flex="50" min="0" flex-offset="5" aria-label="Nome do Grupo" ng-model="widget.data" ng-change="widget.updateData()" required>
+
+<!--            <div ng-messages="precisionValidator.precision.$error">-->
+<!--              <div ng-message="required">Adicione o número de digitos</div>-->
+<!--            </div>-->
+          </md-input-container>
+        </md-content>
+
+
         <div>
-          <h3>Informe quais questões farão parte do grupo</h3>
+          <h3>Adicione as questões farão parte do grupo</h3>
         </div>
         <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center" layout-align="start center" layout-fill>
-          <span flex="10" layout-align="end end" layout="row">Mover:</span>
-          <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">
-            {{$ctrl.position}} - {{$ctrl.item.customID}}
-          </md-card>
-          <span flex="5"></span>
+<!--          <span flex="10" layout-align="end end" layout="row">Nome do Grupo:</span>-->
+
+
+<!--          <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">-->
+<!--            {{$ctrl.position}} - {{$ctrl.item.customID}}-->
+<!--          </md-card>-->
+<!--          <span flex="5"></span>-->
           <md-input-container flex flex-gt-xs="20" style="width: 500px">
-            <label>Critério</label>
+            <label>Questões</label>
             <md-select ng-model="$ctrl.selectedCriteria" flex ng-change="$ctrl.isBeginQuestion()">
               <md-option ng-repeat="criteria in $ctrl.criterias" ng-value="criteria.value">
                 {{criteria.label}}
