@@ -16,9 +16,10 @@
     '$scope',
     '$mdDialog',
     'DialogService',
+    'WorkspaceService'
   ]
 
-  function Controller($scope, $mdDialog, DialogService) {
+  function Controller($scope, $mdDialog, DialogService, WorkspaceService) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
@@ -57,11 +58,10 @@
     }
 
     function editorSurveyItemGroup() {
-
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
         //header: "Excluir Questão "+self.item.customID,
-        //ctrl: 'SurveyItemOrderChangeController',
+        ctrl: 'SurveyItemGroupController',
         //item: self.item,
         //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
         //questions: WorkspaceService.getSurvey().getItems(),
@@ -71,7 +71,7 @@
           //{message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
         ]
       };
-      DialogService.show(data)
+      DialogService.show(data, WorkspaceService);
     }
   }
 
