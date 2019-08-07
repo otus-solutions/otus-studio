@@ -3,26 +3,26 @@
 
   angular
     .module('editor.ui')
-    .controller('SurveyItemGroupController', DialogController);
+    .controller('SurveyItemGroupController', Ctrl);
 
-  function DialogController(data, WorkspaceService) {
+  function Ctrl(data) {
     var vm = this;
-    vm.selectedQuestion = 1;
     //console.log(WorkspaceService.getSurvey().getItems());
     console.log(data);
 
     vm.enabledQuestions = _questionValidator(WorkspaceService) || [];
+    vm.enabledQuestions = _data.questions || [];
     console.log(vm.enabledQuestions);
 
-    vm.BUTTONS = data.buttons || [];
-    vm.cancel = data.cancel;
+    //vm.BUTTONS = data.buttons || [];
+    //vm.cancel = data.cancel;
   }
 
-  function _questionValidator(WorkspaceService){
-    console.log(WorkspaceService);
-    let questions = angular.copy(WorkspaceService.getSurvey().getItems());
-    let enableQuestions = [];
-    questions.forEach( question => enableQuestions.push({'acronym':question.templateID, 'acronymCustom': question.customID}));
-    return enableQuestions;
-  }
+  // function _questionValidator(WorkspaceService){
+  //   console.log(WorkspaceService);
+  //   let questions = angular.copy(WorkspaceService.getSurvey().getItems());
+  //   let enableQuestions = [];
+  //   questions.forEach( question => enableQuestions.push({'acronym':question.templateID, 'acronymCustom': question.customID}));
+  //   return enableQuestions;
+  // }
 }());

@@ -14,12 +14,11 @@
 
   Controller.$inject = [
     '$scope',
-    '$mdDialog',
-    'DialogService',
-    'WorkspaceService'
-  ]
+    'WorkspaceService',
+    'editor.ui.SurveyItemGroupService'
+  ];
 
-  function Controller($scope, $mdDialog, DialogService, WorkspaceService) {
+  function Controller($scope, WorkspaceService, SurveyItemGroupService) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
@@ -57,21 +56,30 @@
       return {}
     }
 
+    SurveyItemGroupService.onClick(self.item.templateID, desativarBotao);
+    function desativarBotao() {
+      self.group = true;
+    }
+
     function editorSurveyItemGroup() {
-      var data = {
-        url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
-        //header: "Excluir Questão "+self.item.customID,
-        ctrl: 'SurveyItemGroupController',
-        //item: self.item,
-        //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
-        //questions: WorkspaceService.getSurvey().getItems(),
-        buttons : [
-          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme"}
-          //{message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
-        ]
-      };
-      DialogService.show(data, WorkspaceService);
+      SurveyItemGroupService.click();
+      // desativarBotao();
+
+
+      // var data = {
+      //   questions: WorkspaceService.getSurvey().getItems(),
+      //   url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html'
+      // }
+
+      // var data = {
+      //   url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
+      //   ctrl: 'SurveyItemGroupController',
+      //   questions: WorkspaceService.getSurvey().getItems(),
+      //   buttons : [
+      //     {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
+      //     {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme"}        ]
+      // };
+      // DialogService.show(data, WorkspaceService);
     }
   }
 
