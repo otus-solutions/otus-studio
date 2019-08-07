@@ -16,41 +16,17 @@
           <md-input-container layout="row" layout-align="start center">
             <span class="md-body-1">Nome do Grupo:</span>
             <input name="surveyItemGroupName" type="text" flex="50" min="0" flex-offset="5" aria-label="Nome do Grupo" ng-model="widget.data" ng-change="widget.updateData()" required>
-
-<!--            <div ng-messages="precisionValidator.precision.$error">-->
-<!--              <div ng-message="required">Adicione o número de digitos</div>-->
-<!--            </div>-->
           </md-input-container>
         </md-content>
-
-
         <div>
           <h3>Adicione as questões farão parte do grupo</h3>
         </div>
         <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center" layout-align="start center" layout-fill>
-<!--          <span flex="10" layout-align="end end" layout="row">Nome do Grupo:</span>-->
-
-
-<!--          <md-card flex-gt-xs="20" flex layout-padding style="width: 500px">-->
-<!--            {{$ctrl.position}} - {{$ctrl.item.customID}}-->
-<!--          </md-card>-->
-<!--          <span flex="5"></span>-->
           <md-input-container flex flex-gt-xs="20" style="width: 500px">
             <label>Questões</label>
-            <md-select ng-model="$ctrl.selectedCriteria" flex ng-change="$ctrl.isBeginQuestion()">
-              <md-option ng-repeat="criteria in $ctrl.criterias" ng-value="criteria.value">
-                {{criteria.label}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-          <md-input-container flex="25" ng-show="$ctrl.selectedCriteria == 0">
-          </md-input-container>
-          <span flex="5"></span>
-          <md-input-container flex-gt-xs="25" flex ng-if="$ctrl.selectedCriteria > 0" style="width: 500px">
-            <label>Questão</label>
-            <md-select ng-model="$ctrl.selectedQuestionNeighbor" flex>
-              <md-option ng-repeat="question in $ctrl.questions" ng-value="question.position" ng-selected="$index == 0">
-                {{question.position + 1}} - {{question.customID}}
+            <md-select ng-model="$ctrl.selectedQuestion" flex ng-change="">
+              <md-option ng-repeat="question in $ctrl.enabledQuestions" ng-value="question.acronym">
+                {{question.acronym}}
               </md-option>
             </md-select>
           </md-input-container>
