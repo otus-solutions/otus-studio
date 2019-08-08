@@ -8,29 +8,32 @@
   function Service() {
     var self = this;
 
-    self.cadastroDeCandidatos = {};
+    self.questionItemReference = {};
     self.click =click;
-    self.onClick = onClick;
+    self.surveyItemsRegistry = surveyItemsRegistry;
 
-    function onClick(id, fun) {
-      self.cadastroDeCandidatos[id] = fun;
-      console.log(self.cadastroDeCandidatos)
+    function surveyItemsRegistry(id, fun) {
+      self.questionItemReference[id] = fun;
+      console.log(self.questionItemReference)
     }
 
     function click(id) {
-      self.getPossiveisCandidatosAoGrupo(id).forEach(function (id) {
-        self.cadastroDeCandidatos[id].call();
+      //aqui será retorno do model como os itens validos para formar um grupo de surveys
+      //para chamar associação inicial
+      self.fakeModelList_getItemsValidCandidates(id).forEach(function (id) {
+        self.questionItemReference[id].call();
       });
     }
 
-    self.getPossiveisCandidatosAoGrupo = function (templateID) {
+    self.fakeModelList_getItemsValidCandidates = function (templateID) {
       return [
         'FDR3',
         'FDR4',
-        'FDR5',
+        // 'FDR5',
         'FDR6',
       ];
     };
+
     return self;
   }
 

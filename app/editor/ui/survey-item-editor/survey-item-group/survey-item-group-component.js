@@ -20,8 +20,9 @@
 
     self.editorSurveyItemGroup = editorSurveyItemGroup;
 
-    SurveyItemGroupService.onClick(self.item.templateID, desabilityBottom);
-    function desabilityBottom() {
+    SurveyItemGroupService.surveyItemsRegistry(self.item.templateID, _desabilityBottom);
+
+    function _desabilityBottom() {
       self.group = true;
     }
 
