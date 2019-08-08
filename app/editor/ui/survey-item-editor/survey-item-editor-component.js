@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,12 +13,10 @@
     }).controller('otusSurveyItemEditorCtrl', Controller);
 
   Controller.$inject = [
-    '$scope',
-    'WorkspaceService',
-    'editor.ui.SurveyItemGroupService'
+    '$scope'
   ];
 
-  function Controller($scope, WorkspaceService, SurveyItemGroupService) {
+  function Controller($scope) {
     var self = this;
     // lifecycle hooks
     self.$onInit = onInit;
@@ -26,7 +24,6 @@
     self.getItem = getItem;
     self.getQuestionId = getQuestionId;
     self.getStyle = getStyle;
-    self.editorSurveyItemGroup = editorSurveyItemGroup;
 
     function onInit() {
       $scope.$on('surveyItemSelected', setIndex);
@@ -50,37 +47,10 @@
     }
 
     function getStyle(position) {
-      if(self.index == position){
-        return {"background-color":"#E88024"}
+      if (self.index == position) {
+        return {"background-color": "#E88024"}
       }
       return {}
     }
-
-    SurveyItemGroupService.onClick(self.item.templateID, desativarBotao);
-    function desativarBotao() {
-      self.group = true;
-    }
-
-    function editorSurveyItemGroup() {
-      SurveyItemGroupService.click();
-      // desativarBotao();
-
-
-      // var data = {
-      //   questions: WorkspaceService.getSurvey().getItems(),
-      //   url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html'
-      // }
-
-      // var data = {
-      //   url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
-      //   ctrl: 'SurveyItemGroupController',
-      //   questions: WorkspaceService.getSurvey().getItems(),
-      //   buttons : [
-      //     {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-      //     {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme"}        ]
-      // };
-      // DialogService.show(data, WorkspaceService);
-    }
   }
-
 }());

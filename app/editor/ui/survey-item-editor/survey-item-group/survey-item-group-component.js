@@ -2,20 +2,32 @@
   'use strict';
 
   angular.module('editor.ui')
-    .component('surveyItemGroupComponent',{
+    .component('surveyItemGroup', {
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
       controller: 'otusSurveyItemGroupCtrl as $ctrl',
-      bindings:{}
-    }).controller('otusSurveyItemGroupCtrl', Ctrl);
+      bindings: {
+        item: "<"
+      }
+    })
+    .controller('otusSurveyItemGroupCtrl', Controller);
 
-  Ctrl.$inject = [];
+  Controller.$inject = [
+    'editor.ui.SurveyItemGroupService'
+  ];
 
-  function Ctrl(data) {
+  function Controller(SurveyItemGroupService) {
     var self = this;
-    console.log(data);
 
-    vm.enabledQuestions = _questionValidator(WorkspaceService) || [];
-    vm.enabledQuestions = _data.questions || [];
-    console.log(vm.enabledQuestions);
+    self.editorSurveyItemGroup = editorSurveyItemGroup;
+
+    SurveyItemGroupService.onClick(self.item.templateID, desabilityBottom);
+    function desabilityBottom() {
+      self.group = true;
+    }
+
+    function editorSurveyItemGroup() {
+      SurveyItemGroupService.click();
+    }
   }
+
 }());

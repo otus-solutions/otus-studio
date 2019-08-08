@@ -1,62 +1,6 @@
-
-
-
-
-
-
-
-
-
-<!--<md-dialog flex flex-gt-sm="60" flex-gt-md="45" flex-gt-lg="35">-->
-<!--  <form ng-cloak flex>-->
-<!--    <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">-->
-<!--      <div class="md-toolbar-tools">-->
-<!--        <h2>Editor do Grupo de Questões</h2>-->
-<!--        <span flex></span>-->
-<!--        <md-button class="md-icon-button" ng-click="$ctrl.cancel()">-->
-<!--          <md-icon>close</md-icon>-->
-<!--          <md-tooltip md-direction="bottom">Fechar</md-tooltip>-->
-<!--        </md-button>-->
-<!--      </div>-->
-<!--    </md-toolbar>-->
-<!--    <md-dialog-content flex="100" id="dialogContent">-->
-<!--      <div class="md-dialog-content md-padding" layout="column" layout-align="start start" layout-wrap flex>-->
-<!--        <md-content layout="column" layout-align="start" flex="70">-->
-<!--          <md-input-container layout="row" layout-align="start center">-->
-<!--            <span class="md-body-1">Nome do Grupo:</span>-->
-<!--            <input name="surveyItemGroupName" type="text" flex="50" min="0" flex-offset="5" aria-label="Nome do Grupo"-->
-<!--                   ng-model="widget.data" ng-change="widget.updateData()" required>-->
-<!--          </md-input-container>-->
-<!--        </md-content>-->
-<!--        <div>-->
-<!--          <h3>Adicione as questões farão parte do grupo</h3>-->
-<!--        </div>-->
-<!--        <md-input-container layout="column" layout-gt-xs="row" flex="100" layout-align-gt-xs="center center"-->
-<!--                            layout-align="start center" layout-fill>-->
-<!--          <md-input-container flex flex-gt-xs="20" style="width: 500px">-->
-<!--            <label>Questões</label>-->
-<!--            <md-select ng-model="$ctrl.selectedQuestion" flex ng-change="" multiple>-->
-<!--              <md-option ng-repeat="question in $ctrl.enabledQuestions" ng-value="question.acronym">-->
-<!--                {{question.acronym}}-->
-<!--              </md-option>-->
-<!--            </md-select>-->
-<!--          </md-input-container>-->
-<!--          <span flex="15"></span>-->
-<!--      </div>-->
-<!--    </md-dialog-content>-->
-
-
-<!--    <md-dialog-actions layout="row">-->
-<!--      <div ng-repeat="button in $ctrl.BUTTONS">-->
-<!--        <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item, $ctrl.selectedQuestionNeighbor + 1)"-->
-<!--                   aria-label="button">-->
-<!--          <md-icon ng-if="button.icon">{{button.icon}}</md-icon>-->
-<!--          {{button.message}}-->
-<!--        </md-button>-->
-<!--        <span flex></span>-->
-<!--      </div>-->
-<!--    </md-dialog-actions>-->
-<!--  </form>-->
-<!--</md-dialog>-->
-
-
+<md-button ng-click="$ctrl.editorSurveyItemGroup()"
+           ng-disabled="$ctrl.group"" class="md-primary md-fab md-mini questionPositionChip">
+<md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;" class="md-default-theme material-icons">
+  how_to_vote
+</md-icon>
+</md-button>

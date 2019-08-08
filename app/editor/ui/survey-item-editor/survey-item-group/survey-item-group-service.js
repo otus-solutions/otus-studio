@@ -8,7 +8,6 @@
   function Service() {
     var self = this;
 
-
     self.cadastroDeCandidatos = {};
     self.click =click;
     self.onClick = onClick;
@@ -23,7 +22,6 @@
         self.cadastroDeCandidatos[id].call();
       });
     }
-
 
     self.getPossiveisCandidatosAoGrupo = function (templateID) {
       return [
