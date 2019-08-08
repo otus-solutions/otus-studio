@@ -17,18 +17,26 @@
 
   function Controller(SurveyItemGroupService) {
     var self = this;
+    self.editorItemGroup = true;
+
 
     self.editorSurveyItemGroup = editorSurveyItemGroup;
 
-    SurveyItemGroupService.surveyItemsRegistry(self.item.templateID, _desabilityBottom);
-
-    function _desabilityBottom() {
-      self.group = true;
-    }
+    SurveyItemGroupService.surveyItemsRegistry(self.item.templateID, _stateControl);
 
     function editorSurveyItemGroup() {
-      SurveyItemGroupService.click();
+      SurveyItemGroupService.click(self.item.templateID);
     }
+
+    function _stateControl() {
+      let vm = this;
+
+      self.editorItemGroup = vm.editorItemGroup;
+      self.validateItemGroup = vm.validateItemGroup;
+      //self.stateComponent = vm.invalidItemGroup
+      //self.group = true;
+    }
+
   }
 
 }());

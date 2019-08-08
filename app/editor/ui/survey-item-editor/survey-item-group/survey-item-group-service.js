@@ -17,11 +17,23 @@
       console.log(self.questionItemReference)
     }
 
-    function click(id) {
+    function click() {
       //aqui será retorno do model como os itens validos para formar um grupo de surveys
       //para chamar associação inicial
-      self.fakeModelList_getItemsValidCandidates(id).forEach(function (id) {
-        self.questionItemReference[id].call();
+      self.fakeModelList_getItemsValidCandidates().forEach(function (id, index) {
+        let stateComponent = {};
+        if(index < 1) {
+          stateComponent.EditorItemGroup = true;
+          stateComponent.validateItemGroup = false;
+          //stateComponent.invalidItemGroup = false;
+        }
+        else{
+          stateComponent.EditorItemGroup = false;
+          stateComponent.validateItemGroup = true;
+          //stateComponent.invalidItemGroup = false;
+        }
+
+        self.questionItemReference[id].call(stateComponent);
       });
     }
 
@@ -29,7 +41,7 @@
       return [
         'FDR3',
         'FDR4',
-        // 'FDR5',
+        'FDR5',
         'FDR6',
       ];
     };
