@@ -18,10 +18,15 @@
 </md-button>
 
 <md-checkbox id=validateGroup_{{$ctrl.item.templateID}}
-             ng-if='$ctrl.stateItemGroup == "validateGroup"'
-             style="height:50px;width:70px;margin-left:22px;color:#FFFFFF";
-             value="{{option.customOptionID}}">
+             ng-if="$ctrl.stateItemGroup == 'validateGroup'"
+             style= "margin-left:22px; margin-top:12px; width:0px; height: 0px; background-color: #FFFFFF";
+             class="md-primary"
+             ng-model="$ctrl.itemValidateCheck"
+             value="{{$ctrl.itemValidateCheck}}">
 </md-checkbox>
+<card ng-if='$ctrl.itemValidateCheck'
+      style="color: #1976D2; background-color: rgb(250,250,250)" >Incluir no grupo
+</card>
 
 <md-button id=invalidateGroup_{{$ctrl.item.templateID}}
            ng-if='$ctrl.stateItemGroup == "invalidateGroup"'
@@ -31,6 +36,7 @@
            class="md-default-theme material-icons">warning
   </md-icon>
 </md-button>
+
 
 <!--           ng-disabled="$ctrl.group"-->
 

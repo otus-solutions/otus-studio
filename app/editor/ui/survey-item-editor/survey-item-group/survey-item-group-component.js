@@ -18,6 +18,7 @@
   function Controller(SurveyItemGroupService) {
     var self = this;
     self.stateItemGroup = "createGroup";
+    self.itemValidateCheck;
 
     self.editorSurveyItemGroup = editorSurveyItemGroup;
 
@@ -31,6 +32,8 @@
       let vm = this;
       self.stateItemGroup = vm.status;
     }
+
+    console.log(self);
   }
 
 }());
