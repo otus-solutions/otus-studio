@@ -1,7 +1,6 @@
 <md-button id=createGroup_{{$ctrl.item.templateID}}
            ng-if="$ctrl.stateItemGroup == 'createGroup'"
            ng-click="$ctrl.editorSurveyItemGroup()"
-           ng-disabled="$ctrl.group"
            class="md-primary md-fab md-mini questionPositionChip">
   <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
            class="md-default-theme material-icons">playlist_add
@@ -18,22 +17,20 @@
   </md-icon>
 </md-button>
 
-<md-button id=validateGroup_{{$ctrl.item.templateID}}
-           ng-if='$ctrl.stateItemGroup == "validateGroup"'
-           ng-click="$ctrl.editorSurveyItemGroup()"
-           ng-disabled="$ctrl.group"
-           class="md-primary md-fab md-mini questionPositionChip">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
-           class="md-default-theme material-icons">verified_user
-  </md-icon>
-</md-button>
+<md-checkbox id=validateGroup_{{$ctrl.item.templateID}}
+             ng-if='$ctrl.stateItemGroup == "validateGroup"'
+             style="height:50px;width:70px;margin-left:22px;color:#FFFFFF";
+             value="{{option.customOptionID}}">
+</md-checkbox>
 
 <md-button id=invalidateGroup_{{$ctrl.item.templateID}}
            ng-if='$ctrl.stateItemGroup == "invalidateGroup"'
            ng-click="$ctrl.editorSurveyItemGroup()"
-           ng-disabled="$ctrl.group"
            class="md-primary md-fab md-mini questionPositionChip">
   <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
            class="md-default-theme material-icons">warning
   </md-icon>
 </md-button>
+
+<!--           ng-disabled="$ctrl.group"-->
+

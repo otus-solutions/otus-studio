@@ -9,24 +9,31 @@
     var self = this;
 
     self.questionItemReference = {};
-    self.click =click;
     self.surveyItemsRegistry = surveyItemsRegistry;
+    self.getValidItemsByTemplateID = getValidItemsByTemplateID;
 
     function surveyItemsRegistry(id, fun) {
       self.questionItemReference[id] = fun;
-      console.log(self.questionItemReference)
     }
 
-    function click(templateId) {
-      //aqui será retorno do model como os itens validos para formar um grupo de surveys
-      //para chamar associação inicial
-      self.fakeModelList_getItemsValidCandidates(templateId).forEach(function (id, index) {
-        let stateComponent = {};
-        if(index < 1)stateComponent.state = "editorGroup";
-        else stateComponent.state = "validateGroup";
+    function getValidItemsByTemplateID(templateId) {
+      let stateComponent = {};
+      let itemsValidCanditates = self.fakeModelList_getItemsValidCandidates(templateId);
 
-        self.questionItemReference[id].call(stateComponent);
-      });
+      if(!itemsValidCanditates.length){
+        stateComponent.status = "invalidateGroup";
+        _setStateComponent(templateId, stateComponent);
+      }else{
+        itemsValidCanditates.forEach(function (id, index) {
+          if(index < 1)stateComponent.status = "editorGroup";
+          else stateComponent.status = "validateGroup";
+          _setStateComponent(id,stateComponent);
+        });
+      }
+    }
+
+    function _setStateComponent(id, stateComponent){
+      self.questionItemReference[id].call(stateComponent)
     }
 
     self.fakeModelList_getItemsValidCandidates = function (templateId) {
@@ -51,16 +58,7 @@
           return [];
           break;
       }
-      console.log(templateId);
-      return [
-        'FDR3',
-        'FDR4',
-        'FDR5',
-        'FDR6',
-      ];
     };
-
     return self;
   }
-
 }());

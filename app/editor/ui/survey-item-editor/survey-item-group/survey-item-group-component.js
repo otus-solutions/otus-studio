@@ -17,22 +17,19 @@
 
   function Controller(SurveyItemGroupService) {
     var self = this;
-    self.editorItemGroup = true;
     self.stateItemGroup = "createGroup";
-    self.stateItemGroup2 = "T";
 
     self.editorSurveyItemGroup = editorSurveyItemGroup;
 
     SurveyItemGroupService.surveyItemsRegistry(self.item.templateID, _stateControl);
 
     function editorSurveyItemGroup() {
-      SurveyItemGroupService.click(self.item.templateID);
+      SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
     }
 
     function _stateControl() {
       let vm = this;
-      self.stateItemGroup = vm.state;
-      console.log(self)
+      self.stateItemGroup = vm.status;
     }
   }
 
