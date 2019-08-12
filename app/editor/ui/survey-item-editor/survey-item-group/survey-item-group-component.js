@@ -18,14 +18,25 @@
   function Controller(SurveyItemGroupService) {
     var self = this;
     self.stateItemGroup = "createGroup";
-    self.itemValidateCheck;
+    self.itemCandidateCheckBox = false;
 
+    self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
+    self.setUpQuestionGroup = setUpQuestionGroup;
+    self.cancelGroupEdit =  cancelGroupEdit;
 
-    SurveyItemGroupService.surveyItemsRegistry(self.item.templateID, _stateControl);
+
+    function onInit() {
+      SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
+    }
 
     function editorSurveyItemGroup() {
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
+      console.log(self);
+    }
+
+    function setUpQuestionGroup() {
+      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
     }
 
     function _stateControl() {
@@ -33,7 +44,10 @@
       self.stateItemGroup = vm.status;
     }
 
-    console.log(self);
+    function cancelGroupEdit(){
+      SurveyItemGroupService.cancelGroupEdit();
+
+    }
   }
 
 }());

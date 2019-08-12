@@ -7,10 +7,9 @@
   </md-icon>
 </md-button>
 
-
 <md-button id=editorGroup_{{$ctrl.item.templateID}}
            ng-if='$ctrl.stateItemGroup == "editorGroup"'
-           ng-click="$ctrl.editorSurveyItemGroup()"
+           ng-click="$ctrl.setUpQuestionGroup()"
            class="md-primary md-fab md-mini questionPositionChip">
   <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
            class="md-default-theme material-icons">library_add
@@ -19,13 +18,14 @@
 
 <md-checkbox id=validateGroup_{{$ctrl.item.templateID}}
              ng-if="$ctrl.stateItemGroup == 'validateGroup'"
-             style= "margin-left:22px; margin-top:12px; width:0px; height: 0px; background-color: #FFFFFF";
+             style="margin-left:22px; margin-top:12px; width:0px; height: 0px; background-color: #FFFFFF" ;
              class="md-primary"
-             ng-model="$ctrl.itemValidateCheck"
-             value="{{$ctrl.itemValidateCheck}}">
+             ng-model="$ctrl.itemCandidateCheckBox" ,
+             ng-value="$ctrl.itemCandidateCheckBox"
+             aria-label="ItemCandidateCheckBox">
 </md-checkbox>
-<card ng-if='$ctrl.itemValidateCheck'
-      style="color: #1976D2; background-color: rgb(250,250,250)" >Incluir no grupo
+<card ng-if='$ctrl.itemCandidateCheckBox && $ctrl.stateItemGroup == "validateGroup"'
+      style="color: #1976D2; background-color: #FFFFFF">Incluir no grupo
 </card>
 
 <md-button id=invalidateGroup_{{$ctrl.item.templateID}}
@@ -37,6 +37,32 @@
   </md-icon>
 </md-button>
 
+<md-button id=savedGroupEditor_{{$ctrl.item.templateID}}
+           ng-if='$ctrl.stateItemGroup == "savedGroupEditor"'
+           ng-click="$ctrl.editorSurveyItemGroup()"
+           class="md-primary md-fab md-mini">
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#e0e0e0;"
+           class="md-default-theme material-icons">view_comfy
+  </md-icon>
+</md-button>
 
-<!--           ng-disabled="$ctrl.group"-->
+<md-button id=savedGroupItem_{{$ctrl.item.templateID}}
+           ng-if='$ctrl.stateItemGroup == "savedGroupItem"'
+           ng-disabled=true
+           class="md-default md-fab md-mini">
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
+           class="md-default-theme material-icons">navigations
+  </md-icon>
+</md-button>
+
+<otus-button click="$ctrl.cancelGroupEdit()"
+             ng-if='$ctrl.stateItemGroup == "editorGroup"'
+             tooltip="Cancelar"
+             icon-button="cancel"/>
+
+
+
+
+
+
 

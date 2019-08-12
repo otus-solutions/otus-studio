@@ -19,9 +19,6 @@
 
   function Controller(WorkspaceService, $window, PageAnchorService) {
     var self = this;
-    self.group = {
-      active:false
-    };
 
     self.$onInit = function () {
       PageAnchorService.setUp(self.template.SurveyItemManager);
