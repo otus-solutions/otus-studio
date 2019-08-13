@@ -12,10 +12,13 @@
     .controller('otusSurveyItemGroupCtrl', Controller);
 
   Controller.$inject = [
-    'editor.ui.SurveyItemGroupService'
+    'editor.ui.SurveyItemGroupService',
+    '$scope',
+    '$mdDialog',
+    'DialogService'
   ];
 
-  function Controller(SurveyItemGroupService) {
+  function Controller(SurveyItemGroupService, $scope, $mdDialog, DialogService) {
     var self = this;
     self.stateItemGroup = "createGroup";
     self.itemCandidateCheckBox = false;
@@ -23,7 +26,6 @@
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
-    self.cancelGroupEdit =  cancelGroupEdit;
 
 
     function onInit() {
@@ -36,7 +38,23 @@
     }
 
     function setUpQuestionGroup() {
-      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-dialog-template.html',
+        //header: "Excluir Questão "+self.item.customID,
+        //ctrl: 'SurveyItemGroupDialogController',
+        item: self.item,
+        //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
+        //questions: WorkspaceService.getSurvey().getItems(),
+        //cancel: SurveyItemGroupService.cancelGroupEdit(),
+        buttons : [
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: SurveyItemGroupService.cancelGroupEdit()},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: SurveyItemGroupService.setUpQuestionGroup(self.item.templateID)}
+        ]
+      };
+
+      DialogService.show(data)
+      //SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
+      //SurveyItemGroupService.cancelGroupEdit();
     }
 
     function _stateControl() {
@@ -44,10 +62,10 @@
       self.stateItemGroup = vm.status;
     }
 
-    function cancelGroupEdit(){
-      SurveyItemGroupService.cancelGroupEdit();
 
-    }
+
+
+
   }
 
 
