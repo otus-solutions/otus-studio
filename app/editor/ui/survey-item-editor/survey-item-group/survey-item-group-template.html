@@ -1,64 +1,71 @@
-<md-button id=createGroup_{{$ctrl.item.templateID}}
-           ng-if="$ctrl.stateItemGroup == 'createGroup'"
+<item-group-button ng-if="$ctrl.stateItemGroup == 'createGroup'"
+                   id="createGroup_{{$ctrl.item.templateID}}"
+                   button-class="md-raised md-fab md-mini"
+                   click="$ctrl.editorSurveyItemGroup()"
+                   icon-color="#737373"
+                   icon-button="playlist_add">
+</item-group-button>
+
+<item-group-button ng-if="$ctrl.stateItemGroup == 'editorGroup'"
+                   button-class="md-raised md-fab md-mini"
+                   id="editorGroup_{{$ctrl.item.templateID}}"
+                   click="$ctrl.setUpQuestionGroup()"
+                   icon-button="library_add">
+</item-group-button>
+
+<item-group-button ng-if="$ctrl.stateItemGroup == 'invalidateGroup'"
+                   id="invalidateGroup_{{$ctrl.item.templateID}}"
+                   click="$ctrl.editorSurveyItemGroup()"
+                   icon-button="warning">
+</item-group-button>
+
+<!--<item-group-button ng-if="$ctrl.stateItemGroup == 'savedGroupEditor'"-->
+<!--                   id="savedGroupEditor_{{$ctrl.item.templateID}}"-->
+<!--                   click="$ctrl.editorSurveyItemGroup()"-->
+<!--                   button-class="md-raised md-fab md-mini"-->
+<!--                   icon-button="view_comfy">-->
+<!--</item-group-button>-->
+
+
+<md-button id=savedGroupEditor_{{$ctrl.item.templateID}}
+           ng-if="$ctrl.stateItemGroup == 'savedGroupEditor'"
            ng-click="$ctrl.editorSurveyItemGroup()"
-           class="md-primary md-fab md-mini questionPositionChip">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
-           class="md-default-theme material-icons">playlist_add
+           class="md-raised md-fab md-mini"
+           style="color:#e0e0e0;">
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#737373;"
+           class="md-default-theme material-icons">bookmarks
   </md-icon>
 </md-button>
 
-<md-button id=editorGroup_{{$ctrl.item.templateID}}
-           ng-if='$ctrl.stateItemGroup == "editorGroup"'
-           ng-click="$ctrl.setUpQuestionGroup()"
-           class="md-primary md-fab md-mini questionPositionChip">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
-           class="md-default-theme material-icons">library_add
-  </md-icon>
-</md-button>
 
 <md-checkbox id=validateGroup_{{$ctrl.item.templateID}}
              ng-if="$ctrl.stateItemGroup == 'validateGroup'"
-             style="margin-left:22px; margin-top:12px; width:0px; height: 0px; background-color: #FFFFFF" ;
+             style="font-size:30px;height:20px;width:40px;color:#737373; margin-left:16px; margin-top:13px" ;
              class="md-primary"
              ng-model="$ctrl.itemCandidateCheckBox" ,
              ng-value="$ctrl.itemCandidateCheckBox"
              aria-label="ItemCandidateCheckBox">
 </md-checkbox>
-<card ng-if='$ctrl.itemCandidateCheckBox && $ctrl.stateItemGroup == "validateGroup"'
-      style="color: #1976D2; background-color: #FFFFFF">Incluir no grupo
-</card>
+<!--<card ng-if='$ctrl.itemCandidateCheckBox && $ctrl.stateItemGroup == "validateGroup"'-->
+<!--      style="color: #737373; background-color: #FFFFFF">Incluir no grupo-->
+<!--</card>-->
 
-<md-button id=invalidateGroup_{{$ctrl.item.templateID}}
-           ng-if='$ctrl.stateItemGroup == "invalidateGroup"'
-           ng-click="$ctrl.editorSurveyItemGroup()"
-           class="md-primary md-fab md-mini questionPositionChip">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
-           class="md-default-theme material-icons">warning
-  </md-icon>
-</md-button>
 
-<md-button id=savedGroupEditor_{{$ctrl.item.templateID}}
-           ng-if='$ctrl.stateItemGroup == "savedGroupEditor"'
-           ng-click="$ctrl.editorSurveyItemGroup()"
-           class="md-primary md-fab md-mini">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#e0e0e0;"
-           class="md-default-theme material-icons">view_comfy
-  </md-icon>
-</md-button>
 
 <md-button id=savedGroupItem_{{$ctrl.item.templateID}}
            ng-if='$ctrl.stateItemGroup == "savedGroupItem"'
-           ng-disabled=true
-           class="md-default md-fab md-mini">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;"
-           class="md-default-theme material-icons">navigations
+           class="md-raised md-fab md-mini">
+
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
+           class="md-default-theme material-icons">bookmark_border
   </md-icon>
 </md-button>
 
-<otus-button click="$ctrl.cancelGroupEdit()"
-             ng-if='$ctrl.stateItemGroup == "editorGroup"'
-             tooltip="Cancelar"
-             icon-button="cancel"/>
+<!--<otus-button click="$ctrl.cancelGroupEdit()"-->
+<!--             ng-if='$ctrl.stateItemGroup == "editorGroup"'-->
+<!--             tooltip="Cancelar"-->
+<!--             icon-button="cancel"-->
+<!--             style="margin-left:-20px"/>-->
 
 
 

@@ -1,0 +1,15 @@
+<md-button id={{$ctrl.id}}
+           class={{$ctrl.buttonClass}}
+           ng-click="$ctrl.click()">
+  <md-icon ng-style= "{'font-size':'30px;'}"
+           class="md-default-theme material-icons">{{$ctrl.iconButton}}
+  </md-icon>
+</md-button>
+
+<!-- {{$ctrl.buttonClass}}-->
+
+<!--class= "md-primary md-fab md-mini questionPositionChip"-->
+
+<md-tooltip md-direction="{{::$ctrl.template.tooltipDirection}}">
+  {{::$ctrl.template.tooltip}}
+</md-tooltip>
