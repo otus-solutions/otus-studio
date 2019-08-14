@@ -39,7 +39,7 @@
 
     function setUpQuestionGroup() {
       var data = {
-        url: 'app/editor/ui/survey-item-editor/survey-item-group/dialog-item-group/survey-item-group-dialog-template.html',
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
         ctrl: 'SurveyItemGroupDialogController',
         item: self.item,
         //questions: WorkspaceService.getSurvey().getItems(),

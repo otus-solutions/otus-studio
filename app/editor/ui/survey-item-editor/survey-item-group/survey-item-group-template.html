@@ -61,6 +61,16 @@
   </md-icon>
 </md-button>
 
+<md-button id=lastSavedGroupItem_{{$ctrl.item.templateID}}
+           ng-if='$ctrl.stateItemGroup == "lastSavedGroupItem"'
+           class="md-raised md-fab md-mini">
+
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
+           class="md-default-theme material-icons">bookmark
+  </md-icon>
+</md-button>
+
+
 <!--<otus-button click="$ctrl.cancelGroupEdit()"-->
 <!--             ng-if='$ctrl.stateItemGroup == "editorGroup"'-->
 <!--             tooltip="Cancelar"-->

@@ -3,7 +3,7 @@
 
   angular.module('editor.ui')
     .component('itemGroupButton', {
-      templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/icon-item-group/item-group-button-template.html',
+      templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-button/item-group-button-template.html',
       controller: 'itemGroupButtonCtrl as $ctrl',
       bindings: {
         stateItemGroup:'@',
@@ -14,9 +14,7 @@
         colorIcon:'@',
         click: '&',
         tooltip: '@',
-
         colorButton:'@',
-
       }
     })
     .controller('itemGroupButtonCtrl', Controller);

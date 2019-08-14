@@ -5,6 +5,10 @@
         <h2>Grupo de Questões</h2>
         <span flex></span>
         <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
+          <md-icon>delete</md-icon>
+          <md-tooltip md-direction="bottom">Excluir Grupo</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
           <md-icon>close</md-icon>
           <md-tooltip md-direction="bottom">Fechar</md-tooltip>
         </md-button>
@@ -19,6 +23,7 @@
         <md-card flex-gt-xs="20" flex layout-padding style="width: auto">
           [{{$ctrl.item.templateID}}]={{$ctrl.item.customID}}
       </div>
+
     </md-dialog-content>
     <md-dialog-actions layout="row" >
       <div ng-repeat="button in $ctrl.BUTTONS">

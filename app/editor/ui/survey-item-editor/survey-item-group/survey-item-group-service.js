@@ -37,7 +37,7 @@
       }
     }
 
-    function setUpQuestionGroup(id){
+    function setUpQuestionGroup(id, idx){
       let taggedValidateGroupItem = false;
       if(self.questionItemReference[id].ctrl.stateItemGroup == "editorGroup"){
         var groupSurveyItems = [];
@@ -52,6 +52,10 @@
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup = "savedGroupItem"
           }
         });
+        var last = groupSurveyItems[groupSurveyItems.length -1];
+        self.questionItemReference[last].ctrl.stateItemGroup = "lastSavedGroupItem"
+
+
         if(taggedValidateGroupItem){
           console.log(groupSurveyItems);
         };
@@ -76,15 +80,17 @@
         case "FDR1":
           return [
             'FDR1',
-            'FDR3'
+            'FDR3',
+            'FDR4'
           ];
           break;
 
-        case "FDR4":
+        case "FDR5":
           return [
-            'FDR4',
             'FDR5',
             'FDR6',
+            'FDR7',
+            'FDR8'
           ];
           break;
 
