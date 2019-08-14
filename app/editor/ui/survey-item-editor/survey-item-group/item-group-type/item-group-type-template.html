@@ -1,0 +1,23 @@
+<md-button ng-if="$ctrl.type == 'button'" id={{$ctrl.id}}
+           class="md-raised md-fab md-mini"
+           ng-click="$ctrl.click()">
+  <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
+           class="md-default-theme material-icons">{{$ctrl.iconButton}}
+  </md-icon>
+</md-button>
+
+<md-checkbox ng-if="$ctrl.type == 'checkbox'"
+             id=validateGroup_{{$ctrl.id}}
+             style="font-size:30px;height:20px;width:40px;color:#737373; margin-left:16px; margin-top:13px;"
+             class="md-primary"
+             aria-label="ItemCandidateCheckBox"
+             bind="$ctrl.itemCandidateCheckBox">
+  </md-checkbox>
+
+  <!-- {{$ctrl.buttonClass}}-->
+<!--ng-style= "{'font-size':'30px;'}"-->
+<!--class= "md-primary md-fab md-mini questionPositionChip"-->
+
+<md-tooltip md-direction="{{::$ctrl.template.tooltipDirection}}">
+  {{::$ctrl.template.tooltip}}
+</md-tooltip>

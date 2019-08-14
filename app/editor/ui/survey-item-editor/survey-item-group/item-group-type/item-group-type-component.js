@@ -2,22 +2,20 @@
   'use strict';
 
   angular.module('editor.ui')
-    .component('itemGroupButton', {
-      templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-button/item-group-button-template.html',
-      controller: 'itemGroupButtonCtrl as $ctrl',
+    .component('itemGroupType', {
+      templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-type/item-group-type-template.html',
+      controller: 'itemGroupTypeCtrl as $ctrl',
       bindings: {
+        type:'@',
         stateItemGroup:'@',
         id:'@',
-        buttonClass: '@',
         iconButton:'@',
-        iconCollor:'@',
-        colorIcon:'@',
         click: '&',
         tooltip: '@',
-        colorButton:'@',
+        itemCandidateCheck: '='
       }
     })
-    .controller('itemGroupButtonCtrl', Controller);
+    .controller('itemGroupTypeCtrl', Controller);
 
   Controller.$inject = [
     // 'editor.ui.SurveyItemGroupService',
@@ -26,9 +24,9 @@
 
   function Controller(SurveyItemGroupService) {
     var self = this;
-    self.buttonClass = "md-primary md-fab md-mini questionPositionChip";
+
   //   self.stateItemGroup = "createGroup";
-  //   self.itemCandidateCheckBox = false;
+  //    self.itemCandidateCheck = true;
   //
   //   self.$onInit = onInit;
   //   self.editorSurveyItemGroup = editorSurveyItemGroup;
