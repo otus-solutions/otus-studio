@@ -39,22 +39,16 @@
 
     function setUpQuestionGroup() {
       var data = {
-        url: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-dialog-template.html',
-        //header: "Excluir Questão "+self.item.customID,
-        //ctrl: 'SurveyItemGroupDialogController',
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/dialog-item-group/survey-item-group-dialog-template.html',
+        ctrl: 'SurveyItemGroupDialogController',
         item: self.item,
-        //position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
         //questions: WorkspaceService.getSurvey().getItems(),
-        //cancel: SurveyItemGroupService.cancelGroupEdit(),
         buttons : [
-          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: SurveyItemGroupService.cancelGroupEdit()},
-          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: SurveyItemGroupService.setUpQuestionGroup(self.item.templateID)}
+          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: _cancelGroup},
+          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _saveItemGroup}
         ]
       };
-
-      DialogService.show(data)
-      //SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
-      //SurveyItemGroupService.cancelGroupEdit();
+      DialogService.show(data);
     }
 
     function _stateControl() {
@@ -62,11 +56,17 @@
       self.stateItemGroup = vm.status;
     }
 
+    function _saveItemGroup(){
+      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
+      //_clearQuestionSelected(0);
+      $mdDialog.cancel();
+    }
 
-
-
-
+    function _cancelGroup(){
+      console.log("_cancel")
+      SurveyItemGroupService.cancelGroupEdit();
+      $mdDialog.cancel();
+    }
   }
-
 
 }());

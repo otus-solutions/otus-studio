@@ -13,15 +13,16 @@
     <md-dialog-content flex="100" id="dialogContent">
       <div class="md-dialog-content md-padding"  layout="column" layout-align="start start" layout-wrap flex>
         <div>
-          <h3>Gostaria de criar um grupo com as questões abaixo?</h3>
+          <h3>Confirme se os itens abaixo devem estar no mesmo grupo</h3>
         </div>
+
         <md-card flex-gt-xs="20" flex layout-padding style="width: auto">
-          FDR1 - FDR2 - FDR3
+          [{{$ctrl.item.templateID}}]={{$ctrl.item.customID}}
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row" >
       <div ng-repeat="button in $ctrl.BUTTONS">
-        <md-button  class="{{ button.class }}" ng-click="button.action()" aria-label="button">
+        <md-button  class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
           <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
           {{button.message}}
         </md-button>

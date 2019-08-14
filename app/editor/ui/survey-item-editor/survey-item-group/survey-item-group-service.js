@@ -59,6 +59,7 @@
     }
 
     function cancelGroupEdit() {
+      console.log("cancel");
       self.itemsValidCanditates.forEach(itemCandidate =>{
         self.questionItemReference[itemCandidate].ctrl.stateItemGroup = "createGroup"
       })
