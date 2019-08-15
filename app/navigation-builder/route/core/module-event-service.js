@@ -77,6 +77,7 @@
     }
 
     function _onDestinationNodeSelected(event, node) {
+      console.log(node);
       GraphLayerService.setNodeAsTrailend(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();

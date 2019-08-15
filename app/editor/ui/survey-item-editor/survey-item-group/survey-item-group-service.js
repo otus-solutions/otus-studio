@@ -21,6 +21,7 @@
     function init() {
       let survey = WorkspaceService.getSurvey();
       groupManager = survey.SurveyItemGroupManager;
+      console.log(groupManager);
 
       //console.log(candidates);
       //console.log(groupManager.createGroup(candidates));

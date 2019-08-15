@@ -63,6 +63,8 @@
     this.color = options.color || '#000';
     this.isDefault = _isDefault();
     this.isOrphan = options.isOrphan || false;
+    this.inGroup = options.inGroup;
+    this.isInitialItemOfGroup = options.isInitialItemOfGroup;
 
     /* Public methods */
     this.connectIn = connectIn;
