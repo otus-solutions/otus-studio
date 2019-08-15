@@ -5,14 +5,27 @@
     .module('editor.ui')
     .service('editor.ui.SurveyItemGroupService', Service);
 
-  function Service() {
-    var self = this;
+  Service.$inject = ['WorkspaceService']
 
+  function Service(WorkspaceService) {
+
+    var self = this;
+    var groupManager = {}
     self.questionItemReference = {};
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.setUpQuestionGroup = setUpQuestionGroup;
     self.cancelGroupEdit = cancelGroupEdit;
+    init()
+
+    function init() {
+      let survey = WorkspaceService.getSurvey();
+      groupManager = survey.SurveyItemGroupManager;
+
+      //console.log(candidates);
+      //console.log(groupManager.createGroup(candidates));
+      //console.log(groupManager.getSurveyItemGroupList());
+    }
 
     function surveyItemsRegistry(ctrl, fun) {
       self.questionItemReference[ctrl.item.templateID] = {};
@@ -22,8 +35,12 @@
     }
 
     function getValidItemsByTemplateID(templateId) {
+      // var realItemsValidCanditates = groupManager.getGroupCandidates(templateId);
+      // console.log(realItemsValidCanditates);
       let stateComponent = {};
-      self.itemsValidCanditates = self.fakeModelList_getItemsValidCandidates(templateId);
+      //self.itemsValidCanditates = self.fakeModelList_getItemsValidCandidates(templateId);
+      self.itemsValidCanditates = groupManager.getGroupCandidates(templateId);
+      console.log(self.itemsValidCanditates);
 
       if(!self.itemsValidCanditates.length){
         stateComponent.status = "invalidateGroup";
@@ -43,7 +60,6 @@
         var groupSurveyItems = [];
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
-          console.log(self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox)
           if(
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup == "validateGroup" &&
             self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
@@ -55,7 +71,6 @@
         });
         var last = groupSurveyItems[groupSurveyItems.length -1];
         self.questionItemReference[last].ctrl.stateItemGroup = "lastSavedGroupItem"
-
 
         if(taggedValidateGroupItem){
           console.log(groupSurveyItems);
@@ -71,35 +86,34 @@
       self.itemsValidCanditates = [];
     }
 
-
     function _setStateComponent(id, stateComponent){
       self.questionItemReference[id].stateControl.call(stateComponent)
     }
 
-    self.fakeModelList_getItemsValidCandidates = function (templateId) {
-      switch (templateId) {
-        case "FDR1":
-          return [
-            'FDR1',
-            'FDR3',
-            'FDR4'
-          ];
-          break;
-
-        case "FDR5":
-          return [
-            'FDR5',
-            'FDR6',
-            'FDR7',
-            'FDR8'
-          ];
-          break;
-
-        default:
-          return [];
-          break;
-      }
-    };
+    // self.fakeModelList_getItemsValidCandidates = function (templateId) {
+    //   switch (templateId) {
+    //     case "FDR1":
+    //       return [
+    //         'FDR1',
+    //         'FDR3',
+    //         'FDR4'
+    //       ];
+    //       break;
+    //
+    //     case "FDR5":
+    //       return [
+    //         'FDR5',
+    //         'FDR6',
+    //         'FDR7',
+    //         'FDR8'
+    //       ];
+    //       break;
+    //
+    //     default:
+    //       return [];
+    //       break;
+    //   }
+    // };
     return self;
   }
 }());

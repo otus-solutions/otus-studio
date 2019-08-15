@@ -15,7 +15,7 @@
     'editor.ui.SurveyItemGroupService',
     '$scope',
     '$mdDialog',
-    'DialogService'
+    'DialogService',
   ];
 
   function Controller(SurveyItemGroupService, $scope, $mdDialog, DialogService) {
@@ -41,7 +41,6 @@
         url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
         ctrl: 'SurveyItemGroupDialogController',
         item: self.item,
-        //questions: WorkspaceService.getSurvey().getItems(),
         buttons : [
           {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: _cancelGroup},
           {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _saveItemGroup}
