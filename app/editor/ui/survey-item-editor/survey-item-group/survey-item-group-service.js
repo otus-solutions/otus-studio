@@ -8,15 +8,23 @@
   Service.$inject = ['WorkspaceService']
 
   function Service(WorkspaceService) {
+    //state of group component scenarios
+    const CREATE_ITEM_GROUP_STATE = "createGroup";
+    const EDITOR_GROUP_STATE = "editorGroup";
+    const VALID_ITEM_GROUP_STATE = "validateGroup";
+    const SAVED_ITEM_GROUP_EDITOR_STATE = "savedGroupEditor";
+    const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
+    const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
 
     var self = this;
     var groupManager = {}
     self.questionItemReference = {};
+    self.futureQuestionItemGroup = [];
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
-    self.setUpQuestionGroup = setUpQuestionGroup;
+    self.saveItemGroup = saveItemGroup;
     self.cancelGroupEdit = cancelGroupEdit;
-    init()
+    init();
 
     function init() {
       let survey = WorkspaceService.getSurvey();
@@ -36,85 +44,54 @@
     }
 
     function getValidItemsByTemplateID(templateId) {
-      // var realItemsValidCanditates = groupManager.getGroupCandidates(templateId);
-      // console.log(realItemsValidCanditates);
       let stateComponent = {};
-      //self.itemsValidCanditates = self.fakeModelList_getItemsValidCandidates(templateId);
       self.itemsValidCanditates = groupManager.getGroupCandidates(templateId);
-      console.log(self.itemsValidCanditates);
-
       if(!self.itemsValidCanditates.length){
-        stateComponent.status = "invalidateGroup";
+        stateComponent.status = VALID_ITEM_GROUP_STATE;
         _setStateComponent(templateId, stateComponent);
       }else{
         self.itemsValidCanditates.forEach(function (id, index) {
-          if(index < 1)stateComponent.status = "editorGroup";
-          else stateComponent.status = "validateGroup";
+          if(index < 1)stateComponent.status = EDITOR_GROUP_STATE;
+          else stateComponent.status = VALID_ITEM_GROUP_STATE;
           _setStateComponent(id,stateComponent);
         });
       }
     }
 
-    function setUpQuestionGroup(id, idx){
+    function saveItemGroup(id){
       let taggedValidateGroupItem = false;
-      if(self.questionItemReference[id].ctrl.stateItemGroup == "editorGroup"){
-        var groupSurveyItems = [];
+      if(self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE){
+        let groupSurveyItems = [];
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
           if(
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup == "validateGroup" &&
+            self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
             self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
-            taggedValidateGroupItem = true;
+            self.questionItemReference[id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
+            self.questionItemReference[itemCandidate].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
-            self.questionItemReference[id].ctrl.stateItemGroup = "savedGroupEditor"
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup = "savedGroupItem"
+          }
+          else if(self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
+            !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
+            self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
           }
         });
-        var last = groupSurveyItems[groupSurveyItems.length -1];
-        self.questionItemReference[last].ctrl.stateItemGroup = "lastSavedGroupItem"
-
-        if(taggedValidateGroupItem){
-          console.log(groupSurveyItems);
-        };
+        let last = groupSurveyItems[groupSurveyItems.length -1];
+        self.questionItemReference[last].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       }
     }
 
     function cancelGroupEdit() {
-      console.log("cancel");
       self.itemsValidCanditates.forEach(itemCandidate =>{
-        self.questionItemReference[itemCandidate].ctrl.stateItemGroup = "createGroup"
-      })
+        self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+      });
       self.itemsValidCanditates = [];
     }
 
     function _setStateComponent(id, stateComponent){
       self.questionItemReference[id].stateControl.call(stateComponent)
+      self.futureQuestionItemGroup.push(self.questionItemReference[id]);
     }
-
-    // self.fakeModelList_getItemsValidCandidates = function (templateId) {
-    //   switch (templateId) {
-    //     case "FDR1":
-    //       return [
-    //         'FDR1',
-    //         'FDR3',
-    //         'FDR4'
-    //       ];
-    //       break;
-    //
-    //     case "FDR5":
-    //       return [
-    //         'FDR5',
-    //         'FDR6',
-    //         'FDR7',
-    //         'FDR8'
-    //       ];
-    //       break;
-    //
-    //     default:
-    //       return [];
-    //       break;
-    //   }
-    // };
     return self;
   }
 }());

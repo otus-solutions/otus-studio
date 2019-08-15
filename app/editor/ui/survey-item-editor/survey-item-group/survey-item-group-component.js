@@ -46,7 +46,8 @@
           {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _saveItemGroup}
         ]
       };
-      DialogService.show(data);
+
+      _taggedItemList().length >= 1 ?  DialogService.show(data) : console.log("não marcou")
     }
 
     function _stateControl() {
@@ -55,8 +56,9 @@
     }
 
     function _saveItemGroup(){
-      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
+      SurveyItemGroupService.saveItemGroup(self.item.templateID);
       //_clearQuestionSelected(0);
+
       $mdDialog.cancel();
     }
 
@@ -64,6 +66,13 @@
       console.log("_cancel")
       SurveyItemGroupService.cancelGroupEdit();
       $mdDialog.cancel();
+    }
+
+    function _taggedItemList(){
+      var taggedItems = SurveyItemGroupService.futureQuestionItemGroup.filter(item =>{
+        return item.ctrl.itemCandidateCheckbox == true
+      })
+      return taggedItems;
     }
   }
 
