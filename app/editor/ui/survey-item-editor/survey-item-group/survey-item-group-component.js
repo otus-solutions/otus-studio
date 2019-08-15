@@ -6,7 +6,7 @@
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
       controller: 'otusSurveyItemGroupCtrl as $ctrl',
       bindings: {
-        item: "<"
+        item: "<",
       }
     })
     .controller('otusSurveyItemGroupCtrl', Controller);
@@ -21,7 +21,7 @@
   function Controller(SurveyItemGroupService, $scope, $mdDialog, DialogService) {
     var self = this;
     self.stateItemGroup = "createGroup";
-    self.itemCandidateCheckBox = false;
+    self.itemCandidateCheckbox = false;
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
@@ -34,7 +34,6 @@
 
     function editorSurveyItemGroup() {
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
-      console.log(self);
     }
 
     function setUpQuestionGroup() {

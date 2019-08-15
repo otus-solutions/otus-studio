@@ -1,62 +1,49 @@
 <item-group-type ng-if="$ctrl.stateItemGroup == 'createGroup'"
-                   type="button"
-                   id="createGroup_{{$ctrl.item.templateID}}"
-                   click="$ctrl.editorSurveyItemGroup()"
-                   icon-button="playlist_add">
+                 type="button"
+                 id="createGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.editorSurveyItemGroup()"
+                 icon-button="playlist_add">
 </item-group-type>
+
 <item-group-type ng-if="$ctrl.stateItemGroup == 'editorGroup'"
-                   type="button"
-                   id="editorGroup_{{$ctrl.item.templateID}}"
-                   click="$ctrl.setUpQuestionGroup()"
-                   icon-button="save">
+                 type="button"
+                 id="editorGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.setUpQuestionGroup()"
+                 icon-button="save">
 </item-group-type>
+
 <item-group-type ng-if="$ctrl.stateItemGroup == 'invalidateGroup'"
-                   type="button"
-                   id="invalidateGroup_{{$ctrl.item.templateID}}"
-                   click="$ctrl.editorSurveyItemGroup()"
-                   icon-button="warning">
+                 type="button"
+                 id="invalidateGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.editorSurveyItemGroup()"
+                 icon-button="warning">
 </item-group-type>
+
 <item-group-type ng-if="$ctrl.stateItemGroup == 'savedGroupEditor'"
                  type="button"
                  id=savedGroupEditor_{{$ctrl.item.templateID}}"
                  click="$ctrl.editorSurveyItemGroup()"
                  icon-button="bookmarks">
 </item-group-type>
+
 <item-group-type ng-if="$ctrl.stateItemGroup == 'savedGroupItem'"
                  type="button"
                  id=savedGroupItem_{{$ctrl.item.templateID}}
                  icon-button="bookmark_border">
 </item-group-type>
+
 <item-group-type ng-if='$ctrl.stateItemGroup == "lastSavedGroupItem"'
                  type="button"
                  id=lastSavedGroupItem_{{$ctrl.item.templateID}}
                  icon-button="bookmark">
 </item-group-type>
 
+<item-group-type ng-if="$ctrl.stateItemGroup == 'validateGroup'"
+                 id=validateGroup_{{$ctrl.item.templateID}}
+                 type="checkbox"
+                 item-candidate-checkbox="$ctrl.itemCandidateCheckbox"
+</item-group-type>
 
-<md-checkbox id=validateGroup_{{$ctrl.item.templateID}}
-             ng-if="$ctrl.stateItemGroup == 'validateGroup'"
-             style="font-size:30px;height:20px;width:40px;color:#737373; margin-left:16px; margin-top:13px" ;
-             class="md-primary"
-             ng-model="$ctrl.itemCandidateCheckBox"
-             ng-value="$ctrl.itemCandidateCheckBox"
-             aria-label="ItemCandidateCheckBox">
-</md-checkbox>
-
-<!--<item-group-type ng-if="$ctrl.stateItemGroup == 'validateGroup'"-->
-<!--                 id=validateGroup_{{$ctrl.item.templateID}}-->
-<!--                 type="checkbox"-->
-<!--                 item-candidate-check = "$ctrl.itemCandidateCheckBox"-->
-<!--</item-group-type>-->
-
-
-
-
-<!--<otus-button click="$ctrl.cancelGroupEdit()"-->
-<!--             ng-if='$ctrl.stateItemGroup == "editorGroup"'-->
-<!--             tooltip="Cancelar"-->
-<!--             icon-button="cancel"-->
-<!--             style="margin-left:-20px"/>-->
 
 
 

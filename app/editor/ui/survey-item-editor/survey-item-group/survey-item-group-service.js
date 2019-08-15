@@ -43,9 +43,10 @@
         var groupSurveyItems = [];
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
+          console.log(self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox)
           if(
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup == "validateGroup" &&
-            self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckBox){
+            self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
             taggedValidateGroupItem = true;
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
             self.questionItemReference[id].ctrl.stateItemGroup = "savedGroupEditor"
