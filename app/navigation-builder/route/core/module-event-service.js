@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -42,7 +42,7 @@
     }
 
     function _unregisterEventListeners() {
-      _events.forEach(function(eventReg) {
+      _events.forEach(function (eventReg) {
         eventReg();
       });
     }
@@ -77,11 +77,26 @@
     }
 
     function _onDestinationNodeSelected(event, node) {
-      console.log(node);
-      GraphLayerService.setNodeAsTrailend(node);
-      GraphLayerService.applyVisualChanges();
-      InstructorService.clearMessenger();
-      RouteDialogService.showDialog(node[0], node[1]);
+      var destination = node[1];
+      if (destination.inGroup)
+        _destinationNodeSelectedIsGroup(destination, node);
+      else {
+        GraphLayerService.setNodeAsTrailend(node);
+        GraphLayerService.applyVisualChanges();
+        InstructorService.clearMessenger();
+        RouteDialogService.showDialog(node[0], node[1]);
+      }
+    }
+
+    function _destinationNodeSelectedIsGroup(destination, node) {
+      if (destination.isInitialItemOfGroup) {
+        GraphLayerService.setNodeAsTrailend(node);
+        GraphLayerService.applyVisualChanges();
+        InstructorService.clearMessenger();
+        RouteDialogService.showDialog(node[0], node[1]);
+      } else {
+        RouteDialogService.showWarningForGroups();
+      }
     }
 
     function _onDestinationNodeUnselected(event, node) {
