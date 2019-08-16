@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -219,7 +219,7 @@
       if (isCustom) {
         ruleData.answer = answer;
       } else {
-        ruleData.answer = answer.option.value ;
+        ruleData.answer = answer.option.value;
       }
       _selectedCondition.rules.push(ruleData);
     }
@@ -250,7 +250,7 @@
         ruleData.isMetadata = false;
         ruleData.isCustom = true;
       } else {
-        ruleData.answer = answer.option.value ;
+        ruleData.answer = answer.option.value;
         ruleData.isMetadata = answer.isMetadata;
         ruleData.isCustom = false;
       }

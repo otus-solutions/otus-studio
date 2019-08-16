@@ -42,7 +42,7 @@
     function showWarningForGroups() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Você só pode criar rotas de pulo para a primeira questão do grupo!')
+          .textContent('Só é possível criar pulos para a questão do início de um grupo ou então da questão final do grupo para outras questões')
           .position("bottom left")
           .hideDelay(4000)
       );

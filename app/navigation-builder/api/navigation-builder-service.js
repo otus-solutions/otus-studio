@@ -99,10 +99,10 @@
         var group = _inGroup(navigation.origin)
         if (group) {
           options.inGroup = true;
-          options.isInitialItemOfGroup = group.position === 'start' ? true : false;
+          options.positionInGroup = group.position;
         } else {
           options.inGroup = false;
-          options.isInitialItemOfGroup = false;
+          options.positionInGroup = undefined;
         }
         _navigationMap.createNode(options);
       });
@@ -126,7 +126,7 @@
     }
 
     function _inGroup(identity) {
-      var groups = _survey.SurveyItemGroupManager.getSurveyItemGroupList();
+      var groups = _survey.SurveyItemGroupManager.getSurveyItemGroupList()[0].members;
       return groups.find(function (element) {
         if (element.id === identity)
           return element;
