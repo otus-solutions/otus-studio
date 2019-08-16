@@ -33,11 +33,7 @@
       let survey = WorkspaceService.getSurvey();
       groupManager = survey.SurveyItemGroupManager;
       surveyItemGroupList = groupManager.getSurveyItemGroupList();
-      //console.log(groupManager);
-
-      //console.log(candidates);
-      //console.log(groupManager.createGroup(candidates));
-      //console.log(groupManager.getSurveyItemGroupList());
+      console.log(groupManager);
     }
 
     function surveyItemsRegistry(ctrl, fun) {
@@ -63,39 +59,37 @@
     }
 
     function identifiesGroupItemStatus(id){
-      let group = []
-      // console.log(groupManager);
-      console.log(id)
-      //console.log(groupManager.hasMember(id));
-      // var group  = groupManager.getGroupByMember(id);
-      //var group  = groupManager.getGroupByStart(id);
-      //console.log(group)
-      //console.log(surveyItemGroupList)
+      var statusItem = {};
       surveyItemGroupList.forEach(itemGroup => {
-        //console.log(itemGroup)
-          group = itemGroup.members.find(member => {
-          return member.id === id;
-        })
-        console.log(group)
-        //if(group.length)
+        statusItem = itemGroup.members.find(member => {
+          return member.id.id === id;
+        });
+      });
 
-      })
-      //return groupManager.getSurveyItemGroupList();
+      if(statusItem){
+        switch (statusItem.position) {
+          case "start":
+            self.questionItemReference[id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
+            break;
+          case "middle":
+            self.questionItemReference[id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
+            break;
+          case "end":
+            self.questionItemReference[id].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
+            break;
+         }
+       }
     }
 
 
     function saveItemGroup(id){
-      let taggedValidateGroupItem = false;
       let groupSurveyItems = [];
       if(self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE){
-
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
           if(
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
             self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
-            self.questionItemReference[id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
           }
           else if(self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
@@ -103,11 +97,8 @@
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
           }
         });
-        let last = groupSurveyItems[groupSurveyItems.length -1];
-        self.questionItemReference[last].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       }
-      let surveyItemGroup = groupManager.createGroup(groupSurveyItems);
-      console.log(surveyItemGroup);
+      groupManager.createGroup(groupSurveyItems);
       AddSurveyItemGroupEventFactory.create().execute();
     }
 
