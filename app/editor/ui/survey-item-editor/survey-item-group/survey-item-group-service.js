@@ -5,9 +5,9 @@
     .module('editor.ui')
     .service('editor.ui.SurveyItemGroupService', Service);
 
-  Service.$inject = ['WorkspaceService']
+  Service.$inject = ['WorkspaceService', 'AddSurveyItemGroupEventFactory']
 
-  function Service(WorkspaceService) {
+  function Service(WorkspaceService, AddSurveyItemGroupEventFactory) {
     //state of group component scenarios
     const CREATE_ITEM_GROUP_STATE = "createGroup";
     const EDITOR_GROUP_STATE = "editorGroup";
@@ -60,8 +60,9 @@
 
     function saveItemGroup(id){
       let taggedValidateGroupItem = false;
+      let groupSurveyItems = [];
       if(self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE){
-        let groupSurveyItems = [];
+
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
           if(
@@ -79,6 +80,9 @@
         let last = groupSurveyItems[groupSurveyItems.length -1];
         self.questionItemReference[last].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       }
+      let surveyItemGroup = groupManager.createGroup(groupSurveyItems);
+      console.log(surveyItemGroup);
+      AddSurveyItemGroupEventFactory.create().execute();
     }
 
     function cancelGroupEdit() {
