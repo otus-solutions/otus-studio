@@ -18,7 +18,10 @@
       if (initialNodes.indexOf(options.id) > -1) {
         node = _createInitialNode(options);
       } else {
-        options.color = options.isOrphan ? '#571616' : '#616161';
+        if (options.inGroup)
+          options.color = _defineColorForGroupsPath(options);
+        else
+          options.color = options.isOrphan ? '#571616' : '#616161';
         node = new Node(options);
       }
       return node;
@@ -43,6 +46,10 @@
       options.color = options.isOrphan ? '#571616' : '#616161';
       options.isDefault = false;
       return new Node(options);
+    }
+
+    function _defineColorForGroupsPath(options) {
+      return options.isInitialItemOfGroup ? '#0965FF' : '#A4C6FF';
     }
 
     return self;

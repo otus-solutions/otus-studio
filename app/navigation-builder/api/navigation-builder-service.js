@@ -85,13 +85,9 @@
       return _survey.SurveyItemManager.getItemList();
     }
 
-    // TODO:
-
-
     function _addNodes(templateNavigations) {
       var items = getCustomIDs();
       templateNavigations.forEach(function (navigation, index) {
-        console.log(navigation);
         var options = {};
         options.id = navigation.origin;
         if (index > 1 && index < (items.length + 2)) {
@@ -100,8 +96,15 @@
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
         options.isMyRootOrphan = navigation.hasOrphanRoot();
-        _inGroup(navigation.origin);
-        _navigationMap.createNode(options, { inGroup: true, isInitialItemOfGroup: false });
+        var group = _inGroup(navigation.origin)
+        if (group) {
+          options.inGroup = true;
+          options.isInitialItemOfGroup = group.position === 'start' ? true : false;
+        } else {
+          options.inGroup = false;
+          options.isInitialItemOfGroup = false;
+        }
+        _navigationMap.createNode(options);
       });
     }
 
@@ -123,25 +126,11 @@
     }
 
     function _inGroup(identity) {
-      var members = [
-        {
-          id: "DIC1",
-          position: 'start'
-        },
-        {
-          id: "DIC2",
-          position: 'middle'
-        },
-        {
-          id: "DIC3",
-          position: 'end'
-        }
-      ];
-
       var groups = _survey.SurveyItemGroupManager.getSurveyItemGroupList();
-      
-      
-      console.log(groups);
+      return groups.find(function (element) {
+        if (element.id === identity)
+          return element;
+      });
     }
   }
 })();
