@@ -3,7 +3,7 @@
 
   angular
     .module('editor.ui')
-    .service('editor.ui.SurveyItemGroupService', Service);
+    .service('SurveyItemGroupService', Service);
 
   Service.$inject = ['WorkspaceService', 'AddSurveyItemGroupEventFactory']
 
@@ -18,18 +18,22 @@
 
     var self = this;
     var groupManager = {}
+    var surveyItemGroupList = [];
     self.questionItemReference = {};
     self.futureQuestionItemGroup = [];
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.saveItemGroup = saveItemGroup;
     self.cancelGroupEdit = cancelGroupEdit;
-    init();
+    self.identifiesGroupItemStatus = identifiesGroupItemStatus;
 
-    function init() {
+    onInit();
+
+    function onInit() {
       let survey = WorkspaceService.getSurvey();
       groupManager = survey.SurveyItemGroupManager;
-      console.log(groupManager);
+      surveyItemGroupList = groupManager.getSurveyItemGroupList();
+      //console.log(groupManager);
 
       //console.log(candidates);
       //console.log(groupManager.createGroup(candidates));
@@ -57,6 +61,28 @@
         });
       }
     }
+
+    function identifiesGroupItemStatus(id){
+      let group = []
+      // console.log(groupManager);
+      console.log(id)
+      //console.log(groupManager.hasMember(id));
+      // var group  = groupManager.getGroupByMember(id);
+      //var group  = groupManager.getGroupByStart(id);
+      //console.log(group)
+      //console.log(surveyItemGroupList)
+      surveyItemGroupList.forEach(itemGroup => {
+        //console.log(itemGroup)
+          group = itemGroup.members.find(member => {
+          return member.id === id;
+        })
+        console.log(group)
+        //if(group.length)
+
+      })
+      //return groupManager.getSurveyItemGroupList();
+    }
+
 
     function saveItemGroup(id){
       let taggedValidateGroupItem = false;

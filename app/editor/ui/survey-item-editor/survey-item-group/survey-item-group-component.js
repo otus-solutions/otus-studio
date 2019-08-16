@@ -12,7 +12,7 @@
     .controller('otusSurveyItemGroupCtrl', Controller);
 
   Controller.$inject = [
-    'editor.ui.SurveyItemGroupService',
+    'SurveyItemGroupService',
     '$scope',
     '$mdDialog',
     'DialogService',
@@ -30,10 +30,16 @@
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
+      _checkGroupItem()
+    }
+
+    function _checkGroupItem(){
+      SurveyItemGroupService.identifiesGroupItemStatus(self.item.templateID);
     }
 
     function editorSurveyItemGroup() {
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
+
     }
 
     function setUpQuestionGroup() {
