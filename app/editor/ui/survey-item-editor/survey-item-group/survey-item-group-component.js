@@ -28,20 +28,12 @@
     self.setUpQuestionGroup = setUpQuestionGroup;
     self.flagsStatusGroupItems = flagsStatusGroupItems;
 
-
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
       flagsStatusGroupItems();
-      //_checkGroupItem()
-
     }
 
-    // function _checkGroupItem(){
-    //   SurveyItemGroupService.identifiesGroupItemStatus(self.item.templateID);
-    // }
-
     function editorSurveyItemGroup() {
-      //_verifyStartItemGroup()
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
 
     }
@@ -57,9 +49,6 @@
       if(SurveyItemGroupService.verifyEndItemGroup(self.item.templateID))
         return {id: self.item.templateID};
     }
-
-
-
 
     function setUpQuestionGroup() {
       var data = {
@@ -82,8 +71,6 @@
 
     function _saveItemGroup(){
       SurveyItemGroupService.saveItemGroup(self.item.templateID);
-      //_clearQuestionSelected(0);
-
       $mdDialog.cancel();
     }
 
