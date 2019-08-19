@@ -4,30 +4,34 @@
       <div class="md-toolbar-tools">
         <h2>Grupo de Questões</h2>
         <span flex></span>
-        <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
           <md-icon>delete</md-icon>
           <md-tooltip md-direction="bottom">Excluir Grupo</md-tooltip>
         </md-button>
-        <md-button class="md-icon-button"  ng-click="$ctrl.cancel()">
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
           <md-icon>close</md-icon>
           <md-tooltip md-direction="bottom">Fechar</md-tooltip>
         </md-button>
       </div>
     </md-toolbar>
     <md-dialog-content flex="100" id="dialogContent">
-      <div class="md-dialog-content md-padding"  layout="column" layout-align="start start" layout-wrap flex>
+      <div class="md-dialog-content md-padding" layout="column" layout-align="start start" layout-wrap flex>
         <div>
           <h3>Confirme se os itens abaixo devem estar no mesmo grupo</h3>
         </div>
 
-        <md-card flex-gt-xs="20" flex layout-padding style="width: auto">
-          [{{$ctrl.item.templateID}}]={{$ctrl.item.customID}}
+        <md-chips ng-model="$ctrl.item" name="item">
+          <md-chip-template>
+            <strong>{{$chip}}</strong>
+            <em>info</em>
+          </md-chip-template>
+        </md-chips>
       </div>
 
     </md-dialog-content>
-    <md-dialog-actions layout="row" >
+    <md-dialog-actions layout="row">
       <div ng-repeat="button in $ctrl.BUTTONS">
-        <md-button  class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
+        <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
           <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
           {{button.message}}
         </md-button>

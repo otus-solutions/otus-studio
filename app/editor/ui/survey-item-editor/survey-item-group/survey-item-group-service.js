@@ -5,9 +5,14 @@
     .module('editor.ui')
     .service('SurveyItemGroupService', Service);
 
-  Service.$inject = ['WorkspaceService', 'AddSurveyItemGroupEventFactory']
+  Service.$inject = [
+    'WorkspaceService',
+    'AddSurveyItemGroupEventFactory',
+    '$mdDialog',
+    'DialogService',
+  ]
 
-  function Service(WorkspaceService, AddSurveyItemGroupEventFactory) {
+  function Service(WorkspaceService, AddSurveyItemGroupEventFactory, $mdDialog, DialogService) {
     //state of group component scenarios
     const CREATE_ITEM_GROUP_STATE = "createGroup";
     const EDITOR_GROUP_STATE = "editorGroup";
@@ -19,14 +24,16 @@
 
     var self = this;
     var groupManager = {};
+
     self.questionItemReference = {};
     self.futureQuestionItemGroup = [];
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
-    self.identifiesInvalidItem = identifiesInvalidItems;
+    // self.identifiesInvalidItem = identifiesInvalidItems;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
-    self.getValidItemsByTemplateID = getValidItemsByTemplateID;
-    self.saveItemGroup = saveItemGroup;
+    self.setUpQuestionGroup = setUpQuestionGroup;
+    self.selectedForSurveyGroup = selectedForSurveyGroup;
+    self.saveSurveyGroup = saveSurveyGroup;
     self.cancelGroupEdit = cancelGroupEdit;
     self.verifyEndItemGroup = verifyEndItemGroup;
 
@@ -44,79 +51,96 @@
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
     }
 
-    function identifiesGroupItemStatus(id){
+    function identifiesGroupItemStatus(id) {
       let surveyItemGroup = groupManager.getGroupByMember(id);
       console.log(surveyItemGroup);
       self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
       self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       surveyItemGroup.members.forEach(member => {
-        if(member.position == "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
+        if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
       });
     }
 
-    function identifiesInvalidItems(id){
-      let stateComponent = {};
-      let invalidCandidate = _getCandidates(id);
-      if(invalidCandidate.length == 1) {
-        stateComponent.status = INVALID_ITEM_GROUP_STATE;
-        _setStateComponent(id, stateComponent);
-      }
-    }
+    // function identifiesInvalidItems(id) {
+    //   let stateComponent = {};
+    //   let invalidCandidate = _getCandidates(id);
+    //   if (invalidCandidate.length === 1) {
+    //     stateComponent.status = INVALID_ITEM_GROUP_STATE;
+    //     _setStateComponent(id, stateComponent);
+    //   }
+    // }
 
     function getValidItemsByTemplateID(id) {
       let stateComponent = {};
       self.itemsValidCanditates = _getCandidates(id);
-      if(self.itemsValidCanditates.length == 1){
+      if (self.itemsValidCanditates.length === 1) {
         stateComponent.status = INVALID_ITEM_GROUP_STATE;
         _setStateComponent(id, stateComponent);
-      }else{
+      } else {
         self.itemsValidCanditates.forEach(function (id, index) {
-          if(index < 1)stateComponent.status = EDITOR_GROUP_STATE;
+          if (index < 1) stateComponent.status = EDITOR_GROUP_STATE;
           else stateComponent.status = VALID_ITEM_GROUP_STATE;
-          _setStateComponent(id,stateComponent);
+          _setStateComponent(id, stateComponent);
         });
       }
     }
 
-    function verifyEndItemGroup(id){
+    function verifyEndItemGroup(id) {
       var surveyItemGroup = groupManager.getGroupByMember(id);
-      if(surveyItemGroup) return surveyItemGroup.end === id ;
+      if (surveyItemGroup) return surveyItemGroup.end === id;
     }
 
+    function setUpQuestionGroup(id) {
+      var data = {
+        url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
+        ctrl: 'SurveyItemGroupDialogController',
+        item: selectedForSurveyGroup(id),
+        buttons: [
+          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: cancelGroupEdit},
+          {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: saveSurveyGroup(id)}
+        ]
+      };
+      DialogService.show(data);
+    }
 
-    function saveItemGroup(id){
+    function saveSurveyGroup(id) {
+      groupManager.createGroup(selectedForSurveyGroup(id));
+      AddSurveyItemGroupEventFactory.create().execute();
+      $mdDialog.cancel();
+    }
+
+    function cancelGroupEdit() {
+      self.itemsValidCanditates.forEach(itemCandidate => {
+        self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+      });
+      self.itemsValidCanditates = [];
+      $mdDialog.cancel();
+    }
+
+    function selectedForSurveyGroup(id) {
       let groupSurveyItems = [];
-      if(self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE){
+      if (self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE) {
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
-          if(
+          if (
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
-            self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
+            self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
-          }
-          else if(self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
-            !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox){
+          } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
+            !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
           }
         });
       }
-      groupManager.createGroup(groupSurveyItems);
-      AddSurveyItemGroupEventFactory.create().execute();
+      return groupSurveyItems;
     }
 
-    function cancelGroupEdit() {
-      self.itemsValidCanditates.forEach(itemCandidate =>{
-        self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
-      });
-      self.itemsValidCanditates = [];
-    }
-
-    function _setStateComponent(id, stateComponent){
+    function _setStateComponent(id, stateComponent) {
       self.questionItemReference[id].stateControl.call(stateComponent)
       self.futureQuestionItemGroup.push(self.questionItemReference[id]);
     }
 
-    function  _getCandidates(id){
+    function _getCandidates(id) {
       return groupManager.getGroupCandidates(id);
     }
 

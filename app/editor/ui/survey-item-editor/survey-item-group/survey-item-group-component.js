@@ -12,13 +12,10 @@
     .controller('otusSurveyItemGroupCtrl', Controller);
 
   Controller.$inject = [
-    'SurveyItemGroupService',
-    '$scope',
-    '$mdDialog',
-    'DialogService',
+    'SurveyItemGroupService'
   ];
 
-  function Controller(SurveyItemGroupService, $scope, $mdDialog, DialogService) {
+  function Controller(SurveyItemGroupService) {
     var self = this;
     self.stateItemGroup = "createGroup";
     self.itemCandidateCheckbox = false;
@@ -26,12 +23,11 @@
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
-    // self.flagsStatusGroupItems = flagsStatusGroupItems;
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
       _flagsStatusGroupItems();
-      _invalidItemsGroups(self.item.templateID);
+      //_invalidItemsGroups(self.item.templateID);
     }
 
     function editorSurveyItemGroup() {
@@ -50,37 +46,18 @@
         return {id: self.item.templateID};
     }
 
-    function _invalidItemsGroups(id){
-      SurveyItemGroupService.identifiesInvalidItem(id)
-    }
+    // function _invalidItemsGroups(id){
+    //   SurveyItemGroupService.identifiesInvalidItem(id)
+    // }
 
-    function setUpQuestionGroup() {
-      var data = {
-        url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
-        ctrl: 'SurveyItemGroupDialogController',
-        item: self.item,
-        buttons : [
-          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme", action: _cancelGroup},
-          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _saveItemGroup}
-        ]
-      };
-      _taggedItemList().length >= 1 ?  DialogService.show(data) : console.log("não marcou")
+    function setUpQuestionGroup(){
+      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
     }
 
     //recursive register in onInit
     function _stateControl() {
       let vm = this;
       self.stateItemGroup = vm.status;
-    }
-
-    function _saveItemGroup(){
-      SurveyItemGroupService.saveItemGroup(self.item.templateID);
-      $mdDialog.cancel();
-    }
-
-    function _cancelGroup(){
-      SurveyItemGroupService.cancelGroupEdit();
-      $mdDialog.cancel();
     }
 
     function _taggedItemList(){
