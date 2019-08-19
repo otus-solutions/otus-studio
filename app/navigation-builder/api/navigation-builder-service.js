@@ -126,11 +126,12 @@
     }
 
     function _inGroup(identity) {
-      var groups = _survey.SurveyItemGroupManager.getSurveyItemGroupList()[0].members;
-      return groups.find(function (element) {
-        if (element.id === identity)
-          return element;
-      });
+      return _survey.SurveyItemGroupManager.getSurveyItemGroupList().find(function (groups) {
+        return groups.members.find(function (member) {
+          if (member.id === identity)
+            return member;
+        });
+      })
     }
   }
 })();
