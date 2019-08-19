@@ -26,21 +26,40 @@
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
+    self.flagsStatusGroupItems = flagsStatusGroupItems;
 
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
-      _checkGroupItem()
+      flagsStatusGroupItems();
+      //_checkGroupItem()
+
     }
 
-    function _checkGroupItem(){
-      SurveyItemGroupService.identifiesGroupItemStatus(self.item.templateID);
-    }
+    // function _checkGroupItem(){
+    //   SurveyItemGroupService.identifiesGroupItemStatus(self.item.templateID);
+    // }
 
     function editorSurveyItemGroup() {
+      //_verifyStartItemGroup()
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
 
     }
+
+    function flagsStatusGroupItems(){
+      var itemStartGroup = _checkEndItemGroup();
+      if(itemStartGroup){
+        SurveyItemGroupService.identifiesGroupItemStatus(itemStartGroup.id)
+      }
+    }
+
+    function _checkEndItemGroup(){
+      if(SurveyItemGroupService.verifyEndItemGroup(self.item.templateID))
+        return {id: self.item.templateID};
+    }
+
+
+
 
     function setUpQuestionGroup() {
       var data = {
