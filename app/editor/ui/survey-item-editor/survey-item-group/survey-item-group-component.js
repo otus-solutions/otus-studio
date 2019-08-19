@@ -60,12 +60,12 @@
       self.stateItemGroup = vm.status;
     }
 
-    function _taggedItemList(){
-      var taggedItems = SurveyItemGroupService.futureQuestionItemGroup.filter(item =>{
-        return item.ctrl.itemCandidateCheckbox == true
-      })
-      return taggedItems;
-    }
+    // function _taggedItemList(){
+    //   var taggedItems = SurveyItemGroupService.futureQuestionItemGroup.filter(item =>{
+    //     return item.ctrl.itemCandidateCheckbox == true
+    //   })
+    //   return taggedItems;
+    // }
   }
 
 }());

@@ -109,6 +109,7 @@
       $mdDialog.cancel();
     }
 
+    //tratar: zerando sem gravar na memoria (implementar método que mantem o que tem em memória)
     function cancelGroupEdit() {
       self.itemsValidCanditates.forEach(itemCandidate => {
         self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
