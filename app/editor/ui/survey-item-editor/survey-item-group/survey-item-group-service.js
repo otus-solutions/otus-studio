@@ -12,6 +12,7 @@
     const CREATE_ITEM_GROUP_STATE = "createGroup";
     const EDITOR_GROUP_STATE = "editorGroup";
     const VALID_ITEM_GROUP_STATE = "validateGroup";
+    const INVALID_ITEM_GROUP_STATE = "invalidateGroup";
     const SAVED_ITEM_GROUP_EDITOR_STATE = "savedGroupEditor";
     const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
     const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
@@ -21,11 +22,13 @@
     self.questionItemReference = {};
     self.futureQuestionItemGroup = [];
     self.surveyItemsRegistry = surveyItemsRegistry;
+    self.identifiesGroupItemStatus = identifiesGroupItemStatus;
+    self.identifiesInvalidItem = identifiesInvalidItems;
+    self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.saveItemGroup = saveItemGroup;
     self.cancelGroupEdit = cancelGroupEdit;
     self.verifyEndItemGroup = verifyEndItemGroup;
-    self.identifiesGroupItemStatus = identifiesGroupItemStatus;
 
     onInit();
 
@@ -41,12 +44,31 @@
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
     }
 
-    function getValidItemsByTemplateID(templateId) {
+    function identifiesGroupItemStatus(id){
+      let surveyItemGroup = groupManager.getGroupByMember(id);
+      console.log(surveyItemGroup);
+      self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
+      self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
+      surveyItemGroup.members.forEach(member => {
+        if(member.position == "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
+      });
+    }
+
+    function identifiesInvalidItems(id){
       let stateComponent = {};
-      self.itemsValidCanditates = groupManager.getGroupCandidates(templateId);
-      if(!self.itemsValidCanditates.length){
-        stateComponent.status = VALID_ITEM_GROUP_STATE;
-        _setStateComponent(templateId, stateComponent);
+      let invalidCandidate = _getCandidates(id);
+      if(invalidCandidate.length == 1) {
+        stateComponent.status = INVALID_ITEM_GROUP_STATE;
+        _setStateComponent(id, stateComponent);
+      }
+    }
+
+    function getValidItemsByTemplateID(id) {
+      let stateComponent = {};
+      self.itemsValidCanditates = _getCandidates(id);
+      if(self.itemsValidCanditates.length == 1){
+        stateComponent.status = INVALID_ITEM_GROUP_STATE;
+        _setStateComponent(id, stateComponent);
       }else{
         self.itemsValidCanditates.forEach(function (id, index) {
           if(index < 1)stateComponent.status = EDITOR_GROUP_STATE;
@@ -61,15 +83,6 @@
       if(surveyItemGroup) return surveyItemGroup.end === id ;
     }
 
-    function identifiesGroupItemStatus(id){
-      var surveyItemGroup = groupManager.getGroupByMember(id);
-      console.log(surveyItemGroup);
-      self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
-      self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
-      surveyItemGroup.members.forEach(member => {
-        if(member.position == "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
-      });
-    }
 
     function saveItemGroup(id){
       let groupSurveyItems = [];
@@ -102,6 +115,11 @@
       self.questionItemReference[id].stateControl.call(stateComponent)
       self.futureQuestionItemGroup.push(self.questionItemReference[id]);
     }
+
+    function  _getCandidates(id){
+      return groupManager.getGroupCandidates(id);
+    }
+
     return self;
   }
 }());

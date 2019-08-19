@@ -26,19 +26,19 @@
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
-    self.flagsStatusGroupItems = flagsStatusGroupItems;
+    // self.flagsStatusGroupItems = flagsStatusGroupItems;
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
-      flagsStatusGroupItems();
+      _flagsStatusGroupItems();
+      _invalidItemsGroups(self.item.templateID);
     }
 
     function editorSurveyItemGroup() {
       SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
-
     }
 
-    function flagsStatusGroupItems(){
+    function _flagsStatusGroupItems(){
       var itemStartGroup = _checkEndItemGroup();
       if(itemStartGroup){
         SurveyItemGroupService.identifiesGroupItemStatus(itemStartGroup.id)
@@ -48,6 +48,10 @@
     function _checkEndItemGroup(){
       if(SurveyItemGroupService.verifyEndItemGroup(self.item.templateID))
         return {id: self.item.templateID};
+    }
+
+    function _invalidItemsGroups(id){
+      SurveyItemGroupService.identifiesInvalidItem(id)
     }
 
     function setUpQuestionGroup() {
@@ -60,10 +64,10 @@
           {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _saveItemGroup}
         ]
       };
-
       _taggedItemList().length >= 1 ?  DialogService.show(data) : console.log("não marcou")
     }
 
+    //recursive register in onInit
     function _stateControl() {
       let vm = this;
       self.stateItemGroup = vm.status;
@@ -75,7 +79,6 @@
     }
 
     function _cancelGroup(){
-      console.log("_cancel")
       SurveyItemGroupService.cancelGroupEdit();
       $mdDialog.cancel();
     }
