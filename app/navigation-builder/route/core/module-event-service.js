@@ -13,6 +13,8 @@
   ];
 
   function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService) {
+    var GROUP_START_POSITION = 'start';
+    var GROUP_END_POSITION = 'end';
     var self = this;
     var _events = [];
 
@@ -60,6 +62,16 @@
     }
 
     function _onOriginNodeSelected(event, node) {
+      if (node.inGroup && node.positionInGroup === GROUP_END_POSITION) {
+        _originNodeSelected(node);
+      } else if (node.inGroup && !(node.positionInGroup === GROUP_END_POSITION)) {
+        RouteDialogService.showWarningForGroups();
+      } else if (!node.inGroup) {
+        _originNodeSelected(node);
+      }
+    }
+
+    function _originNodeSelected(node) {
       GraphLayerService.lockPreviousNodeOf(node);
       GraphLayerService.setNodeAsTrailhead(node);
       GraphLayerService.applyVisualChanges();
@@ -81,22 +93,23 @@
       if (destination.inGroup)
         _destinationNodeSelectedIsGroup(destination, node);
       else {
-        GraphLayerService.setNodeAsTrailend(node);
-        GraphLayerService.applyVisualChanges();
-        InstructorService.clearMessenger();
-        RouteDialogService.showDialog(node[0], node[1]);
+        _destinationNodeSelected(node);
       }
     }
 
     function _destinationNodeSelectedIsGroup(destination, node) {
-      if (destination.isInitialItemOfGroup) {
-        GraphLayerService.setNodeAsTrailend(node);
-        GraphLayerService.applyVisualChanges();
-        InstructorService.clearMessenger();
-        RouteDialogService.showDialog(node[0], node[1]);
+      if (destination.positionInGroup === GROUP_START_POSITION) {
+        _destinationNodeSelected(node);
       } else {
         RouteDialogService.showWarningForGroups();
       }
+    }
+
+    function _destinationNodeSelected(node) {
+      GraphLayerService.setNodeAsTrailend(node);
+      GraphLayerService.applyVisualChanges();
+      InstructorService.clearMessenger();
+      RouteDialogService.showDialog(node[0], node[1]);
     }
 
     function _onDestinationNodeUnselected(event, node) {
