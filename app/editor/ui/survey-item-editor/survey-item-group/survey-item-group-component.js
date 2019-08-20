@@ -28,11 +28,12 @@
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
       _flagsStatusGroupItems();
-      //_invalidItemsGroups(self.item.templateID);
     }
 
-    function editorSurveyItemGroup() {
-      SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
+    //recursive register in onInit
+    function _stateControl() {
+      let vm = this;
+      self.stateItemGroup = vm.status;
     }
 
     function _flagsStatusGroupItems(){
@@ -47,28 +48,12 @@
         return {id: self.item.templateID};
     }
 
-    // function _invalidItemsGroups(id){
-    //   SurveyItemGroupService.identifiesInvalidItem(id)
-    // }
+    function editorSurveyItemGroup() {
+      SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
+    }
 
     function setUpQuestionGroup(){
       SurveyItemGroupService.setUpQuestionGroup(self.item.templateID)
     }
-
-    //recursive register in onInit
-    function _stateControl() {
-      let vm = this;
-      self.stateItemGroup = vm.status;
-    }
-
-    // function _taggedItemList(){
-    //   var taggedItems = SurveyItemGroupService.futureQuestionItemGroup.filter(item =>{
-    //     return item.ctrl.itemCandidateCheckbox == true
-    //   })
-    //   return taggedItems;
-    // }
   }
-
-
-
 }());

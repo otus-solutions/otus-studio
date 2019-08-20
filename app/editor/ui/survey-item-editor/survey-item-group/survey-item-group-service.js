@@ -1,6 +1,5 @@
 (function () {
   'use strict';
-
   angular
     .module('editor.ui')
     .service('SurveyItemGroupService', Service);
@@ -26,14 +25,11 @@
     var groupManager = {};
 
     self.questionItemReference = {};
-    self.futureQuestionItemGroup = [];
     self.surveyItemsRegistry = surveyItemsRegistry;
+    self.verifyEndItemGroup = verifyEndItemGroup;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
-    // self.identifiesInvalidItem = identifiesInvalidItems;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.setUpQuestionGroup = setUpQuestionGroup;
-    self.cancelGroupEdit = cancelGroupEdit;
-    self.verifyEndItemGroup = verifyEndItemGroup;
 
     onInit();
 
@@ -49,23 +45,19 @@
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
     }
 
+    function verifyEndItemGroup(id) {
+      var surveyItemGroup = groupManager.getGroupByMember(id);
+      if (surveyItemGroup) return surveyItemGroup.end === id;
+    }
+
     function identifiesGroupItemStatus(id) {
       let surveyItemGroup = groupManager.getGroupByMember(id);
       self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
       self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       surveyItemGroup.members.forEach(member => {
-        if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE;
-      });
+        if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE }
+      );
     }
-
-    // function identifiesInvalidItems(id) {
-    //   let stateComponent = {};
-    //   let invalidCandidate = _getCandidates(id);
-    //   if (invalidCandidate.length === 1) {
-    //     stateComponent.status = INVALID_ITEM_GROUP_STATE;
-    //     _setStateComponent(id, stateComponent);
-    //   }
-    // }
 
     function getValidItemsByTemplateID(id) {
       let stateComponent = {};
@@ -82,18 +74,13 @@
       }
     }
 
-    function verifyEndItemGroup(id) {
-      var surveyItemGroup = groupManager.getGroupByMember(id);
-      if (surveyItemGroup) return surveyItemGroup.end === id;
-    }
-
     function setUpQuestionGroup(id) {
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
         ctrl: 'SurveyItemGroupDialogController',
         item: _selectedForSurveyGroup(id),
         buttons: [
-          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: cancelGroupEdit},
+          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
           {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
         ]
       };
@@ -101,9 +88,9 @@
     }
 
     function _saveSurveyGroup() {
-      var id = angular.copy(DialogService.data.item[0]);
+      var items = angular.copy(DialogService.data.item);
       groupManager.createGroup(DialogService.data.item);
-      identifiesGroupItemStatus(id);
+      identifiesGroupItemStatus(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
       $mdDialog.cancel();
     }
@@ -129,7 +116,7 @@
 
 
     //tratar: zerando sem gravar na memoria (implementar método que mantem o que tem em memória)
-    function cancelGroupEdit() {
+    function _cancelGroupEdit() {
       // self.itemsValidCanditates.forEach(itemCandidate => {
       //   self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
       // });
@@ -138,8 +125,7 @@
     }
 
     function _setStateComponent(id, stateComponent) {
-      self.questionItemReference[id].stateControl.call(stateComponent)
-      self.futureQuestionItemGroup.push(self.questionItemReference[id]);
+      self.questionItemReference[id].stateControl.call(stateComponent);
     }
 
     function _getCandidates(id) {
