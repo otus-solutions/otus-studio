@@ -12,10 +12,11 @@
     .controller('otusSurveyItemGroupCtrl', Controller);
 
   Controller.$inject = [
-    'SurveyItemGroupService'
+    'SurveyItemGroupService',
+    '$scope'
   ];
 
-  function Controller(SurveyItemGroupService) {
+  function Controller(SurveyItemGroupService, $scope) {
     var self = this;
     self.stateItemGroup = "createGroup";
     self.itemCandidateCheckbox = false;
@@ -51,7 +52,7 @@
     // }
 
     function setUpQuestionGroup(){
-      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID);
+      SurveyItemGroupService.setUpQuestionGroup(self.item.templateID)
     }
 
     //recursive register in onInit
@@ -67,5 +68,7 @@
     //   return taggedItems;
     // }
   }
+
+
 
 }());

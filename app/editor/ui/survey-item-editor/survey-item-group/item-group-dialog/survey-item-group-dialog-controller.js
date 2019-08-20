@@ -10,6 +10,5 @@
     vm.item = data.item;
     vm.BUTTONS = data.buttons || [];
     vm.cancel = data.cancel;
-    //vm.questions = data.questions;
   }
 }());
