@@ -12,7 +12,6 @@
   ]
 
   function Service(WorkspaceService, AddSurveyItemGroupEventFactory, $mdDialog, DialogService) {
-    //state of group component scenarios
     const CREATE_ITEM_GROUP_STATE = "createGroup";
     const EDITOR_GROUP_STATE = "editorGroup";
     const VALID_ITEM_GROUP_STATE = "validateGroup";
@@ -52,12 +51,16 @@
 
     function identifiesGroupItemStatus(id) {
       let surveyItemGroup = groupManager.getGroupByMember(id);
-      self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
-      self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
+      _setItemGroupState(surveyItemGroup.start, SAVED_ITEM_GROUP_EDITOR_STATE);
+      _setItemGroupState(surveyItemGroup.end, LAST_SAVED_ITEM_GROUP_STATE);
       surveyItemGroup.members.forEach(member => {
-          if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE
+          if (member.position === "middle") _setItemGroupState(member.id,SAVED_ITEM_GROUP_STATE)
         }
       );
+    }
+
+    function _setItemGroupState(id, state) {
+      self.questionItemReference[id].ctrl.stateItemGroup = state;
     }
 
     function getValidItemsByTemplateID(id) {
@@ -74,6 +77,14 @@
         });
       }
     }
+    function _getCandidates(id) {
+      return groupManager.getGroupCandidates(id);
+    }
+
+    function _setStateComponent(id, stateComponent) {
+      self.questionItemReference[id].stateControl.call(stateComponent);
+    }
+
 
     function setUpQuestionGroup(id) {
       if (_selectedForSurveyGroup(id).length === 1) {
@@ -91,6 +102,7 @@
           url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
           ctrl: 'SurveyItemGroupDialogController',
           item: _selectedForSurveyGroup(id),
+          deleteGroup: _deleteGroup,
           buttons: [
             {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
             {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
@@ -100,10 +112,12 @@
       }
     }
 
-    function _saveSurveyGroup() {
-      var items = angular.copy(DialogService.data.item);
-      groupManager.createGroup(DialogService.data.item);
-      identifiesGroupItemStatus(items[0]);
+    function _deleteGroup(items){
+      items.forEach(item => {
+        self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+        self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
+      });
+      groupManager.deleteGroup(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
       $mdDialog.cancel();
     }
@@ -119,11 +133,19 @@
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
           } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
             !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+            _setItemGroupState(itemCandidate, CREATE_ITEM_GROUP_STATE);
           }
         });
       }
       return groupSurveyItems;
+    }
+
+    function _saveSurveyGroup() {
+      var items = angular.copy(DialogService.data.item);
+      groupManager.createGroup(DialogService.data.item);
+      identifiesGroupItemStatus(items[0]);
+      AddSurveyItemGroupEventFactory.create().execute();
+      $mdDialog.cancel();
     }
 
     function _cancelGroupEdit() {
@@ -133,14 +155,6 @@
       });
       DialogService.data.item = [];
       $mdDialog.cancel();
-    }
-
-    function _setStateComponent(id, stateComponent) {
-      self.questionItemReference[id].stateControl.call(stateComponent);
-    }
-
-    function _getCandidates(id) {
-      return groupManager.getGroupCandidates(id);
     }
 
     return self;

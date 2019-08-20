@@ -10,5 +10,6 @@
     vm.item = data.item;
     vm.BUTTONS = data.buttons || [];
     vm.cancel = data.cancel;
+    vm.deleteGroup = data.deleteGroup;
   }
 }());
