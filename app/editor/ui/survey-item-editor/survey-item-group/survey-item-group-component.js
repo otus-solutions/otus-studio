@@ -37,9 +37,9 @@
     }
 
     function _flagsStatusGroupItems(){
-      var itemStartGroup = _checkEndItemGroup();
-      if(itemStartGroup){
-        SurveyItemGroupService.identifiesGroupItemStatus(itemStartGroup.id)
+      var itemEndGroup = _checkEndItemGroup();
+      if(itemEndGroup){
+        SurveyItemGroupService.identifiesGroupItemStatus(itemEndGroup.id)
       }
     }
 

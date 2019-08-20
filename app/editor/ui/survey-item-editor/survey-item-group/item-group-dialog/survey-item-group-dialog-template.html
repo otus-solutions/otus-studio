@@ -17,10 +17,10 @@
     <md-dialog-content flex="100" id="dialogContent">
       <div class="md-dialog-content md-padding" layout="column" layout-align="start start" layout-wrap flex>
         <div>
-          <h3>Confirme se os itens abaixo devem estar no mesmo grupo</h3>
+          <h3>Itens do agrupamento:</h3>
         </div>
 
-        <md-chips ng-model="$ctrl.item" name="item">
+        <md-chips ng-model="$ctrl.item" name="item" readonly=true>
           <md-chip-template>
             <strong>{{$chip}}</strong>
           </md-chip-template>

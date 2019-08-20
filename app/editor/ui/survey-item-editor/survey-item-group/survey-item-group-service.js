@@ -88,6 +88,7 @@
     }
 
     function _saveSurveyGroup() {
+      console.log(DialogService.data.ctrl)
       var items = angular.copy(DialogService.data.item);
       groupManager.createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
