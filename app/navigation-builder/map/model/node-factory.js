@@ -6,7 +6,7 @@
     .factory('otusjs.studio.navigationBuilder.NodeFactory', factory);
 
   function factory() {
-    var GROUP_START_POSITION = 'start';
+    var GROUP_MIDDLE_POSITION = 'middle';
     var self = this;
 
     self.create = create;
@@ -50,7 +50,7 @@
     }
 
     function _defineColorForGroupsPath(options) {
-      return options.positionInGroup === GROUP_START_POSITION ? '#0965FF' : '#A4C6FF';
+      return options.positionInGroup === GROUP_MIDDLE_POSITION ? '#A4C6FF' : '#0965FF';
     }
 
     return self;

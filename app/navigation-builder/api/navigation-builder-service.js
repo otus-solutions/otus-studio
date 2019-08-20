@@ -125,13 +125,18 @@
       });
     }
 
+    // TODO: Garantir que essa função está sendo a mais performatica possível
     function _inGroup(identity) {
-      return _survey.SurveyItemGroupManager.getSurveyItemGroupList().find(function (groups) {
-        return groups.members.find(function (member) {
-          if (member.id === identity)
-            return member;
+      var result = undefined;
+      _survey.SurveyItemGroupManager.getSurveyItemGroupList().some(function (groups) {
+        return groups.members.some(function (member) {
+          if (member.id === identity) {
+            result = member;
+            return;
+          }
         });
-      })
+      });
+      return result;
     }
   }
 })();
