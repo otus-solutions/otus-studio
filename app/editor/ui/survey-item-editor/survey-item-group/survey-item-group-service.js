@@ -55,7 +55,8 @@
       self.questionItemReference[surveyItemGroup.start].ctrl.stateItemGroup = SAVED_ITEM_GROUP_EDITOR_STATE;
       self.questionItemReference[surveyItemGroup.end].ctrl.stateItemGroup = LAST_SAVED_ITEM_GROUP_STATE;
       surveyItemGroup.members.forEach(member => {
-        if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE }
+          if (member.position === "middle") self.questionItemReference[member.id].ctrl.stateItemGroup = SAVED_ITEM_GROUP_STATE
+        }
       );
     }
 
@@ -75,20 +76,31 @@
     }
 
     function setUpQuestionGroup(id) {
-      var data = {
-        url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
-        ctrl: 'SurveyItemGroupDialogController',
-        item: _selectedForSurveyGroup(id),
-        buttons: [
-          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
-          {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
-        ]
-      };
-      DialogService.show(data);
+      if (_selectedForSurveyGroup(id).length === 1) {
+
+        $mdDialog.show(
+          $mdDialog.alert()
+            .clickOutsideToClose(true)
+            .title('Criação de Grupo negada')
+            .textContent('Verificamos que somente a questão inicial está habilitada')
+            .ok('OK')
+        );
+        self.questionItemReference[id].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+      } else {
+        var data = {
+          url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
+          ctrl: 'SurveyItemGroupDialogController',
+          item: _selectedForSurveyGroup(id),
+          buttons: [
+            {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
+            {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
+          ]
+        };
+        DialogService.show(data);
+      }
     }
 
     function _saveSurveyGroup() {
-      console.log(DialogService.data.ctrl)
       var items = angular.copy(DialogService.data.item);
       groupManager.createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
@@ -98,14 +110,14 @@
 
     function _selectedForSurveyGroup(id) {
       let groupSurveyItems = [];
-      if (self.questionItemReference[id].ctrl.stateItemGroup == EDITOR_GROUP_STATE) {
+      if (self.questionItemReference[id].ctrl.stateItemGroup === EDITOR_GROUP_STATE) {
         groupSurveyItems.push(self.questionItemReference[id].item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
           if (
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
+            self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
             self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
             groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
-          } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup == VALID_ITEM_GROUP_STATE &&
+          } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
             !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
           }
@@ -114,14 +126,12 @@
       return groupSurveyItems;
     }
 
-
-
-    //tratar: zerando sem gravar na memoria (implementar método que mantem o que tem em memória)
     function _cancelGroupEdit() {
-      // self.itemsValidCanditates.forEach(itemCandidate => {
-      //   self.questionItemReference[itemCandidate].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
-      // });
-      // self.itemsValidCanditates = [];
+      DialogService.data.item.forEach(item => {
+        self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
+        self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+      });
+      DialogService.data.item = [];
       $mdDialog.cancel();
     }
 
