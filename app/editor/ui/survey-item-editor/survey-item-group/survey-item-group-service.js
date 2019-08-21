@@ -60,12 +60,13 @@
 
     function getValidItemsByTemplateID(id) {
       let stateComponent = {};
-      self.itemsValidCanditates = _getCandidates(id);
-      if (self.itemsValidCanditates.length === 1) {
+      let validCandidates = _getCandidates(id);
+
+      if (validCandidates.length === 1) {
         stateComponent.status = INVALID_ITEM_GROUP_STATE;
         _setStateComponent(id, stateComponent);
       } else {
-        self.itemsValidCanditates.forEach(function (id, index) {
+        validCandidates.forEach(function (id, index) {
           if (index < 1) stateComponent.status = EDITOR_GROUP_STATE;
           else stateComponent.status = VALID_ITEM_GROUP_STATE;
           _setStateComponent(id, stateComponent);
@@ -82,7 +83,8 @@
     }
 
     function setUpQuestionGroup(id) {
-      if (_selectedForSurveyGroup(id).length === 1) {
+      let scaledItemGroup = _selectedForSurveyGroup(id);
+      if (scaledItemGroup.length === 1) {
 
         $mdDialog.show(
           $mdDialog.alert()
@@ -96,7 +98,7 @@
         var data = {
           url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
           ctrl: 'SurveyItemGroupDialogController',
-          item: _selectedForSurveyGroup(id),
+          item: scaledItemGroup,
           deleteGroup: _deleteGroup,
           buttons: [
             {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
@@ -118,21 +120,20 @@
     }
 
     function _selectedForSurveyGroup(id) {
-      let groupSurveyItems = [];
-      if (self.questionItemReference[id].ctrl.stateItemGroup === EDITOR_GROUP_STATE) {
-        groupSurveyItems.push(self.questionItemReference[id].ctrl.item.templateID);
-        self.itemsValidCanditates.forEach(itemCandidate => {
-          if (
-            self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
-            self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
-            groupSurveyItems.push(self.questionItemReference[itemCandidate].ctrl.item.templateID);
-          } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
-            !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
-            _setItemGroupState(itemCandidate, CREATE_ITEM_GROUP_STATE);
-          }
-        });
-      }
-      return groupSurveyItems;
+      let selectedCandidates = [];
+      _getCandidates(id).forEach(candidate => {
+        if (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) {
+          selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID);
+        }
+        if (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) {
+          selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID);
+        } else if (self.questionItemReference[candidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
+          !self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) {
+          _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
+        }
+      });
+      console.log(selectedCandidates);
+      return selectedCandidates;
     }
 
     function _saveSurveyGroup() {
