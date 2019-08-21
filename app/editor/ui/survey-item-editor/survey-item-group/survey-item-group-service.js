@@ -20,7 +20,6 @@
       const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
       const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
 
-
       var self = this;
 
       self.questionItemReference = {};
@@ -48,12 +47,14 @@
 
       function identifiesGroupItemStatus(id) {
         let surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
-        _setItemGroupState(surveyItemGroup.start, SAVED_ITEM_GROUP_EDITOR_STATE);
-        _setItemGroupState(surveyItemGroup.end, LAST_SAVED_ITEM_GROUP_STATE);
-        surveyItemGroup.members.forEach(member => {
-            if (member.position === "middle") _setItemGroupState(member.id, SAVED_ITEM_GROUP_STATE)
-          }
-        );
+        if(surveyItemGroup && surveyItemGroup.members.length){
+          _setItemGroupState(surveyItemGroup.start, SAVED_ITEM_GROUP_EDITOR_STATE);
+          _setItemGroupState(surveyItemGroup.end, LAST_SAVED_ITEM_GROUP_STATE);
+          surveyItemGroup.members.forEach(member => {
+              if (member.position === "middle") _setItemGroupState(member.id, SAVED_ITEM_GROUP_STATE)
+            }
+          );
+        }
       }
 
       function _setItemGroupState(id, state) {
