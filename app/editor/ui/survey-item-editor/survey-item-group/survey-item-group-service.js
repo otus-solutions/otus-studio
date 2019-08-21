@@ -21,7 +21,6 @@
     const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
 
     var self = this;
-    var groupManager = {};
 
     self.questionItemReference = {};
     self.surveyItemsRegistry = surveyItemsRegistry;
@@ -30,31 +29,27 @@
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.setUpQuestionGroup = setUpQuestionGroup;
 
-    onInit();
-
-    function onInit() {
-      let survey = WorkspaceService.getSurvey();
-      groupManager = survey.SurveyItemGroupManager;
+    function _getSurveyItemGroupManager() {
+      return WorkspaceService.getSurvey().SurveyItemGroupManager;
     }
 
     function surveyItemsRegistry(ctrl, fun) {
       self.questionItemReference[ctrl.item.templateID] = {};
       self.questionItemReference[ctrl.item.templateID].stateControl = fun;
-      self.questionItemReference[ctrl.item.templateID].item = ctrl.item;
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
     }
 
     function verifyEndItemGroup(id) {
-      var surveyItemGroup = groupManager.getGroupByMember(id);
+      var surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
       if (surveyItemGroup) return surveyItemGroup.end === id;
     }
 
     function identifiesGroupItemStatus(id) {
-      let surveyItemGroup = groupManager.getGroupByMember(id);
+      let surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
       _setItemGroupState(surveyItemGroup.start, SAVED_ITEM_GROUP_EDITOR_STATE);
       _setItemGroupState(surveyItemGroup.end, LAST_SAVED_ITEM_GROUP_STATE);
       surveyItemGroup.members.forEach(member => {
-          if (member.position === "middle") _setItemGroupState(member.id,SAVED_ITEM_GROUP_STATE)
+          if (member.position === "middle") _setItemGroupState(member.id, SAVED_ITEM_GROUP_STATE)
         }
       );
     }
@@ -77,14 +72,14 @@
         });
       }
     }
+
     function _getCandidates(id) {
-      return groupManager.getGroupCandidates(id);
+      return _getSurveyItemGroupManager().getGroupCandidates(id);
     }
 
     function _setStateComponent(id, stateComponent) {
       self.questionItemReference[id].stateControl.call(stateComponent);
     }
-
 
     function setUpQuestionGroup(id) {
       if (_selectedForSurveyGroup(id).length === 1) {
@@ -112,12 +107,12 @@
       }
     }
 
-    function _deleteGroup(items){
+    function _deleteGroup(items) {
       items.forEach(item => {
         self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
         self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
       });
-      groupManager.deleteGroup(items[0]);
+      _getSurveyItemGroupManager().deleteGroup(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
       $mdDialog.cancel();
     }
@@ -125,12 +120,12 @@
     function _selectedForSurveyGroup(id) {
       let groupSurveyItems = [];
       if (self.questionItemReference[id].ctrl.stateItemGroup === EDITOR_GROUP_STATE) {
-        groupSurveyItems.push(self.questionItemReference[id].item.templateID);
+        groupSurveyItems.push(self.questionItemReference[id].ctrl.item.templateID);
         self.itemsValidCanditates.forEach(itemCandidate => {
           if (
             self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
             self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
-            groupSurveyItems.push(self.questionItemReference[itemCandidate].item.templateID);
+            groupSurveyItems.push(self.questionItemReference[itemCandidate].ctrl.item.templateID);
           } else if (self.questionItemReference[itemCandidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
             !self.questionItemReference[itemCandidate].ctrl.itemCandidateCheckbox) {
             _setItemGroupState(itemCandidate, CREATE_ITEM_GROUP_STATE);
@@ -142,7 +137,7 @@
 
     function _saveSurveyGroup() {
       var items = angular.copy(DialogService.data.item);
-      groupManager.createGroup(DialogService.data.item);
+      _getSurveyItemGroupManager().createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
       $mdDialog.cancel();
