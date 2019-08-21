@@ -58,26 +58,26 @@
       GraphLayerService.resetDefaultToInteractionButton(resetDefaultToStatusButton);
     }
 
-    function editRoutePriority() {
-      self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
-      self.modificationButtonInspect = false;
-      self.isPressButtonAddRoute = false;
-      _setSelected();
-      NavigationBuilderService.editRoutePriorityState(self.modificationButtonRoutePriority);
-    }
-
     function addRoute() {
+      self.isPressButtonAddRoute = !self.isPressButtonAddRoute;
       self.modificationButtonRoutePriority = false;
       self.modificationButtonInspect = false;
-      self.isPressButtonAddRoute = !self.isPressButtonAddRoute;
       _setSelected();
       NavigationBuilderService.activateRouteCreatorMode();
     }
 
-    function inspect() {
-      self.modificationButtonInspect = !self.modificationButtonInspect;
-      self.modificationButtonRoutePriority = false;
+    function editRoutePriority() {
       self.isPressButtonAddRoute = false;
+      self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
+      self.modificationButtonInspect = false;
+      _setSelected();
+      NavigationBuilderService.editRoutePriorityState(self.modificationButtonRoutePriority);
+    }
+
+    function inspect() {
+      self.isPressButtonAddRoute = false;
+      self.modificationButtonRoutePriority = false;
+      self.modificationButtonInspect = !self.modificationButtonInspect;
       _setSelected();
       NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
     }
@@ -86,6 +86,9 @@
       self.routePriorityButtonClass = _changeModificationButtonClass(false);
       self.inspectButtonClass = _changeModificationButtonClass(false);
       self.addRouteButtonClass = _changeModificationButtonClass(false);
+      self.isPressButtonAddRoute = false;
+      self.modificationButtonRoutePriority = false;
+      self.modificationButtonInspect = false;
     }
 
     function _setSelected() {
@@ -93,17 +96,17 @@
       self.inspectButtonClass = _changeModificationButtonClass(self.modificationButtonInspect);
       self.addRouteButtonClass = _changeModificationButtonClass(self.isPressButtonAddRoute);
       if (self.isPressButtonAddRoute) {
+        self.addRouteButtonClass = _changeModificationButtonClass(self.isPressButtonAddRoute);
         self.routePriorityButtonClass = _changeModificationButtonClass(false);
         self.inspectButtonClass = _changeModificationButtonClass(false);
-        self.addRouteButtonClass = _changeModificationButtonClass(self.isPressButtonAddRoute);
       } else if (self.modificationButtonRoutePriority) {
+        self.addRouteButtonClass = _changeModificationButtonClass(false);
         self.routePriorityButtonClass = _changeModificationButtonClass(self.modificationButtonRoutePriority);
         self.inspectButtonClass = _changeModificationButtonClass(false);
-        self.addRouteButtonClass = _changeModificationButtonClass(false);
       } else if (self.modificationButtonInspect) {
+        self.addRouteButtonClass = _changeModificationButtonClass(false);
         self.routePriorityButtonClass = _changeModificationButtonClass(false);
         self.inspectButtonClass = _changeModificationButtonClass(self.modificationButtonInspect);
-        self.addRouteButtonClass = _changeModificationButtonClass(false);
       }
     }
 
