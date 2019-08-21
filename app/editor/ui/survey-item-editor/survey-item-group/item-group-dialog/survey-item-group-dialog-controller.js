@@ -9,7 +9,7 @@
     var vm = this;
     vm.item = data.item;
     vm.BUTTONS = data.buttons || [];
-    vm.cancel = data.cancel;
+    vm.cancelGroupEdit = data.cancelGroupEdit;
     vm.deleteGroup = data.deleteGroup;
   }
 }());

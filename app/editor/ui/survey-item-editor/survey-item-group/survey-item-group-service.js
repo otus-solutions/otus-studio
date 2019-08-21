@@ -20,6 +20,7 @@
     const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
     const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
 
+
     var self = this;
 
     self.questionItemReference = {};
@@ -28,6 +29,7 @@
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.setUpQuestionGroup = setUpQuestionGroup;
+    self.editModeInUse = false;
 
     function _getSurveyItemGroupManager() {
       return WorkspaceService.getSurvey().SurveyItemGroupManager;
@@ -59,6 +61,8 @@
     }
 
     function getValidItemsByTemplateID(id) {
+      if(self.editModeInUse) return false;
+
       let stateComponent = {};
       let validCandidates = _getCandidates(id);
 
@@ -71,6 +75,7 @@
           else stateComponent.status = VALID_ITEM_GROUP_STATE;
           _setStateComponent(id, stateComponent);
         });
+         _setEditMode(true);
       }
     }
 
@@ -85,7 +90,7 @@
     function setUpQuestionGroup(id) {
       let scaledItemGroup = _selectedForSurveyGroup(id);
       if (scaledItemGroup.length === 1) {
-
+        _setEditMode(false);
         $mdDialog.show(
           $mdDialog.alert()
             .clickOutsideToClose(true)
@@ -99,6 +104,7 @@
           url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
           ctrl: 'SurveyItemGroupDialogController',
           item: scaledItemGroup,
+          cancelGroupEdit: _cancelGroupEdit,
           deleteGroup: _deleteGroup,
           buttons: [
             {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
@@ -116,6 +122,7 @@
       });
       _getSurveyItemGroupManager().deleteGroup(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
+      _setEditMode(false);
       $mdDialog.cancel();
     }
 
@@ -132,7 +139,6 @@
           _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
         }
       });
-      console.log(selectedCandidates);
       return selectedCandidates;
     }
 
@@ -141,6 +147,7 @@
       _getSurveyItemGroupManager().createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
+      _setEditMode(false);
       $mdDialog.cancel();
     }
 
@@ -150,7 +157,12 @@
         self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
       });
       DialogService.data.item = [];
+      _setEditMode(false);
       $mdDialog.cancel();
+    }
+
+    function _setEditMode(state){
+      self.editModeInUse = state;
     }
 
     return self;
