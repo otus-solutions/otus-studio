@@ -125,7 +125,6 @@
       });
     }
 
-    // TODO: Garantir que essa função está sendo a mais performatica possível
     function _inGroup(identity) {
       var result = undefined;
       _survey.SurveyItemGroupManager.getSurveyItemGroupList().some(function (groups) {

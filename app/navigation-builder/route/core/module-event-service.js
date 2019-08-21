@@ -66,6 +66,8 @@
         _originNodeSelected(node);
       } else if (node.inGroup && !(node.positionInGroup === GROUP_END_POSITION)) {
         RouteDialogService.showWarningForGroups();
+        GraphLayerService.resetDefaultToInteractionButton();
+        moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
       } else if (!node.inGroup) {
         _originNodeSelected(node);
       }
@@ -133,6 +135,7 @@
 
     function _onRouteBuildCanceled(event) {
       RouteDialogService.closeDialog();
+      GraphLayerService.resetDefaultToInteractionButton();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
     }
   }

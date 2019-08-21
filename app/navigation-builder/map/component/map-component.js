@@ -22,8 +22,8 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.toolsCtrl = new ToolsController(NavigationBuilderService);
       moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
+      self.toolsCtrl = new ToolsController(NavigationBuilderService, GraphLayerService);
     }
 
     function _renderMap() {
@@ -36,23 +36,32 @@
     }
   }
 
-  function ToolsController(NavigationBuilderService) {
+  function ToolsController(NavigationBuilderService, GraphLayerService) {
     var self = this;
     self.routePriorityButtonClass = ['md-fab', 'md-raised', 'md-mini'];
     self.addRouteButtonClass = ['md-fab', 'md-raised', 'md-mini'];
     self.inspectButtonClass = ['md-fab', 'md-raised', 'md-mini'];
     self.modificationButtonRoutePriority = false;
     self.modificationButtonInspect = false;
+    self.isPressButtonAddRoute = false;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.addRoute = addRoute;
     self.editRoutePriority = editRoutePriority;
     self.inspect = inspect;
-    self.changeModificationButtonClass = changeModificationButtonClass;
+    self.resetDefaultToStatusButton = resetDefaultToStatusButton;
+
+    onInit();
+
+    function onInit() {
+      GraphLayerService.resetDefaultToInteractionButton(resetDefaultToStatusButton);
+    }
 
     function editRoutePriority() {
       self.modificationButtonRoutePriority = !self.modificationButtonRoutePriority;
       self.modificationButtonInspect = false;
+      self.isPressButtonAddRoute = false;
       _setSelected();
       NavigationBuilderService.editRoutePriorityState(self.modificationButtonRoutePriority);
     }
@@ -60,6 +69,7 @@
     function addRoute() {
       self.modificationButtonRoutePriority = false;
       self.modificationButtonInspect = false;
+      self.isPressButtonAddRoute = !self.isPressButtonAddRoute;
       _setSelected();
       NavigationBuilderService.activateRouteCreatorMode();
     }
@@ -67,23 +77,37 @@
     function inspect() {
       self.modificationButtonInspect = !self.modificationButtonInspect;
       self.modificationButtonRoutePriority = false;
+      self.isPressButtonAddRoute = false;
       _setSelected();
       NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
     }
 
+    function resetDefaultToStatusButton() {
+      self.routePriorityButtonClass = _changeModificationButtonClass(false);
+      self.inspectButtonClass = _changeModificationButtonClass(false);
+      self.addRouteButtonClass = _changeModificationButtonClass(false);
+    }
+
     function _setSelected() {
-      self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
-      self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
-      if (self.modificationButtonRoutePriority) {
-        self.routePriorityButtonClass = changeModificationButtonClass(self.modificationButtonRoutePriority);
-        self.inspectButtonClass = changeModificationButtonClass(false);
+      self.routePriorityButtonClass = _changeModificationButtonClass(self.modificationButtonRoutePriority);
+      self.inspectButtonClass = _changeModificationButtonClass(self.modificationButtonInspect);
+      self.addRouteButtonClass = _changeModificationButtonClass(self.isPressButtonAddRoute);
+      if (self.isPressButtonAddRoute) {
+        self.routePriorityButtonClass = _changeModificationButtonClass(false);
+        self.inspectButtonClass = _changeModificationButtonClass(false);
+        self.addRouteButtonClass = _changeModificationButtonClass(self.isPressButtonAddRoute);
+      } else if (self.modificationButtonRoutePriority) {
+        self.routePriorityButtonClass = _changeModificationButtonClass(self.modificationButtonRoutePriority);
+        self.inspectButtonClass = _changeModificationButtonClass(false);
+        self.addRouteButtonClass = _changeModificationButtonClass(false);
       } else if (self.modificationButtonInspect) {
-        self.routePriorityButtonClass = changeModificationButtonClass(false);
-        self.inspectButtonClass = changeModificationButtonClass(self.modificationButtonInspect);
+        self.routePriorityButtonClass = _changeModificationButtonClass(false);
+        self.inspectButtonClass = _changeModificationButtonClass(self.modificationButtonInspect);
+        self.addRouteButtonClass = _changeModificationButtonClass(false);
       }
     }
 
-    function changeModificationButtonClass(selectedState) {
+    function _changeModificationButtonClass(selectedState) {
       if (!selectedState) {
         return ['md-fab', 'md-raised', 'md-mini'];
       } else {
