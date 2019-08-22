@@ -63,9 +63,19 @@
 
       function getValidItemsByTemplateID(id) {
         if (self.editModeInUse) return false;
-
         let stateComponent = {};
         let validCandidates = _getCandidates(id);
+
+        if(self.questionItemReference[id].ctrl.stateItemGroup == SAVED_ITEM_GROUP_EDITOR_STATE){
+          _getSurveyItemGroupManager().getGroupByMember(id).members.forEach(function (item, index) {
+            if (index < 1) stateComponent.status = EDITOR_GROUP_STATE;
+            else {
+              stateComponent.status = VALID_ITEM_GROUP_STATE;
+              self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true;
+              _setStateComponent(id, stateComponent);
+            }
+          });
+        }
 
         if (validCandidates.length === 1) {
           stateComponent.status = INVALID_ITEM_GROUP_STATE;
@@ -165,8 +175,23 @@
 
       function _cancelGroupEdit() {
         DialogService.data.item.forEach(item => {
-          self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
-          self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+          let group = _getSurveyItemGroupManager().getGroupByStart(item)
+          console.log(group)
+          if(group){
+            group.members.forEach(item => {
+              if (item.position === "start") _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE);
+              else {
+                self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true;
+                if(item.position === "end") _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE)
+                else _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE);
+              }
+            })
+          }
+          else {
+              self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
+              self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+            }
+
         });
         DialogService.data.item = [];
         _setEditMode(false);

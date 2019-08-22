@@ -30,7 +30,7 @@
       _flagsStatusGroupItems();
     }
 
-    //recursive register in onInit
+    //internal callBack register in onInit
     function _stateControl() {
       let vm = this;
       self.stateItemGroup = vm.status;
