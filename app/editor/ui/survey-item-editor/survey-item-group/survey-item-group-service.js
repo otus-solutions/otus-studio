@@ -9,7 +9,7 @@
       'AddSurveyItemGroupEventFactory',
       '$mdDialog',
       'DialogService'
-    ]
+    ];
 
     function Service(WorkspaceService, AddSurveyItemGroupEventFactory, $mdDialog, DialogService) {
       const CREATE_ITEM_GROUP_STATE = "createGroup";
@@ -20,7 +20,7 @@
       const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
       const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
 
-      var self = this;
+      let self = this;
 
       self.questionItemReference = {};
       self.surveyItemsRegistry = surveyItemsRegistry;
@@ -41,7 +41,7 @@
       }
 
       function verifyEndItemGroup(id) {
-        var surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
+        let surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
         if (surveyItemGroup) return surveyItemGroup.end === id;
       }
 
@@ -66,7 +66,7 @@
         let stateComponent = {};
         let validCandidates = _getCandidates(id);
 
-        if(self.questionItemReference[id].ctrl.stateItemGroup == SAVED_ITEM_GROUP_EDITOR_STATE){
+        if(self.questionItemReference[id].ctrl.stateItemGroup === SAVED_ITEM_GROUP_EDITOR_STATE){
           _getSurveyItemGroupManager().getGroupByMember(id).members.forEach(function (item, index) {
             if (index < 1) stateComponent.status = EDITOR_GROUP_STATE;
             else {
@@ -122,7 +122,7 @@
       }
 
       function _callGroupEditDialog(scaledItemGroup){
-          var data = {
+          let data = {
             url: 'app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-template.html',
             ctrl: 'SurveyItemGroupDialogController',
             item: scaledItemGroup,
@@ -135,7 +135,6 @@
           };
           DialogService.show(data);
       }
-
 
       function _deleteGroup(items) {
         items.forEach(item => {
@@ -165,7 +164,7 @@
       }
 
       function _saveSurveyGroup() {
-        var items = angular.copy(DialogService.data.item);
+        let items = angular.copy(DialogService.data.item);
         _getSurveyItemGroupManager().createGroup(DialogService.data.item);
         identifiesGroupItemStatus(items[0]);
         AddSurveyItemGroupEventFactory.create().execute();
@@ -175,14 +174,13 @@
 
       function _cancelGroupEdit() {
         DialogService.data.item.forEach(item => {
-          let group = _getSurveyItemGroupManager().getGroupByMember(item)
-          console.log(group)
+          let group = _getSurveyItemGroupManager().getGroupByMember(item);
           if(group){
             group.members.forEach(item => {
               if (item.position === "start") _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE);
               else {
                 self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true;
-                if(item.position === "end") _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE)
+                if(item.position === "end") _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE);
                 else _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE);
               }
             })
@@ -203,7 +201,4 @@
 
       return self;
     }
-  }
-
-  ()
-);
+  }());
