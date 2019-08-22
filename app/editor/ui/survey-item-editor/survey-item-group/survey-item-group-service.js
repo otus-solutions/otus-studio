@@ -175,7 +175,7 @@
 
       function _cancelGroupEdit() {
         DialogService.data.item.forEach(item => {
-          let group = _getSurveyItemGroupManager().getGroupByStart(item)
+          let group = _getSurveyItemGroupManager().getGroupByMember(item)
           console.log(group)
           if(group){
             group.members.forEach(item => {
@@ -191,7 +191,6 @@
               self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
               self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
             }
-
         });
         DialogService.data.item = [];
         _setEditMode(false);
