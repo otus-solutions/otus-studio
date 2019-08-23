@@ -68,7 +68,7 @@
 
       if (self.questionItemReference[id].ctrl.stateItemGroup === SAVED_ITEM_GROUP_EDITOR_STATE) {
         _getGroup(id).members.forEach(function (item) {
-          (item.position != "start") ? self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true : 0
+          (item.position !== "start") ? self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true : 0
         })
       }
       _createGroupEditor(validCandidates);
@@ -79,9 +79,7 @@
     }
 
     function setGroupEditorTools(validCandidates) {
-      validCandidates.forEach((id, index) => (index < 1) ? _setStateComponent(id, {status: EDITOR_GROUP_STATE}) : _setStateComponent(id, {status: VALID_ITEM_GROUP_STATE})
-      )
-
+      validCandidates.forEach((id, index) => (index < 1) ? _setStateComponent(id, {status: EDITOR_GROUP_STATE}) : _setStateComponent(id, {status: VALID_ITEM_GROUP_STATE}));
       _setEditMode(true);
     }
 
@@ -143,13 +141,13 @@
     }
 
     function _selectedForSurveyGroup(id) {
-        let selectedCandidates = [];
-        _getCandidates(id).forEach(candidate => {
-          (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : 0;
-          (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
-        });
-        return selectedCandidates;
-      }
+      let selectedCandidates = [];
+      _getCandidates(id).forEach(candidate => {
+        (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : 0;
+        (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
+      });
+      return selectedCandidates;
+    }
 
     function _saveSurveyGroup() {
       let items = angular.copy(DialogService.data.item);
@@ -162,17 +160,9 @@
 
     function _cancelGroupEdit() {
       DialogService.data.item.forEach(item => {
-        let group = _getSurveyItemGroupManager().getGroupByMember(item);
-        if (group) {
-          group.members.forEach(item => {
-            if (item.position === "start") _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE);
-            else {
-              self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true;
-              if (item.position === "end") _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE);
-              else _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE);
-            }
-          })
-        } else {
+        let group = _getGroup(item);
+        if (group) identifiesGroupItemStatus(item);
+        else {
           self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
           self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
         }
