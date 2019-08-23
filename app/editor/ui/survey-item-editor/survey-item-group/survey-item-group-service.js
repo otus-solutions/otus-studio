@@ -41,23 +41,21 @@
       }
 
       function verifyEndItemGroup(id) {
-        let surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
-        if (surveyItemGroup) return surveyItemGroup.end === id;
-      }
-
-      function identifiesGroupItemStatus(id) {
-        _getGroup(id).filter(item => {
-          item.position === "middle" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE) : 0;
-          item.position === "start" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE): 0;
-          item.position === "end" ? _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE) :  0;
-        });
+        let itemGroup = _getGroup(id);
+        return itemGroup ? itemGroup.end === id : 0
       }
 
       function _getGroup(id){
         let group = _getSurveyItemGroupManager().getGroupByMember(id);
-        if(group){
-          return group.members;
-        }
+        return group ? group : 0;
+      }
+
+      function identifiesGroupItemStatus(id) {
+        _getGroup(id).members.filter(item => {
+          item.position === "middle" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE) : 0;
+          item.position === "start" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE): 0;
+          item.position === "end" ? _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE) :  0;
+        });
       }
 
       function _setItemGroupState(id, state) {
