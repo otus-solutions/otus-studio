@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -26,10 +26,11 @@
     '$window',
     '$mdSelect',
     '$rootScope',
-    '$timeout'
+    '$timeout',
+    '$mdToast'
   ];
 
-  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect, $rootScope, $timeout) {
+  function Controller(RemoveSurveyItemEventFactory, MoveSurveyItemEventFactory, $mdDialog, DialogService, WorkspaceService, $window, $mdSelect, $rootScope, $timeout, $mdToast) {
     var self = this;
 
     var DELETE_MSG = 'A exclusão de uma questão pode afetar as rotas do questionário, assim como apaga-lás! <br><br><b>Deseja realmente excluir esta questão?</b>';
@@ -39,7 +40,7 @@
     self.deleteSurveyItem = deleteSurveyItem;
     self.moveSurveyItem = moveSurveyItem;
 
-    self.$onInit = function() {
+    self.$onInit = function () {
       _clearQuestionSelected();
       self.css = {};
       self.template = {};
@@ -53,17 +54,21 @@
       self.template.icon = (self.isToShow) ? 'expand_less' : 'expand_more';
     }
 
-    function _removeQuestion(answer){
-      if(answer){
+    function _removeQuestion(answer) {
+      if (answer) {
         RemoveSurveyItemEventFactory.create().execute(self.item);
         _clearQuestionSelected(0);
         $mdDialog.cancel();
       }
     }
 
-    function _moveQuestion(item, position){
-      if(item){
-        MoveSurveyItemEventFactory.create().execute(item, position);
+    function _moveQuestion(item, position) {
+      if (item) {
+        try {
+          MoveSurveyItemEventFactory.create().execute(item, position);
+        } catch (e) {
+          _errorHandler(e);
+        }
         $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
         _clearQuestionSelected(2000);
         $mdDialog.cancel();
@@ -78,15 +83,15 @@
 
     function deleteSurveyItem() {
       var data = {
-        header: "Excluir Questão "+self.item.customID,
+        header: "Excluir Questão " + self.item.customID,
         title: DELETE_TITLE,
         text: DELETE_MSG,
         dialogDimensions: {
           width: '800px'
         },
-        buttons : [
-          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-          {message:"SIM",class: "md-primary md-raised md-layoutTheme-theme", action: _removeQuestion}
+        buttons: [
+          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme"},
+          {message: "SIM", class: "md-primary md-raised md-layoutTheme-theme", action: _removeQuestion}
         ]
       };
       $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
@@ -96,21 +101,41 @@
     function moveSurveyItem() {
       var data = {
         url: 'app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-template.html',
-        header: "Excluir Questão "+self.item.customID,
+        header: "Excluir Questão " + self.item.customID,
         ctrl: 'SurveyItemOrderChangeController',
         item: self.item,
         position: WorkspaceService.getSurvey().getItems().indexOf(self.item) + 1,
         questions: WorkspaceService.getSurvey().getItems(),
-        buttons : [
-          {message:"CANCELAR",class: "md-primary md-layoutTheme-theme"},
-          {message:"Salvar",class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
+        buttons: [
+          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme"},
+          {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _moveQuestion}
         ]
       };
       $rootScope.$broadcast("surveyItemSelected", WorkspaceService.getSurvey().getItems().indexOf(self.item));
       DialogService.show(data);
     }
 
-    $window.addEventListener('click',function(e){
+    function _errorHandler(e) {
+      _toastMessage(_translateMessage(e.message));
+    }
+
+    function _toastMessage(message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(message)
+          .position('bottom left')
+          .hideDelay(3000));
+    }
+
+    function _translateMessage(message) {
+      if (message === 'Can not move item to inside of an existing group') {
+        return "Não é possível mover item para dentro de um grupo existente";
+      } else {
+        return message;
+      }
+    }
+
+    $window.addEventListener('click', function (e) {
       $mdSelect.hide();
     });
   }
