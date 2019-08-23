@@ -64,30 +64,23 @@
 
     function getValidItemsByTemplateID(id) {
       if (self.editModeInUse) return 0;
-      let stateComponent = {};
       let validCandidates = _getCandidates(id);
 
-      if(self.questionItemReference[id].ctrl.stateItemGroup === SAVED_ITEM_GROUP_EDITOR_STATE){
-        _getSurveyItemGroupManager().getGroupByMember(id).members.forEach(function (item, index) {
-          if (index < 1) stateComponent.status = EDITOR_GROUP_STATE;
-          else {
-            stateComponent.status = VALID_ITEM_GROUP_STATE;
-            self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true;
-            _setStateComponent(id, stateComponent);
-          }
-        });
+      if (self.questionItemReference[id].ctrl.stateItemGroup === SAVED_ITEM_GROUP_EDITOR_STATE) {
+        _getGroup(id).members.forEach(function (item) {
+          (item.position != "start") ? self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true : 0
+        })
       }
-
       _createGroupEditor(validCandidates);
     }
 
     function _createGroupEditor(validCandidates) {
-      (validCandidates.length > 1) ? setGroupEditorTools(validCandidates): _setStateComponent(validCandidates[0], {status: INVALID_ITEM_GROUP_STATE});
+      (validCandidates.length > 1) ? setGroupEditorTools(validCandidates) : _setStateComponent(validCandidates[0], {status: INVALID_ITEM_GROUP_STATE});
     }
 
-    function setGroupEditorTools(validCandidates){
+    function setGroupEditorTools(validCandidates) {
       validCandidates.forEach((id, index) => (index < 1) ? _setStateComponent(id, {status: EDITOR_GROUP_STATE}) : _setStateComponent(id, {status: VALID_ITEM_GROUP_STATE})
-    )
+      )
 
       _setEditMode(true);
     }
