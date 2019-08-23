@@ -143,20 +143,13 @@
     }
 
     function _selectedForSurveyGroup(id) {
-      let selectedCandidates = [];
-      _getCandidates(id).forEach(candidate => {
-        if (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) {
-          selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID);
-        }
-        if (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) {
-          selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID);
-        } else if (self.questionItemReference[candidate].ctrl.stateItemGroup === VALID_ITEM_GROUP_STATE &&
-          !self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) {
-          _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
-        }
-      });
-      return selectedCandidates;
-    }
+        let selectedCandidates = [];
+        _getCandidates(id).forEach(candidate => {
+          (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : 0;
+          (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
+        });
+        return selectedCandidates;
+      }
 
     function _saveSurveyGroup() {
       let items = angular.copy(DialogService.data.item);
