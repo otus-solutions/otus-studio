@@ -46,14 +46,17 @@
       }
 
       function identifiesGroupItemStatus(id) {
-        let surveyItemGroup = _getSurveyItemGroupManager().getGroupByMember(id);
-        if(surveyItemGroup && surveyItemGroup.members.length){
-          _setItemGroupState(surveyItemGroup.start, SAVED_ITEM_GROUP_EDITOR_STATE);
-          _setItemGroupState(surveyItemGroup.end, LAST_SAVED_ITEM_GROUP_STATE);
-          surveyItemGroup.members.forEach(member => {
-              if (member.position === "middle") _setItemGroupState(member.id, SAVED_ITEM_GROUP_STATE)
-            }
-          );
+        _getGroup(id).filter(item => {
+          item.position === "middle" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE) : 0;
+          item.position === "start" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE): 0;
+          item.position === "end" ? _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE) :  0;
+        });
+      }
+
+      function _getGroup(id){
+        let group = _getSurveyItemGroupManager().getGroupByMember(id);
+        if(group){
+          return group.members;
         }
       }
 
