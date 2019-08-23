@@ -30,14 +30,14 @@
       self.setUpQuestionGroup = setUpQuestionGroup;
       self.editModeInUse = false;
 
-      function _getSurveyItemGroupManager() {
-        return WorkspaceService.getSurvey().SurveyItemGroupManager;
-      }
-
       function surveyItemsRegistry(ctrl, fun) {
         self.questionItemReference[ctrl.item.templateID] = {};
         self.questionItemReference[ctrl.item.templateID].stateControl = fun;
         self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
+      }
+
+      function _getSurveyItemGroupManager() {
+        return WorkspaceService.getSurvey().SurveyItemGroupManager;
       }
 
       function verifyEndItemGroup(id) {
@@ -63,7 +63,7 @@
       }
 
       function getValidItemsByTemplateID(id) {
-        if (self.editModeInUse) return false;
+        if (self.editModeInUse) return 0;
         let stateComponent = {};
         let validCandidates = _getCandidates(id);
 
@@ -116,7 +116,7 @@
               .ok('OK')
           );
           self.questionItemReference[id].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
-          identifiesGroupItemStatus(scaledItemGroup[0]);
+          _getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
           validation = false;
         }
         return validation;

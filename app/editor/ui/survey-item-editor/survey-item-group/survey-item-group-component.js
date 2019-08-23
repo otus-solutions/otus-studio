@@ -27,7 +27,7 @@
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
-      _flagsStatusGroupItems();
+      _flagStatusGroupItems();
     }
 
     //internal callBack register in onInit
@@ -36,16 +36,13 @@
       self.stateItemGroup = vm.status;
     }
 
-    function _flagsStatusGroupItems(){
-      var itemEndGroup = _checkEndItemGroup();
-      if(itemEndGroup){
-        SurveyItemGroupService.identifiesGroupItemStatus(itemEndGroup.id)
-      }
+    function _flagStatusGroupItems(){
+      let itemEndGroup = _checkEndItemGroup();
+      itemEndGroup ? SurveyItemGroupService.identifiesGroupItemStatus(itemEndGroup.id): 0;
     }
 
     function _checkEndItemGroup(){
-      if(SurveyItemGroupService.verifyEndItemGroup(self.item.templateID))
-        return {id: self.item.templateID};
+      return SurveyItemGroupService.verifyEndItemGroup(self.item.templateID) ? {id: self.item.templateID} : 0;
     }
 
     function editorSurveyItemGroup() {
