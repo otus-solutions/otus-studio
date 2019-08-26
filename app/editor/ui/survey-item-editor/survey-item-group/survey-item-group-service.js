@@ -8,18 +8,11 @@
     'WorkspaceService',
     'AddSurveyItemGroupEventFactory',
     '$mdDialog',
-    'DialogService'
+    'DialogService',
+    'SurveyItemGroupValue'
   ];
 
-  function Service(WorkspaceService, AddSurveyItemGroupEventFactory, $mdDialog, DialogService) {
-    const CREATE_ITEM_GROUP_STATE = "createGroup";
-    const EDITOR_GROUP_STATE = "editorGroup";
-    const VALID_ITEM_GROUP_STATE = "validateGroup";
-    const INVALID_ITEM_GROUP_STATE = "invalidateGroup";
-    const SAVED_ITEM_GROUP_EDITOR_STATE = "savedGroupEditor";
-    const SAVED_ITEM_GROUP_STATE = "savedGroupItem";
-    const LAST_SAVED_ITEM_GROUP_STATE = "lastSavedGroupItem";
-
+  function Service(WorkspaceService, AddSurveyItemGroupEventFactory, $mdDialog, DialogService, StateValues) {
     let self = this;
 
     self.questionItemReference = {};
@@ -34,6 +27,10 @@
       self.questionItemReference[ctrl.item.templateID] = {};
       self.questionItemReference[ctrl.item.templateID].stateControl = fun;
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
+    }
+
+    function _getItemRegistered(id){
+      return self.questionItemReference[id];
     }
 
     function _getSurveyItemGroupManager() {
@@ -52,34 +49,38 @@
 
     function identifiesGroupItemStatus(id) {
       _getGroup(id).members.filter(item => {
-        item.position === "middle" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_STATE) : 0;
-        item.position === "start" ? _setItemGroupState(item.id, SAVED_ITEM_GROUP_EDITOR_STATE) : 0;
-        item.position === "end" ? _setItemGroupState(item.id, LAST_SAVED_ITEM_GROUP_STATE) : 0;
+        item.position === "middle" ? _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE) : 0;
+        item.position === "start" ? _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) : 0;
+        item.position === "end" ? _setItemGroupState(item.id, StateValues.LAST_SAVED_ITEM_GROUP_STATE) : 0;
       });
     }
 
     function _setItemGroupState(id, state) {
-      self.questionItemReference[id].ctrl.stateItemGroup = state;
+      _getItemRegistered(id).ctrl.stateItemGroup = state;
     }
 
     function getValidItemsByTemplateID(id) {
       if (self.editModeInUse) return 0;
       let validCandidates = _getCandidates(id);
 
-      if (self.questionItemReference[id].ctrl.stateItemGroup === SAVED_ITEM_GROUP_EDITOR_STATE) {
+      if (_getItemRegistered(id).ctrl.stateItemGroup === StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) {
         _getGroup(id).members.forEach(function (item) {
-          (item.position !== "start") ? self.questionItemReference[item.id].ctrl.itemCandidateCheckbox = true : 0
+          (item.position !== "start") ? _getItemRegistered(item.id).ctrl.itemCandidateCheckbox = true : 0
         })
       }
       _createGroupEditor(validCandidates);
     }
 
     function _createGroupEditor(validCandidates) {
-      (validCandidates.length > 1) ? setGroupEditorTools(validCandidates) : _setStateComponent(validCandidates[0], {status: INVALID_ITEM_GROUP_STATE});
+      (validCandidates.length > 1) ?
+        _setGroupEditorTools(validCandidates) :
+        _setStateComponent(validCandidates[0], {status: StateValues.INVALID_ITEM_GROUP_STATE});
     }
 
-    function setGroupEditorTools(validCandidates) {
-      validCandidates.forEach((id, index) => (index < 1) ? _setStateComponent(id, {status: EDITOR_GROUP_STATE}) : _setStateComponent(id, {status: VALID_ITEM_GROUP_STATE}));
+    function _setGroupEditorTools(validCandidates) {
+      validCandidates.forEach((id, index) => (index < 1) ?
+        _setStateComponent(id, {status: StateValues.EDITOR_GROUP_STATE}) :
+        _setStateComponent(id, {status: StateValues.VALID_ITEM_GROUP_STATE}));
       _setEditMode(true);
     }
 
@@ -88,7 +89,7 @@
     }
 
     function _setStateComponent(id, stateComponent) {
-      self.questionItemReference[id].stateControl.call(stateComponent);
+      _getItemRegistered(id).stateControl.call(stateComponent);
     }
 
     function setUpQuestionGroup(id) {
@@ -107,7 +108,7 @@
             .textContent('Verificamos que somente a questão inicial está habilitada')
             .ok('OK')
         );
-        self.questionItemReference[id].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+        self.questionItemReference[id].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
         _getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
         validation = false;
       }
@@ -131,8 +132,8 @@
 
     function _deleteGroup(items) {
       items.forEach(item => {
-        self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
-        self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
+        _getItemRegistered(item).ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+        _getItemRegistered(item).ctrl.itemCandidateCheckbox = false;
       });
       _getSurveyItemGroupManager().deleteGroup(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
@@ -142,9 +143,14 @@
 
     function _selectedForSurveyGroup(id) {
       let selectedCandidates = [];
+
       _getCandidates(id).forEach(candidate => {
-        (self.questionItemReference[candidate].ctrl.stateItemGroup === EDITOR_GROUP_STATE) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : 0;
-        (self.questionItemReference[candidate].ctrl.itemCandidateCheckbox) ? selectedCandidates.push(self.questionItemReference[candidate].ctrl.item.templateID) : _setItemGroupState(candidate, CREATE_ITEM_GROUP_STATE);
+        (_getItemRegistered(candidate).ctrl.stateItemGroup === StateValues.EDITOR_GROUP_STATE) ?
+          selectedCandidates.push(_getItemRegistered(candidate).ctrl.item.templateID) : 0;
+
+        (_getItemRegistered(candidate).ctrl.itemCandidateCheckbox) ?
+          selectedCandidates.push(_getItemRegistered(candidate).ctrl.item.templateID) :
+          _setItemGroupState(candidate, StateValues.CREATE_ITEM_GROUP_STATE);
       });
       return selectedCandidates;
     }
@@ -163,8 +169,8 @@
         let group = _getGroup(item);
         if (group) identifiesGroupItemStatus(item);
         else {
-          self.questionItemReference[item].ctrl.itemCandidateCheckbox = false;
-          self.questionItemReference[item].ctrl.stateItemGroup = CREATE_ITEM_GROUP_STATE;
+          _getItemRegistered(item).ctrl.itemCandidateCheckbox = false;
+          _getItemRegistered(item).ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
         }
       });
       DialogService.data.item = [];
