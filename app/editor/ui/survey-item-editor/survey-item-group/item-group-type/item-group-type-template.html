@@ -4,6 +4,8 @@
   <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
            class="md-default-theme material-icons">{{$ctrl.iconButton}}
   </md-icon>
+  <md-tooltip md-direction="right">{{::$ctrl.tooltip}}</md-tooltip>
+
 </md-button>
 
 <md-checkbox ng-if="$ctrl.type == 'checkbox'"
@@ -14,8 +16,3 @@
              ng-model="$ctrl.itemCandidateCheckbox"
              ng-value="$ctrl.itemCandidateCheckbox">
 </md-checkbox>
-
-
-<!--<md-tooltip md-direction="{{::$ctrl.template.tooltipDirection}}">-->
-<!--  {{::$ctrl.template.tooltip}}-->
-<!--</md-tooltip>-->

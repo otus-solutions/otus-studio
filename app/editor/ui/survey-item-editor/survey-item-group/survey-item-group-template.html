@@ -2,39 +2,45 @@
                  type="button"
                  id="createGroup_{{$ctrl.item.templateID}}"
                  click="$ctrl.editorSurveyItemGroup()"
-                 icon-button="playlist_add">
+                 icon-button="playlist_add"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.EDITOR_GROUP_STATE"
                  type="button"
                  id="editorGroup_{{$ctrl.item.templateID}}"
                  click="$ctrl.setUpQuestionGroup()"
-                 icon-button="save">
+                 icon-button="save"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.INVALID_ITEM_GROUP_STATE"
                  type="button"
                  id="invalidateGroup_{{$ctrl.item.templateID}}"
                  click="$ctrl.editorSurveyItemGroup()"
-                 icon-button="warning">
+                 icon-button="warning"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.SAVED_ITEM_GROUP_EDITOR_STATE"
                  type="button"
                  id="savedGroupEditor_{{$ctrl.item.templateID}}"
                  click="$ctrl.editorSurveyItemGroup()"
-                 icon-button="bookmarks">
+                 icon-button="bookmarks"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.SAVED_ITEM_GROUP_STATE"
                  type="button"
                  id="savedGroupItem_{{$ctrl.item.templateID}}"
-                 icon-button="bookmark_border">
+                 icon-button="bookmark_border"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.LAST_SAVED_ITEM_GROUP_STATE"
                  type="button"
                  id="lastSavedGroupItem_{{$ctrl.item.templateID}}"
-                 icon-button="bookmark">
+                 icon-button="bookmark"
+                 tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.VALID_ITEM_GROUP_STATE"
                  id="validateGroup_{{$ctrl.item.templateID}}"
