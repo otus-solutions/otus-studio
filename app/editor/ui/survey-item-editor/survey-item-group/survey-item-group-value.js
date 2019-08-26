@@ -3,12 +3,12 @@
 
   angular.module('editor.ui')
     .value('SurveyItemGroupValue', {
-      CREATE_ITEM_GROUP_STATE: "createGroup",
-      EDITOR_GROUP_STATE: "editorGroup",
-      VALID_ITEM_GROUP_STATE: "validateGroup",
-      INVALID_ITEM_GROUP_STATE: "invalidateGroup",
-      SAVED_ITEM_GROUP_EDITOR_STATE: "savedGroupEditor",
-      SAVED_ITEM_GROUP_STATE: "savedGroupItem",
-      LAST_SAVED_ITEM_GROUP_STATE: "lastSavedGroupItem",
+      CREATE_ITEM_GROUP_STATE: "Criador de Grupo",
+      EDITOR_GROUP_STATE: "Persistência de Grupo",
+      VALID_ITEM_GROUP_STATE: "Item Válido",
+      INVALID_ITEM_GROUP_STATE: "Item Não Permitido",
+      SAVED_ITEM_GROUP_EDITOR_STATE: "Editor do Grupo",
+      SAVED_ITEM_GROUP_STATE: "Item em Grupo",
+      LAST_SAVED_ITEM_GROUP_STATE: "Fim do Grupo",
     })
 })();

@@ -13,17 +13,18 @@
 
   Controller.$inject = [
     'SurveyItemGroupService',
-    '$scope'
+    'SurveyItemGroupValue'
   ];
 
-  function Controller(SurveyItemGroupService, $scope) {
+  function Controller(SurveyItemGroupService, StateValues) {
     var self = this;
-    self.stateItemGroup = "createGroup";
+    self.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     self.itemCandidateCheckbox = false;
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
+    self.StateValues = StateValues;
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);
