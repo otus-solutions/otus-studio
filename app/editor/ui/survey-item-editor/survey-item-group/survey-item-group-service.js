@@ -88,12 +88,18 @@
     function monitoringCheckboxState(ctrl) {
       let idx = self.validCandidates.indexOf(ctrl.item.templateID);
       ctrl.itemCandidateCheckbox ?
-        setUpCandidateReverseList(self.validCandidates, self.validCandidates.length, false) :
-        setUpCandidateReverseList(self.validCandidates, idx, true)
+        unmarkCandidatesPerBlock(self.validCandidates, idx, false) :
+        markCandidatesPerBlock(self.validCandidates, idx, true)
     }
 
-    function setUpCandidateReverseList(validCandidates, idx, state) {
+    function markCandidatesPerBlock(validCandidates, idx, state) {
       validCandidates.slice(1, ++idx).reverse().forEach(item => {
+        _getItemRegistered(item).ctrl.itemCandidateCheckbox = state
+      });
+    }
+
+    function unmarkCandidatesPerBlock(validCandidates, idx, state) {
+      validCandidates.slice(idx, validCandidates.length).forEach(item => {
         _getItemRegistered(item).ctrl.itemCandidateCheckbox = state
       });
     }
