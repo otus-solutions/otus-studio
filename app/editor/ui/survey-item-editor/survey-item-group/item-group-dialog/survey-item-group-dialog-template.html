@@ -2,7 +2,7 @@
   <form ng-cloak flex>
     <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
       <div class="md-toolbar-tools">
-        <h2>Grupo de Questões</h2>
+        <h2>Edição do Grupo de Questões</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.cancelGroupEdit()">
           <md-icon>close</md-icon>
@@ -13,7 +13,7 @@
     <md-dialog-content flex="100" id="dialogContent">
       <div class="md-dialog-content md-padding" layout="column" layout-align="start start" layout-wrap flex>
         <div>
-          <h3>Itens do agrupamento:</h3>
+          <h3>Itens:</h3>
         </div>
         <md-chips ng-model="$ctrl.item" name="item" readonly=true>
           <md-chip-template>

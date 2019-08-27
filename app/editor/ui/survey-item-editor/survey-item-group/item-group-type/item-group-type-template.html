@@ -1,3 +1,10 @@
+<style>
+  md-checkbox.md-checked.color .md-icon {
+    background-color: #737373;
+  }
+</style>
+
+
 <md-button ng-if="$ctrl.type == 'button'" id="button_{{$ctrl.id}}"
            class="md-mini md-icon-button"
            ng-click="$ctrl.click()">
@@ -9,6 +16,7 @@
 
 <md-checkbox ng-if="$ctrl.type == 'checkbox'"
              id="validateGroup_{{$ctrl.id}}"
+             class="color"
              style="margin-top:16px; margin-left:15.5px; margin-right:7px;"
              aria-label="ItemCandidateCheckBox"
              ng-model="$ctrl.itemCandidateCheckbox"
