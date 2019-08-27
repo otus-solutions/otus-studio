@@ -30,7 +30,7 @@
       self.questionItemReference[ctrl.item.templateID].ctrl = ctrl;
     }
 
-    function _getItemRegistered(id){
+    function _getItemRegistered(id) {
       return self.questionItemReference[id];
     }
 
@@ -52,9 +52,10 @@
       _getGroup(id).members.filter(item => {
 
         item.position === "start" ?
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE):
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) :
           _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE)
-      });    }
+      });
+    }
 
     function _setItemGroupState(id, state) {
       _getItemRegistered(id).ctrl.stateItemGroup = state;
@@ -72,15 +73,15 @@
       _createGroupEditor(self.validCandidates);
     }
 
-    function monitoringCheckboxState(ctrl){
+    function monitoringCheckboxState(ctrl) {
       let idx = self.validCandidates.indexOf(ctrl.item.templateID);
       ctrl.itemCandidateCheckbox ?
-        setUpCandidateReverseList(self.validCandidates, self.validCandidates.length, false):
+        setUpCandidateReverseList(self.validCandidates, self.validCandidates.length, false) :
         setUpCandidateReverseList(self.validCandidates, idx, true)
     }
 
-    function setUpCandidateReverseList(validCandidates, idx, state){
-      validCandidates.slice(1, ++idx).reverse().forEach( item => {
+    function setUpCandidateReverseList(validCandidates, idx, state) {
+      validCandidates.slice(1, ++idx).reverse().forEach(item => {
         _getItemRegistered(item).ctrl.itemCandidateCheckbox = state
       });
     }

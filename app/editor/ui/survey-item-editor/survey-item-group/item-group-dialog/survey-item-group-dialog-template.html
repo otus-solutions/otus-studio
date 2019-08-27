@@ -4,10 +4,6 @@
       <div class="md-toolbar-tools">
         <h2>Grupo de Questões</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="$ctrl.deleteGroup($ctrl.item)">
-          <md-icon>delete</md-icon>
-          <md-tooltip md-direction="bottom" >Excluir Grupo</md-tooltip>
-        </md-button>
         <md-button class="md-icon-button" ng-click="$ctrl.cancelGroupEdit()">
           <md-icon>close</md-icon>
           <md-tooltip md-direction="bottom">Fechar</md-tooltip>
@@ -19,7 +15,6 @@
         <div>
           <h3>Itens do agrupamento:</h3>
         </div>
-
         <md-chips ng-model="$ctrl.item" name="item" readonly=true>
           <md-chip-template>
             <strong>{{$chip}}</strong>
@@ -28,13 +23,20 @@
       </div>
 
     </md-dialog-content>
-    <md-dialog-actions layout="row">
-      <div ng-repeat="button in $ctrl.BUTTONS">
-        <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
-          <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
-          {{button.message}}
+    <md-dialog-actions layout="row" layout-align="space-between center">
+      <div>
+        <md-button class="md-warn md-raised md-hue-2 md-layoutTheme-theme" ng-click="$ctrl.deleteGroup($ctrl.item)"
+                   aria-label="button">DELETAR GRUPO
         </md-button>
-        <span flex></span>
+      </div>
+      <div layout="row">
+        <div ng-repeat="button in $ctrl.BUTTONS">
+          <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
+            <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
+            {{button.message}}
+          </md-button>
+          <span flex></span>
+        </div>
       </div>
     </md-dialog-actions>
   </form>
