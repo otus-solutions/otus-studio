@@ -23,6 +23,19 @@
     self.setUpQuestionGroup = setUpQuestionGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
+    self.validCandidates = [];
+
+
+    init();
+    function init() {
+      WorkspaceService.registerObserver({update:_clean});
+    }
+
+    function _clean() {
+      self.questionItemReference = {};
+      self.editModeInUse = false;
+      self.validCandidates = [];
+    }
 
     function surveyItemsRegistry(ctrl, fun) {
       self.questionItemReference[ctrl.item.templateID] = {};
@@ -40,12 +53,11 @@
 
     function verifyEndItemGroup(id) {
       let itemGroup = _getGroup(id);
-      return itemGroup ? itemGroup.end === id : 0
+      return itemGroup ? itemGroup.end === id : 0;
     }
 
     function _getGroup(id) {
-      let group = _getSurveyItemGroupManager().getGroupByMember(id);
-      return group ? group : 0;
+      return _getSurveyItemGroupManager().getGroupByMember(id);
     }
 
     function identifiesGroupItemStatus(id) {
