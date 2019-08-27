@@ -10,7 +10,7 @@
                  type="button"
                  id="editorGroup_{{$ctrl.item.templateID}}"
                  click="$ctrl.setUpQuestionGroup()"
-                 icon-button="save"
+                 icon-button="create"
                  tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
@@ -33,12 +33,6 @@
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.SAVED_ITEM_GROUP_STATE"
                  type="button"
                  id="savedGroupItem_{{$ctrl.item.templateID}}"
-                 icon-button="bookmark_border"
-                 tooltip={{$ctrl.stateItemGroup}}>
-</item-group-type>
-<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.LAST_SAVED_ITEM_GROUP_STATE"
-                 type="button"
-                 id="lastSavedGroupItem_{{$ctrl.item.templateID}}"
                  icon-button="bookmark"
                  tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>

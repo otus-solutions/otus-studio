@@ -1,7 +1,7 @@
 <md-button ng-if="$ctrl.type == 'button'" id="button_{{$ctrl.id}}"
            class="md-mini md-icon-button"
            ng-click="$ctrl.click()">
-  <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
+  <md-icon style="color:#737373;"
            class="md-default-theme material-icons">{{$ctrl.iconButton}}
   </md-icon>
   <md-tooltip md-direction="right">{{::$ctrl.tooltip}}</md-tooltip>
@@ -9,9 +9,8 @@
 
 <md-checkbox ng-if="$ctrl.type == 'checkbox'"
              id="validateGroup_{{$ctrl.id}}"
-             style="font-size:30px;height:20px;width:40px;color:#737373; margin-left:16px; margin-top:13px;"
+             style="margin-top:16px; margin-left:15.5px; margin-right:7px;"
              aria-label="ItemCandidateCheckBox"
-             class="md-raised"
              ng-model= "$ctrl.itemCandidateCheckbox"
              ng-change="$ctrl.monitoringCheckboxState()">
 </md-checkbox>

@@ -50,11 +50,11 @@
 
     function identifiesGroupItemStatus(id) {
       _getGroup(id).members.filter(item => {
-        item.position === "middle" ? _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE) : 0;
-        item.position === "start" ? _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) : 0;
-        item.position === "end" ? _setItemGroupState(item.id, StateValues.LAST_SAVED_ITEM_GROUP_STATE) : 0;
-      });
-    }
+
+        item.position === "start" ?
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE):
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE)
+      });    }
 
     function _setItemGroupState(id, state) {
       _getItemRegistered(id).ctrl.stateItemGroup = state;
@@ -118,8 +118,8 @@
         $mdDialog.show(
           $mdDialog.alert()
             .clickOutsideToClose(true)
-            .title('Criação de Grupo negada')
-            .textContent('Verificamos que somente a questão inicial está habilitada')
+            .title('Criação de Grupo Interrompida')
+            .textContent('Selecione uma ou mais questões para criar um grupo')
             .ok('OK')
         );
         self.questionItemReference[id].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
