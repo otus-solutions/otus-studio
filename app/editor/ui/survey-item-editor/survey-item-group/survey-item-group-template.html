@@ -27,6 +27,7 @@
                  id="savedGroupEditor_{{$ctrl.item.templateID}}"
                  click="$ctrl.editorSurveyItemGroup()"
                  icon-button="bookmarks"
+                 state-color={{$ctrl.stateColor}}
                  tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 
@@ -34,6 +35,7 @@
                  type="button"
                  id="savedGroupItem_{{$ctrl.item.templateID}}"
                  icon-button="bookmark"
+                 state-color={{$ctrl.stateColor}}
                  tooltip={{$ctrl.stateItemGroup}}>
 </item-group-type>
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.VALID_ITEM_GROUP_STATE"

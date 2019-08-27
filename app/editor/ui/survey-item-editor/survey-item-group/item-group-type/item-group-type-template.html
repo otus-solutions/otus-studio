@@ -8,7 +8,7 @@
 <md-button ng-if="$ctrl.type == 'button'" id="button_{{$ctrl.id}}"
            class="md-mini md-icon-button"
            ng-click="$ctrl.click()">
-  <md-icon style="color:#737373;"
+  <md-icon ng-style="{color:$ctrl.stateColor}"
            class="md-default-theme material-icons">{{$ctrl.iconButton}}
   </md-icon>
   <md-tooltip md-direction="right">{{::$ctrl.tooltip}}</md-tooltip>
@@ -22,3 +22,4 @@
              ng-model="$ctrl.itemCandidateCheckbox"
              ng-change="$ctrl.monitoringCheckboxState()">
 </md-checkbox>
+

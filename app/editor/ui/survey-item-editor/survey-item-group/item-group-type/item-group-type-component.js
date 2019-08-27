@@ -12,7 +12,8 @@
         iconButton:'@',
         itemCandidateCheckbox: '=',
         tooltip: '@',
-        monitoringCheckboxState: '&'
+        monitoringCheckboxState: '&',
+        stateColor: '@'
       }
     })
     .controller('itemGroupTypeCtrl', Controller);

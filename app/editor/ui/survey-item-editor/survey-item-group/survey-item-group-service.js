@@ -61,16 +61,31 @@
     }
 
     function identifiesGroupItemStatus(id) {
+       let instantColorGroup = changeColorGroupItems(id)
       _getGroup(id).members.filter(item => {
-
         item.position === "start" ?
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) :
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE)
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE,  instantColorGroup) :
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, instantColorGroup)
       });
     }
 
-    function _setItemGroupState(id, state) {
+    function changeColorGroupItems(id) {
+      return _getGroup(id).instantColorGroup = getRandomColor();
+
+    }
+
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function _setItemGroupState(id, state, color) {
       _getItemRegistered(id).ctrl.stateItemGroup = state;
+      _getItemRegistered(id).ctrl.stateColor = color;
     }
 
     function getValidItemsByTemplateID(id) {

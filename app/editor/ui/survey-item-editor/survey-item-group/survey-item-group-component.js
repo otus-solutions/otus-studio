@@ -20,6 +20,7 @@
     var self = this;
     self.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     self.itemCandidateCheckbox = false;
+    self.stateColor = "#737373";
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
