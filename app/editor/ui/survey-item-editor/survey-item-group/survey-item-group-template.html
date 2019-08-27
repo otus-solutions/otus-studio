@@ -44,8 +44,9 @@
 </item-group-type>
 <item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.VALID_ITEM_GROUP_STATE"
                  id="validateGroup_{{$ctrl.item.templateID}}"
-                 type="checkbox"
-                 item-candidate-checkbox="$ctrl.itemCandidateCheckbox"
+                 type="checkbox",
+                 item-candidate-checkbox="$ctrl.itemCandidateCheckbox",
+                 monitoring-checkbox-state="$ctrl.monitoringCheckboxState($ctrl)"
 </item-group-type>
 
 

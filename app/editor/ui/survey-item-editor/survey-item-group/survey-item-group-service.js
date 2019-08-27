@@ -21,6 +21,7 @@
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
     self.getValidItemsByTemplateID = getValidItemsByTemplateID;
     self.setUpQuestionGroup = setUpQuestionGroup;
+    self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
 
     function surveyItemsRegistry(ctrl, fun) {
@@ -61,14 +62,27 @@
 
     function getValidItemsByTemplateID(id) {
       if (self.editModeInUse) return 0;
-      let validCandidates = _getCandidates(id);
+      self.validCandidates = _getCandidates(id);
 
       if (_getItemRegistered(id).ctrl.stateItemGroup === StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) {
         _getGroup(id).members.forEach(function (item) {
           (item.position !== "start") ? _getItemRegistered(item.id).ctrl.itemCandidateCheckbox = true : 0
         })
       }
-      _createGroupEditor(validCandidates);
+      _createGroupEditor(self.validCandidates);
+    }
+
+    function monitoringCheckboxState(ctrl){
+      let idx = self.validCandidates.indexOf(ctrl.item.templateID);
+      ctrl.itemCandidateCheckbox ?
+        setUpCandidateReverseList(self.validCandidates, self.validCandidates.length, false):
+        setUpCandidateReverseList(self.validCandidates, idx, true)
+    }
+
+    function setUpCandidateReverseList(validCandidates, idx, state){
+      validCandidates.slice(1, ++idx).reverse().forEach( item => {
+        _getItemRegistered(item).ctrl.itemCandidateCheckbox = state
+      });
     }
 
     function _createGroupEditor(validCandidates) {
@@ -81,7 +95,7 @@
       validCandidates.forEach((id, index) => (index < 1) ?
         _setStateComponent(id, {status: StateValues.EDITOR_GROUP_STATE}) :
         _setStateComponent(id, {status: StateValues.VALID_ITEM_GROUP_STATE}));
-      _setEditMode(true);
+      _setEditMode();
     }
 
     function _getCandidates(id) {
@@ -100,7 +114,7 @@
     function _groupCreationValidation(id, scaledItemGroup) {
       let validation = true;
       if (scaledItemGroup.length === 1) {
-        _setEditMode(false);
+        _setEditMode();
         $mdDialog.show(
           $mdDialog.alert()
             .clickOutsideToClose(true)
@@ -137,7 +151,7 @@
       });
       _getSurveyItemGroupManager().deleteGroup(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
-      _setEditMode(false);
+      _setEditMode();
       $mdDialog.cancel();
     }
 
@@ -160,7 +174,7 @@
       _getSurveyItemGroupManager().createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
       AddSurveyItemGroupEventFactory.create().execute();
-      _setEditMode(false);
+      _setEditMode();
       $mdDialog.cancel();
     }
 
@@ -174,12 +188,12 @@
         }
       });
       DialogService.data.item = [];
-      _setEditMode(false);
+      _setEditMode();
       $mdDialog.cancel();
     }
 
-    function _setEditMode(state) {
-      self.editModeInUse = state;
+    function _setEditMode() {
+      self.editModeInUse = !self.editModeInUse;
     }
 
     return self;

@@ -1,4 +1,4 @@
-<md-button ng-if="$ctrl.type == 'button'" id={{$ctrl.id}}
+<md-button ng-if="$ctrl.type == 'button'" id="button_{{$ctrl.id}}"
            class="md-mini md-icon-button"
            ng-click="$ctrl.click()">
   <md-icon style="font-size:30px;height:30px;width:30px;color:#737373; margin-left:-2px"
@@ -8,10 +8,10 @@
 </md-button>
 
 <md-checkbox ng-if="$ctrl.type == 'checkbox'"
-             id=validateGroup_{{$ctrl.id}}
+             id="validateGroup_{{$ctrl.id}}"
              style="font-size:30px;height:20px;width:40px;color:#737373; margin-left:16px; margin-top:13px;"
              aria-label="ItemCandidateCheckBox"
              class="md-raised"
-             ng-model="$ctrl.itemCandidateCheckbox"
-             ng-value="$ctrl.itemCandidateCheckbox">
+             ng-model= "$ctrl.itemCandidateCheckbox"
+             ng-change="$ctrl.monitoringCheckboxState()">
 </md-checkbox>

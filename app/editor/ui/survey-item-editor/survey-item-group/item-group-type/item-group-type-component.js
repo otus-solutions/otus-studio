@@ -10,16 +10,12 @@
         id:'@',
         click: '&',
         iconButton:'@',
-        itemCandidateCheckbox: "=",
-        tooltip: '@'
+        itemCandidateCheckbox: '=',
+        tooltip: '@',
+        monitoringCheckboxState: '&'
       }
     })
     .controller('itemGroupTypeCtrl', Controller);
 
-  Controller.$inject = [];
-
-  function Controller() {
-    var self = this;
-  }
-
+  function Controller(){}
 }());
