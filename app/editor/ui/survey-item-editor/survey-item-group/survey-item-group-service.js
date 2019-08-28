@@ -27,8 +27,9 @@
 
 
     init();
+
     function init() {
-      WorkspaceService.registerObserver({update:_clean});
+      WorkspaceService.registerObserver({update: _clean});
     }
 
     function _clean() {
@@ -61,26 +62,32 @@
     }
 
     function identifiesGroupItemStatus(id) {
-       let instantColorGroup = changeColorGroupItems(id)
+      let instantColorGroup = changeColorGroupItems(id)
       _getGroup(id).members.filter(item => {
         item.position === "start" ?
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE,  instantColorGroup) :
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, instantColorGroup) :
           _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, instantColorGroup)
       });
     }
 
     function changeColorGroupItems(id) {
-      return _getGroup(id).instantColorGroup = getRandomColor();
-
+      return _getGroup(id).instantColorGroup = getColorGroup(id);
     }
 
-    function getRandomColor() {
-      var letters = '0123456789ABCDEF';
-      var color = '#';
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+    function getColorGroup(id) {
+      let members = JSON.stringify(_getGroup(id).members);
+      let hash = Array.from(members)
+        .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
+      return `#${hashToARGB(hash)}`
+    }
+
+    function hashToARGB (hash) {
+      let hex = ((hash >> 24) & 0xFF).toString(16) +
+        ((hash >> 16) & 0xFF).toString(16) +
+        ((hash >> 8) & 0xFF).toString(16) +
+        (hash & 0xFF).toString(16);
+      hex += '000000';
+      return hex.substring(0, 6);
     }
 
     function _setItemGroupState(id, state, color) {
