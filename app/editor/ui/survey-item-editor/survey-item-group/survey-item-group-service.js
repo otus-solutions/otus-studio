@@ -25,7 +25,6 @@
     self.editModeInUse = false;
     self.validCandidates = [];
 
-
     init();
 
     function init() {
@@ -62,19 +61,19 @@
     }
 
     function identifiesGroupItemStatus(id) {
-      let instantColorGroup = changeColorGroupItems(id)
+      let colorGroup = _getColorGroup(id)
       _getGroup(id).members.filter(item => {
         item.position === "start" ?
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, instantColorGroup) :
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, instantColorGroup)
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, colorGroup) :
+          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, colorGroup)
       });
     }
 
-    function changeColorGroupItems(id) {
-      return _getGroup(id).instantColorGroup = getColorGroup(id);
+    function _getColorGroup(id) {
+      return _getGroup(id).instantColorGroup = getColorCode(id);
     }
 
-    function getColorGroup(id) {
+    function getColorCode(id) {
       let members = JSON.stringify(_getGroup(id).members);
       let hash = Array.from(members)
         .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);

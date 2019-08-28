@@ -20,14 +20,13 @@
     var self = this;
     self.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     self.itemCandidateCheckbox = false;
-    self.stateColor = "#737373";
+    self.stateColor = StateValues.STATE_COLOR;
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setUpQuestionGroup = setUpQuestionGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.StateValues = StateValues;
-
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);

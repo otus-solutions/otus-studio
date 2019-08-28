@@ -9,5 +9,6 @@
       INVALID_ITEM_GROUP_STATE: "Item Não Permitido",
       SAVED_ITEM_GROUP_EDITOR_STATE: "Editar Grupo",
       SAVED_ITEM_GROUP_STATE: "Item do Grupo",
+      STATE_COLOR: "#737373"
     })
 })();

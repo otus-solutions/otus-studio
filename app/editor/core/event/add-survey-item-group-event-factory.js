@@ -5,9 +5,7 @@
         .module('editor.core')
         .factory('AddSurveyItemGroupEventFactory', AddSurveyItemGroupEventFactory);
 
-    AddSurveyItemGroupEventFactory.$inject = [
-        'WorkspaceService'
-    ];
+    AddSurveyItemGroupEventFactory.$inject = ['WorkspaceService'];
 
     function AddSurveyItemGroupEventFactory(WorkspaceService) {
         var self = this;
@@ -24,7 +22,6 @@
 
     function AddSurveyItemGroupEvent(WorkspaceService) {
         var self = this;
-
         self.execute = execute;
 
         function execute() {
