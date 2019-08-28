@@ -31,7 +31,7 @@
 
         function execute(item) {
             RemoveSurveyItemService.execute(item, WorkspaceService.getSurvey());
-            $rootScope.$broadcast('item.remove.' + item.templateID, item);
+            $rootScope.$broadcast('item.remove', item);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }

@@ -31,7 +31,7 @@
 
         function execute(item, position) {
             MoveSurveyItemService.execute(WorkspaceService.getSurvey(), item, position);
-            $rootScope.$broadcast('item.move.' + item.templateID, item);
+            $rootScope.$broadcast('item.move', item);
             WorkspaceService.workspace.isdb.userEdits.store(self);
             WorkspaceService.saveWork();
         }
