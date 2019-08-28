@@ -81,21 +81,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'app/**/*.js': 'coverage',
-      'tests/**/*-spec.js': 'browserify'
+      './app/**/*.js': ['babel', 'coverage'],
+      'node_modules/otus*/**/*.js': 'babel',
+      './tests/unit/**/*-spec.js': 'babel'
     },
-
     browserify: {
       debug: true,
       transform: ['babelify', 'stringify']
     },
-    plugins: [
-      'karma-jasmine',
-      'karma-coverage',
-      'karma-chrome-launcher',
-      'karma-phantomjs-launcher',
-      'karma-browserify'
-    ],
     coverageReporter: {
       reporters: [{
         type: 'html',
