@@ -26,20 +26,21 @@
     self.editModeInUse = false;
     self.validCandidates = [];
 
-    let remove; //todo: remove
-
     init();
-
 
     function init() {
       WorkspaceService.registerObserver({update: _clean});
-      remove = $rootScope.$on('item.remove', respond);
+      $rootScope.$on('item.remove', respond);
       $rootScope.$on('item.move', respond);
     }
 
     function respond(event, item) {
+      if(self.editModeInUse) _setEditMode();
       let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
-      group.forEach(member => identifiesGroupItemStatus(member.start))
+      group.forEach(member => {
+        _getCandidates(member.start).forEach(item =>  self.questionItemReference[item].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE);
+        identifiesGroupItemStatus(member.start);
+      })
     }
 
     function _clean() {
@@ -81,17 +82,17 @@
     }
 
     function _getColorGroup(id) {
-      return _getGroup(id).instantColorGroup = getColorCode(id);
+      return _getGroup(id).instantColorGroup = _getColorCode(id);
     }
 
-    function getColorCode(id) {
+    function _getColorCode(id) {
       let members = JSON.stringify(_getGroup(id).members);
       let hash = Array.from(members)
         .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
-      return `#${hashToARGB(hash)}`
+      return `#${_hashToARGB(hash)}`
     }
 
-    function hashToARGB(hash) {
+    function _hashToARGB(hash) {
       let hex = ((hash >> 24) & 0xFF).toString(16) +
         ((hash >> 16) & 0xFF).toString(16) +
         ((hash >> 8) & 0xFF).toString(16) +
@@ -123,7 +124,6 @@
         unmarkCandidatesPerBlock(self.validCandidates, idx) :
         markCandidatesPerBlock(self.validCandidates, idx,)
     }
-
 
     function markCandidatesPerBlock(validCandidates, idx) {
       validCandidates.slice(1, ++idx).reverse().forEach(item => {
