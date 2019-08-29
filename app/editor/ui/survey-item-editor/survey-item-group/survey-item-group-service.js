@@ -21,7 +21,7 @@
     self.verifyEndItemGroup = verifyEndItemGroup;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
     self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
-    self.setUpSurveyGroup = setUpSurveyGroup;
+    self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
     self.validCandidates = [];
@@ -157,7 +157,7 @@
       _getRegisteredItem(id).stateControl.call(stateComponent);
     }
 
-    function setUpSurveyGroup(id) {
+    function setSurveyGroup(id) {
       let scaledItemGroup = _selectedForSurveyGroup(id);
       _isValidGroupCreation(id, scaledItemGroup) ? _callGroupEditDialog(scaledItemGroup) : 0;
     }

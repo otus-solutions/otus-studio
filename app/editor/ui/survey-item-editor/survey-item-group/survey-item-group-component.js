@@ -24,7 +24,7 @@
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
-    self.setUpSurveyGroup = setUpSurveyGroup;
+    self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.StateValues = StateValues;
 
@@ -52,8 +52,8 @@
       SurveyItemGroupService.preparesValidCandidatesForGroupEditing(self.item.templateID);
     }
 
-    function setUpSurveyGroup(){
-      SurveyItemGroupService.setUpSurveyGroup(self.item.templateID)
+    function setSurveyGroup(){
+      SurveyItemGroupService.setSurveyGroup(self.item.templateID)
     }
 
     function monitoringCheckboxState(id){
