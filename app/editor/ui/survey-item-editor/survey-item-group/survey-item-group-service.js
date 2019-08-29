@@ -36,8 +36,8 @@
       $rootScope.$on('item.move', respond);
     }
 
-    function respond(event,item) {
-      console.log(event,item);
+    function respond(event, item) {
+      console.log(event, item);
       console.log(remove);
       // remove();  //remove o watcher em item.remove
     }
@@ -91,7 +91,7 @@
       return `#${hashToARGB(hash)}`
     }
 
-    function hashToARGB (hash) {
+    function hashToARGB(hash) {
       let hex = ((hash >> 24) & 0xFF).toString(16) +
         ((hash >> 16) & 0xFF).toString(16) +
         ((hash >> 8) & 0xFF).toString(16) +
@@ -121,7 +121,8 @@
       let idx = self.validCandidates.indexOf(ctrl.item.templateID);
       ctrl.itemCandidateCheckbox ?
         unmarkCandidatesPerBlock(self.validCandidates, idx) :
-        markCandidatesPerBlock(self.validCandidates, idx, )    }
+        markCandidatesPerBlock(self.validCandidates, idx,)
+    }
 
 
     function markCandidatesPerBlock(validCandidates, idx) {
@@ -158,7 +159,7 @@
     }
 
     function setSurveyGroup(id) {
-      let scaledItemGroup = _selectedForSurveyGroup(id);
+      let scaledItemGroup = _selectForSurveyGroup(id);
       _isValidGroupCreation(id, scaledItemGroup) ? _callGroupEditDialog(scaledItemGroup) : 0;
     }
 
@@ -166,7 +167,7 @@
       let validation = true;
       if (scaledItemGroup.length === 1) {
         _setEditMode();
-       _callAlertForGroupCreationNotAllowed();
+        _callAlertForGroupCreationNotAllowed();
         self.questionItemReference[id].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
         _getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
         validation = false;
@@ -174,7 +175,7 @@
       return validation;
     }
 
-    function _callAlertForGroupCreationNotAllowed(){
+    function _callAlertForGroupCreationNotAllowed() {
       $mdDialog.show(
         $mdDialog.alert()
           .clickOutsideToClose(true)
@@ -192,28 +193,33 @@
         cancelGroupEdit: _cancelGroupEdit,
         deleteGroup: _deleteGroup,
         buttons: [
-          {message: StateValues.EDITOR_GROUP_CANCEL_BUTTON, class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
-          {message: StateValues.EDITOR_GROUP_SAVE_BUTTON, class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
+          {
+            message: StateValues.EDITOR_GROUP_CANCEL_BUTTON,
+            class: "md-primary md-layoutTheme-theme",
+            action: _cancelGroupEdit
+          },
+          {
+            message: StateValues.EDITOR_GROUP_SAVE_BUTTON,
+            class: "md-primary md-raised md-layoutTheme-theme",
+            action: _saveSurveyGroup
+          }
         ]
       };
       DialogService.show(data);
     }
 
-    //fixme: AddSurveyItemGroupEventFactory é um método de add e está sendo chamado na exclusão de um grupo
     function _deleteGroup(items) {
       items.forEach(item => {
         _getRegisteredItem(item).ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
         _getRegisteredItem(item).ctrl.itemCandidateCheckbox = false;
       });
       _getSurveyItemGroupManager().deleteGroup(items[0]);
-      AddSurveyItemGroupEventFactory.create().execute();
+      _updatedModelPersist();
       _setEditMode();
       $mdDialog.cancel();
     }
 
-    //fixme: 'selected' significa selecionado. Geralmente desejamos que o nome de um método seja um verbo, dizendo a ação que ele executa.
-    // se esse método seleciona, talvez o nome dele devesse ser 'selectForSurveyGroup'
-    function _selectedForSurveyGroup(id) {
+    function _selectForSurveyGroup(id) {
       let selectedCandidates = [];
 
       _getCandidates(id).forEach(candidate => {
@@ -232,9 +238,13 @@
       let items = angular.copy(DialogService.data.item);
       _getSurveyItemGroupManager().createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
-      AddSurveyItemGroupEventFactory.create().execute();
+      _updatedModelPersist();
       _setEditMode();
       $mdDialog.cancel();
+    }
+
+    function _updatedModelPersist() {
+      AddSurveyItemGroupEventFactory.create().execute();
     }
 
     function _cancelGroupEdit() {
