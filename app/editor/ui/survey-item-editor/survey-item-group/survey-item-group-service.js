@@ -20,7 +20,7 @@
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.verifyEndItemGroup = verifyEndItemGroup;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
-    self.getValidItemsByTemplateID = getValidItemsByTemplateID;
+    self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
     self.setUpQuestionGroup = setUpQuestionGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
@@ -107,13 +107,7 @@
       _getRegisteredItem(id).ctrl.stateColor = color;
     }
 
-    function getValidItemsByTemplateID(id) {
-      //fixme: nome do método é getValidItemsByTemplateID e ele:
-      // cria um grupo
-      // edita um grupo
-      // diz os candidatos válidos?
-      // é um get sem retorno... get geralmente te devolve alguma coisa
-
+    function preparesValidCandidatesForGroupEditing(id) {
       if (self.editModeInUse) return;
       self.validCandidates = _getCandidates(id);
 
@@ -122,7 +116,7 @@
           (item.position !== "start") ? _getRegisteredItem(item.id).ctrl.itemCandidateCheckbox = true : 0
         })
       }
-      _createGroupEditor(self.validCandidates);
+      _enableGroupEditor(self.validCandidates);
     }
 
     function monitoringCheckboxState(ctrl) {
@@ -144,8 +138,7 @@
       });
     }
 
-    //fixme: onde está o editor criado por este método?
-    function _createGroupEditor(validCandidates) {
+    function _enableGroupEditor(validCandidates) {
       (validCandidates.length > 1) ?
         _setGroupEditorTools(validCandidates) :
         _setStateComponent(validCandidates[0], {status: StateValues.INVALID_ITEM_GROUP_STATE});

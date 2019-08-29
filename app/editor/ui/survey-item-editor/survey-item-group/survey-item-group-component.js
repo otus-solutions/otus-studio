@@ -49,7 +49,7 @@
     }
 
     function editorSurveyItemGroup() {
-      SurveyItemGroupService.getValidItemsByTemplateID(self.item.templateID);
+      SurveyItemGroupService.preparesValidCandidatesForGroupEditing(self.item.templateID);
     }
 
     function setUpQuestionGroup(){
