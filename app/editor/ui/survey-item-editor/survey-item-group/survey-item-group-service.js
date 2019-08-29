@@ -128,21 +128,19 @@
     function monitoringCheckboxState(ctrl) {
       let idx = self.validCandidates.indexOf(ctrl.item.templateID);
       ctrl.itemCandidateCheckbox ?
-        unmarkCandidatesPerBlock(self.validCandidates, idx, false) :
-        markCandidatesPerBlock(self.validCandidates, idx, true)
-    }
+        unmarkCandidatesPerBlock(self.validCandidates, idx) :
+        markCandidatesPerBlock(self.validCandidates, idx, )    }
 
-    //fixme: mark e unmark recebem um state fixo. Precisavam recebê-lo por parâmetro?
-    // se o método é unmark talvez ele seja sempre false, não?
-    function markCandidatesPerBlock(validCandidates, idx, state) {
+
+    function markCandidatesPerBlock(validCandidates, idx) {
       validCandidates.slice(1, ++idx).reverse().forEach(item => {
-        _getRegisteredItem(item).ctrl.itemCandidateCheckbox = state
+        _getRegisteredItem(item).ctrl.itemCandidateCheckbox = true
       });
     }
 
-    function unmarkCandidatesPerBlock(validCandidates, idx, state) {
+    function unmarkCandidatesPerBlock(validCandidates, idx) {
       validCandidates.slice(idx, validCandidates.length).forEach(item => {
-        _getRegisteredItem(item).ctrl.itemCandidateCheckbox = state
+        _getRegisteredItem(item).ctrl.itemCandidateCheckbox = false
       });
     }
 
