@@ -30,6 +30,7 @@
 
     init();
 
+
     function init() {
       WorkspaceService.registerObserver({update: _clean});
       remove = $rootScope.$on('item.remove', respond);
@@ -37,9 +38,8 @@
     }
 
     function respond(event, item) {
-      console.log(event, item);
-      console.log(remove);
-      // remove();  //remove o watcher em item.remove
+      let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
+      group.forEach(member => identifiesGroupItemStatus(member.start))
     }
 
     function _clean() {

@@ -11,7 +11,6 @@ describe('SurveyItemGroupDialogController_UnitTests_Suite', function () {
    });
 
   it('controllerExistence check ', function () {
-    console.log(ctrl)
     expect(ctrl).toBeDefined();
   });
 
