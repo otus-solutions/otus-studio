@@ -21,16 +21,14 @@
     self.verifyEndItemGroup = verifyEndItemGroup;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
     self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
-    self.setUpQuestionGroup = setUpQuestionGroup;
+    self.setUpSurveyGroup = setUpSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
     self.validCandidates = [];
 
     let remove; //todo: remove
 
-
     init();
-
 
     function init() {
       WorkspaceService.registerObserver({update: _clean});
@@ -159,29 +157,31 @@
       _getRegisteredItem(id).stateControl.call(stateComponent);
     }
 
-    function setUpQuestionGroup(id) {
+    function setUpSurveyGroup(id) {
       let scaledItemGroup = _selectedForSurveyGroup(id);
-      _groupCreationValidation(id, scaledItemGroup) ? _callGroupEditDialog(scaledItemGroup) : 0;
+      _isValidGroupCreation(id, scaledItemGroup) ? _callGroupEditDialog(scaledItemGroup) : 0;
     }
 
-    //fixme: pq há uma dialog sendo chamada dentro do método de validação?
-    // pq em alguns lugares chama o serviço de dialog e em outros o $mdDialog?
-    function _groupCreationValidation(id, scaledItemGroup) {
+    function _isValidGroupCreation(id, scaledItemGroup) {
       let validation = true;
       if (scaledItemGroup.length === 1) {
         _setEditMode();
-        $mdDialog.show(
-          $mdDialog.alert()
-            .clickOutsideToClose(true)
-            .title('Criação de Grupo Interrompida')
-            .textContent('Selecione uma ou mais questões para criar um grupo')
-            .ok('OK')
-        );
+       _callAlertForGroupCreationNotAllowed();
         self.questionItemReference[id].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
         _getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
         validation = false;
       }
       return validation;
+    }
+
+    function _callAlertForGroupCreationNotAllowed(){
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(StateValues.EDITOR_GROUP_VALIDATION_ALERT_TITLE)
+          .textContent(StateValues.EDITOR_GROUP_VALIDATION_ALERT_TEXT_CONTENT)
+          .ok('OK')
+      );
     }
 
     function _callGroupEditDialog(scaledItemGroup) {
@@ -192,8 +192,8 @@
         cancelGroupEdit: _cancelGroupEdit,
         deleteGroup: _deleteGroup,
         buttons: [
-          {message: "CANCELAR", class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
-          {message: "Salvar", class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
+          {message: StateValues.EDITOR_GROUP_CANCEL_BUTTON, class: "md-primary md-layoutTheme-theme", action: _cancelGroupEdit},
+          {message: StateValues.EDITOR_GROUP_SAVE_BUTTON, class: "md-primary md-raised md-layoutTheme-theme", action: _saveSurveyGroup}
         ]
       };
       DialogService.show(data);

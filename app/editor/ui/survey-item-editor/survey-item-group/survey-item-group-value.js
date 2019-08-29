@@ -9,6 +9,11 @@
       INVALID_ITEM_GROUP_STATE: "Item Não Permitido",
       SAVED_ITEM_GROUP_EDITOR_STATE: "Editar Grupo",
       SAVED_ITEM_GROUP_STATE: "Item do Grupo",
+      EDITOR_GROUP_VALIDATION_ALERT_TITLE: "Criação de Grupo Interrompida",
+      EDITOR_GROUP_VALIDATION_ALERT_TEXT_CONTENT: "Selecione uma ou mais questões para criar um grupo",
+      EDITOR_GROUP_CANCEL_BUTTON: "CANCELAR",
+      EDITOR_GROUP_SAVE_BUTTON: "Salvar",
+
       STATE_COLOR: "#737373"
     })
 })();
