@@ -8,7 +8,7 @@ describe('itemGroupTypeComponent_UnitTests_Suite', function () {
     })
   });
 
-  it('componentExistence check ', function () {
+  it('componentCtrlExistence check ', function () {
     expect(ctrl).toBeDefined();
   });
 });
