@@ -13,7 +13,6 @@
       EDITOR_GROUP_VALIDATION_ALERT_TEXT_CONTENT: "Selecione uma ou mais questões para criar um grupo",
       EDITOR_GROUP_CANCEL_BUTTON: "CANCELAR",
       EDITOR_GROUP_SAVE_BUTTON: "Salvar",
-
       STATE_COLOR: "#737373"
     })
 })();

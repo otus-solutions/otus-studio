@@ -121,17 +121,17 @@
     function monitoringCheckboxState(ctrl) {
       let idx = self.validCandidates.indexOf(ctrl.item.templateID);
       ctrl.itemCandidateCheckbox ?
-        unmarkCandidatesPerBlock(self.validCandidates, idx) :
-        markCandidatesPerBlock(self.validCandidates, idx,)
+        _unmarkCandidatesPerBlock(self.validCandidates, idx) :
+        _markCandidatesPerBlock(self.validCandidates, idx,)
     }
 
-    function markCandidatesPerBlock(validCandidates, idx) {
+    function _markCandidatesPerBlock(validCandidates, idx) {
       validCandidates.slice(1, ++idx).reverse().forEach(item => {
         _getRegisteredItem(item).ctrl.itemCandidateCheckbox = true
       });
     }
 
-    function unmarkCandidatesPerBlock(validCandidates, idx) {
+    function _unmarkCandidatesPerBlock(validCandidates, idx) {
       validCandidates.slice(idx, validCandidates.length).forEach(item => {
         _getRegisteredItem(item).ctrl.itemCandidateCheckbox = false
       });
@@ -216,7 +216,7 @@
       _getSurveyItemGroupManager().deleteGroup(items[0]);
       _updatedModelPersist();
       _setEditMode();
-      $mdDialog.cancel();
+      _finishEditing();
     }
 
     function _selectForSurveyGroup(id) {
@@ -233,14 +233,13 @@
       return selectedCandidates;
     }
 
-    //fixme: método cria um grupo e cancela uma dialog? Talvez o cancelamento da dialog devesse ser responsabilidade de quem a abriu
     function _saveSurveyGroup() {
       let items = angular.copy(DialogService.data.item);
       _getSurveyItemGroupManager().createGroup(DialogService.data.item);
       identifiesGroupItemStatus(items[0]);
       _updatedModelPersist();
       _setEditMode();
-      $mdDialog.cancel();
+      _finishEditing();
     }
 
     function _updatedModelPersist() {
@@ -258,6 +257,10 @@
       });
       DialogService.data.item = [];
       _setEditMode();
+      _finishEditing();
+    }
+
+    function _finishEditing(){
       $mdDialog.cancel();
     }
 

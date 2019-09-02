@@ -4,12 +4,12 @@
   angular.module('editor.ui')
     .component('surveyItemGroup', {
       templateUrl: 'app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-template.html',
-      controller: 'surveyItemGroupCtrl as $ctrl',
+      controller: 'SurveyItemGroupCtrl as $ctrl',
       bindings: {
         item: "<",
       }
     })
-    .controller('surveyItemGroupCtrl', Controller);
+    .controller('SurveyItemGroupCtrl', Controller);
 
   Controller.$inject = [
     'SurveyItemGroupService',

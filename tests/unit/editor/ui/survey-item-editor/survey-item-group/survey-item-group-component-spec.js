@@ -8,7 +8,7 @@ describe('itemGroupComponent_UnitTests_Suite', function () {
     angular.mock.inject(function ($controller, $injector) {
       Injections.SurveyItemGroupService = $injector.get('SurveyItemGroupService');
       Injections.SurveyItemGroupValue = $injector.get('SurveyItemGroupValue');
-      ctrl = $controller('surveyItemGroupCtrl', Injections);
+      ctrl = $controller('SurveyItemGroupCtrl', Injections);
       ctrl.item = {templateID: "ID1"}
       spyOn(Injections.SurveyItemGroupService, "surveyItemsRegistry");
       spyOn(Injections.SurveyItemGroupService, "identifiesGroupItemStatus");

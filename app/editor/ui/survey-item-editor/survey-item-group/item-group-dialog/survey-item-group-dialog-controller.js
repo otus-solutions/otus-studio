@@ -3,9 +3,9 @@
 
   angular
     .module('editor.ui')
-    .controller('SurveyItemGroupDialogController', SurveyItemGroupDialogController);
+    .controller('SurveyItemGroupDialogController', Controller);
 
-  function SurveyItemGroupDialogController(data) {
+  function Controller(data) {
     var vm = this;
     vm.item = data.item;
     vm.BUTTONS = data.buttons || [];

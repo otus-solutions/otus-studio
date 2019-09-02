@@ -5,7 +5,7 @@
 </style>
 
 
-<md-button ng-if="$ctrl.type == 'button'" id="button_{{$ctrl.id}}"
+<md-button ng-if="$ctrl.type == 'button'"
            class="md-mini md-icon-button"
            ng-click="$ctrl.click()">
   <md-icon ng-style="{color:$ctrl.stateColor}"
@@ -15,7 +15,6 @@
 </md-button>
 
 <md-checkbox ng-if="$ctrl.type == 'checkbox'"
-             id="validateGroup_{{$ctrl.id}}"
              class="color"
              style="margin-top:16px; margin-left:15.5px; margin-right:7px;"
              aria-label="ItemCandidateCheckBox"
