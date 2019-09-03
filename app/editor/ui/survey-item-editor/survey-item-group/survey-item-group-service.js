@@ -25,7 +25,6 @@
     self.monitoringCheckboxState = monitoringCheckboxState;
     self.editModeInUse = false;
     self.validCandidates = [];
-
     init();
 
     function init() {
@@ -35,10 +34,10 @@
     }
 
     function respond() {
-      if(self.editModeInUse) _setEditMode();
+      if (self.editModeInUse) _setEditMode();
       let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
       group.forEach(member => {
-        _getCandidates(member.start).forEach(item =>  self.questionItemReference[item].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE);
+        _getCandidates(member.start).forEach(item => self.questionItemReference[item].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE);
         identifiesGroupItemStatus(member.start);
       })
     }
@@ -102,9 +101,6 @@
     }
 
     function _setItemGroupState(id, state, color) {
-      console.log(id)
-      console.log(state)
-      console.log(color)
       _getRegisteredItem(id).ctrl.stateItemGroup = state;
       _getRegisteredItem(id).ctrl.stateColor = color;
     }
@@ -263,7 +259,7 @@
       _finishEditing();
     }
 
-    function _finishEditing(){
+    function _finishEditing() {
       $mdDialog.cancel();
     }
 
