@@ -34,7 +34,7 @@
       $rootScope.$on('item.move', respond);
     }
 
-    function respond(event, item) {
+    function respond() {
       if(self.editModeInUse) _setEditMode();
       let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
       group.forEach(member => {
@@ -102,6 +102,9 @@
     }
 
     function _setItemGroupState(id, state, color) {
+      console.log(id)
+      console.log(state)
+      console.log(color)
       _getRegisteredItem(id).ctrl.stateItemGroup = state;
       _getRegisteredItem(id).ctrl.stateColor = color;
     }

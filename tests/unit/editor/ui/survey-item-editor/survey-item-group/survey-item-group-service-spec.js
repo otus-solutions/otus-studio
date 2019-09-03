@@ -1,5 +1,5 @@
 describe('SurveyItemGroupService_UnitTests_Suite', function () {
-  let service;
+  let service, groupManager;
   let Injections = [];
   let Mock = {};
 
@@ -14,22 +14,36 @@ describe('SurveyItemGroupService_UnitTests_Suite', function () {
       Injections.DialogService = $injector.get("DialogService");
       Injections.SurveyItemGroupValue = $injector.get("SurveyItemGroupValue");
 
-      service = $injector.get('SurveyItemGroupService', Injections);
-
-      Mock.SurveyItemGroupManagerFactory = $injector.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory')
-      //service.workspace.project = {survey: jasmine.createSpy()};
-
-      Mock.surveyItemGroupCtrl = $controller('SurveyItemGroupCtrl');
-      Mock.surveyItemGroupCtrl.item = {templateID:"TST3"};
-      Mock.id = Mock.surveyItemGroupCtrl.item.templateID;
-
+      Mock.SurveyItemGroupManagerFactory = $injector.get('otusjs.surveyItemGroup.SurveyItemGroupManagerFactory');
       Mock.SurveyResult = {SurveyItemGroupManager: Mock.SurveyItemGroupManagerFactory.create()};
-      spyOn(Injections.WorkspaceService, "getSurvey").and.returnValues(Mock.SurveyResult);
-    })
+      spyOn(Injections.WorkspaceService, "getSurvey").and.callFake(function () {
+        return Mock.SurveyResult;
+      });
+
+      service = $injector.get('SurveyItemGroupService', Injections);
+      groupManager = Mock.SurveyResult.SurveyItemGroupManager;
+
+      //Registry emulation
+      Mock.ids = ["TST1", "TST3"]
+      Mock.ids.forEach(id => {
+         Mock.surveyItemGroupCtrl = $controller('SurveyItemGroupCtrl');
+         Mock.surveyItemGroupCtrl.item = {templateID: id};
+      });
+
+      spyOn(groupManager, "getGroupByMember")
+        .and.callFake(function () {
+          let group = {
+            objectType: "SurveyItemGroup",
+            start: "TST1",
+            end: "TST3",
+            members: [{id: "TST1", position: "start"}, {id: "TST3", position: "end"}]
+          };
+          return group;
+      });
+    });
   });
 
   it('serviceExistence check ', function () {
-    console.log(service);
     expect(service).toBeDefined();
   });
 
@@ -44,51 +58,25 @@ describe('SurveyItemGroupService_UnitTests_Suite', function () {
 
   it('surveyItemsRegistryMethod_should_register_reference_map', function () {
     service.surveyItemsRegistry(Mock.surveyItemGroupCtrl, _stateControl);
-    expect(service.questionItemReference[Mock.id].stateControl).toBe(_stateControl);
-    expect(service.questionItemReference[Mock.id].ctrl).toBe(Mock.surveyItemGroupCtrl)
+    expect(service.questionItemReference[Mock.ids[1]].stateControl).toBe(_stateControl);
+    expect(service.questionItemReference[Mock.ids[1]].ctrl).toBe(Mock.surveyItemGroupCtrl)
   });
 
-  it('verifyEndItemGroupMethod_should_', function () {
-    //console.log(service)
-    //console.log(Injections.WorkspaceService)
-    //console.log(Mock.SurveyItemGroupManagerFactory.create())
-    //console.log(Injections.WorkspaceService.getSurvey())
-    console.log(Mock.id);
-    spyOn(Mock.SurveyResult.SurveyItemGroupManager, "getGroupByMember")
-      .and.returnValues({end: "TST3"});
-
-    console.log(service.verifyEndItemGroup(Mock.id));
-
-    //Mock.SurveyItemGroupManager = {};
-    //WorkspaceService.getSurvey().SurveyItemGroupManager.getSurveyItemGroups();
-    //Mock.ownerWorkSession = {owner: "visitor"};
-    //Injections.WorkspaceService.initializeWorkspace(Mock.ownerWorkSession);
-    //console.log(Injections.WorkspaceService.getSurvey());
-    //console.log(Injections.SurveyItemGroupManagerFactory.create())
-    //service.verifyEndItemGroup(Mock.id);
+  it('verifyEndItemGroupMethod_check_if_it_is_the_last_element_of_the_group', function () {
+    expect(service.verifyEndItemGroup(Mock.ids[1])).toBeTruthy();
   });
+
+  it('identifiesGroupItemStatus_should_set_states_to_found_group_items', function () {
+    console.log(service.questionItemReference[Mock.ids[1]])
+    //service.identifiesGroupItemStatus(Mock.ids[1]);
+  });
+
 });
 
 function _stateControl() {
   let vm = this;
   self.stateItemGroup = vm.status;
 }
-
-function mockWorkspace() {
-   return Mock.workspace = {
-     isdb: {
-       userEdits: {
-         store: jasmine.createSpy()
-       }
-     },
-     project: {
-       survey: jasmine.createSpy()
-     },
-     sessions: {
-       workspaceOwner: jasmine.createSpy()
-    }
-   }
-};
 
 
 
