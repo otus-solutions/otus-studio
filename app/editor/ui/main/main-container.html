@@ -2,13 +2,15 @@
   <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
     <div class="md-toolbar-tools" layout-align="space-between center">
       <div layout="row" layout-align="end center">
-        <md-button aria-label="Salvar" class="editor-icon" ng-disabled="editorToolbarController.isSurveyEmpty()" ng-click="editorToolbarController.saveOfflineWork()">
+        <md-button aria-label="Salvar" class="editor-icon" ng-disabled="editorToolbarController.isSurveyEmpty()"
+          ng-click="editorToolbarController.saveOfflineWork()">
           <md-icon md-svg-icon="content-save"></md-icon>
           <md-tooltip md-direction="down">
             Salvar
           </md-tooltip>
         </md-button>
-        <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()" aria-label="Exportar" class="editor-icon">
+        <md-button survey-template-export ng-disabled="editorToolbarController.isSurveyEmpty()" aria-label="Exportar"
+          class="editor-icon">
           <md-icon md-svg-icon="file-export"></md-icon>
           <md-tooltip md-direction="down">
             Exportar
@@ -26,9 +28,7 @@
       </div>
     </div>
   </md-toolbar>
-
   <md-content layout flex>
-
     <md-content layout="column" layout-padding flex class="stage">
       <md-tabs id="stage-mode-selector" flex>
         <md-tab id="editing-tab" label="Edição">
@@ -36,6 +36,9 @@
         </md-tab>
         <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
           <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>
+        </md-tab>
+        <md-tab id="resource-tab" label="Recursos">
+          <studio-static-variable></studio-static-variable>
         </md-tab>
         <md-tab id="preview-tab" label="Preview" otus-survey-preview-generator>
           <div id="survey-preview" layout="row" layout-align="center center" flex></div>

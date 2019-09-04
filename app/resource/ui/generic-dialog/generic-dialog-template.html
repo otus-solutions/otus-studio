@@ -1,0 +1,20 @@
+<md-dialog aria-label="caixa de mensagem">
+  <md-toolbar class="md-primary editor-toolbar" style="background-color: #448aff !important">
+    <div class="md-toolbar-tools">
+      <h2>{{title}}</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <p>{{body}}</p>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions layout="row">
+    <md-button ng-click="cancel()">
+      Cancelar
+    </md-button>
+    <md-button ng-click="answer()">
+      Sim
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>
