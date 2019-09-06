@@ -21,12 +21,12 @@
     self.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     self.itemCandidateCheckbox = false;
     self.stateColor = StateValues.STATE_COLOR;
+    self.StateValues = StateValues;
 
     self.$onInit = onInit;
     self.editorSurveyItemGroup = editorSurveyItemGroup;
     self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
-    self.StateValues = StateValues;
 
     function onInit() {
       SurveyItemGroupService.surveyItemsRegistry(self, _stateControl);

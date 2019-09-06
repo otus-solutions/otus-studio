@@ -18,8 +18,8 @@ describe('SurveyItemGroupDialogController_UnitTests_Suite', function () {
     expect(ctrl.item).toBe('scaledItemGroup');
     expect(ctrl.cancelGroupEdit).toBe("_cancelGroupEdit");
     expect(ctrl.deleteGroup).toBe( "_deleteGroup");
-    expect(ctrl.BUTTONS[0].message).toBe('StateValues.EDITOR_GROUP_CANCEL_BUTTON');
-    expect(ctrl.BUTTONS[1].message).toBe('StateValues.EDITOR_GROUP_SAVE_BUTTON');
+    expect(ctrl.buttons[0].message).toBe('StateValues.EDITOR_GROUP_CANCEL_BUTTON');
+    expect(ctrl.buttons[1].message).toBe('StateValues.EDITOR_GROUP_SAVE_BUTTON');
   });
 });
 

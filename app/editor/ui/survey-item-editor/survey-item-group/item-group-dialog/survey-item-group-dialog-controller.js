@@ -8,8 +8,9 @@
   function Controller(data) {
     var vm = this;
     vm.item = data.item;
-    vm.BUTTONS = data.buttons || [];
+    vm.buttons = data.buttons || [];
     vm.cancelGroupEdit = data.cancelGroupEdit;
     vm.deleteGroup = data.deleteGroup;
+    vm.deleteGroupButton = "DELETAR GRUPO"
   }
 }());

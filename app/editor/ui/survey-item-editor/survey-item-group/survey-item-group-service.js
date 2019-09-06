@@ -17,23 +17,24 @@
     let self = this;
 
     self.questionItemReference = {};
+    self.editModeInUse = false;
+    self.validCandidates = [];
+
     self.surveyItemsRegistry = surveyItemsRegistry;
     self.verifyEndItemGroup = verifyEndItemGroup;
     self.identifiesGroupItemStatus = identifiesGroupItemStatus;
     self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
     self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
-    self.editModeInUse = false;
-    self.validCandidates = [];
-    init();
+    self.$onInit = onInit;
 
-    function init() {
+    function onInit() {
       WorkspaceService.registerObserver({update: _clean});
-      $rootScope.$on('item.remove', respond);
-      $rootScope.$on('item.move', respond);
+      $rootScope.$on('item.remove', _respond);
+      $rootScope.$on('item.move', _respond);
     }
 
-    function respond() {
+    function _respond() {
       if (self.editModeInUse) _setEditMode();
       let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
       group.forEach(member => {
@@ -74,7 +75,7 @@
     function identifiesGroupItemStatus(id) {
       let colorGroup = _getColorGroup(id);
       _getGroup(id).members.filter(item => {
-        item.position === "start" ?
+        item.position === StateValues.START_POSITION ?
           _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, colorGroup) :
           _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, colorGroup)
       });
@@ -111,7 +112,7 @@
 
       if (_getRegisteredItem(id).ctrl.stateItemGroup === StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) {
         _getGroup(id).members.forEach(function (item) {
-          (item.position !== "start") ? _getRegisteredItem(item.id).ctrl.itemCandidateCheckbox = true : 0
+          (item.position !== StateValues.START_POSITION) ? _getRegisteredItem(item.id).ctrl.itemCandidateCheckbox = true : 0
         })
       }
       _enableGroupEditor(self.validCandidates);
@@ -266,7 +267,5 @@
     function _setEditMode() {
       self.editModeInUse = !self.editModeInUse;
     }
-
-    return self;
   }
 }());

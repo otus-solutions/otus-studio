@@ -26,11 +26,11 @@
     <md-dialog-actions layout="row" layout-align="space-between center">
       <div>
         <md-button class="md-warn md-raised md-hue-2 md-layoutTheme-theme" ng-click="$ctrl.deleteGroup($ctrl.item)"
-                   aria-label="deleteGroupButton">DELETAR GRUPO
+                   aria-label="deleteGroupButton">{{$ctrl.deleteGroupButton}}
         </md-button>
       </div>
       <div layout="row">
-        <div ng-repeat="button in $ctrl.BUTTONS">
+        <div ng-repeat="button in $ctrl.buttons">
           <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
             <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
             {{button.message}}
