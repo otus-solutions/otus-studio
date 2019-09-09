@@ -26,9 +26,9 @@
     self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
     self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
-    self.$onInit = onInit;
 
-    function onInit() {
+    init();
+    function init() {
       WorkspaceService.registerObserver({update: _clean});
       $rootScope.$on('item.remove', _respond);
       $rootScope.$on('item.move', _respond);
