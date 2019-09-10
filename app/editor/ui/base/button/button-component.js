@@ -52,7 +52,6 @@
       /* Event definitions */
       self.event.click = self.click;
     }
-
   }
 
 }());
