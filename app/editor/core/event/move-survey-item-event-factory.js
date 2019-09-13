@@ -1,40 +1,42 @@
-(function() {
-    'use strict';
+(function () {
+  'use strict';
 
-    angular
-        .module('editor.core')
-        .factory('MoveSurveyItemEventFactory', MoveSurveyItemEventFactory);
+  angular
+    .module('editor.core')
+    .factory('MoveSurveyItemEventFactory', MoveSurveyItemEventFactory);
 
-    MoveSurveyItemEventFactory.$inject = [
-        '$rootScope',
-        'WorkspaceService',
-        'MoveSurveyItemService',
-    ];
+  MoveSurveyItemEventFactory.$inject = [
+    '$rootScope',
+    'WorkspaceService',
+    'MoveSurveyItemService',
+    'SurveyItemGroupService'
+  ];
 
-    function MoveSurveyItemEventFactory($rootScope, WorkspaceService, MoveSurveyItemService) {
-        var self = this;
+  function MoveSurveyItemEventFactory($rootScope, WorkspaceService, MoveSurveyItemService, SurveyItemGroupService) {
+    var self = this;
 
-        /* Public interface */
-        self.create = create;
+    /* Public interface */
+    self.create = create;
 
-        function create() {
-            return new MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService);
-        }
-
-        return self;
+    function create() {
+      return new MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService, SurveyItemGroupService);
     }
 
-    function MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService) {
-        var self = this;
+    return self;
+  }
 
-        self.execute = execute;
+  function MoveSurveyItemEvent($rootScope, WorkspaceService, MoveSurveyItemService, SurveyItemGroupService) {
+    var self = this;
 
-        function execute(item, position) {
-            MoveSurveyItemService.execute(WorkspaceService.getSurvey(), item, position);
-            $rootScope.$broadcast('item.move', item);
-            WorkspaceService.workspace.isdb.userEdits.store(self);
-            WorkspaceService.saveWork();
-        }
+    self.execute = execute;
+
+    function execute(item, position) {
+      let itemGroup = SurveyItemGroupService.getGroup(item.templateID);
+      MoveSurveyItemService.execute(WorkspaceService.getSurvey(), item, position);
+      $rootScope.$broadcast('item.move', item, itemGroup);
+      WorkspaceService.workspace.isdb.userEdits.store(self);
+      WorkspaceService.saveWork();
     }
+  }
 
 }());

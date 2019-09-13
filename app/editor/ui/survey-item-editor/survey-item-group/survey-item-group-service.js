@@ -26,21 +26,47 @@
     self.preparesValidCandidatesForGroupEditing = preparesValidCandidatesForGroupEditing;
     self.setSurveyGroup = setSurveyGroup;
     self.monitoringCheckboxState = monitoringCheckboxState;
+    self.getGroup = getGroup;
 
     init();
+
     function init() {
       WorkspaceService.registerObserver({update: _clean});
-      $rootScope.$on('item.remove', _respond);
-      $rootScope.$on('item.move', _respond);
+      $rootScope.$on('item.remove', _respondToItemRemoval);
+      $rootScope.$on('item.move', _respondMove);
     }
 
-    function _respond() {
-      if (self.editModeInUse) _setEditMode();
-      let group = _getSurveyItemGroupManager().getSurveyItemGroupList();
-      group.forEach(member => {
-        _getCandidates(member.start).forEach(item => self.questionItemReference[item].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE);
-        identifiesGroupItemStatus(member.start);
-      })
+    function _respondMove(event, item, group) {
+      if (group) {
+        uncheckMovedItem(item.templateID);
+        if (self.editModeInUse) _setEditMode();
+
+        recoveryStatesAfterRemoval(item.templateID, group);
+      }
+
+    }
+
+    function _respondToItemRemoval(event, item, group) {
+      if (group) {
+        if (self.editModeInUse) _setEditMode();
+        recoveryStatesAfterRemoval(item.templateID, group);
+      }
+    }
+
+    function uncheckMovedItem(templateID) {
+      self.questionItemReference[templateID].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+    }
+
+    function recoveryStatesAfterRemoval(id, group) {
+      if (group.members.length <= 2 && (group.start === id || group.end === id)) {
+        if (group.start === id) {
+          self.questionItemReference[group.end].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+        } else {
+          self.questionItemReference[group.start].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+        }
+      } else {
+        setGroupIcons(group);
+      }
     }
 
     function _clean() {
@@ -64,29 +90,34 @@
     }
 
     function verifyEndItemGroup(id) {
-      let itemGroup = _getGroup(id);
+      let itemGroup = getGroup(id);
       return itemGroup ? itemGroup.end === id : false;
     }
 
-    function _getGroup(id) {
+    function getGroup(id) {
       return _getSurveyItemGroupManager().getGroupByMember(id);
     }
 
     function identifiesGroupItemStatus(id) {
-      let colorGroup = _getColorGroup(id);
-      _getGroup(id).members.filter(item => {
-        item.position === StateValues.START_POSITION ?
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, colorGroup) :
-          _setItemGroupState(item.id, StateValues.SAVED_ITEM_GROUP_STATE, colorGroup)
+      setGroupIcons(getGroup(id));
+    }
+
+    function setGroupIcons(group) {
+      let colorGroup = _getColorGroup(group.start);
+
+      group.members.forEach(member => {
+        member.position === StateValues.START_POSITION ?
+          _setItemGroupState(member.id, StateValues.SAVED_ITEM_GROUP_EDITOR_STATE, colorGroup) :
+          _setItemGroupState(member.id, StateValues.SAVED_ITEM_GROUP_STATE, colorGroup);
       });
     }
 
     function _getColorGroup(id) {
-      return _getGroup(id).instantColorGroup = _getColorCode(id);
+      return getGroup(id).instantColorGroup = _getColorCode(id);
     }
 
     function _getColorCode(id) {
-      let members = JSON.stringify(_getGroup(id).members);
+      let members = JSON.stringify(getGroup(id).members);
       let hash = Array.from(members)
         .reduce((s, c) => Math.imul(31, s) + c.charCodeAt(0) | 0, 0);
       return `#${_hashToARGB(hash)}`
@@ -111,7 +142,7 @@
       self.validCandidates = _getCandidates(id);
 
       if (_getRegisteredItem(id).ctrl.stateItemGroup === StateValues.SAVED_ITEM_GROUP_EDITOR_STATE) {
-        _getGroup(id).members.forEach(function (item) {
+        getGroup(id).members.forEach(function (item) {
           (item.position !== StateValues.START_POSITION) ? _getRegisteredItem(item.id).ctrl.itemCandidateCheckbox = true : 0
         })
       }
@@ -169,7 +200,7 @@
         _setEditMode();
         _callAlertForGroupCreationNotAllowed();
         self.questionItemReference[id].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
-        _getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
+        getGroup(id) ? identifiesGroupItemStatus(scaledItemGroup[0]) : 0;
         validation = false;
       }
       return validation;
@@ -248,7 +279,7 @@
 
     function _cancelGroupEdit() {
       DialogService.data.item.forEach(item => {
-        let group = _getGroup(item);
+        let group = getGroup(item);
         if (group) identifiesGroupItemStatus(item);
         else {
           _getRegisteredItem(item).ctrl.itemCandidateCheckbox = false;
