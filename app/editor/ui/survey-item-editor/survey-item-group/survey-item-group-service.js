@@ -39,7 +39,6 @@
     function _respondMove(event, item, group) {
       if (group) {
         uncheckMovedItem(item.templateID);
-        if (self.editModeInUse) _setEditMode();
 
         recoveryStatesAfterRemoval(item.templateID, group);
       }
@@ -48,7 +47,6 @@
 
     function _respondToItemRemoval(event, item, group) {
       if (group) {
-        if (self.editModeInUse) _setEditMode();
         recoveryStatesAfterRemoval(item.templateID, group);
       }
     }
