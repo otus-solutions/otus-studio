@@ -61,8 +61,10 @@
       if (group.members.length <= 2 && (group.start === id || group.end === id)) {
         if (group.start === id) {
           self.questionItemReference[group.end].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+          self.questionItemReference[group.end].ctrl.itemCandidateCheckbox = false;
         } else {
           self.questionItemReference[group.start].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+          self.questionItemReference[group.start].ctrl.itemCandidateCheckbox = false;
         }
       } else {
         setGroupIcons(group);
