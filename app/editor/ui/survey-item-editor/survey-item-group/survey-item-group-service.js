@@ -39,9 +39,9 @@
     function _respondMove(event, item, group) {
       if (group) {
         uncheckMovedItem(item.templateID);
-        _recoveryStatesAfterRemoval(item.templateID, group);
+        _recoveryStatesAfterRemovalOrMove(item.templateID, group);
       }
-      if(self.editModeInUse) {
+      if (self.editModeInUse) {
         _recoveryStatesAfterRemovalOrMoveInEdition()
       }
     }
@@ -50,18 +50,9 @@
       if (group) {
         _recoveryStatesAfterRemovalOrMove(item.templateID, group);
       }
-      if(self.editModeInUse) {
+      if (self.editModeInUse) {
         _recoveryStatesAfterRemovalOrMoveInEdition();
       }
-    }
-
-    function _recoveryStatesAfterRemovalOrMoveInEdition(){
-      _setEditMode();
-      self.validCandidates.forEach(candidate => {
-        _getRegisteredItem(candidate).ctrl.itemCandidateCheckbox = false;
-        self.questionItemReference[candidate].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
-      });
-      self.validCandidates = [];
     }
 
     function uncheckMovedItem(templateID) {
@@ -80,6 +71,15 @@
       } else {
         setGroupIcons(group);
       }
+    }
+
+    function _recoveryStatesAfterRemovalOrMoveInEdition() {
+      _setEditMode();
+      self.validCandidates.forEach(candidate => {
+        _getRegisteredItem(candidate).ctrl.itemCandidateCheckbox = false;
+        self.questionItemReference[candidate].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+      });
+      self.validCandidates = [];
     }
 
     function _clean() {
