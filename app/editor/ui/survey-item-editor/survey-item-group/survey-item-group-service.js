@@ -39,15 +39,19 @@
     function _respondMove(event, item, group) {
       if (group) {
         uncheckMovedItem(item.templateID);
-
-        recoveryStatesAfterRemoval(item.templateID, group);
+        _recoveryStatesAfterRemoval(item.templateID, group);
       }
-
     }
 
     function _respondToItemRemoval(event, item, group) {
       if (group) {
-        recoveryStatesAfterRemoval(item.templateID, group);
+        _recoveryStatesAfterRemoval(item.templateID, group);
+      }
+      if(self.editModeInUse) {
+        _setEditMode();
+        self.validCandidates.forEach(candidate => {
+          self.questionItemReference[candidate].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+        });
       }
     }
 
@@ -55,7 +59,7 @@
       self.questionItemReference[templateID].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     }
 
-    function recoveryStatesAfterRemoval(id, group) {
+    function _recoveryStatesAfterRemoval(id, group) {
       if (group.members.length <= 2 && (group.start === id || group.end === id)) {
         if (group.start === id) {
           self.questionItemReference[group.end].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
