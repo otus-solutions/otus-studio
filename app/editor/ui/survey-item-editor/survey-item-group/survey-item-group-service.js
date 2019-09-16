@@ -41,25 +41,34 @@
         uncheckMovedItem(item.templateID);
         _recoveryStatesAfterRemoval(item.templateID, group);
       }
+      if(self.editModeInUse) {
+        _recoveryStatesAfterRemovalOrMoveInEdition()
+      }
     }
 
     function _respondToItemRemoval(event, item, group) {
       if (group) {
-        _recoveryStatesAfterRemoval(item.templateID, group);
+        _recoveryStatesAfterRemovalOrMove(item.templateID, group);
       }
       if(self.editModeInUse) {
-        _setEditMode();
-        self.validCandidates.forEach(candidate => {
-          self.questionItemReference[candidate].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
-        });
+        _recoveryStatesAfterRemovalOrMoveInEdition();
       }
+    }
+
+    function _recoveryStatesAfterRemovalOrMoveInEdition(){
+      _setEditMode();
+      self.validCandidates.forEach(candidate => {
+        _getRegisteredItem(candidate).ctrl.itemCandidateCheckbox = false;
+        self.questionItemReference[candidate].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
+      });
+      self.validCandidates = [];
     }
 
     function uncheckMovedItem(templateID) {
       self.questionItemReference[templateID].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
     }
 
-    function _recoveryStatesAfterRemoval(id, group) {
+    function _recoveryStatesAfterRemovalOrMove(id, group) {
       if (group.members.length <= 2 && (group.start === id || group.end === id)) {
         if (group.start === id) {
           self.questionItemReference[group.end].ctrl.stateItemGroup = StateValues.CREATE_ITEM_GROUP_STATE;
