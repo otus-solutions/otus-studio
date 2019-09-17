@@ -4,7 +4,7 @@
   margin: 0 auto;
   background-color: white;
   position: relative;
-  border: 2px solid #E6E6E6;
+  /*border: 2px solid #E6E6E6;*/
   z-index: 5;
 }
 
@@ -88,7 +88,7 @@
   /*  transform: translate(-30%, -30%);*/
   /*}*/
   #login-page #center {
-    width: 100%;
+    width: 90%;
     bottom: 0 !important;
     top: 80px;
     /*display: block;*/

@@ -1,8 +1,18 @@
-<md-content id="editor-container" flex layout-align="center center" layout="column" class="relative">
-    <div layout= "row">
-        <otus:survey-template-header identity="$ctrl.template.identity"></otus:survey-template-header>
-        <otus:page-anchor id="top-anchor"></otus:page-anchor>
-    </div>
-    <studio-sheet template="$ctrl.template"></studio-sheet>
-    <otus:page-anchor id="bottom-anchor"></otus:page-anchor>
+<md-content id="editor-container" layout-align="center center" layout="column" hide show-gt-sm>
+  <div layout="row">
+    <otus:survey-template-header identity="$ctrl.template.identity"></otus:survey-template-header>
+    <otus:page-anchor id="top-anchor"></otus:page-anchor>
+  </div>
+  <div layout="row" flex>
+    <studio-sheet template="$ctrl.template" flex></studio-sheet>
+  </div>
+  <otus:page-anchor id="bottom-anchor"></otus:page-anchor>
+</md-content>
+
+<md-content layout-align="center center" layout="column" show-xs show-sm hide
+            style="background-color: transparent; width: 360px">
+  <otus:survey-template-header identity="$ctrl.template.identity" layout="row"></otus:survey-template-header>
+  <otus:page-anchor id="top-anchor" layout="row"></otus:page-anchor>
+  <studio-sheet template="$ctrl.template" layout="row"></studio-sheet>
+  <otus:page-anchor id="bottom-anchor"></otus:page-anchor>
 </md-content>

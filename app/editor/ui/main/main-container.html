@@ -1,5 +1,5 @@
 <div layout="column" flex>
-  <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
+  <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar navbar-fixed-top" ng-controller="EditorToolbarController as editorToolbarController">
     <div class="md-toolbar-tools" layout-align="space-between center">
       <div layout="row" layout-align="end center">
         <md-button aria-label="Salvar" class="editor-icon" ng-disabled="editorToolbarController.isSurveyEmpty()"
@@ -32,11 +32,13 @@
 
     </div>
   </md-toolbar>
-  <md-content layout flex>
-    <md-content layout="column" layout-padding flex class="stage">
-      <md-tabs id="stage-mode-selector" flex>
-        <md-tab id="editing-tab" label="Edição">
-          <otus:stage template="mainContainer.template"></otus:stage>
+<!--  <otus-stage template="mainContainer.template" show-xs hide></otus-stage>-->
+
+  <md-content  flex layout="column">
+    <md-content layout="column" layout-padding layout-fill="" class="stage" >
+      <md-tabs id="stage-mode-selector" layout-fill="">
+        <md-tab id="editing-tab" label="Edição" layout-fill="">
+          <otus-stage template="mainContainer.template"></otus-stage>
         </md-tab>
         <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
           <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>
@@ -50,4 +52,6 @@
       </md-tabs>
     </md-content>
   </md-content>
+
 </div>
+

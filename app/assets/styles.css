@@ -48,6 +48,7 @@ md-input-container.md-input-invalid>md-icon {
   margin: 0 1px 0px;
   padding-top: 0px !important;
   background-color: #F9F9F9 !important;
+  /*max-width: 100%;*/
 }
 .resource {
   border-left: 1px solid #E1E1E1;
@@ -183,7 +184,7 @@ Page Anchor.css
 **/
 
 #editor-container {
-  background: none;
+  background: transparent;
 }
 .filling-mode-selector {}
 .editable {
@@ -377,4 +378,40 @@ survey-template md-card:focus {
 .grid-line-bar {
   border-bottom: dotted 1px gray;
   /*background-color: gray;*/
+}
+
+
+@media only screen and (max-width: 640px) {
+  #sheet {
+    border: none;
+    min-height: 90%;
+    position: -ms-device-fixed;
+    padding: 4mm;
+    width: auto !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding-bottom: 180px;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .item-id-frame {
+    background-color: transparent;
+  }
+
+
+}
+
+@media only screen and (max-width: 1025px) and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    /*overflow-x: hidden;*/
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
 }
