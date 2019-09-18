@@ -32,26 +32,28 @@
 
     </div>
   </md-toolbar>
-<!--  <otus-stage template="mainContainer.template" show-xs hide></otus-stage>-->
-
   <md-content  flex layout="column">
-    <md-content layout="column" layout-padding layout-fill="" class="stage" >
-      <md-tabs id="stage-mode-selector" layout-fill="">
-        <md-tab id="editing-tab" label="Edição" layout-fill="">
-          <otus-stage template="mainContainer.template"></otus-stage>
-        </md-tab>
-        <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
-          <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>
-        </md-tab>
-        <md-tab id="resource-tab" label="Recursos">
-          <studio-static-variable></studio-static-variable>
-        </md-tab>
-        <md-tab id="preview-tab" label="Preview" otus-survey-preview-generator>
-          <div id="survey-preview" layout="row" layout-align="center center" flex></div>
-        </md-tab>
-      </md-tabs>
-    </md-content>
+      <otus-stage template="mainContainer.template"></otus-stage>
   </md-content>
+<!--  TODO: ABORDAGEM PARA MOBILE?-->
+<!--  <md-content  flex layout="column">-->
+<!--    <md-content layout="column" layout-padding layout-fill="" class="stage" >-->
+<!--      <md-tabs id="stage-mode-selector" layout-fill="">-->
+<!--        <md-tab id="editing-tab" label="Edição" layout-fill="">-->
+<!--          <otus-stage template="mainContainer.template"></otus-stage>-->
+<!--        </md-tab>-->
+<!--        <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">-->
+<!--          <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>-->
+<!--        </md-tab>-->
+<!--        <md-tab id="resource-tab" label="Recursos">-->
+<!--          <studio-static-variable></studio-static-variable>-->
+<!--        </md-tab>-->
+<!--        <md-tab id="preview-tab" label="Preview" otus-survey-preview-generator>-->
+<!--          <div id="survey-preview" layout="row" layout-align="center center" flex></div>-->
+<!--        </md-tab>-->
+<!--      </md-tabs>-->
+<!--    </md-content>-->
+<!--  </md-content>-->
 
 </div>
 

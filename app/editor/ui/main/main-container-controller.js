@@ -11,7 +11,8 @@
     'MainContainerContentService',
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'WorkspaceService',
-    'contextTemplate'
+    'contextTemplate',
+    '$mdDialog'
   ];
 
   function MainContainerController(
@@ -21,7 +22,8 @@
     MainContainerContentService,
     NavigationBuilderScopeService,
     WorkspaceService,
-    contextTemplate
+    contextTemplate,
+    $mdDialog
   ) {
     var self = this;
 
@@ -36,10 +38,17 @@
     }
 
     function showQuestionsMenu() {
-      $mdBottomSheet.show({
+      // $mdBottomSheet.show({
+      //   templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
+      //   disableParentScroll: false
+      // });
+      $mdDialog.show({
         templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
-        disableParentScroll: false
+        disableParentScroll: false,
+        parent: angular.element(document.body),
+        clickOutsideToClose:true,
       });
+      //TODO DIALOG
     }
 
     function startNavigationBuilder() {

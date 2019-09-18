@@ -7,9 +7,10 @@
 
   OtusSurveyItemPaletteWidgetFactory.$inject = [
     'AddSurveyItemEventFactory',
+    '$mdDialog'
   ];
 
-  function OtusSurveyItemPaletteWidgetFactory(AddSurveyItemEventFactory) {
+  function OtusSurveyItemPaletteWidgetFactory(AddSurveyItemEventFactory, $mdDialog) {
     var self = this;
 
     /* Public interface */
@@ -59,6 +60,7 @@
 
     function addCalendarQuestion() {
       AddSurveyItemEventFactory.create().execute('CalendarQuestion');
+      $mdDialog.close();
     }
 
     function addIntegerQuestion() {

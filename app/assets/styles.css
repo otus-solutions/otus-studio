@@ -114,7 +114,7 @@ Page Anchor.css
   padding-bottom: 180px;
 }
 .item-id-frame {
-  background-color: #FAFAFA;
+  background-color: transparent;
   color: #1976D2;
   cursor: pointer;
 }
@@ -309,6 +309,7 @@ survey-template md-card:focus {
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
+  flex: none;
 }
 
 /* NAVIGATION BUILDER */
@@ -395,7 +396,7 @@ survey-template md-card:focus {
   }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 960px) {
   .item-id-frame {
     background-color: transparent;
   }
@@ -403,15 +404,15 @@ survey-template md-card:focus {
 
 }
 
-@media only screen and (max-width: 1025px) and (orientation: landscape) {
-  html {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    height: 100vw;
-    /*overflow-x: hidden;*/
-    position: absolute;
-    top: 100%;
-    left: 0;
-  }
-}
+/*@media only screen and (max-width: 1025px) and (orientation: landscape) {*/
+/*  html {*/
+/*    transform: rotate(-90deg);*/
+/*    transform-origin: left top;*/
+/*    width: 100vh;*/
+/*    height: 100vw;*/
+/*    !*overflow-x: hidden;*!*/
+/*    position: absolute;*/
+/*    top: 100%;*/
+/*    left: 0;*/
+/*  }*/
+/*}*/

@@ -3,14 +3,14 @@
     <otus:survey-template-header identity="$ctrl.template.identity"></otus:survey-template-header>
     <otus:page-anchor id="top-anchor"></otus:page-anchor>
   </div>
-  <div layout="row" flex>
-    <studio-sheet template="$ctrl.template" flex></studio-sheet>
+  <div layout="row" flex="100" layout-fill="" layout-align="center center">
+    <studio-sheet template="$ctrl.template" flex-gt-md="50"></studio-sheet>
   </div>
   <otus:page-anchor id="bottom-anchor"></otus:page-anchor>
 </md-content>
 
 <md-content layout-align="center center" layout="column" show-xs show-sm hide
-            style="background-color: transparent; width: 360px">
+            style="background-color: transparent;">
   <otus:survey-template-header identity="$ctrl.template.identity" layout="row"></otus:survey-template-header>
   <otus:page-anchor id="top-anchor" layout="row"></otus:page-anchor>
   <studio-sheet template="$ctrl.template" layout="row"></studio-sheet>
