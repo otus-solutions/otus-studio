@@ -1,11 +1,15 @@
-<md-container layout="column" flex>
-    <md-list ng-cloak>
-        <md-divider></md-divider>
-        <md-list-item layout="column" flex layout-align="center start">
-            <md-content layout="row">
+<style>
+  md-list-item:before {
+    min-height: 0 !important;
+  }
+</style>
+<div layout="column">
+    <md-list>
+        <md-list-item layout="column" layout-align="start end">
+            <div layout="row">
                 <md-subheader class="md-no-sticky">Validações</md-subheader>
-                <md-menu md-offset="0 -7">
-                    <md-button aria-label="Opções" class="md-icon-button md-button" ng-disabled="widget.menuDisabler()" ng-click="$mdOpenMenu($event)">
+                <md-menu>
+                    <md-button aria-label="Opções" class="md-icon-button md-button" ng-click="widget.hasValidatorsForAdd() ? false : $mdOpenMenu($event)">
                         <i class="material-icons">more_vert</i>
                     </md-button>
                     <md-menu-content width="6">
@@ -78,10 +82,10 @@
                             <md-menu-divider></md-menu-divider>
                         </md-menu-item>
 <!--TODO: verificar-->
-                        <!-- <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('specials')">
-                            <md-button ng-click="widget.addValidator('specials')">Não permite caracteres especiais</md-button>
-                            <md-menu-divider></md-menu-divider>
-                        </md-menu-item> -->
+<!--                        <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('specials')">-->
+<!--                            <md-button ng-click="widget.addValidator('specials')">Não permite caracteres especiais</md-button>-->
+<!--                            <md-menu-divider></md-menu-divider>-->
+<!--                        </md-menu-item>-->
 
                         <md-menu-item layout="column" class="md-indent" ng-if="widget.checkIfShow('minLength')">
                             <md-button ng-click="widget.addValidator('minLength')">Quantidade mínima de caracteres</md-button>
@@ -129,12 +133,12 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-            </md-content>
+            </div>
         </md-list-item>
 
-        <md-list-item>
-            <md-list id="validators-column" layout-padding layout="column" flex="100"></md-list>
-        </md-list-item>
+        <div layout-fill="">
+            <md-list id="validators-column" layout="column" layout-fill=""></md-list>
+        </div>
 
     </md-list>
-</md-container>
+</div>

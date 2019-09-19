@@ -12,7 +12,7 @@
       }
     }).controller('otusSurveyItemEditorCtrl', Controller);
 
-  Controller.$inject = ['$scope']
+  Controller.$inject = ['$scope'];
 
   function Controller($scope) {
     var self = this;

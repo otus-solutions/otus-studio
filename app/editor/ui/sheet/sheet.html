@@ -1,4 +1,4 @@
-<div layout="column" flex>
-  <otus:survey-item-editor item="item" position="$ctrl.template.getItems().indexOf(item)+1" ng-repeat="item in $ctrl.template.getItems() track by item.templateID">
+<div layout="column" flex layout-fill="">
+  <otus:survey-item-editor layout-fill item="item" position="$ctrl.template.getItems().indexOf(item)+1" ng-repeat="item in $ctrl.template.getItems() track by item.templateID">
   </otus:survey-item-editor>
 </div>

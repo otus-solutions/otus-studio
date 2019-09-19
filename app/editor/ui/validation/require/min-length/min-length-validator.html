@@ -1,26 +1,13 @@
-<md-list-item layout-padding flex>
-    <form name="minLengthValidator" layout="column">
-        <md-content layout="row" layout-align="start">
-            <md-input-container layout="column" layout-align="start center">
-                <span class="md-body-1">Mínimo de Caracteres:</span>
-                <input name="minLength" type="number" min="0" flex="30" flex-offset="5" aria-label="Mínimo de caracteres" ng-model="widget.data" ng-change="widget.updateData()" required>
+<md-list-item style="margin-top:15px" layout-padding="">
+    <form name="minLengthValidator" layout="row" flex="85">
+            <md-input-container class="md-icon-right" flex>
+                <label>Mínimo de Caracteres:</label>
+                <input name="minLength" type="number" min="0" flex="100" aria-label="Mínimo de caracteres" ng-model="widget.data" ng-change="widget.updateData()" required>
+              <md-icon ng-click="widget.deleteValidator()">close</md-icon>
               <div ng-messages="minLengthValidator.minLength.$error">
                 <div ng-message="required">Adicione o número de caracteres</div>
               </div>
-
             </md-input-container>
-
-          <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
-            <i class="material-icons">close</i>
-          </md-button>
-        </md-content>
     </form>
-<!--    <md-content layout="column" layout-padding layout-align="center end">-->
-<!--        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">-->
-<!--            <i class="material-icons">close</i>-->
-<!--        </md-button>-->
-<!--    </md-content>-->
 </md-list-item>
 
-
-<!--TODO: TIAGO-->

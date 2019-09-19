@@ -309,7 +309,6 @@ survey-template md-card:focus {
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
-  flex: none;
 }
 
 /* NAVIGATION BUILDER */
@@ -388,7 +387,7 @@ survey-template md-card:focus {
     min-height: 90%;
     position: -ms-device-fixed;
     padding: 4mm;
-    width: auto !important;
+    width: 100% !important;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;

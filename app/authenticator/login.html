@@ -3,45 +3,48 @@
   <div id="divtop" flex="100" layout="column">
     <div id="center" class="md-whiteframe-4dp">
       <div layout="column">
-          <div id="content" flex>
-            <form name="loginForm" novalidate flex="100" layout-wrap layout="row">
-              <md-input-container class="md-block" flex="75">
-                <label>Domínio</label>
-                <input name="userDomain" ng-model="user.domain" required/>
-                <div ng-messages="loginForm.userDomain.$error">
-                  <div ng-message="required">Obrigatório</div>
-                </div>
-              </md-input-container>
-              <md-input-container class="md-block" flex="75">
-                <label>Email</label>
-                <input name="userEmail" ng-model="user.email" required/>
-
-                <div ng-messages="loginForm.userEmail.$error">
-                  <div ng-message="required">Obrigatório</div>
-                </div>
-              </md-input-container>
-
-              <md-input-container class="md-block" flex="75">
-                <label>Senha</label>
-                <input name="userPassword" ng-model="user.password" type="password" required/>
-
-                <div ng-messages="loginForm.userPassword.$error">
-                  <div ng-message="required">Obrigatório</div>
-                </div>
-              </md-input-container>
-              <br/>
-
-              <div layout="row" layout-wrap="" layout-align-gt-xs="start center" layout-align="center center" flex="100">
-                <md-button type="submit" class="md-raised md-accent" ng-click="loginController.authenticate(user)"
-                           ng-disabled="loginForm.$invalid" flex-xs="100">
-                  Logar
-                </md-button>
-                <md-button md-no-ink class="md-primary" ng-click="loginController.visitAccess()" flex-xs>Visitante</md-button>
+        <div id="content" flex>
+          <form name="loginForm" novalidate flex="100" layout-wrap layout="row">
+            <md-input-container class="md-block" flex="75">
+              <label>Domínio</label>
+              <input name="userDomain" ng-model="user.domain" required/>
+              <div ng-messages="loginForm.userDomain.$error">
+                <div ng-message="required">Obrigatório</div>
               </div>
-            </form>
-          </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="75">
+              <label>Email</label>
+              <input name="userEmail" ng-model="user.email" required/>
+
+              <div ng-messages="loginForm.userEmail.$error">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex="75">
+              <label>Senha</label>
+              <input name="userPassword" ng-model="user.password" type="password" required/>
+
+              <div ng-messages="loginForm.userPassword.$error">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </md-input-container>
+            <br/>
+
+            <div layout="row" layout-wrap="" layout-align-gt-xs="start center" layout-align="center center" flex="100">
+              <md-button type="submit" class="md-raised md-accent" ng-click="loginController.authenticate(user)"
+                         ng-disabled="loginForm.$invalid" flex-xs="100">
+                Logar
+              </md-button>
+              <div flex-xs>
+
+                <md-button md-no-ink class="md-primary" ng-click="loginController.visitAccess()">Visitante</md-button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>

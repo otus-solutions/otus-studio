@@ -1,19 +1,12 @@
-<md-list-item layout-padding flex>
-    <form name="upperLimitValidator" flex-gt-xs>
-        <md-content layout="column" layout-align="start" flex="65">
-            <md-input-container layout="row" layout-align="start center">
-                <span class="md-body-1">Valor Máximo:</span>
-                <input name="upperLimit" type="number" min="0" flex="50" flex-offset="5" aria-label="Distinto" ng-model="widget.data" ng-change="widget.updateData()" required>
-
-                <div ng-messages="upperLimitValidator.upperLimit.$error">
-                    <div ng-message="required">Adicione um valor</div>
-                </div>
-            </md-input-container>
-        </md-content>
-    </form>
-    <md-content layout="column" flex="35" layout-padding layout-align="center end">
-        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
-            <i class="material-icons">close</i>
-        </md-button>
-    </md-content>
+<md-list-item style="margin-top:15px" layout-padding="">
+  <form name="upperLimitValidator" layout="row" flex="85">
+    <md-input-container class="md-icon-right" flex>
+      <label>Valor Máximo:</label>
+      <input name="upperLimit" type="number" min="0" flex="100" aria-label="UpperLimit" ng-model="widget.data" ng-change="widget.updateData()" required>
+      <md-icon ng-click="widget.deleteValidator()">close</md-icon>
+      <div ng-messages="upperLimitValidator.upperLimit.$error">
+        <div ng-message="required">Adicione um valor</div>
+      </div>
+    </md-input-container>
+  </form>
 </md-list-item>

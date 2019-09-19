@@ -56,6 +56,10 @@
 
     function showListFeeder() {
       var showList = getItem().validators();
+      var _specials = showList.indexOf('specials');
+      if (_specials > -1) {
+        showList.splice(_specials, 1);
+      }
       return showList;
     }
 
@@ -124,6 +128,10 @@
         return false;
       }
     }
+
+    self.hasValidatorsForAdd = () => {
+      return Boolean(showList.length === 1);
+    };
 
     function menuDisabler() {
       if (showList.length > 0) {

@@ -1,10 +1,10 @@
-<md-list-item class="alphanumericValidation" layout-padding flex="100">
-    <md-content layout="column" flex="90">
+<md-list-item class="alphanumericValidation" layout-padding flex="100" layout="row">
+    <md-content layout="column" flex="70">
         <md-switch class="md-primary" ng-model="widget.data" md-primary md-no-ink ng-change="widget.updateData()" layout-align="start start">
-            <span class="md-body-1">Somente caracteres alfanuméricos</span>
+            <span class="md-body-1 layout-wrap truncate">Somente alfanuméricos</span>
         </md-switch>
     </md-content>
-    <md-content layout="column" flex="10" layout-padding layout-align="center center">
+    <md-content layout="column" flex layout-padding layout-align="center center">
         <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
             <i class="material-icons">close</i>
         </md-button>
