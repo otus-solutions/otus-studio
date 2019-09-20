@@ -17,13 +17,13 @@
     self.create = create;
 
     function create(parentWidget) {
-      return new OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory);
+      return new OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory, $mdDialog);
     }
 
     return self;
   }
 
-  function OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory) {
+  function OtusQuestionPaletteWidget(parentWidget, AddSurveyItemEventFactory, $mdDialog) {
     var self = this;
 
     /* Type definitions */
@@ -48,67 +48,86 @@
     self.addFileUploadQuestion = addFileUploadQuestion;
     self.addGridTextQuestion = addGridTextQuestion;
     self.addGridIntegerQuestion = addGridIntegerQuestion;
+    self.closeDialog = closeDialog;
 
     /* Actions */
     function addFileUploadQuestion() {
       AddSurveyItemEventFactory.create().execute('FileUploadQuestion');
+      self.closeDialog();
     }
 
     function addAutocompleteQuestion() {
       AddSurveyItemEventFactory.create().execute('AutocompleteQuestion');
+      self.closeDialog();
     }
 
     function addCalendarQuestion() {
       AddSurveyItemEventFactory.create().execute('CalendarQuestion');
-      $mdDialog.close();
+      self.closeDialog();
     }
 
     function addIntegerQuestion() {
       AddSurveyItemEventFactory.create().execute('IntegerQuestion');
+      self.closeDialog();
     }
 
     function addDecimalQuestion() {
       AddSurveyItemEventFactory.create().execute('DecimalQuestion');
+      self.closeDialog();
     }
 
     function addSingleSelectionQuestion() {
       AddSurveyItemEventFactory.create().execute('SingleSelectionQuestion');
+      self.closeDialog();
     }
 
     function addTextQuestion() {
       AddSurveyItemEventFactory.create().execute('TextQuestion');
+      self.closeDialog();
     }
 
     function addTimeQuestion() {
       AddSurveyItemEventFactory.create().execute('TimeQuestion');
+      self.closeDialog();
     }
 
     function addEmailQuestion() {
       AddSurveyItemEventFactory.create().execute('EmailQuestion');
+      self.closeDialog();
     }
 
     function addTextItem() {
       AddSurveyItemEventFactory.create().execute('TextItem');
+      self.closeDialog();
     }
 
     function addImageItem() {
       AddSurveyItemEventFactory.create().execute('ImageItem');
+      self.closeDialog();
     }
 
     function addPhoneQuestion() {
       AddSurveyItemEventFactory.create().execute('PhoneQuestion');
+      self.closeDialog();
     }
 
     function addCheckboxQuestion() {
       AddSurveyItemEventFactory.create().execute('CheckboxQuestion');
+      self.closeDialog();
     }
 
     function addGridTextQuestion() {
       AddSurveyItemEventFactory.create().execute('GridTextQuestion');
+      self.closeDialog();
     }
 
     function addGridIntegerQuestion() {
       AddSurveyItemEventFactory.create().execute('GridIntegerQuestion');
+      self.closeDialog();
+    }
+
+    function closeDialog() {
+      $mdDialog.hide();
     }
 
   }

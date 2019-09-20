@@ -1,21 +1,19 @@
-<link href="app/editor/ui/survey-item/question/time/time-question.css" rel="stylesheet" />
+<link href="app/editor/ui/survey-item/question/time/time-question.css" rel="stylesheet"/>
 
-<md-content layout-padding>
-    <div layout="row" flex>
-          <div layout="row" flex>
+<md-content layout="row" layout-padding="" layout-align="start center" flex>
+    <button class="md-button md-raised md-icon-button" style="margin-top: -20px"
+            aria-label="Hora Atual" ng-disabled="!$ctrl.button">
+      <md-icon>access_time</md-icon>
+    </button>
+    <md-input-container flex="30">
 
-            <button class="md-fab md-raised md-mini md-button md-layoutTheme-theme md-ink-ripple" type="button" aria-label="Hora Atual" ng-disabled="!$ctrl.button">
-              <md-icon class="ng-scope md-layoutTheme-theme material-icons">access_time</md-icon>
-            </button>
-            <md-input-container class="md-block" flex-gt-sm="75">
-            <input type="time" aria-label="Tempo" min="0" max="4999">
-          </md-input-container>
-          </div>
-        <md-input-container class="md-block" flex-gt-sm="45" layout-margin>
-          <md-switch class="md-primary" ng-model="$ctrl.button" ng-change="$ctrl.updateOption($ctrl.disabledButton, !$ctrl.button)" layout-align="start start">
-            <span class="md-body-1">Botão de Hora</span>
-            <md-tooltip>Exibir o botão de hora atual</md-tooltip>
-          </md-switch>
-        </md-input-container>
-    </div>
+      <input type="time" aria-label="Tempo" min="0" max="4999">
+    </md-input-container>
+    <md-input-container flex>
+      <md-switch class="md-primary" ng-model="$ctrl.button"
+                 ng-change="$ctrl.updateOption($ctrl.disabledButton, !$ctrl.button)" layout-align="start start">
+        <span class="md-body-1">Botão de Hora</span>
+        <md-tooltip>Exibir o botão de hora atual</md-tooltip>
+      </md-switch>
+    </md-input-container>
 </md-content>

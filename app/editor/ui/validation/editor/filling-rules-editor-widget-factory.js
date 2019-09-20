@@ -56,6 +56,7 @@
 
     function showListFeeder() {
       var showList = getItem().validators();
+      // TODO: attribute removed to future implementation
       var _specials = showList.indexOf('specials');
       if (_specials > -1) {
         showList.splice(_specials, 1);
