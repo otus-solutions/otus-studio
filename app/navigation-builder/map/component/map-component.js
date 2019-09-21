@@ -22,7 +22,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.toolsCtrl = new ToolsController(NavigationBuilderService);
+      self.toolsCtrl = new ToolsController(GraphLayerService, NavigationBuilderService);
       moduleScope.onEvent(moduleScope.NBEVENTS.MAP_CONTAINER_READY, _renderMap);
     }
 
@@ -36,7 +36,7 @@
     }
   }
 
-  function ToolsController(NavigationBuilderService) {
+  function ToolsController(GraphLayerService, NavigationBuilderService) {
     var self = this;
     self.routePriorityButtonClass = ['md-fab', 'md-raised', 'md-mini'];
     self.addRouteButtonClass = ['md-fab', 'md-raised', 'md-mini'];
@@ -48,6 +48,7 @@
     self.addRoute = addRoute;
     self.editRoutePriority = editRoutePriority;
     self.inspect = inspect;
+    self.update = update;
     self.changeModificationButtonClass = changeModificationButtonClass;
 
     function editRoutePriority() {
@@ -69,6 +70,10 @@
       self.modificationButtonRoutePriority = false;
       _setSelected();
       NavigationBuilderService.activateNavigationInspectorMode(self.modificationButtonInspect);
+    }
+
+    function update() {
+      window.document.getElementById('survey-navigation-tab').click();
     }
 
     function _setSelected() {

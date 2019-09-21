@@ -20,6 +20,8 @@
   function GraphLayer(mapViewContainer) {
     var self = this;
     var _mapView = {};
+    var _touched = 0;
+    self.cam = null;
 
     _loadInternalBehaviour();
 
@@ -92,11 +94,12 @@
         sigma.classes.graph.attach('addEdge', 'onAddEdge', _onAddEdge);
       }
       $('#map-view').empty();
-      _mapView = new sigma({
-        renderer: {
+      _mapView = new sigma();
+      var cam = _mapView.addCamera('#map-view');
+      _mapView.addRenderer({
           container: mapViewContainer,
-          type: 'canvas'
-        }
+          type: 'canvas',
+          camera: cam
       });
     }
 

@@ -14,10 +14,10 @@
             </md-input-container>
             <md-input-container class="md-block" flex="75">
               <label>Email</label>
-              <input name="userEmail" ng-model="user.email" required/>
-
+              <input name="userEmail" ng-model="user.email" type="email" required/>
               <div ng-messages="loginForm.userEmail.$error">
                 <div ng-message="required">Obrigatório</div>
+                <div ng-message="email">Email ínválido</div>
               </div>
             </md-input-container>
 
