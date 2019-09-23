@@ -73,7 +73,7 @@
   </md-button>
 </div>
 
-<md-menu show-xs show-sm hide-gt-sm md-position-mode="target-right target" md-offset-xs="0 52">
+<md-menu show-xs show-sm hide-gt-sm md-position-mode="target-right target" md-offset-xs="0 52" md-offset="55">
   <md-button aria-label="opções" class="md-icon-button" ng-click="$mdOpenMenu($event)">
     <md-tooltip md-direction="down">
       Opções
@@ -81,101 +81,105 @@
     <md-icon md-menu-origin>text_format</md-icon>
   </md-button>
   <md-menu-content>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Bold" ng-mousedown="controller.bold()">
-        <md-icon>format_bold</md-icon>
-        <md-tooltip md-direction="down">
-          Negrito
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Italic" ng-mousedown="controller.italic()">
-        <md-icon>format_italic</md-icon>
-        <md-tooltip md-direction="down">
-          Italico
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Underlined" ng-mousedown="controller.underlined()">
-        <md-icon>format_underlined</md-icon>
-        <md-tooltip md-direction="down">
-          Sublinhado
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Tachado" ng-mousedown="controller.strikeThrough()">
-        <md-icon>format_strikethrough</md-icon>
-        <md-tooltip md-direction="down">
-          Tachado
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Centralizado" ng-mousedown="controller.justifyCenter()">
-        <md-icon>format_align_center</md-icon>
-        <md-tooltip md-direction="down">
-          Centralizado
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Justificado" ng-mousedown="controller.justifyFull()">
-        <md-icon>format_align_justify</md-icon>
-        <md-tooltip md-direction="down">
-          Justificado
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Alinhado Esquerda" ng-mousedown="controller.justifyLeft()">
-        <md-icon>format_align_left</md-icon>
-        <md-tooltip md-direction="down">
-          Alinhado Esquerda
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Alinhado Direita" ng-mousedown="controller.justifyRight()">
-        <md-icon>format_align_right</md-icon>
-        <md-tooltip md-direction="down">
-          Alinhado Direita
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Aplicar Cor de Fundo" ng-mousedown="controller.hiliteColor()">
-        <md-icon>format_color_fill</md-icon>
-        <md-tooltip md-direction="down">
-          Aplicar Cor de Fundo
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Aplicar Cor de Texto" ng-mousedown="controller.foreColor()">
-        <md-icon>brush</md-icon>
-        <md-tooltip md-direction="down">
-          Aplicar Cor de Texto
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Remover Formatação" ng-mousedown="controller.removeFormat()">
-        <md-icon>format_clear</md-icon>
-        <md-tooltip md-direction="down">
-          Remover Formatação
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item>
-      <md-button class="editor-icon" aria-label="Cores" ng-click="controller.openColors()">
-        <md-icon>color_lens</md-icon>
-        <md-tooltip md-direction="down">
-          Seleção de Cores
-        </md-tooltip>
-      </md-button>
-    </md-menu-item>
+    <md-list layout="row" layout-wrap="" layout-align="start center" layout-align-gt-lg="center center"
+             layout-padding="">
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Bold" ng-mousedown="controller.bold()">
+          <md-icon>format_bold</md-icon>
+          <md-tooltip md-direction="down">
+            Negrito
+          </md-tooltip>
+        </md-button>
+
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Italic" ng-mousedown="controller.italic()">
+          <md-icon>format_italic</md-icon>
+          <md-tooltip md-direction="down">
+            Italico
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Underlined" ng-mousedown="controller.underlined()">
+          <md-icon>format_underlined</md-icon>
+          <md-tooltip md-direction="down">
+            Sublinhado
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Tachado" ng-mousedown="controller.strikeThrough()">
+          <md-icon>format_strikethrough</md-icon>
+          <md-tooltip md-direction="down">
+            Tachado
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Centralizado" ng-mousedown="controller.justifyCenter()">
+          <md-icon>format_align_center</md-icon>
+          <md-tooltip md-direction="down">
+            Centralizado
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Justificado" ng-mousedown="controller.justifyFull()">
+          <md-icon>format_align_justify</md-icon>
+          <md-tooltip md-direction="down">
+            Justificado
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Alinhado Esquerda" ng-mousedown="controller.justifyLeft()">
+          <md-icon>format_align_left</md-icon>
+          <md-tooltip md-direction="down">
+            Alinhado Esquerda
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Alinhado Direita" ng-mousedown="controller.justifyRight()">
+          <md-icon>format_align_right</md-icon>
+          <md-tooltip md-direction="down">
+            Alinhado Direita
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Aplicar Cor de Fundo" ng-mousedown="controller.hiliteColor()">
+          <md-icon>format_color_fill</md-icon>
+          <md-tooltip md-direction="down">
+            Aplicar Cor de Fundo
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Aplicar Cor de Texto" ng-mousedown="controller.foreColor()">
+          <md-icon>brush</md-icon>
+          <md-tooltip md-direction="down">
+            Aplicar Cor de Texto
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Remover Formatação" ng-mousedown="controller.removeFormat()">
+          <md-icon>format_clear</md-icon>
+          <md-tooltip md-direction="down">
+            Remover Formatação
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+      <md-list-item flex flex-xs="20" flex-sm="10">
+        <md-button class="editor-icon" aria-label="Cores" ng-click="controller.openColors()">
+          <md-icon>color_lens</md-icon>
+          <md-tooltip md-direction="down">
+            Seleção de Cores
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+    </md-list>
   </md-menu-content>
 </md-menu>

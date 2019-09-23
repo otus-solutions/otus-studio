@@ -17,9 +17,9 @@
           </md-tooltip>
         </md-button>
       </div>
-      <otus:text-edition-menu show-gt-xs hide></otus:text-edition-menu>
-      <span flex-xs></span>
-      <otus:text-edition-menu show-xs hide-gt-xs></otus:text-edition-menu>
+      <otus:text-edition-menu show-gt-sm hide></otus:text-edition-menu>
+      <span flex-xs flex-sm></span>
+      <otus:text-edition-menu show-xs show-sm hide-gt-xs></otus:text-edition-menu>
 
       <div layout="row" layout-align="end center">
         <md-button class="md-fab md-mini md-primary" ng-click="mainContainer.showQuestionsMenu()">
@@ -29,6 +29,14 @@
           <md-icon class="material-icons">library_books</md-icon>
         </md-button>
       </div>
+      <div layout="row" layout-align="end center">
+        <md-button class="md-fab md-mini md-primary" otus-survey-preview-generator>
+          <md-tooltip md-delay="0" md-direction="bottom" md-autohide="true" ng-cloak>
+            Responder Questionário
+          </md-tooltip>
+          <md-icon class="material-icons">play_arrow</md-icon>
+        </md-button>
+      </div>
 
     </div>
   </md-toolbar>
@@ -36,7 +44,7 @@
 <!--      <otus-stage template="mainContainer.template"></otus-stage>-->
 <!--  </md-content>-->
 <!--  TODO: ABORDAGEM PARA MOBILE?-->
-  <md-content  flex layout="column">
+  <md-content  flex layout="column" id="survey-preview">
     <md-content layout="column" layout-padding layout-fill="" class="stage" >
       <md-tabs id="stage-mode-selector" layout-fill="">
         <md-tab id="editing-tab" label="Edição" layout-fill="">

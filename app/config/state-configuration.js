@@ -25,6 +25,15 @@
           }
         }
       })
+      .state('preview', { //TODO: DOING
+        url: '/preview',
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/preview/activity-viewer-template.html',
+            controller: 'activityViewerCtrl as $ctrl'
+          }
+        }
+      })
       .state('home', {
         url: '/home',
         views: {

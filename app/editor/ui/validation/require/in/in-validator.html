@@ -1,7 +1,5 @@
 <md-list-item style="margin-top:15px" layout-padding="">
-  <form name="inValidator" layout="row" flex>
-    <!--        <md-content layout="row" flex="100" layout-align="start start">-->
-    <!--            <div layout="row" layout-align="start center" flex="100">-->
+  <form name="inValidator" layout="row" flex="95">
     <md-input-container flex="40">
       <label>Valores de:</label>
 
@@ -12,17 +10,15 @@
       </div>
     </md-input-container>
     <span flex="5"></span>
-    <md-input-container flex="25">
+    <md-input-container flex="30">
       <label>Até:</label>
       <input name="inSecond" type="number" min="0" step="any" flex="100" aria-label="Insira o segundo valor"
              ng-change="widget.updateData()" ng-model="widget.data.end" required/>
-
-
       <div ng-messages="inValidator.inSecond.$error">
         <div ng-message="required">Adicione um valor</div>
       </div>
     </md-input-container>
-    <md-button ng-click="widget.deleteValidator()" flex="15" class="md-icon-button md-button">
+    <md-button ng-click="widget.deleteValidator()" flex="20" class="md-icon-button md-button">
       <i class="material-icons">close</i>
     </md-button>
   </form>

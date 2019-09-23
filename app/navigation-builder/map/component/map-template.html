@@ -28,4 +28,18 @@
 <!--  </md-button>-->
 </div>
 <div id="map-view" layout-fill=""></div>
-<otus-messenger-instructor layout="row" flex style="position: absolute; top: 70px; left: 0"></otus-messenger-instructor>
+<otus-messenger-instructor layout="row" flex></otus-messenger-instructor>
+<style>
+  otus-messenger-instructor {
+    left: 180px;
+    top: 30px;
+    position: absolute;
+  }
+  @media only screen and (max-width: 640px) {
+    otus-messenger-instructor {
+    left: 0;
+    top: 60px;
+    position: absolute;
+  }
+  }
+</style>

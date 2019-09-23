@@ -23,6 +23,7 @@
     var _touched = 0;
     self.cam = null;
 
+
     _loadInternalBehaviour();
 
     /* Public methods */
@@ -43,6 +44,7 @@
 
     function loadData(nodes, edges) {
       _mapView.graph.clear();
+      console.log(nodes)
       _mapView.graph.read({
         nodes: nodes,
         edges: edges
@@ -82,6 +84,30 @@
     }
 
     function _loadInternalBehaviour() {
+      var move = function(dx,dy,x,y) {
+        var clientX, clientY;
+        if( (typeof dx == 'object') && ( dx.type == 'touchmove') ) {
+          clientX = dx.changedTouches[0].clientX;
+          clientY = dx.changedTouches[0].clientY;
+          dx = clientX - this.data('ox');
+          dy = clientY - this.data('oy');
+        }
+        this.attr({
+          transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, dy]
+        });
+      }
+
+      var start = function( x, y, ev) {
+        if( (typeof x == 'object') && ( x.type == 'touchstart') ) {
+          x.preventDefault();
+          this.data('ox', x.changedTouches[0].clientX );
+          this.data('oy', x.changedTouches[0].clientY );
+        }
+        this.data('origTransform', this.transform().local );
+      }
+
+      var stop = function() {
+      }
       if (!sigma.classes.graph.hasMethod('updateNodeStyleBefore')) {
         sigma.classes.graph.addMethod('updateNodeStyleBefore', _updateNodeStyleBefore);
         sigma.classes.graph.addMethod('updateNodeStyle', _updateNodeStyle);
@@ -90,6 +116,9 @@
         sigma.classes.graph.addMethod('updateAllEdgesStyle', _updateAllEdgesStyle);
         sigma.classes.graph.addMethod('updateOutputs', _updateOutputs);
         sigma.classes.graph.addMethod('updateInputs', _updateInputs);
+        sigma.classes.graph.addMethod('touchstart', start);
+        sigma.classes.graph.addMethod('touchmove', move);
+        sigma.classes.graph.addMethod('touchend', stop);
         sigma.classes.graph.attach('addNode', 'onAddNode', _onAddNode);
         sigma.classes.graph.attach('addEdge', 'onAddEdge', _onAddEdge);
       }
@@ -98,9 +127,14 @@
       var cam = _mapView.addCamera('#map-view');
       _mapView.addRenderer({
           container: mapViewContainer,
-          type: 'canvas',
+          type: 'webgl',
           camera: cam
       });
+      _mapView.graph.touchstart = start;
+      _mapView.graph.touchmove = move;
+      _mapView.graph.touchend = stop;
+      console.log(_mapView)
+
     }
 
     function _updateNodeStyleBefore(style, nodeLimiter) {
