@@ -17,13 +17,12 @@
     '$scope',
     '$element',
     '$compile',
-    '$window',
     'WorkspaceService',
     'otusjs.model.activity.ActivityFacadeService',
     'otusjs.player.core.player.PlayerService'
   ];
 
-  function Controller($scope, $element, $compile, $window, WorkspaceService, ActivityFacadeService, PlayerService) {
+  function Controller($scope, $element, $compile, WorkspaceService, ActivityFacadeService, PlayerService) {
     var OTUS_SHEET_COMPONENT = '<otus-player md-theme="layoutTheme" layout="column" flex="80"></otus-player>';
     var _newScope;
     var _user = undefined;
@@ -48,11 +47,6 @@
       _newScope.surveyActivity = {};
       _newScope.surveyActivity.template = _getSurveyTemplateObject();
       var content = $compile(OTUS_SHEET_COMPONENT)(_newScope);
-      // var _w = $window.open('', '_blank');
-      // _w.document.write('<otus-viewer layout="column" flex></otus-viewer>');
-      // angular.element(_w.document.body).append(content)
-      // _w.document.write('<div id="survey-preview" layout="row" layout-align="center center" flex></div>');
-      // $('#survey-preview').empty();
       $('#survey-preview').append(content);
     }
 

@@ -2,19 +2,22 @@
 <html lang="en" ng-app="studio">
 
 <head>
-    <base href="/otus-studio/" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="app/assets/img/coruja_construtora.png" rel="icon" />
-    <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
-    <title>Otus Studio</title>
+  <base href="/otus-studio/"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="app/assets/img/coruja_construtora.png" rel="icon"/>
+  <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+  <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
+  <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+  <title>Otus Studio</title>
+
 </head>
 
 <body layout="row" md-theme="layoutTheme">
-    <div layout="row" class="md-body-2" flex ui-view="system-wrap"></div>
+<div layout="row" class="md-body-2" flex ui-view="system-wrap"></div>
 </body>
 
 <!-- Script imports -->
@@ -43,6 +46,9 @@
 <script src="node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
 <!--<script src="../node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>-->
 
+<!-- ************************************** Please-wait ************************************** -->
+<script src="node_modules/please-wait/build/please-wait.min.js"></script>
+
 <!-- ************************************* Angular ************************************* -->
 <script src="node_modules/angular/angular.min.js"></script>
 <script src="node_modules/angular-animate/angular-animate.min.js"></script>
@@ -53,7 +59,7 @@
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
 <!-- ************************************* Angular Material ************************************* -->
-<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
 <script src="node_modules/angular-material/angular-material.min.js"></script>
 <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 
@@ -95,8 +101,8 @@
 <script src="app/app.js"></script>
 
 <!-- assets -->
-<link href="app/assets/styles.css" rel="stylesheet" />
-<link href="app/assets/login-page.css" rel="stylesheet" />
+<link href="app/assets/styles.css" rel="stylesheet"/>
+<link href="app/assets/login-page.css" rel="stylesheet"/>
 
 <!-- app.config -->
 <script src="app/config/dependencies-configuration.js"></script>
@@ -144,9 +150,11 @@
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATE -->
 <script src="app/dashboard/survey-templates/components/survey-template/survey-template-component.js"></script>
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATES-LIST -->
-<script src="app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list-component.js"></script>
+<script
+  src="app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list-component.js"></script>
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATES-TOOLBAR -->
-<script src="app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-component.js"></script>
+<script
+  src="app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-component.js"></script>
 
 <!-- SURVEY-TEMPLATES.DIRECTIVES -->
 <script src="app/dashboard/survey-templates/directives/survey-template-upload-service.js"></script>
@@ -366,7 +374,8 @@
 <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-component.js"></script>
 
 <!-- WIDGET.GRID-LINE-QUESTION -->
-<script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-component.js"></script>
+<script
+  src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-component.js"></script>
 
 <!-- WIDGET.GRID-INTEGER-QUESTION -->
 <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-component.js"></script>
@@ -436,6 +445,9 @@
 <!-- PROJECT -->
 <script src="app/editor/workspace/project/survey-project-factory.js"></script>
 
+<!-- LOADING -->
+<script src="app/editor/workspace/loading/loading-screen-service.js"></script>
+
 <!-- ************************************** Studio Resource ************************************** -->
 
 <!-- STATIC-VARIABLES -->
@@ -453,6 +465,7 @@
 <!-- ************************************** Studio Preview ************************************** -->
 <script src="app/preview/preview-module.js"></script>
 <script src="app/preview/activity-viewer-component.js"></script>
+<script src="app/preview/survey-preview-service.js"></script>
 
 <!-- NAVIGATION-BUILDER -->
 <script src="app/navigation-builder/navigation-builder-module.js"></script>

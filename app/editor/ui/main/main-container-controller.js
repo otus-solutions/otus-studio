@@ -12,7 +12,9 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'WorkspaceService',
     'contextTemplate',
-    '$mdDialog'
+    '$mdDialog',
+    'DashboardStateService',
+    'LoadingScreenService'
   ];
 
   function MainContainerController(
@@ -23,7 +25,9 @@
     NavigationBuilderScopeService,
     WorkspaceService,
     contextTemplate,
-    $mdDialog
+    $mdDialog,
+    DashboardStateService,
+    LoadingScreenService
   ) {
     var self = this;
 
@@ -38,17 +42,19 @@
     }
 
     function showQuestionsMenu() {
-      // $mdBottomSheet.show({
-      //   templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
-      //   disableParentScroll: false
-      // });
       $mdDialog.show({
         templateUrl: 'app/editor/ui/survey-item-palette/bottom-sheet.html',
         disableParentScroll: false,
         parent: angular.element(document.body),
         clickOutsideToClose:true,
       });
-      //TODO DIALOG
+    }
+
+    self.preview = () => {
+      LoadingScreenService.message = 'Aguardando respostas da atividade';
+      LoadingScreenService.start();
+      window.open(document.URL.replace('editor','preview'), '_blank');
+      // DashboardStateService.goToPreview();
     }
 
     function startNavigationBuilder() {
