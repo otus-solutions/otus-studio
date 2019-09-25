@@ -403,15 +403,15 @@ survey-template md-card:focus {
 
 }
 
-/*@media only screen and (max-width: 1025px) and (orientation: landscape) {*/
-/*  html {*/
-/*    transform: rotate(-90deg);*/
-/*    transform-origin: left top;*/
-/*    width: 100vh;*/
-/*    height: 100vw;*/
-/*    !*overflow-x: hidden;*!*/
-/*    position: absolute;*/
-/*    top: 100%;*/
-/*    left: 0;*/
-/*  }*/
-/*}*/
+otus-messenger-instructor {
+  left: 180px;
+  top: 30px;
+  position: absolute;
+}
+@media only screen and (max-width: 640px) {
+  otus-messenger-instructor {
+    left: 0;
+    top: 60px;
+    position: absolute;
+  }
+}

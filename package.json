@@ -60,7 +60,7 @@
     "babel-plugin-es6-promise": "^1.1.1",
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^7.3.0",
-    "browser-sync": "^2.11.2",
+    "browser-sync": "2.11.2",
     "browser-sync-middleware-spa": "^1.0.0",
     "browserify": "^14.4.0",
     "concurrently": "^1.0.0",
