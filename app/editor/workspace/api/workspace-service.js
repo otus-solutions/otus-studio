@@ -21,7 +21,6 @@
     SurveyExportService
   ) {
     var self = this,
-      workspace,
       questionIdCounter = -1,
       observers = [];
 
@@ -60,7 +59,6 @@
       saveWork();
       self.workspace.project.close('now');
       questionIdCounter = -1;
-      observers = [];
       self.workspace = undefined;
     }
 

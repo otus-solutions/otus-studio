@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -30,17 +30,18 @@
     self.showOutputs = showOutputs;
     self.showInputs = showInputs;
     self.lockUnrelated = lockUnrelated;
+    self.resetDefaultToInteractionButton = resetDefaultToInteractionButton;
 
     function initialize() {
       _graphLayer = GraphLayerFactory.create('map-view');
 
-      self.loadData = function(nodes, edges) {
-         var orderedNodes = [].concat(nodes);
-         orderedNodes.push(orderedNodes.splice(1, 1)[0]);
-         orderedNodes.map(function(node, index) {
-            node.x = index;
-         });
-         _graphLayer.loadData(orderedNodes, edges);
+      self.loadData = function (nodes, edges) {
+        var orderedNodes = [].concat(nodes);
+        orderedNodes.push(orderedNodes.splice(1, 1)[0]);
+        orderedNodes.map(function (node, index) {
+          node.x = index;
+        });
+        _graphLayer.loadData(orderedNodes, edges);
       };
       self.render = _graphLayer.render;
       GraphLayerEventService.setMapView(_graphLayer.mapView());
@@ -105,6 +106,13 @@
       var style = { color: '#CCC' };
       _graphLayer.updateAllNodesStyle(style);
       _graphLayer.updateAllEdgesStyle(style);
+    }
+
+    function resetDefaultToInteractionButton(referenceToFunctionOfClean) {
+      if (!self.cleanInteractionButtons)
+        self.cleanInteractionButtons = referenceToFunctionOfClean;
+      else
+        self.cleanInteractionButtons();
     }
   }
 })();

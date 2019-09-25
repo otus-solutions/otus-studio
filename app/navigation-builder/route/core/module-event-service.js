@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,6 +13,8 @@
   ];
 
   function service(moduleScope, GraphLayerService, InstructorService, RouteDialogService) {
+    var GROUP_START_POSITION = 'start';
+    var GROUP_END_POSITION = 'end';
     var self = this;
     var _events = [];
 
@@ -42,7 +44,7 @@
     }
 
     function _unregisterEventListeners() {
-      _events.forEach(function(eventReg) {
+      _events.forEach(function (eventReg) {
         eventReg();
       });
     }
@@ -60,6 +62,18 @@
     }
 
     function _onOriginNodeSelected(event, node) {
+      if (node.inGroup && node.positionInGroup === GROUP_END_POSITION) {
+        _originNodeSelected(node);
+      } else if (node.inGroup && !(node.positionInGroup === GROUP_END_POSITION)) {
+        RouteDialogService.showWarningForGroups();
+        GraphLayerService.resetDefaultToInteractionButton();
+        moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
+      } else if (!node.inGroup) {
+        _originNodeSelected(node);
+      }
+    }
+
+    function _originNodeSelected(node) {
       GraphLayerService.lockPreviousNodeOf(node);
       GraphLayerService.setNodeAsTrailhead(node);
       GraphLayerService.applyVisualChanges();
@@ -77,6 +91,23 @@
     }
 
     function _onDestinationNodeSelected(event, node) {
+      var destination = node[1];
+      if (destination.inGroup)
+        _destinationNodeSelectedIsGroup(destination, node);
+      else {
+        _destinationNodeSelected(node);
+      }
+    }
+
+    function _destinationNodeSelectedIsGroup(destination, node) {
+      if (destination.positionInGroup === GROUP_START_POSITION) {
+        _destinationNodeSelected(node);
+      } else {
+        RouteDialogService.showWarningForGroups();
+      }
+    }
+
+    function _destinationNodeSelected(node) {
       GraphLayerService.setNodeAsTrailend(node);
       GraphLayerService.applyVisualChanges();
       InstructorService.clearMessenger();
@@ -104,6 +135,7 @@
 
     function _onRouteBuildCanceled(event) {
       RouteDialogService.closeDialog();
+      GraphLayerService.resetDefaultToInteractionButton();
       moduleScope.emit(moduleScope.NBEVENTS.ROUTE_MODE_OFF);
     }
   }

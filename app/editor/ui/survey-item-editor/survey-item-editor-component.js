@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -12,7 +12,7 @@
       }
     }).controller('otusSurveyItemEditorCtrl', Controller);
 
-  Controller.$inject = ['$scope']
+  Controller.$inject = ['$scope'];
 
   function Controller($scope) {
     var self = this;
@@ -45,12 +45,10 @@
     }
 
     function getStyle(position) {
-      if(self.index == position){
-        return {"background-color":"#E88024"}
+      if (self.index == position) {
+        return {"background-color": "#E88024"}
       }
       return {}
     }
-
   }
-
 }());
