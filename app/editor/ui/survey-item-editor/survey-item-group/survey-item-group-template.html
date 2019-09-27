@@ -1,0 +1,47 @@
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.CREATE_ITEM_GROUP_STATE"
+                 type="button"
+                 id="createGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.editorSurveyItemGroup()"
+                 icon-button="playlist_add"
+                 tooltip={{$ctrl.stateItemGroup}}>
+</item-group-type>
+
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.EDITOR_GROUP_STATE"
+                 type="button"
+                 id="editorGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.setSurveyGroup()"
+                 icon-button="create"
+                 tooltip={{$ctrl.stateItemGroup}}>
+</item-group-type>
+
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.INVALID_ITEM_GROUP_STATE"
+                 type="button"
+                 id="invalidateGroup_{{$ctrl.item.templateID}}"
+                 click="$ctrl.editorSurveyItemGroup()"
+                 icon-button="warning"
+                 tooltip={{$ctrl.stateItemGroup}}>
+</item-group-type>
+
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.SAVED_ITEM_GROUP_EDITOR_STATE"
+                 type="button"
+                 id="savedGroupEditor_{{$ctrl.item.templateID}}"
+                 click="$ctrl.editorSurveyItemGroup()"
+                 icon-button="bookmarks"
+                 state-color={{$ctrl.stateColor}}
+                 tooltip={{$ctrl.stateItemGroup}}>
+</item-group-type>
+
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.SAVED_ITEM_GROUP_STATE"
+                 type="button"
+                 id="savedGroupItem_{{$ctrl.item.templateID}}"
+                 icon-button="bookmark"
+                 state-color={{$ctrl.stateColor}}
+                 tooltip={{$ctrl.stateItemGroup}}>
+</item-group-type>
+
+<item-group-type ng-if="$ctrl.stateItemGroup == $ctrl.StateValues.VALID_ITEM_GROUP_STATE"
+                 id="validateGroup_{{$ctrl.item.templateID}}"
+                 type="checkbox"
+                 item-candidate-checkbox="$ctrl.itemCandidateCheckbox"
+                 monitoring-checkbox-state="$ctrl.monitoringCheckboxState($ctrl)"
+</item-group-type>

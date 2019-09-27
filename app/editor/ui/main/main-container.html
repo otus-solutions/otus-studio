@@ -1,5 +1,5 @@
 <div layout="column" flex>
-  <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar navbar-fixed-top" ng-controller="EditorToolbarController as editorToolbarController">
+  <md-toolbar layout="row" layout-align="center center" class="md-primary editor-toolbar" ng-controller="EditorToolbarController as editorToolbarController">
     <div class="md-toolbar-tools" layout-align="space-between center">
       <div layout="row" layout-align="end center">
         <md-button aria-label="Salvar" class="editor-icon" ng-disabled="editorToolbarController.isSurveyEmpty()"
@@ -35,7 +35,6 @@
           <md-icon class="material-icons">play_arrow</md-icon>
         </md-button>
       </div>
-
     </div>
   </md-toolbar>
   <md-content  flex layout="column" id="survey-preview">
@@ -53,6 +52,4 @@
       </md-tabs>
     </md-content>
   </md-content>
-
 </div>
-

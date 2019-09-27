@@ -43,7 +43,7 @@
         templateUrl: self.data.url,
         parent: angular.element(document.body),
         controllerAs:"$ctrl",
-        clickOutsideToClose: true
+        clickOutsideToClose: false
       });
     }
 

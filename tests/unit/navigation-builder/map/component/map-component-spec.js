@@ -22,14 +22,12 @@ describe('otusNavigationMap', function () {
   });
 
   describe('editRoutePriority method', function () {
-
     beforeEach(function () {
       controller.$onInit();
       spyOn(Mock.NavigationBuilderService, "editRoutePriorityState").and.callThrough();
     });
 
     it('should to be definition', function () {
-
       expect(controller.toolsCtrl.editRoutePriority).toBeDefined();
     });
 
@@ -42,9 +40,13 @@ describe('otusNavigationMap', function () {
 
     it('should call method editRoutePriorityState', function () {
       controller.toolsCtrl.editRoutePriority();
-
       expect(Mock.NavigationBuilderService.editRoutePriorityState).toHaveBeenCalledTimes(1);
     });
+
+    it("inspectMethod_should", function () {
+      console.log(controller.inspect)
+
+    })
 
   });
 

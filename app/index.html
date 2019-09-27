@@ -16,7 +16,7 @@
 </head>
 
 <body layout="row" md-theme="layoutTheme">
-<div layout="row" class="md-body-2" flex ui-view="system-wrap"></div>
+    <div layout="row" class="md-body-2" flex ui-view="system-wrap"></div>
 </body>
 
 <!-- Script imports -->
@@ -149,11 +149,9 @@
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATE -->
 <script src="app/dashboard/survey-templates/components/survey-template/survey-template-component.js"></script>
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATES-LIST -->
-<script
-  src="app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list-component.js"></script>
+<script src="app/dashboard/survey-templates/components/survey-templates-list/survey-templates-list-component.js"></script>
 <!-- SURVEY-TEMPLATES.COMPONENTS.SURVEY-TEMPLATES-TOOLBAR -->
-<script
-  src="app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-component.js"></script>
+<script src="app/dashboard/survey-templates/components/survey-templates-toolbar/survey-templates-toolbar-component.js"></script>
 
 <!-- SURVEY-TEMPLATES.DIRECTIVES -->
 <script src="app/dashboard/survey-templates/directives/survey-template-upload-service.js"></script>
@@ -174,6 +172,7 @@
 <script src="app/editor/core/event/add-route-condition-event-factory.js"></script>
 <script src="app/editor/core/event/add-rule-event-factory.js"></script>
 <script src="app/editor/core/event/add-survey-item-event-factory.js"></script>
+<script src="app/editor/core/event/add-survey-item-group-event-factory.js"></script>
 <script src="app/editor/core/event/add-filling-rules-event-factory.js"></script>
 <script src="app/editor/core/event/add-option-item-event-factory.js"></script>
 <script src="app/editor/core/event/remove-filling-rules-event-factory.js"></script>
@@ -373,8 +372,7 @@
 <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-question-component.js"></script>
 
 <!-- WIDGET.GRID-LINE-QUESTION -->
-<script
-  src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-component.js"></script>
+<script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer-line/grid-integer-line-component.js"></script>
 
 <!-- WIDGET.GRID-INTEGER-QUESTION -->
 <script src="app/editor/ui/survey-item/question/grid-integer-question/grid-integer/grid-integer-component.js"></script>
@@ -409,6 +407,14 @@
 <!-- WIDGET.QUESTION-EDITOR -->
 <script src="app/editor/ui/survey-item-editor/survey-item-editor-component.js"></script>
 <script src="app/editor/ui/survey-item-editor/survey-item-order/survey-item-order-change-controller.js"></script>
+
+<!-- WIDGET.QUESTION-EDITOR-GROUP -->
+<script src="app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-value.js"></script>
+<script src="app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-component.js"></script>
+<script src="app/editor/ui/survey-item-editor/survey-item-group/survey-item-group-service.js"></script>
+<script src="app/editor/ui/survey-item-editor/survey-item-group/item-group-type/item-group-type-component.js"></script>
+<script src="app/editor/ui/survey-item-editor/survey-item-group/item-group-dialog/survey-item-group-dialog-controller.js"></script>
+
 
 <!-- WIDGET.QUESTION-EDITOR.SETTINGS -->
 <script src="app/editor/ui/survey-item-editor/survey-item-settings/survey-item-settings-directive.js"></script>

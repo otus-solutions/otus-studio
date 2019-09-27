@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -45,12 +45,10 @@
     }
 
     function getStyle(position) {
-      if(self.index == position){
-        return {"background-color":"#E88024"}
+      if (self.index == position) {
+        return {"background-color": "#E88024"}
       }
       return {}
     }
-
   }
-
 }());

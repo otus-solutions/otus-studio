@@ -519,6 +519,17 @@ describe('NavigationBuilderService Suite', function () {
           }
         ]
       }
+    ],
+    "surveyItemGroupList":[
+      {
+        "end":"OS24",
+        "members":[
+          {"id":"OS23", "position": "start"},
+          {"id":"OS24", "position": "end"}
+          ],
+        "objectType":"SurveyItemGroup",
+        "start": "OS24"
+      }
     ]
   };
 });

@@ -6,6 +6,7 @@
     .factory('otusjs.studio.navigationBuilder.NodeFactory', factory);
 
   function factory() {
+    var GROUP_MIDDLE_POSITION = 'middle';
     var self = this;
 
     self.create = create;
@@ -18,7 +19,10 @@
       if (initialNodes.indexOf(options.id) > -1) {
         node = _createInitialNode(options);
       } else {
-        options.color = options.isOrphan ? '#571616' : '#616161';
+        if (options.inGroup)
+          options.color = _defineColorForGroupsPath(options);
+        else
+          options.color = options.isOrphan ? '#571616' : '#616161';
         node = new Node(options);
       }
       return node;
@@ -45,6 +49,10 @@
       return new Node(options);
     }
 
+    function _defineColorForGroupsPath(options) {
+      return options.positionInGroup === GROUP_MIDDLE_POSITION ? '#A4C6FF' : '#0965FF';
+    }
+
     return self;
   }
 
@@ -63,6 +71,8 @@
     this.color = options.color || '#000';
     this.isDefault = _isDefault();
     this.isOrphan = options.isOrphan || false;
+    this.inGroup = options.inGroup;
+    this.positionInGroup = options.positionInGroup;
 
     /* Public methods */
     this.connectIn = connectIn;

@@ -50,7 +50,7 @@
 
     function activateNavigationInspectorMode(activate) {
       deactiveMode();
-      if(activate) {
+      if (activate) {
         _activeServiceMode = NavigationInspectorService;
         _activeServiceMode.activate(_survey);
       }
@@ -58,7 +58,7 @@
 
     function editRoutePriorityState(activate) {
       deactiveMode();
-      if(activate) {
+      if (activate) {
         _activeServiceMode = NavigationRoutePriorityService;
         _activeServiceMode.activate(_survey);
       }
@@ -101,6 +101,14 @@
         options.index = navigation.index;
         options.isOrphan = navigation.isOrphan();
         options.isMyRootOrphan = navigation.hasOrphanRoot();
+        var group = _inGroup(navigation.origin)
+        if (group) {
+          options.inGroup = true;
+          options.positionInGroup = group.position;
+        } else {
+          options.inGroup = false;
+          options.positionInGroup = undefined;
+        }
         _navigationMap.createNode(options);
       });
     }
@@ -120,6 +128,19 @@
           }
         });
       });
+    }
+
+    function _inGroup(identity) {
+      var result = undefined;
+      _survey.SurveyItemGroupManager.getSurveyItemGroupList().some(function (groups) {
+        return groups.members.some(function (member) {
+          if (member.id === identity) {
+            result = member;
+            return;
+          }
+        });
+      });
+      return result;
     }
   }
 })();

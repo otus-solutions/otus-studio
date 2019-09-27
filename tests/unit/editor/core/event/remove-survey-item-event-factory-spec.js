@@ -13,6 +13,7 @@ describe('RemoveSurveyItemEventFactory_Suite', function () {
       Injections.WorkspaceService = _$injector_.get('WorkspaceService');
       Injections.WorkspaceService.workspace = mockWorkspace();
       Injections.RemoveSurveyItemService = _$injector_.get('RemoveSurveyItemService');
+      Injections.SurveyItemGroupService = _$injector_.get('SurveyItemGroupService');
       Mock.item = _$injector_.get('SurveyItemFactory').create('IntegerQuestion', 'Q1');
 
       factory = _$injector_.get('RemoveSurveyItemEventFactory', Injections);
@@ -22,6 +23,7 @@ describe('RemoveSurveyItemEventFactory_Suite', function () {
       spyOn(Injections.RemoveSurveyItemService, "execute").and.callThrough();
       spyOn(Injections.$rootScope, "$broadcast");
       spyOn(Injections.WorkspaceService, "saveWork");
+      spyOn(Injections.SurveyItemGroupService, "getGroup");
     });
   });
 
@@ -38,7 +40,8 @@ describe('RemoveSurveyItemEventFactory_Suite', function () {
   });
 
   it('execute_method_should_evoke_internalMethods_of_instance_UpdateFillingRulesEvent', function () {
-   factory.create().execute(Mock.item);
+   Mock.position = 1;
+    factory.create().execute(Mock.item, Mock.position);
    expect(Injections.RemoveSurveyItemService.execute).toHaveBeenCalledTimes(1);
    expect(Injections.$rootScope.$broadcast).toHaveBeenCalledTimes(1);
    expect(Injections.WorkspaceService.workspace.isdb.userEdits.store).toHaveBeenCalledTimes(1);
