@@ -2,19 +2,24 @@
   <form ng-cloak flex>
     <md-toolbar class="editor-toolbar md-primary md-layoutTheme-theme">
       <div class="md-toolbar-tools">
-        <h2>Edição do Grupo de Questões</h2>
+        <h2>Grupo de Questões</h2>
+        <md-button class="md-icon-button md-hue-2 md-layoutTheme-theme" ng-click="$ctrl.deleteGroup($ctrl.item)"
+                   aria-label="deleteGroupButton">
+          <md-icon>delete_forever</md-icon>
+          <md-tooltip md-direction="top">Excluir Grupo</md-tooltip>
+
+        </md-button>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.cancelGroupEdit()">
           <md-icon>close</md-icon>
-          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+          <md-tooltip md-direction="top">Fechar</md-tooltip>
         </md-button>
       </div>
     </md-toolbar>
     <md-dialog-content flex="100" id="dialogContent">
       <div class="md-dialog-content md-padding" layout="column" layout-align="start start" layout-wrap flex>
-        <div>
-          <h3>Itens:</h3>
-        </div>
+
+        <h3>Itens:</h3>
         <md-chips ng-model="$ctrl.item" name="item" readonly=true>
           <md-chip-template>
             <strong>{{$chip}}</strong>
@@ -23,20 +28,17 @@
       </div>
 
     </md-dialog-content>
-    <md-dialog-actions layout="row" layout-align="space-between center">
-      <div>
-        <md-button class="md-warn md-raised md-hue-2 md-layoutTheme-theme" ng-click="$ctrl.deleteGroup($ctrl.item)"
-                   aria-label="deleteGroupButton">{{$ctrl.deleteGroupButton}}
-        </md-button>
-      </div>
-      <div layout="row">
-        <div ng-repeat="button in $ctrl.buttons">
-          <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button">
+    <md-dialog-actions layout="column" layout-fill>
+<!--      <div layout="row" layout-wrap layout-align="end center" flex="100" layout-fill="">-->
+<!--        <md-button class="md-warn md-raised md-hue-2 md-layoutTheme-theme" ng-click="$ctrl.deleteGroup($ctrl.item)"-->
+<!--                   aria-label="deleteGroupButton">{{$ctrl.deleteGroupButton}}-->
+<!--        </md-button>-->
+<!--      </div>-->
+      <div layout="row" layout-wrap layout-align="end center" flex="100" layout-fill="">
+          <md-button class="{{ button.class }}" ng-click="button.action($ctrl.item.templateID)" aria-label="button" ng-repeat="button in $ctrl.buttons"  flex-xs="40">
             <md-icon ng-if="button.icon">{{button.icon}}</md-icon>
             {{button.message}}
           </md-button>
-          <span flex></span>
-        </div>
       </div>
     </md-dialog-actions>
   </form>
