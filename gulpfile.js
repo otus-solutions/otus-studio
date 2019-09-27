@@ -20,9 +20,8 @@
     browserSync.init({
       server: {
         baseDir: '../',
-        ghostMode: false,
         middleware: [
-          browserSyncSpa(/^[^\.]+$/, baseDir),
+          //browserSyncSpa(/^[^\.]+$/, baseDir),
 
           function(req, res, next) {
             res.setHeader('Access-Control-Allow-Origin', '*');

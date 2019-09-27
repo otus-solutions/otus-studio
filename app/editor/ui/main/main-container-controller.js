@@ -12,7 +12,8 @@
     'otusjs.studio.navigationBuilder.NavigationBuilderScopeService',
     'WorkspaceService',
     'contextTemplate',
-    '$mdDialog'
+    '$mdDialog',
+    'DashboardStateService'
   ];
 
   function MainContainerController(
@@ -23,7 +24,8 @@
     NavigationBuilderScopeService,
     WorkspaceService,
     contextTemplate,
-    $mdDialog
+    $mdDialog,
+    DashboardStateService
   ) {
     var self = this;
 
@@ -48,7 +50,7 @@
     }
 
     function preview() {
-         window.open(document.URL.replace('editor','preview'));
+      DashboardStateService.goToPreview();
     }
 
     function startNavigationBuilder() {

@@ -89,7 +89,6 @@
 
     function createNode(options) {
       var node = Inject.NodeFactory.create(options);
-      console.info(node)
       addNode(node);
       return node;
     }
