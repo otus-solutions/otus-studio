@@ -415,3 +415,24 @@ otus-messenger-instructor {
     position: absolute;
   }
 }
+
+@media screen and (max-height: 650px) {
+  .nav-up {
+    height: 0 !important;
+    width: 0 !important;
+    top:-100px;
+    left: 100px;
+  }
+}
+
+.studio-header {
+  transition: top 0.2s ease-in-out;
+  height: 50px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+md-tab-content > div {
+  height: 100%;
+}
