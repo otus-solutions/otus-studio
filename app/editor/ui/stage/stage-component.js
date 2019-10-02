@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,15 +16,15 @@
     var lastScrollTop = 0;
     var delta = 5;
 
-    angular.element(document.querySelector('.stage-component')).bind('wheel', function(){
+    angular.element(document.querySelector('.stage-component')).bind('wheel', function () {
       didScroll = true;
     });
 
-    angular.element(document.querySelector('.stage-component')).bind('touchmove', function(){
+    angular.element(document.querySelector('.stage-component')).bind('touchmove', function () {
       didScroll = true;
     });
 
-    setInterval(function() {
+    setInterval(function () {
       if (didScroll) {
         hasScrolled();
         didScroll = false;
@@ -34,10 +34,10 @@
     function hasScrolled() {
       var st = angular.element(document.querySelector('.stage-component')).scrollTop();
 
-      if(Math.abs(lastScrollTop - st) <= delta)
+      if (Math.abs(lastScrollTop - st) <= delta)
         return;
 
-      if (st > lastScrollTop){
+      if (st > lastScrollTop && st > 60) {
         $('.studio-header').removeClass('nav-down').addClass('nav-up');
       } else {
         $('.studio-header').removeClass('nav-up').addClass('nav-down');
