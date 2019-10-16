@@ -64,6 +64,11 @@
       }
     }
 
+    self.updateMode = () => {
+      _activeServiceMode = NavigationInspectorService;
+      _activeServiceMode.activate(_survey);
+    }
+
     function deactiveMode() {
       if (_activeServiceMode) {
         return _activeServiceMode.deactivate();

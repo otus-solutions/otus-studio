@@ -1,12 +1,15 @@
-<md-list-item class="alphanumericValidation" layout-padding flex="100">
-    <md-content layout="column" flex="90">
-        <md-switch class="md-primary" ng-model="widget.data" md-primary md-no-ink ng-change="widget.updateData()" layout-align="start start">
-            <span class="md-body-1">Somente caracteres alfanuméricos</span>
+<md-list-item class="alphanumericValidation" layout-padding layout="row">
+    <md-content layout="row" flex="90">
+        <md-switch class="md-primary" flex ng-model="widget.data" md-primary md-no-ink ng-change="widget.updateData()" layout-align="start start">
+            <span class="md-body-1 layout-wrap truncate">Somente alfanuméricos</span>
         </md-switch>
+      <md-button ng-click="widget.deleteValidator()" flex="20" class="md-icon-button md-button">
+        <i class="material-icons">close</i>
+      </md-button>
     </md-content>
-    <md-content layout="column" flex="10" layout-padding layout-align="center center">
-        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
-            <i class="material-icons">close</i>
-        </md-button>
-    </md-content>
+<!--    <md-content layout="column" flex layout-padding layout-align="center center">-->
+<!--        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">-->
+<!--            <i class="material-icons">close</i>-->
+<!--        </md-button>-->
+<!--    </md-content>-->
 </md-list-item>

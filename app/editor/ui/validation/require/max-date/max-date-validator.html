@@ -1,15 +1,20 @@
-<md-list-item layout-padding layout-align="space-between">
+<md-list-item layout-padding layout-align="space-around" style="margin-top: 15px">
     <md-content layout="column" flex="90">
-        <md-content layout="row">
-            <span class="md-body-1">Data Máxima:</span>
-        </md-content>
-        <md-content layout="row" layout-align="start">
-            <md-datepicker ng-model="widget.data.date" md-placeholder="Insira uma data" ng-change="widget.updateData()"></md-datepicker>
-        </md-content>
-    </md-content>
-    <md-content layout="column" flex="10" layout-padding layout-align="end center">
-        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">
+        <md-content layout="row" flex="100">
+            <span class="md-body-1" flex>Data Máxima:</span>
+          <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-mini" flex="20">
             <i class="material-icons">close</i>
-        </md-button>
+          </md-button>
+        </md-content>
+        <md-content layout="row" layout-align="start" flex="100">
+            <md-datepicker ng-model="widget.data.date" md-placeholder="Insira uma data" ng-change="widget.updateData()"></md-datepicker>
+
+        </md-content>
+
     </md-content>
+<!--    <md-content layout="column" flex="10" layout-padding layout-align="end center">-->
+<!--        <md-button ng-click="widget.deleteValidator()" class="md-icon-button md-button">-->
+<!--            <i class="material-icons">close</i>-->
+<!--        </md-button>-->
+<!--    </md-content>-->
 </md-list-item>

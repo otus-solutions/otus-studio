@@ -1,8 +1,8 @@
-<div layout="row" layout-align="space-between center" layout-margin>
+<div layout="row" layout-align="space-between center" layout-xs="column" layout-margin flex style="background-color: white">
 
   <!-- WHEN PARAMETER -->
   <md-autocomplete
-    flex="30"
+    flex="30" flex-xs
     md-no-cache="true"
     md-selected-item="$ctrl.selectedWhen"
     md-selected-item-change="$ctrl.whenChange($ctrl.selectedWhen)"
@@ -36,7 +36,7 @@
 
   <!-- OPERATOR PARAMETER -->
   <md-autocomplete
-    flex="30"
+    flex="30" flex-xs
     md-no-cache="true"
     ng-disabled="$ctrl.isDisable"
     md-selected-item="$ctrl.selectedOperator"
@@ -59,7 +59,7 @@
 
   <!-- ANSWER PARAMETER -->
   <md-autocomplete
-    flex="30"
+    flex="30" flex-xs
     md-no-cache="true"
     ng-disabled="$ctrl.isDisable"
     md-selected-item="$ctrl.selectedAnswer"

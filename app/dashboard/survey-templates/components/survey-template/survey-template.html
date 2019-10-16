@@ -1,16 +1,16 @@
-<md-card>
-  <md-card-header>
-    <md-card-avatar>
+<md-card flex="100">
+  <md-card-header flex="100">
+    <md-card-avatar >
       <img class="md-avatar" src="app/assets/img/form-icon.png"/>
     </md-card-avatar>
-    <md-card-header-text>
+    <md-card-header-text flex="90">
       <div layout="column">
-        <span class="md-subhead">{{$ctrl.surveyTemplate.template.identity.acronym}}</span>
+        <span class="md-subhead truncate">{{$ctrl.surveyTemplate.template.identity.acronym}}</span>
         <span class="md-title">{{$ctrl.surveyTemplate.template.identity.name}}</span>
       </div>
     </md-card-header-text>
   </md-card-header>
-  <md-card-content>
+  <md-card-content flex>
     <md-icon md-font-set="material-icons"> today </md-icon>
     <span class="md-caption">{{$ctrl.surveyTemplate.template.metainfo.creationDatetime | date : 'dd-MM-yyyy'}}</span>
   </md-card-content>

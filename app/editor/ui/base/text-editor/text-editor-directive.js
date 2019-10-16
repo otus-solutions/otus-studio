@@ -10,7 +10,7 @@
     function directive(OtusTextEditorWidgetFactory) {
         var ddo = {
             scope: {
-                placeholder: '@',
+                placeHolder: '@',
                 label: '=',
                 ariaLabel: '@',
                 leftIcon: '@',

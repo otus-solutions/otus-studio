@@ -1,36 +1,24 @@
-<style>
-  .questionPositionChip{
-    width: 40px !important;
-    height: 40px !important;
-    padding: 4px 4px!important;
-    text-align: center !important;
-    border-radius: 0px !important;
-    background-color: rgb(68,138,255);
-    color: #FAFAFA !important;
-    position: fixed;
-  }
-</style>
-<div layout="row" layout-margin="" flex>
-  <div layout-align="center center" layout="row" style="display:inline-block;z-index: 1000; margin-right: 20px;margin-left: -20px;margin-top:24px; position: fixed;" >
-    <div layout-align="center center" layout="row" class="questionPositionChip" ng-style="$ctrl.getStyle($ctrl.position-1)" md-whiteframe="1dp">
+<div layout="column" id="maincontainer" flex flex-gt-md="60" flex-offset-gt-md="20" flex-gt-lg="40" flex-offset-gt-lg="30" flex-gt-sm="70" flex-offset-gt-sm="15" flex-gt-xs="80" flex-offset-gt-xs="10">
+  <div id={{$ctrl.getQuestionId()}} class="custom-whiteframe" layout="column" md-whiteframe="2dp"  style="min-width: 300px; border-radius: 12px 12px">
+    <md-toolbar class="md-primary" layout="row" layout-padding="" layout-align="start center" style="border-radius: 12px 12px 0 0">
       <span class="md-title" style="vertical-align: middle;">{{$ctrl.position}}</span>
-    </div>
-  </div>
-  <md-whiteframe id={{$ctrl.getQuestionId()}} class="custom-whiteframe" layout="column" layout-fill md-whiteframe="2dp">
+
+      <span flex="5"></span>
+                  <div layout-align="center center" class="clipped" flex>
+                    <span class="md-body-1">{{$ctrl.item.label.ptBR.plainText || $ctrl.item.value.ptBR.plainText}}</span>
+                  </div>
+      <span flex></span>
+
+      <div class="item-id-frame md-primary" layout-padding layout-align="center center">
+        <otus-item-icon item="{{::$ctrl.item.objectType}}" >
+      </div>
+    </md-toolbar>
     <item-container item="$ctrl.item" position="$ctrl.position">
       <item-container-header flex>
-        <div layout="row" layout-align="center center" flex >
+        <div layout="row" layout-align="start center" flex >
           <md-card layout-align="center">
             <editable-id item="::$ctrl.item"></editable-id>
           </md-card>
-          <div class="item-id-frame" layout-padding layout-align="center center">
-            <otus-item-icon item="{{::$ctrl.item.objectType}}">
-          </div>
-          <md-content layout-padding flex>
-            <div layout-align="center center" class="clipped" flex>
-              <span class="md-body-1">{{$ctrl.item.label.ptBR.plainText || $ctrl.item.value.ptBR.plainText}}</span>
-            </div>
-          </md-content>
         </div>
       </item-container-header>
       <item-container-body>
@@ -38,6 +26,6 @@
         <misc-item ng-if="::!$ctrl.item.isQuestion()" item="$ctrl.item"></misc-item>
       </item-container-body>
     </item-container>
-  </md-whiteframe>
-  <br/>
+  </div>
+  <br />
 </div>

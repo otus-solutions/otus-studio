@@ -1,62 +1,115 @@
 #login-page #center {
-	width: 55%;
-	top: 60%;
-	margin: 0 auto;
-	background-color: white;
-	position: relative;
-	border: 2px solid #E6E6E6;
+  width: 30%;
+  top: 70%;
+  margin: 0 auto;
+  background-color: white;
+  position: relative;
+  /*border: 2px solid #E6E6E6;*/
+  z-index: 5;
 }
 
-#login-page #divtop{
-	background-color: #448AFF;
-	height:35%;
-	z-index: 1;
-	position: absolute;
-	width: 100%;
+
+.banner {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+
 }
 
-#login-page .nameStudio{
-	text-align: left;
-	color: white;
-	top: 58%;
-    position: relative;
-    margin: 0 auto;
-}
 
-#login-page .nameStudio span {
-	margin-left: 23%;
+#login-page #divtop {
+  height: 35%;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
 }
 
 #login-page h1 {
-	margin: 0 auto;
-	width: 110px;
-	/* height: 150px; */
-	display: block;
+  margin: 0 auto;
+  width: 110px;
+  /* height: 150px; */
+  display: block;
 }
 
 #login-page .logo {
-    width: 21.4%;
-    position: absolute;
-    left: 41%;
-    transform: translate(-30%, -30%);
+  width: 21.4%;
+  position: absolute;
+  left: 41%;
+  transform: translate(-30%, -30%);
 }
 
-@media screen and (max-width: 1280px) and (min-width: 800px) {
-    #login-page .logo {
-        width: 29%;
-        position: absolute;
-        left: 45%;
-        transform: translate(-30%, -30%);
-    }
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+  #login-page .logo {
+    width: 25%;
+    position: absolute;
+    left: 45%;
+    transform: translate(-30%, -30%);
+  }
+
+  #login-page #center {
+    width: 80%;
+    border: none;
+  }
+
+  #login-page {
+    background-color: #FFFFFF;
+  }
 }
 
 #login-page #content {
-	margin-top: 11%;
-	padding: 10px;
+  margin-top: 2%;
+  padding: 10px;
 }
 
 #login-page .md-block {
-	width: 60%;
-	left: 12%;
-	right: 12%
+  width: 60%;
+  left: 12%;
+  right: 12%
+}
+
+
+@media only screen and (max-width: 600px) {
+  md-input-container {
+    width: 80% !important;
+  }
+
+  .banner {
+    z-index: 5;
+  }
+
+  /*#login-page .logo {*/
+  /*  width: 40%;*/
+  /*  position: absolute;*/
+  /*  left: 41%;*/
+  /*  transform: translate(-30%, -30%);*/
+  /*}*/
+  #login-page #center {
+    width: 90%;
+    bottom: 0 !important;
+    top: 80px;
+    /*display: block;*/
+    margin: 0 auto;
+    background-color: transparent;
+    position: relative;
+    border: none;
+    padding: 0 !important;
+  }
+
+  #login-page #divtop {
+    /*background-color: #448AFF;*/
+    height: 15% !important;
+    /*z-index: 1;*/
+    position: absolute;
+    width: 100%;
+  }
+
+  #login-page {
+    background-color: #FFFFFF;
+  }
+
+
 }

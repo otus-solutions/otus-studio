@@ -1,8 +1,8 @@
 <md-content layout="column" flex>
     <div layout="row" class="label-container" layout-align="left center">
-        <otus:text-editor ng-model="$ctrl.item.label" placeholder="Clique aqui para editar a label" flex></otus:text-editor>
+        <otus:text-editor ng-model="$ctrl.item.label" place-holder="Clique aqui para editar a label" flex></otus:text-editor>
     </div>
-    <md-tabs class="filling-mode-selector" md-no-pagination md-dynamic-height>
+    <md-tabs class="filling-mode-selector" md-dynamic-height flex>
         <md-tab label="Resposta">
             <md-content bind-html-compile="$ctrl.getTemplate()"></md-content>
         </md-tab>
@@ -10,9 +10,6 @@
             <md-content>
                 <otus:metadata-group metadata="$ctrl.item.metadata"></otus:metadata-group>
             </md-content>
-        </md-tab>
-        <md-tab label="Comentário">
-            <md-content></md-content>
         </md-tab>
     </md-tabs>
 </md-content>
