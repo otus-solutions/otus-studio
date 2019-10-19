@@ -1,24 +1,34 @@
 ###############################################
 ###               Variables                 ###
 ###############################################
+variable "otus-studio-name" {
+  default = "otus-studio"
+}
+variable "otus-studio-directory" {
+  default = "otus-studio"
+}
+variable "otus-studio-source" {
+  default = "/source"
+}
 
-variable "otus-studio" {
-  type = "map"
-  default = {
-    "name" = "otus-studio"
-    "directory" = "otus-studio"
-    "source" = "/source"
-  }
+variable "otus-studio-npmbuild" {
+  default = "install"
 }
 
 ###############################################
 ###  OTUS-STUDIO : Build Image Front-End    ###
 ###############################################
-resource "null_resource" "otus-studio" {
+resource "null_resource" "otus-studio-build" {
   provisioner "local-exec" {
-    command = "cd ${var.otus-studio["directory"]}/${var.otus-studio["source"]} && npm install"
+    working_dir = "otus-studio/source"
+    command = "npm ${var.otus-studio-npmbuild}"
   }
+}
+
+resource "null_resource" "otus-studio" {
+  depends_on = [null_resource.otus-studio-build]
   provisioner "local-exec" {
-    command = "sudo docker build -t ${var.otus-studio["name"]} ${var.otus-studio["directory"]}"
+    working_dir = "otus-studio"
+    command = "docker build -t ${var.otus-studio-name} ."
   }
 }
