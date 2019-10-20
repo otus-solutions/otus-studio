@@ -8,11 +8,15 @@ variable "otus-studio-directory" {
   default = "otus-studio"
 }
 variable "otus-studio-source" {
-  default = "/source"
+  default = "source"
 }
 
 variable "otus-studio-npmbuild" {
-  default = "install"
+  default = "run build"
+}
+
+variable "otus-studio-dockerbuild" {
+  default = "build"
 }
 
 ###############################################
@@ -20,7 +24,7 @@ variable "otus-studio-npmbuild" {
 ###############################################
 resource "null_resource" "otus-studio-build" {
   provisioner "local-exec" {
-    working_dir = "otus-studio/source"
+    working_dir = "${var.otus-studio-source}"
     command = "npm ${var.otus-studio-npmbuild}"
   }
 }
@@ -28,7 +32,6 @@ resource "null_resource" "otus-studio-build" {
 resource "null_resource" "otus-studio" {
   depends_on = [null_resource.otus-studio-build]
   provisioner "local-exec" {
-    working_dir = "otus-studio"
-    command = "docker build -t ${var.otus-studio-name} ."
+    command = "docker ${var.otus-studio-dockerbuild} -t ${var.otus-studio-name} ."
   }
 }

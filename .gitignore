@@ -14,3 +14,7 @@ node_modules/
 dist/otus-studio.war
 **/.sonar
 package-lock.json
+**/.terraform
+**/terraform.tfstate
+**/terraform.tfstate.backup
+

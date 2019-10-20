@@ -19,7 +19,7 @@
     "gulp": "gulp",
     "start": "npm run gulp browser-sync --no-online",
     "karma": "karma",
-    "build": "gulp compress"
+    "build": "npm install --production && npm test && gulp compress"
   },
   "dependencies": {
     "angular": "1.5.8",
