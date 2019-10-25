@@ -17,7 +17,7 @@ variable "otus-studio-source" {
 }
 
 variable "otus-studio-npminstall" {
-  default = "npm install --production"
+  default = "npm install"
 }
 
 variable "otus-studio-npmtest" {
@@ -26,6 +26,10 @@ variable "otus-studio-npmtest" {
 
 variable "otus-studio-npmbuild" {
   default = "npm run build"
+}
+
+variable "otus-studio-npmprune" {
+  default = "npm prune --production"
 }
 
 variable "otus-studio-dockerbuild" {
@@ -55,6 +59,14 @@ resource "null_resource" "otus-studio-build" {
   provisioner "local-exec" {
     working_dir = "${var.otus-studio-source}"
     command = "${var.otus-studio-npmbuild}"
+  }
+}
+
+resource "null_resource" "otus-studio-prune" {
+  depends_on = [null_resource.otus-studio-build]
+  provisioner "local-exec" {
+    working_dir = "${var.otus-studio-source}"
+    command = "${var.otus-studio-npmprune}"
   }
 }
 
