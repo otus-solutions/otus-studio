@@ -17,7 +17,7 @@
         }
 
         function visitAccess() {
-            DashboardStateService.goToHome();
+            DashboardStateService.goToFormTemplates();
         }
     }
 

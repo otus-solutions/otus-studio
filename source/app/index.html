@@ -2,15 +2,17 @@
 <html lang="en" ng-app="studio">
 
 <head>
-    <base href="/otus-studio/" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="app/assets/img/coruja_construtora.png" rel="icon" />
-    <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+  <base href="/otus-studio/"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="app/assets/img/coruja_construtora.png" rel="icon"/>
+  <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+  <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
   <title>Otus Studio</title>
+
 </head>
 
 <body layout="row" md-theme="layoutTheme">
@@ -27,6 +29,24 @@
 <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js"></script>
 <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js"></script>
 <script src="node_modules/sigma/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="node_modules/sigma/build/plugins/sigma.exporters.svg.min.js"></script>
+<script src="node_modules/sigma/plugins/sigma.exporters.svg/sigma.exporters.svg.js"></script>
+<script src="node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.edges.curve.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.edges.def.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.hovers.def.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.labels.def.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.nodes.def.js"></script>
+<script src="node_modules/sigma/src/renderers/svg/sigma.svg.utils.js"></script>
+<script src="node_modules/sigma/src/renderers/sigma.renderers.svg.js"></script>
+<script src="node_modules/sigma/build/plugins/sigma.plugins.animate.min.js"></script>
+<script src="node_modules/sigma/build/plugins/sigma.parsers.gexf.min.js"></script>
+
+<script src="node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<!--<script src="../node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>-->
+
+<!-- ************************************** Please-wait ************************************** -->
+<script src="node_modules/please-wait/build/please-wait.min.js"></script>
 
 <!-- ************************************* Angular ************************************* -->
 <script src="node_modules/angular/angular.min.js"></script>
@@ -38,7 +58,7 @@
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
 <!-- ************************************* Angular Material ************************************* -->
-<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
 <script src="node_modules/angular-material/angular-material.min.js"></script>
 <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 
@@ -80,8 +100,8 @@
 <script src="app/app.js"></script>
 
 <!-- assets -->
-<link href="app/assets/styles.css" rel="stylesheet" />
-<link href="app/assets/login-page.css" rel="stylesheet" />
+<link href="app/assets/styles.css" rel="stylesheet"/>
+<link href="app/assets/login-page.css" rel="stylesheet"/>
 
 <!-- app.config -->
 <script src="app/config/dependencies-configuration.js"></script>
@@ -430,6 +450,9 @@
 <!-- PROJECT -->
 <script src="app/editor/workspace/project/survey-project-factory.js"></script>
 
+<!-- LOADING -->
+<script src="app/editor/workspace/loading/loading-screen-service.js"></script>
+
 <!-- ************************************** Studio Resource ************************************** -->
 
 <!-- STATIC-VARIABLES -->
@@ -446,6 +469,12 @@
 
 <!-- ************************************** Studio Preview ************************************** -->
 <script src="app/preview/preview-module.js"></script>
+<script src="app/preview/activity-viewer-component.js"></script>
+<script src="app/preview/survey-preview-service.js"></script>
+<script src="app/preview/player/exit-player-step-service.js"></script>
+<script src="app/preview/player/save-player-step-service.js"></script>
+<script src="app/preview/player/stop-player-step-service.js"></script>
+<script src="app/preview/player/player-service.js"></script>
 
 <!-- NAVIGATION-BUILDER -->
 <script src="app/navigation-builder/navigation-builder-module.js"></script>

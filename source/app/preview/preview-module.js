@@ -1,6 +1,16 @@
-(function() {
-    'use strict';
+(function () {
+  'use strict';
 
-    angular.module('preview', []);
+  angular.module('preview', []).run(runner);
+
+  runner.$inject = [
+    '$injector'
+  ];
+
+  function runner($injector) {
+    var application = $injector.get('PlayerService');
+    application.setup();
+    console.info('Preview module ready.');
+  }
 
 }());

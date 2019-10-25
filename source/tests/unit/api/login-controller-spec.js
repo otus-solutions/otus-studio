@@ -15,7 +15,7 @@ describe('LoginController_Suite', function () {
 
       ctrl = $controller('LoginController', Injections);
       spyOn(Injections.AuthenticationService, "login").and.callThrough();
-      spyOn(Injections.DashboardStateService, "goToHome").and.callThrough();
+      spyOn(Injections.DashboardStateService, "goToFormTemplates").and.callThrough();
     });
   });
 
@@ -38,7 +38,7 @@ describe('LoginController_Suite', function () {
   it('visitAccess_method_should_evoke_goToHome_of_DashboardStateService', function () {
     mockUser();
     ctrl.visitAccess();
-    expect(Injections.DashboardStateService.goToHome).toHaveBeenCalledTimes(1);
+    expect(Injections.DashboardStateService.goToFormTemplates).toHaveBeenCalledTimes(1);
   });
 
   function mockUser() {

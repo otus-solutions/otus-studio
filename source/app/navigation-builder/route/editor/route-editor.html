@@ -1,15 +1,19 @@
 <md-toolbar layout="row" flex>
   <div class="md-toolbar-tools">
     <h2>{{ $ctrl.label.dialog.title }}</h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
+      <md-icon>close</md-icon>
+    </md-button>
   </div>
 </md-toolbar>
-<md-dialog-content layout="row" layout-align="center center">
-  <md-content layout="column">
+<md-dialog-content layout="row" layout-xs="column" layout-align="center space-between" layout-padding>
+  <md-content layout="column" style="background-color: white">
     <md-switch ng-model="$ctrl.selectedRoute.isDefault" ng-disabled="$ctrl.selectedRoute.isDefault" ng-change="$ctrl.readyToSave()" aria-label="Tipo de Rota">
       {{ $ctrl.label.isDefaultRoute }}
     </md-switch>
   </md-content>
-  <md-card layout="column" flex="40" layout-align="center center">
+  <md-card layout="column" flex-gt-xs="40" flex="100" layout-align="center center">
     <md-card-title>
       <md-card-title-text>
         <span class="md-subhead" style="color: #3D855B !important">{{ $ctrl.label.origin }}</span>
@@ -20,7 +24,7 @@
     </md-card-content>
   </md-card>
   <span layout="column" flex></span>
-  <md-card layout="column" flex="40" layout-align="center center">
+  <md-card layout="column" flex="40" flex-xs="100" layout-align="center center">
     <md-card-title>
       <md-card-title-text>
         <span class="md-subhead" style="color: #1B5BD1 !important">{{ $ctrl.label.destination }}</span>
@@ -31,12 +35,12 @@
     </md-card-content>
   </md-dialog-content>
 </md-card>
-<md-dialog-content layout="row" id="route-conditions-container" flex>
+<md-dialog-content layout="row" layout-xs="column" id="route-conditions-container" flex>
   <div layout="column" flex ng-show="!$ctrl.selectedRoute.isDefault">
     <md-whiteframe class="md-whiteframe-2dp" layout-align="center center" ng-repeat="condition in $ctrl.conditions track by $index" ng-click="$ctrl.selectCondition($index)">
       <span ng-show="false">{{ conditionIndex = $index }}</span>
       <md-dialog-actions>
-        <md-content flex>
+        <md-content flex style="background-color: white">
           {{ $ctrl.label.conditionTitle }}
         </md-content>
         <md-button ng-show="$index !== 0" ng-click="$ctrl.deleteCondition($index, condition)">
@@ -47,20 +51,20 @@
         </md-button>
       </md-dialog-actions>
       <md-content ng-show="clicked" flex>
-        <md-list-item layout="row" flex class="md-1-line" ng-repeat="rule in condition.rules">
+        <md-list-item layout="row" layout-xs="column" flex ng-repeat="rule in condition.rules" class="md-1-line">
           <div layout="column" flex class="md-list-item-text">
             <otus-rule-editor flex rule-data="rule" condition="condition" condition-index="conditionIndex" on-update="$ctrl.deleteRule(ruleEditor)"></otus-rule-editor>
           </div>
         </md-list-item>
-        <md-list-item layout="row" flex class="md-1-line">
+        <md-list-item layout="row" layout-fill="" flex class="md-1-line">
           <otus-rule-creator condition="condition" condition-index="$index" flex></otus-rule-creator>
         </md-list-item>
       </md-content>
     </md-whiteframe>
   </div>
 </md-dialog-content>
-<md-dialog-actions layout="row" flex>
-  <div flex layout-align="start center">
+<md-dialog-actions layout="row" flex layout-wrap>
+  <div flex layout-align="start center" layout-align-xs="center center" flex-xs="100">
     <md-button class="md-raised" ng-click="$ctrl.createCondition()" ng-show="!$ctrl.selectedRoute.isDefault">{{ $ctrl.label.button.createCondition }}</md-button>
     <md-button class="md-raised md-warn" ng-click="$ctrl.deleteRoute()" ng-show="!$ctrl.selectedRoute.isDefault && !$ctrl.isNewRoute">{{ $ctrl.label.button.deleteRoute }}</md-button>
   </div>

@@ -25,6 +25,48 @@
           }
         }
       })
+      .state('preview', {
+        url: '/preview',
+        params: {
+          template: null
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/preview/activity-viewer-template.html',
+            controller: 'activityViewerCtrl as $ctrl',
+            resolve: {
+              contextTemplate: function load($stateParams, SurveyPreviewService, CrossSessionDatabaseService, $window, $q, WorkspaceService) {
+
+                var previewStatePromisse = $q.defer();
+
+                var surveyTemplate_OID = $window.sessionStorage.getItem('surveyTemplate_OID');
+
+                if ($stateParams.template) {
+                  _startEditor($stateParams.template);
+                } else if (surveyTemplate_OID) {
+                  _loadFromIndexedDB();
+                } else {
+                  previewStatePromisse.resolve(WorkspaceService.getSurvey());
+                }
+
+                function _loadFromIndexedDB() {
+                  var promise = CrossSessionDatabaseService.findSurveyTemplateByOID(surveyTemplate_OID);
+                  promise.then(function(result) {
+                    $stateParams.template = result.template;
+                    _startEditor($stateParams.template);
+                  });
+                }
+
+                function _startEditor(surveyTemplate) {
+                  SurveyPreviewService.startPreviewWithSurveyTemplate(surveyTemplate);
+                  previewStatePromisse.resolve(WorkspaceService.getSurvey());
+                }
+                return previewStatePromisse.promise;
+              }
+            }
+          }
+        }
+      })
       .state('home', {
         url: '/home',
         views: {

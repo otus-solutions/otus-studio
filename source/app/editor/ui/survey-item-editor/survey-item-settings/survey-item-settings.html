@@ -1,9 +1,9 @@
-<md-content layout-padding>
-<md-toolbar class="md-accent md-hue-1">
+<div>
+<md-toolbar class="md-accent md-hue-1" layout-fill="" layout-padding="" ng-style="widget.showValidationEditor ? {} : {'border-radius': '0 0 12px 12px'}">
   <div class="md-toolbar-tools">
     <otus:button click="widget.validationButton()" tooltip="Validação" icon-button="verified_user" />
     <otus:accept-answer item="widget.getItem()"></otus:accept-answer>
   </div>
 </md-toolbar>
-<otus:filling-rules-editor layout="row" flex ng-show="widget.showValidationEditor" layout-padding></otus:filling-rules-editor>
-</md-content>
+<otus:filling-rules-editor layout="column" ng-show="widget.showValidationEditor" layout-fill></otus:filling-rules-editor>
+</div>

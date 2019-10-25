@@ -1,7 +1,8 @@
-<md-content layout="row" layout-padding layout-align="space-between center" flex>
+<div layout="row" layout-padding layout-align="space-between center" flex>
   <md-content ng-transclude="headerSlot" flex></md-content>
   <otus-button click="$ctrl.changeState()" ng-if="$ctrl.isToShow"  tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"></otus-button>
   <otus-button click="$ctrl.changeState()" ng-if="!$ctrl.isToShow"  tooltip="Expandir" icon-button="{{::$ctrl.template.icon}}"></otus-button>
+
   <md-menu>
   <md-button class="md-icon-button" tooltip="Opções" icon-button="more_vert"  ng-click="$mdOpenMenu()">
     <md-icon md-menu-origin>more_vert</md-icon>
@@ -21,10 +22,8 @@
     </md-menu-item>
   </md-menu-content>
   </md-menu>
-  <survey-item-group item="$ctrl.item"></survey-item-group>
-</md-content>
-<md-content ng-if="$ctrl.isToShow" layout="column" flex>
-  <md-content ng-transclude="bodySlot"></md-content>
-</md-content>
-
-
+<survey-item-group item="$ctrl.item"></survey-item-group>
+</div>
+<div ng-if="$ctrl.isToShow" layout="column" flex>
+  <div ng-transclude="bodySlot"></div>
+</div>
