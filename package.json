@@ -22,7 +22,7 @@
     "build": "gulp compress"
   },
   "dependencies": {
-    "angular": "1.5.8",
+    "angular": "1.7.8",
     "angular-animate": "1.5.8",
     "angular-aria": "1.5.8",
     "angular-bind-html-compile-ci-dev": "1.1.1",
