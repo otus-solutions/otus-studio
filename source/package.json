@@ -13,6 +13,11 @@
     "type": "git",
     "url": "https://github.com/ccem-dev/studio"
   },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "scripts": {
     "test": "karma start karma.conf.js --single-run",
     "tdd": "karma start karma.conf.js --auto-watch --browsers PhantomJS --reporters progress",

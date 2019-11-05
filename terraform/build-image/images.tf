@@ -16,6 +16,10 @@ variable "otus-studio-source" {
   default = "source"
 }
 
+variable "otus-studio-cleanup" {
+  default = "rm -rf package-lock.json node_modules/ dist/"
+}
+
 variable "otus-studio-npminstall" {
   default = "npm install"
 }
@@ -39,7 +43,15 @@ variable "otus-studio-dockerbuild" {
 ###############################################
 ###  OTUS-STUDIO : Build Image Front-End    ###
 ###############################################
+resource "null_resource" "otus-studio-cleanup" {
+  provisioner "local-exec" {
+    working_dir = "${var.otus-studio-source}"
+    command = "${var.otus-studio-cleanup}"
+  }
+}
+
 resource "null_resource" "otus-studio-install" {
+  depends_on = [null_resource.otus-studio-cleanup]
   provisioner "local-exec" {
     working_dir = "${var.otus-studio-source}"
     command = "${var.otus-studio-npminstall}"
