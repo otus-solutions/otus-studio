@@ -18,19 +18,11 @@
   /* Task registry */
   gulp.task('browser-sync', function() {
     browserSync.init({
+      open: 'external',
       server: {
-        baseDir: '../',
-        middleware: [
-          //browserSyncSpa(/^[^\.]+$/, baseDir),
-
-          function(req, res, next) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Headers', '*');
-            next();
-          }
-        ]
+        baseDir: ['./app', './']
       },
-      startPath: 'otus-studio'
+      https: true
     });
 
     gulp.watch([

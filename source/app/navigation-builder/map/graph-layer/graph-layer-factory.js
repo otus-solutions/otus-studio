@@ -44,7 +44,6 @@
 
     function loadData(nodes, edges) {
       _mapView.graph.clear();
-      console.log(nodes)
       _mapView.graph.read({
         nodes: nodes,
         edges: edges
@@ -127,14 +126,12 @@
       var cam = _mapView.addCamera('#map-view');
       _mapView.addRenderer({
           container: mapViewContainer,
-          type: 'webgl',
+          type: 'canvas',
           camera: cam
       });
       _mapView.graph.touchstart = start;
       _mapView.graph.touchmove = move;
       _mapView.graph.touchend = stop;
-      console.log(_mapView)
-
     }
 
     function _updateNodeStyleBefore(style, nodeLimiter) {
