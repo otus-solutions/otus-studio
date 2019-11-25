@@ -10,7 +10,6 @@
   function runner($injector) {
     var application = $injector.get('PlayerService');
     application.setup();
-    console.info('Preview module ready.');
   }
 
 }());

@@ -10,27 +10,19 @@
   var sonar = require('gulp-sonar');
   var war = require('gulp-war');
   var zip = require('gulp-zip');
-  var packageJson = require('./package.json');
   var baseDir = __dirname + '/app/index.html';
-  const registryUrl = require('registry-url');
+  var packageJson = require('./package.json');
+
 
 
   /* Task registry */
   gulp.task('browser-sync', function() {
     browserSync.init({
+      open: 'external',
       server: {
-        baseDir: '../',
-        middleware: [
-          //browserSyncSpa(/^[^\.]+$/, baseDir),
-
-          function(req, res, next) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Headers', '*');
-            next();
-          }
-        ]
+        baseDir: ['./app', './']
       },
-      startPath: 'otus-studio'
+      https: true
     });
 
     gulp.watch([
@@ -49,7 +41,7 @@
   });
 
   gulp.task('compress', function() {
-    gulp.src('app/**/*.js')
+    gulp.src('./app/**/*.js')
       .pipe(concat('otus-studio.js'))
       .pipe(minify({
         'mangle': false
