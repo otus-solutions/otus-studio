@@ -1,4 +1,8 @@
-<div layout="column" flex layout-fill="">
-  <otus:survey-item-editor item="item" position="$ctrl.template.getItems().indexOf(item)+1" ng-repeat="item in $ctrl.template.getItems() track by item.templateID">
+<div layout="column" flex layout-fill="" id="studio-sheet">
+  <otus:survey-item-editor item="item" position="$ctrl.template.getItems().indexOf(item)+1"  ng-repeat="item in $ctrl.template.getItems() | limitTo: $ctrl.limit track by item.templateID">
   </otus:survey-item-editor>
+  <div layout="row">
+    <md-progress-linear ng-if="$ctrl.template.getItems().length > $ctrl.limit" md-mode="indeterminate" style="position: fixed; bottom: 0; width: 98%"></md-progress-linear>
+  </div>
 </div>
+

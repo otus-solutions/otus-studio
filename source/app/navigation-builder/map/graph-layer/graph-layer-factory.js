@@ -44,7 +44,6 @@
 
     function loadData(nodes, edges) {
       _mapView.graph.clear();
-      console.log(nodes)
       _mapView.graph.read({
         nodes: nodes,
         edges: edges
@@ -133,8 +132,6 @@
       _mapView.graph.touchstart = start;
       _mapView.graph.touchmove = move;
       _mapView.graph.touchend = stop;
-      console.log(_mapView)
-
     }
 
     function _updateNodeStyleBefore(style, nodeLimiter) {
