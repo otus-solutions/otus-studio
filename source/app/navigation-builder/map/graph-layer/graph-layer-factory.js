@@ -126,7 +126,7 @@
       var cam = _mapView.addCamera('#map-view');
       _mapView.addRenderer({
           container: mapViewContainer,
-          type: 'webgl',
+          type: 'canvas',
           camera: cam
       });
       _mapView.graph.touchstart = start;

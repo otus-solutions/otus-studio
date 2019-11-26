@@ -44,7 +44,10 @@
           <otus-stage template="mainContainer.template"></otus-stage>
         </md-tab>
         <md-tab id="survey-navigation-tab" label="Navegação" ng-click="mainContainer.startNavigationBuilder()">
-          <div ng-include="'app/navigation-builder/navigation-builder-index.html'"></div>
+          <div ng-include="'app/navigation-builder/navigation-builder-index.html'" hide show-gt-xs></div>
+          <div layout="row" layout-align="center center" layout-margin layout-padding>
+            <span class="md-body-1" show-xs hide>Não é possível editar a navegação em smartphones! Acesse em um Tablet ou Computador.</span>
+          </div>
         </md-tab>
         <md-tab id="resource-tab" label="Recursos">
           <studio-static-variable></studio-static-variable>
