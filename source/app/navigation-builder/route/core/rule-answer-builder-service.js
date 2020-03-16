@@ -19,8 +19,6 @@
         answers = answers.concat(_getCustomAnswer());
       } else if (item.options) {
         answers = answers.concat(item.options.map(getAnswerOption));
-      } else if (item.options) {
-        answers = answers.concat(item.options.map(getAnswerOption));
       }
 
       if (item.metadata && item.metadata.options) {
