@@ -80,7 +80,7 @@
         self.selectedAnswer = RuleAnswerBuilderService.buildCustomAnswer(self.selectedWhen, self.ruleData, self.answerList);
       } else {
         self.selectedAnswer = self.answerList.filter(function(answer) {
-          return (answer.option.value === self.ruleData.answer) && (answer.isMetadata === self.ruleData.isMetadata);
+          return (answer.option.value == self.ruleData.answer) && (answer.isMetadata == self.ruleData.isMetadata);
         })[0];
       }
     }
