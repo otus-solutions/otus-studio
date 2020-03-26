@@ -1,6 +1,6 @@
 {
   "name": "otus-studio",
-  "version": "1.15.2",
+  "version": "1.16.0",
   "description": "The tool to build survey forms to be used in Otus Studio.",
   "keywords": [
     "otus",
@@ -51,10 +51,10 @@
     "md-color-picker": "0.2.6",
     "moment": "2.12.0",
     "node-uuid": "1.4.7",
-    "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#1.1.0",
-    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#1.25.0",
-    "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#1.15.3",
-    "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#1.1.0",
+    "otus-domain-client": "1.1.0",
+    "otus-model-js": "1.30.0",
+    "otus-preview-js": "1.15.3",
+    "otus-validation-js": "1.1.0",
     "registry-url": "3.1.0",
     "sigma": "1.2.0",
     "tinycolor2": "1.4.1",
