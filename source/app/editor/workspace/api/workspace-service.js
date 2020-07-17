@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -75,27 +75,24 @@
     }
 
     function getSurvey() {
-      return self.workspace.project.survey;
+      return angular.copy(self.workspace.project.survey);
     }
 
     function importProject(project) {
       if (project.survey.SurveyItemManager.getItemListSize()) {
-        _setLastTemplateIdValue(project)
+        _loadIncrementalIDValue(project);
       }
       self.workspace.importProject(project);
-      self.workspace.loadProjectConfiguration();
+      self.workspace.loadProjectConfiguration(project);
     }
 
-    function _setLastTemplateIdValue(project) {
-        var projectAcronym = project.survey.identity.acronym;
-        var lastItemTemplateID = project.survey.SurveyItemManager.getLastItem().templateID;
-        var lastID = project.survey.SurveyItemManager.getLastItem().templateID.slice(projectAcronym.length,lastItemTemplateID.length);
-        project.survey.SurveyItemManager.setIncrementalIDValue(lastID);
+    function _loadIncrementalIDValue(project) {
+      project.survey.loadIncrementalIDValue();
     }
 
     /* Observable interface */
     function notifyObservers(update) {
-      observers.forEach(function(observer) {
+      observers.forEach(function (observer) {
         observer.update(update);
       });
     }
