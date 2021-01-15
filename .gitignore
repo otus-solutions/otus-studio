@@ -18,3 +18,4 @@ package-lock.json
 **/terraform.tfstate
 **/terraform.tfstate.backup
 **/.npmrc
+**/.terraform.lock.hcl
